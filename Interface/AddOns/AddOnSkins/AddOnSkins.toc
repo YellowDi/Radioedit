@@ -1,0 +1,16 @@
+﻿## Interface: 70000
+## Title: |cffC495DDEUI|r |cffFFFFFFAddOnSkins|r
+## Title-zhCN: |cffC495DDEUI|r美化皮肤模块
+## Title-zhTW: |cffC495DDEUI|r美化皮膚模塊
+## Version: 3.38
+## Author: Azilroka, Sortokk
+## SavedVariablesPerCharacter: AddOnSkinsOptions
+## OptionalDep: ElvUI, BuyEmAll, DSM, Tukui, HydraUI
+## X-Tukui-ProjectID: 128
+## X-Tukui-ProjectFolders: AddOnSkins
+## X-Curse-Packaged-Version: 3.38
+## X-Curse-Project-Name: AddOnSkins
+## X-Curse-Project-ID: elvui_addonskins
+## X-Curse-Repository-ID: wow/elvui_addonskins/mainline
+
+Load_AddOnSkins.xml

@@ -1,0 +1,12 @@
+## Title: TDDps_Mage
+## Version: 1.1
+## Author: Kaminari
+## Interface: 70000
+## Dependencies: TDDps
+## LoadOnDemand: 1
+## X-Curse-Packaged-Version: v1.1
+## X-Curse-Project-Name: TDDps Mage
+## X-Curse-Project-ID: tddps-mage
+## X-Curse-Repository-ID: wow/tddps-mage/mainline
+
+main.lua

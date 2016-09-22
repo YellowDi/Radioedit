@@ -1,0 +1,18 @@
+## Interface: 70000
+## Title: BugGrabber
+## Title: |cff880303EUI|r BugGrabber
+## Title-zhCN: |cff880303EUI|r屏蔽插件错误
+## Title-zhTW: |cff880303EUI|r屏蔽插件錯誤
+## Author: Funkydude
+## X-Credits: Rabbit, Rowne, Ramble, kergoth, ckknight, Fritti
+## X-License: GPL v2 or later.
+## X-Category: Development Tools
+## SavedVariables: BugGrabberDB
+## X-Curse-Packaged-Version: r218-release
+## X-Curse-Project-Name: !BugGrabber
+## X-Curse-Project-ID: bug-grabber
+## X-Curse-Repository-ID: wow/bug-grabber/mainline
+
+BugGrabber.lua
+locales.lua
+

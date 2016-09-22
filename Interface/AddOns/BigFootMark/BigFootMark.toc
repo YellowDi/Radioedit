@@ -1,0 +1,15 @@
+﻿## Interface: 70000
+## Title: |cffC495DDEUI|rNPC_Mark
+## Title-zhCN: |cffC495DDEUI|rNPC位置标注
+## Title-zhTW: |cffC495DDEUI|rNPC位置標註
+## Notes: |cffC495DDEUI|rNPC_Mark
+## Notes-zhCN: |cffC495DDEUI|rNPC位置标注 |cffbc8f8f在大地图上标记指定类型的NPC坐标(来自大脚)。|r
+## Notes-zhTW: |cffC495DDEUI|rNPC位置標註 |cffbc8f8f在大地圖上標記指定類型的NPC座標(來自大腳)。|r
+## Author: Terry, Eui.cc
+## Version: 0.1.5
+## SavedVariables: BigFootMarkMappingDB
+## SavedVariablesPerCharacter: BigFootMarkDB
+## RequiredDeps: HandyNotes
+
+BigFootMark.xml
+

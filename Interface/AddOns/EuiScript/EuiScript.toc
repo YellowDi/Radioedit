@@ -1,0 +1,18 @@
+## Interface: 70000
+## Title: |cffC495DDEUI|r Script
+## Title-zhCN: |cffC495DDEUI|r增强功能
+## Title-zhTW: |cffC495DDEUI|r增強功能
+## Author: eui.cc
+## X-Category: ElvUI
+## Version: 20160921A
+## SavedVariables: ACHIEVEMENTSEARCH_DB, TalentSetManager_Options, DejaCharacterStatsDB
+## SavedVariablesPerCharacter: TalentSetManager_Saves, DejaCharacterStatsDBPC
+## RequiredDeps: ElvUI
+
+init.lua
+..\libs\LibStub\LibStub.lua
+..\libs\CallbackHandler-1.0\CallbackHandler-1.0.lua
+..\libs\LibSharedMedia-3.0\LibSharedMedia-3.0.lua
+Media.lua
+overlay.xml
+module\load_module.xml

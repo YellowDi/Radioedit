@@ -1,0 +1,50 @@
+﻿## Interface: 70000
+## Title: |cffC495DDEUI|rHandyNotes: Achievements
+## Title-zhCN: |cffC495DDEUI|r地图标记-成就模块
+## Title-zhTW: |cffC495DDEUI|r地圖標記-成就模塊
+## Description: Shows location of incomplete achievements
+## Version: 0.4.17
+## Author: rbrian, eui.cc
+## Dependencies: HandyNotes
+## SavedVariables: HandyNotesAchievementsDB
+## Dependencies: ElvUI
+## X-Revision: ElvUI
+../Libs/LibStub/LibStub.lua
+../Libs/CallbackHandler-1.0/CallbackHandler-1.0.lua
+../Libs/AceAddon-3.0/AceAddon-3.0.lua
+../Libs/AceDB-3.0/AceDB-3.0.lua
+../Libs/AceEvent-3.0/AceEvent-3.0.lua
+../Libs/AceTimer-3.0/AceTimer-3.0.lua
+../Libs/LibQTip-1.0/LibQTip-1.0.lua
+
+# first-party libraries
+Libs/MapExcursion-1.0/MapExcursion-1.0.lua
+Libs/MapMap-1.0/MapMap-1.0.lua
+Libs/InstanceLocations-1.0/InstanceLocations-1.0.lua
+Libs/InSeason-1.0/InSeason-1.0.lua
+
+Libs/AchievementLocations-1.0/AchievementLocations-1.0.lua
+Libs/AchievementLocations-1.0/AchievementLocations_data.lua
+Libs/AchievementLocations-1.0/AchievementLocations_cartography.lua
+Libs/AchievementLocations-1.0/AchievementLocations_soloable.lua
+Libs/AchievementLocations-1.0/AchievementLocations_group.lua
+Libs/AchievementLocations-1.0/AchievementLocations_pvp.lua
+Libs/AchievementLocations-1.0/AchievementLocations_reputation.lua
+Libs/AchievementLocations-1.0/AchievementLocations_pet.lua
+Libs/AchievementLocations-1.0/AchievementLocations_seasonal.lua
+Libs/AchievementLocations-1.0/AchievementLocations_seasonal_brew.lua
+Libs/AchievementLocations-1.0/AchievementLocations_seasonal_children.lua
+Libs/AchievementLocations-1.0/AchievementLocations_seasonal_darkmoon.lua
+Libs/AchievementLocations-1.0/AchievementLocations_seasonal_hallow.lua
+Libs/AchievementLocations-1.0/AchievementLocations_seasonal_love.lua
+Libs/AchievementLocations-1.0/AchievementLocations_seasonal_lunar.lua
+Libs/AchievementLocations-1.0/AchievementLocations_seasonal_mid.lua
+Libs/AchievementLocations-1.0/AchievementLocations_seasonal_noble.lua
+Libs/AchievementLocations-1.0/AchievementLocations_seasonal_pilgrim.lua
+Libs/AchievementLocations-1.0/AchievementLocations_seasonal_winter.lua
+
+Locale/enUS.lua
+Locale/zhCN.lua
+Locale/zhTW.lua
+
+HandyNotes_Achievements.lua

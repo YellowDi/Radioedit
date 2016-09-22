@@ -1,0 +1,12 @@
+## Title: TDDps_Warrior
+## Version: 1.3
+## Author: Kaminaris
+## Interface: 70000
+## Dependencies: TDDps
+## LoadOnDemand: 1
+## X-Curse-Packaged-Version: v1.3
+## X-Curse-Project-Name: TDDps Warrior
+## X-Curse-Project-ID: tddps-warrior
+## X-Curse-Repository-ID: wow/tddps-warrior/mainline
+
+main.lua

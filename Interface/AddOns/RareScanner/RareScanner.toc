@@ -1,0 +1,27 @@
+﻿## Interface: 70000
+## Title: |cffC495DDEUI|rRareScanner
+## Title-zhCN: |cffC495DDEUI|r稀有检测RareScanner
+## Title-zhTW: |cffC495DDEUI|r稀有檢測RareScanner
+## Notes: Minimap scanner. Warns you visually with a button and a miniature and plays a sound everytime a rare NPC, treasure/chest or event shows up in your minimap
+## Notes-esES: Escaner del minimapa. Avisa con un mensaje, una miniatura y reproduce un sonido cada vez que un NPC raro, tesoro o evento aparece en tu minimapa.
+## Notes-esMX: Escaner del minimapa. Avisa con un mensaje, una miniatura y reproduce un sonido cada vez que un NPC raro, tesoro o evento aparece en tu minimapa.
+## Notes-zhTW: 小地圖掃描器。 當每次稀有NPC、寶藏/寶箱或事件出現在您的小地圖上時，使用一個按鈕與縮小的模型視覺化提醒您並撥放聲音。
+## Notes-zhCN: 小地图扫描器。 当每次稀有NPC、宝藏/宝箱或事件出现在您的小地图上时，使用一个按钮与缩小的模型视觉化提醒您并拨放声音。
+## Author: maqjav, Maciza-Tyrande
+## Version: 2.1
+## SavedVariables: RareScannerDB
+## OptionalDeps: Ace3
+## X-Category: Miscellaneous
+## X-Credits: maqjav, Maciza-Tyrande
+## X-Date: Ago. 29, 2016
+## X-Email: maqjav@gmail.com
+## X-License: GPLv2
+## X-Localizations: enUS, zhCN, zhTW
+## Dependencies: ElvUI
+## X-Revision: ElvUI
+Libs\Libs.xml
+Locales\Locales.xml
+DisplayIds.lua
+LootTables.lua
+Core.lua
+Config.lua

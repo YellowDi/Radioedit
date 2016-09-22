@@ -1,0 +1,8 @@
+## Interface: 70000
+## Title: NetEase Feedback
+## Title-zhCN: |cffff565e[网易]|r 服务器问题反馈
+## Notes-zhCN: 服务器问题反馈
+## Version: 60100.01
+## X-WoWBox-Ver: 1
+
+Main.xml

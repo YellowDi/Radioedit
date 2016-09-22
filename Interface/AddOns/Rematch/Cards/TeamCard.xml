@@ -1,0 +1,95 @@
+<Ui>
+	<!-- the team card itself -->
+	<Frame name="RematchTeamCard" frameStrata="DIALOG" parent="UIParent" clampedToScreen="true" enableMouse="true" movable="true" inherits="BasicFrameTemplate" hidden="false">
+		<Size x="260" y="428"/>
+		<Anchors>
+			<Anchor point="CENTER"/>
+		</Anchors>
+		<Layers>
+			<Layer level="ARTWORK">
+				<!-- the "Team Card" title in titlebar (not to be confused with "Title" frame that contains top portion of card -->
+				<FontString parentKey="TeamCardTitle" inherits="GameFontNormal" justifyH="CENTER" justifyV="TOP">
+					<Size x="0" y="14"/>
+					<Anchors>
+						<Anchor point="TOPLEFT" x="6" y="-5"/>
+						<Anchor point="TOPRIGHT" x="-6" y="-5"/>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+
+		<Frames>
+			<!-- title area of card is visible on front and back -->
+			<Frame parentKey="Title" useParentLevel="true" forceAlpha="true">
+				<Size x="248" y="48"/>
+				<Anchors>
+					<Anchor point="TOP" x="0" y="-25"/>
+				</Anchors>
+				<Layers>
+					<Layer level="BACKGROUND">
+						<!-- background to title area -->
+						<Texture parentKey="TitleBG" file="Interface\PetBattles\PetJournal" setAllPoints="true">
+							<TexCoords left="0.19140625" right="0.65625" top="0.4873046875" bottom="0.5654296875"/>
+						</Texture>
+					</Layer>
+					<Layer level="ARTWORK">
+						<!-- large name in title -->
+						<FontString parentKey="Name" inherits="SystemFont_Shadow_Med1_Outline" justifyH="CENTER" justifyV="CENTER" text="Name Of Team">
+							<Color r="1" g=".82" b=".5"/>
+							<Size x="0" y="54"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" x="48" y="2"/>
+								<Anchor point="TOPRIGHT" x="-48" y="2"/>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Frames>
+					<Button parentKey="Icon">
+						<Size x="40" y="40"/>
+						<Anchors>
+							<Anchor point="TOPLEFT" x="4" y="-4"/>
+						</Anchors>
+						<Layers>
+							<Layer level="BORDER">
+								<Texture parentKey="Texture" setAllPoints="true"/>
+							</Layer>
+							<Layer level="ARTWORK">
+								<!-- thin gold border around Icon -->
+								<Texture file="Interface\PetBattles\PetBattleHUD">
+									<Anchors>
+										<Anchor point="TOPLEFT" x="0" y="1"/>
+										<Anchor point="BOTTOMRIGHT" x="1" y="0"/>
+									</Anchors>
+									<TexCoords left="0.884765625" right="0.943359375" top="0.681640625" bottom="0.798828125"/>
+								</Texture>
+							</Layer>
+						</Layers>
+					</Button>
+					<!-- icon of the team's tab in topright corner -->
+					<Button parentKey="TabIcon">
+						<Size x="41" y="41"/>
+						<Anchors>
+							<Anchor point="TOPRIGHT" x="-4" y="-3"/>
+						</Anchors>
+						<Layers>
+							<Layer level="BORDER">
+								<!-- the icon texture itself -->
+								<Texture parentKey="Texture" setAllPoints="true"/>
+							</Layer>
+							<Layer level="ARTWORK">
+								<!-- thin gold border around icon -->
+								<Texture file="Interface\PetBattles\PetBattleHUD" setAllPoints="true">
+									<TexCoords left="0.884765625" right="0.943359375" top="0.681640625" bottom="0.798828125"/>
+								</Texture>
+							</Layer>
+						</Layers>
+					</Button>
+
+				</Frames>
+			</Frame> <!-- Title -->
+
+		</Frames>
+	</Frame>
+
+</Ui>

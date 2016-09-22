@@ -1,0 +1,23 @@
+﻿## Interface: 70000
+## Title: |cffC495DDEUI|r ExtraCD
+## Title-zhCN: |cffC495DDEUI|r内置CD监视
+## Title-zhTW: |cffC495DDEUI|r內置CD監視
+## Notes: Display internal cd or rppm of items, enchants, talents and abilities
+## Notes-zhTW: 物品,附魔,天賦和技能的內置冷卻或RPPM監視
+## Notes-zhCN: 物品,附魔,天赋和技能的内置冷却或RPPM监视
+## Author: superk,ozz
+## SavedVariables: ExtraCDDB
+## Version: 1.5
+## X-Curse-Packaged-Version: 1.5.0
+## X-Curse-Project-Name: ExtraCD
+## X-Curse-Project-ID: extracd
+## X-Curse-Repository-ID: wow/extracd/mainline
+## Dependencies: ElvUI
+## X-Revision: ElvUI
+
+embeds.xml
+Locales\locales.xml
+
+ExtraCD.lua
+data.lua
+options.lua

@@ -1,0 +1,12 @@
+## Title: TDDps_Priest
+## Version: 1.2.1
+## Author: Kaminari
+## Interface: 70000
+## Dependencies: TDDps
+## LoadOnDemand: 1
+## X-Curse-Packaged-Version: v1.2.1
+## X-Curse-Project-Name: TDDps Priest
+## X-Curse-Project-ID: tddps-priest
+## X-Curse-Repository-ID: wow/tddps-priest/mainline
+
+main.lua

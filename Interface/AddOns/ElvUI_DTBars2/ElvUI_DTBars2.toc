@@ -1,0 +1,12 @@
+﻿## Interface: 70000
+## Title: |cff1784d1ElvUI |rDatatext Bars 2
+## Author: |cff9482c9Darth Predator|r
+## Version: 7.0.3.0010
+## Notes: The plugin to create and manage additional datatext panels.
+## Notes-ruRU: Плагин для создания и управления дополнительными панелями инфо-текстов.
+## RequiredDeps: ElvUI
+## DefaultState: Enabled
+
+locales\load_locales.xml
+core.lua
+options.lua

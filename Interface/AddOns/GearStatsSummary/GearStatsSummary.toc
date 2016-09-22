@@ -1,0 +1,19 @@
+## Interface: 70000
+## Notes: Compare your equipments bonus of all status with other players.
+## Notes-zhCN: 与观察目标的装备属性进行比较
+## Notes-zhTW: 與觀察目標的裝備屬性進行比較
+## Author-Origin: slashboy @ 九藜方舟 Dreamland  yyslash@gmail.com / lasthime @ 幻物梵天 艾森纳 
+## Author: Henrui @ 幽暗沼泽 zhengruiw02@gmail.com 
+## Title: |cffC495DDEUI|r |cff00ff00GearStatsSummary|r
+## Title-zhCN: |cffC495DDEUI|r装备属性统计
+## Title-zhTW: |cffC495DDEUI|r裝備屬性統計
+## Version: GSS Realse 6
+## Dependencies: ElvUI
+## X-Revision: ElvUI
+
+embeds.xml
+
+Localization.lua
+GearStatsSummary.xml
+
+

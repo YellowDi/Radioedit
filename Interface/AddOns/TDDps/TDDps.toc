@@ -1,0 +1,35 @@
+﻿## Title: TDDps
+## Title-zhCN: |cffC495DDTDDps|r输出循环提示插件
+## Title-zhTW: |cffC495DDTDDps|r輸出迴圈提示外掛程式
+## Notes: Rotation helper framework.
+## Notes-zhCN: 在动作条上提示下个技能的输出辅助插件.
+## Notes-zhTW: 在動作條上提示下個技能的輸出輔助外掛程式.
+## Version: 1.9
+## Author: Kaminaris
+## Interface: 70000
+## SavedVariables: TDDps_Options
+## OptionalDependencies: Bartender4, ElvUI, ButtonForge
+## X-Curse-Packaged-Version: v1.9
+## X-Curse-Project-Name: TDDps
+## X-Curse-Project-ID: tddps
+## X-Curse-Repository-ID: wow/tddps/mainline
+## RequiredDeps: ElvUI
+## X-Revision: ElvUI
+
+#..\Libs\LibStub\LibStub.lua
+#..\Libs\AceGUI-3.0\AceGUI-3.0.xml
+#..\Libs\AceGUI-3.0\AceGUI-3.0.lua
+#..\Libs\AceConfig-3.0\AceConfig-3.0.xml
+#..\Libs\AceConfig-3.0\AceConfig-3.0.lua
+#TDSettings.lua
+#TDButtons.lua
+#TDHelper.lua
+#TDDps.lua
+
+#Modules\TDDps_Paladin\main.lua
+#Modules\TDDps_Priest\main.lua
+#Modules\TDDps_Shaman\main.lua
+#Modules\TDDps_Warlock\main.lua
+#Modules\TDDps_Warrior\main.lua
+#Modules\TDDps_Hunter\main.lua
+#Modules\TDDps_Mage\main.lua

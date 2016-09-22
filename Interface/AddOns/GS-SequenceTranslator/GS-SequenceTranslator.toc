@@ -1,0 +1,28 @@
+﻿## Interface: 70000
+## Title: |cffC495DDEUI|r |cffff0000GS-E:|r |cFF00D1FFSequence Translator|r
+## Title-zhCN: |cffC495DDEUI|r |cFF00D1FF一键宏增强版|r 宏翻译器
+## Title-zhTW: |cffC495DDEUI|r |cFF00D1FF一鍵宏增強版|r 宏翻譯器
+## Notes: This addon allows you to Trnaslate GnomeSequenced-Enhanced Sequences into your local client language
+## Author: Draik
+## Version: 1.3.1
+## RequiredDeps: GS-Core
+## X-Curse-Packaged-Version: r20160906073131
+## X-Curse-Project-Name: GS-E Sequence Translator
+## X-Curse-Project-ID: gs-e-sequence-translator
+## X-Curse-Repository-ID: wow/gs-e-sequence-translator/mainline
+
+#setup
+startup.lua
+
+# Language Files
+langs\enUSErrata.lua
+langs\zhTW.lua
+langs\zhTWHash.lua
+langs\zhTWSHADOW.lua
+langs\zhCN.lua
+langs\zhCNHash.lua
+langs\zhCNSHADOW.lua
+poststartup.lua
+
+# Translater
+poststartup.lua

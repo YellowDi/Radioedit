@@ -1,0 +1,12 @@
+## Title: TDDps_Hunter
+## Version: 1.2
+## Author: Kaminaris
+## Interface: 70000
+## Dependencies: TDDps
+## LoadOnDemand: 1
+## X-Curse-Packaged-Version: v1.2
+## X-Curse-Project-Name: TDDps Hunter
+## X-Curse-Project-ID: tddps-hunter
+## X-Curse-Repository-ID: wow/tddps-hunter/mainline
+
+main.lua

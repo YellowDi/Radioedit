@@ -1,0 +1,7 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">	
+	<Script file="RaidLeaderBox.lua"/>
+	<Script file="UnitFrame.lua"/>
+	<Script file="NamePlate.lua"/>
+	<Script file="reminders.lua"/>
+	<Script file="extracd.lua"/>
+</Ui>

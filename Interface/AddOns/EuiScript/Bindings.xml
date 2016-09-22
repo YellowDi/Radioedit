@@ -1,0 +1,74 @@
+<Bindings>
+	<Binding name="AutoSlotButton1" header="EUI_AUTOSLOTBUTTON" category="BINDING_HEADER_ELVUI">		
+		EuiScript_AutoButton_Click(AutoSlotButton1)
+	</Binding>
+	<Binding name="AutoSlotButton2" category="BINDING_HEADER_ELVUI">
+		EuiScript_AutoButton_Click(AutoSlotButton2)
+	</Binding>
+	<Binding name="AutoSlotButton3" category="BINDING_HEADER_ELVUI">
+		EuiScript_AutoButton_Click(AutoSlotButton3)
+	</Binding>
+	<Binding name="AutoSlotButton4" category="BINDING_HEADER_ELVUI">
+		EuiScript_AutoButton_Click(AutoSlotButton4)
+	</Binding>
+	<Binding name="AutoSlotButton5" category="BINDING_HEADER_ELVUI">
+		EuiScript_AutoButton_Click(AutoSlotButton5)
+	</Binding>
+	<Binding name="AutoSlotButton6" category="BINDING_HEADER_ELVUI">
+		EuiScript_AutoButton_Click(AutoSlotButton6)
+	</Binding>
+	<Binding name="AutoSlotButton7" category="BINDING_HEADER_ELVUI">
+		EuiScript_AutoButton_Click(AutoSlotButton7)
+	</Binding>
+	<Binding name="AutoSlotButton8" category="BINDING_HEADER_ELVUI">
+		EuiScript_AutoButton_Click(AutoSlotButton8)
+	</Binding>
+	<Binding name="AutoSlotButton9" category="BINDING_HEADER_ELVUI">
+		EuiScript_AutoButton_Click(AutoSlotButton9)
+	</Binding>
+	<Binding name="AutoSlotButton10" category="BINDING_HEADER_ELVUI">
+		EuiScript_AutoButton_Click(AutoSlotButton10)
+	</Binding>
+	<Binding name="AutoSlotButton11" category="BINDING_HEADER_ELVUI">
+		EuiScript_AutoButton_Click(AutoSlotButton11)
+	</Binding>
+	<Binding name="AutoSlotButton12" category="BINDING_HEADER_ELVUI">
+		EuiScript_AutoButton_Click(AutoSlotButton12)
+	</Binding>
+	<Binding name="AutoQuestButton1" header="EUI_AUTOQUESTBUTTON" category="BINDING_HEADER_ELVUI">
+		EuiScript_AutoButton_Click(AutoQuestButton1)
+	</Binding>
+	<Binding name="AutoQuestButton2" category="BINDING_HEADER_ELVUI">
+		EuiScript_AutoButton_Click(AutoQuestButton2)
+	</Binding>
+	<Binding name="AutoQuestButton3" category="BINDING_HEADER_ELVUI">
+		EuiScript_AutoButton_Click(AutoQuestButton3)
+	</Binding>
+	<Binding name="AutoQuestButton4" category="BINDING_HEADER_ELVUI">
+		EuiScript_AutoButton_Click(AutoQuestButton4)
+	</Binding>
+	<Binding name="AutoQuestButton5" category="BINDING_HEADER_ELVUI">
+		EuiScript_AutoButton_Click(AutoQuestButton5)
+	</Binding>
+	<Binding name="AutoQuestButton6" category="BINDING_HEADER_ELVUI">
+		EuiScript_AutoButton_Click(AutoQuestButton6)
+	</Binding>
+	<Binding name="AutoQuestButton7" category="BINDING_HEADER_ELVUI">
+		EuiScript_AutoButton_Click(AutoQuestButton7)
+	</Binding>
+	<Binding name="AutoQuestButton8" category="BINDING_HEADER_ELVUI">
+		EuiScript_AutoButton_Click(AutoQuestButton8)
+	</Binding>
+	<Binding name="AutoQuestButton9" category="BINDING_HEADER_ELVUI">
+		EuiScript_AutoButton_Click(AutoQuestButton9)
+	</Binding>
+	<Binding name="AutoQuestButton10" category="BINDING_HEADER_ELVUI">
+		EuiScript_AutoButton_Click(AutoQuestButton10)
+	</Binding>
+	<Binding name="AutoQuestButton11" category="BINDING_HEADER_ELVUI">
+		EuiScript_AutoButton_Click(AutoQuestButton11)
+	</Binding>
+	<Binding name="AutoQuestButton12" category="BINDING_HEADER_ELVUI">
+		EuiScript_AutoButton_Click(AutoQuestButton12)
+	</Binding>		
+</Bindings>

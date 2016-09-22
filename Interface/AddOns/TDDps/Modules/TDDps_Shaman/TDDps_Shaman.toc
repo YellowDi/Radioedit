@@ -1,0 +1,12 @@
+## Title: TDDps_Shaman
+## Version: 1.3
+## Author: Kaminaris
+## Interface: 70000
+## Dependencies: TDDps
+## LoadOnDemand: 1
+## X-Curse-Packaged-Version: v1.3
+## X-Curse-Project-Name: TDDps Shaman
+## X-Curse-Project-ID: tddps-shaman
+## X-Curse-Repository-ID: wow/tddps-shaman/mainline
+
+main.lua
