@@ -3,18 +3,18 @@ MSBTProfiles_SavedVars = {
 	["profiles"] = {
 		["Default"] = {
 			["scrollAreas"] = {
-				["Incoming"] = {
-					["offsetX"] = -340,
-					["offsetY"] = -20,
-				},
 				["Static"] = {
-					["disabled"] = true,
-				},
-				["Notification"] = {
 					["disabled"] = true,
 				},
 				["Outgoing"] = {
 					["offsetX"] = 300,
+					["offsetY"] = -20,
+				},
+				["Notification"] = {
+					["disabled"] = true,
+				},
+				["Incoming"] = {
+					["offsetX"] = -340,
 					["offsetY"] = -20,
 				},
 			},

@@ -5,11 +5,13 @@ MasqueDB = {
 		},
 	},
 	["profileKeys"] = {
-		["Radioedit - 奥蕾莉亚"] = "Default",
 	},
 	["profiles"] = {
 		["Default"] = {
 			["Groups"] = {
+				["ElvUI_Buffs"] = {
+					["SkinID"] = "Serenity",
+				},
 				["ElvUI_ActionBars"] = {
 					["Colors"] = {
 						["Highlight"] = {
@@ -34,18 +36,15 @@ MasqueDB = {
 				["ElvUI_Debuffs"] = {
 					["SkinID"] = "Serenity",
 				},
-				["ElvUI"] = {
+				["WeakAuras"] = {
+					["Inherit"] = false,
 					["SkinID"] = "Serenity",
 				},
-				["ElvUI_Buffs"] = {
+				["ElvUI"] = {
 					["SkinID"] = "Serenity",
 				},
 				["ElvUI_Stance Bar"] = {
 					["Disabled"] = true,
-					["SkinID"] = "Serenity",
-				},
-				["WeakAuras"] = {
-					["Inherit"] = false,
 					["SkinID"] = "Serenity",
 				},
 				["ElvUI_Pet Bar"] = {
