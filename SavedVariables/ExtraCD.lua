@@ -505,12 +505,12 @@ ExtraCDDB = {
 						115554, -- [5]
 					},
 					["type"] = "itemset",
-					["spec"] = 2,
+					["class"] = "MAGE",
 					["ppm"] = 0.7,
 					["enable"] = true,
-					["duration"] = 4,
+					["spec"] = 2,
 					["piece"] = 4,
-					["class"] = "MAGE",
+					["duration"] = 4,
 				},
 				["183931"] = {
 					["type"] = "item",
