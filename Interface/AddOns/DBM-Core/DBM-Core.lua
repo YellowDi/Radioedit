@@ -41,9 +41,9 @@
 --  Globals/Default Options  --
 -------------------------------
 DBM = {
-	Revision = tonumber(("$Revision: 15243 $"):sub(12, -3)),
-	DisplayVersion = "7.0.6 alpha", -- the string that is shown as version
-	ReleaseRevision = 15226 -- the revision of the latest stable version that is available
+	Revision = tonumber(("$Revision: 15255 $"):sub(12, -3)),
+	DisplayVersion = "7.0.7 alpha", -- the string that is shown as version
+	ReleaseRevision = 15244 -- the revision of the latest stable version that is available
 }
 DBM.HighestRelease = DBM.ReleaseRevision --Updated if newer version is detected, used by update nags to reflect critical fixes user is missing on boss pulls
 
@@ -419,7 +419,7 @@ local dbmToc = 0
 local isTalkingHeadLoaded = false
 local talkingHeadUnregistered = false
 
-local fakeBWVersion, fakeBWHash = 10, "e0c536b"
+local fakeBWVersion, fakeBWHash = 11, "edbe654"
 local versionQueryString, versionResponseString = "Q:%d-%s", "V:%d-%s"
 
 local enableIcons = true -- set to false when a raid leader or a promoted player has a newer version of DBM
@@ -7402,7 +7402,7 @@ end
 
 function bossModPrototype:CheckNearby(range, targetname)
 	local uId = DBM:GetRaidUnitId(targetname)
-	if uId then
+	if uId and not UnitIsUnit("player", uId) then
 		local inRange = DBM.RangeCheck:GetDistance(uId)
 		if inRange and inRange < range then
 			return true

@@ -850,6 +850,7 @@ G['BossSwing'] = {
 
 P["euiscript"] = {
 	["DRTracker"] = false,
+	["DRTrackerSize"] = 29,
 	["disable_talking"] = false,
 	['CharacterStats'] = true,
 	['CharacterStatsList'] = {
@@ -1146,6 +1147,25 @@ P["euiscript"] = {
 			[122455] = true,
 			[122456] = true,	
 			[116411] = true, --保护卷轴
+			--Legion
+			[118330] = true,-- Pile of Weapons
+			[122100] = true,-- Soul Gem
+			[127030] = true, -- Granny's Flare Grenades
+			[127295] = true, -- Blazing Torch
+			[128651] = true, -- Critter Hand Cannon
+			[128772] = true, -- Branch of the Runewood
+			[129161] = true, -- Stormforged Horn
+			[129725] = true, -- Smoldering Torch
+			[131931] = true, -- Khadgar's Wand
+			[133756] = true, -- Fresh Mound of Flesh
+			[133882] = true, -- Trap Rune
+			[133897] = true, -- Telemancy Beacon
+			[133925] = true, -- Fel Lash
+			[133999] = true, -- Inert Crystal
+			[136605] = true, -- Solendra's Compassion
+			[137299] = true, -- Nightborne Spellblad
+			[138146] = true, -- Rediant Ley Crystal
+			[140916] = true, -- Satchel of Locklimb Powder
 		},
 		['blankList'] = {},
 		['blankitemID'] = '',

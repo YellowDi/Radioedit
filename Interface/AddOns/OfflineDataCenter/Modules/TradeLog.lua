@@ -469,20 +469,20 @@ function Module:TRADE_MONEY_CHANGED()
 	GetTrade().targetMoney = GetTargetTradeMoney()
 end
 
-function Module:UI_ERROR_MESSAGE(event, arg1)
-	if(arg1==ERR_TRADE_BAG_FULL or arg1==ERR_TRADE_MAX_COUNT_EXCEEDED or arg1==ERR_TRADE_TARGET_BAG_FULL or arg1==ERR_TRADE_TARGET_MAX_COUNT_EXCEEDED) then
+function Module:UI_ERROR_MESSAGE(event, arg1, arg2)
+	if(arg2==ERR_TRADE_BAG_FULL or arg2==ERR_TRADE_MAX_COUNT_EXCEEDED or arg2==ERR_TRADE_TARGET_BAG_FULL or arg2==ERR_TRADE_TARGET_MAX_COUNT_EXCEEDED) then
 		GetTrade().result = "error";
-		GetTrade().reason=arg1;
+		GetTrade().reason=arg2;
 		TradeLog_LogTradeAndReset();
-	elseif (arg1==ERR_TRADE_TARGET_DEAD or arg1==ERR_TRADE_TOO_FAR) then
-		DEFAULT_CHAT_FRAME:AddMessage(arg1, 1, 0.2, 0.2);
+	elseif (arg2==ERR_TRADE_TARGET_DEAD or arg2==ERR_TRADE_TOO_FAR) then
+		DEFAULT_CHAT_FRAME:AddMessage(arg2, 1, 0.2, 0.2);
 	end
 end
 
-function Module:UI_INFO_MESSAGE(event, arg1)
-	if arg1==ERR_TRADE_CANCELLED then
+function Module:UI_INFO_MESSAGE(event, arg1, arg2)
+	if arg2==ERR_TRADE_CANCELLED then
 		GetTrade().result = "cancelled"
-	elseif arg1==ERR_TRADE_COMPLETE then
+	elseif arg2==ERR_TRADE_COMPLETE then
 		GetTrade().result = "complete"
 	end
 	TradeLog_LogTradeAndReset();

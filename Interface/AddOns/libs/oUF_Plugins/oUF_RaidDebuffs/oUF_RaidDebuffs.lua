@@ -6,6 +6,7 @@ local oUF = ns.oUF or oUF
 
 local SymbiosisName = GetSpellInfo(110309)
 local CleanseName = GetSpellInfo(4987)
+local IsInInstance = IsInInstance
 
 local addon = {}
 ns.oUF_RaidDebuffs = addon
@@ -254,7 +255,7 @@ local function Update(self, event, unit)
 	
 	--store if the unit its charmed, mind controlled units (Imperial Vizier Zor'lok: Convert)
 	local isCharmed = UnitIsCharmed(unit)		
-	
+	local _, instanceType = IsInInstance();
 	--store if we cand attack that unit, if its so the unit its hostile (Amber-Shaper Un'sok: Reshape Life)
 	local canAttack = UnitCanAttack("player", unit)
 	
@@ -286,7 +287,15 @@ local function Update(self, event, unit)
 		end
 	end
 	
-	local filterName = ElvUI[1].db.unitframe.units.raid.rdebuffs.useFilter or 'RaidDebuffs'
+	local filterName
+	if instanceType == "party" or instanceType == "raid" then
+		filterName= "RaidDebuffs"
+	else
+		filterName = "CCDebuffs"
+	end
+	if ElvUI[1].db.unitframe.units.raid.rdebuffs.useFilter then
+		filterName = ElvUI[1].db.unitframe.units.raid.rdebuffs.useFilter
+	end
 	_stackThreshold = _name and ElvUI[1].global.unitframe['aurafilters'][filterName]['spells'][_name] and ElvUI[1].global.unitframe['aurafilters'][filterName]['spells'][_name].stackThreshold or 0
 
 	if self.RaidDebuffs.forceShow then

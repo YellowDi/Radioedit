@@ -4,23 +4,21 @@ local select = select
 local UnitGUID, GetSpellInfo, GetTime, pairs, print = UnitGUID, GetSpellInfo, GetTime, pairs, print
 local class = select(2, UnitClass('player'))
 local CooldownFrame_Set = CooldownFrame_Set
+local GetSpellTexture = GetSpellTexture
 
 -- DRtime controls how long it takes for the icons to reset. Several factors can affect how DR resets.
 -- If you are experiencing constant problems with DR reset accuracy, you can change this value
 local DRtime = 18
 
-
-if IsAddOnLoaded("ElvUI") then
-	framelist = {
-		--[FRAME NAME]	= {UNITID,SIZE,ANCHOR,ANCHORFRAME,X,Y,"ANCHORNEXT","ANCHORPREVIOUS",nextx,nexty},
-		-- My settings
-		["ElvUF_Arena1"]	= {"arena1",29,"TOPRIGHT","BOTTOMLEFT",-2,-2,"RIGHT","LEFT",-2,0},
-		["ElvUF_Arena2"]	= {"arena2",29,"TOPRIGHT","BOTTOMLEFT",-2,-2,"RIGHT","LEFT",-2,0},
-		["ElvUF_Arena3"]	= {"arena3",29,"TOPRIGHT","BOTTOMLEFT",-2,-2,"RIGHT","LEFT",-2,0},
-		["ElvUF_Arena4"]	= {"arena4",29,"TOPRIGHT","BOTTOMLEFT",-2,-2,"RIGHT","LEFT",-2,0},
-		["ElvUF_Arena5"]	= {"arena5",29,"TOPRIGHT","BOTTOMLEFT",-2,-2,"RIGHT","LEFT",-2,0},
-	}
-end
+framelist = {
+	--[FRAME NAME]	= {UNITID,SIZE,ANCHOR,ANCHORFRAME,X,Y,"ANCHORNEXT","ANCHORPREVIOUS",nextx,nexty},
+	-- My settings
+	["ElvUF_Arena1"]	= {"arena1",29,"TOPRIGHT","BOTTOMLEFT",-2,-2,"RIGHT","LEFT",-2,0},
+	["ElvUF_Arena2"]	= {"arena2",29,"TOPRIGHT","BOTTOMLEFT",-2,-2,"RIGHT","LEFT",-2,0},
+	["ElvUF_Arena3"]	= {"arena3",29,"TOPRIGHT","BOTTOMLEFT",-2,-2,"RIGHT","LEFT",-2,0},
+	["ElvUF_Arena4"]	= {"arena4",29,"TOPRIGHT","BOTTOMLEFT",-2,-2,"RIGHT","LEFT",-2,0},
+	["ElvUF_Arena5"]	= {"arena5",29,"TOPRIGHT","BOTTOMLEFT",-2,-2,"RIGHT","LEFT",-2,0},
+}
 
 -- This is the config section for what DR categories to show for each class
 if class == 'DEATHKNIGHT' then
@@ -48,8 +46,8 @@ elseif class == 'HUNTER' then
 elseif class == 'MAGE' then
 	classCat = {
 		["incapacitate"] = true,
-		["silence"] = true,
-		["ctrlstun"] = true,
+		["silence"] = false,
+		["ctrlstun"] = false,
 		["ctrlroot"] = true,
 		}
 elseif class == 'MONK' then
@@ -62,7 +60,7 @@ elseif class == 'MONK' then
 elseif class == 'PALADIN' then
 	classCat = {
 		["incapacitate"] = true,
-		["silence"] = false,
+		["silence"] = true,
 		["disorient"] = true,
 		["ctrlstun"] = true,
 		}
@@ -114,82 +112,84 @@ end
 local function GetDrIcons() 
 	if class == 'DEATHKNIGHT' then
 		return {
-		["ctrlstun"] = select(3,GetSpellInfo(108194)), --Aspyxiate
-		["ctrlroot"] = select(3,GetSpellInfo(96294)), -- Chains of Ice (Chilblains Root)
-		["silence"] = select(3,GetSpellInfo(47476)), -- Strangulate
+		["ctrlstun"] = GetSpellTexture(108194), --Aspyxiate
+		["ctrlroot"] = GetSpellTexture(96294), -- Chains of Ice (Chilblains Root)
+		["silence"] = GetSpellTexture(47476), -- Strangulate
 		}
 	elseif class == 'DRUID' then
 		return {
-		["ctrlstun"] = select(3,GetSpellInfo(5211)), -- Mighty Bash
-		["disorient"] = select(3,GetSpellInfo(113056)), -- Intimidating Roar
-		["ctrlroot"] = select(3,GetSpellInfo(339)), -- Entangling Roots
-		["silence"] = select(3,GetSpellInfo(78675)), -- Solar Beam
+		["ctrlstun"] = GetSpellTexture(5211), -- Mighty Bash
+		["disorient"] = GetSpellTexture(33786), -- Intimidating Roar
+		["ctrlroot"] = GetSpellTexture(339), -- Entangling Roots
+		["silence"] = GetSpellTexture(78675), -- Solar Beam
+		["incapacitate"] = GetSpellTexture(99), -- Freezing Trap
 		}
 	elseif class == 'HUNTER' then
 		return {
-		["ctrlstun"] = select(3,GetSpellInfo(24394)), -- Intimidation
-		["incapacitate"] = select(3,GetSpellInfo(91644)), -- Freezing Trap
-		["ctrlroot"] = select(3,GetSpellInfo(128405)), -- Narrow Escape
+		["ctrlstun"] = GetSpellTexture(24394), -- Intimidation
+		["incapacitate"] = GetSpellTexture(3355), -- Freezing Trap
+		["ctrlroot"] = GetSpellTexture(128405), -- Narrow Escape
 		}
 	elseif class == 'MAGE' then
 		return {
-		["ctrlstun"] = select(3,GetSpellInfo(44572)),
-		["incapacitate"] = select(3,GetSpellInfo(118)),
-		["ctrlroot"] = select(3,GetSpellInfo(122)),
+	--	["ctrlstun"] = GetSpellTexture(44572),
+		["incapacitate"] = GetSpellTexture(118),
+		["ctrlroot"] = GetSpellTexture(122),
 		}
 	elseif class == 'MONK' then
 		return {
-		["ctrlstun"] = select(3,GetSpellInfo(119381)), -- Leg Sweep 
-		["incapacitate"] = select(3,GetSpellInfo(115078)), -- Paralysis
-		["ctrlroot"] = select(3,GetSpellInfo(116706)), -- Disable
+		["ctrlstun"] = GetSpellTexture(119381), -- Leg Sweep 
+		["incapacitate"] = GetSpellTexture(115078), -- Paralysis
+		["ctrlroot"] = GetSpellTexture(116706), -- Disable
 		}
 	elseif class == 'PALADIN' then
 		return {
-		["ctrlstun"] = select(3,GetSpellInfo(853)), -- Hammer of Justice
-		["incapacitate"] = select(3,GetSpellInfo(20066)), -- Repentance
-		["disorient"] = select(3,GetSpellInfo(10326)), -- Turn Evil
-		["silence"] = select(3,GetSpellInfo(31935)), -- Avenger's Shield
+		["ctrlstun"] = GetSpellTexture(853), -- Hammer of Justice
+		["incapacitate"] = GetSpellTexture(20066), -- Repentance
+		["disorient"] = GetSpellTexture(105421), -- Turn Evil
+		["silence"] = GetSpellTexture(31935), -- Avenger's Shield
 		}
 	elseif class == 'PRIEST' then
 		return {
-		["incapacitate"] = select(3,GetSpellInfo(9484)), -- Shackle Undead
-		["incapacitate"] = select(3,GetSpellInfo(64044)), -- Psyhcic Horror
-		["ctrlroot"] = select(3,GetSpellInfo(114404)), -- Void Tendrils
-		["silence"] = select(3,GetSpellInfo(15487)), -- Silence
+	--	["incapacitate"] = GetSpellTexture(9484), -- Shackle Undead
+		["incapacitate"] = GetSpellTexture(64044), -- Psyhcic Horror
+		["ctrlroot"] = GetSpellTexture(114404), -- Void Tendrils
+		["silence"] = GetSpellTexture(15487), -- Silence
+		["disorient"] = GetSpellTexture(8122),
 		}
 	elseif class == 'ROGUE' then
 		return {
-		["ctrlstun"] = select(3,GetSpellInfo(408)),-- Kidney Shot
-		["incapacitate"] = select(3,GetSpellInfo(6770)), -- Sap
-		["disorient"] = select(3,GetSpellInfo(2094)), -- Blind
-		["silence"] = select(3,GetSpellInfo(1330)), -- Garrote
+		["ctrlstun"] = GetSpellTexture(408),-- Kidney Shot
+		["incapacitate"] = GetSpellTexture(6770), -- Sap
+		["disorient"] = GetSpellTexture(2094), -- Blind
+		["silence"] = GetSpellTexture(1330), -- Garrote
 		}
 	elseif class == 'SHAMAN' then
 		return {
-		["ctrlstun"] = select(3,GetSpellInfo(118905)), -- Static Charge (Capacitor Totem)
-		["incapacitate"] = select(3,GetSpellInfo(51514)), -- Hex
-		["ctrlroot"] = select(3,GetSpellInfo(64695)), -- Earthgrab
+		["ctrlstun"] = GetSpellTexture(118905), -- Static Charge (Capacitor Totem)
+		["incapacitate"] = GetSpellTexture(51514), -- Hex
+		["ctrlroot"] = GetSpellTexture(64695), -- Earthgrab
 		}
 	elseif class == 'WARLOCK' then
 		return {
-		["ctrlstun"] = select(3,GetSpellInfo(89766)), -- Axe Toss (Felguard)
-		["disorient"] = select(3,GetSpellInfo(5782)), -- Fear
-		["incapacitate"] = select(3,GetSpellInfo(6789)), -- Mortal Coil
+		["ctrlstun"] = GetSpellTexture(89766), -- Axe Toss (Felguard)
+		["disorient"] = GetSpellTexture(5782), -- Fear
+		["incapacitate"] = GetSpellTexture(6789), -- Mortal Coil
 		}
 	elseif class == 'WARRIOR' then
 		return {
-		["ctrlstun"] = select(3,GetSpellInfo(132168)), -- Shockwave
-		["disorient"] = select(3,GetSpellInfo(5246)), -- Intimidating Shout
-		["ctrlroot"] = select(3,GetSpellInfo(107566)), -- Staggering Shout 
+		["ctrlstun"] = GetSpellTexture(132168), -- Shockwave
+		["disorient"] = GetSpellTexture(5246), -- Intimidating Shout
+		["ctrlroot"] = GetSpellTexture(107566), -- Staggering Shout 
 		}
 	elseif class == 'DEMONHUNTER' then
 		return {
-		["ctrlstun"] = select(3,GetSpellInfo(179057)), -- Shockwave
-		["disorient"] = select(3,GetSpellInfo(207685)), -- Intimidating Shout
-		["silence"] = select(3,GetSpellInfo(204490)), -- Staggering Shout 
+		["ctrlstun"] = GetSpellTexture(179057), -- Shockwave
+		["disorient"] = GetSpellTexture(207685), -- Intimidating Shout
+		["silence"] = GetSpellTexture(204490), -- Staggering Shout 
 		}		
 	end
-		--["test"] = select(3,GetSpellInfo(80353)),
+		--["test"] = GetSpellTexture(80353)),
 end
 
 local function GetSpellDR() 
@@ -370,7 +370,7 @@ local function GetSpellDR()
 		-- Shaman
 		[ 64695] = {"ctrlroot"}, -- Earthgrab Totem
 
-		[  1459] = {"test"},		-- Testing purpose (Intel Mage)
+		[116706] = {"test"},		-- Testing purpose (Intel Mage)
 		[   130] = {"test","disorient"},	-- Testing purpose (Slow Fall)
 	}
 end
@@ -402,7 +402,7 @@ function DisplayDrActives(self)
 			aura:Height(self.size) -- default value
 			aura:SetScale(1)
 			aura:SetTemplate("Default")
-			if index == 1 and IsAddOnLoaded("ElvUI") then
+			if index == 1 then
 				aura:Point("BOTTOMRIGHT", self.mover, "BOTTOMRIGHT", 0, 0)
 			elseif index == 1 then
 				aura:Point(self.anchor, self:GetParent().Health, self.anchorframe, self.x, self.y)
@@ -416,9 +416,8 @@ function DisplayDrActives(self)
 			aura.cooldown = CreateFrame("Cooldown", "$parentCD", aura, "CooldownFrameTemplate")
 			aura.cooldown:SetAllPoints(aura.icon)
 			aura.cooldown:SetReverse()
-			if IsAddOnLoaded("ElvUI") then
-				ElvUI[1]:RegisterCooldown(aura.cooldown)
-			end
+			E:RegisterCooldown(aura.cooldown)
+
 			aura.cat = "cat"
 			aura.start = 0
 			
@@ -569,7 +568,7 @@ for frame, target in pairs(framelist) do
 		DrTracker:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 		DrTracker:SetScript("OnEvent",CombatLogCheck)
 		DrTracker.target = target[1]
-		DrTracker.size = target[2]
+		DrTracker.size = E.db.euiscript.DRTrackerSize or target[2]
 		DrTracker.anchor = target[3]
 		DrTracker.anchorframe = target[4]
 		DrTracker.x = target[5]

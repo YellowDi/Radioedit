@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod(1667, "DBM-EmeraldNightmare", nil, 768)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 15240 $"):sub(12, -3))
+mod:SetRevision(("$Revision: 15248 $"):sub(12, -3))
 mod:SetCreatureID(100497)
 mod:SetEncounterID(1841)
 mod:SetZone()
@@ -55,7 +55,7 @@ local voiceRoaringCacophony			= mod:NewVoice(197969)--aesoon
 mod:AddSetIconOption("SetIconOnCharge", 198006, true)
 mod:AddHudMapOption("HudMapOnCharge", 198006)
 mod:AddInfoFrameOption(198108, false)
-mod:AddBoolOption("NoAutoSoaking", false)
+mod:AddBoolOption("NoAutoSoaking2", true)
 
 mod.vb.roarCount = 0
 mod.vb.chargeCount = 0
@@ -107,10 +107,7 @@ do
 		end
 		if self.Options.SpecWarn198006moveto then
 			--if soaker special warning is disabled, this too is disabled.
-			local text = table.concat(soakTable, "<, >")
-			if text then
-				DBM:AddMsg(L.SoakersText:format(text))
-			end
+			DBM:AddMsg(L.SoakersText:format(table.concat(soakTable, "<, >")))
 		end
 	end
 end
@@ -214,7 +211,7 @@ function mod:SPELL_AURA_APPLIED(args)
 				DBMHudMap:RegisterRangeMarkerOnPartyMember(spellId, "highlight", args.destName, 8, 8, nil, nil, nil, 0.5):Appear():RegisterForAlerts(nil, args.destName)
 			end
 		end
-		if not self.Options.NoAutoSoaking then
+		if not self.Options.NoAutoSoaking2 then
 			GenerateSoakAssignment(self, secondCount, args.destName)
 		end
 	elseif spellId == 197943 then

@@ -4089,6 +4089,15 @@ E.Options.args.unitframe.args.arena = {
 			set = function(info, value) E.db.euiscript.DRTracker = value; E:StaticPopup_Show("PRIVATE_RL"); end,
 			get = function(info) return E.db.euiscript.DRTracker; end,
 		},
+		DRTrackerSize = {
+			order = 18,
+			type = "range",
+			min = 5, max = 100, step = 1,
+			disabled = function() return not E.db.euiscript.DRTracker; end,
+			name = L["DRTracker"].. L["Icon size"],
+			set = function(info, value) E.db.euiscript.DRTrackerSize = value; E:StaticPopup_Show("PRIVATE_RL"); end,
+			get = function(info) return E.db.euiscript.DRTrackerSize; end,		
+		},
 		pvpTrinket = {
 			order = 19,
 			type = 'group',
