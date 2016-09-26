@@ -46,21 +46,21 @@ RematchSettings = {
 		},
 		["Rarity"] = {
 		},
-		["Tough"] = {
+		["Favorite"] = {
 		},
-		["Level"] = {
+		["Collected"] = {
 		},
 		["Sources"] = {
 		},
 		["Breed"] = {
 		},
-		["Similar"] = {
-		},
 		["Script"] = {
 		},
-		["Collected"] = {
+		["Similar"] = {
 		},
-		["Favorite"] = {
+		["Level"] = {
+		},
+		["Tough"] = {
 		},
 		["Types"] = {
 		},

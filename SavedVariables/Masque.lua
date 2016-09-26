@@ -44,13 +44,13 @@ MasqueDB = {
 					["Disabled"] = true,
 					["SkinID"] = "Serenity",
 				},
-				["WeakAuras"] = {
-					["Inherit"] = false,
-					["SkinID"] = "Serenity",
-				},
 				["ElvUI_Pet Bar"] = {
 					["SkinID"] = "Masque: Shadow",
 					["Inherit"] = false,
+				},
+				["WeakAuras"] = {
+					["Inherit"] = false,
+					["SkinID"] = "Serenity",
 				},
 				["Masque"] = {
 					["SkinID"] = "Serenity",

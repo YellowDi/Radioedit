@@ -2,8 +2,8 @@
 ACHIEVEMENTSEARCH_DB = {
 	["Achievement"] = {
 		["date"] = false,
-		["name"] = true,
 		["description"] = true,
+		["name"] = true,
 		["reward"] = true,
 	},
 }
