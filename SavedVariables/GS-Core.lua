@@ -23,14 +23,14 @@ GnomeOptions = {
 	["initialised"] = true,
 	["filterList"] = {
 		["Spec"] = true,
-		["All"] = false,
 		["Class"] = true,
+		["All"] = false,
 	},
 	["DebugModules"] = {
 		["GS-SequenceTranslator"] = false,
-		["Transmission"] = false,
-		["GS-SequenceEditor"] = false,
 		["GS-Core"] = true,
+		["GS-SequenceEditor"] = false,
+		["Transmission"] = false,
 	},
 	["sendDebugOutputToChat"] = true,
 	["DisabledSequences"] = {

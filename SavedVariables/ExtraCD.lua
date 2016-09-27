@@ -259,21 +259,21 @@ ExtraCDDB = {
 					["desc"] = "",
 				},
 				["45182"] = {
-					["enable"] = true,
+					["column"] = 1,
 					["type"] = "talent",
 					["cd"] = 90,
 					["tier"] = 3,
-					["column"] = 1,
+					["enable"] = true,
 					["class"] = "ROGUE",
 					["duration"] = 3,
 					["desc"] = "",
 				},
 				["116888"] = {
-					["enable"] = true,
+					["column"] = 3,
 					["type"] = "talent",
 					["cd"] = 180,
 					["tier"] = 2,
-					["column"] = 3,
+					["enable"] = true,
 					["class"] = "DEATHKNIGHT",
 					["duration"] = 3,
 					["desc"] = "",
@@ -370,9 +370,9 @@ ExtraCDDB = {
 						124154, -- [4]
 						124165, -- [5]
 					},
-					["spec"] = 2,
-					["piece"] = 4,
 					["class"] = "MAGE",
+					["piece"] = 4,
+					["spec"] = 2,
 				},
 				["122281"] = {
 					["type"] = "talent",
@@ -506,10 +506,10 @@ ExtraCDDB = {
 					},
 					["type"] = "itemset",
 					["spec"] = 2,
-					["piece"] = 4,
+					["ppm"] = 0.7,
 					["enable"] = true,
 					["duration"] = 4,
-					["ppm"] = 0.7,
+					["piece"] = 4,
 					["class"] = "MAGE",
 				},
 				["183931"] = {
@@ -569,25 +569,28 @@ ExtraCDDB = {
 					["ppm"] = 1,
 					["desc"] = "",
 				},
-				["121283"] = {
-					["type"] = "talent",
-					["cd"] = 20,
-					["tier"] = 3,
-					["column"] = 1,
-					["class"] = "MONK",
-					["enable"] = true,
-					["desc"] = "",
-				},
-				["177160"] = {
+				["165824"] = {
 					["type"] = "item",
 					["cd"] = 0,
 					["item"] = {
-						118300, -- [1]
-						118303, -- [2]
+						110019, -- [1]
 					},
 					["enable"] = true,
 					["duration"] = 10,
 					["ppm"] = 0.92,
+					["desc"] = "",
+				},
+				["182069"] = {
+					["type"] = "item",
+					["item"] = {
+						111233, -- [1]
+						115760, -- [2]
+						117740, -- [3]
+						117941, -- [4]
+					},
+					["enable"] = true,
+					["duration"] = 20,
+					["cd"] = 50,
 					["desc"] = "",
 				},
 				["74241"] = {
@@ -611,15 +614,17 @@ ExtraCDDB = {
 					["ppm"] = 1,
 					["desc"] = "",
 				},
-				["177060"] = {
+				["190025"] = {
 					["type"] = "item",
-					["cd"] = 0,
 					["item"] = {
-						119192, -- [1]
+						124868, -- [1]
+						125345, -- [2]
+						125982, -- [3]
+						126459, -- [4]
 					},
 					["enable"] = true,
-					["duration"] = 10,
-					["ppm"] = 0.92,
+					["duration"] = 20,
+					["cd"] = 50,
 					["desc"] = "",
 				},
 				["142530"] = {
@@ -634,45 +639,40 @@ ExtraCDDB = {
 					["ppm"] = 2.53,
 					["desc"] = "",
 				},
-				["162915"] = {
+				["165822"] = {
 					["type"] = "item",
-					["item"] = {
-						112318, -- [1]
-					},
-					["enable"] = true,
-					["duration"] = 20,
-					["cd"] = 115,
-					["desc"] = "",
-				},
-				["60229"] = {
-					["type"] = "item",
-					["item"] = {
-						75274, -- [1]
-						122604, -- [2]
-						122603, -- [3]
-						122602, -- [4]
-						122601, -- [5]
-						109262, -- [6]
-						128024, -- [7]
-						128023, -- [8]
-					},
-					["enable"] = true,
-					["duration"] = 15,
-					["cd"] = 55,
-					["desc"] = "",
-				},
-				["116660"] = {
-					["enchant"] = {
-						4446, -- [1]
-					},
-					["type"] = "enchant",
-					["slot"] = 16,
-					["enable"] = true,
-					["duration"] = 7,
-					["ppm"] = 3.67,
-					["desc"] = "",
 					["cd"] = 0,
-					["modifier"] = "haste",
+					["item"] = {
+						109999, -- [1]
+						110014, -- [2]
+					},
+					["enable"] = true,
+					["duration"] = 10,
+					["ppm"] = 0.92,
+					["desc"] = "",
+				},
+				["165832"] = {
+					["type"] = "item",
+					["cd"] = 0,
+					["item"] = {
+						110004, -- [1]
+					},
+					["enable"] = true,
+					["duration"] = 10,
+					["ppm"] = 0.92,
+					["desc"] = "",
+				},
+				["201408"] = {
+					["refreshable"] = true,
+					["type"] = "item",
+					["cd"] = 0,
+					["item"] = {
+						133597, -- [1]
+					},
+					["enable"] = true,
+					["duration"] = 5,
+					["ppm"] = 0.5,
+					["desc"] = "",
 				},
 				["156055"] = {
 					["enchant"] = {
@@ -685,27 +685,25 @@ ExtraCDDB = {
 					["ppm"] = 1.55,
 					["desc"] = "",
 				},
-				["177042"] = {
+				["87023"] = {
+					["column"] = 2,
+					["type"] = "talent",
+					["cd"] = 120,
+					["tier"] = 2,
+					["enable"] = true,
+					["class"] = "MAGE",
+					["duration"] = 6,
+					["desc"] = "",
+				},
+				["177040"] = {
 					["type"] = "item",
 					["cd"] = 0,
 					["item"] = {
-						119193, -- [1]
+						113645, -- [1]
 					},
 					["enable"] = true,
 					["duration"] = 10,
 					["ppm"] = 0.92,
-					["desc"] = "",
-				},
-				["142535"] = {
-					["enchant"] = {
-						5124, -- [1]
-					},
-					["type"] = "enchant",
-					["cd"] = 0,
-					["slot"] = 16,
-					["enable"] = true,
-					["duration"] = 12,
-					["ppm"] = 2.2,
 					["desc"] = "",
 				},
 				["159675"] = {
@@ -721,36 +719,42 @@ ExtraCDDB = {
 					["ppm"] = 1.15,
 					["desc"] = "",
 				},
-				["176978"] = {
+				["190026"] = {
+					["type"] = "item",
+					["item"] = {
+						125336, -- [1]
+						124857, -- [2]
+						125971, -- [3]
+						126450, -- [4]
+					},
+					["enable"] = true,
+					["duration"] = 20,
+					["cd"] = 50,
+					["desc"] = "",
+				},
+				["642"] = {
+					["iconid"] = 175893,
+					["enable"] = true,
+					["class"] = "PALADIN",
+					["desc"] = "",
+					["cd"] = 150,
+					["tier"] = 6,
+					["column"] = 1,
+					["type"] = "spectalent",
+					["duration"] = 8,
+					["spec"] = 3,
+				},
+				["201410"] = {
+					["refreshable"] = true,
 					["type"] = "item",
 					["cd"] = 0,
 					["item"] = {
-						116291, -- [1]
+						133596, -- [1]
 					},
 					["enable"] = true,
-					["duration"] = 10,
-					["ppm"] = 0.92,
+					["duration"] = 15,
+					["ppm"] = 1.1,
 					["desc"] = "",
-				},
-				["59626"] = {
-					["enchant"] = {
-						3790, -- [1]
-					},
-					["type"] = "enchant",
-					["cd"] = 35,
-					["slot"] = 16,
-					["enable"] = true,
-					["duration"] = 10,
-				},
-				["99621"] = {
-					["enchant"] = {
-						4267, -- [1]
-					},
-					["type"] = "enchant",
-					["cd"] = 40,
-					["slot"] = 16,
-					["enable"] = true,
-					["duration"] = 10,
 				},
 				["171982"] = {
 					["type"] = "talent",
@@ -774,16 +778,16 @@ ExtraCDDB = {
 					["ppm"] = 0.92,
 					["desc"] = "",
 				},
-				["201410"] = {
-					["refreshable"] = true,
+				["177172"] = {
 					["type"] = "item",
 					["cd"] = 0,
 					["item"] = {
-						133596, -- [1]
+						118308, -- [1]
+						118307, -- [2]
 					},
 					["enable"] = true,
-					["duration"] = 15,
-					["ppm"] = 1.1,
+					["duration"] = 10,
+					["ppm"] = 0.92,
 					["desc"] = "",
 				},
 				["60233"] = {
@@ -873,134 +877,130 @@ ExtraCDDB = {
 					["ppm"] = 3,
 					["desc"] = "",
 				},
-				["177172"] = {
+				["99621"] = {
+					["enchant"] = {
+						4267, -- [1]
+					},
+					["type"] = "enchant",
+					["cd"] = 40,
+					["slot"] = 16,
+					["enable"] = true,
+					["duration"] = 10,
+				},
+				["59626"] = {
+					["enchant"] = {
+						3790, -- [1]
+					},
+					["type"] = "enchant",
+					["cd"] = 35,
+					["slot"] = 16,
+					["enable"] = true,
+					["duration"] = 10,
+				},
+				["176978"] = {
 					["type"] = "item",
 					["cd"] = 0,
 					["item"] = {
-						118308, -- [1]
-						118307, -- [2]
+						116291, -- [1]
 					},
 					["enable"] = true,
 					["duration"] = 10,
 					["ppm"] = 0.92,
 					["desc"] = "",
 				},
-				["642"] = {
-					["iconid"] = 175893,
+				["142535"] = {
+					["enchant"] = {
+						5124, -- [1]
+					},
+					["type"] = "enchant",
+					["cd"] = 0,
+					["slot"] = 16,
 					["enable"] = true,
-					["class"] = "PALADIN",
+					["duration"] = 12,
+					["ppm"] = 2.2,
 					["desc"] = "",
-					["cd"] = 150,
-					["tier"] = 6,
-					["column"] = 1,
-					["spec"] = 3,
-					["duration"] = 8,
-					["type"] = "spectalent",
 				},
-				["190026"] = {
+				["177042"] = {
+					["type"] = "item",
+					["cd"] = 0,
+					["item"] = {
+						119193, -- [1]
+					},
+					["enable"] = true,
+					["duration"] = 10,
+					["ppm"] = 0.92,
+					["desc"] = "",
+				},
+				["116660"] = {
+					["enchant"] = {
+						4446, -- [1]
+					},
+					["type"] = "enchant",
+					["slot"] = 16,
+					["enable"] = true,
+					["duration"] = 7,
+					["ppm"] = 3.67,
+					["desc"] = "",
+					["cd"] = 0,
+					["modifier"] = "haste",
+				},
+				["60229"] = {
 					["type"] = "item",
 					["item"] = {
-						125336, -- [1]
-						124857, -- [2]
-						125971, -- [3]
-						126450, -- [4]
+						75274, -- [1]
+						122604, -- [2]
+						122603, -- [3]
+						122602, -- [4]
+						122601, -- [5]
+						109262, -- [6]
+						128024, -- [7]
+						128023, -- [8]
+					},
+					["enable"] = true,
+					["duration"] = 15,
+					["cd"] = 55,
+					["desc"] = "",
+				},
+				["162915"] = {
+					["type"] = "item",
+					["item"] = {
+						112318, -- [1]
 					},
 					["enable"] = true,
 					["duration"] = 20,
-					["cd"] = 50,
+					["cd"] = 115,
 					["desc"] = "",
 				},
-				["177040"] = {
+				["177060"] = {
 					["type"] = "item",
 					["cd"] = 0,
 					["item"] = {
-						113645, -- [1]
+						119192, -- [1]
 					},
 					["enable"] = true,
 					["duration"] = 10,
 					["ppm"] = 0.92,
 					["desc"] = "",
 				},
-				["87023"] = {
+				["177160"] = {
+					["type"] = "item",
+					["cd"] = 0,
+					["item"] = {
+						118300, -- [1]
+						118303, -- [2]
+					},
 					["enable"] = true,
+					["duration"] = 10,
+					["ppm"] = 0.92,
+					["desc"] = "",
+				},
+				["121283"] = {
 					["type"] = "talent",
-					["cd"] = 120,
-					["tier"] = 2,
-					["column"] = 2,
-					["class"] = "MAGE",
-					["duration"] = 6,
-					["desc"] = "",
-				},
-				["201408"] = {
-					["refreshable"] = true,
-					["type"] = "item",
-					["cd"] = 0,
-					["item"] = {
-						133597, -- [1]
-					},
+					["cd"] = 20,
+					["tier"] = 3,
+					["column"] = 1,
+					["class"] = "MONK",
 					["enable"] = true,
-					["duration"] = 5,
-					["ppm"] = 0.5,
-					["desc"] = "",
-				},
-				["165832"] = {
-					["type"] = "item",
-					["cd"] = 0,
-					["item"] = {
-						110004, -- [1]
-					},
-					["enable"] = true,
-					["duration"] = 10,
-					["ppm"] = 0.92,
-					["desc"] = "",
-				},
-				["165822"] = {
-					["type"] = "item",
-					["cd"] = 0,
-					["item"] = {
-						109999, -- [1]
-						110014, -- [2]
-					},
-					["enable"] = true,
-					["duration"] = 10,
-					["ppm"] = 0.92,
-					["desc"] = "",
-				},
-				["190025"] = {
-					["type"] = "item",
-					["item"] = {
-						124868, -- [1]
-						125345, -- [2]
-						125982, -- [3]
-						126459, -- [4]
-					},
-					["enable"] = true,
-					["duration"] = 20,
-					["cd"] = 50,
-					["desc"] = "",
-				},
-				["182069"] = {
-					["type"] = "item",
-					["item"] = {
-						111233, -- [1]
-						115760, -- [2]
-						117740, -- [3]
-						117941, -- [4]
-					},
-					["enable"] = true,
-					["duration"] = 20,
-					["cd"] = 50,
-					["desc"] = "",
-				},
-				["165824"] = {
-					["type"] = "item",
-					["cd"] = 0,
-					["item"] = {
-						110019, -- [1]
-					},
-					["enable"] = true,
-					["duration"] = 10,
-					["ppm"] = 0.92,
 					["desc"] = "",
 				},
 			},
