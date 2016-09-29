@@ -4,19 +4,19 @@
 ## Title-zhTW: |cffC495DDEUI|r |cFF00D1FF一鍵宏增強版|r 編輯器
 ## Notes: This addon allows you to edit GnomeSequenced-Enhanced sequences in game.
 ## Author: Draik
-## Version: 1.3.5
+## Version: 1.4
 ## RequiredDeps: GS-Core
 ## OptionalDeps: GS-SequenceTranslator LibCompress
-## X-Curse-Packaged-Version: r20160911064545
+## X-Curse-Packaged-Version: r20160927120114
 ## X-Curse-Project-Name: GnomeSequencer - Enhanced : Advanced Macros
 ## X-Curse-Project-ID: gnomesequencer-enhanced
 ## X-Curse-Repository-ID: wow/gnomesequencer-enhanced/mainline
 
 #libs
 embeds.xml
-# languages
-langs\GSSE_enUS.lua
-langs\GSSE_zhCN.lua
+..\libs\LibQTip-1.0\LibQTip-1.0.lua
+lib\AceGUI-3.0-Completing-EditBox\AceGUI-3.0-Completing-EditBox.lua
+
 
 #startup
 editor-startup.lua
@@ -26,7 +26,11 @@ translator-core.lua
 
 #Editor
 editor-core.lua
+DebugWindow.lua
 GS-Transmission.lua
+
 
 #OptionsGUI
 GSE-options.lua
+
+sequencemenu.lua

@@ -122,7 +122,7 @@ function UF:Update_AttentionFrames(frame, db)
 		end		
 	end	
 	
-	frame:UpdateAllElements()
+	frame:UpdateAllElements("ElvUI_UpdateAllElements")
 end
 
 UF['headerstoload']['attention'] = {nil, 'ELVUI_UNITTARGET'}

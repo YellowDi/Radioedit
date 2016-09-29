@@ -153,7 +153,7 @@ local function GetUnitSettings(unit, name)
 						order = 3,
 						name = L["Width"],
 						type = "range",
-						min = 50, max = 200, step = 1,
+						min = 50, max = 600, step = 1,
 					},
 					textGroup = {
 						order = 100,
@@ -857,7 +857,7 @@ E.Options.args.nameplate = {
 							type = "range",
 							name = L["Clickable Width"],
 							desc = L["Controls how big of an area on the screen will accept clicks to target unit."],
-							min = 50, max = 200, step = 1,
+							min = 50, max = 600, step = 1,
 							set = function(info, value) E.db.nameplates.clickableWidth = value; E:StaticPopup_Show("CONFIG_RL") end,
 						},
 						clickableHeight = {

@@ -4,6 +4,16 @@ if E.db.euiscript.questnoti.enable ~= true then return; end
 --## Author: Gentoo/Asem/聂荣/才人/大爱无疆/Suse/我真的是上帝/siweia
 --2014/1/2修改并精简代码 by eui.cc
 --2014/10/29 针对wod修改API by eui.cc
+local GetQuestLogTitle = GetQuestLogTitle
+local GetQuestLink = GetQuestLink
+local IsQuestWatched = IsQuestWatched
+local RemoveQuestWatch = RemoveQuestWatch
+local GetNumQuestLeaderBoards = GetNumQuestLeaderBoards
+local GetQuestLogLeaderBoard = GetQuestLogLeaderBoard
+local SendChatMessage = SendChatMessage
+local IsInGroup, IsInRaid, LE_PARTY_CATEGORY_HOME, LE_PARTY_CATEGORY_INSTANCE, UnitInParty, UnitInRaid = IsInGroup, IsInRaid, LE_PARTY_CATEGORY_HOME, LE_PARTY_CATEGORY_INSTANCE, UnitInParty, UnitInRaid
+local find, pairs = string.find, pairs
+
 local QN_Locale   = {
 	["Colon"]       = ":",
 	["Quest"]       = "Quest",
@@ -59,7 +69,7 @@ local function RScanQuests()
 				Header   =qisHeader,    -- boolean
 				Collapsed=qisCollapsed, -- boolean
 				Complete =qisComplete,  -- Integer
-				Daily    =frequency,     -- Integer
+				Daily    =0, --frequency,     -- Integer
 				QuestID  =qID,          -- Integer
 				Link     =qLink
 			}
@@ -71,7 +81,7 @@ local function RScanQuests()
 			for i=1,GetNumQuestLeaderBoards(qIndex) do
 				local leaderboardTxt, itemType, isDone = GetQuestLogLeaderBoard (i,qIndex);
 			--	local j, k, itemName, numItems, numNeeded = string.find(leaderboardTxt, "(.*)"..splitdot.."%s*([%d]+)%s*/%s*([%d]+)");
-				local _, _, numItems, numNeeded, itemName = string.find(leaderboardTxt, "(%d+)/(%d+) ?(.*)")
+				local _, _, numItems, numNeeded, itemName = find(leaderboardTxt, "(%d+)/(%d+) ?(.*)")
 			--	local numstr, itemName = strsplit(" ", leaderboardTxt)
 			--	local numItems, numNeeded = strsplit("/", numstr)
 				-- print(qID,qTitle,qLevel,qTag,qGroup,qisHeader,qisCollapsed,qisComplete,qisDaily,leaderboardTxt,itemType,isDone,j,k,itemName,numItems,numNeeded)

@@ -4,10 +4,13 @@ assert(oUF, 'oUF not loaded')
 
 local trinketSpells = {
 	[208683] = 120,
+	[214027] = 60,
+	[59752] = 30,
+	
 	[195710] = 180,
 	[59752] = 120,
 	[42292] = 120,
-	[7744] = 45,
+	[7744] = 30,
 }
 
 local GetTrinketIcon = function(unit)

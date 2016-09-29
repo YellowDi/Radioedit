@@ -129,9 +129,9 @@ local lodFrames = {
   -- New frames in MoP
   Blizzard_Collections = { ["CollectionsJournal"] = false },
   Blizzard_BlackMarketUI = { ["BlackMarketFrame"] = false }, -- UNTESTED
-  Blizzard_ChallengesUI = { ["ChallengesLeaderboardFrame"] = false }, -- UNTESTED
+  Blizzard_ChallengesUI = { ["ChallengesLeaderboardFrame"] = false, ["ChallengesKeystoneFrame"] = false }, -- UNTESTED
   Blizzard_ItemUpgradeUI = { ["ItemUpgradeFrame"] = false, }, -- UNTESTED
-  
+
   -- New frames in WOD
   Blizzard_GarrisonUI = {
 	["GarrisonLandingPage"] = false,

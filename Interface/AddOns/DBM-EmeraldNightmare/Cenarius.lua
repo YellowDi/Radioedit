@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod(1750, "DBM-EmeraldNightmare", nil, 768)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 15254 $"):sub(12, -3))
+mod:SetRevision(("$Revision: 15279 $"):sub(12, -3))
 mod:SetCreatureID(104636)
 mod:SetEncounterID(1877)
 mod:SetZone()
@@ -27,22 +27,20 @@ mod:RegisterEventsInCombat(
 --TODO, see if destructive Nightmares has a fixate of sorts to warn one being chased by bad whisps
 --TODO, evaluate stomp and need of timer/etc
 --TODO, Further assess thorns. it doesn't need warnings at all if adds never tanked near boss in first place
---TODO, figure out good voice for specWarnCreepingNightmares. "clear stacks"?
 --Cenarius
 local warnNightmareBrambles			= mod:NewTargetAnnounce(210290, 2)
 local warnBeastsOfNightmare			= mod:NewSpellAnnounce(214876, 2)--Generic for now, figure out what to do with later.
 local warnPhase2					= mod:NewPhaseAnnounce(2, 2)
 ----Forces of Nightmare
-local warnDesiccatingStomp			= mod:NewCastAnnounce(211073, 3, nil, nil, "Melee")--Basic warning for now, will change to special if needed
+local warnDesiccatingStomp			= mod:NewCastAnnounce(211073, 3, nil, nil, true, 2)--Basic warning for now, will change to special if needed
 local warnRottenBreath				= mod:NewTargetAnnounce(211192, 2)
 local warnScornedTouch				= mod:NewTargetAnnounce(211471, 3)
 --Malfurion Stormrage
 local warnCleansingGround			= mod:NewCastAnnounce(212630, 1)
 
 --Cenarius
-local specWarnCreepingNightmares	= mod:NewSpecialWarningStack(210279, nil, 20, nil, 1)--Stack warning subject to tuning
-local specWarnNightmareBrambles		= mod:NewSpecialWarningRun(210290, nil, nil, nil, 1, 2)
-local yellNightmareBrambles			= mod:NewYell(210290)
+local specWarnCreepingNightmares	= mod:NewSpecialWarningStack(210279, nil, 20, nil, 1, 6)--Stack warning subject to tuning
+local yellNightmareBrambles			= mod:NewYell(210290, L.BrambleYell)
 local specWarnNightmareBramblesNear	= mod:NewSpecialWarningClose(210290, nil, nil, nil, 1, 2)
 --local specWarnDreadThorns			= mod:NewSpecialWarningMoveAway(210346, "Tank", nil, nil, 1, 2)--Move away warning? Have to move away from other adds
 local specWarnNightmareBlast		= mod:NewSpecialWarningDefensive(213162, nil, nil, nil, 1, 2)
@@ -69,7 +67,7 @@ local timerEntanglingNightmareCD	= mod:NewNextTimer(51, 214505, nil, nil, nil, 1
 ----Malfurion
 local timerCleansingGroundCD		= mod:NewNextTimer(77, 214249, nil, nil, nil, 3)--Phase 2 version only for now. Not sure if cast more than once though?
 ----Forces of Nightmare
-local timerTouchofLifeCD			= mod:NewCDTimer(12, 211368, nil, nil, nil, 4, nil, DBM_CORE_INTERRUPT_ICON)--increased to 15?
+local timerTouchofLifeCD			= mod:NewCDTimer(15, 211368, nil, nil, nil, 4, nil, DBM_CORE_INTERRUPT_ICON)
 local timerRottenBreathCD			= mod:NewCDTimer(25, 211192, nil, nil, nil, 3)
 
 --Cenarius
@@ -78,6 +76,7 @@ local countdownNightmareBrambles	= mod:NewCountdown("Alt30", 210290, "Ranged")--
 ----Forces of Nightmare
 
 --Cenarius
+local voiceCreepingNightmares		= mod:NewVoice(210279)--stackhigh
 local voiceNightmareBrambles		= mod:NewVoice(210290)--runout/watchstep
 local voicePhaseChange				= mod:NewVoice(nil, nil, DBM_CORE_AUTO_VOICE2_OPTION_TEXT)
 --local voiceDreadThorns				= mod:NewVoice(210346, "Tank")--bossout
@@ -121,8 +120,7 @@ function mod:OnCombatStart(delay)
 		timerNightmareBlastCD:Start(31.2-delay)
 	end
 	if not self.Options.AlertedBramble then
-		DBM:AddMsg("Note: DBM cannot detect who is actually fixated by Bramble (no mod can, Blizzard has assured this). It does, however, detect who the initial target is for the SPAWN. Boss picks player, throws it at that player (dbm does detect correct player for this and notifies them and those near them to move away from spawn point at least). After this, it picks someone that may or may not be the target he threw it at (likely by proximity)")
-		self.Options.AlertedBramble = true
+		DBM:AddMsg(L.BrambleMessage)
 	end
 end
 
@@ -132,6 +130,10 @@ function mod:OnCombatEnd()
 	end
 	if self.Options.HudMapOnBreath then
 		DBMHudMap:Disable()
+	end
+	if not self.Options.AlertedBramble then
+		DBM:AddMsg(L.BrambleMessage)
+		self.Options.AlertedBramble = true
 	end
 end
 
@@ -185,7 +187,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 	if spellId == 214876 then
 		warnBeastsOfNightmare:Show()
 		timerBeastsOfNightmareCD:Start()
-	elseif spellId == 214529 then
+	elseif spellId == 214529 and not args:IsPlayer() then
 		if self:GetNumAliveTanks() >= 3 and not self:CheckNearby(21, args.destName) then return end--You are not near current tank, you're probably 3rd tank on Doom Guards that never taunts massive blast
 		specWarnSpearOfNightmaresOther:Show(args.destName)
 		voiceSpearOfNightmares:Play("tauntboss")
@@ -214,6 +216,7 @@ function mod:SPELL_AURA_APPLIED_DOSE(args)
 		if amount % 5 == 0 then--Every 5
 			if amount >= 20 then--Starting at 20
 				specWarnCreepingNightmares:Show(amount)
+				voiceCreepingNightmares:Play("stackhigh")
 			end
 		end
 	end
@@ -246,7 +249,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, _, spellGUID)
 		if not UnitExists(uId.."target") then return end--Blizzard decided to go even further out of way to break this detection, if this happens we don't want nil errors for users.
 		local targetName = DBM:GetUnitFullName(uId.."target")
 		if UnitIsUnit("player", uId.."target") then
-			specWarnNightmareBrambles:Show()
+			specWarnNightmareBramblesNear:Show(YOU)
 			yellNightmareBrambles:Yell()
 			voiceNightmareBrambles:Play("runout")
 		elseif self:CheckNearby(8, targetName) then

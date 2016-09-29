@@ -1986,6 +1986,8 @@ end
 
 --singleFunc
 do
+	L['GottaGoFast'] = true;
+	L['Show GottaGoFast Option'] = true;
 	L["WorldQuestTracker"] = true;
 	L['singleFunc'] = 'single addons manager';
 	L['singleFunc desc'] = 'can on/off addon';

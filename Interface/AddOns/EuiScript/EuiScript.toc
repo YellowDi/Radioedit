@@ -4,7 +4,7 @@
 ## Title-zhTW: |cffC495DDEUI|r增強功能
 ## Author: eui.cc
 ## X-Category: ElvUI
-## Version: 20160923A
+## Version: 20160928A
 ## SavedVariables: ACHIEVEMENTSEARCH_DB, TalentSetManager_Options, DejaCharacterStatsDB
 ## SavedVariablesPerCharacter: TalentSetManager_Saves, DejaCharacterStatsDBPC
 ## RequiredDeps: ElvUI

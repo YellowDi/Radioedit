@@ -23,6 +23,7 @@ local temToggle = {
 	["GearStatsSummary"] = true,
 	["Mapster"] = true,
 	["WorldQuestTracker"] = true,
+	["GottaGoFast"] = true,
 }
 for k, v in pairs(temToggle) do
 	temToggle[k] = IsAddOnLoaded(k)
@@ -444,6 +445,29 @@ E.Options.args.singleFunc = {
 			name = L["WorldQuestTracker"],
 			desc = L["Enable/Disable"]..L["WorldQuestTracker"],
 			disabled = function() return not E:IsConfigurableAddOn('WorldQuestTracker'); end,
+		},
+		GottaGoFastHeader = {
+			order = 77,
+			type = "header",
+			name = L['GottaGoFast'],
+		},		
+		GottaGoFast = {
+			order = 78,
+			type = 'toggle',
+			name = L["GottaGoFast"],
+			desc = L["Enable/Disable"]..L["GottaGoFast"],
+			disabled = function() return not E:IsConfigurableAddOn('GottaGoFast'); end,
+		},
+		GottaGoFastConfig = {
+			order = 79,
+			type = 'execute',
+			name = L['Show GottaGoFast Option'],
+			disabled = function() return not IsAddOnLoaded('GottaGoFast'); end,
+			func = function()
+				InterfaceOptionsFrame_OpenToCategory(GottaGoFast.optionsFrame);
+				InterfaceOptionsFrame_OpenToCategory(GottaGoFast.optionsFrame);
+				E:ToggleConfig();
+			end,
 		},
 	},
 }

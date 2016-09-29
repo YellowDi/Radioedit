@@ -2174,6 +2174,8 @@ end
 
 --singleFunc
 do
+	L['GottaGoFast'] = "大秘境計時";
+	L['Show GottaGoFast Option'] = "顯示大秘境計時設置";
 	L["WorldQuestTracker"] = "世界任務追蹤"
 	L['singleFunc'] = '單體插件管理';
 	L['singleFunc desc'] = '集中管理、自動更新、按需加載、設置方便';

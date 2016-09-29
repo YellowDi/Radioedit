@@ -40,6 +40,10 @@ local function PraseItemSet(text)
 end
 
 local function ScanItemTooltip(itemLink)
+	if not itemLink then
+		return 0, 0, 0, 0
+	end
+
 	tip:SetOwner(UIParent, "ANCHOR_NONE")
 	for i = 1,4 do
 		if _G[ tip:GetName() .."Texture"..i] then

@@ -1,14 +1,5 @@
 local GNOME, _ = ...
 
-GSTRStaticKey = "KEY"
-GSTRStaticHash = "HASH"
-GSTRStaticShadow = "SHADOW"
-
-GSAvailableLanguages = {}
-GSAvailableLanguages[GSTRStaticKey] = {}
-GSAvailableLanguages[GSTRStaticHash] = {}
-GSAvailableLanguages[GSTRStaticShadow] = {}
-
 GSAvailableLanguages[GSTRStaticKey]["enUS"] = {
 	[17] = "Power Word: Shield",
 	[53] = "Backstab",
@@ -1154,6 +1145,7 @@ GSAvailableLanguages[GSTRStaticKey]["enUS"] = {
 	[108273] = "Windwalk Totem",
 	[108280] = "Healing Tide Totem",
 	[108839] = "Ice Floes",
+	[108416] = "Dark Pact",
 	[108442] = "Lavaburst",
 	[108978] = "Alter Time",
 	[109304] = "Exhilaration",
@@ -1695,6 +1687,7 @@ GSAvailableLanguages[GSTRStaticKey]["enUS"] = {
 	[207311] = "Clawing Shadows",
 	[207317] = "Epidemic",
 	[207343] = "Aldrachi Design",
+	[207349] = "Dark Arbiter",
 	[207387] = "Painbringer",
 	[207399] = "Ancestral Protection Totem",
 	[207407] = "Soul Carver",
@@ -1737,6 +1730,7 @@ GSAvailableLanguages[GSTRStaticKey]["enUS"] = {
 	[210726] = "Mark of Aluneth",
 	[210984] = "Eye of Fate",
 	[211048] = "Chaos Blades",
+	[211053] = "Fel Barrage",
 	[211073] = "Desiccating Stomp",
 	[211619] = "Replenishing Roots",
 	[211714] = "Thal'kiel's Consumption",
@@ -1833,6 +1827,7 @@ GSAvailableLanguages[GSTRStaticKey]["enUS"] = {
 	[217814] = "Retrieving Fu Zan",
 	[218256] = "Empower Wards",
 	[218281] = "Shield of Blood",
+	[218679] = "Spirit Bomb",
 	[218713] = "Siphoned Power",
 	[218838] = "Arcane Eclipse",
 	[219091] = "Stonebolt",

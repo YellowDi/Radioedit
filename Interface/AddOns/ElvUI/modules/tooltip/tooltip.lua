@@ -995,7 +995,7 @@ function TT:Initialize()
 	self:HookScript(GameTooltip, 'OnTooltipSetItem', 'GameTooltip_OnTooltipSetItem')
 	self:HookScript(GameTooltip, 'OnTooltipSetUnit', 'GameTooltip_OnTooltipSetUnit')
 	self:HookScript(GameTooltip, "OnSizeChanged", "CheckBackdropColor")
-
+	self:HookScript(GameTooltip, "OnUpdate", "CheckBackdropColor") --There has to be a more elegant way of doing this.
 	self:HookScript(GameTooltipStatusBar, 'OnValueChanged', 'GameTooltipStatusBar_OnValueChanged')
 
 	self:RegisterEvent("MODIFIER_STATE_CHANGED")
@@ -1005,6 +1005,14 @@ function TT:Initialize()
 		self:HookScript(tt, 'OnShow', 'SetStyle')
 		if tt.BackdropFrame then tt.BackdropFrame:Kill() end
 	end
+
+	--World Quest Reward Icon
+	WorldMapTooltip.ItemTooltip.IconBorder:SetAlpha(0)
+	WorldMapTooltip.ItemTooltip.Icon:SetTexCoord(unpack(E.TexCoords))
+	WorldMapTooltip.ItemTooltip:CreateBackdrop()
+	WorldMapTooltip.ItemTooltip.backdrop:SetOutside(WorldMapTooltip.ItemTooltip.Icon)
+	WorldMapTooltip.ItemTooltip.Count:ClearAllPoints()
+	WorldMapTooltip.ItemTooltip.Count:SetPoint("BOTTOMRIGHT", WorldMapTooltip.ItemTooltip.Icon, "BOTTOMRIGHT", 0, 2)
 
 	--Variable is localized at top of file, then set here when we're sure the frame has been created
 	--Used to check if keybinding is active, if so then don't hide tooltips on actionbars

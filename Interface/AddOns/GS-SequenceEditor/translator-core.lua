@@ -1,9 +1,6 @@
 local GNOME = "GS-SequenceTranslator"
 local locale = GetLocale();
-
-
-local language = GSAvailableLanguages
-
+local L = GSL
 
 function GSTRListCachedLanguages()
   t = {}
@@ -98,16 +95,17 @@ function GSTranslateString(instring, fromLocale, toLocale, cleanNewLines)
         elseif strlower(cmd) == "castsequence" then
           GSPrintDebugMessage("attempting to split : " .. etc, GNOME)
           --look for conditionals at the startattack
-          local conditionals, mods, etc = GSTRGetConditionalsFromString(etc)
+          local conditionals, mods, uetc = GSTRGetConditionalsFromString(etc)
           if conditionals then
             output = output ..GSMasterOptions.STANDARDFUNCS .. mods .. GSStaticStringRESET .. " "
           end
-          for _, w in ipairs(GSTRsplit(etc,",")) do
+          for _, w in ipairs(GSTRsplit(uetc,",")) do
             if not cleanNewLines then
               w = string.match(w, "^%s*(.-)%s*$")
             end
             if string.sub(w, 1, 1) == "!" then
               w = string.sub(w, 2)
+              output = output .. "!"
             end
             local foundspell, returnval = GSTRTranslateSpell(w, fromLocale, toLocale, (cleanNewLines and cleanNewLines or false))
             output = output ..  GSMasterOptions.KEYWORD .. returnval .. GSStaticStringRESET .. ", "
@@ -168,19 +166,19 @@ function GSTRTranslateSpell(str, fromLocale, toLocale, cleanNewLines)
       etc = string.match(etc, "^%s*(.-)%s*$")
     end
     etc = string.gsub (etc, "!", "")
-    local foundspell = language[GSTRStaticHash][fromLocale][etc]
+    local foundspell = GSAvailableLanguages[GSTRStaticHash][fromLocale][etc]
     if foundspell then
       GSPrintDebugMessage("Translating Spell ID : " .. foundspell , GNOME )
-      GSPrintDebugMessage(" to " .. (GSisEmpty(language[GSTRStaticKey][toLocale][foundspell]) and " but its not in [GSTRStaticKey][" .. toLocale .. "]" or language[GSTRStaticKey][toLocale][foundspell]) , GNOME)
-      output = output .. GSMasterOptions.KEYWORD .. language[GSTRStaticKey][toLocale][foundspell] .. GSStaticStringRESET
+      GSPrintDebugMessage(" to " .. (GSisEmpty(GSAvailableLanguages[GSTRStaticKey][toLocale][foundspell]) and " but its not in [GSTRStaticKey][" .. toLocale .. "]" or GSAvailableLanguages[GSTRStaticKey][toLocale][foundspell]) , GNOME)
+      output = output .. GSMasterOptions.KEYWORD .. GSAvailableLanguages[GSTRStaticKey][toLocale][foundspell] .. GSStaticStringRESET
       found = true
     else
       GSPrintDebugMessage("Did not find : " .. etc .. " in " .. fromLocale .. " Hash table checking shadow table", GNOME)
       -- try the shadow table
-      local foundspell = language[GSTRStaticShadow][fromLocale][string.lower(etc)]
-      if foundspell then
-		GSPrintDebugMessage("Translating from the shadow table for  Spell ID : " .. foundspell .. " to " .. (language[GSTRStaticKey][toLocale][foundspell] or ""), GNOME) --by eui.cc language[GSTRStaticKey][toLocale][foundspell] = nil
-        output = output  .. GSMasterOptions.KEYWORD .. (language[GSTRStaticKey][toLocale][foundspell] or "") .. GSStaticStringRESET
+      local nfoundspell = GSAvailableLanguages[GSTRStaticShadow][fromLocale][string.lower(etc)]
+      if nfoundspell then
+        GSPrintDebugMessage("Translating from the shadow table for  Spell ID : " .. nfoundspell .. " to " .. GSAvailableLanguages[GSTRStaticKey][toLocale][nfoundspell], GNOME)
+        output = output  .. GSMasterOptions.KEYWORD .. GSAvailableLanguages[GSTRStaticKey][toLocale][nfoundspell] .. GSStaticStringRESET
         found = true
       else
         GSPrintDebugMessage("Did not find : " .. etc .. " in " .. fromLocale, GNOME)

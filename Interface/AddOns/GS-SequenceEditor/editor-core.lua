@@ -1,7 +1,7 @@
 local GNOME,_ = ...
-GSSE = LibStub("AceAddon-3.0"):NewAddon("GSSE", "AceConsole-3.0", "AceEvent-3.0", "AceComm-3.0", "AceSerializer-3.0")
+GSSE = LibStub("AceAddon-3.0"):NewAddon("GSSE", "AceConsole-3.0", "AceEvent-3.0", "AceComm-3.0", "AceSerializer-3.0", "AceTimer-3.0")
 local AceGUI = LibStub("AceGUI-3.0")
-local L = LibStub("AceLocale-3.0"):GetLocale("GS-SE")
+local L = GSL
 local libS = LibStub:GetLibrary("AceSerializer-3.0")
 local libC = LibStub:GetLibrary("LibCompress")
 local libCE = libC:GetAddonEncodeTable()
@@ -9,9 +9,24 @@ local libCE = libC:GetAddonEncodeTable()
 local currentSequence = ""
 local importStr = ""
 local otherversionlistboxvalue = ""
+local frame = AceGUI:Create("Frame")
+local editframe = AceGUI:Create("Frame")
 
 
-GSSequenceEditorLoaded = false
+StaticPopupDialogs["GSSEConfirmReloadUI"] = {
+  text = L["You need to reload the User Interface for the change in StepFunction to take effect.  Would you like to do this now?"],
+  button1 = L["Yes"],
+  button2 = L["No"],
+  OnAccept = function()
+      ReloadUI();
+  end,
+  timeout = 0,
+  whileDead = true,
+  hideOnEscape = true,
+  preferredIndex = 3,  -- avoid some UI taint, see http://www.wowace.com/announcements/how-to-avoid-some-ui-taint/
+}
+
+
 local sequenceboxtext = AceGUI:Create("MultiLineEditBox")
 local remotesequenceboxtext = AceGUI:Create("MultiLineEditBox")
 local boxes = {}
@@ -22,44 +37,6 @@ function GSGetDefaultIcon()
   local currentSpecID = currentSpec and select(1, GetSpecializationInfo(currentSpec)) or ""
   local _, _, _, defaulticon, _, _, _ = GetSpecializationInfoByID(currentSpecID)
   return strsub(defaulticon, 17)
-end
-
-function GSEncodeSequence(Sequence)
-  --clean sequence
-  Sequence = GSTRUnEscapeSequence(Sequence)
-  --remove version and source
-  Sequence.version = nil
-  Sequence.source = GSStaticSourceTransmission
-  Sequence.authorversion = nil
-  Sequence.author = GetUnitName("player", true) .. '@' .. GetRealmName()
-
-
-  local one = libS:Serialize(Sequence)
-  local two = libC:CompressHuffman(one)
-  local final = libCE:Encode(two)
-  return final
-end
-
-function GSDecodeSequence(data)
-  -- Decode the compressed data
-  local one = libCE:Decode(data)
-
-  --Decompress the decoded data
-  local two, message = libC:Decompress(one)
-  if(not two) then
-  	GSPrintDebugMessage ("YourAddon: error decompressing: " .. message, "GS-Transmission")
-  	return
-  end
-
-  -- Deserialize the decompressed data
-  local success, final = libS:Deserialize(two)
-  if (not success) then
-  	GSPrintDebugMessage ("YourAddon: error deserializing " .. final, "GS-Transmission")
-  	return
-  end
-
-  GSPrintDebugMessage ("final data: " .. final, "GS-Transmission")
-  return final
 end
 
 function GSSE:parsetext(editbox)
@@ -123,6 +100,17 @@ function GSSE:DisableSequence(currentSeq)
   sequencebox:SetText(GSExportSequencebySeq(GSTranslateSequenceFromTo(GSMasterOptions.SequenceLibrary[currentSeq][GSGetActiveSequenceVersion(currentSeq)], (GSisEmpty(GSMasterOptions.SequenceLibrary[currentSeq][GSGetActiveSequenceVersion(currentSeq)].lang) and "enUS" or GSMasterOptions.SequenceLibrary[currentSeq][GSGetActiveSequenceVersion(currentSeq)].lang), GetLocale()), currentSeq))
 end
 
+local editOptionsbutton = AceGUI:Create("Button")
+editOptionsbutton:SetText(L["Options"])
+editOptionsbutton:SetWidth(250)
+editOptionsbutton:SetCallback("OnClick", function() GSSE:OptionsGuiDebugView() end)
+
+local transbutton = AceGUI:Create("Button")
+transbutton:SetText(L["Send"])
+transbutton:SetWidth(150)
+transbutton:SetCallback("OnClick", function() GSShowTransmissionGui(currentSequence) end)
+
+
 -- Create functions for tabs
 function GSSE:drawstandardwindow(container)
   sequencebox = AceGUI:Create("MultiLineEditBox")
@@ -132,6 +120,7 @@ function GSSE:drawstandardwindow(container)
   sequencebox:SetFullWidth(true)
   sequencebox:SetText(sequenceboxtext:GetText())
   sequencebox:SetCallback("OnEnter", function() sequencebox:HighlightText(0, string.len(sequencebox:GetText())) end)
+
   container:AddChild(sequencebox)
 
   local buttonGroup = AceGUI:Create("SimpleGroup")
@@ -156,6 +145,12 @@ function GSSE:drawstandardwindow(container)
   impbutton:SetCallback("OnClick", function() importStr = sequenceboxtext:GetText(); GSSE:importSequence() end)
   buttonGroup:AddChild(impbutton)
 
+  local tranbutton = AceGUI:Create("Button")
+  tranbutton:SetText(L["Send"])
+  tranbutton:SetWidth(150)
+  tranbutton:SetCallback("OnClick", function() GSShowTransmissionGui(currentSequence) end)
+  buttonGroup:AddChild(tranbutton)
+
   local versbutton = AceGUI:Create("Button")
   versbutton:SetText(L["Manage Versions"])
   versbutton:SetWidth(150)
@@ -168,6 +163,12 @@ function GSSE:drawstandardwindow(container)
   disableSeqbutton:SetCallback("OnClick", function() GSSE:DisableSequence(currentSequence) end)
   buttonGroup:AddChild(disableSeqbutton)
 
+  local eOptionsbutton = AceGUI:Create("Button")
+  eOptionsbutton:SetText(L["Options"])
+  eOptionsbutton:SetWidth(150)
+  eOptionsbutton:SetCallback("OnClick", function() GSSE:OptionsGuiDebugView() end)
+  buttonGroup:AddChild(eOptionsbutton)
+
   container:AddChild(buttonGroup)
 
   sequenceboxtext = sequencebox
@@ -177,7 +178,7 @@ function GSSE:drawsecondarywindow(container)
   local languages = GSTRListCachedLanguages()
   local listbox = AceGUI:Create("Dropdown")
   listbox:SetLabel(L["Choose Language"])
-  listbox:SetWidth(250)
+  listbox:SetWidth(150)
   listbox:SetList(languages)
   listbox:SetCallback("OnValueChanged", function (obj,event,key) GSSE:loadTranslatedSequence(GSTRListCachedLanguages()[key]) end)
   container:AddChild(listbox)
@@ -210,19 +211,20 @@ end
 -- function that draws the widgets for the first tab
 
 
-local frame = AceGUI:Create("Frame")
+
 local curentSequence
 frame:SetTitle(L["Sequence Viewer"])
 frame:SetStatusText(L["Gnome Sequencer: Sequence Viewer"])
 frame:SetCallback("OnClose", function(widget) frame:Hide() end)
 frame:SetLayout("List")
+GSSE.viewframe = frame
+GSSE.editframe = editframe
 
 local btn = AceGUI:Create("Button") --by eui.cc
 btn:SetWidth(120)
 btn:SetText(CLOSE)
 btn:SetCallback("OnClick", function() GSSE:GSSlash("hide") end)
 frame:AddChild(btn)
-
 GSSequenceListbox = AceGUI:Create("Dropdown")
 GSSequenceListbox:SetLabel(L["Load Sequence"])
 GSSequenceListbox:SetWidth(250)
@@ -249,7 +251,7 @@ end
 
 -------------end viewer-------------
 -------------begin editor--------------------
-local editframe = AceGUI:Create("Frame")
+
 local stepvalue
 
 local headerGroup = AceGUI:Create("SimpleGroup")
@@ -261,16 +263,20 @@ local firstheadercolumn = AceGUI:Create("SimpleGroup")
 firstheadercolumn:SetLayout("List")
 
 editframe:SetTitle(L["Sequence Editor"])
-editframe:SetStatusText(L["Gnome Sequencer: Sequence Editor. Press the Close button to Save -->"])
-editframe:SetCallback("OnClose", function() GSSE:UpdateSequenceDefinition(currentSequence, GSSequenceEditorLoaded) end)
+--editframe:SetStatusText(L["Gnome Sequencer: Sequence Editor."])
+editframe:SetCallback("OnClose", function (self) editframe:Hide();  frame:Show(); end)
 editframe:SetLayout("List")
+
 
 local nameeditbox = AceGUI:Create("EditBox")
 nameeditbox:SetLabel(L["Sequence Name"])
 nameeditbox:SetWidth(250)
 nameeditbox:SetCallback("OnTextChanged", function(self) currentSequence = self:GetText(); end)
 nameeditbox:DisableButton( true)
+
+
 firstheadercolumn:AddChild(nameeditbox)
+
 
 local stepdropdown = AceGUI:Create("Dropdown")
 stepdropdown:SetLabel(L["Step Function"])
@@ -284,6 +290,13 @@ stepdropdown:SetList({
 stepdropdown:SetCallback("OnValueChanged", function (obj,event,key) stepvalue = key;  end)
 firstheadercolumn:AddChild(stepdropdown)
 
+headerGroup:AddChild(firstheadercolumn)
+
+local middleColumn = AceGUI:Create("SimpleGroup")
+middleColumn:SetWidth(252)
+middleColumn:SetLayout("List")
+
+
 GSSE:getSpecNames()
 
 local speciddropdown = AceGUI:Create("Dropdown")
@@ -292,20 +305,28 @@ speciddropdown:SetWidth(250)
 speciddropdown:SetList(GSSE:getSpecNames())
 speciddropdown:SetCallback("OnValueChanged", function (obj,event,key) specdropdownvalue = key;  end)
 
-headerGroup:AddChild(firstheadercolumn)
+local helpeditbox = AceGUI:Create("EditBox")
+helpeditbox:SetLabel(L["Help Information"])
+helpeditbox:SetWidth(250)
+helpeditbox:DisableButton( true)
+
+middleColumn:AddChild(helpeditbox)
+middleColumn:AddChild(speciddropdown)
+
 
 local iconpicker = AceGUI:Create("Icon")
 --iconpicker:SetImage()
 iconpicker:SetLabel(L["Macro Icon"])
 --iconpicker:OnClick(MacroPopupButton_SelectTexture(editframe:GetID() + (FauxScrollFrame_GetOffset(MacroPopupScrollFrame) * NUM_ICONS_PER_ROW)))
-headerGroup:AddChild(speciddropdown)
+headerGroup:AddChild(middleColumn)
 headerGroup:AddChild(iconpicker)
 editframe:AddChild(headerGroup)
 
 
+
 local premacrobox = AceGUI:Create("MultiLineEditBox")
 premacrobox:SetLabel(L["PreMacro"])
-premacrobox:SetNumLines(3)
+premacrobox:SetNumLines(2)
 premacrobox:DisableButton(true)
 premacrobox:SetFullWidth(true)
 --premacrobox.editBox:SetScript("OnLeave", OnTextChanged)
@@ -316,7 +337,7 @@ premacrobox.editBox:SetScript("OnTextChanged", function () end)
 
 local spellbox = AceGUI:Create("MultiLineEditBox")
 spellbox:SetLabel(L["Sequence"])
-spellbox:SetNumLines(9)
+spellbox:SetNumLines(10)
 spellbox:DisableButton(true)
 spellbox:SetFullWidth(true)
 spellbox.editBox:SetScript( "OnLeave",  function(self) GSSE:parsetext(self) end)
@@ -325,7 +346,7 @@ editframe:AddChild(spellbox)
 
 local postmacrobox = AceGUI:Create("MultiLineEditBox")
 postmacrobox:SetLabel(L["PostMacro"])
-postmacrobox:SetNumLines(3)
+postmacrobox:SetNumLines(2)
 postmacrobox:DisableButton(true)
 postmacrobox:SetFullWidth(true)
 postmacrobox.editBox:SetScript( "OnLeave",  function(self) GSSE:parsetext(self) end)
@@ -333,6 +354,21 @@ postmacrobox.editBox:SetScript("OnTextChanged", function () end)
 
 editframe:AddChild(postmacrobox)
 
+local editButtonGroup = AceGUI:Create("SimpleGroup")
+editButtonGroup:SetFullWidth(true)
+editButtonGroup:SetLayout("Flow")
+
+local savebutton = AceGUI:Create("Button")
+savebutton:SetText(L["Save"])
+savebutton:SetWidth(150)
+savebutton:SetCallback("OnClick", function() GSSE:UpdateSequenceDefinition(currentSequence) end)
+editButtonGroup:AddChild(savebutton)
+
+editButtonGroup:AddChild(transbutton)
+
+
+
+editframe:AddChild(editButtonGroup)
 -------------end editor-----------------
 
 local versionframe = AceGUI:Create("Frame")
@@ -353,17 +389,16 @@ local rightGroup = AceGUI:Create("SimpleGroup")
 rightGroup:SetFullWidth(true)
 rightGroup:SetLayout("List")
 
-
 local activesequencebox = AceGUI:Create("MultiLineEditBox")
 activesequencebox:SetLabel(L["Active Version: "])
-activesequencebox:SetNumLines(11)
+activesequencebox:SetNumLines(10)
 activesequencebox:DisableButton(true)
 activesequencebox:SetFullWidth(true)
 leftGroup:AddChild(activesequencebox)
 
 local otherversionlistbox = AceGUI:Create("Dropdown")
 otherversionlistbox:SetLabel(L["Select Other Version"])
-otherversionlistbox:SetWidth(250)
+otherversionlistbox:SetWidth(150)
 otherversionlistbox:SetCallback("OnValueChanged", function (obj,event,key) GSSE:ChangeOtherSequence(key) end)
 rightGroup:AddChild(otherversionlistbox)
 
@@ -384,13 +419,13 @@ othersequencebuttonGroup:SetLayout("Flow")
 
 local actbutton = AceGUI:Create("Button")
 actbutton:SetText(L["Make Active"])
-actbutton:SetWidth(200)
+actbutton:SetWidth(150)
 actbutton:SetCallback("OnClick", function() GSSE:SetActiveSequence(otherversionlistboxvalue) end)
 othersequencebuttonGroup:AddChild(actbutton)
 
 local delbutton = AceGUI:Create("Button")
 delbutton:SetText(L["Delete Version"])
-delbutton:SetWidth(200)
+delbutton:SetWidth(150)
 delbutton:SetCallback("OnClick", function()
   if not GSisEmpty(otherversionlistboxvalue) then
     GSDeleteSequenceVersion(currentSequence, otherversionlistboxvalue)
@@ -458,9 +493,11 @@ function GSSE:importSequence()
         end
         GSCheckMacroCreated(k)
         newkey = k
+        GSPrint(L["Imported new sequence "] .. k, GNOME)
       end
       GSUpdateSequenceList()
       GSSequenceListbox:SetValue(newkey)
+
     end
   else
     GSPrintDebugMessage (err, GNOME)
@@ -532,6 +569,11 @@ function GSSE:LoadEditor(SequenceName)
       -- we have a starting
       reticon = "Interface\\Icons\\" .. reticon
     end
+    if GSisEmpty(GSMasterOptions.SequenceLibrary[SequenceName][GSGetActiveSequenceVersion(SequenceName)].helpTxt) then
+      helpeditbox:SetText("Talents: " .. GSSE:getCurrentTalents())
+    else
+      helpeditbox:SetText(GSMasterOptions.SequenceLibrary[SequenceName][GSGetActiveSequenceVersion(SequenceName)].helpTxt)
+    end
     iconpicker:SetImage(reticon)
     GSPrintDebugMessage("SequenceName: " .. SequenceName, GNOME)
     speciddropdown:SetValue(GSSpecIDList[GSMasterOptions.SequenceLibrary[SequenceName][GSGetActiveSequenceVersion(SequenceName)].specID])
@@ -540,72 +582,85 @@ function GSSE:LoadEditor(SequenceName)
     GSPrintDebugMessage(L["No Sequence Icon setting to "] , GNOME)
     iconpicker:SetImage("Interface\\Icons\\INV_MISC_QUESTIONMARK")
     currentSequence = ""
+    helpeditbox:SetText("Talents: " .. GSSE:getCurrentTalents())
   end
   frame:Hide()
   editframe:Show()
 
 end
 
-function GSSE:UpdateSequenceDefinition(SequenceName, loaded)
-    --process Lines
-    if loaded then
-      -- Changes have been made so save them
-      if not GSisEmpty(SequenceName) then
-        nextVal = GSGetNextSequenceVersion(currentSequence)
-        local sequence = {}
-        GSSE:lines(sequence, spellbox:GetText())
-        -- update sequence
-        if stepvalue == "2" then
-          sequence.StepFunction = GSStaticPriority
-        else
-          sequence.StepFunction = nil
-        end
-        sequence.PreMacro = premacrobox:GetText()
-        sequence.author = GetUnitName("player", true) .. '@' .. GetRealmName()
-        sequence.source = GSStaticSourceLocal
-        sequence.specID = GSSpecIDHashList[specdropdownvalue]
-        sequence.helpTxt = "Talents: " .. GSSE:getCurrentTalents()
-        if not tonumber(sequence.icon) then
-          sequence.icon = "INV_MISC_QUESTIONMARK"
-        end
-        sequence.PostMacro = postmacrobox:GetText()
-        sequence.version = nextVal
-        GSTRUnEscapeSequence(sequence)
-        if GSisEmpty(GSMasterOptions.SequenceLibrary[SequenceName]) then
-          -- this is new
-          GSAddSequenceToCollection(SequenceName, sequence, nextVal)
-          GSSE:loadSequence(SequenceName)
-          GSCheckMacroCreated(SequenceName)
-          GSUpdateSequence(SequenceName, GSMasterOptions.SequenceLibrary[SequenceName][nextVal])
-          GSUpdateSequenceList()
-          GSSequenceListbox:SetValue(SequenceName)
-        elseif not GSCompareSequence(sequence, GSMasterOptions.SequenceLibrary[SequenceName][GSGetActiveSequenceVersion(SequenceName)] ) then
-          GSAddSequenceToCollection(SequenceName, sequence, nextVal)
-          GSSE:loadSequence(SequenceName)
-          GSCheckMacroCreated(SequenceName)
-          GSUpdateSequence(SequenceName, GSMasterOptions.SequenceLibrary[SequenceName][nextVal])
-        end
-      end
-      editframe:Hide()
-      frame:Show()
+function GSSE:UpdateSequenceDefinition(SequenceName)
+  -- Changes have been made so save them
+  if not GSisEmpty(SequenceName) then
+    nextVal = GSGetNextSequenceVersion(currentSequence)
+    local sequence = {}
+    GSSE:lines(sequence, spellbox:GetText())
+    -- update sequence
+    if stepvalue == "2" then
+      sequence.StepFunction = GSStaticPriority
     else
-      GSSequenceEditorLoaded = true
+      sequence.StepFunction = nil
     end
+    sequence.PreMacro = premacrobox:GetText()
+    sequence.author = GetUnitName("player", true) .. '@' .. GetRealmName()
+    sequence.source = GSStaticSourceLocal
+    sequence.specID = GSSpecIDHashList[specdropdownvalue]
+    sequence.helpTxt = helpeditbox:GetText()
+    if not tonumber(sequence.icon) then
+      sequence.icon = "INV_MISC_QUESTIONMARK"
+    end
+    sequence.PostMacro = postmacrobox:GetText()
+    sequence.version = nextVal
+    GSTRUnEscapeSequence(sequence)
+    if GSisEmpty(GSMasterOptions.SequenceLibrary[SequenceName]) then
+      -- this is new
+      GSPrintDebugMessage(L["Creating New Sequence."], GNOME)
+      GSAddSequenceToCollection(SequenceName, sequence, nextVal)
+      GSSE:loadSequence(SequenceName)
+      GSCheckMacroCreated(SequenceName)
+      GSUpdateSequence(SequenceName, GSMasterOptions.SequenceLibrary[SequenceName][nextVal])
+      GSUpdateSequenceList()
+      GSSequenceListbox:SetValue(SequenceName)
+      GSPrint(L["Sequence Saved as version "] .. nextVal, GNOME)
+    elseif not GSCompareSequence(sequence, GSMasterOptions.SequenceLibrary[SequenceName][GSGetActiveSequenceVersion(SequenceName)] ) then
+      GSPrintDebugMessage(L["Updating due to new version."], GNOME)
+      local compStep = GSMasterOptions.SequenceLibrary[SequenceName][GSGetActiveSequenceVersion(SequenceName)].StepFunction
+      GSAddSequenceToCollection(SequenceName, sequence, nextVal)
+      GSSE:loadSequence(SequenceName)
+      GSCheckMacroCreated(SequenceName)
+      if sequence.StepFunction == compStep then
+        GSUpdateSequence(SequenceName, GSMasterOptions.SequenceLibrary[SequenceName][nextVal])
+      else
+        GSPrepareLogout(false)
+        StaticPopup_Show ("GSSEConfirmReloadUI")
+      end
+      GSPrint(L["Sequence Saved as version "] .. nextVal, GNOME)
+    end
+
+  end
+end
+
+function GSGuiShowViewer()
+  if not InCombatLockdown() then
+    local names = GSSE:getSequenceNames()
+    GSSequenceListbox:SetList(names)
+    frame:Show()
+  else
+    GSPrint(L["Please wait till you have left combat before using the Sequence Editor."], GNOME)
+  end
+
 end
 
 function GSSE:GSSlash(input)
     if input == "hide" then
       frame:Hide()
+    elseif input == "debug" then
+      GSShowDebugWindow()
     else
-      if not InCombatLockdown() then
-        local names = GSSE:getSequenceNames()
-        GSSequenceListbox:SetList(names)
-        frame:Show()
-      else
-        GSPrint(L["Please wait till you have left combat before using the Sequence Editor."], GNOME)
-      end
+      GSGuiShowViewer()
     end
 end
+
 
 
 function GSSE:OnInitialize()

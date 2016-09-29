@@ -43,7 +43,7 @@ L:SetOptionLocalization({
 })
 
 L:SetMiscLocalization({
-	SoakersText		=	"Soakers Assigned: %s"
+	SoakersText			= "Soakers Assigned: %s"
 })
 
 ---------------------------
@@ -56,10 +56,19 @@ L= DBM:GetModLocalization(1704)
 ------------------
 L= DBM:GetModLocalization(1750)
 
+L:SetMiscLocalization({
+	BrambleYell			= "Brambles NEAR " .. UnitName("player") .. "!",
+	BrambleMessage		= "Note: DBM can't detect who is actually FIXATED by Bramble. It does, however, warn who the initial target is for the SPAWN. Boss picks player, throws it them. After this, bramble picks ANOTHER target mods can't detect"
+})
+
 ------------------
 -- Xavius --
 ------------------
 L= DBM:GetModLocalization(1726)
+
+L:SetOptionLocalization({
+	InfoFrameFilterDream	= "Filter players who are affected by $spell:206005 from the InfoFrame"
+})
 
 -------------
 --  Trash  --

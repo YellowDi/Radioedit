@@ -4,7 +4,7 @@
 ## Title-zhTW: |cffC495DDEUI|r要塞職業大廳增強包
 ## Author: eui.cc
 ## X-Category: ElvUI
-## Version: 20160921A
+## Version: 20160928A
 ## Dependencies: ElvUI
 ## X-Revision: ElvUI
 ## LoadOnDemand: 1 

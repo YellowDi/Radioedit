@@ -7,7 +7,7 @@
 ## Version: v1.3 Legion 7.0.3
 ## RequiredDeps: GS-Core
 ## LoadOnDemand: 1
-## X-Curse-Packaged-Version: r20160911064545
+## X-Curse-Packaged-Version: r20160927120114
 ## X-Curse-Project-Name: GnomeSequencer - Enhanced : Advanced Macros
 ## X-Curse-Project-ID: gnomesequencer-enhanced
 ## X-Curse-Repository-ID: wow/gnomesequencer-enhanced/mainline
