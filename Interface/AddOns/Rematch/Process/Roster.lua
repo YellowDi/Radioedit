@@ -53,13 +53,39 @@ function rematch:UpdateRoster()
 	rematch:StartTimer("RosterUpdate",0,rematch.UpdateUI)
 end
 
--- Just about everything that changes pets (added/removed, renamed, stoned for level/rarity, etc)
--- triggers PET_JOURNAL_LIST_UPDATE. On a cold login, this event fires once with filled-in info.
--- On a reload, this event fires twice, first with 0 owned, then filled-in info.
--- There's quite a delay before a cold login event fires; run this at PLAYER_LOGIN too?
+--[[ PET_JOURNAL_LIST_UPDATE
+
+	Just about everything that changes pets (added/removed, renamed, stoned for level/rarity, etc)
+	triggers this event.
+
+	As of 7.0.3:
+
+	On a cold login if this fires once:
+	1: numPets is valid, numOwned is valid, not sure on first loadout (not observed lately)
+
+	On a cold login if this fires twice:
+	1: numPets is 0, numOwned is 0, first loadout is nil
+	2: numPets is valid, numOwned is valid, first loadout is valid
+
+	On a /reload if this fires once (first /reload after a cold login):
+	1: numPets is valid, numOwned is valid, first loadout is valid
+
+	On a /reload if this fires twice:
+	1: numPets is 0, numOwned is valid, first loadout is nil (pets are not properly loaded!)
+	2: numPets is valid, numOwned is valid, first loadout is valid
+
+	Notes:
+	- numPets,numOwned are the returns of C_PetJournal.GetNumPets()
+	- numPets can be 0 and still be valid! When the default journal has all pets filtered off.
+	- numPets can be 0 and still be valid too! When the user has no pets.
+	- On the first event of a /reload when it fires twice, petIDs are not yet valid.
+	- In the past on a cold login it could take a good while for this event to fire (and it would fire once)
+]]
+
 function roster:PET_JOURNAL_LIST_UPDATE()
 	local numPets,owned = C_PetJournal.GetNumPets()
-	local justLoaded -- will be true if pets just loaded
+	local pet1 = C_PetJournal.GetPetLoadOutInfo(1)
+
 	-- if number of owned pets changed, pets were added/removed; flag for an update to happen
 	if owned ~= roster.ownedPets then
 		roster.ownedPets = owned

@@ -6,7 +6,6 @@ local oUF = ns.oUF or oUF
 
 local SymbiosisName = GetSpellInfo(110309)
 local CleanseName = GetSpellInfo(4987)
-local IsInInstance = IsInInstance
 
 local addon = {}
 ns.oUF_RaidDebuffs = addon
@@ -21,18 +20,21 @@ addon.DebuffData = debuff_data
 
 addon.ShowDispelableDebuff = true
 addon.FilterDispellableDebuff = true
-addon.MatchBySpellName = true
+addon.MatchBySpellName = false
 
 
 addon.priority = 10
 
-local function add(spell, priority)
+local function add(spell, priority, stackThreshold)
 	if addon.MatchBySpellName and type(spell) == 'number' then
 		spell = GetSpellInfo(spell)
 	end
 	
 	if(spell) then
-		debuff_data[spell] = addon.priority + priority
+		debuff_data[spell] = {
+			priority = (addon.priority + priority),
+			stackThreshold = (stackThreshold or 0),
+		}
 	end
 end
 
@@ -42,11 +44,12 @@ function addon:RegisterDebuffs(t)
 			local oldValue = t[spell]
 			t[spell] = {
 				['enable'] = oldValue,
-				['priority'] = 0
+				['priority'] = 0,
+				['stackThreshold'] = 0
 			}
 		else
 			if t[spell].enable then
-				add(spell, t[spell].priority)
+				add(spell, t[spell].priority, t[spell].stackThreshold)
 			end
 		end
 	end
@@ -88,7 +91,7 @@ do
 			['Disease'] = true,
 		},
 		['MAGE'] = {
-			['Curse'] = false,
+			['Curse'] = true,
 		},
 		['DRUID'] = {
 			['Magic'] = false,
@@ -250,12 +253,13 @@ local blackList = {
 
 local function Update(self, event, unit)
 	if unit ~= self.unit then return end
-	local _name, _icon, _count, _dtype, _duration, _endTime, _spellId, _stackThreshold
+	local _name, _icon, _count, _dtype, _duration, _endTime, _spellId
 	local _priority, priority = 0, 0
+	local _stackThreshold = 0
 	
 	--store if the unit its charmed, mind controlled units (Imperial Vizier Zor'lok: Convert)
 	local isCharmed = UnitIsCharmed(unit)		
-	local _, instanceType = IsInInstance();
+	
 	--store if we cand attack that unit, if its so the unit its hostile (Amber-Shaper Un'sok: Reshape Life)
 	local canAttack = UnitCanAttack("player", unit)
 	
@@ -280,28 +284,21 @@ local function Update(self, event, unit)
 				_priority, _name, _icon, _count, _dtype, _duration, _endTime, _spellId = priority, name, icon, count, debuffType, duration, expirationTime, spellId
 			end
 		end
-		
-		priority = debuff_data[addon.MatchBySpellName and name or spellId]
+
+		priority = debuff_data[addon.MatchBySpellName and name or spellId] and debuff_data[addon.MatchBySpellName and name or spellId].priority
 		if priority and not blackList[spellId] and (priority > _priority) then
 			_priority, _name, _icon, _count, _dtype, _duration, _endTime, _spellId = priority, name, icon, count, debuffType, duration, expirationTime, spellId
 		end
 	end
-	
-	local filterName
-	if instanceType == "party" or instanceType == "raid" then
-		filterName= "RaidDebuffs"
-	else
-		filterName = "CCDebuffs"
-	end
-	if ElvUI[1].db.unitframe.units.raid.rdebuffs.useFilter then
-		filterName = ElvUI[1].db.unitframe.units.raid.rdebuffs.useFilter
-	end
-	_stackThreshold = _name and ElvUI[1].global.unitframe['aurafilters'][filterName]['spells'][_name] and ElvUI[1].global.unitframe['aurafilters'][filterName]['spells'][_name].stackThreshold or 0
 
 	if self.RaidDebuffs.forceShow then
 		_spellId = 47540
 		_name, _, _icon = GetSpellInfo(_spellId)
 		_count, _dtype, _duration, _endTime, _stackThreshold = 5, 'Magic', 0, 60, 0
+	end
+
+	if _name then
+		_stackThreshold = debuff_data[addon.MatchBySpellName and _name or _spellId] and debuff_data[addon.MatchBySpellName and _name or _spellId].stackThreshold or _stackThreshold
 	end
 
 	UpdateDebuff(self, _name, _icon, _count, _dtype, _duration, _endTime, _spellId, _stackThreshold)

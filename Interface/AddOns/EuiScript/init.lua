@@ -731,7 +731,7 @@ function S:Initialize()
 	self:RegisterEvent("TRADE_SHOW", "TradeTargetLevel")
 	self:RegisterEvent("TRADE_CLOSED", "TradeTargetLevel")
 
-	if E.db.euiscript.talentSetManager then E:TalentSetManager_Toggle(true) end
+--	if E.db.euiscript.talentSetManager then E:TalentSetManager_Toggle(true) end
 	if E.db.euiscript.CharacterStats then E:ToggleCharacterStats(true) end
 end
 

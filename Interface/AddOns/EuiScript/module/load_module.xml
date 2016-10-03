@@ -75,10 +75,7 @@
 	<Script file="InstanceSpec.lua"/>
 	<Script file="AuraBarsMovers.lua"/>
 	
-	<Script file="TalentSetManager\localization.lua"/>
-	<Script file="TalentSetManager\TalentSetManager.lua"/>
-	<Include file="TalentSetManager\components.xml"/>
-	
 	<Script file="DejaCharacterStats.lua"/>
 	<Script file="EUI_DrTracker.lua"/>
+	<Script file="TalentProfiles.lua"/>
 </Ui>

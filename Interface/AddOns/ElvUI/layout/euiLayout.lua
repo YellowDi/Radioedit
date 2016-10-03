@@ -5,10 +5,11 @@ local function CreateInfobar(name)
 	if not name then return end
 	
 	local f = CreateFrame('Frame', name, E.UIParent)
-	f:SetFrameLevel(2)
 	f:SetTemplate("Default", true)
 --	f:CreateShadow("Default")
-	
+	f:SetFrameLevel(200)
+	f:SetFrameStrata('BACKGROUND')
+
 	return f
 end
 
@@ -16,9 +17,8 @@ function LO:ChangeSize(f, step)
 	local num = 1
 	
 	if step then num = step end
-	
-	local width = E.db.infobar.width * num
-	f:Size(width, E.db.infobar.height)
+
+	f:Size(E.db.infobar.width * num, E.db.infobar.height)
 end
 
 function LO:ChangePositon()

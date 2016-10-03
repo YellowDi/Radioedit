@@ -576,13 +576,13 @@ end
 ElvUF.Tags.Events['name:short'] = 'UNIT_NAME_UPDATE'
 ElvUF.Tags.Methods['name:short'] = function(unit)
 	local name = UnitName(unit)
-	return name ~= nil and E:ShortenString(name, 10) or ''
+	return name ~= nil and E:ShortenString(name, 6) or ''
 end
 
 ElvUF.Tags.Events['name:medium'] = 'UNIT_NAME_UPDATE'
 ElvUF.Tags.Methods['name:medium'] = function(unit)
 	local name = UnitName(unit)
-	return name ~= nil and E:ShortenString(name, 15) or ''
+	return name ~= nil and E:ShortenString(name, 10) or ''
 end
 
 ElvUF.Tags.Events['name:long'] = 'UNIT_NAME_UPDATE'

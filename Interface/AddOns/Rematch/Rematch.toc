@@ -6,7 +6,7 @@
 ## Notes-zhTW: 针对NPC保存组合 自动载入 升级宠系统 日常必备！
 ## Notes-zhCN: 針對NPC保存組合 自動載入 升級寵系統 日常必備！
 ## Author: Gello
-## Version: 4.5.3
+## Version: 4.5.4
 ## SavedVariables: RematchSaved, RematchSettings
 ## Dependencies: ElvUI
 ## X-Revision: ElvUI

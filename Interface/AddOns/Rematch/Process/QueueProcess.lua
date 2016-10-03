@@ -69,7 +69,8 @@ function rematch:ProcessQueue()
 
 	-- if pets not loaded, come back in half a second to try again
 	local numPets,owned = C_PetJournal.GetNumPets()
-	if numPets==0 or owned==0 then
+	local petLoaded = C_PetJournal.GetPetLoadOutInfo(1)
+	if owned==0 or not petLoaded then
 		return -- if pets aren't loaded, then don't do anything yet
 	end
 

@@ -658,7 +658,7 @@ E.Options.args.euiscript = {
 							order = 24,
 							type = 'toggle',
 							name = L["Talent Set Manager"],
-							set = function(info, value) E.db.euiscript.talentSetManager = value; TalentSetManager_Toggle(value); end,
+							set = function(info, value) E.db.euiscript.talentSetManager = value; E:StaticPopup_Show("CONFIG_RL"); end,
 							get = function(info) return E.db.euiscript.talentSetManager; end,
 						},
 						disable_talking = {
