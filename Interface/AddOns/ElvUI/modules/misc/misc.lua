@@ -150,9 +150,9 @@ function M:MERCHANT_CLOSE()
 end
 
 function M:MERCHANT_SHOW()
-	if E.db.general.vendorGrays then
-		C_Timer_After(0.5, VendorGrays)
-	end
+--	if E.db.general.vendorGrays then
+--		C_Timer_After(0.5, VendorGrays)
+--	end
 
 	local autoRepair = E.db.general.autoRepair
 	if IsShiftKeyDown() or autoRepair == 'NONE' or not CanMerchantRepair() then return end

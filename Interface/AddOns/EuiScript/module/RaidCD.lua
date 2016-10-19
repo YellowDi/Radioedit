@@ -256,6 +256,10 @@ function RD:COMBAT_LOG_EVENT_UNFILTERED(...)
 		else
 			return
 		end
+		if raid_spells[tostring(spellId)].enable and raid_spells[tostring(spellId)].cc and not E.db.euiscript.raidcccd then
+			return
+		end
+
 		if eventType == "SPELL_RESURRECT" and not spellId == 61999 then
 			if spellId == 95750 then spellId = 6203 end
 			self:StartTimer(sourceName, spellId)

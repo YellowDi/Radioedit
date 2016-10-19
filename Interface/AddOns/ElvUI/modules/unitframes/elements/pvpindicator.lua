@@ -14,7 +14,6 @@ function UF:Construct_PvPIndicator(frame)
 end
 
 function UF:Configure_PVPIndicator(frame)
-	if not frame.VARIABLES_SET then return end
 	local pvp = frame.PvPText
 	local x, y = self:GetPositionOffset(frame.db.pvp.position)
 	pvp:ClearAllPoints()

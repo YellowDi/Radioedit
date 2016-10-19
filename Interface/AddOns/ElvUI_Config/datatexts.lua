@@ -2,6 +2,22 @@ local E, L, V, P, G = unpack(ElvUI); --Inport: Engine, Locales, PrivateDB, Profi
 local DT = E:GetModule('DataTexts')
 
 local datatexts = {}
+local GetSpecializationInfo = GetSpecializationInfo
+local GetNumEquipmentSets = GetNumEquipmentSets
+local GetEquipmentSetInfo = GetEquipmentSetInfo
+
+local function GetEquipmentList()
+	local num = GetNumEquipmentSets()
+	local list = {['NONE'] = NONE}
+	if num == 0 then return list; end
+	
+	for i = 1, num do
+		local name = GetEquipmentSetInfo(i)
+		list[name] = name;
+	end
+	
+	return list;
+end
 
 function DT:PanelLayoutOptions()
 	for name, _ in pairs(DT.RegisteredDataTexts) do
@@ -140,7 +156,7 @@ E.Options.args.datatexts = {
 								E:GetModule('Layout'):ChangeSize(TopDataTextsBar1);
 								E:GetModule('Layout'):ChangeSize(TopDataTextsBar2);
 								E:GetModule('Layout'):ChangeSize(TopDataTextsBar3, 3);
-								E:GetModule('Layout'):ChangeSize(TopDataTextsBar4, 3);
+								E:GetModule('Layout'):ChangeSize(TopDataTextsBar4, 2);
 								E:GetModule('Layout'):ChangePositon()
 								DT:UpdateAllDimensions()
 							end,
@@ -156,7 +172,7 @@ E.Options.args.datatexts = {
 								E:GetModule('Layout'):ChangeSize(TopDataTextsBar1);
 								E:GetModule('Layout'):ChangeSize(TopDataTextsBar2);
 								E:GetModule('Layout'):ChangeSize(TopDataTextsBar3, 3);
-								E:GetModule('Layout'):ChangeSize(TopDataTextsBar4, 3);
+								E:GetModule('Layout'):ChangeSize(TopDataTextsBar4, 2);
 								E:GetModule('Layout'):ChangePositon()
 								DT:UpdateAllDimensions()
 							end,
@@ -389,6 +405,48 @@ E.Options.args.datatexts = {
 					desc = L["If not set to true then the server time will be displayed instead."],
 					get = function(info) return E.db.datatexts.localtime end,
 					set = function(info, value) E.db.datatexts.localtime = value; DT:LoadDataTexts() end,
+				},
+			},
+		},
+		spec = {
+			order = 130,
+			type = 'group',
+			guiInline = true,
+			name = L['Spec Binding Equipment'],
+			args = {
+				spec1 = {
+					type = 'select',
+					order = 1,
+					name = select(2, GetSpecializationInfo(1)),
+					values = GetEquipmentList,
+					get = function(info, k) return E.db.datatexts.spec1; end,
+					set = function(info, k, v) E.db.datatexts.spec1 = k; end,
+				},
+				spec2 = {
+					type = 'select',
+					order = 2,
+					name = select(2, GetSpecializationInfo(2)),
+					values = GetEquipmentList,
+					get = function(info, k) return E.db.datatexts.spec2; end,
+					set = function(info, k, v) E.db.datatexts.spec2 = k; end,
+				},
+				spec3 = {
+					type = 'select',
+					order = 1,
+					name = select(2, GetSpecializationInfo(3)) or " ",
+					hidden = function() return not GetSpecializationInfo(3) end,
+					values = GetEquipmentList,
+					get = function(info, k) return E.db.datatexts.spec3; end,
+					set = function(info, k, v) E.db.datatexts.spec3 = k; end,
+				},
+				spec4 = {
+					type = 'select',
+					order = 2,
+					name = select(2, GetSpecializationInfo(4)) or " ",
+					hidden = function() return not GetSpecializationInfo(4) end,
+					values = GetEquipmentList,
+					get = function(info, k) return E.db.datatexts.spec4; end,
+					set = function(info, k, v) E.db.datatexts.spec4 = k; end,
 				},
 			},
 		},

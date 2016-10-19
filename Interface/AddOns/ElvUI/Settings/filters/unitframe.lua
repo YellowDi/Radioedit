@@ -387,63 +387,42 @@ G.unitframe.aurafilters['Whitelist'] = {
 G.unitframe.aurafilters['RaidDebuffs'] = {
 	['type'] = 'Whitelist',
 	['spells'] = {
-	-- Legion
+-- Legion
 		--ÄáÉºµÂÀ­
 		[202977] = Defaults(),
-		[204463] = Defaults(),
-		[202977] = Defaults(),
-		[203096] = Defaults(),
 		[203552] = Defaults(),
 		--ÒÁ¸ñÅµË¹@¸¯Ê´Ö®ĞÄ
 		[208931] = Defaults(),
 		[215234] = Defaults(),
-		[210984] = Defaults(),
 		[208689] = Defaults(),
-		[208929] = Defaults(),
-		[215234] = Defaults(),
-		[209469] = Defaults(),
 		--°¬ÀÖÈğÉª
 		[210948] = Defaults(),
 		[210229] = Defaults(),
 		[215582] = Defaults(),
 		[212993] = Defaults(),
 		[215443] = Defaults(),
-		[210850] = Defaults(),
 		[215288] = Defaults(),
-		[210948] = Defaults(),
 		--ÎÚË÷¿Ë
-		[197943] = Defaults(),
 		[197942] = Defaults(),
-		[197980] = Defaults(),
-		[198108] = Defaults(),
-		[198006] = Defaults(),
 		[108109] = Defaults(),
 		[199237] = Defaults(),
 		--ÃÎ÷ÊÖ®Áú
-		[203110] = Defaults(),
 		[203028] = Defaults(),
 		[204122] = Defaults(),
 		[203690] = Defaults(),
-		[203770] = Defaults(5),
 		[203771] = Defaults(),
 		--ÈûÄÉÁôË¹
 		[210346] = Defaults(),
 		[212630] = Defaults(),
-		[210279] = Defaults(),
 		[211368] = Defaults(),
 		[211178] = Defaults(),
-		[212630] = Defaults(),
 		[211180] = Defaults(),
 		--ÈøÎ¬Ë¹
-		[206005] = Defaults(),
-		[206651] = Defaults(),
-		[209158] = Defaults(),
 		[210264] = Defaults(),
-		[208385] = Defaults(),
-		[206005] = Defaults(),
 		[209288] = Defaults(),
 		-- The Nighthold
-		-- Skorpyron
+-- The Nighthold
+	-- Skorpyron
 		[204766] = Defaults(), -- Energy Surge
 		[214718] = Defaults(), -- Acidic Fragments
 		[211801] = Defaults(), -- Volatile Fragments
@@ -475,7 +454,7 @@ G.unitframe.aurafilters['RaidDebuffs'] = {
 		[212494] = Defaults(), -- Annihilated (Main Tank debuff)
 		[212587] = Defaults(), -- Mark of Frost
 		[212531] = Defaults(), -- Mark of Frost (marked)
-		[212530] = Defaults(), -- Replicate: Mark of Frost 
+		[212530] = Defaults(), -- Replicate: Mark of Frost
 		[212647] = Defaults(), -- Frostbitten
 		[212736] = Defaults(), -- Pool of Frost
 		[213085] = Defaults(), -- Frozen Tempest
@@ -569,16 +548,14 @@ G.unitframe.aurafilters['RaidDebuffs'] = {
 		[213124] = Defaults(), -- Venomous Pool
 		[210850] = Defaults(), -- Twisting Shadows
 		[215489] = Defaults(), -- Venomous Pool
+		[218519] = Defaults(), -- Wind Burn (Mythic)
 
 	-- Il'gynoth, Heart of the Corruption
-		[210279] = Defaults(), -- Creeping Nightmares
-		[213162] = Defaults(), -- Nightmare Blast
-		[212681] = Defaults(), -- Cleansed Ground
-		[210315] = Defaults(), -- Nightmare Brambles
-		[211507] = Defaults(), -- Nightmare Javelin
-		[211471] = Defaults(), -- Scorned Touch
+		[208929] = Defaults(), -- Spew Corruption
+		[210984] = Defaults(), -- Eye of Fate
+		[209469] = Defaults(5), -- Touch of Corruption
 		[208697] = Defaults(), -- Mind Flay
-		[215143] = Defaults(), -- Cursed Blood
+		[215143] = Defaults(),  -- Cursed Blood
 
 	-- Ursoc
 		[198108] = Defaults(), -- Unbalanced
@@ -593,12 +570,12 @@ G.unitframe.aurafilters['RaidDebuffs'] = {
 		[203121] = Defaults(), -- Mark of Taerar
 		[203125] = Defaults(), -- Mark of Emeriss
 		[203124] = Defaults(), -- Mark of Lethon
-		[204731] = Defaults(), -- Wasting Dread
-		[203110] = Defaults(), -- Slumbering Nightmare
-		[207681] = Defaults(), -- Nightmare Bloom
-		[205341] = Defaults(), -- Sleeping Fog
+		[204731] = Defaults(5), -- Wasting Dread
+		[203110] = Defaults(5), -- Slumbering Nightmare
+		[207681] = Defaults(5), -- Nightmare Bloom
+		[205341] = Defaults(5), -- Sleeping Fog
 		[203770] = Defaults(5), -- Defiled Vines
-		[203787] = Defaults(), -- Volatile Infection
+		[203787] = Defaults(5), -- Volatile Infection
 
 	-- Cenarius
 		[210279] = Defaults(), -- Creeping Nightmares

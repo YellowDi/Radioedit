@@ -72,6 +72,7 @@ function UF:Construct_PlayerFrame(frame)
 
 	frame.CombatFade = true
 	frame.InfoPanel = self:Construct_InfoPanel(frame)
+	frame.PvP = UF:Construct_PvPIcon(frame)
 	frame.customTexts = {}
 
 	frame:Point('BOTTOMLEFT', E.UIParent, 'BOTTOM', -413, 135) --Set to default position
@@ -193,6 +194,9 @@ function UF:Update_PlayerFrame(frame, db)
 	UF:Configure_SwingBar(frame)
 	--TankShield
 	UF:Configure_TankShield(frame)
+
+	--PvP & Prestige Icon
+	UF:Configure_PVPIcon(frame)
 
 	--CustomTexts
 	UF:Configure_CustomTexts(frame)

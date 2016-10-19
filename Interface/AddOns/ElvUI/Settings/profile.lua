@@ -16,7 +16,7 @@ P['general'] = {
 	['bottomPanel'] = true,
 	['hideErrorFrame'] = true,
 	['enhancedPvpMessages'] = true,
-	['objectiveFrameHeight'] = 520, --by eui.cc
+	['objectiveFrameHeight'] = 620, --by eui.cc
 	['bonusObjectivePosition'] = "LEFT",
 	["talkingHeadFrameScale"] = 0.9,
 
@@ -33,6 +33,13 @@ P['general'] = {
 	['minimap'] = {
 		['size'] = 176,
 		['locationText'] = 'MOUSEOVER',
+		["locationFontSize"] = 12,
+		["locationFontOutline"] = "OUTLINE",
+		["locationFont"] = "EUI",
+		["resetZoom"] = {
+			["enable"] = false,
+			["time"] = 3,
+		},
 		['icons'] = {
 			['classHall'] = {
 				['scale'] = 0.8,
@@ -172,6 +179,7 @@ P['bags'] = {
 	["junkIcon"] = false,
 	['ignoredItems'] = {},
 	['itemLevel'] = true,
+	["useTooltipScanning"] = true,
 	['itemLevelThreshold'] = 1,
 	['itemLevelFont'] = 'EUI',
 	['itemLevelFontSize'] = 10,
@@ -189,6 +197,7 @@ P['bags'] = {
 		['sortDirection'] = 'ASCENDING',
 		['size'] = 30,
 		['spacing'] = 4,
+		["backdropSpacing"] = 4,
 		['showBackdrop'] = false,
 		['mouseover'] = false,
 	},
@@ -247,6 +256,7 @@ P["nameplates"] = {
 			['enable'] = false,
 			["alwaysShow"] = false,
 			["clickthrough"] = false,
+			["combatFade"] = false,
 			['healthbar'] = {
 				['enable'] = true,
 				['height'] = 10,
@@ -914,6 +924,13 @@ P['unitframe'] = {
 				['xOffset'] = 0,
 				['yOffset'] = 0,
 			},
+			["pvpIcon"] = {
+				["enable"] = false,
+				["anchorPoint"] = "CENTER",
+				["xOffset"] = 0,
+				["yOffset"] = 0,
+				["scale"] = 1,
+			},
 			['portrait'] = {
 				['enable'] = false,
 				['width'] = 45,
@@ -1086,6 +1103,13 @@ P['unitframe'] = {
 				['xOffset'] = 0,
 				['yOffset'] = 0,
 				['attachTextTo'] = 'Health',
+			},
+			["pvpIcon"] = {
+				["enable"] = false,
+				["anchorPoint"] = "CENTER",
+				["xOffset"] = 0,
+				["yOffset"] = 0,
+				["scale"] = 1,
 			},
 			['portrait'] = {
 				['enable'] = false,
@@ -2953,6 +2977,8 @@ P["actionbar"] = {
 
 	['globalFadeAlpha'] = 0,
 	["lockActionBars"] = true,
+	["hideCooldownBling"] = false,
+	["useDrawSwipeOnCharges"] = false,
 
 	['bar1'] = {
 		['enabled'] = true,

@@ -16,6 +16,10 @@ assert(ElvUF, "ElvUI was unable to locate oUF.")
 function UF:Construct_AssistFrames(unitGroup)
 	self:SetScript('OnEnter', UnitFrame_OnEnter)
 	self:SetScript('OnLeave', UnitFrame_OnLeave)
+
+	self.RaisedElementParent = CreateFrame('Frame', nil, self)
+	self.RaisedElementParent:SetFrameLevel(self:GetFrameLevel() + 100)
+
 	if E.db["clickset"].enable then  
 		self.ClickSet = E.db["clickset"]
 	end

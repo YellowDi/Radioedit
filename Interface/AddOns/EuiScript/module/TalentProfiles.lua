@@ -391,10 +391,12 @@ function BuildFrame()
     UIDropDownMenu_SetSelectedID(dropdown, 1) -- TODO: select the currently active profile
     UIDropDownMenu_JustifyText(dropdown, "LEFT")
     dropdown:SetPoint("TOPLEFT", TalentProfiles_main, "TOPLEFT", 0, 0)
-	S:HandleDropDownBox(TalentProfiles_profilesDropDown, 125)
-	TalentProfiles_profilesDropDownButton:SetWidth(24)
-	TalentProfiles_profilesDropDownText:ClearAllPoints()
-	TalentProfiles_profilesDropDownText:SetPoint("LEFT", TalentProfiles_profilesDropDownButton,"RIGHT", -60, 0)
+	if E.private.skins.blizzard.enable and E.private.skins.blizzard.talent then
+		S:HandleDropDownBox(TalentProfiles_profilesDropDown, 125)
+		TalentProfiles_profilesDropDownButton:SetWidth(24)
+		TalentProfiles_profilesDropDownText:ClearAllPoints()
+		TalentProfiles_profilesDropDownText:SetPoint("LEFT", TalentProfiles_profilesDropDownButton,"RIGHT", -60, 0)
+	end
     dropdown:Show()
 
     -- Set up the action buttons

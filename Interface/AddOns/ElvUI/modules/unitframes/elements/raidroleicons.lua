@@ -8,7 +8,7 @@ local UF = E:GetModule('UnitFrames');
 local CreateFrame = CreateFrame
 
 function UF:Construct_RaidRoleFrames(frame)
-	local anchor = CreateFrame('Frame', nil, frame)
+	local anchor = CreateFrame('Frame', nil, frame.RaisedElementParent)
 	frame.Leader = anchor:CreateTexture(nil, 'OVERLAY')
 	frame.Assistant = anchor:CreateTexture(nil, 'OVERLAY')
 	frame.MasterLooter = anchor:CreateTexture(nil, 'OVERLAY')
@@ -26,7 +26,6 @@ function UF:Construct_RaidRoleFrames(frame)
 end
 
 function UF:Configure_RaidRoleIcons(frame)
-	if not frame.VARIABLES_SET then return end
 	local raidRoleFrameAnchor = frame.RaidRoleFramesAnchor
 
 	if frame.db.raidRoleIcons.enable then
@@ -53,14 +52,15 @@ end
 
 function UF:RaidRoleUpdate()
 	local anchor = self:GetParent()
-	local leader = anchor:GetParent().Leader
-	local assistant = anchor:GetParent().Assistant
-	local masterLooter = anchor:GetParent().MasterLooter
+	local frame = anchor:GetParent():GetParent()
+	local leader = frame.Leader
+	local assistant = frame.Assistant
+	local masterLooter = frame.MasterLooter
 
 	if not leader or not masterLooter or not assistant then return; end
 
-	local unit = anchor:GetParent().unit
-	local db = anchor:GetParent().db
+	local unit = frame.unit
+	local db = frame.db
 	local isLeader = leader:IsShown()
 	local isMasterLooter = masterLooter:IsShown()
 	local isAssist = assistant:IsShown()

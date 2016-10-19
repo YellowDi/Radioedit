@@ -1,5 +1,5 @@
 -- Mini Dragon(projecteurs@gmail.com)
--- Last update: May 12 2015, 07:49 UTC@14943
+-- Last update: Oct 08 2016, 02:00 UTC@15334
 
 if GetLocale() ~= "zhCN" then return end
 local L
@@ -25,10 +25,11 @@ L:SetMiscLocalization({
 -- Il'gynoth, Heart of Corruption --
 ---------------------------
 L= DBM:GetModLocalization(1738)
+
 L:SetOptionLocalization({
-	InfoFrameBehavior	= "在战斗中显示讯息框架",
-	Fixates				= "显示中了锁定的玩家",
-	Adds				= "显示小怪数量和类型"
+	InfoFrameBehavior	= "设置在战斗过程中信息窗的内容",
+	Fixates				= "显示被锁定的玩家",
+	Adds				= "显示所有小怪计数"
 })
 
 ---------------------------
@@ -36,13 +37,32 @@ L:SetOptionLocalization({
 ---------------------------
 L= DBM:GetModLocalization(1744)
 
+L:SetWarningLocalization({
+	warnWebOfPain		= ">%s< 和 >%s< 相连!",--Only this needs localizing
+	specWarnWebofPain	= "你和 >%s< 相连!"--Only this needs localizing
+})
+
+L:SetOptionLocalization({
+	WebConfiguration	= "设置痛苦之网的箭头及HUD选项",
+	Disabled			= "关闭",
+	Arrow				= "只使用传统的箭头",
+	HudSelf				= "只对你使用HUD连线",
+	HudAll				= "对所有相连目标使用HUD连线"
+})
+
+L:SetMiscLocalization({
+	MapMessage			= "注意: 本mod使用的箭头及HUD能在 /DBM 配置. 7.1后该功能被取缔."
+})
+
 ---------------------------
 -- Ursoc --
 ---------------------------
 L= DBM:GetModLocalization(1667)
+
 L:SetOptionLocalization({
-	NoAutoSoaking2		= "禁用所有专注凝视的自动分伤相关的警告/箭头/HUDs"
+	NoAutoSoaking2		= "关闭所有和专注凝视有关的吃冲击提示"
 })
+
 L:SetMiscLocalization({
 	SoakersText		=	"吃冲击分配: %s"
 })
@@ -56,17 +76,21 @@ L= DBM:GetModLocalization(1704)
 -- Cenarius --
 ------------------
 L= DBM:GetModLocalization(1750)
+
 L:SetMiscLocalization({
-	BrambleYell			= "刺藤在" .. UnitName("player") .. "附近!",
-	BrambleMessage		= "注：DBM无法侦测刺藤锁定谁。警告会提示首领丢出的第一个目标，在这之后不能侦测刺藤锁定其他目标。"
+	BrambleYell			= UnitName("player") .. " 的附近有梦魇荆棘!",
+	BrambleMessage		= "注意: 梦魇荆棘没有战斗记录无法被DBM检测. DBM目前使用的黑科技只能确保显示第一个点名的人. (换其他插件也不行)"
 })
+
 ------------------
 -- Xavius --
 ------------------
 L= DBM:GetModLocalization(1726)
+
 L:SetOptionLocalization({
-	InfoFrameFilterDream	= "在讯息框架过滤中了$spell:206005的玩家"
+	InfoFrameFilterDream	= "在信息窗中过滤到受到 $spell:206005 影响的玩家"
 })
+
 -------------
 --  Trash  --
 -------------

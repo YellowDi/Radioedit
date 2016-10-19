@@ -48,7 +48,7 @@ local function Cooldown_OnUpdate(cd, elapsed)
 	end
 end
 
-function E:Cooldown_OnSizeChanged(cd, width, height)
+function E:Cooldown_OnSizeChanged(cd, width)
 	local fontScale = floor(width +.5) / ICON_SIZE
 	local override = cd:GetParent():GetParent().SizeOverride
 	if override then
@@ -103,7 +103,6 @@ end
 
 function E:OnSetCooldown(start, duration)
 	if(self.noOCC) then return end
-	local button = self:GetParent()
 
 	if start > 0 and duration > MIN_DURATION then
 		local timer = self.timer or E:CreateCooldownTimer(self)
@@ -127,11 +126,6 @@ function E:RegisterCooldown(cooldown)
 	cooldown.noCooldownCount = E.db.general.disableOmnicc
 	cooldown.isHooked = true
 	cooldown:SetHideCountdownNumbers(true)
-	cooldown.SetHideCountdownNumbers = E.noop
-	if E.private.actionbar.hideCooldownBling then
-		cooldown:SetDrawBling(false)
-		cooldown.SetDrawBling = E.noop
-	end
 end
 
 function E:UpdateCooldownSettings()

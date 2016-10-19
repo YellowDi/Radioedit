@@ -7,7 +7,7 @@ local UF = E:GetModule('UnitFrames');
 --WoW API / Variables
 
 function UF:Construct_CombatIndicator(frame)
-	local combat = frame:CreateTexture(nil, "OVERLAY")
+	local combat = frame.RaisedElementParent:CreateTexture(nil, "OVERLAY")
 	combat:Size(19)
 	combat:Point("CENTER", frame.Health, "CENTER", 0,6)
 	combat:SetVertexColor(0.69, 0.31, 0.31)
@@ -16,7 +16,6 @@ function UF:Construct_CombatIndicator(frame)
 end
 
 function UF:Configure_CombatIndicator(frame)
-	if not frame.VARIABLES_SET then return end
 	if frame.db.combatIcon and not frame:IsElementEnabled('Combat') then
 		frame:EnableElement('Combat')
 	elseif not frame.db.combatIcon and frame:IsElementEnabled('Combat') then

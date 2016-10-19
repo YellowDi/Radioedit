@@ -7,13 +7,13 @@ function Profile:OnInitialize()
     local gdb = {
         global = {
             ActivityProfiles = {
-                Voice = nil,
+                Voice     = nil,
                 VoiceSoft = nil,
             },
-            annData = {},
-            serverDatas = {},
-            ignoreHash = {},
-            spamWord = {},
+            annData        = {},
+            serverDatas    = {},
+            ignoreHash     = {},
+            spamWord       = {},
             searchProfiles = {},
         },
     }
@@ -21,12 +21,12 @@ function Profile:OnInitialize()
     local cdb = {
         profile = {
             settings = {
-                storage = { point = 'TOP', x = 0, y = -20},
-                panel = true,
-                panelLock = false,
-                sound = true,
-                ignore = true,
-                spamWord = true,
+                storage      = { point = 'TOP', x = 0, y = -20},
+                panel        = true,
+                panelLock    = false,
+                sound        = true,
+                ignore       = true,
+                spamWord     = true,
             },
             minimap = {
                 minimapPos = 192.68,
@@ -65,12 +65,12 @@ function Profile:SaveActivityProfile(activity)
     self.gdb.global.ActivityProfiles.Voice = activity:GetVoiceChat()
 
     self.gdb.global.ActivityProfiles[activity:GetName()] = {
-        ItemLevel   = activity:GetItemLevel(),
-        Summary     = activity:GetSummary(),
-        MinLevel    = activity:GetMinLevel(),
-        MaxLevel    = activity:GetMaxLevel(),
-        PvPRating   = activity:GetPvPRating(),
-        HonorLevel  = activity:GetHonorLevel(),
+        ItemLevel  = activity:GetItemLevel(),
+        Summary    = activity:GetSummary(),
+        MinLevel   = activity:GetMinLevel(),
+        MaxLevel   = activity:GetMaxLevel(),
+        PvPRating  = activity:GetPvPRating(),
+        HonorLevel = activity:GetHonorLevel(),
     }
 end
 
@@ -348,4 +348,12 @@ end
 
 function Profile:ClearAdvShine()
     self.cdb.profile.advShine = ADDON_VERSION
+end
+
+function Profile:NeedWorldQuestHelp()
+    return not self.cdb.profile.worldQuestHelp
+end
+
+function Profile:ClearWorldQuestHelp()
+    self.cdb.profile.worldQuestHelp = true
 end

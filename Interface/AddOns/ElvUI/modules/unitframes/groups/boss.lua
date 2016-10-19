@@ -22,6 +22,9 @@ function UF:Construct_BossFrames(frame)
 	if E.db["clickset"].enable then  
 		frame.ClickSet = E.db["clickset"]
 	end
+	frame.RaisedElementParent = CreateFrame('Frame', nil, frame)
+	frame.RaisedElementParent:SetFrameLevel(frame:GetFrameLevel() + 100)
+
 	frame.Health = self:Construct_HealthBar(frame, true, true, 'RIGHT')
 
 	frame.Power = self:Construct_PowerBar(frame, true, true, 'LEFT')

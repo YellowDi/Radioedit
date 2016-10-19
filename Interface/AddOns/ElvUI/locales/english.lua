@@ -70,6 +70,7 @@ L["Bars"] = true;
 L["Honor Bar"] = true;
 
 --Minimap
+L["Reset Zoom"] = true;
 L['Always Display'] = true;
 L['Location Text'] = true;
 L["Minimap Buttons"] = true;
@@ -152,6 +153,8 @@ L["Separate Panel Sizes"] = true;
 L["Alerts"] = true;
 
 --ActionBars
+L["Shows a swipe animation when a spell is recharging but still has charges left."] = true;
+L["Use Draw Swipe"] = true;
 L["Zone Ability"] = true;
 L["Color of the actionbutton when not usable."] = true;
 L["Color of the actionbutton when usable."] = true;
@@ -269,6 +272,8 @@ L[ [=[This works like a macro, you can run different situations to get the actio
  Example: '[combat] show;hide']=] ] = true;
 
 --Bags
+L["Use Tooltip Scanning"] = true;
+L["This makes the item level display more reliable but uses more resources. If this is disabled then upgraded items will not show the correct item level."] = true;
 L["Disable Bag Sort"] = true;
 L["Disable Bank Sort"] = true;
 L["Clear Search On Close"] = true;
@@ -1198,8 +1203,10 @@ L["You have changed your UIScale, however you still have the AutoScale option en
 L["You must purchase a bank slot first!"] = true;
 
 --Tooltip
-	L["Inspect Info"] = true;
-	L["Display the players talent spec and item level in the tooltip, this may not immediately update when mousing over a unit."] = true;
+L["Loot Item Level: "] = true;
+L["Weekly Chest Item Level: "] = true;
+L["Inspect Info"] = true;
+L["Display the players talent spec and item level in the tooltip, this may not immediately update when mousing over a unit."] = true;
 L["Header Font Size"] = true;
 L["Comparison Font Size"] = true;
 L["This setting controls the size of text in item comparison tooltips."] = true;
@@ -1294,6 +1301,8 @@ L['You can use the /resetui command to reset all of your movers. You can also us
 L['ABOVE_THREAT_FORMAT'] = '%s: %.0f%% [%.0f%% above |cff%02x%02x%02x%s|r]'
 
 --UnitFrames
+L["PvP & Prestige Icon"] = true;
+L["PvP Text"] = true;
 L["Attach Text To"] = true;
 L["Target Class Icon"] = true;
 L["Player Portrait"] = true;
@@ -1986,8 +1995,8 @@ end
 
 --singleFunc
 do
-	L['GottaGoFast'] = true;
-	L['Show GottaGoFast Option'] = true;
+	L['AngryKeystones'] = true;
+	L['Show AngryKeystones Option'] = true;
 	L["WorldQuestTracker"] = true;
 	L['singleFunc'] = 'single addons manager';
 	L['singleFunc desc'] = 'can on/off addon';
@@ -2070,6 +2079,7 @@ end
 
 --euiscript
 do
+	L["Blz ClassBar"] = true;
 	L["DRTracker"] = true;
 	L["ElvUF_Arena1"] = true;
 	L["ElvUF_Arena2"] = true;
@@ -2315,6 +2325,8 @@ do
 		L["idQuestAutomation_desc"] = true;
 	L["Auto Choise BestValue Item"] = true;
 	L["raidcd"] = true;
+	L["raidcccd"] = true;
+		L["CC Spell"] = true;
 		L["raidcd_width"] = true;
 		L["raidcd_height"] = true;
 		L["raidcd_maxbars"] = true;
@@ -2382,6 +2394,7 @@ end
 
 --Mover
 do
+	L["Zone Ability"] = true;
 	L["MirrorTimer"] = true;
 	L['BodyGuard Frame'] = true;
 	L["Loot / Alert Frames"] = true;

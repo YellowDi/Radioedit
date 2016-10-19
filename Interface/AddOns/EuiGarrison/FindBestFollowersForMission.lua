@@ -7,18 +7,19 @@ local AddFollowerToMission = C_Garrison.AddFollowerToMission
 local After = C_Timer.After
 local C_Garrison = C_Garrison
 local CreateFrame = CreateFrame
+local dump = DevTools_Dump
 local GARRISON_CURRENCY = GARRISON_CURRENCY
 local GARRISON_FOLLOWER_MAX_LEVEL = GARRISON_FOLLOWER_MAX_LEVEL
 local GARRISON_SHIP_OIL_CURRENCY = GARRISON_SHIP_OIL_CURRENCY
 local GarrisonMissionFrame = GarrisonMissionFrame
 local GetFramesRegisteredForEvent = GetFramesRegisteredForEvent
+local GetNumFollowersOnMission = C_Garrison.GetNumFollowersOnMission
 local GetPartyMissionInfo = C_Garrison.GetPartyMissionInfo
 local LE_FOLLOWER_TYPE_GARRISON_6_0 = LE_FOLLOWER_TYPE_GARRISON_6_0
 local LE_FOLLOWER_TYPE_GARRISON_7_0 = LE_FOLLOWER_TYPE_GARRISON_7_0
-local RemoveFollowerFromMission = C_Garrison.RemoveFollowerFromMission
-local dump = DevTools_Dump
 local pairs = pairs
 local print = print
+local RemoveFollowerFromMission = C_Garrison.RemoveFollowerFromMission
 local sfind = string.find
 local tinsert = table.insert
 local tremove = table.remove
@@ -39,6 +40,7 @@ local UnregisterEvent = event_frame.UnregisterEvent
 
 -- will be "table" in 6.2, number before it
 local currencyMultipliers_type
+-- TODO: Fix this, broken for OH
 local class_based_SetClearFollower = GarrisonMissionFrame and GarrisonMissionFrame.AssignFollowerToMission and GarrisonMissionFrame.RemoveFollowerFromMission and true
 
 local top = {{}, {}, {}, {}}
@@ -58,12 +60,13 @@ local function FindBestFollowersForMission(mission, followers, mode)
       wipe(top[idx])
       wipe(top_yield[idx])
       wipe(top_unavailable[idx])
+      top.yield = nil
    end
 
    local type70 = followers.type == LE_FOLLOWER_TYPE_GARRISON_7_0
 
    local slots = mission.numFollowers
-   if slots > followers_count and not type70 then return end
+   if (slots > followers_count and not type70) or addon_env.b then return end
 
    local event_handlers = { GetFramesRegisteredForEvent("GARRISON_FOLLOWER_LIST_UPDATE") }
    -- TODO: this can break everything else if player initiates combat and gets "too slow" before handlers are returned
@@ -78,7 +81,7 @@ local function FindBestFollowersForMission(mission, followers, mode)
       end
    end
 
-   if C_Garrison.GetNumFollowersOnMission(mission_id) > 0 then
+   if GetNumFollowersOnMission(mission_id) > 0 then
       for idx = 1, followers_count do
          RemoveFollowerFromMission(mission_id, followers[idx].followerID)
       end
@@ -152,6 +155,7 @@ local function FindBestFollowersForMission(mission, followers, mode)
       local follower1_level = follower1.isMaxLevel and follower1.iLevel or follower1.level
       local follower1_busy = follower1.is_busy_for_mission and 1 or 0
       local follower1_is_troop = follower1.isTroop and 1 or 0
+      local prev_follower2_troop_spec
       for i2 = min[2] or (i1 + 1), max[2] do
          local follower2_maxed = 0
          local follower2 = followers[i2]
@@ -159,18 +163,24 @@ local function FindBestFollowersForMission(mission, followers, mode)
          local follower2_level = 0
          local follower2_busy = 0
          local follower2_is_troop = 0
+         local follower2_troop_spec
          if follower2 then
             follower2_id = follower2.followerID
             if follower2.levelXP == 0 then follower2_maxed = 1 end
             follower2_level = follower2.isMaxLevel and follower2.iLevel or follower2.level
             if follower2.is_busy_for_mission then follower2_busy = 1 end
-            if follower2.isTroop then follower2_is_troop = 1 end
+            if follower2.isTroop then
+               follower2_is_troop = 1
+               -- Only used to remove "duplicate" teams with different instance of same troop class
+               follower2_troop_spec = follower2.classSpec * (-follower2_busy)
+            end
          end
          -- Special handling to calculate precisely one team for 1 filled slot in 3 members missions.
          local i3_start = min[3] or (i2 + 1)
          if type70 then
             if i2 == followers_count + 1 then i3_start = followers_count + 1 end
          end
+         local prev_follower3_troop_spec
          for i3 = i3_start, max[3] do
             local follower3_maxed = 0
             local follower3 = followers[i3]
@@ -178,15 +188,22 @@ local function FindBestFollowersForMission(mission, followers, mode)
             local follower3_level = 0
             local follower3_busy = 0
             local follower3_is_troop = 0
+            local follower3_troop_spec
             if follower3 then
                follower3_id = follower3.followerID
                if follower3.levelXP == 0 then follower3_maxed = 1 end
                follower3_level = follower3.isMaxLevel and follower3.iLevel or follower3.level
                if follower3.is_busy_for_mission then follower3_busy = 1 end
-               if follower3.isTroop then follower3_is_troop = 1 end
+               if follower3.isTroop then
+                  follower3_is_troop = 1
+                  -- Only used to remove "duplicate" teams with different instance of same troop class
+                  follower3_troop_spec = follower3.classSpec * (-follower3_busy)
+               end
             end
 
             local followers_maxed = follower1_maxed + follower2_maxed + follower3_maxed
+            local followers_troop = follower1_is_troop + follower2_is_troop + follower3_is_troop
+
             -- at least one follower in party is busy (i.e. staus non-empty/non-party) for mission
             local follower_is_busy_for_mission = (follower1_busy + follower2_busy + follower3_busy) > 0
 
@@ -203,7 +220,15 @@ local function FindBestFollowersForMission(mission, followers, mode)
             end
 
             -- Throw away "potential" teams with busy followers if we're just calculating one button for mission list
-            if mode == "mission_list" and follower_is_busy_for_mission then
+            if not skip and (mode == "mission_list" and follower_is_busy_for_mission) then
+               skip = true
+            end
+
+            if not skip and (follower2_is_troop == 1 and follower2_troop_spec == prev_follower2_troop_spec) then
+               skip = true
+            end
+
+            if not skip and (follower3_is_troop == 1 and follower3_troop_spec == prev_follower3_troop_spec) then
                skip = true
             end
 
@@ -288,6 +313,7 @@ local function FindBestFollowersForMission(mission, followers, mode)
 
                         if not prev_top[1] then found = true break end
 
+                        local prev_followers_troop = prev_top.followers_troop
                         local prev_SuccessChance = prev_top.successChance
                         local prev_followers_maxed = prev_top.followers_maxed
 
@@ -430,6 +456,7 @@ local function FindBestFollowersForMission(mission, followers, mode)
                         new.all_followers_maxed = all_followers_maxed_on_mission
                         new.follower_level_total = follower_level_total
                         new.mission_level = mission.level
+                        new.followers_troop = followers_troop
                         tinsert(top_list, idx, new)
                         top_list[5] = nil
                         break
@@ -442,9 +469,11 @@ local function FindBestFollowersForMission(mission, followers, mode)
                   best_modes_count = saved_best_modes_count
                end
             end
-         end
-      end
-   end
+            prev_follower3_troop_spec = follower3_troop_spec
+         end -- for i3
+         prev_follower2_troop_spec = follower2_troop_spec
+      end -- for i2
+   end -- for i1
 
    if follower1_added then RemoveFollowerFromMission(mission_id, follower1_added) end
    if follower2_added then RemoveFollowerFromMission(mission_id, follower2_added) end
@@ -461,7 +490,7 @@ local function FindBestFollowersForMission(mission, followers, mode)
    if party_followers_count > 0 then
       for party_idx = 1, party_followers_count do
          if preserve_mission_page_followers[party_idx] then
-            if class_based_SetClearFollower then GarrisonMissionFrame:AssignFollowerToMission(MissionPageFollowers[party_idx], preserve_mission_page_followers[party_idx]) else GarrisonMissionPage_SetFollower(MissionPageFollowers[party_idx], preserve_mission_page_followers[party_idx]) end
+            GarrisonMissionFrame:AssignFollowerToMission(MissionPageFollowers[party_idx], preserve_mission_page_followers[party_idx])
          end
       end
    end

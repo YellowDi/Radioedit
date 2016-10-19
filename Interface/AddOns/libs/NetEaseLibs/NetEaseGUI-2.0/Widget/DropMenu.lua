@@ -1,5 +1,5 @@
 
-local WIDGET, VERSION = 'DropMenu', 8
+local WIDGET, VERSION = 'DropMenu', 9
 
 local GUI = LibStub('NetEaseGUI-2.0')
 local DropMenu = GUI:NewClass(WIDGET, GUI:GetClass('GridView'), VERSION, 'Owner')
@@ -255,7 +255,7 @@ function DropMenu:OnItemEnter(button, data)
     else
         self:Open(self:GetLevel() + 1,
             data.menuTable,
-            self:GetOwner(), self.maxItem, 'TOP', button, 'BOTTOM')
+            self:GetOwner(), self.maxItem, 'TOPLEFT', button, 'TOPRIGHT', 0, 10)
     end
 
     local tip = Tooltip:GetGlobalTooltip()

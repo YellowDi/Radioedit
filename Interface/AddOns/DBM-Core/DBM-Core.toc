@@ -31,7 +31,6 @@ localization.en.lua
 localization.cn.lua
 
 localization.tw.lua
-
 DBM-Core.lua
 DBM-Arrow.lua
 DBM-Flash.lua

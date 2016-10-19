@@ -1,74 +1,26 @@
 <Bindings>
-	<Binding name="AutoSlotButton1" header="EUI_AUTOSLOTBUTTON" category="BINDING_HEADER_ELVUI">		
-		EuiScript_AutoButton_Click(AutoSlotButton1)
-	</Binding>
-	<Binding name="AutoSlotButton2" category="BINDING_HEADER_ELVUI">
-		EuiScript_AutoButton_Click(AutoSlotButton2)
-	</Binding>
-	<Binding name="AutoSlotButton3" category="BINDING_HEADER_ELVUI">
-		EuiScript_AutoButton_Click(AutoSlotButton3)
-	</Binding>
-	<Binding name="AutoSlotButton4" category="BINDING_HEADER_ELVUI">
-		EuiScript_AutoButton_Click(AutoSlotButton4)
-	</Binding>
-	<Binding name="AutoSlotButton5" category="BINDING_HEADER_ELVUI">
-		EuiScript_AutoButton_Click(AutoSlotButton5)
-	</Binding>
-	<Binding name="AutoSlotButton6" category="BINDING_HEADER_ELVUI">
-		EuiScript_AutoButton_Click(AutoSlotButton6)
-	</Binding>
-	<Binding name="AutoSlotButton7" category="BINDING_HEADER_ELVUI">
-		EuiScript_AutoButton_Click(AutoSlotButton7)
-	</Binding>
-	<Binding name="AutoSlotButton8" category="BINDING_HEADER_ELVUI">
-		EuiScript_AutoButton_Click(AutoSlotButton8)
-	</Binding>
-	<Binding name="AutoSlotButton9" category="BINDING_HEADER_ELVUI">
-		EuiScript_AutoButton_Click(AutoSlotButton9)
-	</Binding>
-	<Binding name="AutoSlotButton10" category="BINDING_HEADER_ELVUI">
-		EuiScript_AutoButton_Click(AutoSlotButton10)
-	</Binding>
-	<Binding name="AutoSlotButton11" category="BINDING_HEADER_ELVUI">
-		EuiScript_AutoButton_Click(AutoSlotButton11)
-	</Binding>
-	<Binding name="AutoSlotButton12" category="BINDING_HEADER_ELVUI">
-		EuiScript_AutoButton_Click(AutoSlotButton12)
-	</Binding>
-	<Binding name="AutoQuestButton1" header="EUI_AUTOQUESTBUTTON" category="BINDING_HEADER_ELVUI">
-		EuiScript_AutoButton_Click(AutoQuestButton1)
-	</Binding>
-	<Binding name="AutoQuestButton2" category="BINDING_HEADER_ELVUI">
-		EuiScript_AutoButton_Click(AutoQuestButton2)
-	</Binding>
-	<Binding name="AutoQuestButton3" category="BINDING_HEADER_ELVUI">
-		EuiScript_AutoButton_Click(AutoQuestButton3)
-	</Binding>
-	<Binding name="AutoQuestButton4" category="BINDING_HEADER_ELVUI">
-		EuiScript_AutoButton_Click(AutoQuestButton4)
-	</Binding>
-	<Binding name="AutoQuestButton5" category="BINDING_HEADER_ELVUI">
-		EuiScript_AutoButton_Click(AutoQuestButton5)
-	</Binding>
-	<Binding name="AutoQuestButton6" category="BINDING_HEADER_ELVUI">
-		EuiScript_AutoButton_Click(AutoQuestButton6)
-	</Binding>
-	<Binding name="AutoQuestButton7" category="BINDING_HEADER_ELVUI">
-		EuiScript_AutoButton_Click(AutoQuestButton7)
-	</Binding>
-	<Binding name="AutoQuestButton8" category="BINDING_HEADER_ELVUI">
-		EuiScript_AutoButton_Click(AutoQuestButton8)
-	</Binding>
-	<Binding name="AutoQuestButton9" category="BINDING_HEADER_ELVUI">
-		EuiScript_AutoButton_Click(AutoQuestButton9)
-	</Binding>
-	<Binding name="AutoQuestButton10" category="BINDING_HEADER_ELVUI">
-		EuiScript_AutoButton_Click(AutoQuestButton10)
-	</Binding>
-	<Binding name="AutoQuestButton11" category="BINDING_HEADER_ELVUI">
-		EuiScript_AutoButton_Click(AutoQuestButton11)
-	</Binding>
-	<Binding name="AutoQuestButton12" category="BINDING_HEADER_ELVUI">
-		EuiScript_AutoButton_Click(AutoQuestButton12)
-	</Binding>		
+	<Binding name="CLICK AutoSlotButton1:LeftButton" header="AutoSlotButton"  category="ADDONS"/>
+	<Binding name="CLICK AutoSlotButton2:LeftButton" header="AutoSlotButton"  category="ADDONS"/>
+	<Binding name="CLICK AutoSlotButton3:LeftButton" header="AutoSlotButton"  category="ADDONS"/>
+	<Binding name="CLICK AutoSlotButton4:LeftButton" header="AutoSlotButton"  category="ADDONS"/>
+	<Binding name="CLICK AutoSlotButton5:LeftButton" header="AutoSlotButton"  category="ADDONS"/>
+	<Binding name="CLICK AutoSlotButton6:LeftButton" header="AutoSlotButton"  category="ADDONS"/>
+	<Binding name="CLICK AutoSlotButton7:LeftButton" header="AutoSlotButton"  category="ADDONS"/>
+	<Binding name="CLICK AutoSlotButton8:LeftButton" header="AutoSlotButton"  category="ADDONS"/>
+	<Binding name="CLICK AutoSlotButton9:LeftButton" header="AutoSlotButton"  category="ADDONS"/>
+	<Binding name="CLICK AutoSlotButton10:LeftButton" header="AutoSlotButton"  category="ADDONS"/>
+	<Binding name="CLICK AutoSlotButton11:LeftButton" header="AutoSlotButton"  category="ADDONS"/>
+	<Binding name="CLICK AutoSlotButton12:LeftButton" header="AutoSlotButton"  category="ADDONS"/>
+	<Binding name="CLICK AutoQuestButton1:LeftButton" header="AutoQuestButton"  category="ADDONS"/>
+	<Binding name="CLICK AutoQuestButton2:LeftButton" header="AutoQuestButton"  category="ADDONS"/>
+	<Binding name="CLICK AutoQuestButton3:LeftButton" header="AutoQuestButton"  category="ADDONS"/>
+	<Binding name="CLICK AutoQuestButton4:LeftButton" header="AutoQuestButton"  category="ADDONS"/>
+	<Binding name="CLICK AutoQuestButton5:LeftButton" header="AutoQuestButton"  category="ADDONS"/>
+	<Binding name="CLICK AutoQuestButton6:LeftButton" header="AutoQuestButton"  category="ADDONS"/>
+	<Binding name="CLICK AutoQuestButton7:LeftButton" header="AutoQuestButton"  category="ADDONS"/>
+	<Binding name="CLICK AutoQuestButton8:LeftButton" header="AutoQuestButton"  category="ADDONS"/>
+	<Binding name="CLICK AutoQuestButton9:LeftButton" header="AutoQuestButton"  category="ADDONS"/>
+	<Binding name="CLICK AutoQuestButton10:LeftButton" header="AutoQuestButton"  category="ADDONS"/>
+	<Binding name="CLICK AutoQuestButton11:LeftButton" header="AutoQuestButton"  category="ADDONS"/>
+	<Binding name="CLICK AutoQuestButton12:LeftButton" header="AutoQuestButton"  category="ADDONS"/>
 </Bindings>

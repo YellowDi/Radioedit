@@ -4,7 +4,7 @@
 ## Title-zhTW: |cffC495DDEUI|r要塞職業大廳增強包
 ## Author: eui.cc
 ## X-Category: ElvUI
-## Version: 20160928A
+## Version: 20161005A
 ## Dependencies: ElvUI
 ## X-Revision: ElvUI
 ## LoadOnDemand: 1 
@@ -33,6 +33,10 @@ LazyWidget.lua
 C_Garrison_cache.lua
 FindBestFollowersForMission.lua
 GarrisonMissionManager.lua
+MissionUI_Shared.lua
+MissionUI_Garrison.lua
+MissionUI_Shipyard.lua
+MissionUI_OrderHall.lua
 SharedMissionUI.lua
 MissionUI.lua
 ShipyardUI.lua
@@ -42,10 +46,11 @@ Broker.lua
 
 #FollowerAssign.lua
 
-#Misc\Data.lua
-#Misc\Localization.lua
-#Misc\DataAPI.lua
-#Misc\LoadWithGarrisonUI.lua
-#Override.lua
-#SmartRecruiter.lua
-#FollowerTooltip.lua
+Misc\Data.lua
+Misc\Localization.lua
+Misc\DataAPI.lua
+Misc\LoadWithGarrisonUI.lua
+Misc\Override.lua
+
+SmartRecruiter.lua
+FollowerTooltip.lua

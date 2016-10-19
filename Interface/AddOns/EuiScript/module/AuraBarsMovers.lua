@@ -109,7 +109,7 @@ function ABM:UpdatePlayer(frame, db)
 	end
 	auraBars:SetAnchors()
 
-	frame:UpdateAllElements()
+	frame:UpdateAllElements("ElvUI_UpdateAllElements")
 end
 
 function ABM:UpdateTarget(frame, db)
@@ -164,7 +164,7 @@ function ABM:UpdateTarget(frame, db)
 	end
 	auraBars:SetAnchors()
 
-	frame:UpdateAllElements()
+	frame:UpdateAllElements("ElvUI_UpdateAllElements")
 end
 
 function ABM:UpdateFocus(frame, db)	
@@ -219,7 +219,7 @@ function ABM:UpdateFocus(frame, db)
 	end
 	auraBars:SetAnchors()
 
-	frame:UpdateAllElements()
+	frame:UpdateAllElements("ElvUI_UpdateAllElements")
 end
 
 function ABM:ChangeTarget()

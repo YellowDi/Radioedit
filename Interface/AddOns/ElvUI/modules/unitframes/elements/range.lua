@@ -11,7 +11,6 @@ function UF:Construct_Range(frame)
 end
 
 function UF:Configure_Range(frame)
-	if not frame.VARIABLES_SET then return end
 	local range = frame.Range
 	if frame.db.rangeCheck then
 		if not frame:IsElementEnabled('Range') then

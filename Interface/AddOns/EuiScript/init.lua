@@ -109,6 +109,14 @@ function E:CheckChat(warning)
 end
 
 --自动卖垃圾
+local GrayWihterList = {
+	[114002] = true,
+	[140661] = true,
+	[140662] = true,
+	[140663] = true,
+	[140664] = true,
+	[140665] = true,
+}
 function S:SellItem()
 	if not E.db.euiscript.autosell then return end
 	local c = 0
@@ -120,7 +128,7 @@ function S:SellItem()
 				local itemid = tonumber(l:match("item:(%d+)"))
 				
 				local p = select(11, GetItemInfo(l))*select(2, GetContainerItemInfo(b, s))
-				if ((select(3, GetItemInfo(l))==0) or E.db.euiscript.autosellList[itemid]) and (p>0) and (itemid ~= 114002) then
+				if ((select(3, GetItemInfo(l))==0) or E.db.euiscript.autosellList[itemid]) and (p>0) and (not GrayWihterList[itemid]) then
 					UseContainerItem(b, s)
 					PickupMerchantItem()
 					c = c+p
@@ -490,6 +498,7 @@ function S:ButtonCollect()
 	self:RegisterEvent("UPDATE_BATTLEFIELD_STATUS", "AutoBattle")--for autoleavebn
 	self:CollapseObjective()
 --	self:FixPriestTicks()
+--	S:ShowBlzClassBarFrame();
 	
 	if GarrisonLandingPageMinimapButton then --要塞小地图图标
 		GarrisonLandingPageMinimapButton:SetSize(36,36)
@@ -662,6 +671,70 @@ function S:ToggleTalkingHead()
 		TalkingHooked = true
 	end
 end
+--[[
+local function SetFrameShowAndMove(f)
+	if not f then return; end
+	
+	f:SetParent(UIParent)
+	f:ClearAllPoints()
+	f:SetScale(E.db.euiscript.blzClassBar.scale or 1)
+
+	f.bg = f.bg or CreateFrame("Button", "EuiBlzClassBar", f)
+	f.bg:SetSize(f:GetWidth(), f:GetHeight())
+	EuiBlzClassBar.classBar = f
+
+	if not E.db.euiscript.blzClassBar.point then
+		E.db.euiscript.blzClassBar.point = {a = "CENTER", c = "UIParent", b = "CENTER", x = 0, y = 100}
+	end
+	f.bg:SetPoint(E.db.euiscript.blzClassBar.point.a, "UIParent", E.db.euiscript.blzClassBar.point.b, E.db.euiscript.blzClassBar.point.x, E.db.euiscript.blzClassBar.point.y)
+	f:SetAllPoints(f.bg)
+	f.bg:SetFrameLevel(f:GetFrameLevel() + 5)
+
+	--Allow dragging the frame around
+	f.bg:SetMovable(true)
+	f.bg:SetClampedToScreen(true)
+	f.bg:RegisterForDrag("LeftButton", "RightButton")
+	f.bg:RegisterForClicks("AnyUp");
+	f.bg:SetScript("OnDragStart", function(self)
+		if not E.db.euiscript.blzClassBar.locked then self:StartMoving() end
+	end)
+	f.bg:SetScript("OnDragStop", function(self)
+		if not E.db.euiscript.blzClassBar.locked then
+			self:StopMovingOrSizing();
+			E.db.euiscript.blzClassBar.point.a, E.db.euiscript.blzClassBar.point.c, E.db.euiscript.blzClassBar.point.b, E.db.euiscript.blzClassBar.point.x, E.db.euiscript.blzClassBar.point.y = self:GetPoint()
+		end
+	end)
+end
+
+function S:ShowBlzClassBarFrame()
+	if not E.db.euiscript.blzClassBar.enable then return; end
+
+	local f
+	local _, class = UnitClass("player");	
+
+	if ( class == "SHAMAN" ) then
+		f = TotemFrame
+	elseif ( class == "DRUID" ) then
+		f = EclipseBarFrame
+	elseif ( class == "DEATHKNIGHT" ) then
+		f = RuneFrame
+	elseif ( class == "PRIEST" ) then
+		f = PriestBarFrame
+	elseif ( class == "PALADIN" ) then
+		f = PaladinPowerBarFrame
+	elseif ( class == "ROGUE" ) then
+		f = ComboPointPlayerFrame
+	elseif ( class == "PRIEST" ) then
+		f = InsanityBarFrame
+	elseif ( class == "MAGE" ) then
+		f = MageArcaneChargesFrame
+	elseif ( class == "MONK" ) then
+		f = MonkHarmonyBarFrame
+	elseif ( class == "WARLOCK" ) then
+		f = WarlockPowerFrame
+	end
+	SetFrameShowAndMove(f)
+end]]
 
 function S:Initialize()
 	CreateAutoQuestButton()
@@ -670,6 +743,7 @@ function S:Initialize()
 	self:ToggleEuiScriptPoi()
 	S:QuestLog()
 	OpenGrassionReport()
+
 
 	if not S.WorldState then S.WorldState = CreateFrame("Frame", "EuiWorldState", UIParent) end
 	S.WorldState:Point("TOP", UIParent, "TOP", -30, -60);

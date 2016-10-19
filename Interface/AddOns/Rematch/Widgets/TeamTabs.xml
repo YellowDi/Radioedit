@@ -129,15 +129,30 @@
 					<Anchor point="LEFT" x="180" y="0"/>
 				</Anchors>
 			</Button>
+			<Button parentArray="Icons" inherits="RematchTeamTabPickerIconTemplate">
+				<Anchors>
+					<Anchor point="LEFT" x="210" y="0"/>
+				</Anchors>
+			</Button>
+			<Button parentArray="Icons" inherits="RematchTeamTabPickerIconTemplate">
+				<Anchors>
+					<Anchor point="LEFT" x="240" y="0"/>
+				</Anchors>
+			</Button>
+			<Button parentArray="Icons" inherits="RematchTeamTabPickerIconTemplate">
+				<Anchors>
+					<Anchor point="LEFT" x="270" y="0"/>
+				</Anchors>
+			</Button>
 		</Frames>
 	</Button>
 
 	<!-- note: this is a child of the dialog! -->
 	<Frame parentKey="TeamTabIconPicker" parent="RematchDialog" inherits="RematchInsetFrameTemplate" hidden="true">
-		<Size x="240" y="156"/>
+		<Size x="330" y="306"/>
 		<Frames>
 			<ScrollFrame parentKey="ScrollFrame" name="RematchTeamTabIconPickerScrollFrame" inherits="HybridScrollFrameTemplate">
-				<Size x="240" y="156"/>
+				<Size x="330" y="306"/>
 				<Anchors>
 					<Anchor point="TOPLEFT" x="4" y="-3"/>
 					<Anchor point="BOTTOMRIGHT" x="-26" y="3"/>

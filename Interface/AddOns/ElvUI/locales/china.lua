@@ -58,6 +58,7 @@ L["Honor Remaining:"] = "荣誉值剩余:"
 L["Bars"] = "条"
 L["Honor Bar"] = "荣誉条"
 --Minimap
+L["Reset Zoom"] = "缩放复位";
 L['Always Display'] = '总是显示';
 L['Location Text'] = '地区文字';
 L["Minimap Buttons"] = '小地图按钮';
@@ -686,9 +687,11 @@ do
 	L["Target Aura Bars"] = "目标光环条"
 	L["Focus Aura Bars"] = "焦点光环条"
 end
-	
+
 --ACTIONBARS
 do
+	L["Shows a swipe animation when a spell is recharging but still has charges left."] = "显示转圈动画当充能法术仍有可用数时";
+	L["Use Draw Swipe"] = "使用转圈动画";
 	L["Zone Ability"] = "区域技能";
 	L["Color of the actionbutton when not usable."] = "当按钮不可使用时的颜色";
 	L["Color of the actionbutton when usable."] = "当按钮可以使用时的颜色";
@@ -824,6 +827,8 @@ L['ABOVE_THREAT_FORMAT'] = '%s: %.0f%% [%.0f%% above |cff%02x%02x%02x%s|r]'
 
 --UNITFRAMES
 do
+	L["PvP & Prestige Icon"] = "PvP 和 声望图标";
+	L["PvP Text"] = "PvP 文字";
 	L["Attach Text To"] = "文字附着于"
 	L["Target Class Icon"] = "目标职业图标";
 	L["Player Portrait"] = "玩家头像";
@@ -1610,6 +1615,8 @@ end
 
 --Tooltip
 do
+	L["Loot Item Level: "] = "掉落物品等级: "
+	L["Weekly Chest Item Level: "] = "周常箱子物品等级: "
 	L["Inspect Info"] = "观察信息";
 	L["Display the players talent spec and item level in the tooltip, this may not immediately update when mousing over a unit."] = "显示玩家的天赋和物品等级在鼠标提示上."
 	L["Header Font Size"] = "头部字体尺寸";
@@ -1890,6 +1897,8 @@ end
 
 --Bags
 do
+	L["Use Tooltip Scanning"] = "使用鼠标扫描"
+	L["This makes the item level display more reliable but uses more resources. If this is disabled then upgraded items will not show the correct item level."] = "使用鼠标扫描获得更加可靠的信息,关闭的话只能得到基本信息"
 	L["Disable Bag Sort"] = "禁用背包排序";
 	L["Disable Bank Sort"] = "禁用银行排序";
 	L["Clear Search On Close"] = "关闭时清空搜索"
@@ -2160,8 +2169,8 @@ end
 
 --singleFunc
 do
-	L['GottaGoFast'] = "大秘境计时";
-	L['Show GottaGoFast Option'] = "显示大秘境计时设置";
+	L['AngryKeystones'] = "大秘境计时";
+	L['Show AngryKeystones Option'] = "显示大秘境计时设置";
 	L["WorldQuestTracker"] = "世界任务追踪"
 	L['singleFunc'] = '单体插件管理';
 	L['singleFunc_desc'] = '集中管理、自动更新、按需加载、设置方便';
@@ -2247,6 +2256,7 @@ end
 
 --euiscript
 do
+	L["Blz ClassBar"] = "暴雪职业条";
 	L["DRTracker"] = "递减追踪"
 	L["ElvUF_Arena1"] = "EUI竞技场框体1";
 	L["ElvUF_Arena2"] = "EUI竞技场框体2";
@@ -2504,6 +2514,8 @@ do
 		L["idQuestAutomation_desc"] = "按住Shift可禁用自动交接"
 	L["Auto Choise BestValue Item"] = "自动选择最贵奖励";
 	L["raidcd"] = "团队技能冷却监视"
+	L["raidcccd"] = "团队控制技能监视"
+		L["CC Spell"] = "控制技能"
 		L["raidcd_width"] = "冷却条宽度"
 		L["raidcd_height"] = "冷却条高度"
 		L["raidcd_maxbars"] = "最大条数"
@@ -2571,6 +2583,7 @@ end
 
 --Mover
 do
+	L["Zone Ability"] = "区域技能"
 	L["MirrorTimer"] = "镜像时间";
 	L['BodyGuard Frame'] = "保镖框体";
 	L["Loot / Alert Frames"] = "拾取 / 成就框";

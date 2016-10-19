@@ -5,7 +5,7 @@ local LSM = LibStub("LibSharedMedia-3.0")
 --Cache global variables
 --Lua functions
 local select, unpack = select, unpack
-local tinsert, tremove, twipe = table.insert, table.remove, table.wipe
+local tinsert, tremove = table.insert, table.remove
 --WoW API / Variables
 local CreateFrame = CreateFrame
 local UnitBuff = UnitBuff
@@ -14,7 +14,7 @@ local BUFF_STACKS_OVERFLOW = BUFF_STACKS_OVERFLOW
 
 local auraCache = {}
 
-function mod:SetAura(aura, index, name, filter, icon, count, debuffType, duration, expirationTime, unitCaster, canStealOrPurge, spellId, isBossAura)
+function mod:SetAura(aura, index, name, icon, count, duration, expirationTime)
 	aura.icon:SetTexture(icon);
 	aura.name = name
 	if ( count > 1 ) then
@@ -53,104 +53,61 @@ local durationOverride = {
 function mod:UpdateElement_Auras(frame)
 	local hasBuffs = false
 	local hasDebuffs = false
-	
+	local auraFrame
+	local name, icon, count, duration, expirationTime, unitCaster, spellId, isBossAura, _
+
 	--Debuffs
 	local index = 1;
 	local frameNum = 1;
-	local filter = nil;
-	local maxDebuffs = #frame.Debuffs.icons;
-	--Show both Boss buffs & debuffs in the debuff location
-	--First, we go through all the debuffs looking for any boss flagged ones.
-	
+	local maxAuras = #frame.Debuffs.icons;
+	local showBoss = self.db.units[frame.UnitType].debuffs.filters.boss
+	local showPersonal = self.db.units[frame.UnitType].debuffs.filters.personal
+	local maxDuration = self.db.units[frame.UnitType].debuffs.filters.maxDuration
+
 	self:HideAuraIcons(frame.Debuffs)
-	if(self.db.units[frame.UnitType].debuffs.enable) then
-		frame.Debuffs.shownIDs = {}
-		if(self.db.units[frame.UnitType].debuffs.filters.boss) then
-			while ( frameNum <= maxDebuffs ) do
-				local name, _, icon, count, debuffType, duration, expirationTime, unitCaster, canStealOrPurge, _, spellId, _, isBossAura = UnitDebuff(frame.displayedUnit, index, filter);
-				if ( name ) then
-					if ( isBossAura ) then
-						local debuffFrame = frame.Debuffs.icons[frameNum];
-						mod:SetAura(debuffFrame, index, name, filter, icon, count, debuffType, duration, expirationTime, unitCaster, canStealOrPurge, spellId, isBossAura)
-						frameNum = frameNum + 1;
-						frame.Debuffs.shownIDs[spellId] = true
-						hasDebuffs = true
-					end
-				else
-					break;
+	if(self.db.units[frame.UnitType].debuffs.enable and (showBoss or showPersonal)) then
+		while ( frameNum <= maxAuras ) do
+			name, _, icon, count, _, duration, expirationTime, unitCaster, _, _, spellId, _, isBossAura = UnitDebuff(frame.displayedUnit, index);
+			if ( name ) then
+				if (showBoss and isBossAura) or (showPersonal and (unitCaster == mod.playerUnitToken and (duration > 0 or durationOverride[spellId]) and duration <= maxDuration)) then
+					auraFrame = frame.Debuffs.icons[frameNum];
+					mod:SetAura(auraFrame, index, name, icon, count, duration, expirationTime)
+					frameNum = frameNum + 1;
+					hasDebuffs = true
 				end
-				index = index + 1;
+			else
+				break;
 			end
-		end
-		
-		if(self.db.units[frame.UnitType].debuffs.filters.personal) then
-			index = 1
-			--Now look for personal debuffs
-			while ( frameNum <= maxDebuffs ) do
-				local name, _, icon, count, debuffType, duration, expirationTime, unitCaster, canStealOrPurge, _, spellId, _, isBossAura = UnitDebuff(frame.displayedUnit, index, filter);
-				if ( name ) then
-					if (unitCaster == mod.playerUnitToken and not frame.Debuffs.shownIDs[spellId] and (duration > 0 or (duration == 0 and durationOverride[spellId])) and duration <= self.db.units[frame.UnitType].debuffs.filters.maxDuration) then
-						local debuffFrame = frame.Debuffs.icons[frameNum];
-						mod:SetAura(debuffFrame, index, name, filter, icon, count, debuffType, duration, expirationTime, unitCaster, canStealOrPurge, spellId, isBossAura)
-						frameNum = frameNum + 1;
-						frame.Debuffs.shownIDs[spellId] = true
-						hasDebuffs = true
-					end
-				else
-					break;
-				end
-				index = index + 1;
-			end
+			index = index + 1;
 		end
 	end
-	
+
 	--Buffs
 	index = 1
-	local maxBuffs = #frame.Buffs.icons
 	frameNum = 1
+	maxAuras = #frame.Buffs.icons
+	showBoss = self.db.units[frame.UnitType].buffs.filters.boss
+	showPersonal = self.db.units[frame.UnitType].buffs.filters.personal
+	maxDuration = self.db.units[frame.UnitType].buffs.filters.maxDuration
+
 	self:HideAuraIcons(frame.Buffs)
-	frame.Buffs.shownIDs = {}
-	--Now look for boss buffs
-	if(self.db.units[frame.UnitType].buffs.enable) then
-		if(self.db.units[frame.UnitType].buffs.filters.boss) then
-			while ( frameNum <= maxBuffs ) do
-				local name, _, icon, count, debuffType, duration, expirationTime, unitCaster, canStealOrPurge, _, spellId, _, isBossAura = UnitBuff(frame.displayedUnit, index, filter);
-				if ( name ) then
-					if ( isBossAura ) then
-						local buffFrame = frame.Buffs.icons[frameNum];
-						mod:SetAura(buffFrame, index, name, filter, icon, count, debuffType, duration, expirationTime, unitCaster, canStealOrPurge, spellId, isBossAura)
-						frameNum = frameNum + 1;
-						frame.Buffs.shownIDs[spellId] = true
-						hasBuffs = true
-					end
-				else
-					break;
+	if(self.db.units[frame.UnitType].buffs.enable and (showBoss or showPersonal)) then
+		while ( frameNum <= maxAuras ) do
+			name, _, icon, count, _, duration, expirationTime, unitCaster, _, _, spellId, _, isBossAura = UnitBuff(frame.displayedUnit, index);
+			if ( name ) then
+				if (showBoss and isBossAura) or (showPersonal and (unitCaster == mod.playerUnitToken and (duration > 0 or durationOverride[spellId]) and duration <= maxDuration)) then
+					auraFrame = frame.Buffs.icons[frameNum];
+					mod:SetAura(auraFrame, index, name, icon, count, duration, expirationTime)
+					frameNum = frameNum + 1;
+					hasBuffs = true
 				end
-				index = index + 1;
-			end	
-		end
-		
-		if(self.db.units[frame.UnitType].buffs.filters.personal) then
-			index = 1
-			--Now look the rest of buffs
-			while ( frameNum <= maxBuffs ) do
-				local name, _, icon, count, debuffType, duration, expirationTime, unitCaster, canStealOrPurge, _, spellId, _, isBossAura = UnitBuff(frame.displayedUnit, index, filter);
-				if ( name ) then
-					if ( unitCaster == mod.playerUnitToken and not frame.Buffs.shownIDs[spellId] and (duration > 0 or (duration == 0 and durationOverride[spellId])) and duration <= self.db.units[frame.UnitType].buffs.filters.maxDuration ) then
-						local buffFrame = frame.Buffs.icons[frameNum];
-						mod:SetAura(buffFrame, index, name, filter, icon, count, debuffType, duration, expirationTime, unitCaster, canStealOrPurge, spellId, isBossAura)
-						frameNum = frameNum + 1;
-						frame.Buffs.shownIDs[spellId] = true
-						hasBuffs = true
-					end
-				else
-					break;
-				end
-				index = index + 1;
+			else
+				break;
 			end
+			index = index + 1;
 		end
 	end
-	
+
 	local TopLevel = frame.HealthBar
 	local TopOffset = ((self.db.units[frame.UnitType].showName and select(2, frame.Name:GetFont()) + 5) or 0)
 	if(hasDebuffs) then
@@ -160,17 +117,17 @@ function mod:UpdateElement_Auras(frame)
 		TopLevel = frame.Debuffs
 		TopOffset = 3
 	end
-	
+
 	if(hasBuffs) then
 		if(not hasDebuffs) then
 			TopOffset = TopOffset + 3
 		end
 		frame.Buffs:SetPoint("BOTTOMLEFT", TopLevel, "TOPLEFT", 0, TopOffset)
 		frame.Buffs:SetPoint("BOTTOMRIGHT", TopLevel, "TOPRIGHT", 0, TopOffset)
-		TopLevel = frame.Buffs	
+		TopLevel = frame.Buffs
 		TopOffset = 3
 	end
-	
+
 	if (frame.TopLevelFrame ~= TopLevel) then
 		frame.TopLevelFrame = TopLevel
 		frame.TopOffset = TopOffset
@@ -192,18 +149,17 @@ function mod:CreateAuraIcon(parent)
 	aura.icon = aura:CreateTexture(nil, "OVERLAY")
 	aura.icon:SetAllPoints()
 	aura.icon:SetTexCoord(unpack(E.TexCoords))
-	
+
 	aura.cooldown = CreateFrame("Cooldown", nil, aura, "CooldownFrameTemplate")
 	aura.cooldown:SetAllPoints(aura)
 	aura.cooldown:SetReverse(true)
 	aura.cooldown.SizeOverride = 10
 	E:RegisterCooldown(aura.cooldown)
 
-
 	aura.count = aura:CreateFontString(nil, "OVERLAY")
 	aura.count:SetPoint("BOTTOMRIGHT")
 	aura.count:SetFont(LSM:Fetch("font", self.db.font), self.db.fontSize, self.db.fontOutline)
-	
+
 	return aura
 end
 
@@ -224,7 +180,7 @@ function mod:UpdateAuraIcons(auras)
 			tinsert(auraCache, auras.icons[i])
 			auras.icons[i]:Hide()
 			auras.icons[i] = nil
-		end 
+		end
 	end
 
 	if numCurrentAuras ~= maxAuras then
@@ -254,13 +210,13 @@ function mod:UpdateAuraIcons(auras)
 	end
 end
 
-function mod:ConstructElement_Auras(frame, maxAuras, side)
+function mod:ConstructElement_Auras(frame, side)
 	local auras = CreateFrame("FRAME", nil, frame)
 
 	auras:SetScript("OnSizeChanged", mod.Auras_SizeChanged)
 	auras:SetHeight(18) -- this really doesn't matter
 	auras.side = side
 	auras.icons = {}
-	
+
 	return auras
 end

@@ -237,7 +237,7 @@ end
 -------------end viewer-------------
 -------------begin editor--------------------
 
-local stepvalue
+local stepvalue = 1
 
 local headerGroup = AceGUI:Create("SimpleGroup")
 headerGroup:SetFullWidth(true)
@@ -272,7 +272,7 @@ stepdropdown:SetList({
 
 })
 
-stepdropdown:SetCallback("OnValueChanged", function (obj,event,key) stepvalue = key;  end)
+stepdropdown:SetCallback("OnValueChanged", function (obj,event,key) stepvalue = key; GSPrintDebugMessage("StepValue Set: " .. stepvalue, GNOME) end)
 firstheadercolumn:AddChild(stepdropdown)
 
 headerGroup:AddChild(firstheadercolumn)
@@ -340,7 +340,7 @@ postmacrobox.editBox:SetScript("OnTextChanged", function () end)
 editframe:AddChild(postmacrobox)
 
 local editButtonGroup = AceGUI:Create("SimpleGroup")
-editButtonGroup:SetFullWidth(true)
+editButtonGroup:SetWidth(302)
 editButtonGroup:SetLayout("Flow")
 
 local savebutton = AceGUI:Create("Button")
@@ -535,9 +535,12 @@ function GSSE:LoadEditor(SequenceName)
     nameeditbox:SetText(SequenceName)
     if GSisEmpty(GSMasterOptions.SequenceLibrary[SequenceName][GSGetActiveSequenceVersion(SequenceName)].StepFunction) then
      stepdropdown:SetValue("1")
+     stepvalue = 1
     else
      stepdropdown:SetValue("2")
+     stepvalue = 2
     end
+    GSPrintDebugMessage("StepValue: " .. stepvalue, GNOME)
     if GSisEmpty(GSMasterOptions.SequenceLibrary[SequenceName][GSGetActiveSequenceVersion(SequenceName)].PreMacro) then
       GSPrintDebugMessage(L["Moving on - LiveTest.PreMacro already exists."], GNOME)
     else
@@ -581,11 +584,13 @@ function GSSE:UpdateSequenceDefinition(SequenceName)
     local sequence = {}
     GSSE:lines(sequence, spellbox:GetText())
     -- update sequence
-    if stepvalue == "2" then
+    if tonumber(stepvalue) == 2 then
       sequence.StepFunction = GSStaticPriority
+      GSPrintDebugMessage("Setting GSStaticPriority.  Inside the Logic Point")
     else
       sequence.StepFunction = nil
     end
+    GSPrintDebugMessage("StepValue Saved: " .. stepvalue, GNOME)
     sequence.PreMacro = premacrobox:GetText()
     sequence.author = GetUnitName("player", true) .. '@' .. GetRealmName()
     sequence.source = GSStaticSourceLocal
@@ -607,14 +612,12 @@ function GSSE:UpdateSequenceDefinition(SequenceName)
       GSUpdateSequenceList()
       GSSequenceListbox:SetValue(SequenceName)
       GSPrint(L["Sequence Saved as version "] .. nextVal, GNOME)
-    elseif not GSCompareSequence(sequence, GSMasterOptions.SequenceLibrary[SequenceName][GSGetActiveSequenceVersion(SequenceName)] ) then
+    else
       GSPrintDebugMessage(L["Updating due to new version."], GNOME)
-      local compStep = GSMasterOptions.SequenceLibrary[SequenceName][GSGetActiveSequenceVersion(SequenceName)].StepFunction
       GSAddSequenceToCollection(SequenceName, sequence, nextVal)
       GSSE:loadSequence(SequenceName)
       GSCheckMacroCreated(SequenceName)
       GSUpdateSequence(SequenceName, GSMasterOptions.SequenceLibrary[SequenceName][nextVal])
-      GSPrepareLogout(false)
       GSPrint(L["Sequence Saved as version "] .. nextVal, GNOME)
     end
 

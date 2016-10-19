@@ -4,8 +4,10 @@ BuildEnv(...)
 
 local Cover = Addon:NewClass('Cover', 'Frame')
 
-function Cover:Constructor()
-    self:SetFrameLevel(50)
+function Cover:Constructor(parent)
+    if parent then
+        self:SetFrameLevel(parent:GetFrameLevel() + 20)
+    end
     self:EnableMouse(true)
     self:EnableMouseWheel(true)
     self:SetScript('OnMouseWheel', nop)

@@ -60,6 +60,7 @@ L["Bars"] = "條"
 L["Honor Bar"] = "榮譽條"
 
 --Minimap
+L["Reset Zoom"] = "縮放復位";
 L['Always Display'] = '總是顯示';
 L['Location Text'] = '地區文字';
 L["Minimap Buttons"] = '小地图按钮';
@@ -689,6 +690,8 @@ end
 
 --ACTIONBARS
 do
+	L["Shows a swipe animation when a spell is recharging but still has charges left."] = "顯示轉圈動畫當充能法術仍有可用數時";
+	L["Use Draw Swipe"] = "使用轉圈動畫";
 	L["Zone Ability"] = "區域技能";
 	L["Color of the actionbutton when not usable."] = "當按鈕不可使用時的顏色";
 	L["Color of the actionbutton when usable."] = "當按鈕可以使用時的顏色";
@@ -825,6 +828,8 @@ L['ABOVE_THREAT_FORMAT'] = '%s: %.0f%% [%.0f%% above |cff%02x%02x%02x%s|r]'
 
 --UNITFRAMES
 do
+	L["PvP & Prestige Icon"] = "PvP 和 聲望圖示";
+	L["PvP Text"] = "PvP 文字";
 	L["Attach Text To"] = "文字附著於"
 	L["Target Class Icon"] = "目標职业圖示";
 	L["Player Portrait"] = "玩家頭像";
@@ -1625,6 +1630,8 @@ end
 
 --Tooltip
 do
+	L["Loot Item Level: "] = "掉落物品等級: "
+	L["Weekly Chest Item Level: "] = "周常箱子物品等級: "
 	L["Inspect Info"] = "觀察資訊";
 	L["Display the players talent spec and item level in the tooltip, this may not immediately update when mousing over a unit."] = "顯示玩家的天賦和物品等級在滑鼠提示上."
 	L["Bags/Bank"] = "背包/銀行";
@@ -1900,6 +1907,8 @@ end
 
 --Bags
 do
+	L["Use Tooltip Scanning"] = "使用滑鼠掃描"
+	L["This makes the item level display more reliable but uses more resources. If this is disabled then upgraded items will not show the correct item level."] = "使用滑鼠掃描獲得更加可靠的資訊,關閉的話只能得到基本資訊"
 	L["Disable Bag Sort"] = "禁用背包排序";
 	L["Disable Bank Sort"] = "禁用銀行排序";
 	L["Clear Search On Close"] = "關閉時清空搜索"
@@ -2174,8 +2183,8 @@ end
 
 --singleFunc
 do
-	L['GottaGoFast'] = "大秘境計時";
-	L['Show GottaGoFast Option'] = "顯示大秘境計時設置";
+	L['AngryKeystones'] = "大秘境計時";
+	L['Show AngryKeystones Option'] = "顯示大秘境計時設置";
 	L["WorldQuestTracker"] = "世界任務追蹤"
 	L['singleFunc'] = '單體插件管理';
 	L['singleFunc desc'] = '集中管理、自動更新、按需加載、設置方便';
@@ -2260,6 +2269,7 @@ end
 
 --euiscript
 do
+	L["Blz ClassBar"] = "暴雪職業條";
 	L["DRTracker"] = "遞減追蹤"
 	L["ElvUF_Arena1"] = "EUI競技場框體1";
 	L["ElvUF_Arena2"] = "EUI競技場框體2";
@@ -2512,6 +2522,8 @@ do
 		L["idQuestAutomation_desc"] = "按住Shift可禁用自動交接"
 	L["Auto Choise BestValue Item"] = "自動選擇最貴獎勵"
 	L["raidcd"] = "團隊技能冷卻監視"
+	L["raidcccd"] = "團隊控制技能監視"
+		L["CC Spell"] = "控制技能"
 		L["raidcd_width"] = "冷卻條寬度"
 		L["raidcd_height"] = "冷卻條高度"
 		L["raidcd_maxbars"] = "最大條數"
@@ -2578,6 +2590,7 @@ end
 
 --Mover
 do
+	L["Zone Ability"] = "區域技能"
 	L["MirrorTimer"] = "鏡像時間";
 	L['BodyGuard Frame'] = '保鏢框體';
 	L["Loot / Alert Frames"] = "拾取 / 成就框";

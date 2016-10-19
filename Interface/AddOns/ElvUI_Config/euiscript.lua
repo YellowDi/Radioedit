@@ -29,6 +29,7 @@ local function UpdateRaidCD_Spell()
 						E.db.euiscript.raid_spells[value] = { 
 							['enable'] = true,
 							['cd'] = 30,
+							['cc'] = false,
 						}
 					end
 					UpdateRaidCD_Spell();
@@ -105,7 +106,19 @@ local function UpdateRaidCD_Spell()
 				end,
 				set = function(info, value) E.db.euiscript.raid_spells[selectedSpell].cd = value; UpdateRaidCD_Spell(); end,
 				min = 5, max = 1800, step = 1,
-			},			
+			},	
+			cc = {
+				name = L["CC Spell"],
+				type = "toggle",
+				get = function()
+					if not selectedSpell then
+						return false
+					else
+						return E.db.euiscript.raid_spells[selectedSpell].cc
+					end
+				end,
+				set = function(info, value) E.db.euiscript.raid_spells[selectedSpell].cc = value; UpdateRaidCD_Spell(); end,
+			},				
 		},
 	}
 end
@@ -781,6 +794,49 @@ E.Options.args.euiscript = {
 							get = function(info, k) return E.db.euiscript.CharacterStatsList[k]; end,
 							values = {},
 						},
+				--[[		blzClassBar = {
+							order = 40,
+							type = 'group',
+							guiInline = true,
+							name = L["Blz ClassBar"],
+							get = function(info) return E.db.euiscript.blzClassBar[ info[#info] ] end,
+							set = function(info, value) E.db.euiscript.blzClassBar[ info[#info] ] = value; E:StaticPopup_Show("CONFIG_RL") end,
+							args = {
+								enable = {
+									order = 1,
+									type = "toggle",
+									name = L["Enable"],
+								},
+								scale = {
+									order = 2,
+									type = "range",
+									name = L["Scale"],
+									min = 0.1, max = 3, step = 0.1,
+									set = function(info)
+										E.db.euiscript.blzClassBar.scale = value;
+										if EuiBlzClassBar and EuiBlzClassBar.classBar then EuiBlzClassBar.classBar:SetScale(value); end
+									end,
+								},
+								locked = {
+									order = 3,
+									type = "toggle",
+									name = L['Lock'],
+								},
+								resetPoint = {
+									order = 4,
+									type = "execute",
+									name = L["Reset Anchors"],
+									func = function()
+										wipe(E.db.euiscript.blzClassBar.point)
+										E.db.euiscript.blzClassBar.point = {a = "CENTER", c = "UIParent", b = "CENTER", x = 0, y = 100}
+										if EuiBlzClassBar and EuiBlzClassBar.classBar then
+											EuiBlzClassBar.classBar:ClearAllPoints()
+											EuiBlzClassBar.classBar:SetPoint("CENTER", UIParent, "CENETR", 0, 100)
+										end
+									end,
+								},
+							},
+						},]]
 					},
 				},
 				questGroup = {
@@ -1222,9 +1278,15 @@ E.Options.args.euiscript = {
 			set = function(info, value) E.db.euiscript[ info[#info] ] = value; E:StaticPopup_Show("CONFIG_RL") end,
 			args = {
 				raidcd = {
-					order = 1,
+					order = 0,
 					type = "toggle",
 					name = L["raidcd"],
+					desc = L["raidcd_desc"],
+				},
+				raidcccd = {
+					order = 1,
+					type = "toggle",
+					name = L["raidcccd"],
 					desc = L["raidcd_desc"],
 				},
 				raidcd_maxbars = {

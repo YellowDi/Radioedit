@@ -243,3 +243,165 @@ PostMacro = [[
 /startattack
 ]],
 }
+
+----------GS-DruidMacros  v0.1 - Patch: 7.0.3
+
+Sequences['Guardian_ST'] = {
+specID = 104,
+author = "HiroYakamura",
+helpTxt = "Talents: 3131321 - Modifiers: 'Shift' for Galatic Guardian Procs or to use Ironfur; 'Ctrl' for Barkskin on Damage Spikes. Mark of Ursol & Frenz. Regeneration on separate keybind for more control",
+StepFunction = GSStaticPriority,
+PreMacro = [[
+/targetenemy [noharm][dead]
+/use [noform] !Bear Form
+/castsequence [mod:ctrl,combat] reset=90 Barkskin, Survival Instincts, Survival Instincts, null
+]],
+"/cast [nomod] Mangle",
+"/cast [nomod] Thrash",
+"/cast [nomod] Swipe",
+"/cast [mod:shift] Moonfire",
+"/cast [mod:shift] Ironfur",
+PostMacro = [[
+/startattack
+]],
+}
+
+Sequences['Guardian_MT'] = {
+specID = 104,
+author = "HiroYakamura",
+helpTxt = "Talents: 3131321 - Modifiers: 'Shift' for Galatic Guardian Procs or to use Ironfur; 'Ctrl' for Barkskin on Damage Spikes. Mark of Ursol & Frenz. Regeneration on separate keybind for more control",
+StepFunction = GSStaticPriority,
+PreMacro = [[
+/targetenemy [noharm][dead]
+/use [noform] !Bear Form
+/castsequence [mod:ctrl,combat] reset=90 Barkskin, Survival Instincts, Survival Instincts, null
+]],
+"/cast [nomod] Thrash",
+"/cast [nomod] Mangle",
+"/cast [nomod] Swipe",
+"/cast [mod:shift] Moonfire",
+"/cast [mod:shift] Ironfur",
+PostMacro = [[
+/startattack
+]],
+}
+
+--Feral (specID = 103)
+
+Sequences['Feral-ST'] = {
+author = 'HiroYakamura',
+specID = 103,
+helpTxt = 'Talents: 2331123',
+icon = 'INV_Misc_QuestionMark',
+PreMacro=[[
+/targetenemy [noharm][dead]
+/use [noform] !Cat Form
+/cast [nostealth,nocombat] Prowl
+/stopattack [stealth]
+]],
+"/castsequence [combat,nostealth] Rake,Shred,Shred,Shred,Rip",
+"/castsequence [combat,nostealth] Shred,Shred,Shred,Shred,Ferocious Bite",
+PostMacro=[[
+/startattack
+/cast [combat]Tiger's Fury
+/use [combat]13
+/use [combat]14
+]],
+}
+
+Sequences['Feral-MT'] = {
+specID = 103,
+author = "HiroYakamura",
+helpTxt = "Talents: 2331123",
+StepFunction = GSStaticPriority,
+icon = 'INV_Misc_QuestionMark',
+PreMacro = [[
+/targetenemy [noharm][dead]
+/castsequence [@player,nostance:2] Cat Form(Shapeshift)
+/cast [nostealth,nocombat] Prowl
+/stopattack [stealth]
+]],
+'/castsequence [combat,nostealth] Thrash,Swipe,Swipe,Swipe,Swipe,Rip',
+'/castsequence [combat,nostealth] Swipe,Swipe,Swipe,Swipe,Thrash,Ferocious Bite',
+PostMacro = [[
+/startattack
+/cast [combat]Tiger's Fury
+/use [combat]13
+/use [combat]14
+]],
+}
+
+--Balance (specID = 102)
+
+Sequences['Moonkin_ST'] = {
+author = 'HiroYakamura',
+specID = 102,
+helpTxt = 'Talents: 3133233 - Use modifier Shift to reapply Moonfire and Sunfire. Incarnation is supposed to be on a separate Keybind for more burst control.',
+icon = 'INV_Misc_QuestionMark',
+PreMacro=[[
+/targetenemy [noharm][dead]
+/use [noform] !Moonkin Form
+]],
+"/castsequence [combat] Solar Wrath,Lunar Strike,Solar Wrath,Lunar Strike,Solar Wrath,Solar Wrath",
+"/cast [combat] Starsurge",
+"/castsequence reset=target/shift Moonfire, Sunfire, null",
+PostMacro=[[
+/startattack
+/use [combat]13
+/use [combat]14
+]],
+}
+
+Sequences['Moonkin_MT'] = {
+author = 'HiroYakamura',
+specID = 102,
+helpTxt = 'Talents: 3133233 - Use modifier Shift to reapply Moonfire and Sunfire. Incarnation is supposed to be on a separate Keybind for more burst control.',
+icon = 'INV_Misc_QuestionMark',
+PreMacro=[[
+/targetenemy [noharm][dead]
+/use [noform] !Moonkin Form
+]],
+"/castsequence [combat,nomod] Lunar Strike, Solar Wrath, Lunar Strike, Lunar Strike, Solar Wrath",
+"/cast [combat,nomod] Starsurge",
+"/cast [mod:shift,combat] Starfall",
+"/castsequence [nomod] reset=target/ctrl Moonfire, Sunfire, null",
+PostMacro=[[
+/startattack
+/use [combat]13
+/use [combat]14
+]],
+}
+
+--Restoration (specID = 105)
+
+Sequences['Restoration_Tank'] = {
+specID = 105,
+author = "HiroYakamura",
+helpTxt = "Talents: 2111122 - Target Tank & Use Macro. Use CTRL Modifier to apply Cenarion Ward. Use Shift modifier to counter Damage-Spikes (Swiftmend + Ironbark + Empowered Rejuvenation)",
+icon = 'INV_Misc_QuestionMark',
+ PreMacro = [[
+/cast [mod:ctrl] Cenarion Ward
+]],
+'/castsequence [mod:shift] Swiftmend, Ironbark, Swiftmend',
+'/castsequence reset=shift/target Lifebloom, Rejuvenation, Regrowth, Healing Touch, Healing Touch, Healing Touch, Healing Touch',
+PostMacro = [[
+/use [mod:shift,combat]13
+/use [mod:shift,combat]14
+]],
+}
+
+Sequences['Restoration_Group'] = {
+specID = 105,
+author = "HiroYakamura",
+helpTxt = "Talents: 2111122 - Target Group Member & Use Macro. Use CTRL Modifier to apply Cenarion Ward. Use Shift modifier to counter Damage-Spikes (Swiftmend + Tranquility)",
+icon = 'INV_Misc_QuestionMark',
+ PreMacro = [[
+/cast [mod:ctrl] Cenarion Ward
+]],
+'/castsequence [mod:shift,nochanneling] Tranquility, Swiftmend, Swiftmend, Swiftmend, Swiftmend',
+'/castsequence [nochanneling] reset=shift/target Rejuvenation, Regrowth, Wild Growth, Healing Touch, Healing Touch, Healing Touch',
+PostMacro = [[
+/use [mod:shift,combat]13
+/use [mod:shift,combat]14
+]],
+}

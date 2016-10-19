@@ -22,8 +22,8 @@ local temToggle = {
 	["RareScanner"] = true,
 	["GearStatsSummary"] = true,
 	["Mapster"] = true,
-	["WorldQuestTracker"] = true,
-	["GottaGoFast"] = true,
+--	["WorldQuestTracker"] = false,
+	["AngryKeystones"] = true,
 }
 for k, v in pairs(temToggle) do
 	temToggle[k] = IsAddOnLoaded(k)
@@ -434,7 +434,7 @@ E.Options.args.singleFunc = {
 				end
 			end,
 		},
-		WorldQuestTrackerHeader = {
+	--[[	WorldQuestTrackerHeader = {
 			order = 75,
 			type = "header",
 			name = L['WorldQuestTracker'],
@@ -445,27 +445,26 @@ E.Options.args.singleFunc = {
 			name = L["WorldQuestTracker"],
 			desc = L["Enable/Disable"]..L["WorldQuestTracker"],
 			disabled = function() return not E:IsConfigurableAddOn('WorldQuestTracker'); end,
-		},
-		GottaGoFastHeader = {
+		},]]
+		AngryKeystonesHeader = {
 			order = 77,
 			type = "header",
-			name = L['GottaGoFast'],
+			name = L['AngryKeystones'],
 		},		
-		GottaGoFast = {
+		AngryKeystones = {
 			order = 78,
 			type = 'toggle',
-			name = L["GottaGoFast"],
-			desc = L["Enable/Disable"]..L["GottaGoFast"],
-			disabled = function() return not E:IsConfigurableAddOn('GottaGoFast'); end,
+			name = L["AngryKeystones"],
+			desc = L["Enable/Disable"]..L["AngryKeystones"],
+			disabled = function() return not E:IsConfigurableAddOn('AngryKeystones'); end,
 		},
-		GottaGoFastConfig = {
+		AngryKeystonesConfig = {
 			order = 79,
 			type = 'execute',
-			name = L['Show GottaGoFast Option'],
-			disabled = function() return not IsAddOnLoaded('GottaGoFast'); end,
+			name = L['Show AngryKeystones Option'],
+			disabled = function() return not IsAddOnLoaded('AngryKeystones'); end,
 			func = function()
-				InterfaceOptionsFrame_OpenToCategory(GottaGoFast.optionsFrame);
-				InterfaceOptionsFrame_OpenToCategory(GottaGoFast.optionsFrame);
+				SlashCmdList.AngryKeystones();
 				E:ToggleConfig();
 			end,
 		},

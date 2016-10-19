@@ -3,7 +3,7 @@
 	<Script file="InspectFix.lua"/>
 	<!--Script file="ProfessionsDatabase.lua"/-->
 	<Script file='drag.lua'/>
-	<Script file='Durability.lua'/>
+	<!--Script file='Durability.lua'/-->
 	<Script file="tradetabs.lua"/>
 	<Script file="RaidCD.lua"/>
 	<!--Script file="stAddonManager.lua"/-->
@@ -78,4 +78,5 @@
 	<Script file="DejaCharacterStats.lua"/>
 	<Script file="EUI_DrTracker.lua"/>
 	<Script file="TalentProfiles.lua"/>
+	<Script file="WorldQuestTips.lua"/>
 </Ui>

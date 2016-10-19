@@ -1,0 +1,24 @@
+﻿## Interface: 70000
+## Title: Angry Keystones
+## Title-zhCN: |cffC495DDEUI|r |cFF00D1FF大秘境计时|r
+## Title-zhTW: |cffC495DDEUI|r |cFF00D1FF大秘境計時|r
+## Notes: Displays additional information for Mythic Keystone dungeons
+## Author: Ermad
+## SavedVariables: AngryKeystones_Config, AngryKeystones_Data
+## SavedVariablesPerCharacter: AngryKeystones_CharacterConfig
+## X-Curse-Packaged-Version: v0.5.2
+## X-Curse-Project-Name: Angry Keystones
+## X-Curse-Project-ID: angry-keystones
+## X-Curse-Repository-ID: wow/angry-keystones/mainline
+## Dependencies: ElvUI
+## X-Revision: ElvUI
+
+Core.lua
+Locale.lua
+Config.lua
+
+ObjectiveTracker.lua
+ProgressTracker.lua
+Keystone.lua
+Gossip.lua
+Splits.lua

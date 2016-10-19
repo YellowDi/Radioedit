@@ -252,7 +252,7 @@ local function ModifyFollowerTooltip(tooltipFrame, data)
 			Ability.Details:Show();	
 			
 			_, abilityCounterMechanicName, abilityCounterMechanicIcon = GetFollowerAbilityCounterMechanicInfo(abilities[i]);
-			Ability.Details:SetFormattedText(GARRISON_ABILITY_COUNTERS_FORMAT, abilityCounterMechanicName);
+			Ability.Details:SetFormattedText(GARRISON_ABILITY_COUNTERS_FORMAT, abilityCounterMechanicName or "");
 			Ability:SetHeight(Ability:GetHeight() + Ability.Details:GetHeight() + spacingBetweenDescriptionAndDetails);
 
 			Ability.CounterIcon:SetTexture(abilityCounterMechanicIcon);

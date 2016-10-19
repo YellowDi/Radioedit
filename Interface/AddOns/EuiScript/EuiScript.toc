@@ -4,8 +4,8 @@
 ## Title-zhTW: |cffC495DDEUI|r增強功能
 ## Author: eui.cc
 ## X-Category: ElvUI
-## Version: 20161003A
-## SavedVariables: ACHIEVEMENTSEARCH_DB, DejaCharacterStatsDB, TalentProfilesGlobalDB
+## Version: 20161018A
+## SavedVariables: ACHIEVEMENTSEARCH_DB, DejaCharacterStatsDB, TalentProfilesGlobalDB, WorldQuestTipsData
 ## SavedVariablesPerCharacter: DejaCharacterStatsDBPC, TalentProfilesDB
 ## RequiredDeps: ElvUI
 
@@ -16,3 +16,5 @@ init.lua
 Media.lua
 overlay.xml
 module\load_module.xml
+
+Bindings.xml

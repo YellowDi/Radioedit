@@ -8,7 +8,6 @@ local pairs = pairs
 
 
 function UF:Configure_CustomTexts(frame)
-	if not frame.VARIABLES_SET then return end
 	local db = frame.db
 
 	--Make sure CustomTexts are hidden if they don't exist in current profile

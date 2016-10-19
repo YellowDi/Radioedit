@@ -422,6 +422,8 @@ end
 
 P['datatexts'].spec1 = '';
 P['datatexts'].spec2 = '';
+P['datatexts'].spec3 = '';
+P['datatexts'].spec4 = '';
 P['datatexts']['userColor'] = { r = 1, g = 1, b = 1 }
 P['datatexts']['customColor'] = 2
 P['datatexts']['panels']['AB1Infobar'] = {
@@ -849,6 +851,10 @@ G['BossSwing'] = {
 }
 
 P["euiscript"] = {
+	["blzClassBar"] = {
+		enable = false,
+		scale = 1,
+	},
 	["DRTracker"] = false,
 	["DRTrackerSize"] = 29,
 	["disable_talking"] = false,
@@ -1009,7 +1015,8 @@ P["euiscript"] = {
 		["raidcd_perrow"] = 10,
 		["raidcd_icondirection"] = 'right',
 		["raidcd_iconfontsize"] = 10,
-		["raidcd_iconspace"] = 8,		
+		["raidcd_iconspace"] = 8,
+		["raidcccd"] = true,
 	["raid_spells"] = {
 		[SpellName(20484)] = { cd = 600, enable = true},	-- 复生
 		[SpellName(126393)] = { cd = 600, enable = true}, -- 永恒守护者 (魁麟?)
@@ -1054,6 +1061,25 @@ P["euiscript"] = {
 		[SpellName(187618)] = { cd = 120, enable = true}, --伊瑟拉鲁斯(治疗)
 		[SpellName(187619)] = { cd = 120, enable = true}, --索拉苏斯(力量输出)
 		[SpellName(187620)] = { cd = 120, enable = true}, --玛鲁斯(敏捷输出)
+
+		--控制技能CD
+		[SpellName(46968)] = { cd = 40, enable = true, cc = true}, --震荡波
+		[SpellName(115750)]= { cd = 90, enable = true, cc = true}, --盲目之光
+		[SpellName(108199)]= { cd = 180, enable = true, cc = true}, --血魔之握
+		[SpellName(102359)]= { cd = 30, enable = true, cc = true}, --群体缠绕
+		[SpellName(179057)]= { cd = 60, enable = true, cc = true}, --混乱新星
+		[SpellName(119381)]= { cd = 45, enable = true, cc = true}, --扫堂腿
+		[SpellName(192058)]= { cd = 45, enable = true, cc = true}, --闪电奔涌图腾
+		[SpellName(109248)]= { cd = 45, enable = true, cc = true}, --束缚射击
+		[SpellName(122)]= { cd = 30, enable = true, cc = true}, --冰霜新星
+		[SpellName(30283)]= { cd = 30, enable = true, cc = true}, --暗影之怒
+		[SpellName(132469)]= { cd = 30, enable = true, cc = true}, --吹风
+		[SpellName(78675)]= { cd = 60, enable = true, cc = true}, --日光术	
+		[SpellName(196932)]= { cd = 30, enable = true, cc = true}, --巫毒图腾
+		[SpellName(51485)]= { cd = 30, enable = true, cc = true}, --陷地图腾
+						
+		[SpellName(113724)]= { cd = 45, enable = true, cc = true}, --冰霜之环
+		[SpellName(31661)]= { cd = 20, enable = true, cc = true}, --龙息术
 	},
 	["classcd"] = true,
 		["classcd_width"] = 130,

@@ -22,7 +22,6 @@ function UF:Construct_GPS(frame)
 end
 
 function UF:Configure_GPS(frame)
-	if not frame.VARIABLES_SET then return end
 	local GPS = frame.GPS
 	if frame.db.GPSArrow.enable then
 		if not frame:IsElementEnabled('GPS') then

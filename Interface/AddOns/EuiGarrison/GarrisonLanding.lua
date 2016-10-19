@@ -71,7 +71,9 @@ hooksecurefunc("GarrisonLandingPageReport_GetShipments", function(self)
 end)
 function E:SHOW_LOOT_TOAST(rt, rl, _q, _4, _5, _6, source)
 	if rt == "currency" and source == 10 and rl:match("currency:824") then
-		GarrisonLandingPageReport_GetShipments(GarrisonLandingPageReport)
+		if GarrisonLandingPageReport and GarrisonLandingPageReport:GetParent() and GarrisonLandingPageReport:GetParent().garrTypeID then --by eui.cc
+			GarrisonLandingPageReport_GetShipments(GarrisonLandingPageReport)
+		end
 	end
 end
 local function addCacheResources(self, id)

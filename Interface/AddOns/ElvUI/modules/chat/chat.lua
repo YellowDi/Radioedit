@@ -165,6 +165,7 @@ local hyperlinkTypes = {
 	['instancelock'] = true,
 	['talent'] = true,
 	['glyph'] = true,
+	["currency"] = true,
 }
 
 local tabTexs = {

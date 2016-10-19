@@ -564,7 +564,7 @@ for frame, target in pairs(framelist) do
 	self = _G[frame]
 	if self and E.db.euiscript.DRTracker then
 		local DrTracker = CreateFrame("Frame", nil, self)
-		
+		DrTracker:SetFrameLevel(self.RaisedElementParent:GetFrameLevel() + 10) --set frame level
 		DrTracker:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 		DrTracker:SetScript("OnEvent",CombatLogCheck)
 		DrTracker.target = target[1]

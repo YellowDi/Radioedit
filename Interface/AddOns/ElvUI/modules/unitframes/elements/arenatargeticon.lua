@@ -9,6 +9,8 @@ local CreateFrame = CreateFrame
 
 function UF:Construct_ArenaTargetIcon(frame)
 	local targetIcon = CreateFrame("Frame", nil, frame)
+	targetIcon:SetFrameLevel(frame.RaisedElementParent:GetFrameLevel() + 10)
+
 	targetIcon.bg = CreateFrame("Frame", nil, targetIcon)
 	targetIcon.bg:SetTemplate("Default", nil, nil, self.thinBorders)
 	targetIcon.bg:SetFrameLevel(targetIcon:GetFrameLevel() - 1)

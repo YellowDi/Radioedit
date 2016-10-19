@@ -72,7 +72,7 @@ L["Version="] = "版本="
 L[":|r You cannot delete the only copy of a sequence."] = ":|r 无法删除一键宏的唯一副本."
 L["A sequence colision has occured.  Your local version of "] = true
 L[" has been added as a new version and set to active.  Please review if this is as expected."] = true
-L["A sequence colision has occured. "] = true
+L["A sequence collision has occured. "] = true
 L[" tried to overwrite the version already loaded from "] = true
 L[". This version was not loaded."] = true
 L["Sequence specID set to current spec of "] = true

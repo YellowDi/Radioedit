@@ -6,8 +6,7 @@ local UF = E:GetModule('UnitFrames');
 local UnitIsPlayer = UnitIsPlayer
 
 function UF:Construct_NameText(frame, childType)
-	local parent = frame.RaisedElementParent or frame
-	local name = parent:CreateFontString(nil, 'OVERLAY')
+	local name = frame.RaisedElementParent:CreateFontString(nil, 'OVERLAY')
 	if childType ~= 'raid' and childType ~= 'raid40' then
 		UF:Configure_FontString(name)
 	end

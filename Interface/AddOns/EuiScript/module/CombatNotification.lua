@@ -198,7 +198,7 @@ f:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 function f:lfgMsg()
 	local str = ''
 	if E.db["euiscript"].lfgnoti == 'NONE' then return end
-	local name = GetLFGDungeonInfo(789); --/dump LFDQueueFrameTypeDropDown.selectedValue
+	local name = GetLFGDungeonInfo(1045); --/dump LFDQueueFrameTypeDropDown.selectedValue
 	if not name then name = ''; end
 	local canSend = (IsInGuild() and E.db["euiscript"].lfgnoti == 'GUILD') or (IsInGroup() and E.db["euiscript"].lfgnoti == 'PARTY') or (IsInRaid() and E.db["euiscript"].lfgnoti == 'RAID')
 	local eligible, forTank, forHealer, forDamage, itemCount, money, xp = GetLFGRoleShortageRewards(789, 1)

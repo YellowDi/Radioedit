@@ -822,6 +822,7 @@ local function GetOptionsTable_Castbar(hasTicks, updateFunc, groupName, numUnits
 				order = 5,
 				name = L["Width"],
 				type = 'range',
+				softMax = 600,
 				min = 50, max = 600, step = 1,
 			},
 			height = {
@@ -2858,10 +2859,54 @@ E.Options.args.unitframe.args.player = {
 				},
 			},
 		},
-		pvp = {
+		pvpIcon = {
+			order = 449,
+			type = 'group',
+			name = L["PvP & Prestige Icon"],
+			get = function(info) return E.db.unitframe.units['player']['pvpIcon'][ info[#info] ] end,
+			set = function(info, value) E.db.unitframe.units['player']['pvpIcon'][ info[#info] ] = value; UF:CreateAndUpdateUF('player') end,
+			args = {
+				enable = {
+					order = 1,
+					type = "toggle",
+					name = L["Enable"],
+				},
+				scale = {
+					order = 2,
+					type = "range",
+					name = L["Scale"],
+					isPercent = true,
+					min = 0.1, max = 2, step = 0.01,
+				},
+				spacer = {
+					order = 3,
+					type = "description",
+					name = " ",
+				},
+				anchorPoint = {
+					order = 4,
+					type = "select",
+					name = L["Anchor Point"],
+					values = positionValues,
+				},
+				xOffset = {
+					order = 5,
+					type = "range",
+					name = L["X-Offset"],
+					min = -100, max = 100, step = 1,
+				},
+				yOffset = {
+					order = 6,
+					type = "range",
+					name = L["Y-Offset"],
+					min = -100, max = 100, step = 1,
+				},
+			},
+		},
+		pvpText = {
 			order = 450,
 			type = 'group',
-			name = PVP,
+			name = L["PvP Text"],
 			get = function(info) return E.db.unitframe.units['player']['pvp'][ info[#info] ] end,
 			set = function(info, value) E.db.unitframe.units['player']['pvp'][ info[#info] ] = value; UF:CreateAndUpdateUF('player') end,
 			args = {
@@ -3024,7 +3069,51 @@ E.Options.args.unitframe.args.target = {
 		castbar = GetOptionsTable_Castbar(false, UF.CreateAndUpdateUF, 'target'),
 		aurabar = GetOptionsTable_AuraBars(false, UF.CreateAndUpdateUF, 'target'),
 		raidicon = GetOptionsTable_RaidIcon(UF.CreateAndUpdateUF, 'target'),
-		GPSArrow = GetOptionsTableForNonGroup_GPS('target')
+		GPSArrow = GetOptionsTableForNonGroup_GPS('target'),
+		pvpIcon = {
+			order = 449,
+			type = 'group',
+			name = L["PvP & Prestige Icon"],
+			set = function(info, value) E.db.unitframe.units['target']['pvpIcon'][ info[#info] ] = value; UF:CreateAndUpdateUF('target') end,
+			get = function(info) return E.db.unitframe.units['target']['pvpIcon'][ info[#info] ] end,
+			args = {
+				enable = {
+					order = 1,
+					type = "toggle",
+					name = L["Enable"],
+				},
+				scale = {
+					order = 2,
+					type = "range",
+					name = L["Scale"],
+					isPercent = true,
+					min = 0.1, max = 2, step = 0.01,
+				},
+				spacer = {
+					order = 3,
+					type = "description",
+					name = " ",
+				},
+				anchorPoint = {
+					order = 4,
+					type = "select",
+					name = L["Anchor Point"],
+					values = positionValues,
+				},
+				xOffset = {
+					order = 5,
+					type = "range",
+					name = L["X-Offset"],
+					min = -100, max = 100, step = 1,
+				},
+				yOffset = {
+					order = 6,
+					type = "range",
+					name = L["Y-Offset"],
+					min = -100, max = 100, step = 1,
+				},
+			},
+		},
 	},
 }
 
@@ -4527,9 +4616,14 @@ E.Options.args.unitframe.args.party = {
 					end,
 					order = 6
 				},
+				spacer = {
+					order = 7,
+					type = 'description',
+					name = '',
+				},
 				raidTurtleBuffs = {
 					type = 'toggle',
-					order = 6,
+					order = 10,
 					name = L['Raid Damage reduction'],
 					set = function(info, value) E.db.unitframe.units.raid.raidTurtleBuffs = value;UF:CreateAndUpdateHeaderGroup('raid'); end,
 					get = function(info) return E.db.unitframe.units.raid.raidTurtleBuffs; end,
@@ -4538,17 +4632,17 @@ E.Options.args.unitframe.args.party = {
 					type = 'execute', 
 					name = L['Configure Raid Turtle Aura'],
 					func = function() E:SetToFilterConfig('Raid Damage reduction') end,
-					order = 7,
+					order = 11,
 					disabled = function() return not E.db.unitframe.units.raid.raidTurtleBuffs end,
 				},
 				spacer = {
-					order = 8,
+					order = 12,
 					type = 'description',
 					name = '',
-				},				
+				},
 				charTurtleBuffs = {
 					type = 'toggle',
-					order = 9,
+					order = 20,
 					name = L['Char Damage reduction'],
 					set = function(info, value) E.db.unitframe.units.raid.charTurtleBuffs = value;UF:CreateAndUpdateHeaderGroup('raid'); end,
 					get = function(info) return E.db.unitframe.units.raid.charTurtleBuffs; end,
@@ -4557,7 +4651,7 @@ E.Options.args.unitframe.args.party = {
 					type = 'execute', 
 					name = L['Configure Char Turtle Aura'],
 					func = function() E:SetToFilterConfig('Char Damage reduction') end,
-					order = 10,
+					order = 21,
 					disabled = function() return not E.db.unitframe.units.raid.charTurtleBuffs end,
 				},
 			},
@@ -5146,6 +5240,44 @@ E.Options.args.unitframe.args['raid'] = {
 						end
 					end,
 					order = 6
+				},
+				spacer = {
+					order = 7,
+					type = 'description',
+					name = '',
+				},
+				raidTurtleBuffs = {
+					type = 'toggle',
+					order = 10,
+					name = L['Raid Damage reduction'],
+					set = function(info, value) E.db.unitframe.units.raid.raidTurtleBuffs = value;UF:CreateAndUpdateHeaderGroup('raid'); end,
+					get = function(info) return E.db.unitframe.units.raid.raidTurtleBuffs; end,
+				},
+				configureButton2 = {
+					type = 'execute', 
+					name = L['Configure Raid Turtle Aura'],
+					func = function() E:SetToFilterConfig('Raid Damage reduction') end,
+					order = 11,
+					disabled = function() return not E.db.unitframe.units.raid.raidTurtleBuffs end,
+				},
+				spacer = {
+					order = 12,
+					type = 'description',
+					name = '',
+				},
+				charTurtleBuffs = {
+					type = 'toggle',
+					order = 20,
+					name = L['Char Damage reduction'],
+					set = function(info, value) E.db.unitframe.units.raid.charTurtleBuffs = value;UF:CreateAndUpdateHeaderGroup('raid'); end,
+					get = function(info) return E.db.unitframe.units.raid.charTurtleBuffs; end,
+				},
+				configureButton3 = {
+					type = 'execute', 
+					name = L['Configure Char Turtle Aura'],
+					func = function() E:SetToFilterConfig('Char Damage reduction') end,
+					order = 21,
+					disabled = function() return not E.db.unitframe.units.raid.charTurtleBuffs end,
 				},
 			},
 		},

@@ -203,6 +203,7 @@ function rematch:FillWinRecordButton(button,key)
 	if battles and battles>0 and not settings.HideWinRecord then
 		local percent = floor(wins*100/battles+0.5)
 		button.Text:SetText(settings.AlternateWinRecord and wins or format("%d%%",percent))
+		local left,right,top,bottom
 		if percent>=60 then
 			left,right,top,bottom = 0,0.296875,0,0.28125
 		elseif percent<=40 then

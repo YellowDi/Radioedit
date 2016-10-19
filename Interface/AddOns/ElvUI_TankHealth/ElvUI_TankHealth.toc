@@ -1,0 +1,26 @@
+﻿## Interface: 70000
+## Author: Sunaurus
+## Version: 1.10
+## Title: |cffC495DDEUI|r |cff00b3ffTankHealth|r
+## Title-zhCN: |cffC495DDEUI|r |cff00b3ff坦克血量增强|r
+## Title-zhTW: |cffC495DDEUI|r |cff00b3ff坦克血量增強|r
+## Notes: ElvUI Plugin for displaying the potential heal from Soul Cleave on your health bar.
+## RequiredDeps: ElvUI
+## X-Revision: ElvUI
+## X-Curse-Packaged-Version: 1.10
+## X-Curse-Project-Name: ElvUI TankHealth
+## X-Curse-Project-ID: elvui_tankhealth
+## X-Curse-Repository-ID: wow/elvui_tankhealth/mainline
+
+../libs/LibStub/LibStub.lua
+../libs/AceGUI-3.0/AceGUI-3.0.lua
+libraries/LegionArtifacts-1.1/LegionArtifacts-1.1.lua
+main.lua
+healcalculations/artifact.lua
+healcalculations/cooldowns.lua
+healcalculations/classes/dh.lua
+healcalculations/classes/dk.lua
+healcalculations/classes/druid.lua
+healcalculations/classes/monk.lua
+healcalculations/classes/paladin.lua
+healcalculations/classes/warrior.lua

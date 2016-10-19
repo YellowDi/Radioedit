@@ -28,5 +28,8 @@
 
 	<Script file="..\..\libs\LibRangeCheck-2.0\LibRangeCheck-2.0.lua"/>
 	<Script file="..\..\libs\LibItemUpgradeInfo-1.0\Core.lua"/>
-	<Script file="..\..\libs\LibQTip-1.0\LibQTip-1.0.lua"/>	
+	<Script file="..\..\libs\LibQTip-1.0\LibQTip-1.0.lua"/>
+
+	<Script file="..\..\libs\LibItem\LibItem.lua"/>
+	
 </Ui>

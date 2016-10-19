@@ -1,12 +1,12 @@
 local mod	= DBM:NewMod(1738, "DBM-EmeraldNightmare", nil, 768)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 15279 $"):sub(12, -3))
+mod:SetRevision(("$Revision: 15338 $"):sub(12, -3))
 mod:SetCreatureID(105393)
 mod:SetEncounterID(1873)
 mod:SetZone()
-mod:SetUsedIcons(4, 3, 2, 1)
-mod:SetHotfixNoticeRev(15123)
+mod:SetUsedIcons(8, 4, 3, 2, 1)
+mod:SetHotfixNoticeRev(15338)
 mod.respawnTime = 29
 
 mod:RegisterCombat("combat")
@@ -32,7 +32,7 @@ mod:RegisterEventsInCombat(
 --TODO, improve spew corruption to work like thogar bombs (continous alerts/yells)
 --TODO, Death Blossom timer for first cast afer a heart phase.
 --Stage One: The Ruined Ground
---ability.id = 210289 or ability.id = 209915
+--(ability.id = 208697 or ability.id = 208929 or ability.id = 218415) and type = "begincast" or ability.id = 209915
 local warnNightmareGaze				= mod:NewSpellAnnounce(210931, 3, nil, false)--Something tells me this is just something it spam casts
 local warnFixate					= mod:NewTargetAnnounce(210099, 2, nil, false)--Spammy so default off
 local warnNightmareExplosion		= mod:NewCastAnnounce(209471, 3)
@@ -99,6 +99,7 @@ local voiceNightmarishFury			= mod:NewVoice(210984)--defensive
 local voiceGroundSlam				= mod:NewVoice(208689)--targetyou/watchwave
 
 mod:AddSetIconOption("SetIconOnSpew", 208929, false)
+mod:AddSetIconOption("SetIconOnOoze", "ej13186", false)
 mod:AddRangeFrameOption(8, 215128)
 mod:AddInfoFrameOption(210099)
 mod:AddDropdownOption("InfoFrameBehavior", {"Fixates", "Adds"}, "Fixates", "misc")
@@ -115,11 +116,18 @@ mod.vb.CorruptorSpawn = 0
 local UnitExists, UnitGUID, UnitDetailedThreatSituation = UnitExists, UnitGUID, UnitDetailedThreatSituation
 local eyeName = EJ_GetSectionInfo(13185)
 local addsTable = {}
-local phase1Deathglares = {26, 69, 85, 55}
-local phase1Corruptors = {90, 95, 35}
+local phase1Deathglares = {26, 69, 85, 55}--Variation 26, 75, 85, 60
+local phase1MythicDeathglares = {26, 69, 85, 65}--Variation 26, 75, 85, 60
+local phase1Corruptors = {90, 95, 35}--Variation 90, 95, 40
+local phase1MythicCorruptors = {90, 95, 45}--Variation 90, 95, 40
+local phase1DeathBlossom = {60, 100, 35}
 
-local phase2Deathglares = {21.5, 90, 130}--it's usually 21, 95, 130 but sometimes it can be 26 90, 130. As such timers have to use 21, 90, 130 to avoid a "slow timer". Scheduling may reduce impact of this problem a little
-local phase2Corruptors = {45, 95, 35, 85, 40}
+local phase2Deathglares = {21.5, 90, 130}--21.5, 95
+local phase2Corruptors = {45, 95, 35, 85, 40}--45, 75 (need more data)
+local phase2MythicCorruptors = {45, 75}--(need more data)
+local phase2DeathBlossom = {80}--Unknown beyond first cast
+local autoMarkScannerActive = false
+local autoMarkFilter = {}
 
 local updateInfoFrame, sortInfoFrame
 do
@@ -162,6 +170,39 @@ do
 	end
 end
 
+--This clean method will only work until 7.1. After which it'll have to be replaced with something FAR uglier
+local autoMarkOozesUntil71
+do
+	local UnitHealth, UnitHealthMax, UnitGUID, UnitCastingInfo = UnitHealth, UnitHealthMax, UnitGUID, UnitCastingInfo
+	autoMarkOozesUntil71 = function(self)
+		self:Unschedule(autoMarkOozesUntil71)
+		if self.vb.IchorCount == 0 then
+			autoMarkScannerActive = false
+			return
+		end--None left, abort scans
+		local lowestUnitID = nil
+		local lowestHealth = 100
+		for i = 1, 25 do
+			local UnitID = "nameplate"..i
+			local GUID = UnitGUID(UnitID)
+			if GUID and not autoMarkFilter[GUID] then
+				local cid = self:GetCIDFromGUID(GUID)
+				if cid == 105721 then
+					local unitHealth = UnitHealth(UnitID) / UnitHealthMax(UnitID)
+					if unitHealth < lowestHealth then
+						lowestHealth = unitHealth
+						lowestUnitID = UnitID
+					end
+				end
+			end
+		end
+		if lowestUnitID then
+			self:SetIcon(lowestUnitID, 8)
+		end
+		self:Schedule(1, autoMarkOozesUntil71, self)
+	end
+end
+
 function mod:SpewCorruptionTarget(targetname, uId)
 	if not targetname then return end
 	if targetname == UnitName("player") then
@@ -179,13 +220,16 @@ function mod:OnCombatStart(delay)
 	self.vb.IchorCount = 0
 	self.vb.DeathglareSpawn = 0
 	self.vb.CorruptorSpawn = 0
+	autoMarkScannerActive = false
+	table.wipe(autoMarkFilter)
 	timerNightmareishFuryCD:Start(6-delay)
 	timerGroundSlamCD:Start(12-delay)
 	timerDeathGlareCD:Start(26-delay)
 	timerNightmareHorrorCD:Start(65-delay)
 	timerCorruptorTentacleCD:Start(90-delay)
 	if self:IsMythic() then
-		timerDeathBlossomCD:Start(55)
+		self.vb.deathBlossomCount = 0
+		timerDeathBlossomCD:Start(60)
 	end
 	if self.Options.InfoFrame then
 		if self.Options.InfoFrameBehavior == "Fixates" then
@@ -214,8 +258,16 @@ function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 210931 then
 		warnNightmareGaze:Show()
-	elseif spellId == 209471 and self:AntiSpam(3, 5) then
-		warnNightmareExplosion:Show()
+	elseif spellId == 209471 then
+		if self:AntiSpam(3, 5) then
+			warnNightmareExplosion:Show()
+		end
+		if self.Options.SetIconOnOoze and not self:IsLFR() then
+			autoMarkOozesUntil71(self)
+		end
+		if not autoMarkFilter[args.sourceGUID] then
+			 autoMarkFilter[args.sourceGUID] = true
+		end
 	elseif spellId == 208697 then
 		if self:CheckInterruptFilter(args.sourceGUID) then
 			specWarnMindFlay:Show(args.sourceName)
@@ -228,7 +280,7 @@ function mod:SPELL_CAST_START(args)
 				self.vb.DeathglareSpawn = self.vb.DeathglareSpawn + 1
 				warnDeathglareTentacle:Show()
 				local nextCount = self.vb.DeathglareSpawn + 1
-				local timer = self.vb.phase == 2 and phase2Deathglares[nextCount] or phase1Deathglares[nextCount]
+				local timer = self.vb.phase == 2 and phase2Deathglares[nextCount] or self:IsMythic() and phase1MythicDeathglares[nextCount] or phase1Deathglares[nextCount]
 				if timer then
 					timerDeathGlareCD:Start(timer)
 				end
@@ -243,25 +295,40 @@ function mod:SPELL_CAST_START(args)
 				self.vb.CorruptorSpawn = self.vb.CorruptorSpawn + 1
 				warnCorruptorTentacle:Show()
 				local nextCount = self.vb.CorruptorSpawn + 1
-				local timer = self.vb.phase == 2 and phase2Corruptors[nextCount] or phase1Corruptors[nextCount]
+				local timer
+				if self.vb.phase == 2 then
+					timer = self:IsMythic() and phase2MythicCorruptors[nextCount] or phase2Corruptors[nextCount]
+				else
+					timer = self:IsMythic() and phase1MythicCorruptors[nextCount] or phase1Corruptors[nextCount]
+				end
 				if timer then
 					timerCorruptorTentacleCD:Start(timer)
 				end
 			end
 		end
 	elseif spellId == 210781 then--Dark Reconstitution
-		timerDarkReconstitution:Start()
-		countdownDarkRecon:Start()
+		if self:IsMythic() then
+			timerDarkReconstitution:Start(55)
+			countdownDarkRecon:Start(55)
+		else
+			timerDarkReconstitution:Start()
+			countdownDarkRecon:Start()
+		end
 	elseif spellId == 208685 and self:AntiSpam(4, 2) then--Rupturing roar (Untanked tentacle)
 		specWarnDominatorTentacle:Show()
 	elseif spellId == 218415 then
+		self.vb.deathBlossomCount = self.vb.deathBlossomCount + 1
 		warnDeathBlossom:Show()
 		timerDeathBlossom:Start()
 		countdownDeathBlossom:Start()
-		timerDeathBlossomCD:Start()
+		local nextCount = self.vb.deathBlossomCount + 1
+		local timer = self.vb.phase == 2 and phase2DeathBlossom[nextCount] or phase1DeathBlossom[nextCount]
+		if timer then
+			timerDeathBlossomCD:Start(timer, self.vb.deathBlossomCount+1)
+		end
 	elseif spellId == 223121 then
 		timerFinalTorpor:Start()
-		countdownDarkRecon:Start()
+		countdownDarkRecon:Start(90)
 	elseif spellId == 208689 and self:AntiSpam(2, 6) then
 		timerGroundSlamCD:Start()
 	end
@@ -292,7 +359,10 @@ function mod:SPELL_AURA_APPLIED(args)
 		timerCursedBloodCD:Stop()
 		timerNightmareishFuryCD:Start(7)
 		timerGroundSlamCD:Start(13)
-		--timerDeathBlossomCD:Start(55)
+		if self:IsMythic() then
+			self.vb.deathBlossomCount = 0
+			timerDeathBlossomCD:Start(80)
+		end
 		timerDeathGlareCD:Start(21.5)
 		timerCorruptorTentacleCD:Start(45)
 		timerNightmareHorrorCD:Start(95)
@@ -308,6 +378,10 @@ function mod:SPELL_AURA_APPLIED(args)
 		if not addsTable[args.sourceGUID] then
 			addsTable[args.sourceGUID] = true
 			self.vb.IchorCount = self.vb.IchorCount + 1
+			if self.Options.SetIconOnOoze and not self:IsLFR() and not autoMarkScannerActive then
+				autoMarkScannerActive = true
+				self:Schedule(2.5, autoMarkOozesUntil71, self)
+			end
 		end
 	elseif spellId == 210984 then
 		local uId = DBM:GetRaidUnitId(args.destName)

@@ -10,7 +10,6 @@ local IsLoggedIn = IsLoggedIn
 local GetMoney = GetMoney
 local GetItemInfo = GetItemInfo
 local IsShiftKeyDown = IsShiftKeyDown
-local ToggleAllBags = ToggleAllBags
 local GetBackpackCurrencyInfo = GetBackpackCurrencyInfo
 local C_WowTokenPublicUpdateMarketPrice = C_WowTokenPublic.UpdateMarketPrice
 local C_WowTokenPublicGetCurrentMarketPrice = C_WowTokenPublic.GetCurrentMarketPrice

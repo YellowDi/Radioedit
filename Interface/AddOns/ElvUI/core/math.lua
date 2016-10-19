@@ -32,7 +32,7 @@ function E:ShortValue(v)
 			y = '億';
 			w = '萬';
 		end
-		if abs(v) >= 1e8 then
+		if abs(v) > 1e8 then
 			return ("%.2f"..y):format(v / 1e8):gsub("%.?0+([km])$", "%1")
 		elseif abs(v) >= 1e4 or abs(v) <= -1e4 then
 			return ("%.2f"..w):format(v / 1e4):gsub("%.?0+([km])$", "%1")

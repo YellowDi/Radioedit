@@ -189,7 +189,7 @@ function panel:ShowTabEditDialog(index)
 		name = groups[index][1]
 		icon = groups[index][2]
 	end
-	rematch:ShowDialog("TabEdit",300,306,name or L["New Tab"],L["Choose a name and icon"],SAVE,panel.IconPickerSave,CANCEL)
+	rematch:ShowDialog("TabEdit",390,456,name or L["New Tab"],L["Choose a name and icon"],SAVE,panel.IconPickerSave,CANCEL)
 	dialog:SetContext("tab",index)
 	dialog:SetContext("name",name)
 	dialog:SetContext("icon",icon)
@@ -209,7 +209,7 @@ function panel:ShowTabEditDialog(index)
 		local scrollFrame = iconPicker.ScrollFrame
 		scrollFrame.update = panel.UpdateTabIconPickerList
 		scrollFrame.ScrollBar.doNotHide = true
-		scrollFrame.stepSize = 120
+		scrollFrame.stepSize = 270
 		HybridScrollFrame_CreateButtons(scrollFrame,"RematchTeamTabPickerListTemplate")
 	end
 	-- set up icon choices (recreating table each time on purpose; don't want to keep these huge tables)
@@ -238,7 +238,7 @@ function panel:UpdateTabIconPickerList()
 	-- data points to searchChoices if a search is used, or iconChoices (all icons) otherwise
 	local data = dialog:GetContext("iconChoices")
 	if not data then return end
-	local numData = ceil(#data/7)
+	local numData = ceil(#data/10)
 	local scrollFrame = iconPicker.ScrollFrame
 	local offset = HybridScrollFrame_GetOffset(scrollFrame)
 	local buttons = scrollFrame.buttons
@@ -247,9 +247,9 @@ function panel:UpdateTabIconPickerList()
 		local index = i + offset
 		local button = buttons[i]
 		if ( index <= numData) then
-			for j=1,7 do
+			for j=1,10 do
 				local subbutton = button.Icons[j]
-				local iconID = data[(index-1)*7+j]
+				local iconID = data[(index-1)*10+j]
 				subbutton.iconID = iconID
 				if iconID then
 					subbutton.Texture:SetTexture(iconID)

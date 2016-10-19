@@ -2,7 +2,7 @@ local E, L, V, P, G = unpack(select(2, ...)); --Inport: Engine, Locales, Private
 local UF = E:GetModule('UnitFrames');
 
 function UF:Construct_RaidIcon(frame)
-	local tex = (frame.RaisedElementParent or frame):CreateTexture(nil, "OVERLAY")
+	local tex = frame.RaisedElementParent:CreateTexture(nil, "OVERLAY")
 	tex:SetTexture([[Interface\TargetingFrame\UI-RaidTargetingIcons]])
 	tex:Size(18)
 	tex:Point("CENTER", frame.Health, "TOP", 0, 2)
@@ -12,7 +12,6 @@ function UF:Construct_RaidIcon(frame)
 end
 
 function UF:Configure_RaidIcon(frame)
-	if not frame.VARIABLES_SET then return end
 	local RI = frame.RaidIcon
 	local db = frame.db
 

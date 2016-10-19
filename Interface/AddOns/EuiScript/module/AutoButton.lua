@@ -27,19 +27,14 @@ local GetInventoryItemCooldown = GetInventoryItemCooldown
 local GetBindingKey = GetBindingKey
 
 --Binding Variables
---BINDING_HEADER_EUI_AUTOSLOTBUTTON = "EUI".. L["Auto InventoryItem Button"];
---BINDING_HEADER_EUI_AUTOQUESTBUTTON = "EUI".. L["Auto QuestItem Button"];
+BINDING_HEADER_AutoSlotButton = "|cffC495DDEUI|r".. L["Auto InventoryItem Button"];
+BINDING_HEADER_AutoQuestButton = "|cffC495DDEUI|r".. L["Auto QuestItem Button"];
 
 for i = 1, 12 do
-	_G["BINDING_NAME_AutoSlotButton"..i] = L["Auto InventoryItem Button"]..i
-	_G["BINDING_NAME_AutoQuestButton"..i] = L["Auto QuestItem Button"]..i
+	_G["BINDING_NAME_CLICK AutoSlotButton"..i..":LeftButton"] = L["Auto InventoryItem Button"]..i
+	_G["BINDING_NAME_CLICK AutoQuestButton"..i..":LeftButton"] = L["Auto QuestItem Button"]..i
 end
 
-function EuiScript_AutoButton_Click(btn)
-	if btn then
-		_G.SetOverrideBindingClick(btn, true, "BUTTON1", btn:GetName())
-	end
-end
 ----------------------------------------------------------------------------------------
 --	AutoButton (by eui.cc at 2015/02/07)
 ----------------------------------------------------------------------------------------

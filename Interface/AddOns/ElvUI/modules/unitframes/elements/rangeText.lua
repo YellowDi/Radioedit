@@ -24,7 +24,8 @@ end
 
 function UF:Construct_RangeText(frame)
 	local R = CreateFrame("Frame", nil, frame)
-	R.rcText = R:CreateFontString(nil, 'OVERLAY')
+	R.rcText = frame.RaisedElementParent:CreateFontString(nil, 'OVERLAY')
+
 	UF:Configure_FontString(R.rcText)
 	
 	R:SetScript("OnUpdate", function(self, elapsed)

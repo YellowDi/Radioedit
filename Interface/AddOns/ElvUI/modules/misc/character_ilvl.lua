@@ -1,112 +1,96 @@
 local E, L, V, P, G = unpack(select(2, ...)); --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
-local ItemUpgradeInfo = LibStub("LibItemUpgradeInfo-1.0")
 
-----------------------------------------------------------------------------------------
---	Item level on slot buttons in Character/InspectFrame(by Tukz)
-----------------------------------------------------------------------------------------
-local slots = {
-	"HeadSlot", "NeckSlot", "ShoulderSlot", "BackSlot", "ChestSlot", "ShirtSlot", "TabardSlot",
-	"WristSlot", "MainHandSlot", "SecondaryHandSlot", "HandsSlot", "WaistSlot",
-	"LegsSlot", "FeetSlot", "Finger0Slot", "Finger1Slot", "Trinket0Slot", "Trinket1Slot"
-}
-
-local function CreateButtonsText(frame)
-	for _, slot in pairs(slots) do
-		local button = _G[frame..slot]
-		button.t = button:CreateFontString(nil, "OVERLAY", "SystemFont_Outline_Small")
-		button.t:SetPoint("TOPRIGHT", button, "TOPRIGHT", -1, -2)
-		button.t:SetText("")
-	end
+--顯示面板裝備物品等級
+local function ShowPaperDollItemLevel(self, unit)
+	if (self:GetID() == 4 or self:GetID() > 17) then return end
+    if (not self.levelString) then
+        self.levelBorder = self:CreateTexture(nil, 'OVERLAY')
+        self.levelBorder:SetSize(67, 67)
+        self.levelBorder:SetPoint('CENTER')
+        self.levelBorder:SetTexture([[Interface\Buttons\UI-ActionButton-Border]])
+        self.levelBorder:SetBlendMode('ADD')
+        self.levelBorder:Hide()
+        self.levelString = self:CreateFontString(nil, "OVERLAY")
+		self.levelString:SetFont(STANDARD_TEXT_FONT, 13, "OUTLINE")
+		self.levelString:SetPoint("TOP")
+        self.levelString:SetTextColor(1, 0.82, 0)
+        self.DurabString = self:CreateFontString(nil, "OVERLAY")
+		self.DurabString:SetFont(STANDARD_TEXT_FONT, 13, "OUTLINE")
+		self.DurabString:SetPoint("BOTTOM")
+        self.DurabString:SetTextColor(0, 0.9, 0)
+    end
+    local result
+    if (unit and self.hasItem) then
+        local unknownCount, level, _, link, quality = EuiLibItem:GetUnitItemInfo(unit, self:GetID())
+        if (unknownCount == 0 and level > 0) then
+            self.levelString:SetText(level)
+            result = true
+        end
+        if (quality) then
+            local r, g, b, hex = GetItemQualityColor(quality)
+            self.levelBorder:SetVertexColor(r, g, b, 0.4)
+            self.levelBorder:Show()
+        end
+        if (unit == "player") then
+            local durability, maxDurability = GetInventoryItemDurability(self:GetID())
+            if (durability and maxDurability) then
+                local durabPercent = durability / maxDurability
+                self.DurabString:SetText(format("%d%%", durabPercent * 100))
+                self.DurabString:SetTextColor(1-durabPercent, durabPercent, 0)
+            else
+                self.DurabString:SetText("")
+            end
+        end
+    else
+        self.levelString:SetText("")
+        self.levelBorder:Hide()
+        result = true
+    end
+    --副手有神器時才需要修正
+    if (self:GetID() == 16 or self:GetID() == 17) then
+        local _, offhand, _, _, quality = EuiLibItem:GetUnitItemInfo(unit, 17)
+        if (quality == 6) then
+            local _, mainhand = EuiLibItem:GetUnitItemInfo(unit, 16)
+            self.levelString:SetText(max(mainhand, offhand))
+        end
+    end
+    return result
 end
 
-local isClose = false
-local function UpdateButtonsText(frame)
-	if frame == "Inspect" and not InspectFrame:IsShown() then return end
-
-	if isClose then return; end
-
-	if not E.db.euiscript.char_ilvl then
-		for _, slot in pairs(slots) do
-			local text = _G[frame..slot].t
-			text:SetText('')
-		end
-		isClose = true;
-		return;
-	else
-		isClose = false;
-	end
-
-	local unit, itemM, itemS, itemMlv, itemSlv, itemMMax
-	if frame == "Inspect" then
-		unit = "target"
-	else
-		unit = "player"
-	end
-	itemM = GetInventoryItemLink(unit, 16)
-	itemS = GetInventoryItemLink(unit, 17)
-	itemMlv = itemM and ItemUpgradeInfo:GetUpgradedItemLevel(itemM) or 0
-	itemSlv = itemS and ItemUpgradeInfo:GetUpgradedItemLevel(itemS) or 0
-	itemMMax = (itemMlv > itemSlv) and itemMlv or itemSlv
-
-	for _, slot in pairs(slots) do
-		local id = GetInventorySlotInfo(slot)
-		local text = _G[frame..slot].t
-		local item
-
-		item = GetInventoryItemLink(unit, id)
-
-		if slot == "ShirtSlot" or slot == "TabardSlot" then
-			text:SetText("")
-		elseif item then
-			local oldilevel = text:GetText()
-			local _, _, q, ilevel = GetItemInfo(item)
-
-			if ilevel then
-				if q == 6 and ilevel == 750 and (id == 16 or id == 17) then--修正神器副手itemLink字串不含升级物品信息的问题
-					text:SetText("|cFFFFFF00".. itemMMax)
-				else				
-					if ilevel ~= oldilevel then
-						if ilevel == 1 then
-							text:SetText("")
-						else
-							text:SetText("|cFFFFFF00".. ItemUpgradeInfo:GetUpgradedItemLevel(item))
-						end
-					end
-				end
-			else
-				text:SetText("")
-			end
-		else
-			text:SetText("")
-		end
-	end
-end
-
-local OnEvent = CreateFrame("Frame")
-OnEvent:RegisterEvent("PLAYER_LOGIN")
-OnEvent:RegisterEvent("PLAYER_EQUIPMENT_CHANGED")
-OnEvent:SetScript("OnEvent", function(self, event)
-	if event == "PLAYER_LOGIN" then
-		CreateButtonsText("Character")
-		UpdateButtonsText("Character")
-		self:UnregisterEvent("PLAYER_LOGIN")
-		CharacterFrame:HookScript("OnShow", function(self) UpdateButtonsText("Character") end)
-	elseif event == "PLAYER_EQUIPMENT_CHANGED" then
-		UpdateButtonsText("Character")
-	else
-		UpdateButtonsText("Inspect")
-	end
+--玩家面板
+hooksecurefunc("PaperDollItemSlotButton_Update", function(self)
+    if not E.db.euiscript.char_ilvl then return end
+	ShowPaperDollItemLevel(self, "player")
 end)
 
-local OnLoad = CreateFrame("Frame")
-OnLoad:RegisterEvent("ADDON_LOADED")
-OnLoad:SetScript("OnEvent", function(self, event, addon)
-	if addon == "Blizzard_InspectUI" then
-		CreateButtonsText("Inspect")
-		InspectFrame:HookScript("OnShow", function(self) UpdateButtonsText("Inspect") end)
-		OnEvent:RegisterEvent("UNIT_INVENTORY_CHANGED")
-		OnEvent:RegisterEvent("PLAYER_TARGET_CHANGED")
-		OnEvent:RegisterEvent("INSPECT_READY")
-		self:UnregisterEvent("ADDON_LOADED")
-	end
+--觀察面板
+local frame = CreateFrame("Frame", nil, UIParent)
+frame:RegisterEvent("INSPECT_READY")
+frame:SetScript("OnEvent", function(self, event, arg1)
+    if (event == "INSPECT_READY" and InspectFrame and InspectFrame.unit and UnitGUID(InspectFrame.unit) == arg1) then
+        --InspectPaperDollItemSlotButton_Update刷太猛或導致卡頓,故使用TASK模式
+        for _, button in ipairs({
+              InspectHeadSlot,InspectNeckSlot,InspectShoulderSlot,InspectBackSlot,InspectChestSlot,InspectWristSlot,
+              InspectHandsSlot,InspectWaistSlot,InspectLegsSlot,InspectFeetSlot,InspectFinger0Slot,InspectFinger1Slot,
+              InspectTrinket0Slot,InspectTrinket1Slot,InspectMainHandSlot,InspectSecondaryHandSlot
+            }) do
+            EuiLibItem:AddTask({
+                button    = button,
+                identity  = button:GetName(),
+                elasped   = 1,
+                expired   = GetTime() + 4,
+                onStart   = function(self)
+                    if (self.button.levelString) then
+                        self.button.levelString:SetText("")
+                        self.button.levelBorder:Hide()
+                    end
+                end,
+                onExecute = function(self)
+                    if (not InspectFrame.unit) then return end
+					if not E.db.euiscript.char_ilvl then return end
+                    return ShowPaperDollItemLevel(self.button, InspectFrame.unit)
+                end,
+            })
+        end
+    end
 end)

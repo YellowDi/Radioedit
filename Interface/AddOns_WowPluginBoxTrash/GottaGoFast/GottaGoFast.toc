@@ -1,0 +1,26 @@
+﻿## Interface: 70000
+## Version: 2.2.1
+## Title: |cffC495DDEUI|r GottaGoFast
+## Title-zhCN: |cffC495DDEUI|r |cFF00D1FF大秘境计时|r
+## Title-zhTW: |cffC495DDEUI|r |cFF00D1FF大秘境計時|r
+## Notes: Mythic+ (CMs) Timer & Objective Tracker W/ Timewalking Capabilities, Ace3 Edition
+## SavedVariables: GottaGoFastDB
+## OptionalDeps: Ace3
+## X-Embeds: Ace3
+## Dependencies: ElvUI
+## X-Revision: ElvUI
+
+Embeds.xml
+
+Core.lua
+Utility.lua
+Timer.lua
+CM.lua
+TW.lua
+InstanceInfo.lua
+Options.lua
+Models/Player.lua
+Models/Dungeon.lua
+Models/Run.lua
+Models/TimeStamp.lua
+History.lua

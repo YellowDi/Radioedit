@@ -1,7 +1,7 @@
 ﻿local E, L, V, P, G = unpack(select(2, ...)); --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local B = E:NewModule('Bags', 'AceHook-3.0', 'AceEvent-3.0', 'AceTimer-3.0');
 local Search = LibStub('LibItemSearch-1.2-ElvUI')
-local ItemUpgradeInfo = LibStub("LibItemUpgradeInfo-1.0")
+
 --Cache global variables
 --Lua functions
 local _G = _G
@@ -73,7 +73,7 @@ local TEXTURE_ITEM_QUEST_BANG = TEXTURE_ITEM_QUEST_BANG
 -- GLOBALS: ContainerFrame1, RightChatToggleButton, GuildItemSearchBox, StackSplitFrame
 -- GLOBALS: LeftChatToggleButton, MAX_GUILDBANK_SLOTS_PER_TAB, UISpecialFrames
 -- GLOBALS: ElvUIReagentBankFrame, MerchantFrame, BagItemAutoSortButton, SetInsertItemsLeftToRight
---
+-- GLOBALS: ElvUIBankMover, ElvUIBagMover, RightChatPanel, LeftChatPanel
 
 local SEARCH_STRING = ""
 
@@ -88,6 +88,47 @@ B.ProfessionColors = {
 	[0x8000] = {107/255, 150/255, 255/255}, -- Fishing
 	[0x010000] = {222/255, 13/255,  65/255} -- Cooking
 }
+
+local itemLevelCache = {}
+local itemLevelPattern = gsub(ITEM_LEVEL, "%%d", "(%%d+)")
+local tooltipLines = { --These are the lines we wish to scan
+	"ElvUI_ItemScanningTooltipTextLeft2",
+	"ElvUI_ItemScanningTooltipTextLeft3",
+	"ElvUI_ItemScanningTooltipTextLeft4",
+}
+local tooltip = CreateFrame("GameTooltip", "ElvUI_ItemScanningTooltip", UIParent, "GameTooltipTemplate")
+tooltip:SetOwner(UIParent, "ANCHOR_NONE")
+
+--Scan tooltip for item level information and cache the value
+local function GetItemLevel(itemLink)
+	if not itemLink or not GetItemInfo(itemLink) then
+		return
+	end
+
+	if not itemLevelCache[itemLink] then
+		local _, itemLevel = EuiLibItem:GetItemInfoActually(itemLink)
+--		tooltip:ClearLines()
+--		tooltip:SetHyperlink(itemLink)
+
+--		local text, itemLevel
+--		for index = 1, #tooltipLines do
+--			text = _G[tooltipLines[index]]:GetText()
+
+--			if text then
+--				itemLevel = tonumber(match(text, itemLevelPattern))
+
+				if itemLevel then
+					itemLevelCache[itemLink] = tonumber(itemLevel)
+					return itemLevel
+				end
+--			end
+--		end
+
+		itemLevelCache[itemLink] = 0 --Cache items that don't have an item level so we don't loop over them again and again
+	end
+
+	return itemLevelCache[itemLink]
+end
 
 function B:GetContainerFrame(arg)
 	if type(arg) == 'boolean' and arg == true then
@@ -291,9 +332,11 @@ function B:UpdateCountDisplay()
 	if self.BankFrame and self.BankFrame.reagentFrame then
 		for i = 1, 98 do
 			local slot = self.BankFrame.reagentFrame.slots[i]
-			slot.Count:FontTemplate(E.LSM:Fetch("font", E.db.bags.countFont), E.db.bags.countFontSize, E.db.bags.countFontOutline)
-			slot.Count:SetTextColor(color.r, color.g, color.b)
-			self:UpdateReagentSlot(i)
+			if slot then
+				slot.Count:FontTemplate(E.LSM:Fetch("font", E.db.bags.countFont), E.db.bags.countFontSize, E.db.bags.countFontOutline)
+				slot.Count:SetTextColor(color.r, color.g, color.b)
+				self:UpdateReagentSlot(i)
+			end
 		end
 	end
 end
@@ -348,11 +391,9 @@ function B:UpdateSlot(bagID, slotID)
 	if B.ProfessionColors[bagType] then
 		slot:SetBackdropBorderColor(unpack(B.ProfessionColors[bagType]))
 	elseif (clink) then
-		local iLvl, itemEquipLoc
-		slot.name, _, _, iLvl, _, _, _, _, itemEquipLoc = GetItemInfo(clink);
-		if iLvl then
-			iLvl = ItemUpgradeInfo:GetUpgradedItemLevel(clink)
-		end
+		local iLvl, itemEquipLoc, itemClassID, itemSubClassID
+		slot.name, _, _, iLvl, _, _, _, _, itemEquipLoc, _, _, itemClassID, itemSubClassID = GetItemInfo(clink);
+
 		local isQuestItem, questId, isActiveQuest = GetContainerItemQuestInfo(bagID, slotID);
 		local r, g, b
 
@@ -361,10 +402,13 @@ function B:UpdateSlot(bagID, slotID)
 			slot.shadow:SetBackdropBorderColor(r, g, b)
 		end
 
-		--Item Level
-		if iLvl and B.db.itemLevel and (itemEquipLoc ~= nil and itemEquipLoc ~= "" and itemEquipLoc ~= "INVTYPE_BAG" and itemEquipLoc ~= "INVTYPE_QUIVER" and itemEquipLoc ~= "INVTYPE_TABARD") and (slot.rarity and slot.rarity > 1) then
-			iLvl = ItemUpgradeInfo:GetUpgradedItemLevel(clink)
+		if B.db.useTooltipScanning then
+			--GetItemLevel will return cached item level
+			iLvl = GetItemLevel(clink)
+		end
 
+		--Item Level
+		if iLvl and B.db.itemLevel and ((itemClassID == 3 and itemSubClassID == 11) or (itemEquipLoc ~= nil and itemEquipLoc ~= "" and itemEquipLoc ~= "INVTYPE_BAG" and itemEquipLoc ~= "INVTYPE_QUIVER" and itemEquipLoc ~= "INVTYPE_TABARD") and (slot.rarity and slot.rarity > 1)) then
 			if (iLvl >= E.db.bags.itemLevelThreshold) then
 				slot.itemLevel:SetText(iLvl)
 				slot.itemLevel:SetTextColor(r, g, b)
@@ -444,7 +488,6 @@ end
 function B:UpdateCooldowns()
 	for _, bagID in ipairs(self.BagIDs) do
 		for slotID = 1, GetContainerNumSlots(bagID) do
-			if not self.Bags[bagID] or not self.Bags[bagID][slotID] or not self.Bags[bagID][slotID].cooldown then break; end
 			local start, duration, enable = GetContainerItemCooldown(bagID, slotID)
 			CooldownFrame_Set(self.Bags[bagID][slotID].cooldown, start, duration, enable)
 			if ( duration > 0 and enable == 0 ) then
@@ -546,6 +589,7 @@ function B:Layout(isBank)
 				f.ContainerHolder[i]:SetNormalTexture("")
 				f.ContainerHolder[i]:SetCheckedTexture(nil)
 				f.ContainerHolder[i]:SetPushedTexture("")
+				
 				f.ContainerHolder[i].id = isBank and bagID or bagID + 1
 				f.ContainerHolder[i]:HookScript("OnEnter", function(self) B.SetSlotAlphaForBag(self, f) end)
 				f.ContainerHolder[i]:HookScript("OnLeave", function(self) B.ResetSlotAlphaForBags(self, f) end)
@@ -960,6 +1004,14 @@ function B:GetGraysValue()
 	return c
 end
 
+local GrayWihterList = {
+	[114002] = true,
+	[140661] = true,
+	[140662] = true,
+	[140663] = true,
+	[140664] = true,
+	[140665] = true,
+}
 function B:VendorGrays(delete, nomsg, getValue)
 	if (not MerchantFrame or not MerchantFrame:IsShown()) and not delete and not getValue then
 		E:Print(L["You must be at a vendor."])
@@ -987,7 +1039,7 @@ function B:VendorGrays(delete, nomsg, getValue)
 					local pp = select(3, GetItemInfo(l));
 					local itemid = tonumber(l:match("item:(%d+)"))
 					
-					if ((select(3, GetItemInfo(l))==0) or E.db.euiscript.autosellList[itemid]) and (p>0) and (itemid ~= 114002) then
+					if ((select(3, GetItemInfo(l))==0) or E.db.euiscript.autosellList[itemid]) and (p>0) and (not GrayWihterList[itemid]) then
 						if not getValue then
 							UseContainerItem(b, s)
 							PickupMerchantItem()
@@ -1038,7 +1090,6 @@ function B:ContructContainerFrame(name, isBank)
 	f:RegisterEvent('PLAYERBANKSLOTS_CHANGED');
 	f:RegisterEvent("QUEST_ACCEPTED");
 	f:RegisterEvent("QUEST_REMOVED");
-
 	f:SetScript('OnEvent', B.OnEvent);
 	f:Hide();
 	
@@ -1191,6 +1242,7 @@ function B:ContructContainerFrame(name, isBank)
 			f.sortButton:Disable()
 		end
 
+
 		--Toggle Bags Button
 		f.depositButton = CreateFrame("Button", name..'DepositButton', f.reagentFrame);
 		f.depositButton:SetSize(16 + E.Border, 16 + E.Border)
@@ -1268,6 +1320,7 @@ function B:ContructContainerFrame(name, isBank)
 			end
 		end)
 
+
 		--Search
 		f.editBox = CreateFrame('EditBox', name..'EditBox', f);
 		f.editBox:SetFrameLevel(f.editBox:GetFrameLevel() + 2);
@@ -1319,6 +1372,7 @@ function B:ContructContainerFrame(name, isBank)
 		if E.db.bags.disableBagSort then
 			f.sortButton:Disable()
 		end
+
 
 		--Bags Button
 		f.bagsButton = CreateFrame("Button", name..'BagsButton', f);
@@ -1596,7 +1650,7 @@ function B:UpdateContainerFrameAnchors()
 		frame:SetScale(1);
 		if ( index == 1 ) then
 			-- First bag
-			frame:Point("BOTTOMRIGHT", RightChatToggleButton, "TOPRIGHT", 2, 2);
+			frame:Point("BOTTOMRIGHT", ElvUIBagMover, "BOTTOMRIGHT", E.Spacing, -E.Border);
 			bagsPerColumn = bagsPerColumn + 1
 		elseif ( freeScreenHeight < frame:GetHeight() ) then
 			-- Start a new column

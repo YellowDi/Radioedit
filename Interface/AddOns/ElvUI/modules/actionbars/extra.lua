@@ -17,6 +17,7 @@ local ExtraActionBarHolder, ZoneAbilityHolder
 
 local function FixExtraActionCD(cd)
 	local start, duration = GetActionCooldown(cd:GetParent().action)
+	cd:SetHideCountdownNumbers(true)
 	E.OnSetCooldown(cd, start, duration, 0, 0)
 end
 
@@ -25,7 +26,11 @@ local function RemoveTexture(self, texture)
 		self:SetTexture("")
 	end
 end
+
 function AB:Extra_SetAlpha()
+	if not E.private.actionbar.enable then return; end
+	local alpha = E.db.actionbar.extraActionButton.alpha
+
 	local alpha = E.db.actionbar.extraActionButton.alpha
 	for i=1, ExtraActionBarFrame:GetNumChildren() do
 		local button = _G["ExtraActionButton"..i]
@@ -41,7 +46,9 @@ function AB:Extra_SetAlpha()
 end
 
 function AB:Extra_SetScale()
+	if not E.private.actionbar.enable then return; end
 	local scale = E.db.actionbar.extraActionButton.scale
+
 	if ExtraActionBarFrame then
 		ExtraActionBarFrame:SetScale(scale)
 		ExtraActionBarHolder:Size(ExtraActionBarFrame:GetWidth() * scale)

@@ -25,9 +25,7 @@ function UF:Configure_ClassBar(frame, cur)
 	local db = frame.db
 	bars.Holder = frame.ClassBarHolder
 	bars.origParent = frame
-
-	if not cur then cur = 0 end
-
+	cur = cur or 0
 	--Fix height in case it is lower than the theme allows, or in case it's higher than 30px when not detached
 	if (not self.thinBorders and not E.PixelMode) and frame.CLASSBAR_HEIGHT > 0 and frame.CLASSBAR_HEIGHT < 7 then --A height of 7 means 6px for borders and just 1px for the actual power statusbar
 		frame.CLASSBAR_HEIGHT = 7
@@ -69,8 +67,7 @@ function UF:Configure_ClassBar(frame, cur)
 			CLASSBAR_WIDTH = CLASSBAR_WIDTH * (frame.MAX_CLASS_BAR - 1) / frame.MAX_CLASS_BAR
 		end
 
-		bars:SetFrameStrata("MEDIUM")
-		bars:SetFrameLevel(frame:GetFrameLevel() + 5)
+		bars:SetFrameLevel(50) --RaisedElementParent uses 100, we want it lower than this
 
 		if bars.Holder and bars.Holder.mover then
 			bars.Holder.mover:SetScale(0.0001)
@@ -83,7 +80,7 @@ function UF:Configure_ClassBar(frame, cur)
 		else
 			bars:Point("BOTTOMLEFT", frame.Health.backdrop, "TOPLEFT", frame.BORDER, frame.SPACING*3)
 		end
-		bars:SetFrameStrata("LOW")
+
 		bars:SetFrameLevel(frame:GetFrameLevel() + 5)
 
 		if bars.Holder and bars.Holder.mover then
@@ -124,6 +121,12 @@ function UF:Configure_ClassBar(frame, cur)
 	bars:Height(frame.CLASSBAR_HEIGHT - ((frame.BORDER + frame.SPACING)*2))
 
 	if (frame.ClassBar == 'ClassIcons' or frame.ClassBar == 'Runes') then
+
+		--This fixes issue with ComboPoints showing as active when they are not.
+		if frame.ClassBar == "ClassIcons" and not cur then
+			cur = 0
+		end
+
 		local maxClassBarButtons = max(UF.classMaxResourceBar[E.myclass] or 0, MAX_COMBO_POINTS)
 		for i = 1, maxClassBarButtons do
 			bars[i]:Hide()
@@ -414,7 +417,6 @@ end
 -------------------------------------------------------------
 function UF:Construct_AdditionalPowerBar(frame)
 	local additionalPower = CreateFrame('StatusBar', "AdditionalPowerBar", frame)
-	additionalPower:SetFrameStrata("LOW")
 	additionalPower:SetFrameLevel(additionalPower:GetFrameLevel() + 1)
 	additionalPower.colorPower = true
 	additionalPower.PostUpdate = UF.PostUpdateAdditionalPower
@@ -441,7 +443,7 @@ function UF:PostUpdateAdditionalPower(unit, min, max, event)
 	local frame = self.origParent or self:GetParent()
 	local db = frame.db
 
-	if frame.USE_CLASSBAR and ((min ~= max or (not db.classbar.autoHide and frame.USE_CLASSBAR)) and (event ~= "ElementDisable")) then
+	if frame.USE_CLASSBAR and ((min ~= max or (not db.classbar.autoHide)) and (event ~= "ElementDisable")) then
 		if db.classbar.additionalPowerText then
 			local powerValue = frame.Power.value
 			local powerValueText = powerValue:GetText()
@@ -526,7 +528,6 @@ function UF:Construct_Stagger(frame)
 	stagger:CreateBackdrop("Default",nil, nil, self.thinBorders)
 	stagger.PostUpdate = UF.PostUpdateStagger
 	stagger.PostUpdateVisibility = UF.PostUpdateVisibilityStagger
-	stagger:SetFrameStrata("LOW")
 
 	stagger:SetScript("OnShow", ToggleResourceBar)
 	stagger:SetScript("OnHide", ToggleResourceBar)

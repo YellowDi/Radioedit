@@ -28,7 +28,6 @@ function UF:Construct_HealthBar(frame, bg, text, textPos, orientation)
 	local health = CreateFrame('StatusBar', nil, frame)
 	UF['statusbars'][health] = true
 
-	health:SetFrameStrata("LOW")
 	health:SetFrameLevel(10) --Make room for Portrait and Power which should be lower by default
 	health.PostUpdate = self.PostUpdateHealth
 
@@ -57,7 +56,6 @@ function UF:Construct_HealthBar(frame, bg, text, textPos, orientation)
 	if text then
 		health.value = frame.RaisedElementParent:CreateFontString(nil, 'OVERLAY')
 		UF:Configure_FontString(health.value)
-		health.value:SetParent(frame)
 
 		local x = -2
 		if textPos == 'LEFT' then

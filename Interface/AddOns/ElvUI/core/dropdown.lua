@@ -88,27 +88,11 @@ function E:DropDown(list, frame, xOffset, yOffset)
 	frame:Point("TOPLEFT", UIParent, "BOTTOMLEFT", x + xOffset, y + yOffset)
 
 	ToggleFrame(frame)
-	if frame:IsVisible() then
-		if not frame:GetScript('OnUpdate') then
-			frame:SetScript("OnUpdate", function(self, t)
-				if not self.eupdatetime then self.eupdatetime = 0 end
-				self.eupdatetime = self.eupdatetime + t
-				if self.eupdatetime > 5 then
-					ToggleFrame(self)
-					self:SetScript("OnUpdate", nil)
-					self.eupdatetime = 0
-				end
-			end)
-		else
-			frame:HookScript('OnUpdate', function(self, t)
-				if not self.eupdatetime then self.eupdatetime = 0 end
-				self.eupdatetime = self.eupdatetime + t
-				if self.eupdatetime > 5 then
-					ToggleFrame(self)
-					self:SetScript("OnUpdate", nil)
-					self.eupdatetime = 0
-				end
-			end)
+	frame:SetScript("OnLeave", function(self)
+		local arg = GetMouseFocus()
+		if arg ~= self and arg:GetParent() ~= self then
+			ToggleFrame(self)
+			self:SetScript("OnLeave", nil)
 		end
-	end
+	end)
 end
