@@ -1,4 +1,4 @@
-## Interface: 70000
+## Interface: 70100
 ## Title: |cffC495DDEUI|r!NoTaint
 ## Title-zhCN: |cffC495DDEUI|r!NoTaint
 ## Title-zhTW: |cffC495DDEUI|r!NoTaint

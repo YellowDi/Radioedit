@@ -1,9 +1,9 @@
 local AS = unpack(AddOnSkins)
 
-if not AS:CheckAddOn('EuiGarrison') then return end
+if not AS:CheckAddOn('MasterPlan') then return end
 
 function AS:MasterPlan(event, addon)
-	if addon == 'EuiGarrison' or IsAddOnLoaded('EuiGarrison') then
+	if addon == 'MasterPlan' or IsAddOnLoaded('MasterPlan') then
 		AS:SkinButton(MPCompleteAll)
 		AS:SkinButton(MPPokeTentativeParties)
 		AS:SkinTab(GarrisonMissionFrameTab3)

@@ -72,7 +72,7 @@ panel.opts = {
 	{ "check", "StayForBattle", L["Even For Pet Battles"], L["Keep the standalone window on the screen even when you enter pet battles."], "LockWindow" },
 	{ "check", "StayOnLogout", L["Even Across Sessions"], L["If the standalone window was on screen when logging out, automatically summon it on next login."], "LockWindow" },
 	{ "check", "LockDrawer", L["Don't Minimize With ESC Key"], L["Don't minimize the standalone window when the ESCape key is pressed."], nil, true, true },
-	{ "check", "LowerStrata", L["Lower Window Behind UI"], L["Push the standalone window back behind other parts of the UI so other parts of the UI can appear ontop."], nil, true, true },
+--	{ "check", "LowerStrata", L["Lower Window Behind UI"], L["Push the standalone window back behind other parts of the UI so other parts of the UI can appear ontop."], nil, true, true },
 	{ "check", "PanelTabsToRight", L["Move Panel Tabs To Right"], L["Align the Pets, Teams, Queue and Options tabs to the right side of the standalone window."], nil, true, true },
 	{ "check", "MiniMinimized", L["Minimal Minimized Window"], L["Remove the titlebar and tabs when the standalone window is minimized."] },
 	{ "header", L["Appearance Options"], 3 },
@@ -397,10 +397,11 @@ panel.funcs.PromptToLoad = function()
 	end
 	panel:Update()
 end
+--[[ Weird things are happening with HIGH frameStrata and no topLevel in 7.1; disabling this option for now
 panel.funcs.LowerStrata = function()
 	RematchFrame:SetFrameStrata(settings.LowerStrata and "MEDIUM" or "HIGH")
 	RematchFrame:SetToplevel(settings.LowerStrata and true)
-end
+end]]
 panel.funcs.UseMinimapButton = function()
 	if settings.UseMinimapButton then
 		rematch:CreateMinimapButton()

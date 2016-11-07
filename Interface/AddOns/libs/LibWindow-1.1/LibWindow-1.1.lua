@@ -124,10 +124,10 @@ mixins["SavePosition"]=true
 function lib.SavePosition(frame)
 	local parent = frame:GetParent() or nilParent
 	-- No, this won't work very well with frames that aren't parented to nil or UIParent
-	local s = frame:GetScale() or 1
-	local left,top = (frame:GetLeft() or 0)*s, (frame:GetTop() or 0)*s
-	local right,bottom = (frame:GetRight() or 0)*s, (frame:GetBottom() or 0)*s
-	local pwidth, pheight = parent:GetWidth() or 0, parent:GetHeight() or 0
+	local s = frame:GetScale()
+	local left,top = frame:GetLeft()*s, frame:GetTop()*s
+	local right,bottom = frame:GetRight()*s, frame:GetBottom()*s
+	local pwidth, pheight = parent:GetWidth(), parent:GetHeight()
 
 	local x,y,point;
 	if left < (pwidth-right) and left < abs((left+right)/2 - pwidth/2) then

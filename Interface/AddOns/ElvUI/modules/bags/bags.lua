@@ -31,13 +31,16 @@ local GetCurrencyLink = GetCurrencyLink
 local GetCurrentGuildBankTab = GetCurrentGuildBankTab
 local GetGuildBankItemLink = GetGuildBankItemLink
 local GetGuildBankTabInfo = GetGuildBankTabInfo
+local GetDetailedItemLevelInfo = GetDetailedItemLevelInfo
 local GetItemInfo = GetItemInfo
 local GetItemQualityColor = GetItemQualityColor
 local GetMoney = GetMoney
+local PutItemInBag = PutItemInBag
 local GetNumBankSlots = GetNumBankSlots
 local GetScreenWidth, GetScreenHeight = GetScreenWidth, GetScreenHeight
 local HandleModifiedItemClick = HandleModifiedItemClick
 local IsBagOpen, IsOptionFrameOpen = IsBagOpen, IsOptionFrameOpen
+local IsContainerItemAnUpgrade = IsContainerItemAnUpgrade
 local IsModifiedClick = IsModifiedClick
 local IsReagentBankUnlocked = IsReagentBankUnlocked
 local IsShiftKeyDown, IsControlKeyDown = IsShiftKeyDown, IsControlKeyDown
@@ -88,47 +91,6 @@ B.ProfessionColors = {
 	[0x8000] = {107/255, 150/255, 255/255}, -- Fishing
 	[0x010000] = {222/255, 13/255,  65/255} -- Cooking
 }
-
-local itemLevelCache = {}
-local itemLevelPattern = gsub(ITEM_LEVEL, "%%d", "(%%d+)")
-local tooltipLines = { --These are the lines we wish to scan
-	"ElvUI_ItemScanningTooltipTextLeft2",
-	"ElvUI_ItemScanningTooltipTextLeft3",
-	"ElvUI_ItemScanningTooltipTextLeft4",
-}
-local tooltip = CreateFrame("GameTooltip", "ElvUI_ItemScanningTooltip", UIParent, "GameTooltipTemplate")
-tooltip:SetOwner(UIParent, "ANCHOR_NONE")
-
---Scan tooltip for item level information and cache the value
-local function GetItemLevel(itemLink)
-	if not itemLink or not GetItemInfo(itemLink) then
-		return
-	end
-
-	if not itemLevelCache[itemLink] then
-		local _, itemLevel = EuiLibItem:GetItemInfoActually(itemLink)
---		tooltip:ClearLines()
---		tooltip:SetHyperlink(itemLink)
-
---		local text, itemLevel
---		for index = 1, #tooltipLines do
---			text = _G[tooltipLines[index]]:GetText()
-
---			if text then
---				itemLevel = tonumber(match(text, itemLevelPattern))
-
-				if itemLevel then
-					itemLevelCache[itemLink] = tonumber(itemLevel)
-					return itemLevel
-				end
---			end
---		end
-
-		itemLevelCache[itemLink] = 0 --Cache items that don't have an item level so we don't loop over them again and again
-	end
-
-	return itemLevelCache[itemLink]
-end
 
 function B:GetContainerFrame(arg)
 	if type(arg) == 'boolean' and arg == true then
@@ -360,6 +322,46 @@ function B:UpdateAllBagSlots()
 	end
 end
 
+local function IsItemEligibleForItemLevelDisplay(classID, subClassID, equipLoc, rarity)
+	if ((classID == 3 and subClassID == 11) --Artifact Relics
+		or (equipLoc ~= nil and equipLoc ~= "" and equipLoc ~= "INVTYPE_BAG" and equipLoc ~= "INVTYPE_QUIVER" and equipLoc ~= "INVTYPE_TABARD"))
+		and (rarity and rarity > 1) then
+		
+		return true
+	end
+
+	return false
+end
+
+
+local UpdateItemUpgradeIcon, UpgradeCheck_OnUpdate
+local ITEM_UPGRADE_CHECK_TIME = 0.5;
+function UpgradeCheck_OnUpdate(self, elapsed)
+	self.timeSinceUpgradeCheck = self.timeSinceUpgradeCheck + elapsed;
+	
+	if (self.timeSinceUpgradeCheck >= ITEM_UPGRADE_CHECK_TIME) then
+		UpdateItemUpgradeIcon(self);
+	end
+end
+
+function UpdateItemUpgradeIcon(slot)
+	if not E.db.bags.upgradeIcon then
+		slot.UpgradeIcon:SetShown(false);
+		return
+	end
+
+	slot.timeSinceUpgradeCheck = 0;
+	
+	local itemIsUpgrade = IsContainerItemAnUpgrade(slot:GetParent():GetID(), slot:GetID());
+	if (itemIsUpgrade == nil) then -- nil means not all the data was available to determine if this is an upgrade.
+		slot.UpgradeIcon:SetShown(false);
+		slot:SetScript("OnUpdate", UpgradeCheck_OnUpdate);
+	else
+		slot.UpgradeIcon:SetShown(itemIsUpgrade);
+		slot:SetScript("OnUpdate", nil);
+	end
+end
+
 function B:UpdateSlot(bagID, slotID)
 	if (self.Bags[bagID] and self.Bags[bagID].numSlots ~= GetContainerNumSlots(bagID)) or not self.Bags[bagID] or not self.Bags[bagID][slotID] then
 		return;
@@ -387,12 +389,18 @@ function B:UpdateSlot(bagID, slotID)
 		end
 	end
 
+	if slot.UpgradeIcon then
+		--Check if item is an upgrade and show/hide upgrade icon accordingly
+		UpdateItemUpgradeIcon(slot)
+	end
+
 	slot.itemLevel:SetText("")
 	if B.ProfessionColors[bagType] then
 		slot:SetBackdropBorderColor(unpack(B.ProfessionColors[bagType]))
 	elseif (clink) then
 		local iLvl, itemEquipLoc, itemClassID, itemSubClassID
-		slot.name, _, _, iLvl, _, _, _, _, itemEquipLoc, _, _, itemClassID, itemSubClassID = GetItemInfo(clink);
+		slot.name, _, _, _, _, _, _, _, itemEquipLoc, _, _, itemClassID, itemSubClassID = GetItemInfo(clink);
+		iLvl = GetDetailedItemLevelInfo(clink)
 
 		local isQuestItem, questId, isActiveQuest = GetContainerItemQuestInfo(bagID, slotID);
 		local r, g, b
@@ -408,8 +416,8 @@ function B:UpdateSlot(bagID, slotID)
 		end
 
 		--Item Level
-		if iLvl and B.db.itemLevel and ((itemClassID == 3 and itemSubClassID == 11) or (itemEquipLoc ~= nil and itemEquipLoc ~= "" and itemEquipLoc ~= "INVTYPE_BAG" and itemEquipLoc ~= "INVTYPE_QUIVER" and itemEquipLoc ~= "INVTYPE_TABARD") and (slot.rarity and slot.rarity > 1)) then
-			if (iLvl >= E.db.bags.itemLevelThreshold) then
+		if iLvl and B.db.itemLevel and IsItemEligibleForItemLevelDisplay(itemClassID, itemSubClassID, itemEquipLoc, slot.rarity) then
+			if (iLvl >= B.db.itemLevelThreshold) then
 				slot.itemLevel:SetText(iLvl)
 				slot.itemLevel:SetTextColor(r, g, b)
 			end

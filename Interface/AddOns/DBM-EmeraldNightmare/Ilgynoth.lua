@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod(1738, "DBM-EmeraldNightmare", nil, 768)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 15338 $"):sub(12, -3))
+mod:SetRevision(("$Revision: 15421 $"):sub(12, -3))
 mod:SetCreatureID(105393)
 mod:SetEncounterID(1873)
 mod:SetZone()
@@ -30,18 +30,17 @@ mod:RegisterEventsInCombat(
 --TODO, figure out voice to use for specWarnHeartPhaseBegin
 --TODO, more adds timers (especially corruptors/deathglarers)
 --TODO, improve spew corruption to work like thogar bombs (continous alerts/yells)
---TODO, Death Blossom timer for first cast afer a heart phase.
 --Stage One: The Ruined Ground
 --(ability.id = 208697 or ability.id = 208929 or ability.id = 218415) and type = "begincast" or ability.id = 209915
 local warnNightmareGaze				= mod:NewSpellAnnounce(210931, 3, nil, false)--Something tells me this is just something it spam casts
 local warnFixate					= mod:NewTargetAnnounce(210099, 2, nil, false)--Spammy so default off
 local warnNightmareExplosion		= mod:NewCastAnnounce(209471, 3)
 local warnEyeOfFate					= mod:NewStackAnnounce(210984, 2, nil, "Tank")
-local warnCorruptorTentacle			= mod:NewSpellAnnounce("ej13191", 2, 208929)
+local warnCorruptorTentacle			= mod:NewCountAnnounce("ej13191", 2, 208929)
 local warnSpewCorruption			= mod:NewTargetAnnounce(208929, 3, nil, true, 2)
 local warnSpewCorruptionSoon		= mod:NewSoonAnnounce(208929, 3)
 local warnGroundSlam				= mod:NewTargetAnnounce(208689, 2)--Figure this out later
-local warnDeathglareTentacle		= mod:NewSpellAnnounce("ej13190", 2, 208697)
+local warnDeathglareTentacle		= mod:NewCountAnnounce("ej13190", 2, 208697)
 local warnDeathBlossom				= mod:NewCastAnnounce(218415, 4)
 --Stage Two: The Heart of Corruption
 local warnCursedBlood				= mod:NewTargetAnnounce(215128, 3)
@@ -70,10 +69,10 @@ local yellCursedBlood				= mod:NewFadesYell(215128)
 mod:AddTimerLine(SCENARIO_STAGE:format(1))
 local timerDeathGlareCD				= mod:NewCDTimer(220, "ej13190", nil, nil, nil, 1, 208697)
 local timerCorruptorTentacleCD		= mod:NewCDTimer(220, "ej13191", nil, nil, nil, 1, 208929)
-local timerNightmareHorrorCD		= mod:NewCDTimer(220, "ej13188", nil, nil, nil, 1, 210289)
+local timerNightmareHorrorCD		= mod:NewCDTimer(280, "ej13188", nil, nil, nil, 1, 210289)
 local timerEyeOfFateCD				= mod:NewCDTimer(10, 210984, nil, "Tank", nil, 5)
 local timerNightmareishFuryCD		= mod:NewNextTimer(10.9, 215234, nil, "Tank", nil, 5)
-local timerGroundSlamCD				= mod:NewNextTimer(21.9, 208689, nil, nil, nil, 3)
+local timerGroundSlamCD				= mod:NewNextTimer(20.5, 208689, nil, nil, nil, 3)
 local timerDeathBlossomCD			= mod:NewNextTimer(105, 218415, nil, nil, nil, 2, nil, DBM_CORE_HEROIC_ICON)
 local timerDeathBlossom				= mod:NewCastTimer(15, 218415, nil, nil, nil, 5, nil, DBM_CORE_DEADLY_ICON)
 --Stage Two: The Heart of Corruption
@@ -83,7 +82,8 @@ local timerFinalTorpor				= mod:NewCastTimer(90, 223121, nil, nil, nil, 6, nil, 
 local timerCursedBloodCD			= mod:NewNextTimer(15, 215128, nil, nil, nil, 3)
 
 --Stage One: The Ruined Ground
-local countdownNightmareHorror		= mod:NewCountdown("Alt50", 210289)
+local countdownNightmareHorror		= mod:NewCountdown(50, 210289)
+local countdownEyeofFate			= mod:NewCountdown("Alt10", 210984, "Tank")
 local countdownDeathBlossom			= mod:NewCountdown("AltTwo15", 218415)
 --Stage Two: The Heart of Corruption
 local countdownDarkRecon			= mod:NewCountdown("Alt50", 210781, nil, nil, 10)
@@ -100,6 +100,7 @@ local voiceGroundSlam				= mod:NewVoice(208689)--targetyou/watchwave
 
 mod:AddSetIconOption("SetIconOnSpew", 208929, false)
 mod:AddSetIconOption("SetIconOnOoze", "ej13186", false)
+mod:AddBoolOption("SetIconOnlyOnce", false)
 mod:AddRangeFrameOption(8, 215128)
 mod:AddInfoFrameOption(210099)
 mod:AddDropdownOption("InfoFrameBehavior", {"Fixates", "Adds"}, "Fixates", "misc")
@@ -116,17 +117,31 @@ mod.vb.CorruptorSpawn = 0
 local UnitExists, UnitGUID, UnitDetailedThreatSituation = UnitExists, UnitGUID, UnitDetailedThreatSituation
 local eyeName = EJ_GetSectionInfo(13185)
 local addsTable = {}
-local phase1Deathglares = {26, 69, 85, 55}--Variation 26, 75, 85, 60
-local phase1MythicDeathglares = {26, 69, 85, 65}--Variation 26, 75, 85, 60
-local phase1Corruptors = {90, 95, 35}--Variation 90, 95, 40
-local phase1MythicCorruptors = {90, 95, 45}--Variation 90, 95, 40
-local phase1DeathBlossom = {60, 100, 35}
+local phase1EasyDeathglares = {26, 62, 85, 55}--Normal/LFR OCT 16
+local phase1HeroicDeathglares = {26, 59, 60}--VERIFIED Oct 16
+--This might be same problem as below. Need to review and see if this is another stupid 21/26 variation that makes 2nd one also variable
+local phase1MythicDeathglares = {21, 69, 85, 70}--VERIFIED Oct 27
+local phase1EasyCorruptors = {86, 95, 35}--Only verifyed 90 on Oct 16 (TODO, verify 95, 35)
+local phase1HeroicCorruptors = {79, 71}--VERIFIED Oct 16
+local phase1MythicCorruptors = {88, 95, 50, 45, 20}--VERIFIED Oct 27
+local phase1DeathBlossom = {58.6, 100, 35}--VERIFIED Oct 27
 
-local phase2Deathglares = {21.5, 90, 130}--21.5, 95
-local phase2Corruptors = {45, 95, 35, 85, 40}--45, 75 (need more data)
-local phase2MythicCorruptors = {45, 75}--(need more data)
-local phase2DeathBlossom = {80}--Unknown beyond first cast
+--Based on data, first one is either 21 or 26, if it's 26 then second one changes from 95 to 90
+--Might have to switch to scheduling to fix accuracy of timers 2 and 3 because of the 5 second variation on timer 1
+local phase2ComboDeathglares = {21.5, 90, 130}--Fuck it. i'm not scheduling to fix a 5 second variation, the two lowest times combined
+--local phase2AllDeathglares = {21.5, 95, 130}--True timers
+--local phase2AltDeathglares = {26.5, 90, 130}--Fucked up timers when first one is late
+--Old shit, when i thought variations were cause of difficulty. They aren't. These tentacles same in all modes apparently
+--local phase2LFRDeathglares = {21.5, 95, 130}--VERIFIED Oct 16 (except for 130)
+--local phase2EasyDeathglares = {21.5, 95, 130}--VERIFIED Oct 16 (except for 130)
+--local phase2HeroicDeathglares = {26.5, 90, 130}--26, 90 verified Oct 16 (130 not verified)
+--local phase2MythicDeathglares = {21.5, 95, 130}--26, 90 VERIFIED Oct 16 (130 not verified)
+--These also same in all modes except mythic
+local phase2Corruptors = {45, 95, 35, 85, 40}--verified Oct 16 45, 95, 30 on heroic/LFR/Normal
+local phase2MythicCorruptors = {45, 75, 115, 65}--VERIFIED Oct 27
+local phase2DeathBlossom = {80, 75}--VERIFIED Oct 16
 local autoMarkScannerActive = false
+local autoMarkBlocked = false
 local autoMarkFilter = {}
 
 local updateInfoFrame, sortInfoFrame
@@ -170,18 +185,18 @@ do
 	end
 end
 
---This clean method will only work until 7.1. After which it'll have to be replaced with something FAR uglier
-local autoMarkOozesUntil71
+local autoMarkOozes
 do
-	local UnitHealth, UnitHealthMax, UnitGUID, UnitCastingInfo = UnitHealth, UnitHealthMax, UnitGUID, UnitCastingInfo
-	autoMarkOozesUntil71 = function(self)
-		self:Unschedule(autoMarkOozesUntil71)
+	local UnitHealth, UnitHealthMax, UnitGUID, UnitCastingInfo, UnitIsUnit = UnitHealth, UnitHealthMax, UnitGUID, UnitCastingInfo, UnitIsUnit
+	autoMarkOozes = function(self)
+		self:Unschedule(autoMarkOozes)
 		if self.vb.IchorCount == 0 then
 			autoMarkScannerActive = false
 			return
 		end--None left, abort scans
 		local lowestUnitID = nil
 		local lowestHealth = 100
+		local found = false
 		for i = 1, 25 do
 			local UnitID = "nameplate"..i
 			local GUID = UnitGUID(UnitID)
@@ -197,9 +212,29 @@ do
 			end
 		end
 		if lowestUnitID then
-			self:SetIcon(lowestUnitID, 8)
+			--Can't set Icon on "nameplate..i" so try to find a target unit ID that supports set icon
+			if UnitIsUnit(lowestUnitID, "mouseover") then
+				self:SetIcon("mouseover", 8)
+				found = true
+			end
+			if not found then
+				for uId in DBM:GetGroupMembers() do
+					local unitid = uId.."target"
+					if UnitIsUnit(lowestUnitID, unitid) then
+						self:SetIcon(unitid, 8)
+						found = true
+						break
+					end
+				end
+			end
 		end
-		self:Schedule(1, autoMarkOozesUntil71, self)
+		if found and self.Options.SetIconOnlyOnce then
+			--Abort until invoked again
+			autoMarkScannerActive = false
+			autoMarkBlocked = true
+			return
+		end
+		self:Schedule(1, autoMarkOozes, self)
 	end
 end
 
@@ -221,15 +256,18 @@ function mod:OnCombatStart(delay)
 	self.vb.DeathglareSpawn = 0
 	self.vb.CorruptorSpawn = 0
 	autoMarkScannerActive = false
+	autoMarkBlocked = false
 	table.wipe(autoMarkFilter)
 	timerNightmareishFuryCD:Start(6-delay)
 	timerGroundSlamCD:Start(12-delay)
 	timerDeathGlareCD:Start(26-delay)
-	timerNightmareHorrorCD:Start(65-delay)
-	timerCorruptorTentacleCD:Start(90-delay)
+	timerNightmareHorrorCD:Start(60-delay)--60 unless delayed (on mythic 95% of time it's delayed by death blossom which is also 60 seconds.but SUPER rarely horror CAN come out first
 	if self:IsMythic() then
 		self.vb.deathBlossomCount = 0
-		timerDeathBlossomCD:Start(60)
+		timerDeathBlossomCD:Start(58.6-delay)
+		timerCorruptorTentacleCD:Start(90-delay)--Verify
+	else
+		timerCorruptorTentacleCD:Start(79-delay)--79-85 but is same in all non mythic modes
 	end
 	if self.Options.InfoFrame then
 		if self.Options.InfoFrameBehavior == "Fixates" then
@@ -262,11 +300,12 @@ function mod:SPELL_CAST_START(args)
 		if self:AntiSpam(3, 5) then
 			warnNightmareExplosion:Show()
 		end
-		if self.Options.SetIconOnOoze and not self:IsLFR() then
-			autoMarkOozesUntil71(self)
-		end
-		if not autoMarkFilter[args.sourceGUID] then
-			 autoMarkFilter[args.sourceGUID] = true
+		if self.Options.SetIconOnOoze and self:IsMythic() then
+			if not autoMarkFilter[args.sourceGUID] then
+				 autoMarkFilter[args.sourceGUID] = true
+				 autoMarkBlocked = false
+			end
+			autoMarkOozes(self)
 		end
 	elseif spellId == 208697 then
 		if self:CheckInterruptFilter(args.sourceGUID) then
@@ -276,11 +315,17 @@ function mod:SPELL_CAST_START(args)
 		if not addsTable[args.sourceGUID] then
 			addsTable[args.sourceGUID] = true
 			self.vb.DeathglareCount = self.vb.DeathglareCount + 1
-			if self:AntiSpam(10, 6) then
+			if self:AntiSpam(10, 16) then
 				self.vb.DeathglareSpawn = self.vb.DeathglareSpawn + 1
-				warnDeathglareTentacle:Show()
+				warnDeathglareTentacle:Show(self.vb.DeathglareSpawn)
 				local nextCount = self.vb.DeathglareSpawn + 1
-				local timer = self.vb.phase == 2 and phase2Deathglares[nextCount] or self:IsMythic() and phase1MythicDeathglares[nextCount] or phase1Deathglares[nextCount]
+				local timer
+				if self.vb.phase == 2 then
+					timer = phase2ComboDeathglares[nextCount]
+					--timer = self:IsMythic() and phase2MythicDeathglares[nextCount] or self:IsHeroic() and phase2HeroicDeathglares[nextCount] or phase2EasyDeathglares[nextCount]
+				else
+					timer = self:IsMythic() and phase1MythicDeathglares[nextCount] or self:IsHeroic() and phase1HeroicDeathglares[nextCount] or phase1EasyDeathglares[nextCount]
+				end
 				if timer then
 					timerDeathGlareCD:Start(timer)
 				end
@@ -293,13 +338,13 @@ function mod:SPELL_CAST_START(args)
 			self.vb.CorruptorCount = self.vb.CorruptorCount + 1
 			if self:AntiSpam(10, 7) then
 				self.vb.CorruptorSpawn = self.vb.CorruptorSpawn + 1
-				warnCorruptorTentacle:Show()
+				warnCorruptorTentacle:Show(self.vb.CorruptorSpawn)
 				local nextCount = self.vb.CorruptorSpawn + 1
 				local timer
 				if self.vb.phase == 2 then
 					timer = self:IsMythic() and phase2MythicCorruptors[nextCount] or phase2Corruptors[nextCount]
 				else
-					timer = self:IsMythic() and phase1MythicCorruptors[nextCount] or phase1Corruptors[nextCount]
+					timer = self:IsMythic() and phase1MythicCorruptors[nextCount] or self:IsHeroic() and phase1HeroicCorruptors[nextCount] or phase1EasyCorruptors[nextCount]
 				end
 				if timer then
 					timerCorruptorTentacleCD:Start(timer)
@@ -326,9 +371,21 @@ function mod:SPELL_CAST_START(args)
 		if timer then
 			timerDeathBlossomCD:Start(timer, self.vb.deathBlossomCount+1)
 		end
+		local elapsed, total = timerNightmareHorrorCD:GetTime()
+		local remaining = total - elapsed
+		if remaining < 15 then--delayed
+			local extend = 15-remaining
+			DBM:Debug("Delay detected, updating horror timer now. Extend: "..extend)
+			timerNightmareHorrorCD:Update(elapsed, total+extend)
+		end
 	elseif spellId == 223121 then
-		timerFinalTorpor:Start()
-		countdownDarkRecon:Start(90)
+		if self:IsMythic() then
+			timerFinalTorpor:Start(55)
+			countdownDarkRecon:Start(55)
+		else
+			timerFinalTorpor:Start()
+			countdownDarkRecon:Start(90)
+		end
 	elseif spellId == 208689 and self:AntiSpam(2, 6) then
 		timerGroundSlamCD:Start()
 	end
@@ -338,8 +395,10 @@ function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
 	if spellId == 210984 then
 		timerEyeOfFateCD:Start(nil, args.sourceGUID)
+		countdownEyeofFate:Start()
 	elseif spellId == 209387 then--First thing Nightmare Horror casts that can give us GUID
 		timerEyeOfFateCD:Start(14, args.sourceGUID)
+		countdownEyeofFate:Start(14)
 	elseif spellId == 208929 then
 		warnSpewCorruption:CombinedShow(0.5, args.destName)
 		if args:IsPlayer() then
@@ -378,9 +437,9 @@ function mod:SPELL_AURA_APPLIED(args)
 		if not addsTable[args.sourceGUID] then
 			addsTable[args.sourceGUID] = true
 			self.vb.IchorCount = self.vb.IchorCount + 1
-			if self.Options.SetIconOnOoze and not self:IsLFR() and not autoMarkScannerActive then
+			if self.Options.SetIconOnOoze and self:IsMythic() and not autoMarkScannerActive and not autoMarkBlocked then
 				autoMarkScannerActive = true
-				self:Schedule(2.5, autoMarkOozesUntil71, self)
+				self:Schedule(2.5, autoMarkOozes, self)
 			end
 		end
 	elseif spellId == 210984 then
@@ -391,7 +450,8 @@ function mod:SPELL_AURA_APPLIED(args)
 				if args:IsPlayer() then--At this point the other tank SHOULD be clear.
 					specWarnEyeOfFate:Show(amount)
 				else--Taunt as soon as stacks are clear, regardless of stack count.
-					if not UnitDebuff("player", args.spellName) and not UnitIsDeadOrGhost("player") then
+					local _, _, _, _, _, _, expireTime = UnitDebuff("player", args.spellName)
+					if not UnitIsDeadOrGhost("player") and (not expireTime or expireTime and expireTime-GetTime() < 10) then
 						specWarnEyeOfFateOther:Show(args.destName)
 						voiceEyeOfFate:Play("changemt")
 					else
@@ -503,6 +563,7 @@ function mod:OnSync(msg, guid)
 		if cid == 105591 then--Nightmare Horror
 			self.vb.NightmareCount = self.vb.NightmareCount - 1
 			timerEyeOfFateCD:Stop(guid)
+			countdownEyeofFate:Cancel()
 		elseif cid == 105304 then--Dominator Tentacle
 			self.vb.DominatorCount = self.vb.DominatorCount - 1
 			if self.vb.DominatorCount == 0 then
@@ -526,7 +587,11 @@ do
 		if targetname == NightmareHorror then
 			specWarnNightmareHorror:Show()
 			voiceNightmareHorror:Play("bigmob")
-			timerNightmareHorrorCD:Start()
+			if self:IsMythic() then
+				timerNightmareHorrorCD:Start(250)
+			else
+				timerNightmareHorrorCD:Start()--280
+			end
 			self.vb.NightmareCount = self.vb.NightmareCount + 1
 			--timerEyeOfFateCD:Start(18)--Started at seeping corruption for mob GUID
 		end

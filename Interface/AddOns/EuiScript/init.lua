@@ -623,7 +623,7 @@ function S:QuestLog()
 	----------------------------------------------------------------------------------------
 	hooksecurefunc("QuestLogQuests_Update", function()
 		for i, button in pairs(QuestMapFrame.QuestsFrame.Contents.Titles) do
-			if button:IsShown() then
+			if button:IsShown() and button.questLogIndex then
 				local level = strmatch(GetQuestLink(button.questLogIndex), "quest:%d+:(%d+)")
 				if level then
 					local height = button.Text:GetHeight()
@@ -634,6 +634,7 @@ function S:QuestLog()
 			end
 		end
 	end)
+
 end
 
 local function OpenGrassionReport()
@@ -741,7 +742,7 @@ function S:Initialize()
 	self:CreateVehicleExit()
 	self:AutoCollect()
 	self:ToggleEuiScriptPoi()
-	S:QuestLog()
+--	S:QuestLog()
 	OpenGrassionReport()
 
 

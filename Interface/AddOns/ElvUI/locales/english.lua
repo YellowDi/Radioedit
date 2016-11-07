@@ -14,7 +14,6 @@ L["Bonus Reward Position"] = true;
 L["Position of bonus quest reward frame relative to the objective tracker."] = true;
 L["Auto"] = true;
 L['ElvUI'] = 'EUI';
-L["Animate Config"] = true
 L["Select the type of aura system you want to use with ElvUI's unitframes. The integrated system utilizes both aura-bars and aura-icons. The icons only system will display only icons and aurabars won't be used. The classic system will configure your auras to how they were pre-v4."] = true;
 L["If you have an icon or aurabar that you don't want to display simply hold down shift and right click the icon for it to disapear."] = true;
 L["Aura Watch module"] = true;
@@ -272,6 +271,8 @@ L[ [=[This works like a macro, you can run different situations to get the actio
  Example: '[combat] show;hide']=] ] = true;
 
 --Bags
+L["Show Upgrade Icon"] = true;
+L["Display the upgrade icon on items that WoW considers an upgrade for your character."] = true;
 L["Use Tooltip Scanning"] = true;
 L["This makes the item level display more reliable but uses more resources. If this is disabled then upgraded items will not show the correct item level."] = true;
 L["Disable Bag Sort"] = true;
@@ -926,6 +927,8 @@ L["Experience Bar"] = true;
 L["Reputation Bar"] = true;
 
 --NamePlates
+L["Use Static Position"] = true;
+L["When enabled the nameplate will stay visible in a locked position."] = true;
 L["Detection"] = true;
 L["Suramar Detection"] = true;
 L["Clickable Height"] = true;
@@ -981,7 +984,6 @@ L["Icon Base Height"] = true;
 L["Base Height for the Aura Icon"] = true;
 L["Boss Auras"] = true;
 L["Always Display"] = true;
-L["By forcing the nameplate to always show it will not move on the screen to stay below your characters feet."] = true;
 L["Display Minions"] = true;
 L["Player Frame"] = true;
 L["Healer Frames"] = true;
@@ -1436,7 +1438,6 @@ L['Raid Show'] = true;
 L['Threat Display Mode'] = true;
 L['Size and Positions'] = true;
 L['Sorting'] = true;
-L['GPS Arrow'] = true;
 L['Grouping & Sorting'] = true;
 L['Raid-Wide Sorting'] = true;
 L['Enabling this allows raid-wide sorting however you will not be able to distinguish between groups.'] = true;

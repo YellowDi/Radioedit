@@ -1,4 +1,4 @@
-﻿## Interface: 70000
+﻿## Interface: 70100
 ## Title: Angry Keystones
 ## Title-zhCN: |cffC495DDEUI|r |cFF00D1FF大秘境计时|r
 ## Title-zhTW: |cffC495DDEUI|r |cFF00D1FF大秘境計時|r
@@ -6,7 +6,7 @@
 ## Author: Ermad
 ## SavedVariables: AngryKeystones_Config, AngryKeystones_Data
 ## SavedVariablesPerCharacter: AngryKeystones_CharacterConfig
-## X-Curse-Packaged-Version: v0.5.2
+## X-Curse-Packaged-Version: v0.6.4
 ## X-Curse-Project-Name: Angry Keystones
 ## X-Curse-Project-ID: angry-keystones
 ## X-Curse-Repository-ID: wow/angry-keystones/mainline

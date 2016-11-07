@@ -32,7 +32,13 @@ function Mod:CoSRumor()
 	if not shortClue then
 		AngryKeystones_Data.rumors[clue] = true
 	end
-	SendChatMessage(shortClue or clue, "PARTY")
+	if IsInGroup(LE_PARTY_CATEGORY_INSTANCE) then
+		SendChatMessage(shortClue or clue, "INSTANCE_CHAT")
+	elseif IsInGroup(LE_PARTY_CATEGORY_HOME) then
+		SendChatMessage(shortClue or clue, "PARTY")
+	else
+		SendChatMessage(shortClue or clue, "SAY")
+	end
 end
 
 function Mod:RumorCleanup()
@@ -49,7 +55,7 @@ function Mod:GOSSIP_SHOW()
 	local npcId = GossipNPCID()
 	if Addon.Config.cosRumors and Addon.Locale:HasRumors() and npcId == cosRumorNPC and GetNumGossipOptions() == 0 then
 		self:CoSRumor()
-		GossipFrameGreetingGoodbyeButton:Click()
+		CloseGossip()
 	end
 
 	local scenarioType = select(10, C_Scenario.GetInfo())
@@ -62,7 +68,7 @@ function Mod:GOSSIP_SHOW()
 				if npcId and staticPopupNPCs[npcId] and not popupShown then
 					StaticPopup1Button1:Click()
 				end
-				GossipFrameGreetingGoodbyeButton:Click()
+				CloseGossip()
 				break
 			end
 		end

@@ -1,4 +1,4 @@
-﻿## Interface: 70000
+﻿## Interface: 70100
 ## Title: |cffC495DDEUI|r Script
 ## Title-zhCN: |cffC495DDEUI|r要塞职业大厅增强包
 ## Title-zhTW: |cffC495DDEUI|r要塞職業大廳增強包

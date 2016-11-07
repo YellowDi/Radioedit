@@ -4,6 +4,7 @@ if E.db.euiscript.questnoti.enable ~= true then return; end
 --## Author: Gentoo/Asem/聂荣/才人/大爱无疆/Suse/我真的是上帝/siweia
 --2014/1/2修改并精简代码 by eui.cc
 --2014/10/29 针对wod修改API by eui.cc
+--2016/10/28 modify by eui.cc for 7.1
 local GetQuestLogTitle = GetQuestLogTitle
 local GetQuestLink = GetQuestLink
 local IsQuestWatched = IsQuestWatched
@@ -60,7 +61,7 @@ local function RScanQuests()
 		local qTitle, qLevel, qGroup, qisHeader, qisCollapsed, qisComplete, frequency, qID = GetQuestLogTitle(qIndex)
 		local qTag, qTagName = GetQuestTagInfo(qID)
 		if not qisHeader then
-			qLink = GetQuestLink(qIndex)
+			qLink = GetQuestLink(qID)
 				QuestList[qID]={
 				Title    =qTitle,       -- String
 				Level    =qLevel,       -- Integer

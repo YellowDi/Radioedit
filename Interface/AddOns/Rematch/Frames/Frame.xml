@@ -11,7 +11,7 @@
 		</Scripts>
 	</Button>
 
-	<Button name="RematchFrame" parent="UIParent" frameStrata="HIGH" enableMouse="true" movable="true" clampedToScreen="true" hidden="true">
+	<Button name="RematchFrame" parent="UIParent" frameStrata="MEDIUM" topLevel="true" enableMouse="true" movable="true" clampedToScreen="true" hidden="true">
 		<Size x="570" y="604"/>
 		<Anchors>
 			<Anchor point="CENTER"/>

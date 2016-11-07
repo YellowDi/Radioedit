@@ -1,10 +1,10 @@
-## Interface: 70000
+## Interface: 70100
 ## Title: |cffC495DDEUI|r Script
 ## Title-zhCN: |cffC495DDEUI|r增强功能
 ## Title-zhTW: |cffC495DDEUI|r增強功能
 ## Author: eui.cc
 ## X-Category: ElvUI
-## Version: 20161018A
+## Version: 20161029A
 ## SavedVariables: ACHIEVEMENTSEARCH_DB, DejaCharacterStatsDB, TalentProfilesGlobalDB, WorldQuestTipsData
 ## SavedVariablesPerCharacter: DejaCharacterStatsDBPC, TalentProfilesDB
 ## RequiredDeps: ElvUI

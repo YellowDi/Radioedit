@@ -1,6 +1,6 @@
 <Ui>
 
-	<Frame name="RematchJournal" toplevel="true" forceAlpha="true" enableMouse="true" inherits="PortraitFrameTemplate" hidden="true">
+	<Frame name="RematchJournal" toplevel="true" ignoreParentAlpha="true" enableMouse="true" inherits="PortraitFrameTemplate" hidden="true">
 		<Size x="855" y="606"/>
 		<Layers>
 			<Layer level="ARTWORK">

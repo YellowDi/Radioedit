@@ -7,7 +7,6 @@
 	<Script file="oUF_Trinkets\oUF_Trinkets.lua"/>
 	<Script file="oUF_CombatFader\oUF_CombatFader.lua"/>
 	<Script file='oUF_PVPSpecIcons\oUF_PVPSpecIcons.lua'/>
-	<Script file='oUF_GPS\oUF_GPS.lua'/>
 	
 	<Script file='oUF_TankShield\oUF_TankShield.lua'/>	
 	<Script file="oUF_ClickSet\oUF_ClickSet.lua"/>

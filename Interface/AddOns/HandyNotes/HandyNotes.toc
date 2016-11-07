@@ -1,16 +1,16 @@
-﻿## Interface: 70000
+﻿## Interface: 70100
 ## Title: |cffC495DDEUI|rHandyNotes
 ## Title-zhCN: |cffC495DDEUI|r地图标记
 ## Title-zhTW: |cffC495DDEUI|r地圖標記
 ## Notes: Handy notes for your maps
 ## Notes-zhCN: 地图标记模块
 ## Author: Xinhuan (modify by Eui.cc)
-## Version: v1.4.9
+## Version: v1.4.11
 ## DefaultState: enabled
 ## X-Category: Map
 ## X-eMail: xinhuan @ gmail DOT com
 ## OptionalDeps: Ace3, TomTom, HereBeDragons-1.0
-## X-Curse-Packaged-Version: v1.4.9
+## X-Curse-Packaged-Version: v1.4.11
 ## X-Curse-Project-Name: HandyNotes
 ## X-Curse-Project-ID: handynotes
 ## X-Curse-Repository-ID: wow/handynotes/mainline

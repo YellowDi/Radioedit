@@ -6,12 +6,15 @@ local DT = E:GetModule('DataTexts')
 local format = string.format
 local tsort = table.sort
 --WoW API / Variables
-local GetMouseFocus = GetMouseFocus
-local GetCurrencyInfo = GetCurrencyInfo
-local C_GarrisonRequestLandingPageShipmentInfo = C_Garrison.RequestLandingPageShipmentInfo
 local C_GarrisonGetBuildings = C_Garrison.GetBuildings
 local C_GarrisonGetInProgressMissions = C_Garrison.GetInProgressMissions
 local C_GarrisonGetLandingPageShipmentInfo = C_Garrison.GetLandingPageShipmentInfo
+local C_GarrisonRequestLandingPageShipmentInfo = C_Garrison.RequestLandingPageShipmentInfo
+local C_Garrison_HasGarrison = C_Garrison.HasGarrison
+local GetCurrencyInfo = GetCurrencyInfo
+local GetMouseFocus = GetMouseFocus
+local HideUIPanel = HideUIPanel
+local ShowGarrisonLandingPage = ShowGarrisonLandingPage
 local GARRISON_LANDING_SHIPMENT_COUNT = GARRISON_LANDING_SHIPMENT_COUNT
 local COMPLETE = COMPLETE
 local LE_GARRISON_TYPE_6_0 = LE_GARRISON_TYPE_6_0
@@ -131,6 +134,10 @@ end
 local garrisonType = LE_GARRISON_TYPE_6_0;
 
 local function OnClick()
+	if not (C_Garrison_HasGarrison(garrisonType)) then
+		return;
+	end
+
 	local isShown = GarrisonLandingPage and GarrisonLandingPage:IsShown();
 	if (not isShown) then
 		ShowGarrisonLandingPage(garrisonType);

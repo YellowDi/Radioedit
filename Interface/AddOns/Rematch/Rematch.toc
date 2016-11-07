@@ -1,4 +1,4 @@
-﻿## Interface: 70000
+﻿## Interface: 70100
 ## Title: Rematch
 ## Title-zhCN: |cffC495DDEUI|r宠物战队保存|cFFBF00FFRematch|r
 ## Title-zhTW: |cffC495DDEUI|r寵物戰隊保存|cFFBF00FFRematch|r
@@ -6,7 +6,7 @@
 ## Notes-zhTW: 针对NPC保存组合 自动载入 升级宠系统 日常必备！
 ## Notes-zhCN: 針對NPC保存組合 自動載入 升級寵系統 日常必備！
 ## Author: Gello
-## Version: 4.5.5
+## Version: 4.5.6
 ## SavedVariables: RematchSaved, RematchSettings
 ## Dependencies: ElvUI
 ## X-Revision: ElvUI

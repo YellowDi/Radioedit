@@ -1,4 +1,4 @@
-## Interface: 70000
+## Interface: 70100
 ## Title: |cffC495DDEUI|rHandyNotes_DraenorTreasures
 ## Title-zhCN: |cffC495DDEUI|r地图标记-德拉诺宝藏模块
 ## Title-zhTW: |cffC495DDEUI|r地圖標記-德拉諾定期模塊

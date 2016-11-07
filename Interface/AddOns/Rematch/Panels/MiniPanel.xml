@@ -177,7 +177,7 @@
 		</Scripts>
 	</Button>
 
-	<Frame name="RematchMiniPanel" forceAlpha="true" hidden="true">
+	<Frame name="RematchMiniPanel" ignoreParentAlpha="true" hidden="true">
 		<Size x="260" y="92"/>
 		<Frames>
 			<!-- this is the background to the main portion of the MiniPanel which is always 92 px high;

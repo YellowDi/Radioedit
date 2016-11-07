@@ -296,7 +296,7 @@ function BrowsePanel:OnInitialize()
     end
 
     local function RefreshFilter()
-        self.ActivityList:SetFilterText(self.SearchInput:GetText():lower(), self.bossFilter, Profile:GetSpamWordStatus())
+        self.ActivityList:SetFilterText(self.SearchInput:GetText():lower(), self.bossFilter, Profile:GetSetting('spamWord'))
     end
 
     local ModeLabel = self:CreateFontString(nil, 'ARTWORK', 'GameFontHighlight') do
@@ -568,7 +568,7 @@ function BrowsePanel:OnInitialize()
         SpamWord:SetPoint('BOTTOMRIGHT', MainPanel, -230, 5)
         SpamWord:SetText(L['关键字过滤'])
         SpamWord:SetScript('OnClick', function(SpamWord)
-            Profile:SetSpamWordEnabled(SpamWord:GetChecked())
+            Profile:SetSetting('spamWord', not not SpamWord:GetChecked())
             RefreshFilter()
         end)
     end
@@ -665,6 +665,8 @@ function BrowsePanel:OnInitialize()
     self:RegisterEvent('LFG_LIST_APPLICATION_STATUS_UPDATED', 'LFG_LIST_SEARCH_RESULT_UPDATED')
     self:RegisterMessage('LFG_LIST_SEARCH_RESULT_REMOVED')
     self:RegisterMessage('MEETINGSTONE_SEARCH_PROFILE_UPDATE')
+
+    self:RegisterMessage('MEETINGSTONE_SETTING_CHANGED_packedPvp', 'LFG_LIST_AVAILABILITY_UPDATE')
 
     self:RegisterMessage('MEETINGSTONE_SPAMWORD_STATUS_UPDATE', 'OnToggleSpamWord')
     self:RegisterMessage('MEETINGSTONE_SPAMWORD_UPDATE', RefreshFilter)

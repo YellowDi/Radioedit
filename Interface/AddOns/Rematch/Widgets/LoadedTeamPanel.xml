@@ -1,7 +1,7 @@
 <Ui>
 
 	<!-- thin panel to display loaded team (or "Battle Pet Slots" if no loaded team) -->
-	<Button name="RematchLoadedTeamPanel" forceAlpha="true" inherits="RematchBigPanelButtonTemplate" hidden="true">
+	<Button name="RematchLoadedTeamPanel" ignoreParentAlpha="true" inherits="RematchBigPanelButtonTemplate" hidden="true">
 		<Size x="280" y="26"/>
 		<Layers>
 			<Layer level="BACKGROUND" textureSubLevel="-5">

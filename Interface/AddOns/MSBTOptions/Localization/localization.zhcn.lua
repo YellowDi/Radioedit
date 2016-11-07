@@ -81,8 +81,6 @@ obj["skillIcons"]	= { label="技能图标", tooltip="设置技能图标"}
 
 obj = L.CHECKBOXES
 obj["enableMSBT"]				= { label="启用MSBT", tooltip="启用MSBT"}
-obj["enableBlizzardDamage"]		= { label="启用暴雪伤害", tooltip="启用暴雪的浮动伤害."}
-obj["enableBlizzardHealing"]	= { label="启用暴雪治疗", tooltip="启用暴雪的浮动治疗."}
 obj["stickyCrits"]				= { label="爆击粘滞显示", tooltip="使用粘滞样式显示爆击"}
 obj["enableSounds"]				= { label="启用声音", tooltip="当指定事件和触发器发生时播放声音"}
 obj["textShadowing"]			= { label="字体阴影", tooltip="显示字体阴影效果让它们看起来更爽"}
@@ -149,6 +147,7 @@ obj["mainEvent"]			= { label="主要事件:"}
 obj["triggerCondition"]		= { label="条件:", tooltip="测试条件."}
 obj["triggerRelation"]		= { label="关系:"}
 obj["triggerParameter"]		= { label="参数:"}
+obj["currencyGains"]		= { label="货币收益", tooltip="显示追踪的货币收益."}
 
 
 ------------------------------

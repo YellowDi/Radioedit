@@ -1,4 +1,4 @@
-﻿## Interface: 70000
+﻿## Interface: 70100
 ## Title: |cffC495DDEUI|r|cffff0000GS-E:|r |cFF00D1FFSequence Editor|r
 ## Title-zhCN: |cffC495DDEUI|r |cFF00D1FF一键宏增强版|r 编辑器
 ## Title-zhTW: |cffC495DDEUI|r |cFF00D1FF一鍵宏增強版|r 編輯器

@@ -51,8 +51,10 @@ end
 
 local function Update(self, elapsed)
 	if(self.elapsed and self.elapsed > 0.2) then
-		local x,y = GetPlayerMapPosition("player")
-	
+		local x, y = GetPlayerMapPosition("player")
+		x = x or 0
+		y = y or 0
+
 		x = floor(100 * x)
 		y = floor(100 * y)
 

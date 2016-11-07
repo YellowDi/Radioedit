@@ -1,4 +1,5 @@
 local L = LibStub("AceLocale-3.0"):NewLocale("GS-E", "zhCN")
+if not L then return; end
 
 --Debug Strings from Core
 L["createButton PreMacro: "] = "createButton PreMacro: "

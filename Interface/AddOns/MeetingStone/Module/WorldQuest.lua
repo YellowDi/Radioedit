@@ -39,7 +39,7 @@ function WorldQuest:OnInitialize()
 end
 
 function WorldQuest:OnEnable()
-    self:RawHook('TaskPOI_OnClick', true)
+    self:SecureHook('TaskPOI_OnClick')
     self:SecureHook('ObjectiveTracker_ToggleDropDown')
 
     if Profile:NeedWorldQuestHelp() then
@@ -54,15 +54,23 @@ function WorldQuest:CloseHelp()
 end
 
 function WorldQuest:FindWorldQuestPOI()
+    local bad
     for i = 1, 100 do
         local button = _G['WorldMapFrameTaskPOI' .. i]
         if not button or not button:IsVisible() then
-            return
+            break
         end
         if button.worldQuest then
-            return button
+            local y = select(5, button:GetPoint())
+            if y and y < -120 then
+                bad = button
+                if select(5, GetQuestTagInfo(button.questID)) then
+                    return button
+                end
+            end
         end
     end
+    return bad
 end
 
 function WorldQuest:WORLD_MAP_UPDATE()
@@ -85,12 +93,11 @@ function WorldQuest:WORLD_MAP_UPDATE()
 end
 
 function WorldQuest:TaskPOI_OnClick(button, click)
-    if not HaveQuestData(button.questID) then
+    if not button.worldQuest or click ~= 'RightButton' or IsModifierKeyDown() then
         return
     end
-
-    if not button.worldQuest or click ~= 'RightButton' then
-        return self.hooks.TaskPOI_OnClick(button, click)
+    if not HaveQuestData(button.questID) then
+        return
     end
 
     local _, zoneId = C_TaskQuest.GetQuestZoneID(button.questID)

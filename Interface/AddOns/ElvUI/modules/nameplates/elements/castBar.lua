@@ -22,7 +22,15 @@ function mod:UpdateElement_CastBarOnUpdate(elapsed)
 			return;
 		end
 		self:SetValue(self.value);
-		self.Time:SetFormattedText("%.1f ", self.value)
+
+		if self.castTimeFormat == "CURRENT" then
+			self.Time:SetFormattedText("%.1f", self.value)
+		elseif self.castTimeFormat == "CURRENT_MAX" then
+			self.Time:SetFormattedText("%.1f / %.1f", self.value, self.maxValue)
+		else --REMAINING
+			self.Time:SetFormattedText("%.1f", (self.maxValue - self.value))
+		end
+
 		if ( self.Spark ) then
 			local sparkPosition = (self.value / self.maxValue) * self:GetWidth();
 			self.Spark:SetPoint("CENTER", self, "LEFT", sparkPosition, 0);
@@ -34,13 +42,24 @@ function mod:UpdateElement_CastBarOnUpdate(elapsed)
 			return;
 		end
 		self:SetValue(self.value);
-		self.Time:SetFormattedText("%.1f ", self.value)
+
+		if self.channelTimeFormat == "CURRENT" then
+			self.Time:SetFormattedText("%.1f", (self.maxValue - self.value))
+		elseif self.channelTimeFormat == "CURRENT_MAX" then
+			self.Time:SetFormattedText("%.1f / %.1f", (self.maxValue - self.value), self.maxValue)
+		else --REMAINING
+			self.Time:SetFormattedText("%.1f", self.value)
+		end
+	elseif (self.holdTime > 0) then
+		self.holdTime = self.holdTime - elapsed
+	else
+		self:Hide()
 	end
 end
 
 function mod:UpdateElement_Cast(frame, event, ...)
 	if(self.db.units[frame.UnitType].castbar.enable ~= true) then return end
-	
+
 	local arg1 = ...;
 	local unit = frame.displayedUnit
 	if ( event == "PLAYER_ENTERING_WORLD" ) then
@@ -56,20 +75,20 @@ function mod:UpdateElement_Cast(frame, event, ...)
 		    frame.CastBar:Hide()
 		end
 	end
-	
+
 	if ( arg1 ~= unit ) then
 		return;
-	end		
+	end
 
 	if ( event == "UNIT_SPELLCAST_START" ) then
-		local name, nameSubtext, text, texture, startTime, endTime, isTradeSkill, castID, notInterruptible = UnitCastingInfo(unit);
+		local name, _, _, texture, startTime, endTime, _, castID, notInterruptible = UnitCastingInfo(unit);
 		if ( not name) then
 			frame.CastBar:Hide();
 			return;
 		end
 
 		frame.CastBar.canInterrupt = not notInterruptible
-		
+
 		if ( frame.CastBar.Spark ) then
 			frame.CastBar.Spark:Show();
 		end
@@ -78,9 +97,7 @@ function mod:UpdateElement_Cast(frame, event, ...)
 		frame.CastBar.maxValue = (endTime - startTime) / 1000;
 		frame.CastBar:SetMinMaxValues(0, frame.CastBar.maxValue);
 		frame.CastBar:SetValue(frame.CastBar.value);
-		if ( frame.CastBar.Text ) then
-			frame.CastBar.Text:SetText(text);
-		end
+
 		if ( frame.CastBar.Icon ) then
 			frame.CastBar.Icon.texture:SetTexture(texture);
 		end
@@ -88,6 +105,7 @@ function mod:UpdateElement_Cast(frame, event, ...)
 		frame.CastBar.casting = true;
 		frame.CastBar.castID = castID;
 		frame.CastBar.channeling = nil;
+		frame.CastBar.holdTime = 0
 
 		frame.CastBar:Show()
 	elseif ( event == "UNIT_SPELLCAST_STOP" or event == "UNIT_SPELLCAST_CHANNEL_STOP") then
@@ -115,27 +133,26 @@ function mod:UpdateElement_Cast(frame, event, ...)
 			if ( frame.CastBar.Spark ) then
 				frame.CastBar.Spark:Hide();
 			end
-			if ( frame.CastBar.Text ) then
-				if ( event == "UNIT_SPELLCAST_FAILED" ) then
-					frame.CastBar.Text:SetText(FAILED);
-				else
-					frame.CastBar.Text:SetText(INTERRUPTED);
-				end
+
+			if ( event == "UNIT_SPELLCAST_FAILED" ) then
+				frame.CastBar.Name:SetText(FAILED);
+			else
+				frame.CastBar.Name:SetText(INTERRUPTED);
 			end
 			frame.CastBar.casting = nil;
 			frame.CastBar.channeling = nil;
 			frame.CastBar.canInterrupt = nil
-			frame.CastBar:Hide()
+			frame.CastBar.holdTime = self.db.units[frame.UnitType].castbar.timeToHold --How long the castbar should stay visible after being interrupted, in seconds
 		end
 	elseif ( event == "UNIT_SPELLCAST_DELAYED" ) then
 		if ( frame:IsShown() ) then
-			local name, nameSubtext, text, texture, startTime, endTime, isTradeSkill, castID, notInterruptible = UnitCastingInfo(unit);
+			local name, _, _, _, startTime, endTime, _, _, notInterruptible = UnitCastingInfo(unit);
 			if ( not name ) then
 				-- if there is no name, there is no bar
 				frame.CastBar:Hide();
 				return;
 			end
-			frame.canInterrupt = not notInterruptible
+
 			frame.CastBar.Name:SetText(name)
 			frame.CastBar.value = (GetTime() - (startTime / 1000));
 			frame.CastBar.maxValue = (endTime - startTime) / 1000;
@@ -144,14 +161,14 @@ function mod:UpdateElement_Cast(frame, event, ...)
 			if ( not frame.CastBar.casting ) then
 				if ( frame.CastBar.Spark ) then
 					frame.CastBar.Spark:Show();
-				end			
-				
+				end
+
 				frame.CastBar.casting = true;
 				frame.CastBar.channeling = nil;
 			end
 		end
 	elseif ( event == "UNIT_SPELLCAST_CHANNEL_START" ) then
-		local name, nameSubtext, text, texture, startTime, endTime, isTradeSkill, notInterruptible = UnitChannelInfo(unit);
+		local name, _, _, texture, startTime, endTime, _, notInterruptible = UnitChannelInfo(unit);
 		if ( not name) then
 			frame.CastBar:Hide();
 			return;
@@ -162,10 +179,8 @@ function mod:UpdateElement_Cast(frame, event, ...)
 		frame.CastBar.maxValue = (endTime - startTime) / 1000;
 		frame.CastBar:SetMinMaxValues(0, frame.CastBar.maxValue);
 		frame.CastBar:SetValue(frame.CastBar.value);
-		
-		if ( frame.CastBar.Text ) then
-			frame.CastBar.Text:SetText(text);
-		end
+		frame.CastBar.holdTime = 0
+
 		if ( frame.CastBar.Icon ) then
 			frame.CastBar.Icon.texture:SetTexture(texture);
 		end
@@ -179,11 +194,12 @@ function mod:UpdateElement_Cast(frame, event, ...)
 		frame.CastBar:Show();
 	elseif ( event == "UNIT_SPELLCAST_CHANNEL_UPDATE" ) then
 		if ( frame.CastBar:IsShown() ) then
-			local name, nameSubtext, text, texture, startTime, endTime, isTradeSkill, notInterruptible = UnitChannelInfo(unit);
+			local name, _, _, _, startTime, endTime, _, notInterruptible = UnitChannelInfo(unit);
 			if ( not name ) then
 				frame.CastBar:Hide();
 				return;
 			end
+			frame.CastBar.canInterrupt = not notInterruptible
 			frame.CastBar.Name:SetText(name)
 			frame.CastBar.value = ((endTime / 1000) - GetTime());
 			frame.CastBar.maxValue = (endTime - startTime) / 1000;
@@ -195,14 +211,14 @@ function mod:UpdateElement_Cast(frame, event, ...)
 	elseif ( event == "UNIT_SPELLCAST_NOT_INTERRUPTIBLE" ) then
 		frame.CastBar.canInterrupt = nil
 	end
-	
+
 	if(frame.CastBar.canInterrupt) then
 		frame.CastBar:SetStatusBarColor(self.db.castColor.r, self.db.castColor.g, self.db.castColor.b)
 	else
 		frame.CastBar:SetStatusBarColor(self.db.castNoInterruptColor.r, self.db.castNoInterruptColor.g, self.db.castNoInterruptColor.b)
 	end
 	frame.CastBar.canInterrupt = nil
-	
+
 	if(self.db.classbar.enable and self.db.classbar.position == "BELOW") then
 		self:ClassBar_Update(frame)
 	end
@@ -215,7 +231,7 @@ function mod:ConfigureElement_CastBar(frame)
 	castBar:ClearAllPoints()
 	if(self.db.units[frame.UnitType].powerbar.enable) then
 		castBar:SetPoint("TOPLEFT", frame.PowerBar, "BOTTOMLEFT", 0, -E.Border - E.Spacing*3)
-		castBar:SetPoint("TOPRIGHT", frame.PowerBar, "BOTTOMRIGHT", 0, -E.Border - E.Spacing*3)	
+		castBar:SetPoint("TOPRIGHT", frame.PowerBar, "BOTTOMRIGHT", 0, -E.Border - E.Spacing*3)
 	else
 		castBar:SetPoint("TOPLEFT", frame.HealthBar, "BOTTOMLEFT", 0, -E.Border - E.Spacing*3)
 		castBar:SetPoint("TOPRIGHT", frame.HealthBar, "BOTTOMRIGHT", 0, -E.Border - E.Spacing*3)
@@ -230,17 +246,17 @@ function mod:ConfigureElement_CastBar(frame)
 		castBar.Icon:SetWidth(self.db.units[frame.UnitType].castbar.height + self.db.units[frame.UnitType].healthbar.height + E.Border + E.Spacing*3)
 	end
 	castBar.Icon.texture:SetTexCoord(unpack(E.TexCoords))
-	
+
 	castBar.Time:SetPoint("TOPRIGHT", castBar, "BOTTOMRIGHT", 0, -E.Border*3)
 	castBar.Name:SetPoint("TOPLEFT", castBar, "BOTTOMLEFT", 0, -E.Border*3)
 	castBar.Name:SetPoint("TOPRIGHT", castBar.Time, "TOPLEFT")
-	
+
 	castBar.Name:SetJustifyH("LEFT")
 	castBar.Name:SetJustifyV("TOP")
-	castBar.Name:SetFont(LSM:Fetch("font", self.db.font), self.db.fontSize, self.db.fontOutline)	
+	castBar.Name:SetFont(LSM:Fetch("font", self.db.font), self.db.fontSize, self.db.fontOutline)
 	castBar.Time:SetJustifyH("RIGHT")
 	castBar.Time:SetJustifyV("TOP")
-	castBar.Time:SetFont(LSM:Fetch("font", self.db.font), self.db.fontSize, self.db.fontOutline)	
+	castBar.Time:SetFont(LSM:Fetch("font", self.db.font), self.db.fontSize, self.db.fontOutline)
 
 	if (self.db.units[frame.UnitType].castbar.hideSpellName) then
 		castBar.Name:Hide()
@@ -255,13 +271,17 @@ function mod:ConfigureElement_CastBar(frame)
 
 	--Texture
 	castBar:SetStatusBarTexture(LSM:Fetch("statusbar", self.db.statusbar))
+
+	--Castbar value formats
+	castBar.castTimeFormat = self.db.units[frame.UnitType].castbar.castTimeFormat
+	castBar.channelTimeFormat = self.db.units[frame.UnitType].castbar.channelTimeFormat
 end
 
 function mod:ConstructElement_CastBar(parent)
 	local frame = CreateFrame("StatusBar", "$parentCastBar", parent)
 	self:StyleFrame(frame)
 	frame:SetScript("OnUpdate", mod.UpdateElement_CastBarOnUpdate)
-	
+
 	frame.Icon = CreateFrame("Frame", nil, frame)
 	frame.Icon.texture = frame.Icon:CreateTexture(nil, "BORDER")
 	frame.Icon.texture:SetAllPoints()
@@ -276,5 +296,5 @@ function mod:ConstructElement_CastBar(parent)
 	frame.Spark:SetBlendMode("ADD")
 	frame.Spark:SetSize(15, 15)
 	frame:Hide()
-	return frame	
+	return frame
 end

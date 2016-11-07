@@ -46,7 +46,6 @@ function UF:Construct_TargetFrame(frame)
 	frame.RaidIcon = UF:Construct_RaidIcon(frame)
 	frame.HealPrediction = self:Construct_HealComm(frame)
 	frame.DebuffHighlight = self:Construct_DebuffHighlight(frame)
-	frame.GPS = self:Construct_GPS(frame)
 	frame.InfoPanel = self:Construct_InfoPanel(frame)
 	frame.AuraBars = self:Construct_AuraBarHeader(frame)
 	frame.Range = UF:Construct_Range(frame)
@@ -132,9 +131,6 @@ function UF:Update_TargetFrame(frame, db)
 
 	--OverHealing
 	UF:Configure_HealComm(frame)
-
-	--GPSArrow
-	UF:Configure_GPS(frame)
 
 	--Raid Icon
 	UF:Configure_RaidIcon(frame)

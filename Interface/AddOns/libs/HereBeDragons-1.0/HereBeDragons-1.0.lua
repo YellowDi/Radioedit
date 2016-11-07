@@ -1,6 +1,6 @@
 -- HereBeDragons is a data API for the World of Warcraft mapping system
 
-local MAJOR, MINOR = "HereBeDragons-1.0", 26
+local MAJOR, MINOR = "HereBeDragons-1.0", 28
 assert(LibStub, MAJOR .. " requires LibStub")
 
 local HereBeDragons, oldversion = LibStub:NewLibrary(MAJOR, MINOR)
@@ -17,8 +17,6 @@ HereBeDragons.microDungeons    = HereBeDragons.microDungeons or {}
 HereBeDragons.transforms       = HereBeDragons.transforms or {}
 
 HereBeDragons.callbacks        = CBH:New(HereBeDragons, nil, nil, false)
-
-local IsLegion = select(4, GetBuildInfo()) >= 70000
 
 -- constants
 local TERRAIN_MATCH = "_terrain%d+$"
@@ -61,9 +59,11 @@ local instanceIDOverrides = {
     [1465] = 1116, -- Tanaan
     -- Legion
     [1478] = 1220, -- Temple of Elune Scenario (Val'Sharah)
+    [1495] = 1220, -- Protection Paladin Artifact Scenario (Stormheim)
     [1502] = 1220, -- Dalaran Underbelly
     [1533] = 0,    -- Karazhan Artifact Scenario
     [1612] = 1220, -- Feral Druid Artifact Scenario (Suramar)
+    [1626] = 1220, -- Suramar Withered Scenario
 }
 
 -- unregister and store all WORLD_MAP_UPDATE registrants, to avoid excess processing when
@@ -204,22 +204,17 @@ if not oldversion or oldversion < 26 then
             end
         end
 
-        local floors
-        if IsLegion then
-            floors = { GetNumDungeonMapLevels() }
+        -- retrieve floors
+        local floors = { GetNumDungeonMapLevels() }
 
-            -- offset floors for terrain map
-            if DungeonUsesTerrainMap() then
-                for i = 1, #floors do
-                    floors[i] = floors[i] + 1
-                end
-            end
-        else
-            floors = {}
-            for f = 1, GetNumDungeonMapLevels() do
-                floors[f] = f
+        -- offset floors for terrain map
+        if DungeonUsesTerrainMap() then
+            for i = 1, #floors do
+                floors[i] = floors[i] + 1
             end
         end
+
+        -- check for fake floors
         if #floors == 0 and GetCurrentMapDungeonLevel() > 0 then
             floors[1] = GetCurrentMapDungeonLevel()
             mapData[id].fakefloor = GetCurrentMapDungeonLevel()
@@ -307,16 +302,6 @@ if not oldversion or oldversion < 26 then
         mapData[WORLDMAP_AZEROTH_ID].C = 0
         mapData[WORLDMAP_AZEROTH_ID].Z = 0
         mapData[WORLDMAP_AZEROTH_ID].name = WORLD_MAP
-
-        -- we only have data for legion clients, zeroing the coordinates
-        -- and niling out the floors temporarily disables the logic on live
-        if not IsLegion then
-            mapData[WORLDMAP_AZEROTH_ID][1] = 0
-            mapData[WORLDMAP_AZEROTH_ID][2] = 0
-            mapData[WORLDMAP_AZEROTH_ID][3] = 0
-            mapData[WORLDMAP_AZEROTH_ID][4] = 0
-            mapData[WORLDMAP_AZEROTH_ID].floors = {}
-        end
 
         -- alliance draenor garrison
         if mapData[971] then
@@ -630,7 +615,8 @@ end
 function HereBeDragons:GetZoneCoordinatesFromWorld(x, y, zone, level, allowOutOfBounds)
     local data = getMapDataTable(zone, level)
     if not data or data[0] == 0 or data[1] == 0 then return nil, nil end
-
+	x = x or 0
+	y = y or 0
     local width, height, left, top = data[1], data[2], data[3], data[4]
     x, y = (left - x) / width, (top - y) / height
 
@@ -650,7 +636,7 @@ end
 -- @param allowOutOfBounds Allow coordinates to go beyond the current map (ie. outside of the 0-1 range), otherwise nil will be returned
 function HereBeDragons:TranslateZoneCoordinates(x, y, oZone, oLevel, dZone, dLevel, allowOutOfBounds)
     local xCoord, yCoord, instance = self:GetWorldCoordinatesFromZone(x, y, oZone, oLevel)
-    if not xCoord then return nil, nil end
+    if not xCoord or not yCoord then return nil, nil end
 
     local data = getMapDataTable(dZone, dLevel)
     if not data or data.instance ~= instance then return nil, nil end
@@ -726,7 +712,7 @@ end
 function HereBeDragons:GetUnitWorldPosition(unitId)
     -- get the current position
     local y, x, z, instanceID = UnitPosition(unitId)
-    if not x or not y then return nil, nil, nil end
+    if not x or not y then return nil, nil, instanceIDOverrides[instanceID] or instanceID end
 
     -- return transformed coordinates
     return applyCoordinateTransforms(x, y, instanceID)
@@ -738,7 +724,7 @@ end
 function HereBeDragons:GetPlayerWorldPosition()
     -- get the current position
     local y, x, z, instanceID = UnitPosition("player")
-    if not x or not y then return nil, nil, nil end
+    if not x or not y then return nil, nil, instanceIDOverrides[instanceID] or instanceID end
 
     -- return transformed coordinates
     return applyCoordinateTransforms(x, y, instanceID)

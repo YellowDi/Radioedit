@@ -8,7 +8,6 @@ local ADDON_NAME, private = ...
 local GARRISON_MAP_ID_HORDE = 976
 local GARRISON_MAP_ID_ALLIANCE = 971
 local DRAENOR_MAP_ID = 962
-local ASHRAN_MAP_ID = 978
 local NPC_VIGNETTE = 4733
 local CONTAINER_VIGNETTE = 4715
 local EVENT_VIGNETTE = 4716
@@ -25,11 +24,11 @@ local PROFILE_DEFAULTS = {
 			scanContainers = true,
 			scanEvents = true,
 			scanGarrison = false,
-			scanAshran = true,
-			filteredRares = {}
+			filteredRares = {},
+			filteredZones = {}
 		},
 		sound = {
-			soundPlayed = "Siege Engineer Weapon",
+			soundPlayed = "Horn",
 			soundObjectPlayed = "PVP Horde",
 			soundDisabled = true
 		},
@@ -158,11 +157,6 @@ scanner_button:SetScript("OnEvent", function(self, event, instanceid)
 	end
 end)
 
-local ignoreName = {
-	["要塞储物箱"] = true,
-	["要塞儲物箱"] = true,
-}
-
 -- Checks if the rare has been found already in the last 5 minutes
 local already_notified = {}
 function scanner_button:CheckNotificationCache(self, id)	
@@ -181,30 +175,16 @@ function scanner_button:CheckNotificationCache(self, id)
 			return
 		-- disable garrison container
 		elseif iconid == CONTAINER_VIGNETTE and not private.db.general.scanGarrison then
-			-- forze setting current map to the current zone
-			-- if map is not laded yet the coordinates of the player will be 0 0
-			local x, y = GetPlayerMapPosition("player")
-			
-			-- if not loaded try again after 1 second
-			if x == 0 and y == 0 then
-				C_Timer.After(1, function() self:CheckNotificationCache(self, id) end)
-				return;
-			end
-			
-			-- if map is loaded extract map ID
-			SetMapToCurrentZone()
-			local zone_id, boolean = GetCurrentMapAreaID()
+			local zone_id = self:GetZoneID(self, id)
 			-- check if the player is at the garrison
 			if (zone_id == GARRISON_MAP_ID_HORDE) or (zone_id == GARRISON_MAP_ID_ALLIANCE) or (zone_id == DRAENOR_MAP_ID) then
 				return
 			end
-		-- disable alerts in Ashran
-		elseif not private.db.general.scanAshran then
-			-- forze setting current map to the current zone
-			SetMapToCurrentZone()
-			local zone_id, boolean = GetCurrentMapAreaID() 
-			-- check if the player is at the garrison
-			if zone_id == ASHRAN_MAP_ID then
+		-- disable zones alerts
+		else
+			local zone_id = self:GetZoneID(self, id)
+			-- check if the player is at a filtered zone
+			if next(private.db.general.filteredZones) ~= nil and private.db.general.filteredZones[zone_id] == false then
 				return
 			end
 		end
@@ -213,7 +193,7 @@ function scanner_button:CheckNotificationCache(self, id)
 	end
 	
 	-- Check if we have found the NPC in the last 5 minutes
-	if already_notified[id] or ignoreName[name] then
+	if already_notified[id] then
 		return
 	else
 		already_notified[id] = true
@@ -284,6 +264,25 @@ function scanner_button:CheckNotificationCache(self, id)
 	
 	-- timer to reset already found NPC
 	C_Timer.After(350, function() already_notified[id] = false end)
+end
+
+-- Method to get current zone ID
+function scanner_button:GetZoneID(self, id) 
+	-- forze setting current map to the current zone
+	-- if map is not laded yet the coordinates of the player will be 0 0
+	local x, y = GetPlayerMapPosition("player")
+	
+	-- if not loaded try again after 1 second
+	if x == 0 and y == 0 then
+		C_Timer.After(1, function() self:CheckNotificationCache(self, id) end)
+		return;
+	end
+	
+	-- if map is loaded extract map ID
+	SetMapToCurrentZone()
+	local zone_id, boolean = GetCurrentMapAreaID()
+	
+	return zone_id
 end
 
 -- Hide action
@@ -487,6 +486,11 @@ function RareScanner:OnInitialize()
 	for k, v in pairs(AL["RARE_LIST"]) do 
 		PROFILE_DEFAULTS.char.general.filteredRares[v] = true
 	end
+	
+	-- Initialize zone filter list
+	for k, v in pairs(AL["ZONES_LIST"]) do 
+		PROFILE_DEFAULTS.char.general.filteredZones[v] = true
+	end
 
 	self.db = LibStub("AceDB-3.0"):New("RareScannerDB", PROFILE_DEFAULTS, true)
 	
@@ -500,8 +504,11 @@ function RareScanner:OnInitialize()
 	self:SetupOptions()
 	private.db = self.db.char
 	
-	-- save a copy of the original list to clear filter searching box
+	-- save a copy of the original list to clear rare filter searching box
 	private.FILTERED_LIST = private.db.general.filteredRares
+		
+	-- save a copy of the original list to clear zone filter searching box
+	private.FILTERED_ZONE_LIST = private.db.general.filteredZones
 	
 --	print("RareScanner loaded")
 end

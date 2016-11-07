@@ -175,7 +175,7 @@
 	</Frame>
 
 	<!-- Little X in a circle to be used for clearing editboxes -->
-	<Button name="RematchClearButtonTemplate" virtual="true" forceAlpha="true">
+	<Button name="RematchClearButtonTemplate" virtual="true" ignoreParentAlpha="true">
 		<Size x="18" y="18"/>
 		<HitRectInsets>
 			<AbsInset left="-2" right="-2" top="-2" bottom="-2"/>

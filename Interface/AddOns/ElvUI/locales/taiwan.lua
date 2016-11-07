@@ -42,7 +42,6 @@ L["Direction the bar moves on gains/losses"] = "狀態條的延展方向,你仍�
 L["Artifact"] = "神器"
 L["Artifact Bar"] = "神器條"
 L["Hide At Max Level"] = "在最高等級時隱藏"
-L["Animate Config"] = "動畫設置"
 L["DATABAR_DESC"] = "設置聲望、經驗等資料條"
 L["Enable + Adjust Movers"] = "啟用+調整移動";
 
@@ -449,6 +448,8 @@ end
 
 --NamePlate Config
 do
+	L["Use Static Position"] = "使用靜態位置";
+	L["When enabled the nameplate will stay visible in a locked position."] = "當啟用時姓名版將顯示在一個固定位置";
 	L["Detection"] = "檢測";
 	L["Suramar Detection"] = " 蘇拉瑪檢測";
 	L["Clickable Height"] = "可點擊高度";
@@ -504,7 +505,6 @@ do
 	L["Base Height for the Aura Icon"] = "光環圖示的基本高度";
 	L["Boss Auras"] = "BOSS光環";
 	L["Always Display"] = "允許顯示";
-	L["By forcing the nameplate to always show it will not move on the screen to stay below your characters feet."] = "強制姓名版一直顯示";
 	L["Display Minions"] = "顯示監視";
 	L["Player Frame"] = "玩家框體";
 	L["Healer Frames"] = "治療框體";
@@ -957,7 +957,6 @@ do
 	L['Enabling this inverts the grouping order when the raid is not full, this will reverse the direction it starts from.'] = '反轉隊伍的排列方向';
 	L['Start Near Center'] = '近中心位置開始';
 	L['The initial group will start near the center and grow out.'] = '初始化時將靠近中心位置開始排列';	
-	L['GPS Arrow'] = '方向箭頭';
 	L['Start near Center'] = '從中心開始';
 	L['The initial group will start near the center and grow out. Corrosponding groups will behave normally.'] = '初始隊伍將從中心開始佈局, 其他的隊伍仍按正常模式';
 	L['Up'] = "上";
@@ -1907,6 +1906,8 @@ end
 
 --Bags
 do
+	L["Show Upgrade Icon"] = "顯示升級圖示";
+	L["Display the upgrade icon on items that WoW considers an upgrade for your character."] = true;
 	L["Use Tooltip Scanning"] = "使用滑鼠掃描"
 	L["This makes the item level display more reliable but uses more resources. If this is disabled then upgraded items will not show the correct item level."] = "使用滑鼠掃描獲得更加可靠的資訊,關閉的話只能得到基本資訊"
 	L["Disable Bag Sort"] = "禁用背包排序";

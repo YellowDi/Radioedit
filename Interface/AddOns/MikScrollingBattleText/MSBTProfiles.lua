@@ -195,7 +195,8 @@ local masterProfile = {
    offsetY				= 120,
    scrollHeight			= 200,
    scrollWidth			= 350,
-   disabled				= true,  },
+   disabled				= true,
+  },
   Static = {
    name					= L.MSG_STATIC,
    offsetX				= -20,
@@ -203,7 +204,8 @@ local masterProfile = {
    scrollHeight			= 125,
    animationStyle		= "Static",
    direction			= "Down",
-   disabled				= true,  },
+   disabled				= true,
+  },
  },
 
  
@@ -1152,6 +1154,11 @@ local masterProfile = {
    message		= "+%a %e (%t)",
    scrollArea	= "Static",
    disabled				= true,
+  },
+  NOTIFICATION_CURRENCY = {
+   colorB		= 0,
+   message		= "+%a %e (%t)",
+   scrollArea	= "Static",
   },
  }, -- End events
 

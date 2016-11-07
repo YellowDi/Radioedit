@@ -95,7 +95,7 @@
 					</Button>
 				</Frames>
 			</Frame>
-			<Frame parentKey="Content" forceAlpha="true" useParentLevel="true">
+			<Frame parentKey="Content" ignoreParentAlpha="true" useParentLevel="true">
 				<Anchors>
 					<Anchor point="TOPLEFT" x="2" y="-22"/>
 					<Anchor point="BOTTOMRIGHT" x="-4" y="2"/>
@@ -177,13 +177,13 @@
 				</Layers>
 				<Frames>
 					<!-- the scrollable notes section -->
-					<ScrollFrame parentKey="ScrollFrame" name="RematchNotesScrollFrame" forceAlpha="true" inherits="MinimalScrollFrameTemplate">
+					<ScrollFrame parentKey="ScrollFrame" name="RematchNotesScrollFrame" ignoreParentAlpha="true" inherits="MinimalScrollFrameTemplate">
 						<Anchors>
 							<Anchor point="TOPLEFT" x="12" y="-46"/>
 							<Anchor point="BOTTOMRIGHT" x="-34" y="10"/>
 						</Anchors>
 						<ScrollChild>
-							<EditBox parentKey="EditBox" multiLine="true" letters="4096" autoFocus="false" forceAlpha="true">
+							<EditBox parentKey="EditBox" multiLine="true" letters="4096" autoFocus="false" ignoreParentAlpha="true">
 								<Size x="64" y="64"/> <!-- an arbitrary size is necessary -->
 								<FontString inherits="GameFontHighlight"/>
 								<Scripts>

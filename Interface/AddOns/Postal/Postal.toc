@@ -1,4 +1,4 @@
-## Interface: 70000
+## Interface: 70100
 ## Title: |cffC495DDEUI|r Postal
 ## Title-zhCN: |cffC495DDEUI|r邮件增强模块 Postal
 ## Title-zhTW: |cffC495DDEUI|r郵件增強模塊 Postal

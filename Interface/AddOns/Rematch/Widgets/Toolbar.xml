@@ -43,7 +43,7 @@
 	</Button>
 
 	<!-- the Toolbar is reparented between TopPanel and Frame (when minimized) -->
-	<Frame name="RematchToolbar" forceAlpha="true" hidden="true">
+	<Frame name="RematchToolbar" ignoreParentAlpha="true" hidden="true">
 		<Size x="0" y="32"/>
 		<Anchors>
 			<Anchor point="RIGHT" x="-6" y="0"/>

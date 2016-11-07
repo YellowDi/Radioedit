@@ -1,12 +1,15 @@
-﻿
+
 local addonName
 WorldQuestTips = CreateFrame("Frame"), {};
 
-local version = 1.17
+local version = 1.23
 local versionSuffix = ""
 
-local profileKey = UnitName("player").."-"..GetRealmName()
+local playerName = UnitName("player")
+local profileKey = playerName.."-"..GetRealmName()
 local gender = UnitSex("player");
+local level = UnitLevel("player")
+local _,playerClass = UnitClass("player")
 
 local locale = GetLocale()
 local L = {		-- Default english
@@ -31,61 +34,12 @@ local L = {		-- Default english
 	OPTIONS_G_TIMES = "Show current and/or average times",
 	OPTIONS_G_OPEN_INFO = "Alt-Click on World Quest to open information",
 }
-if locale == 'zhCN' then
-	L = {
-		TITLE = "世界任务提示和计时",
-		AVERAGE = "平均",
-		COMPLETED_IN = "完成",
-		PER_MINUTE = "每分钟",
-		WAYPOINT_PATH = "路径",
-		WAYPOINT_CAVE = "洞口",
-		WAYPOINT_STAIRS = "台阶",
-		WAYPOINT_BUILDING = "入口",
-		WAYPOINT_PORTAL = "门户",
-		OPTIONS_Q_INFO = "任务信息",
-		OPTIONS_Q_ID = "任务ID",
-		OPTIONS_Q_NOTE = "设置任务备注",
-		OPTIONS_Q_NOTE_TIP = "Alt-点击一个世界任务或输入ID",
-		OPTIONS_Q_TT = "总花费时间, 按秒",
-		OPTIONS_Q_TC = "多次完成",
-		OPTIONS_P_FOOTER = "You can ignore up to 3 tamers for each achievement",
-		OPTIONS_G_REP_EX = "继续显示声望在崇拜后",
-		OPTIONS_G_REP_CUR = "显示当前阵营声望",
-		OPTIONS_G_TIMES = "显示当前或平均时间",
-		OPTIONS_G_OPEN_INFO = "Alt-点击世界任务查看信息",
-	}
-elseif locale == 'zhTW' then
-	L = {
-		TITLE = "世界任務提示和計時",
-		AVERAGE = "平均",
-		COMPLETED_IN = "完成",
-		PER_MINUTE = "每分鐘",
-		WAYPOINT_PATH = "路徑",
-		WAYPOINT_CAVE = "洞口",
-		WAYPOINT_STAIRS = "臺階",
-		WAYPOINT_BUILDING = "入口",
-		WAYPOINT_PORTAL = "門戶",
-		OPTIONS_Q_INFO = "任務資訊",
-		OPTIONS_Q_ID = "任務ID",
-		OPTIONS_Q_NOTE = "設置任務備註",
-		OPTIONS_Q_NOTE_TIP = "Alt-點擊一個世界任務或輸入ID",
-		OPTIONS_Q_TT = "總花費時間, 按秒",
-		OPTIONS_Q_TC = "多次完成",
-		OPTIONS_P_FOOTER = "You can ignore up to 3 tamers for each achievement",
-		OPTIONS_G_REP_EX = "繼續顯示聲望在崇拜後",
-		OPTIONS_G_REP_CUR = "顯示當前陣營聲望",
-		OPTIONS_G_TIMES = "顯示當前或平均時間",
-		OPTIONS_G_OPEN_INFO = "Alt-點擊世界任務查看資訊",
-	}
-end
-
-
 local wowhead = "www.wowhead.com/quest="
 if locale ~= "enUS" then wowhead = locale:sub(1,2) .. ".wowhead.com/quest=" end
 
 local debugging
 
-local brokenIsleZones = {1015,1021,1014,1096,1024,1017,1033,1018} -- 1007 -- 1007 is the broken isles map. left out because it gives the wrong coords.
+local brokenIsleZones = {1015,1021,1014,1096,1024,1017,1033,1018} -- 1007 is the broken isles map
 
 local leyraceWP = {
 	[1018] = { -- Val'Sharah
@@ -98,8 +52,8 @@ local leyraceWP = {
 	[1024] = { -- Highmountain
 		questID = 43764,
 		waypoints = {
-			{ 59.99, 31.80},{ 59.28, 30.77},{ 58.23, 30.15},{ 57.12, 29.23},{ 57.79, 27.39},{ 56.87, 27.16},{ 55.26, 28.68},{ 50.34, 30.35},{ 47.55, 30.64},{ 43.96, 31.03},
-			{ 41.67, 31.58},{ 40.42, 30.46},{ 37.55, 31.03},{ 35.26, 30.96},{ 33.59, 29.50},{ 34.52, 29.08},{ 35.18, 28.41},{ 36.39, 28.69},{ 37.49, 28.32}
+			{ 31.80, 59.99 },{ 30.77, 59.28 },{ 30.15, 58.23 },{ 29.23, 57.12 },{ 27.39, 57.79 },{ 27.16, 56.87 },{ 28.68, 55.26 },{ 30.35, 50.34 },{ 30.64, 47.55 },{ 31.03, 43.96 },
+			{ 31.58, 41.67 },{ 30.46, 40.42 },{ 31.03, 37.55 },{ 30.96, 35.26 },{ 29.50, 33.59 },{ 29.08, 34.52 },{ 28.41, 35.18 },{ 28.69, 36.39 },{ 28.32, 37.49 }
 		}
 	},
 	[1015] = { -- Azsuna
@@ -125,8 +79,27 @@ local leyraceWP = {
 	}
 }
 
+local enigmaticActive = false
+local enigmaticAttempting = false
+local enigmaticQuests = { [43767] = true, [43772] = true, [43756] = true }
+local enigmaticPaths = { 
+			{ 0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,1,0,0,1,1,1,1,1,0,0,1,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0 },
+			{ 0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,1,0,0,0,0,1,1,1,0,0,0,0,1,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0	},
+			{ 0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0	},
+			{ 0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,1,0,0,0,0,1,1,1,0,0,0,0,1,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0 },
+			{ 0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,1,1,1,1,1,0,0,1,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0 },
+			{ 0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,1,0,0,0,0,0,1,1,0,0,0,0,0,1,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0 },
+			{ 0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0	},
+			{ 0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,1,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,1,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0	},
+			{ 0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,1,1,0,0,0,0,0,1,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0	},
+			{ 0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,1,0,0,0,0,0,0,1,0,1,1,1,0,0,1,0,1,0,1,0,0,1,1,1,0,1,0,0,0,0,0,0,0,0	},
+			{ 0,0,0,0,0,0,0,0,1,0,1,1,1,0,0,1,0,1,0,1,0,0,1,1,1,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0 },
+			{ 0,0,0,0,0,0,0,0,1,0,1,1,1,0,0,1,0,1,0,1,0,0,1,0,1,0,1,0,0,1,1,1,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0	},
+			{ 0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0	},
+		}
+
 --[[-- "WorldQuestWayPoints" - If user has TomTom, use these waypoints as exceptions to the the default PoI --]]--
-local wqwp = {
+local wqwp = {			-- "add" => add quest title to str;		"rop" => RemoveOnPickup (removes waypoint on quest autoaccept)
 	--[[
 	To Do:
 	-- investigate WANTED: Fathnyr
@@ -151,17 +124,21 @@ local wqwp = {
 	[42636] = { [1] = { x = 41.1,	y = 35.3,	str = L.WAYPOINT_PATH, 		add = true } },	-- WANTED: Arcanist Shal'iman		--unverified accuracy
 	[43605] = { [1] = { x = 41.1,	y = 35.3,	str = L.WAYPOINT_PATH, 		add = true } },	-- WANTED: Arcanist Shal'iman
 	[41824] = {	[1] = { x = 48.67,	y = 49.96,	str = L.WAYPOINT_CAVE, 		add = true },	-- WANTED: Arru						--unverified accuracy
-				[2] = { x = 46.29,	y = 49.60,	str = L.WAYPOINT_PATH, 		add = true } },	                   
+				[2] = { x = 46.29,	y = 49.60,	str = L.WAYPOINT_PATH, 		add = true, rop = true },              
+				[3] = { x = 47.9,	y = 53.0,	str = L.WAYPOINT_PATH, 		add = true, rop = true } },	                   
 	[44289] = {	[1] = { x = 48.67,	y = 49.96,	str = L.WAYPOINT_CAVE, 		add = true },	-- WANTED: Arru
-				[2] = { x = 46.29,	y = 49.60,	str = L.WAYPOINT_PATH, 		add = true } },		                    
+				[2] = { x = 46.29,	y = 49.60,	str = L.WAYPOINT_PATH, 		add = true, rop = true },	           
+				[3] = { x = 47.9,	y = 53.0,	str = L.WAYPOINT_PATH, 		add = true, rop = true } },		                    
 	[43426] = { [1] = { x = 58.9,	y = 50.0,	str = L.WAYPOINT_PATH, 		add = true } },	-- WANTED: Brogozog					--unverified accuracy
 	[43607] = { [1] = { x = 58.9,	y = 50.0,	str = L.WAYPOINT_PATH, 		add = true } },	-- WANTED: Brogozog
 	[43430] = { [1] = { x = 51.6,	y = 44.6,	str = L.WAYPOINT_PATH, 		add = true } },	-- WANTED: Captain Volo'ren			--unverified accuracy
 	[43608] = { [1] = { x = 51.6,	y = 44.6,	str = L.WAYPOINT_PATH, 		add = true } },	-- WANTED: Captain Volo'ren
 	[41826] = { [1] = { x = 49.57,	y = 39.74,	str = L.WAYPOINT_PATH, 		add = true } },	-- WANTED: Crawshuk the Hungry		--unverified accuracy
 	[41826] = { [1] = { x = 49.57,	y = 39.74,	str = L.WAYPOINT_PATH, 		add = true } },	-- WANTED: Crawshuk the Hungry
-	[43455] = { [1] = { x = 55.25,	y = 44.41,	str = L.WAYPOINT_CAVE, 		add = true } },	-- WANTED: Devouring Darkness		--unverified accuracy
-	[43617] = { [1] = { x = 55.25,	y = 44.41,	str = L.WAYPOINT_CAVE, 		add = true } },	-- WANTED: Devouring Darkness
+	[43455] = { [1] = { x = 55.25,	y = 44.41,	str = L.WAYPOINT_CAVE, 		add = true, rop = true },	-- WANTED: Devouring Darkness		--confirmed
+				[2] = { x = 54.47,	y = 41.37,								add = true } },
+	[43617] = { [1] = { x = 55.25,	y = 44.41,	str = L.WAYPOINT_CAVE, 		add = true, rop = true },	-- WANTED: Devouring Darkness		--confirmed
+				[2] = { x = 54.47,	y = 41.37,								add = true } },
 	[43428] = { [1] = { x = 46.7,	y = 28.2,	str = L.WAYPOINT_PATH, 		add = true } },	-- WANTED: Doomlord Kazrok			--unverified accuracy
 	[43609] = { [1] = { x = 46.7,	y = 28.2,	str = L.WAYPOINT_PATH, 		add = true } },	-- WANTED: Doomlord Kazrok
 	[43620] = { [1] = { x = 41.4,	y = 31.9,	str = L.WAYPOINT_CAVE, 		add = true } },	-- WANTED: Egyl the Enduring		--unverified accuracy
@@ -188,8 +165,10 @@ local wqwp = {
 				[3] = { x = 57.8,	y = 62.0,	str = "Leleyna" } },
 				
 	[41950] = { [1] = { x = 37.46,	y = 64.18 } },											-- Cry More Thunder!				--confirmed
+	
+	[42077] = { [1] = { x = 50.0,	y = 85.6 } },											-- Waking Nightmares				--unverified
 			                                                                                        
-	[44002] = {	[1] = { x = 40.7,	y = 68.9,	str = "Highmountain Prisoner" },			-- An Overdue Debt					--confirmed
+	[43951] = {	[1] = { x = 40.7,	y = 68.9,	str = "Highmountain Prisoner" },			-- An Overdue Debt					--confirmed
 				[2] = { x = 40.2,	y = 68.5,	str = "Highmountain Prisoner" },
 				[3] = { x = 42.4,	y = 69.7,	str = "Highmountain Prisoner" },
 				[4] = { x = 42.7,	y = 70.7,	str = "Highmountain Prisoner" },
@@ -199,8 +178,38 @@ local wqwp = {
 				[8] = { x = 43.8,	y = 64.9,	str = "Highmountain Prisoner" },
 				[9] = { x = 44.9,	y = 65.0,	str = "Highmountain Prisoner" },
 				[10]= { x = 45.5,	y = 66.2,	str = "Highmountain Prisoner" } },
+	[41557] = {	[1] = { x = 39.9,	y = 29.4,	str = L.WAYPOINT_CAVE, 		add = true },	-- Slab of Bacon (Suramar)						--unverified accuracy
+				[2] = { x = 39.8,	y = 27.3,	str = L.WAYPOINT_PATH, 		add = true, rop = true },              
+				[3] = { x = 40.2,	y = 26.3,	str = L.WAYPOINT_PATH, 		add = true, rop = true } },	  
+	[41687] = { [1] = { x = 42.63,	y = 25.21,	str = L.WAYPOINT_CAVE, 		add = true, rop = true } ,	-- Snail Fight!		--confirmed
+				[2] = { x = 44.58,	y = 22.55 } },  
 }
 local awqwp = {} -- Active WorldQuestWayPoints
+
+local repList = { 1859,1900,1883,1828,1948,1894 }
+
+local repitems = {
+	["140260"] = 1859,	-- 25			The Nightfallen
+	["141870"] = 1859,	-- 100
+	["141343"] = 1859,	-- 250 boa
+	["139026"] = 1859,	-- 250
+	["141992"] = 1859,	-- 750
+	["141340"] = 1900,	-- 250 boa		Court of Farondis
+	["139023"] = 1900,	-- 250
+	["141989"] = 1900,	-- 750
+	["141339"] = 1883,	-- 250 boa		Dreamweavers
+	["139021"] = 1883,	-- 250
+	["141988"] = 1883,	-- 750
+	["141341"] = 1828,	-- 250 boa		Highmountain Tribe
+	["139024"] = 1828,	-- 250
+	["141990"] = 1828,	-- 750
+	["141338"] = 1948,	-- 250 boa		Valarjar
+	["139020"] = 1948,	-- 250
+	["141987"] = 1948,	-- 750
+	["141342"] = 1894,	-- 250 boa		The Wardens
+	["139025"] = 1894,	-- 250
+	["141991"] = 1894,	-- 750
+}
 
 local zoneFactions = {
 	[1015] = 1900, -- Azsuna		= Court of Farondis
@@ -225,8 +234,50 @@ local pets = {	-- links pet family to achievements (gets icons added too)
 	[10] = { achID = 9694 }  -- Mechanical
 }
 local botbi = { }
+local fishingRTI = { }
+local fishingRTIdoubles = {
+	[41243] = { 41608, 41609 },	-- Huge Highmountain Salmon
+	[41280] = { 41617 },		-- Huge Runescale Koi
+	[41265] = { 41611, 41610 },	-- Huge Cursed Queenfish
+	[41275] = { 41614, 41615 },	-- Huge Stormrays
+	[41270] = { 41612, 41613 },	-- Huge Mossgill Perch
+	[41599] = { 41264, 41598 },	-- Lively Cursed Queenfish
+	[41597] = { 41244, 41596 },	-- Lively Highmountain Salmon
+	[41602] = { 41274 },		-- Lively Stormrays
+	[41604] = { 41279 },		-- Lively Runescale Koi
+	[41269] = { 41601 },		-- Lively Mossgill Perch
+	
+	--[[
+	
+	/run for i = 1, GetAchievementNumCriteria(10598) do local name,_,fishingRTICompleted,_,_,_,_,fishingRTIID = GetAchievementCriteriaInfo(10598, i) print( i,fishingRTIID,fishingRTICompleted,name ) end
+	
+	21 Lively Cursed Queenfish
+	22 Lively Highmountain Salmon
+	23 Lively Stormrays
+	24 Lively Runescale Koi
+	25 Lively Mossgill Perch
+	-]]
+}
 local dataloaded = false
 
+local pet_quests = {
+	[1]  = 42159, -- "Nightwatcher Merayl",
+	[2]  = 40299, -- "Bodhi Sunwayver",
+	[3]  = 40277, -- "Tiffany Nelson",
+	[4]  = 42442, -- "Amalia",
+	[5]  = 40298, -- "Sir Galveston",
+	[6]  = 40280, -- "Bredda Tenderhide",
+	[7]  = 40282, -- "Grixis Tinypop",
+	[8]  = 41687, -- "Odrogg",
+	[9]  = 40278, -- "Robert Craig",
+	[10] = 41944, -- "Trapper Jarrun",
+	[11] = 41895, -- "Aulier",
+	[12] = 40337, -- "Master Tamer Flummox",
+	[13] = 41990, -- "Varenne",
+	[14] = 40279, -- "Durian Strongfruit",
+	[15] = 41860, -- "Xorvasc",
+}
+--[[
 local pet_quests = {
 	[1]  = 40279, -- "Durian Strongfruit",
 	[2]  = 40278, -- "Robert Craig",
@@ -244,8 +295,12 @@ local pet_quests = {
 	[14] = 41687, -- "Odrogg",
 	[15] = 42159, -- "Nightwatcher Merayl",
 }
+--]]
 
 local pet_tamers = {}
+local closedtimer = 0
+local refreshing = false
+local refreshingblock
 
 --[[
 id, name, points, completed, month, day, year, description, flags, icon, rewardText, isGuildAch, wasEarnedByMe, earnedBy = GetAchievementInfo(id)
@@ -254,6 +309,36 @@ description, type, completed, quantity, requiredQuantity, characterName, flags, 
 --]]
 local function getdata()
 	if debugging then print("Getting data for achievement tips...") end
+	
+	local _,fishingRTIName,_,fishingRTIAchcompleted = GetAchievementInfo(10598)
+	fishingRTI.name = fishingRTIName
+	fishingRTI.complete = fishingRTIAchcompleted
+	fishingRTI.count = 0
+	if not fishingRTIAchcompleted then
+		for i = 1, GetAchievementNumCriteria(10598) do
+			local _,_,fishingRTICompleted,_,_,_,_,fishingRTIID = GetAchievementCriteriaInfo(10598, i)
+			
+			if		i ==  1 then fishingRTIID = 41270		-- Huge Mossgill Perch
+			elseif	i ==  7 then fishingRTIID = 41265		-- Huge Cursed Queenfish
+			elseif	i ==  9 then fishingRTIID = 41280		-- Huge Runescale Koi
+			elseif	i == 12 then fishingRTIID = 41243		-- Huge Highmountain Salmon
+			elseif	i == 15 then fishingRTIID = 41275		-- Huge Stormrays
+			elseif	i ==  4 then fishingRTIID = 41599		-- Lively Cursed Queenfish
+			elseif 	i == 10 then fishingRTIID = 41597		-- Lively Highmountain Salmon
+			elseif	i == 11 then fishingRTIID = 41602		-- Lively Stormrays
+			elseif	i ==  3 then fishingRTIID = 41604		-- Lively Runescale Koi
+			elseif	i == 20 then fishingRTIID = 41269 end	-- Lively Mossgill Perch
+			
+			fishingRTI[fishingRTIID] = fishingRTICompleted
+			if fishingRTICompleted then
+				fishingRTI.count = fishingRTI.count + 1
+			elseif fishingRTIdoubles[ fishingRTIID ] then
+				for k,v in pairs( fishingRTIdoubles[ fishingRTIID ] ) do
+					fishingRTI[ v ] = false
+				end
+			end
+		end
+	end
 	
 	local _,botbiName,_,botbiAchcompleted = GetAchievementInfo(10876)
 	botbi.name = botbiName
@@ -306,7 +391,7 @@ local function addWayPoints( questID, source, m, f, x, y, title )
 	if wayPointsEnabled( source ) then
 		if awqwp[questID] == nil then awqwp[questID] = {} end
 		if wqwp[questID] then
-			local m = GetCurrentMapAreaID()
+			local _, m = C_TaskQuest.GetQuestZoneID( questID )
 			for i,quest in pairs( wqwp[questID] ) do
 				local wp = wqwp[questID][i]
 				title = C_TaskQuest.GetQuestInfoByQuestID(questID)
@@ -319,11 +404,12 @@ local function addWayPoints( questID, source, m, f, x, y, title )
 		elseif source == "click" then
 			awqwp[questID][1] = TomTom:AddMFWaypoint(m, f, x, y, {title=title, persistent=false })
 		elseif source == "leyrace" then
-			for i in pairs( awqwp[questID] ) do TomTom:RemoveWaypoint( awqwp[questID][i] ) end
+			for j in pairs( awqwp[questID] ) do TomTom:RemoveWaypoint( awqwp[questID][j] ) end
 			for i, wp in pairs( leyraceWP[ m ].waypoints ) do
 				awqwp[questID][i] = TomTom:AddMFWaypoint(m, 0, wp[1]/100, wp[2]/100, {title=title, persistent=false })
 			end
 		end
+		TomTom:SetClosestWaypoint()
 	end
 end
 
@@ -337,30 +423,33 @@ local function addWorldQuest(id)
 		
 		addWayPoints( questID, "auto" )
 		
-		--[[ -- consider option to remove generic waypoints on quest pickup?
-		if awqwp[questID] and wqwp[questID] == nil then
+		if awqwp[questID] then
 			for i in pairs( awqwp[questID] ) do
-				TomTom:RemoveWaypoint( awqwp[questID][i] )
+				if wqwp[questID] == nil or ( wqwp[questID] and wqwp[questID][i].rop ) then
+					TomTom:RemoveWaypoint( awqwp[questID][i] )
+				end
 			end
-			awqwp[questID] = nil
 		end
-		-]]
 				
 		table.insert(trackingNames, title)
 		local isInArea, isOnMap, numObjectives = GetTaskInfo(questID)
 		local objectives = {}
-		for obj = 1, numObjectives do
-			local objectiveText, objectiveType, finished = GetQuestObjectiveInfo(questID, obj, false);
-			objectives[obj] = objectiveText
-			if debugging then print(objectiveText) end
+		if numObjectives then
+			for obj = 1, numObjectives do
+				local objectiveText, objectiveType, finished = GetQuestObjectiveInfo(questID, obj, false);
+				objectives[obj] = objectiveText
+				if debugging then print(objectiveText) end
+			end
 		end
 		local percent = C_TaskQuest.GetQuestProgressBarInfo(questID);
 		objectives.percent = percent
+		local expireTime = C_TaskQuest.GetQuestTimeLeftMinutes(questID) or 0
+		expireTime = expireTime *60 + time()
 		if tracking[questID] == nil then
 			tracking[questID] = {
 				progressed = false,
 				duration = 0,
-				expires = C_TaskQuest.GetQuestTimeLeftMinutes(questID)*60 + time(),
+				expires = expireTime,
 				objectives = objectives,
 				objectivesInit = objectives
 			}
@@ -371,20 +460,55 @@ local function addWorldQuest(id)
 		end
 		if tracking[questID].expires < time() then
 			tracking[questID].duration = 0
-			tracking[questID].expires = C_TaskQuest.GetQuestTimeLeftMinutes(questID)*60 + time()
+			tracking[questID].expires = expireTime
+		end
+		if tracking[questID].active and enigmaticQuests[ questID ] then
+			enigmaticActive = true
+			if WorldQuestTipsData.global.options.useEnigmatic then
+				if WorldQuestTips.enigmatic == nil then
+					WorldQuestTips:loadEnigmatic()
+				else
+					WorldQuestTips.enigmatic:Show()
+				end
+			end
 		end
 	end
 end
 
 local function findQuest( questID )
+--	print("findquest fired")
 --local function findQuest( questID, m )
---	if questID == nil then
-		for _,mapID in pairs(brokenIsleZones) do
-			
-			local viewedZone = GetCurrentMapAreaID()
+	if questID then
+		local title = C_TaskQuest.GetQuestInfoByQuestID(questID)
+		local _, questZoneId = C_TaskQuest.GetQuestZoneID( questID )
+		local x, y = C_TaskQuest.GetQuestLocation( questID, questZoneId )
+		local coords = {
+			default = {
+				x = x,
+				y = y,
+				f = 0,
+				m = questZoneId,
+			}
+		}
+		if WorldQuestTipsData.global.worldQuests[questID] == nil then
+			WorldQuestTipsData.global.worldQuests[questID] = {
+				completed = 0,
+				timespent = 0,
+			}
+		end
+		WorldQuestTipsData.global.worldQuests[questID].coords = coords
+		WorldQuestTipsData.global.worldQuests[questID].title = title
+	else
+		--	local viewedZone = GetCurrentMapAreaID()
+		--	print( viewedZone )
 		--	SetMapToCurrentZone()
 		--	local thisZone = GetCurrentMapAreaID()
-		--	SetMapByID( mapID )
+		--	if viewedZone ~= 1007 then
+		--	SetMapByID( 1007 )
+		--	SetMapByID( viewedZone )
+		for _,mapID in pairs(brokenIsleZones) do
+			
+			
 			
 			-- /run for _,mapID in pairs({1015,1021,1014,1096,1024,1017,1033,1018,1007}) do print(mapID, C_TaskQuest.GetQuestLocation( 41938, mapID )) end
 			-- /run print(C_TaskQuest.GetQuestZoneID(41938))
@@ -397,6 +521,7 @@ local function findQuest( questID )
 				for i, info in pairs(taskInfo) do
 					if info.questId then
 					--	print( info.questId )
+						local title = C_TaskQuest.GetQuestInfoByQuestID( info.questId )
 						local _, questZoneId = C_TaskQuest.GetQuestZoneID( info.questId )
 						local x, y = C_TaskQuest.GetQuestLocation( info.questId, questZoneId )
 						if WorldQuestTipsData.global.worldQuests[info.questId] == nil then
@@ -414,7 +539,8 @@ local function findQuest( questID )
 									--	m = mapID,
 										m = questZoneId,
 									}
-								}
+								},
+								title = title
 							}
 					--	elseif WorldQuestTipsData.global.worldQuests[info.questId].coords == nil then
 						else
@@ -429,6 +555,7 @@ local function findQuest( questID )
 									m = questZoneId,
 								}
 							}
+							WorldQuestTipsData.global.worldQuests[info.questId].title = title
 						end
 					end
 				end
@@ -447,6 +574,7 @@ local function findQuest( questID )
 		end
 	end
 	return nil--]]
+	end
 end
 
 function WorldQuestTips:PLAYER_LOGIN(...)
@@ -462,6 +590,20 @@ function WorldQuestTips:PLAYER_LOGIN(...)
 					showCurrentRep = true,
 					hideSmallGold = true,
 					hideSmallGoldThreshold = 10,
+					showRepOnItems = true,
+					showAltRepOnItems = true,
+					useEnigmatic = true,
+					enigmaticRows = 3,
+					enigmaticSize = 6,
+					enigmaticMove = true,
+					enigmaticPos = "CENTER",
+					useEnigmaticHUD = true,
+					enigmaticHUDSize = 32,
+					enigmaticHUDPathA = 0.1,
+					enigmaticHUDEdgeA = 0.3,
+					enigmaticHUDPathDim = true,
+					enigmaticHUDMove = true,
+					enigmaticHUDPos = "CENTER",
 				}
 	if WorldQuestTipsData == nil then
 		WorldQuestTipsData = {
@@ -517,23 +659,49 @@ function WorldQuestTips:PLAYER_LOGOUT(...)
 			local isInArea, isOnMap, numObjectives = GetTaskInfo(questID)
 			local progressed = false
 			local objectives = {}
-			for obj = 1, numObjectives do
-				local objectiveText, objectiveType, finished = GetQuestObjectiveInfo(questID, obj, false);
-				if objectiveText ~= data.objectives[obj] then progressed = true end
-				objectives[obj] = objectiveText
-			end
-			local percent = C_TaskQuest.GetQuestProgressBarInfo(questID);
-			if percent and percent ~= data.objectives.percent then
-				progressed = true
-				objectives.percent = percent
-			end
-			if progressed then
-				data.objectives = objectives
-				tracking[questID].duration = data.duration + ( time() - data.start )
+			if numObjectives and type(numObjectives) == 'number' then --by eui.cc
+				for obj = 1, numObjectives do
+					local objectiveText, objectiveType, finished = GetQuestObjectiveInfo(questID, obj, false);
+					if objectiveText ~= data.objectives[obj] then progressed = true end
+					objectives[obj] = objectiveText
+				end
+				local percent = C_TaskQuest.GetQuestProgressBarInfo(questID);
+				if percent and percent ~= data.objectives.percent then
+					progressed = true
+					objectives.percent = percent
+				end
+				if progressed then
+					data.objectives = objectives
+					tracking[questID].duration = data.duration + ( time() - data.start )
+				end
 			end
 		end
 	end
 	WorldQuestTipsData[profileKey].worldQuestPartial = tracking
+	
+	WorldQuestTipsData[profileKey].info = {
+		name = playerName,
+		class = playerClass,
+		level = level
+	}
+	
+	local factionStandings = {}
+	
+	for k,factionID in pairs( repList ) do
+		local factionName,_,factionStanding,barMin,barMax,value = GetFactionInfoByID( factionID );
+		barMax = (barMax - barMin)/1000;
+		local barValue = math.floor( (value - barMin)/100 ) / 10
+		local factionStandingtext = GetText("FACTION_STANDING_LABEL"..factionStanding, gender);
+		local colour = "|cff808080"
+		if factionStanding < 8 then
+			factionStandingtext = factionStandingtext.." "..barValue.."k /"..barMax.."k"
+			colour = "|cffffd100"
+		end
+		factionStandings[ factionID ] = colour..factionStandingtext.."\124r"
+		
+	end
+	
+	WorldQuestTipsData[profileKey].reps = factionStandings
 end
 
 --[[-- Checks for world quests on load --]]--
@@ -588,8 +756,15 @@ end
 
 
 function WorldQuestTips:QUEST_TURNED_IN(questID)
-	if pet_quests[questID] or botbi[questID] == false then dataloaded = false end
+	if pet_quests[questID] or botbi[questID] == false or fishingRTI[questID] == false then dataloaded = false end
 	if tracking[questID] then
+		
+		if enigmaticQuests[ questID ] then
+			enigmaticActive = false
+			if WorldQuestTips.enigmatic then WorldQuestTips.enigmatic:Hide() end
+			if WorldQuestTips.enigmaticHUD then WorldQuestTips.enigmaticHUD:Hide() end
+		end
+		
 		local totaltime = tracking[questID].duration + ( time() - tracking[questID].start )
 		if WorldQuestTipsData.global.worldQuests[questID] == nil then WorldQuestTipsData.global.worldQuests[questID] = { completed = 0, timespent = 0} end
 		WorldQuestTipsData.global.worldQuests[questID].completed = WorldQuestTipsData.global.worldQuests[questID].completed + 1;
@@ -615,28 +790,33 @@ function WorldQuestTips:QUEST_TURNED_IN(questID)
 				local text = BONUS_OBJECTIVE_REWARD_WITH_COUNT_FORMAT:format(texture, numItems, name);
 				SendSystemMessage(YOU_EARNED_LABEL.." ".. text .." "..L.PER_MINUTE..".")
 			end
+			local honor = GetQuestLogRewardHonor(questID)
+			if honor > 0 then	
+				averageHonor = math.floor( honor / timeInMin )
+				text = BONUS_OBJECTIVE_REWARD_WITH_COUNT_FORMAT:format("Interface\\ICONS\\Achievement_LegionPVPTier4", averageHonor, HONOR);
+				SendSystemMessage(YOU_EARNED_LABEL.." ".. text .." "..L.PER_MINUTE..".")
+			end
 		end
 		tracking[questID] = nil
 	end
 end
 
---[[ function progress:UNIT_ENTERING_VEHICLE()
+function WorldQuestTips:UNIT_ENTERING_VEHICLE()
 	local collectingEnergy = GetSpellInfo(218813)
 	if UnitDebuff("player", collectingEnergy) then
-	
 		local viewedZone = GetCurrentMapAreaID()
 		SetMapToCurrentZone()
 		local thisZone = GetCurrentMapAreaID()
+		local zone = thisZone or viewedZone
 		SetMapByID( viewedZone )
 		
-		if leyraceWP[ thisZone ] then
-			addWayPoints( leyraceWP[ thisZone ].questID, "leyrace", thisZone, nil, nil, nil, "Ley Line Node" )
+		--	local _, zone = C_TaskQuest.GetQuestZoneID( questID ) --use this instead?
+		
+		if leyraceWP[ zone ] then
+			addWayPoints( leyraceWP[ zone ].questID, "leyrace", zone, nil, nil, nil, "Ley Line Node" )
 		end
-		TomTom:SetClosestWaypoint()
-	--else
-	--	print("bar")
 	end
-end ]]
+end
 
 local function addpetlines( tt, name, botbip )
 	if WorldQuestTipsData.global.options.PetFF then
@@ -661,12 +841,17 @@ function WorldQuestTips:UNIT_QUEST_LOG_CHANGED(unitID)
 			local title, level, suggestedGroup, isHeader, isCollapsed, isComplete, frequency, questID, startEvent, displayQuestID, isOnMap, hasLocalPOI, isTask, isStory = GetQuestLogTitle(q)
 			local tagID, tagName, worldQuestType, rarity, isElite, tradeskillLineIndex = GetQuestTagInfo(questID);
 			if worldQuestType and tracking[questID] then
+				
+				if enigmaticQuests[ questID ] then enigmaticAttempting = false end
+		
 				local isInArea, isOnMap, numObjectives = GetTaskInfo(questID)
-				for obj = 1, numObjectives do
-					local objectiveText, objectiveType, finished = GetQuestObjectiveInfo(questID, obj, false);
-					if objectiveText ~= tracking[questID].objectives[obj] and objectiveText ~= tracking[questID].objectivesInit[obj] then
-						tracking[questID].objectives[obj] = objectiveText;
-						tracking[questID].progressed = true;
+				if numObjectives then
+					for obj = 1, numObjectives do
+						local objectiveText, objectiveType, finished = GetQuestObjectiveInfo(questID, obj, false);
+						if objectiveText ~= tracking[questID].objectives[obj] and objectiveText ~= tracking[questID].objectivesInit[obj] then
+							tracking[questID].objectives[obj] = objectiveText;
+							tracking[questID].progressed = true;
+						end
 					end
 				end
 				local percent = C_TaskQuest.GetQuestProgressBarInfo(questID);
@@ -686,6 +871,11 @@ function WorldQuestTips:QUEST_REMOVED(questID)
 		end
 	end
 	if tracking[questID] then
+		if enigmaticQuests[ questID ] then
+			enigmaticActive = false
+			if WorldQuestTips.enigmatic then WorldQuestTips.enigmatic:Hide() end
+			if WorldQuestTips.enigmaticHUD then WorldQuestTips.enigmaticHUD:Hide() end
+		end
 		if tracking[questID].progressed then
 			tracking[questID].duration = tracking[questID].duration + ( time() - tracking[questID].start )
 			tracking[questID].start = time()
@@ -708,17 +898,6 @@ hooksecurefunc ("TaskPOI_OnClick", function (self, button)
 	if self.worldQuest and button == "LeftButton" then
 		if IsAltKeyDown() and WorldQuestTipsData.global.options.EditOnC then
 			WorldQuestTips:loadOptions( self.questID )
-		else
-			local info = WorldQuestTipsData.global.worldQuests[ self.questID ].coords.default
-			local title, factionID, capped = C_TaskQuest.GetQuestInfoByQuestID(self.questID);
-			addWayPoints( self.questID, "click", info.m, info.f, info.x, info.y, title )
-			--[[
-			local info, m = findQuest( self.questID )
-			if info then
-				local title, factionID, capped = C_TaskQuest.GetQuestInfoByQuestID(self.questID);
-				addWayPoints( self.questID, "click", m, info.x, info.y, title )
-			end
-			--]]
 		end
 	end
 end)
@@ -726,7 +905,6 @@ end)
 --[[-- Adds tooltip to world quests on map --]]--
 hooksecurefunc ("TaskPOI_OnEnter", function (self)
 --function TaskPOI_OnEnter(self)
-	
 	WorldMapTooltip:SetOwner(self, "ANCHOR_RIGHT");
 
 	if ( not HaveQuestData(self.questID) ) then
@@ -736,32 +914,32 @@ hooksecurefunc ("TaskPOI_OnEnter", function (self)
 	end
 	
 	local title, factionID, capped = C_TaskQuest.GetQuestInfoByQuestID(self.questID);
-	
+		
+
 	-- Handling other addons changing the PoI frame name willynillily
-	if WorldQuestTrackerAddon then
+	if ( IsAltKeyDown() and WorldQuestTipsData.global.options.EditOnC ) and ( WorldQuestTrackerAddon or AngryWorldQuests ) then
 		local mtable = GetMouseFocus()
-		local orginalScript = mtable:GetScript("OnClick")
-		mtable:SetScript("OnClick", function (self, button)
-			if IsAltKeyDown() and WorldQuestTipsData.global.options.EditOnC then
-				WorldQuestTips:loadOptions( self.questID )
-			else
-				local info = WorldQuestTipsData.global.worldQuests[ self.questID ].coords.default
-				local title, factionID, capped = C_TaskQuest.GetQuestInfoByQuestID(self.questID);
-				addWayPoints( self.questID, "click", info.m, info.f, info.x, info.y, title )
-				--[[
-				local info, m = findQuest( self.questID )
-				if info then
-					addWayPoints( self.questID, "click", m, info.x, info.y, title )
+		if mtable:HasScript("OnClick") then
+			local orginalScript = mtable:GetScript("OnClick")
+			mtable:SetScript("OnClick", function (self, button)
+				if button == "LeftButton" and WorldQuestTipsData.global.options.EditOnC and IsAltKeyDown() then
+					WorldQuestTips:loadOptions( self.questID )
+				else
+					orginalScript( self )
 				end
-				--]]
-				orginalScript( self )
-			end
-		end)
+			end)
+		end
 	end
 	
 	if ( self.worldQuest ) then
 		if not dataloaded then getdata() end
 		local averageTime
+		if WorldQuestTipsData.global.worldQuests[self.questID] == nil then
+			findQuest(self.questID)
+		end
+		if WorldQuestTipsData.global.worldQuests[self.questID].coords == nil then
+			findQuest(self.questID)
+		end
 		if WorldQuestTipsData.global.worldQuests[self.questID] and WorldQuestTipsData.global.worldQuests[self.questID].completed > 0 then
 			averageTime = math.floor( WorldQuestTipsData.global.worldQuests[self.questID].timespent/WorldQuestTipsData.global.worldQuests[self.questID].completed )
 		end
@@ -793,9 +971,10 @@ hooksecurefunc ("TaskPOI_OnEnter", function (self)
 				end
 			end
 			
-			local fmap
+	--		local _, fmap = C_TaskQuest.GetQuestZoneID( self.questID )
+			local fmap = WorldQuestTipsData.global.worldQuests[self.questID].coords.default.m
 	--		if WorldQuestTipsData.global.worldQuests[self.questID] and WorldQuestTipsData.global.worldQuests[self.questID].coords then
-				fmap = WorldQuestTipsData.global.worldQuests[self.questID].coords.default.m
+	--			fmap = WorldQuestTipsData.global.worldQuests[self.questID].coords.default.m
 	--		else
 	--			_, fmap = findQuest( self.questID )
 	--		end
@@ -877,7 +1056,12 @@ hooksecurefunc ("TaskPOI_OnEnter", function (self)
 		WorldMapTaskTooltipStatusBar.Bar:SetValue(percent);
 		WorldMapTaskTooltipStatusBar.Bar.Label:SetFormattedText(PERCENTAGE_STRING, percent);
 	end
-
+	
+	if fishingRTI[ self.questID ] == false and not fishingRTI.complete then
+		WorldMapTooltip:AddLine("\n"..ACHIEVEMENT_PROGRESSED..":")
+		WorldMapTooltip:AddDoubleLine("|cffffff00[" .. fishingRTI.name .. "]", "|cffffffff(".. fishingRTI.count .. "/25)")
+	end
+	
 	if pet_tamers[pet_quests[self.questID]] ~= nil or botbi[self.questID] == false then 
 		addpetlines( WorldMapTooltip, pet_quests[self.questID], botbi[self.questID] )
 	end
@@ -922,14 +1106,34 @@ hooksecurefunc ("WorldMap_AddQuestRewardsToTooltip", function (questID)
 		end
 	end
 	
+	local honor = GetQuestLogRewardHonor(questID)
+	local line = 0
+	if honor > 0 then line = 1 end
+	
 	-- currency
 	local numQuestCurrencies = GetNumQuestLogRewardCurrencies(questID);
 	if numQuestCurrencies > 0 and averageTime and averageTimeInMin > 1 then
-		local name, texture, numItems = GetQuestLogRewardCurrencyInfo(1, questID);
-		local averageNumItems = math.floor( numItems / averageTimeInMin )
+	--	for i = 1, numQuestCurrencies do
+			local name, texture, numItems = GetQuestLogRewardCurrencyInfo(1, questID);
+			local averageNumItems = math.floor( numItems / averageTimeInMin )
+			local text = _G["WorldMapTooltipTextLeft"..WorldMapTooltip:NumLines()-line]:GetText()
+	--		print(text)
+			if WorldQuestTipsData.global.options.showTimes then text = text .. " (" .. averageNumItems .. " "..L.PER_MINUTE..")" end
+			_G["WorldMapTooltipTextLeft"..WorldMapTooltip:NumLines()-line]:SetText( text )
+	--	end
+	end
+	
+	-- honor
+	if honor > 0 and averageTime and averageTimeInMin > 1 then
+		local honorLine = 0
+		local averageHonor = math.floor( honor / averageTimeInMin )
 		local text = _G["WorldMapTooltipTextLeft"..WorldMapTooltip:NumLines()]:GetText()
-		if WorldQuestTipsData.global.options.showTimes then text = text .. " (" .. averageNumItems .. " "..L.PER_MINUTE..")" end
-		_G["WorldMapTooltipTextLeft"..WorldMapTooltip:NumLines()]:SetText( text )
+		if text == " " then
+			text = _G["WorldMapTooltipTextLeft"..WorldMapTooltip:NumLines()-1]:GetText()
+			honorLine = 1
+		end
+		if WorldQuestTipsData.global.options.showTimes then text = text .. " (" .. averageHonor .. " "..L.PER_MINUTE..")" end
+		_G["WorldMapTooltipTextLeft"..WorldMapTooltip:NumLines() - honorLine]:SetText( text )
 	end
 
 	-- items
@@ -954,15 +1158,60 @@ hooksecurefunc ("WorldMap_AddQuestRewardsToTooltip", function (questID)
 	end
 end)
 
-local closedtimer = 0
-local refreshing = false
-local refreshingblock
+local enigma = GetSpellInfo(219247)
+local function enigmaticUpdate()
+	if WorldQuestTipsData.global.options.useEnigmatic then
+		if UnitDebuff("player", enigma) then
+			if not enigmaticAttempting then
+				enigmaticAttempting = true
+				WorldQuestTips:loadEnigmatic()
+				WorldQuestTips:loadEnigmaticHUD()
+			end
+		else
+			if enigmaticAttempting then
+				enigmaticAttempting = false
+				WorldQuestTips.enigmaticHUD:Hide()
+				WorldQuestTips:loadEnigmatic()
+			end
+		end
+	end
+end
+
 local function onUpdate(self,elapsed)
     closedtimer = closedtimer + elapsed
-	if closedtimer >= 1 and refreshing then
-		BonusObjectiveTracker_ShowRewardsTooltip(refreshingblock);
-        closedtimer = 0
+	if closedtimer >= 1 then
+		if refreshing then
+			BonusObjectiveTracker_ShowRewardsTooltip(refreshingblock);
+			closedtimer = 0
+		end
+		if enigmaticActive then
+			enigmaticUpdate()
+			closedtimer = 0
+		end
     end
+	if enigmaticAttempting and WorldQuestTips.enigmaticHUD then
+		local enigmaticHUD = WorldQuestTips.enigmaticHUD
+		local facing = GetPlayerFacing()
+		local newFacing = facing - enigmaticHUD.initialMP.r
+		enigmaticHUD.arrow.texture:SetRotation( newFacing )
+		
+		local unitX, unitY = GetPlayerMapPosition("player")
+		
+		local movedX = enigmaticHUD.zone.x * ( unitX - enigmaticHUD.initialMP.x )
+		local movedY = enigmaticHUD.zone.y * ( unitY - enigmaticHUD.initialMP.y )
+		
+		local dist = math.sqrt( movedX^2 + movedY^2 )
+
+		local actualAng = math.atan2( movedX, movedY ) + math.pi
+		
+		movedX = ( dist * math.sin( enigmaticHUD.initialMP.r - actualAng ) ) * 0.4
+		movedY = ( dist * math.cos( enigmaticHUD.initialMP.r - actualAng ) ) * 0.4
+		
+		local movedTextureX = enigmaticHUD.initialTP.x + movedX * WorldQuestTipsData.global.options.enigmaticHUDSize
+		local movedTextureY = enigmaticHUD.initialTP.y + movedY * WorldQuestTipsData.global.options.enigmaticHUDSize
+		
+		enigmaticHUD.arrow:SetPoint("CENTER", enigmaticHUD, "BOTTOMLEFT", movedTextureX, movedTextureY )
+	end
 end
 local f = CreateFrame("frame")
 f:SetScript("OnUpdate", onUpdate)
@@ -970,6 +1219,27 @@ f:SetScript("OnUpdate", onUpdate)
 hooksecurefunc ("BonusObjectiveTracker_OnBlockClick", function (self)
 	if IsAltKeyDown() and WorldQuestTipsData.global.options.EditOnC then
 		WorldQuestTips:loadOptions( self.id )
+	end
+end)
+
+local lastTrackedQuestID = nil
+
+hooksecurefunc ("BonusObjectiveTracker_TrackWorldQuest", function (questID, hardWatch)
+	if lastTrackedQuestID and not IsWorldQuestWatched(lastTrackedQuestID) then
+		if awqwp[lastTrackedQuestID] then
+			for i in pairs( awqwp[lastTrackedQuestID] ) do TomTom:RemoveWaypoint( awqwp[lastTrackedQuestID][i] ) end
+		end
+	end
+	if hardWatch then lastTrackedQuestID = nil else lastTrackedQuestID = questID end
+	
+	local info = WorldQuestTipsData.global.worldQuests[ questID ].coords.default
+	local title, factionID, capped = C_TaskQuest.GetQuestInfoByQuestID(questID);
+	addWayPoints( questID, "click", info.m, info.f, info.x, info.y, title )
+end)
+
+hooksecurefunc ("BonusObjectiveTracker_UntrackWorldQuest", function (questID)
+	if awqwp[questID] then
+		for i in pairs( awqwp[questID] ) do TomTom:RemoveWaypoint( awqwp[questID][i] ) end
 	end
 end)
 
@@ -982,6 +1252,13 @@ hooksecurefunc ("BonusObjectiveTracker_ShowRewardsTooltip", function (self)
 	if worldQuestType then
 		local title, factionID, capped = C_TaskQuest.GetQuestInfoByQuestID(self.id);
 		local faction1, faction2 = "", "";
+		
+		if WorldQuestTipsData.global.worldQuests[self.id] == nil then
+			findQuest(self.questID)
+		end
+		if WorldQuestTipsData.global.worldQuests[self.id].coords == nil then
+			findQuest(self.questID)
+		end
 	--	local info, zone = findQuest( self.id )
 		if ( factionID ) then
 			--name, description, standingID, barMin, barMax, barValue, atWarWith, canToggleAtWar, isHeader, isCollapsed, hasRep, isWatched, isChild, factionID, hasBonusRepGain, canBeLFGBonus = GetFactionInfoByID(factionID)
@@ -1010,7 +1287,8 @@ hooksecurefunc ("BonusObjectiveTracker_ShowRewardsTooltip", function (self)
 				end
 			end
 		--	if WorldQuestTipsData.global.worldQuests[self.id].coords then 
-				local zone = WorldQuestTipsData.global.worldQuests[self.id].coords.default.m
+		--	local _, zone = C_TaskQuest.GetQuestZoneID( self.questID )
+			local zone = WorldQuestTipsData.global.worldQuests[self.id].coords.default.m
 		--	end
 			if zoneFactions[zone] and zoneFactions[zone] ~= factionID then
 				local factionName2,_,factionStanding2,barMin2,barMax2,value2 = GetFactionInfoByID(zoneFactions[zone]);
@@ -1107,6 +1385,65 @@ GameTooltip:HookScript("OnTooltipSetUnit", function(self)
 	end
 end)
 
+local function addRepToToolTip( self, factionID )
+	if WorldQuestTipsData.global.options.showRepOnItems then
+		local factionName,_,factionStanding,barMin,barMax,value = GetFactionInfoByID( factionID );
+		barMax = (barMax - barMin)/1000;
+		local barValue = math.floor( (value - barMin)/100 ) / 10
+		local factionStandingtext = GetText("FACTION_STANDING_LABEL"..factionStanding, gender);
+		local colour = "|cff808080"
+		if factionStanding < 8 then
+			factionStandingtext = factionStandingtext.." "..barValue.."k /"..barMax.."k"
+			colour = "|cffffd100"
+		end
+		if not ( factionStanding == 8 and not WorldQuestTipsData.global.options.showExalted ) then
+			_G[ self:GetName().."TextLeft2" ]:SetText( colour..factionStandingtext.."\124r\n".._G[ self:GetName().."TextLeft2" ]:GetText().." ")
+		end
+		
+		if WorldQuestTipsData.global.options.showAltRepOnItems then
+			for i = 1, self:NumLines() do
+			--	if string.find(_G[ self:GetName().."TextLeft"..i ]:GetText(),ITEM_BNETACCOUNTBOUND) and IsAltKeyDown() then
+				if string.find(_G[ self:GetName().."TextLeft"..i ]:GetText(),ITEM_BNETACCOUNTBOUND) or string.find(_G[ self:GetName().."TextLeft"..i ]:GetText(),ITEM_BIND_TO_BNETACCOUNT) then
+					for k,v in pairs( WorldQuestTipsData ) do
+						if k ~= "global" and k ~= "version" and k ~= profileKey then
+							if v.info and v.info.level > 100 then
+								local color = RAID_CLASS_COLORS[v.info.class]
+								local level = ""
+								if v.info.level < 110 then level = "|cffffffff ("..v.info.level..")" end
+								if not ( string.find( v.reps[ factionID ], "|cff808080" ) and not WorldQuestTipsData.global.options.showExalted ) then
+									self:AddDoubleLine( v.info.name..level, v.reps[factionID], color.r, color.g, color.b )
+								end
+							end
+						end
+					end
+				end
+			end
+		end
+		self:Show()
+	end
+end
+
+hooksecurefunc(ItemRefTooltip, "SetHyperlink", function(self, link)
+	local type, id = string.match(link,"^(%a+):(%d+)")
+	if type == "item" and repitems[ id ] then
+		addRepToToolTip( self, repitems[ id ] )
+	end
+end)
+
+hooksecurefunc(WorldMapFrame.UIElementsFrame.BountyBoard, "ShowBountyTooltip", function(self, i)
+	addRepToToolTip( WorldMapTooltip, self.bounties[ i ].factionID )
+end)
+
+GameTooltip:HookScript("OnTooltipSetItem", function(self)
+	local link = select(2, self:GetItem())
+	if link then
+		local id = string.match(link, "item:(%d*)")
+		if id and repitems[ id ] then
+			addRepToToolTip( self, repitems[ id ] )
+		end
+	end
+end)
+
 WorldMapFrame:HookScript("OnShow", function(self)
 	if wqto then
 		wqto:SetParent("WorldMapFrame")
@@ -1120,14 +1457,6 @@ WorldMapFrame:HookScript("OnHide", function(self)
 	end
 end)
 
---[[
-local function getQuestInfo( questID )
-	local tagID, tagName, worldQuestType, rarity, isElite, tradeskillLineIndex = GetQuestTagInfo(questID);
-	local title, factionID, capped = C_TaskQuest.GetQuestInfoByQuestID(questID);
-	return title
-end
--]]
-
 local currentQuestEdit
 
 local function fillQuestInfo( questID )
@@ -1136,7 +1465,9 @@ local function fillQuestInfo( questID )
 	else
 		currentQuestEdit = wqto.q.qid:GetNumber()
 	end
-	local title = C_TaskQuest.GetQuestInfoByQuestID( currentQuestEdit )
+	--local title = C_TaskQuest.GetQuestInfoByQuestID( currentQuestEdit )
+	local title
+	if currentQuestEdit ~= 0 and WorldQuestTipsData.global.worldQuests[ currentQuestEdit ] ~= nil then title = WorldQuestTipsData.global.worldQuests[ currentQuestEdit ].title end
 	if title then
 		wqto.q.qlink.name:SetText( "[ "..title.." ]" )
 	end
@@ -1184,7 +1515,7 @@ function WorldQuestTips:loadOptions( questID )
 	
 	if not dataloaded then getdata() end
 	
-	local tablist = { g = GENERAL, o = TOOLTIP_BATTLE_PET, q = QUESTS_LABEL }
+	local tablist = { g = GENERAL, r = REPUTATION, o = TOOLTIP_BATTLE_PET, q = QUESTS_LABEL, e = "Enigmatic" }
 	if wqto == nil then
 		local initParent = UIParent
 		if WorldMapFrame:IsShown() then initParent = WorldMapFrame end
@@ -1200,6 +1531,7 @@ function WorldQuestTips:loadOptions( questID )
 			insets = { left = 11, right = 12, top = 12, bottom = 11 }
 		})
 		wqto:SetFrameLevel(999)
+		wqto:SetMovable(true)
 		  
 		wqto.tabs = CreateFrame("FRAME", nil, wqto)
 		wqto.tabs:SetWidth(200)
@@ -1214,20 +1546,17 @@ function WorldQuestTips:loadOptions( questID )
 		wqto.tabs.footer = wqto.tabs:CreateFontString(nil, wqto.tabs, "GameFontWhite" )
 		wqto.tabs.footer:SetText("v" .. format("%.2f",version) .. versionSuffix );
 		wqto.tabs.footer:SetPoint("BOTTOM", 0, 20 )
-		  
+
 		wqto.header = CreateFrame("FRAME", nil, wqto)
-		wqto.header:SetWidth(384)
-		wqto.header:SetHeight(64)
+		wqto.header:SetSize(384, 64)
 		wqto.header:SetBackdrop({ bgFile = "Interface/DialogFrame/UI-DialogBox-Header" })
 		wqto.header:SetPoint("TOP", wqto, "TOP", 0, 12)
+		wqto.header:EnableMouse(true)
+		wqto.header:SetScript("OnMouseDown", function(self) self:GetParent():StartMoving() end )
+		wqto.header:SetScript("OnMouseUp", function(self) self:GetParent():StopMovingOrSizing() end )
 		wqto.header.text = wqto.header:CreateFontString(nil, wqto.header, "GameFontNormal" )
 		wqto.header.text:SetText( L.TITLE )
 		wqto.header.text:SetPoint("TOP", 0, -14)
-		
-		wqto.dragRegion = wqto:CreateTitleRegion()
-		wqto:EnableMouse(true)
-		wqto.dragRegion:SetSize(384, 64)
-		wqto.dragRegion:SetPoint("TOPLEFT", wqto.header )
 		
 		local tabbtnoffset = -32;
 		local function makeTabBtns( x, v )
@@ -1255,7 +1584,7 @@ function WorldQuestTips:loadOptions( questID )
 		
 		g.option_TomTomMP = CreateFrame("CheckButton", nil, g, "UICheckButtonTemplate");
 		g.option_TomTomMP:SetPoint("TOPLEFT", g.subtitle_tomtom, "BOTTOMLEFT", 10, -5);
-		g.option_TomTomMP.text:SetText("Add way point on World Map quest Left Click");
+		g.option_TomTomMP.text:SetText("Add way point on World Map quest tracking");
 		g.option_TomTomMP.text:SetFontObject("GameFontNormal")
 		g.option_TomTomMP:SetScript("OnEnter", function(self) GameTooltip:SetOwner(self, "ANCHOR_RIGHT",0,-32);  GameTooltip:SetText("Adds a useful waypoint if there's data for it\ne.g. \"Cave entrance to WANTED:x\"\n\nAdds a waypoint to Blizzards PoI if there's no data"); GameTooltip:Show() end)
 		g.option_TomTomMP:SetScript("OnLeave", function(self) GameTooltip:Hide() end)
@@ -1306,31 +1635,10 @@ function WorldQuestTips:loadOptions( questID )
 		if WorldQuestTipsData.global.options.showTimes then g.option_ShowT:SetChecked(true) end
 		g.option_ShowT:SetScript("OnClick", function() if g.option_ShowT:GetChecked() then WorldQuestTipsData.global.options.showTimes = true; else WorldQuestTipsData.global.options.showTimes = false end end);
 		
-		g.subtitle_Rep = g:CreateFontString(nil, g, "GameFontNormal" )
-		g.subtitle_Rep:SetText( REPUTATION .. ":");
-		g.subtitle_Rep:SetPoint("TOPLEFT", g, 20, -275 )
-		
-		g.option_CurRep = CreateFrame("CheckButton", nil, g, "UICheckButtonTemplate");
-		g.option_CurRep:SetPoint("TOPLEFT", g.subtitle_Rep, "BOTTOMLEFT", 10, -5);
-		g.option_CurRep.text:SetText( L.OPTIONS_G_REP_CUR );
-		g.option_CurRep.text:SetFontObject("GameFontNormal")
-		--g.option_CurRep:SetScript("OnEnter", function(self) GameTooltip:SetOwner(self, "ANCHOR_RIGHT",0,-32);  GameTooltip:SetText("Show your current standing with the relevant faction\nin tooltips, in the format \"Standing (#k / #k)\""); GameTooltip:Show() end)
-		--g.option_CurRep:SetScript("OnLeave", function(self) GameTooltip:Hide() end)
-		if WorldQuestTipsData.global.options.showCurrentRep then g.option_CurRep:SetChecked(true) end
-		g.option_CurRep:SetScript("OnClick", function() if g.option_CurRep:GetChecked() then WorldQuestTipsData.global.options.showCurrentRep = true; else WorldQuestTipsData.global.options.showCurrentRep = false end end);
-		
-		g.option_ShowEx = CreateFrame("CheckButton", nil, g, "UICheckButtonTemplate");
-		g.option_ShowEx:SetPoint("TOPLEFT", g.subtitle_Rep, "BOTTOMLEFT", 10, -30);
-		g.option_ShowEx.text:SetText( L.OPTIONS_G_REP_EX );
-		g.option_ShowEx.text:SetFontObject("GameFontNormal")
-		--g.option_ShowEx:SetScript("OnEnter", function(self) GameTooltip:SetOwner(self, "ANCHOR_RIGHT",0,-32);  GameTooltip:SetText("Disable to stop showing faction names in\ntooltips once you've reached exalted"); GameTooltip:Show() end)
-		--g.option_ShowEx:SetScript("OnLeave", function(self) GameTooltip:Hide() end)
-		if WorldQuestTipsData.global.options.showExalted then g.option_ShowEx:SetChecked(true) end
-		g.option_ShowEx:SetScript("OnClick", function() if g.option_ShowEx:GetChecked() then WorldQuestTipsData.global.options.showExalted = true; else WorldQuestTipsData.global.options.showExalted = false end end);
 		
 		g.subtitle_Other = g:CreateFontString(nil, g, "GameFontNormal" )
 		g.subtitle_Other:SetText( OTHER .. ":"); --BONUS_ROLL_REWARD_MONEY ="Gold"
-		g.subtitle_Other:SetPoint("TOPLEFT", g, 20, -355 )
+		g.subtitle_Other:SetPoint("TOPLEFT", g, 20, -275 )
 		
 		g.option_HideSG = CreateFrame("CheckButton", nil, g, "UICheckButtonTemplate");
 		g.option_HideSG:SetPoint("TOPLEFT", g.subtitle_Other, "BOTTOMLEFT", 10, -5);
@@ -1342,6 +1650,259 @@ function WorldQuestTips:loadOptions( questID )
 		g.option_HideSG:SetScript("OnClick", function() if g.option_HideSG:GetChecked() then WorldQuestTipsData.global.options.hideSmallGold = true; else WorldQuestTipsData.global.options.hideSmallGold = false end end);
 		
 		wqto.g = g;
+		
+		local r = CreateFrame("FRAME", nil, wqto)
+		r:SetWidth(410)
+		r:SetHeight(440)
+		r:SetPoint("CENTER", wqto, "CENTER")
+		r.subtitle_Rep = r:CreateFontString(nil, r, "GameFontNormal" )
+		r.subtitle_Rep:SetText( REPUTATION .. ":")
+		r.subtitle_Rep:SetPoint("TOPLEFT", 20, -60 )
+		
+		r.option_CurRep = CreateFrame("CheckButton", nil, r, "UICheckButtonTemplate");
+		r.option_CurRep:SetPoint("TOPLEFT", r.subtitle_Rep, "BOTTOMLEFT", 10, -5);
+		r.option_CurRep.text:SetText( L.OPTIONS_G_REP_CUR );
+		r.option_CurRep.text:SetFontObject("GameFontNormal")
+		--r.option_CurRep:SetScript("OnEnter", function(self) GameTooltip:SetOwner(self, "ANCHOR_RIGHT",0,-32);  GameTooltip:SetText("Show your current standing with the relevant faction\nin tooltips, in the format \"Standing (#k / #k)\""); GameTooltip:Show() end)
+		--r.option_CurRep:SetScript("OnLeave", function(self) GameTooltip:Hide() end)
+		if WorldQuestTipsData.global.options.showCurrentRep then r.option_CurRep:SetChecked(true) end
+		r.option_CurRep:SetScript("OnClick", function() if r.option_CurRep:GetChecked() then WorldQuestTipsData.global.options.showCurrentRep = true; else WorldQuestTipsData.global.options.showCurrentRep = false end end);
+		
+		r.option_ShowEx = CreateFrame("CheckButton", nil, r, "UICheckButtonTemplate");
+		r.option_ShowEx:SetPoint("TOPLEFT", r.subtitle_Rep, "BOTTOMLEFT", 10, -30);
+		r.option_ShowEx.text:SetText( L.OPTIONS_G_REP_EX );
+		r.option_ShowEx.text:SetFontObject("GameFontNormal")
+		--r.option_ShowEx:SetScript("OnEnter", function(self) GameTooltip:SetOwner(self, "ANCHOR_RIGHT",0,-32);  GameTooltip:SetText("Disable to stop showing faction names in\ntooltips once you've reached exalted"); GameTooltip:Show() end)
+		--r.option_ShowEx:SetScript("OnLeave", function(self) GameTooltip:Hide() end)
+		if WorldQuestTipsData.global.options.showExalted then r.option_ShowEx:SetChecked(true) end
+		r.option_ShowEx:SetScript("OnClick", function() if r.option_ShowEx:GetChecked() then WorldQuestTipsData.global.options.showExalted = true; else WorldQuestTipsData.global.options.showExalted = false end end);
+		
+		r.option_ShowROI = CreateFrame("CheckButton", nil, r, "UICheckButtonTemplate");
+		r.option_ShowROI:SetPoint("TOPLEFT", r.subtitle_Rep, "BOTTOMLEFT", 10, -55);
+		r.option_ShowROI.text:SetText( "Show reputation on faction insignia" );
+		r.option_ShowROI.text:SetFontObject("GameFontNormal")
+		--r.option_ShowROI:SetScript("OnEnter", function(self) GameTooltip:SetOwner(self, "ANCHOR_RIGHT",0,-32);  GameTooltip:SetText("Disable to stop showing faction names in\ntooltips once you've reached exalted"); GameTooltip:Show() end)
+		--r.option_ShowROI:SetScript("OnLeave", function(self) GameTooltip:Hide() end)
+		if WorldQuestTipsData.global.options.showExalted then r.option_ShowROI:SetChecked(true) end
+		r.option_ShowROI:SetScript("OnClick", function() if r.option_ShowROI:GetChecked() then WorldQuestTipsData.global.options.showRepOnItems = true; else WorldQuestTipsData.global.options.showRepOnItems = false end end);
+		
+		r.option_ShowAROI = CreateFrame("CheckButton", nil, r, "UICheckButtonTemplate");
+		r.option_ShowAROI:SetPoint("TOPLEFT", r.subtitle_Rep, "BOTTOMLEFT", 10, -80);
+		r.option_ShowAROI.text:SetText( "Show alts reputations on BOA faction insignia" );
+		r.option_ShowAROI.text:SetFontObject("GameFontNormal")
+		--r.option_ShowAROI:SetScript("OnEnter", function(self) GameTooltip:SetOwner(self, "ANCHOR_RIGHT",0,-32);  GameTooltip:SetText("Disable to stop showing faction names in\ntooltips once you've reached exalted"); GameTooltip:Show() end)
+		--r.option_ShowAROI:SetScript("OnLeave", function(self) GameTooltip:Hide() end)
+		if WorldQuestTipsData.global.options.showExalted then r.option_ShowAROI:SetChecked(true) end
+		r.option_ShowAROI:SetScript("OnClick", function() if r.option_ShowAROI:GetChecked() then WorldQuestTipsData.global.options.showAltRepOnItems = true; else WorldQuestTipsData.global.options.showAltRepOnItems = false end end);
+		
+		r:Hide()
+		wqto.r = r;
+		
+		local e = CreateFrame("FRAME", nil, wqto)
+		e:SetWidth(410)
+		e:SetHeight(440)
+		e:SetPoint("CENTER", wqto, "CENTER")
+		e.subtitle_enigmatic = e:CreateFontString(nil, e, "GameFontNormal" )
+		e.subtitle_enigmatic:SetText("Enigmatic Path Helper:");
+		e.subtitle_enigmatic:SetPoint("TOPLEFT", 20, -60 )
+		
+		e.option_useEnigmatic = CreateFrame("CheckButton", nil, e, "UICheckButtonTemplate");
+		e.option_useEnigmatic:SetPoint("TOPLEFT", e.subtitle_enigmatic, "BOTTOMLEFT", 10, -5);
+		e.option_useEnigmatic.text:SetText("Enable Enigmatic Path Helper");
+		e.option_useEnigmatic.text:SetFontObject("GameFontNormal")
+		if WorldQuestTipsData.global.options.useEnigmatic then e.option_useEnigmatic:SetChecked(true) end
+		e.option_useEnigmatic:SetScript("OnClick", function()
+			if e.option_useEnigmatic:GetChecked() then
+				WorldQuestTipsData.global.options.useEnigmatic = true
+				if enigmaticActive then
+					if WorldQuestTips.enigmatic == nil then WorldQuestTips:loadEnigmatic() end
+					WorldQuestTips.enigmatic:Show()
+				end
+			else
+				WorldQuestTipsData.global.options.useEnigmatic = false
+				if WorldQuestTips.enigmatic then WorldQuestTips.enigmatic:Hide() end
+				if WorldQuestTips.enigmaticHUD then WorldQuestTips.enigmaticHUD:Hide() end
+			end
+		end);
+		
+		e.subtitle_enigmaticPaths = e:CreateFontString(nil, e, "GameFontNormal" )
+		e.subtitle_enigmaticPaths:SetText("Enigmatic Path Selector:");
+		e.subtitle_enigmaticPaths:SetPoint("TOPLEFT", 20, -115 )
+		
+		e.option_enimaticMove = CreateFrame("CheckButton", nil, e, "UICheckButtonTemplate");
+		e.option_enimaticMove:SetPoint("TOPLEFT", e.subtitle_enigmaticPaths, "BOTTOMLEFT", 10, -5);
+		e.option_enimaticMove.text:SetText("Enable dragging");
+		e.option_enimaticMove.text:SetFontObject("GameFontNormal")
+		e.option_enimaticMove:SetScript("OnEnter", function(self) GameTooltip:SetOwner(self, "ANCHOR_RIGHT",0,-32);  GameTooltip:SetText("Enable/Lock moving the path selection frame\nThe position is saved between sessions"); GameTooltip:Show() end)
+		e.option_enimaticMove:SetScript("OnLeave", function(self) GameTooltip:Hide() end)
+		if WorldQuestTipsData.global.options.enigmaticMove then e.option_enimaticMove:SetChecked(true) end
+		e.option_enimaticMove:SetScript("OnClick", function() if e.option_enimaticMove:GetChecked() then WorldQuestTipsData.global.options.enigmaticMove = true; else WorldQuestTipsData.global.options.enigmaticMove = false end WorldQuestTips:loadEnigmatic( "optionUpdate" ) end);
+		
+		e.toggleBtn = CreateFrame("BUTTON", nil, e, "UIPanelButtonTemplate")
+		e.toggleBtn:SetWidth(64)
+		e.toggleBtn:SetHeight(24)
+		e.toggleBtn:SetText( "Toggle" )
+		e.toggleBtn:SetPoint("TOPRIGHT", -20, -60 )
+		e.toggleBtn:SetScript("OnClick", function()
+								if WorldQuestTips.enigmatic == nil then
+									WorldQuestTips:loadEnigmatic()
+								elseif WorldQuestTips.enigmatic:IsShown() then
+								--	WorldQuestTipsData.global.options.enigmaticPos = { left = WorldQuestTips.enigmatic:GetLeft(), bottom = WorldQuestTips.enigmatic:GetBottom() }
+									WorldQuestTips.enigmatic:Hide()
+									if WorldQuestTips.enigmaticHUD then WorldQuestTips.enigmaticHUD:Hide() end
+								else
+									WorldQuestTips.enigmatic:Show()
+								end
+							end)
+		
+		e.resetPosBtn = CreateFrame("BUTTON", nil, e, "UIPanelButtonTemplate")
+		e.resetPosBtn:SetWidth(64)
+		e.resetPosBtn:SetHeight(24)
+		e.resetPosBtn:SetText( "Reset" )
+		e.resetPosBtn:SetPoint("LEFT", e.option_enimaticMove.text, "RIGHT" );
+		e.resetPosBtn:SetScript("OnClick", function()
+								WorldQuestTipsData.global.options.enigmaticPos = "CENTER"
+								WorldQuestTips:loadEnigmatic( "optionUpdate" )
+							end)
+							
+		e.rowsSlider = CreateFrame('Slider', 'wqt_enigmatic_rowSlider', e, 'OptionsSliderTemplate')
+		e.rowsSlider:SetPoint("TOPRIGHT", e, -40, -180);
+		e.rowsSlider:SetMinMaxValues(1, table.getn( enigmaticPaths ) )
+		e.rowsSlider:SetValue( WorldQuestTipsData.global.options.enigmaticRows )
+		wqt_enigmatic_rowSliderLow:SetText(1);
+		wqt_enigmatic_rowSliderHigh:SetText(table.getn( enigmaticPaths ));
+		wqt_enigmatic_rowSliderText:SetText("Rows ("..WorldQuestTipsData.global.options.enigmaticRows..")");
+		e.rowsSlider:SetScript("OnValueChanged", function(self, value)
+								value = math.floor(value + 0.5)
+								self:SetValue( value )
+								wqt_enigmatic_rowSliderText:SetText("Rows ("..value..")");
+								WorldQuestTipsData.global.options.enigmaticRows = value
+								WorldQuestTips:loadEnigmatic( "optionUpdate" )
+							end)
+							
+		e.sizeSlider = CreateFrame('Slider', 'wqt_enigmatic_sizeSlider', e, 'OptionsSliderTemplate')
+		e.sizeSlider:SetPoint("TOPLEFT", e, 40, -180);
+		e.sizeSlider:SetMinMaxValues(1, 32 )
+		e.sizeSlider:SetValue( WorldQuestTipsData.global.options.enigmaticSize )
+		wqt_enigmatic_sizeSliderLow:SetText(1);
+		wqt_enigmatic_sizeSliderHigh:SetText(32);
+		wqt_enigmatic_sizeSliderText:SetText("Size ("..WorldQuestTipsData.global.options.enigmaticSize..")");
+		e.sizeSlider:SetScript("OnValueChanged", function(self, value)
+								value = math.floor(value + 0.5)
+								self:SetValue( value )
+								wqt_enigmatic_sizeSliderText:SetText("Size ("..value..")");
+								WorldQuestTipsData.global.options.enigmaticSize = value
+								WorldQuestTips:loadEnigmatic( "optionUpdate" )
+							end)
+		
+		
+		e.subtitle_enigmaticHUD = e:CreateFontString(nil, e, "GameFontNormal" )
+		e.subtitle_enigmaticHUD:SetText("Enigmatic HUD:");
+		e.subtitle_enigmaticHUD:SetPoint("TOPLEFT", 20, -220 )
+		
+		e.option_useEnigmaticHUD = CreateFrame("CheckButton", nil, e, "UICheckButtonTemplate");
+		e.option_useEnigmaticHUD:SetPoint("TOPLEFT", e.subtitle_enigmaticHUD, "BOTTOMLEFT", 10, -5);
+		e.option_useEnigmaticHUD.text:SetText("Enable Enigmatic HUD");
+		e.option_useEnigmaticHUD.text:SetFontObject("GameFontNormal")
+		if WorldQuestTipsData.global.options.useEnigmaticHUD then e.option_useEnigmaticHUD:SetChecked(true) end
+		e.option_useEnigmaticHUD:SetScript("OnClick", function()
+			if e.option_useEnigmaticHUD:GetChecked() then
+				WorldQuestTipsData.global.options.useEnigmaticHUD = true
+			else
+				WorldQuestTipsData.global.options.useEnigmaticHUD = false
+				if WorldQuestTips.enigmaticHUD then WorldQuestTips.enigmaticHUD:Hide() end
+			end
+		end);
+		
+		e.option_enimaticHUDMove = CreateFrame("CheckButton", nil, e, "UICheckButtonTemplate");
+		e.option_enimaticHUDMove:SetPoint("TOPLEFT", e.subtitle_enigmaticHUD, "BOTTOMLEFT", 10, -30);
+		e.option_enimaticHUDMove.text:SetText("Enable dragging");
+		e.option_enimaticHUDMove.text:SetFontObject("GameFontNormal")
+		e.option_enimaticHUDMove:SetScript("OnEnter", function(self) GameTooltip:SetOwner(self, "ANCHOR_RIGHT",0,-32);  GameTooltip:SetText("Enable/Lock moving the HUD frame\nThe position is saved between sessions"); GameTooltip:Show() end)
+		e.option_enimaticHUDMove:SetScript("OnLeave", function(self) GameTooltip:Hide() end)
+		if WorldQuestTipsData.global.options.enigmaticHUDMove then e.option_enimaticHUDMove:SetChecked(true) end
+		e.option_enimaticHUDMove:SetScript("OnClick", function() if e.option_enimaticHUDMove:GetChecked() then WorldQuestTipsData.global.options.enigmaticHUDMove = true; else WorldQuestTipsData.global.options.enigmaticHUDMove = false end WorldQuestTips:loadEnigmaticHUD( "optionUpdate" ) end);
+		
+		e.resetHUDPosBtn = CreateFrame("BUTTON", nil, e, "UIPanelButtonTemplate")
+		e.resetHUDPosBtn:SetWidth(64)
+		e.resetHUDPosBtn:SetHeight(24)
+		e.resetHUDPosBtn:SetText( "Reset" )
+		e.resetHUDPosBtn:SetPoint("LEFT", e.option_enimaticHUDMove.text, "RIGHT" );
+		e.resetHUDPosBtn:SetScript("OnClick", function()
+								WorldQuestTipsData.global.options.enigmaticHUDPos = "CENTER"
+								WorldQuestTips:loadEnigmaticHUD( "optionUpdate" )
+							end)
+		e.HUDsizeSlider = CreateFrame('Slider', 'wqt_enigmatic_HUDsizeSlider', e, 'OptionsSliderTemplate')
+		e.HUDsizeSlider:SetPoint("TOPLEFT", e, 40, -310);
+		e.HUDsizeSlider:SetMinMaxValues(1, 96 )
+		e.HUDsizeSlider:SetValue( WorldQuestTipsData.global.options.enigmaticHUDSize )
+		wqt_enigmatic_HUDsizeSliderLow:SetText(1);
+		wqt_enigmatic_HUDsizeSliderHigh:SetText(96);
+		wqt_enigmatic_HUDsizeSliderText:SetText("Size ("..WorldQuestTipsData.global.options.enigmaticHUDSize..")");
+		e.HUDsizeSlider:SetScript("OnValueChanged", function(self, value)
+								value = math.floor(value + 0.5)
+								self:SetValue( value )
+								wqt_enigmatic_HUDsizeSliderText:SetText("Size ("..value..")");
+								WorldQuestTipsData.global.options.enigmaticHUDSize = value
+								WorldQuestTips:loadEnigmaticHUD( "optionUpdate" )
+							end)
+		
+		e.option_enimaticHUDPathDim = CreateFrame("CheckButton", nil, e, "UICheckButtonTemplate");
+		e.option_enimaticHUDPathDim:SetPoint("TOPLEFT", e.subtitle_enigmaticHUD, "BOTTOMLEFT", 10, -120);
+		e.option_enimaticHUDPathDim.text:SetText("Invert path");
+		e.option_enimaticHUDPathDim.text:SetFontObject("GameFontNormal")
+		e.option_enimaticHUDPathDim:SetScript("OnEnter", function(self) GameTooltip:SetOwner(self, "ANCHOR_RIGHT",0,-32);  GameTooltip:SetText("Enable/Lock moving the HUD frame\nThe position is saved between sessions"); GameTooltip:Show() end)
+		e.option_enimaticHUDPathDim:SetScript("OnLeave", function(self) GameTooltip:Hide() end)
+		if WorldQuestTipsData.global.options.enigmaticHUDPathDim then e.option_enimaticHUDPathDim:SetChecked(true) end
+		e.option_enimaticHUDPathDim:SetScript("OnClick", function()
+			if e.option_enimaticHUDPathDim:GetChecked() then
+				WorldQuestTipsData.global.options.enigmaticHUDPathDim = true;
+			else
+				WorldQuestTipsData.global.options.enigmaticHUDPathDim = false
+			end
+			local pathA = WorldQuestTipsData.global.options.enigmaticHUDEdgeA
+			local edgeA = WorldQuestTipsData.global.options.enigmaticHUDPathA
+			wqt_enigmatic_HUDEdgeASliderText:SetText("Edge Alpha ("..edgeA..")");
+			WorldQuestTipsData.global.options.enigmaticHUDEdgeA = edgeA
+			wqto.e.HUDEdgeASlider:SetValue( edgeA )
+			wqt_enigmatic_HUDPathASliderText:SetText("Path Alpha ("..pathA..")");
+			WorldQuestTipsData.global.options.enigmaticHUDPathA = pathA
+			wqto.e.HUDPathASlider:SetValue( pathA )
+			WorldQuestTips:loadEnigmaticHUD( "optionUpdate" )
+		end);
+		
+		e.HUDPathASlider = CreateFrame('Slider', 'wqt_enigmatic_HUDPathASlider', e, 'OptionsSliderTemplate')
+		e.HUDPathASlider:SetPoint("TOPRIGHT", e, -40, -310);
+		e.HUDPathASlider:SetMinMaxValues(0, 1 )
+		e.HUDPathASlider:SetValue( WorldQuestTipsData.global.options.enigmaticHUDPathA )
+		wqt_enigmatic_HUDPathASliderLow:SetText(0);
+		wqt_enigmatic_HUDPathASliderHigh:SetText(1);
+		wqt_enigmatic_HUDPathASliderText:SetText("Path Alpha ("..WorldQuestTipsData.global.options.enigmaticHUDPathA..")");
+		e.HUDPathASlider:SetScript("OnValueChanged", function(self, value)
+								value = math.floor(value*100 + 0.5)/100
+								self:SetValue( value )
+								wqt_enigmatic_HUDPathASliderText:SetText("Path Alpha ("..value..")");
+								WorldQuestTipsData.global.options.enigmaticHUDPathA = value
+								WorldQuestTips:loadEnigmaticHUD( "optionUpdate" )
+							end)
+		
+		e.HUDEdgeASlider = CreateFrame('Slider', 'wqt_enigmatic_HUDEdgeASlider', e, 'OptionsSliderTemplate')
+		e.HUDEdgeASlider:SetPoint("TOPRIGHT", e, -40, -360);
+		e.HUDEdgeASlider:SetMinMaxValues(0, 1 )
+		e.HUDEdgeASlider:SetValue( WorldQuestTipsData.global.options.enigmaticHUDEdgeA )
+		wqt_enigmatic_HUDEdgeASliderLow:SetText(0);
+		wqt_enigmatic_HUDEdgeASliderHigh:SetText(1);
+		wqt_enigmatic_HUDEdgeASliderText:SetText("Edge Alpha ("..WorldQuestTipsData.global.options.enigmaticHUDEdgeA..")");
+		e.HUDEdgeASlider:SetScript("OnValueChanged", function(self, value)
+								value = math.floor(value*100 + 0.5)/100
+								self:SetValue( value )
+								wqt_enigmatic_HUDEdgeASliderText:SetText("Edge Alpha ("..value..")");
+								WorldQuestTipsData.global.options.enigmaticHUDEdgeA = value
+								WorldQuestTips:loadEnigmaticHUD( "optionUpdate" )
+							end)
+		
+		e:Hide()
+		wqto.e = e;
 		
 		
 		local q = CreateFrame("FRAME", nil, wqto)
@@ -1577,7 +2138,14 @@ function WorldQuestTips:loadOptions( questID )
 		wqto.doneBtn:SetHeight(24)
 		wqto.doneBtn:SetText( DONE )
 		wqto.doneBtn:SetPoint("BOTTOM", wqto, 0, 12)
-		wqto.doneBtn:SetScript("OnClick", function() wqto:Hide(); currentQuestEdit = 0 end)
+		wqto.doneBtn:SetScript("OnClick", function()
+			wqto:Hide()
+			currentQuestEdit = 0
+			if not enigmaticActive then
+				if WorldQuestTips.enigmatic then WorldQuestTips.enigmatic:Hide() end
+				if WorldQuestTips.enigmaticHUD then WorldQuestTips.enigmaticHUD:Hide() end
+			end
+		end)
 		
 	--	tinsert(UISpecialFrames, "wqto") 
 	end
@@ -1597,6 +2165,269 @@ function WorldQuestTips:loadOptions( questID )
 	end
 end
 
+local function activateEnigmatic( z )
+	WorldQuestTips.enigmatic["path"..z]:SetAlpha(1)
+	WorldQuestTips.enigmatic["path"..z].aplha = 1
+	for x = 1, 49 do
+		if enigmaticPaths[z][x] == 0 then
+			WorldQuestTips.enigmatic["path"..z].sq[x].texture:SetDesaturated(false)
+			WorldQuestTips.enigmatic["path"..z].sq[x]:SetAlpha(1)
+			if WorldQuestTips.enigmaticHUD then
+				WorldQuestTips.enigmaticHUD.sq[x].texture:SetDesaturated(not WorldQuestTipsData.global.options.enigmaticHUDPathDim)
+				WorldQuestTips.enigmaticHUD.sq[x]:SetAlpha(WorldQuestTipsData.global.options.enigmaticHUDEdgeA)
+			end
+		else
+			WorldQuestTips.enigmatic["path"..z].sq[x].texture:SetDesaturated(true)
+			WorldQuestTips.enigmatic["path"..z].sq[x]:SetAlpha(0.2)
+			if WorldQuestTips.enigmaticHUD then
+				WorldQuestTips.enigmaticHUD.sq[x].texture:SetDesaturated(WorldQuestTipsData.global.options.enigmaticHUDPathDim)
+				WorldQuestTips.enigmaticHUD.sq[x]:SetAlpha(WorldQuestTipsData.global.options.enigmaticHUDPathA)
+			end
+		end
+	end
+	WorldQuestTips.enigmatic["path"..z].sq[41]:Show()
+end
+
+local function deactivateEnigmatic( z )
+	for x = 1, 49 do
+		if enigmaticPaths[z][x] == 0 then
+			WorldQuestTips.enigmatic["path"..z].sq[x].texture:SetDesaturated(true)
+			WorldQuestTips.enigmatic["path"..z].sq[x]:SetAlpha(0.2)
+		else
+			WorldQuestTips.enigmatic["path"..z].sq[x].texture:SetDesaturated(false)
+			WorldQuestTips.enigmatic["path"..z].sq[x]:SetAlpha(1)
+		end
+	end
+	WorldQuestTips.enigmatic["path"..z].sq[41]:Hide()
+end
+
+function WorldQuestTips:loadEnigmatic( event )
+	local size = WorldQuestTipsData.global.options.enigmaticSize
+	local rows = WorldQuestTipsData.global.options.enigmaticRows
+	local length = table.getn( enigmaticPaths )
+	local cols = math.ceil( length / rows )
+	
+	local width = ( cols * size * 8 ) + size
+	local height = ( rows * size * 8 ) + size + 12
+	
+	local enigmatic
+	if WorldQuestTips.enigmatic == nil then
+		if event == "optionUpdate" then return end
+		enigmatic = CreateFrame("FRAME")
+	else enigmatic = WorldQuestTips.enigmatic end
+	enigmatic:SetSize( width, height )
+	enigmatic:ClearAllPoints()
+	enigmatic:SetMovable(true)
+		
+	if WorldQuestTipsData.global.options.enigmaticPos == "CENTER" then enigmatic:SetPoint("LEFT", UIParent, "CENTER")
+	else enigmatic:SetPoint("BOTTOMLEFT", UIParent, WorldQuestTipsData.global.options.enigmaticPos.left, WorldQuestTipsData.global.options.enigmaticPos.bottom ) end
+	
+	if enigmatic.draglabel == nil then
+		enigmatic.draglabel = CreateFrame("FRAME", nil, enigmatic) 
+		enigmatic.draglabel:SetPoint("BOTTOMLEFT", enigmatic, "TOPLEFT",0,-12 )
+		enigmatic.draglabel.texture = enigmatic.draglabel:CreateTexture()
+		enigmatic.draglabel.texture:SetTexture("Interface\\CHATFRAME\\ChatFrameTab")
+		enigmatic.draglabel.texture:SetAllPoints()
+		enigmatic.draglabel.text = enigmatic.draglabel:CreateFontString(nil, enigmatic.draglabel, "GameFontNormalSmall" )
+		enigmatic.draglabel.text:SetText( "Drag" );
+		enigmatic.draglabel.text:SetPoint("TOP",0,-10 )
+		
+		enigmatic.draglabel:EnableMouse(true)
+		enigmatic.draglabel:SetScript("OnMouseDown", function(self) self:GetParent():StartMoving() end )
+		enigmatic.draglabel:SetScript("OnMouseUp", function(self)
+				self:GetParent():StopMovingOrSizing()
+				WorldQuestTipsData.global.options.enigmaticPos = { left = WorldQuestTips.enigmatic:GetLeft(), bottom = WorldQuestTips.enigmatic:GetBottom() }
+			end )
+		enigmatic.draglabel:SetScript("OnEnter", function(self)
+			GameTooltip:SetOwner(self, "ANCHOR_RIGHT",0,-32);
+			local text = "To use; select a path to display in\nthe Enigmatic HUD\n\n"
+			if not WorldQuestTipsData.global.options.useEnigmaticHUD then text = "To use; just select a path to set\nas a reminder\n\n" end
+			GameTooltip:SetText( text.."To configure, type:\n /wqt\n\nIf you see a path that isn't here,\nplease contact the author");
+			GameTooltip:Show() end)
+		enigmatic.draglabel:SetScript("OnLeave", function(self) GameTooltip:Hide() end)
+			
+	end
+	if WorldQuestTipsData.global.options.enigmaticMove then
+		enigmatic:EnableMouse(true)
+		enigmatic.draglabel:Show()
+	else
+		enigmatic:EnableMouse(false)
+		enigmatic.draglabel:Hide()
+	end
+	enigmatic.draglabel:SetSize( size * 7, 22 )
+	
+	for k,v in pairs( enigmaticPaths ) do
+		local findrow = math.modf( (k-1) / cols )
+		if enigmatic["path"..k] == nil then
+			enigmatic["path"..k] = CreateFrame("Button", nil, enigmatic, "SecureActionButtonTemplate")	
+			enigmatic["path"..k].k = k
+			
+			enigmatic["path"..k]:SetHighlightTexture("Interface\\Buttons\\ButtonHilight-Square")
+			enigmatic["path"..k]:SetScript("OnEnter", function(self)
+				enigmatic["path"..k].aplha = enigmatic["path"..k]:GetAlpha()
+				enigmatic["path"..k]:SetAlpha(0.7)
+			end)
+			enigmatic["path"..k]:SetScript("OnLeave", function(self)
+				enigmatic["path"..k]:SetAlpha( enigmatic["path"..k].aplha )
+			end)
+			enigmatic["path"..k]:SetScript("OnClick", function(self)
+				for z = 1, table.getn( enigmaticPaths ) do
+					enigmatic["path"..z]:SetAlpha(0.2)
+					deactivateEnigmatic( z )
+				end
+				if WorldQuestTips.enigmaticHUD == nil then WorldQuestTips:loadEnigmaticHUD() end
+				if WorldQuestTipsData.global.options.useEnigmaticHUD then WorldQuestTips.enigmaticHUD:Show() end
+				WorldQuestTips.enigmaticHUD.k = self.k
+				activateEnigmatic( self.k )
+			end)
+			
+		enigmatic["path"..k].arrow = CreateFrame("FRAME", nil, enigmatic["path"..k])
+		enigmatic["path"..k].arrow.texture = enigmatic["path"..k].arrow:CreateTexture()
+		enigmatic["path"..k].arrow.texture:SetTexture("Interface\\MINIMAP\\MinimapArrow")
+		enigmatic["path"..k].arrow.texture:SetAllPoints()
+		enigmatic["path"..k].arrow:SetFrameLevel(50)
+		
+		end
+		enigmatic["path"..k]:SetWidth(size*7)
+		enigmatic["path"..k]:SetHeight(size*7)
+		enigmatic["path"..k]:SetPoint("TOPLEFT", enigmatic, (k-1-findrow*cols)*size*8, -findrow*size*8-12 )
+		
+		local sq
+		if enigmatic["path"..k].sq == nil then sq = {} else sq = enigmatic["path"..k].sq end
+		for i = 0,6 do
+			for j = 0,6 do
+				local thisSq = i*7 + j + 1
+				if sq[thisSq] == nil then
+					sq[thisSq] = CreateFrame("FRAME", nil, enigmatic["path"..k])
+					sq[thisSq].texture = sq[thisSq]:CreateTexture()
+					sq[thisSq].texture:SetTexture("Interface\\Icons\\spell_holy_holybolt")
+					sq[thisSq].texture:SetAllPoints()
+				end
+				sq[thisSq]:SetSize(size, size)
+				sq[thisSq]:SetPoint("TOPLEFT", enigmatic["path"..k], j*size, -i*size )
+				enigmatic["path"..k].sq = sq
+			end
+		end
+	local arrowsize = math.min( 48, size*2 )
+	enigmatic["path"..k].arrow:SetSize(arrowsize, arrowsize)
+	enigmatic["path"..k].arrow:SetPoint("CENTER", enigmatic["path"..k].sq[41] )
+	end
+	WorldQuestTips.enigmatic = enigmatic
+	for z = 1, table.getn( enigmaticPaths ) do
+		enigmatic["path"..z]:SetAlpha(1)
+		deactivateEnigmatic( z )
+	end
+end
+
+function WorldQuestTips:loadEnigmaticHUD( event )
+	
+	local viewedZone = GetCurrentMapAreaID()
+	SetMapToCurrentZone()
+	local unitX, unitY = GetPlayerMapPosition("player")
+	local rotation = GetPlayerFacing()
+	local _,TLx,TLy,BRx,BRy = GetCurrentMapZone()
+	SetMapByID( viewedZone )
+	local size = WorldQuestTipsData.global.options.enigmaticHUDSize
+	local currentPosX = 5.5*size
+	local currentPosY = 1.5*size
+	
+	local enigmaticHUD
+	if WorldQuestTips.enigmaticHUD == nil then
+		if event == "optionUpdate" then return end
+	--	enigmaticHUD = CreateFrame("FRAME", nil, UIParent)
+		enigmaticHUD = CreateFrame("FRAME")
+	else enigmaticHUD = WorldQuestTips.enigmaticHUD end
+	
+	enigmaticHUD:SetSize( 7*size, 7*size + 12 )
+	enigmaticHUD:ClearAllPoints()
+	enigmaticHUD:SetMovable(true)
+	
+	if WorldQuestTipsData.global.options.enigmaticHUDPos == "CENTER" then enigmaticHUD:SetPoint("RIGHT", UIParent, "CENTER")
+	else enigmaticHUD:SetPoint("BOTTOMLEFT", UIParent, WorldQuestTipsData.global.options.enigmaticHUDPos.left, WorldQuestTipsData.global.options.enigmaticHUDPos.bottom ) end
+	
+	if enigmaticHUD.draglabel == nil then
+		enigmaticHUD.draglabel = CreateFrame("FRAME", nil, enigmaticHUD) 
+		enigmaticHUD.draglabel:SetPoint("BOTTOMLEFT", enigmaticHUD, "TOPLEFT",0,-12 )
+		enigmaticHUD.draglabel.texture = enigmaticHUD.draglabel:CreateTexture()
+		enigmaticHUD.draglabel.texture:SetTexture("Interface\\CHATFRAME\\ChatFrameTab")
+		enigmaticHUD.draglabel.texture:SetAllPoints()
+		enigmaticHUD.draglabel.text = enigmaticHUD.draglabel:CreateFontString(nil, enigmaticHUD.draglabel, "GameFontNormalSmall" )
+		enigmaticHUD.draglabel.text:SetText( "Drag" );
+		enigmaticHUD.draglabel.text:SetPoint("TOP",0,-10 )
+		
+		enigmaticHUD.draglabel:EnableMouse(true)
+		enigmaticHUD.draglabel:SetScript("OnMouseDown", function(self) self:GetParent():StartMoving() end )
+		enigmaticHUD.draglabel:SetScript("OnMouseUp", function(self)
+				self:GetParent():StopMovingOrSizing()
+				WorldQuestTipsData.global.options.enigmaticHUDPos = { left = WorldQuestTips.enigmaticHUD:GetLeft(), bottom = WorldQuestTips.enigmaticHUD:GetBottom() }
+			end )
+		enigmaticHUD.draglabel:SetScript("OnEnter", function(self) GameTooltip:SetOwner(self, "ANCHOR_RIGHT",0,-32);  GameTooltip:SetText("To use, select a path from the Enigmatic Paths frame\nthen keep the player arrow on the path!\n\nTo configure, type:\n /wqt"); GameTooltip:Show() end)
+		enigmaticHUD.draglabel:SetScript("OnLeave", function(self) GameTooltip:Hide() end)
+	--	enigmaticHUD.dragRegion = enigmaticHUD:CreateTitleRegion()
+	--	enigmaticHUD.dragRegion:SetPoint("TOPLEFT", enigmaticHUD )			
+	end
+	
+	if WorldQuestTipsData.global.options.enigmaticHUDMove then
+		enigmaticHUD:EnableMouse(true)
+		enigmaticHUD.draglabel:Show()
+	else
+		enigmaticHUD:EnableMouse(false)
+		enigmaticHUD.draglabel:Hide()
+	end
+	enigmaticHUD.draglabel:SetSize( 42, 22 )
+	--enigmaticHUD.dragRegion:SetSize( 42, 22 )
+	
+	local sq
+	if enigmaticHUD.sq == nil then sq = {} else sq = enigmaticHUD.sq end
+	for i = 0,6 do
+		for j = 0,6 do
+			local thisSq = i*7 + j + 1
+			if sq[thisSq] == nil then
+				sq[thisSq] = CreateFrame("FRAME", nil, enigmaticHUD)
+				sq[thisSq].texture = sq[thisSq]:CreateTexture()
+			--	sq[thisSq].texture:SetTexture("Interface\\Icons\\spell_holy_holybolt")
+				sq[thisSq].texture:SetTexture("Interface\\Buttons\\CheckButtonHilight")
+				sq[thisSq].texture:SetAllPoints()
+			end
+			if enigmaticHUD.k == nil then
+				if not ( thisSq < 8 or thisSq > 42 or thisSq%7 == 0 or (thisSq-1)%7 == 0 ) then
+					sq[thisSq].texture:SetDesaturated(true)
+					sq[thisSq]:SetAlpha(WorldQuestTipsData.global.options.enigmaticHUDPathA)
+				else
+					sq[thisSq]:SetAlpha(WorldQuestTipsData.global.options.enigmaticHUDEdgeA)
+				end
+			end
+			sq[thisSq]:SetSize(size, size)
+			sq[thisSq]:SetPoint("TOPLEFT", enigmaticHUD, j*size, -i*size-12 )
+			enigmaticHUD.sq = sq
+		end
+	end
+	if enigmaticHUD.arrow == nil then
+		enigmaticHUD.arrow = CreateFrame("FRAME", nil, enigmaticHUD)
+		enigmaticHUD.arrow.texture = enigmaticHUD.arrow:CreateTexture()
+		enigmaticHUD.arrow.texture:SetTexture("Interface\\MINIMAP\\MinimapArrow")
+		enigmaticHUD.arrow.texture:SetAllPoints()
+		enigmaticHUD.arrow:SetFrameLevel(50)
+	end
+	local arrowsize = math.min( 48, size*2 )
+	enigmaticHUD.arrow:SetSize(arrowsize, arrowsize)
+		
+	enigmaticHUD.initialTP = { x = currentPosX, y = currentPosY }
+	
+	if event == "optionUpdate" then
+		if enigmaticHUD.k then
+			activateEnigmatic( enigmaticHUD.k )
+		end
+	else
+		enigmaticHUD.arrow:SetPoint("CENTER", enigmaticHUD, "BOTTOMLEFT", currentPosX, currentPosY )
+		enigmaticHUD.initialMP = { x = unitX, y = unitY, r = rotation }
+		enigmaticHUD.zone = { x = TLx-BRx, y = TLy-BRy }	-- width / height of zone in yards
+		enigmaticHUD:Hide()
+	end
+	
+	WorldQuestTips.enigmaticHUD = enigmaticHUD
+end
+		
 SLASH_WorldQuestTips1= "/wqt";
 function SlashCmdList.WorldQuestTips(msg)
 	if msg == "" then
@@ -1604,15 +2435,21 @@ function SlashCmdList.WorldQuestTips(msg)
 	else
 		if msg == 'debug true' then debugging = true; print('WorldQuestTips: Debugging messages on')
 		elseif msg == 'debug false' then debugging = false; print('WorldQuestTips: Debugging messages off') end
+		
+		if msg == 'test' then
 		--[[
-		if msg == 'test' then 
+			for k,v in pairs( WorldQuestTipsData ) do
+				print( k, v)
+			end
+			WorldQuestTips:loadEnigmatic()
 			print("test fired")
 			for i = 1, GetAchievementNumCriteria(9692) do
 				local description, type, completed, quantity, requiredQuantity, characterName, flags, assetID, quantityString, criteriaID = GetAchievementCriteriaInfo(9692, i)
 				print(description)
 			end
-		end
 		--]]
+		end
+
 		WorldQuestTipsData.global.options.debugging = debugging;
 	end
 end

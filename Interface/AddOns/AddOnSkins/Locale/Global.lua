@@ -24,10 +24,7 @@ function AS:UpdateLocale()
 	ASL.OptionsPanel.EmbedDesc = 'Enable/Disable this embed.'
 	ASL.OptionsPanel.OptionDesc = 'Enable/Disable this option.'
 	ASL.OptionsPanel.ElvUIDesc = 'This option will disable the corresponding ElvUI option. Do you accept this change?'
-	
-	ASL["Left: '%s' | Right: '%s'"] = "Left: '%s' | Right: '%s'";
-	ASL['Embed System: - %s'] = 'Embed System: - %s';
-	ASL["Main: '%s'"] = "Main: '%s'";
+
 	ASL["AddOn Skins"] = "AddOn Skins"
 	ASL["Blizzard Skins"] = "Blizzard Skins"
 	ASL["BossMod Options"] = "BossMod Options"
@@ -86,9 +83,12 @@ function AS:UpdateLocale()
 	ASL["Embed into Right Chat Panel"] = "Embed into Right Chat Panel"
 	ASL["Parchment"] = "Parchment"
 	ASL["Enable Skin Debugging"] = "Enable Skin Debugging"
+	ASL["Login Message"] = "Login Message"
+	ASL["Embed System Message"] = "Embed System Message"
 	ASL["Enable the Login Message"] = "Enable the Login Message"
 	ASL["Enable the Embed System Message"] = "Enable the Embed System Message"
-	
+	ASL["Enable the Login Message"] = "Enable the Login Message"
+
 	if AS['UpdateLocale_'..Locale] then
 		AS['UpdateLocale_'..Locale]()
 	end

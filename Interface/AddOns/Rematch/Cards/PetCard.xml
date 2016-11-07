@@ -240,7 +240,7 @@
 			</Button>
 
 			<!-- title area of card is visible on front and back -->
-			<Frame parentKey="Title" useParentLevel="true" forceAlpha="true">
+			<Frame parentKey="Title" useParentLevel="true" ignoreParentAlpha="true">
 				<Size x="248" y="48"/>
 				<Anchors>
 					<Anchor point="TOP" x="0" y="-25"/>
@@ -361,7 +361,7 @@
 			</Frame> <!-- Title -->
 			
 			<!-- front is border encompassing whole card inset -->
-			<Frame parentKey="Front" forceAlpha="true">
+			<Frame parentKey="Front" ignoreParentAlpha="true">
 				<Anchors> <!-- 254 width -->
 					<Anchor point="TOPLEFT" x="2" y="-22"/>
 					<Anchor point="BOTTOMRIGHT" x="-4" y="2"/>
@@ -711,7 +711,7 @@
 			</Frame> <!-- Front -->
 
 			<!-- back of card -->
-			<Frame parentKey="Back" forceAlpha="true">
+			<Frame parentKey="Back" ignoreParentAlpha="true">
 				<Anchors> <!-- 254 width -->
 					<Anchor point="TOPLEFT" x="2" y="-22"/>
 					<Anchor point="BOTTOMRIGHT" x="-4" y="2"/>

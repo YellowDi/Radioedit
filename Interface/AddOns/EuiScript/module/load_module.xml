@@ -3,7 +3,7 @@
 	<Script file="InspectFix.lua"/>
 	<!--Script file="ProfessionsDatabase.lua"/-->
 	<Script file='drag.lua'/>
-	<!--Script file='Durability.lua'/-->
+	<Script file='Durability.lua'/>
 	<Script file="tradetabs.lua"/>
 	<Script file="RaidCD.lua"/>
 	<!--Script file="stAddonManager.lua"/-->
@@ -41,7 +41,7 @@
 	<!--Script file='vengeance.lua'/-->
 	<!--Script file='GemPlus.lua'/-->
 	<!--Script file='BanditsGuile.lua'/-->
-	<Script file='FriendGroups.lua'/>
+	<!--Script file='FriendGroups.lua'/-->
 	
 	<Script file='encounters\Pandaria.lua'/>
 	<Script file='encounters\Draenor.lua'/>

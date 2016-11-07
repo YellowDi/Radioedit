@@ -1,4 +1,4 @@
-﻿## Interface: 70000
+﻿## Interface: 70100
 ## Title: |cffC495DDEUI|rRareScanner
 ## Title-zhCN: |cffC495DDEUI|r稀有检测RareScanner
 ## Title-zhTW: |cffC495DDEUI|r稀有檢測RareScanner
@@ -8,12 +8,12 @@
 ## Notes-zhTW: 小地圖掃描器。 當每次稀有NPC、寶藏/寶箱或事件出現在您的小地圖上時，使用一個按鈕與縮小的模型視覺化提醒您並撥放聲音。
 ## Notes-zhCN: 小地图扫描器。 当每次稀有NPC、宝藏/宝箱或事件出现在您的小地图上时，使用一个按钮与缩小的模型视觉化提醒您并拨放声音。
 ## Author: maqjav, Maciza-Tyrande
-## Version: 2.1
+## Version: 2.2
 ## SavedVariables: RareScannerDB
 ## OptionalDeps: Ace3
 ## X-Category: Miscellaneous
 ## X-Credits: maqjav, Maciza-Tyrande
-## X-Date: Ago. 29, 2016
+## X-Date: Oct. 25, 2016
 ## X-Email: maqjav@gmail.com
 ## X-License: GPLv2
 ## X-Localizations: enUS, zhCN, zhTW

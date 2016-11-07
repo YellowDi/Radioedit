@@ -42,7 +42,6 @@ L["Direction the bar moves on gains/losses"] = "状态条的延展方向,你仍�
 L["Artifact"] = "神器"
 L["Artifact Bar"] = "神器条"
 L["Hide At Max Level"] = "在最高等级时隐藏"
-L["Animate Config"] = "动画设置"
 L["DATABAR_DESC"] = "设置声望、经验等数据条"
 L["Thin Border Theme"] = "瘦边框主题"
 L["The Thin Border Theme option will change the overall apperance of your UI. Using Thin Border Theme is a slight performance increase over the traditional layout."] = "细边框主题(像素主题)会改变所有的外观,使用细边框主题会略微提升性能";
@@ -453,6 +452,8 @@ end
 
 --NamePlate Config
 do
+	L["Use Static Position"] = "使用静态位置";
+	L["When enabled the nameplate will stay visible in a locked position."] = "当启用时姓名版将显示在一个固定位置";
 	L["Detection"] = "检测";
 	L["Suramar Detection"] = " 苏拉玛检测";
 	L["Clickable Height"] = "可点击高度";
@@ -508,7 +509,6 @@ do
 	L["Base Height for the Aura Icon"] = "光环图标的基本高度";
 	L["Boss Auras"] = "BOSS光环";
 	L["Always Display"] = "允许显示";
-	L["By forcing the nameplate to always show it will not move on the screen to stay below your characters feet."] = "强制姓名版一直显示";
 	L["Display Minions"] = "显示监视";
 	L["Player Frame"] = "玩家框体";
 	L["Healer Frames"] = "治疗框体";
@@ -952,8 +952,7 @@ do
 	L['Invert Grouping Order'] = '反转队伍顺序';
 	L['Enabling this inverts the grouping order when the raid is not full, this will reverse the direction it starts from.'] = '反转队伍的排列方向';
 	L['Start Near Center'] = '近中心位置开始';
-	L['The initial group will start near the center and grow out.'] = '初始化时将靠近中心位置开始排列';	
-	L['GPS Arrow'] = '方向箭头';	
+	L['The initial group will start near the center and grow out.'] = '初始化时将靠近中心位置开始排列';		
 	L['Start near Center'] = '从中心开始';
 	L['The initial group will start near the center and grow out. Corrosponding groups will behave normally.'] = '初始队伍将从中心开始布局, 其它的队伍仍按正常模式';
 	L['Up'] = "上";
@@ -1897,6 +1896,8 @@ end
 
 --Bags
 do
+	L["Show Upgrade Icon"] = "显示升级图标";
+	L["Display the upgrade icon on items that WoW considers an upgrade for your character."] = true;
 	L["Use Tooltip Scanning"] = "使用鼠标扫描"
 	L["This makes the item level display more reliable but uses more resources. If this is disabled then upgraded items will not show the correct item level."] = "使用鼠标扫描获得更加可靠的信息,关闭的话只能得到基本信息"
 	L["Disable Bag Sort"] = "禁用背包排序";

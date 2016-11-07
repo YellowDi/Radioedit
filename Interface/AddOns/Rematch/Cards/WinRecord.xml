@@ -227,7 +227,7 @@
 				</Frames>
 			</Frame>
 			<!-- this is the main visible portion that's shown even when rest is hidden -->
-			<Frame parentKey="Content" forceAlpha="true" useParentLevel="true">
+			<Frame parentKey="Content" ignoreParentAlpha="true" useParentLevel="true">
 				<Anchors>
 					<Anchor point="TOPLEFT" x="2" y="-22"/>
 					<Anchor point="BOTTOMRIGHT" x="-4" y="25"/>

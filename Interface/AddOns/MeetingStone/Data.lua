@@ -245,8 +245,12 @@ CATEGORY = {
             [122] = true,
             [123] = true,
             [124] = true,
+            [125] = true,
+            [126] = true,
         },
-        activities = {},
+        activities = {
+            [458] = true,
+        },
     }
 }
 

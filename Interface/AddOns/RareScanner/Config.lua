@@ -100,17 +100,6 @@ local function GetGeneralOptions()
 					end,
 					width = "full",
 				},
-				scanAshran = {
-					order = 4,
-					name = AL["ENABLE_SCAN_IN_ASHRAN"],
-					desc = AL["ENABLE_SCAN_IN_ASHRAN_DESC"],
-					type = "toggle",
-					get = function() return db.general.scanAshran end,
-					set = function(_, value)
-						db.general.scanAshran = value
-					end,
-					width = "full",
-				},
 				test = {
 					order = 5,
 					name = AL["TEST"],
@@ -341,6 +330,67 @@ local function GetFilterOptions()
 	return filter_options
 end
 
+local function GetZonesFilterOptions()
+	if not zones_filter_options then
+		local db = private.db
+
+		zones_filter_options = {
+			type = "group",
+			order = 1,
+			name = AL["ZONES_FILTER"],
+			handler = RareScanner,
+			desc = AL["ZONES_FILTER"],
+			args = {
+				zoneFiltersSearch = {
+					order = 1,
+					type = "input",
+					name = AL["FILTERS_SEARCH"],
+					desc = AL["ZONES_FILTERS_SEARCH_DESC"],
+					set = function(_, value)
+						if value then
+							zones_filter_options.args.zoneFilters.values = {}
+							for k, v in pairs(AL["ZONES_LIST"]) do 
+								if string.match(k, value) then
+									zones_filter_options.args.zoneFilters.values[k] = v
+								end
+							end
+						end
+					end,
+					width = "full",
+				},
+				zoneFiltersClear = {
+					order = 2,
+					name = AL["CLEAR_FILTERS_SEARCH"],
+					desc = AL["CLEAR_FILTERS_SEARCH_DESC"],
+					type = "execute",
+					func = function() 
+						zones_filter_options.args.zoneFilters.values = AL["ZONES_LIST"]
+					end,
+					width = "normal",
+				},
+				separator = {
+					order = 3,
+					type = "header",
+					name = AL["ZONES_FILTER"],
+				},
+				zoneFilters = {
+					order = 4,
+					type = "multiselect",
+					name = AL["FILTER_ZONES_LIST"],
+					desc = AL["FILTER_ZONES_LIST_DESC"],
+					values = AL["ZONES_LIST"],
+					get = function(_, key) return db.general.filteredZones[key] end,
+					set = function(_, key, value)
+						db.general.filteredZones[key] = value;
+					end,
+				}
+			},
+		}
+	end
+	
+	return zones_filter_options
+end
+
 function RareScanner:SetupOptions()
 
 	local RSAC = LibStub("AceConfig-3.0")
@@ -348,10 +398,12 @@ function RareScanner:SetupOptions()
 	RSAC:RegisterOptionsTable("RareScanner Sound", GetSoundOptions)
 	RSAC:RegisterOptionsTable("RareScanner Display", GetDisplayOptions)
 	RSAC:RegisterOptionsTable("RareScanner Filter", GetFilterOptions)
+	RSAC:RegisterOptionsTable("RareScanner Zone Filter", GetZonesFilterOptions)
 
 	local RSACD = LibStub("AceConfigDialog-3.0-RSmod")
 	RSACD:AddToBlizOptions("RareScanner General", _G.GENERAL_LABEL, "RareScanner")
 	RSACD:AddToBlizOptions("RareScanner Sound", AL["SOUND"], "RareScanner")
 	RSACD:AddToBlizOptions("RareScanner Display", AL["DISPLAY"], "RareScanner")
 	RSACD:AddToBlizOptions("RareScanner Filter", AL["FILTER"], "RareScanner")
+	RSACD:AddToBlizOptions("RareScanner Zone Filter", AL["ZONES_FILTER"], "RareScanner")
 end

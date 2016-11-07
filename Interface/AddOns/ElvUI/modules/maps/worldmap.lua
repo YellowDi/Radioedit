@@ -1,118 +1,179 @@
 local E, L, V, P, G = unpack(select(2, ...)); --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
-local S = E:GetModule('Skins')
+local M = E:NewModule('WorldMap', 'AceHook-3.0', 'AceEvent-3.0', 'AceTimer-3.0');
+E.WorldMap = M
 
 --Cache global variables
 --Lua functions
-local unpack = unpack
+local find = string.find
+--WoW API / Variables
+local CreateFrame = CreateFrame
+local GetCursorPosition = GetCursorPosition
+local GetPlayerMapPosition = GetPlayerMapPosition
+local InCombatLockdown = InCombatLockdown
+local SetCVar = SetCVar
+local SetUIPanelAttribute = SetUIPanelAttribute
+local PLAYER = PLAYER
+local MOUSE_LABEL = MOUSE_LABEL
+local WORLDMAP_FULLMAP_SIZE = WORLDMAP_FULLMAP_SIZE
+local WORLDMAP_WINDOWED_SIZE = WORLDMAP_WINDOWED_SIZE
 
-local function LoadSkin()
-	if E.private.skins.blizzard.enable ~= true or E.private.skins.blizzard.worldmap ~= true then return end
+--Global variables that we don't cache, list them here for mikk's FindGlobals script
+-- GLOBALS: WorldMapFrame, WorldMapFrameSizeUpButton, WorldMapFrameSizeDownButton
+-- GLOBALS: UIParent, CoordsHolder, WorldMapDetailFrame, DropDownList1, WORLD_MAP_MIN_ALPHA
+-- GLOBALS: NumberFontNormal, WORLDMAP_SETTINGS, BlackoutWorld, WorldMapScrollFrame
 
-	WorldMapFrame.BorderFrame.Inset:StripTextures()
-	WorldMapFrame.BorderFrame:StripTextures()
-	WorldMapFrameNavBar:StripTextures()
-	WorldMapFrameNavBarOverlay:StripTextures()
+local INVERTED_POINTS = {
+	["TOPLEFT"] = "BOTTOMLEFT",
+	["TOPRIGHT"] = "BOTTOMRIGHT",
+	["BOTTOMLEFT"] = "TOPLEFT",
+	["BOTTOMRIGHT"] = "TOPRIGHT",
+	["TOP"] = "BOTTOM",
+	["BOTTOM"] = "TOP",
+}
 
-	WorldMapFrameNavBarHomeButton:StripTextures()
-	WorldMapFrameNavBarHomeButton:SetTemplate("Default", true)
-	WorldMapFrameNavBarHomeButton:SetFrameLevel(1)
-	WorldMapFrameNavBarHomeButton.text:FontTemplate()
+function M:SetLargeWorldMap()
+	if InCombatLockdown() then return end
 
-	S:HandleDropDownBox(WorldMapLevelDropDown)
-	WorldMapLevelDropDown:Point("TOPLEFT", -17, 0)
+	WorldMapFrame:SetParent(E.UIParent)
+	WorldMapFrame:EnableKeyboard(false)
+	WorldMapFrame:SetScale(1)
+	WorldMapFrame:EnableMouse(true)
+	WorldMapTooltip:SetFrameStrata("TOOLTIP")
+	WorldMapCompareTooltip1:SetFrameStrata("TOOLTIP")
+	WorldMapCompareTooltip2:SetFrameStrata("TOOLTIP")
 
-	WorldMapFrame.BorderFrame:CreateBackdrop("Transparent")
-	WorldMapFrame.BorderFrame.Inset:CreateBackdrop("Default")
-	WorldMapFrame.BorderFrame.Inset.backdrop:Point("TOPLEFT", WorldMapFrame.BorderFrame.Inset, "TOPLEFT", 3, -3)
-	WorldMapFrame.BorderFrame.Inset.backdrop:Point("BOTTOMRIGHT", WorldMapFrame.BorderFrame.Inset, "BOTTOMRIGHT", -3, 2)
-
-	S:HandleScrollBar(QuestScrollFrameScrollBar)
-
-	if E.global.general.disableTutorialButtons then
-		WorldMapFrameTutorialButton:Kill()
+	if WorldMapFrame:GetAttribute('UIPanelLayout-area') ~= 'center' then
+		SetUIPanelAttribute(WorldMapFrame, "area", "center");
 	end
 
-	S:HandleButton(QuestMapFrame.DetailsFrame.BackButton)
-	S:HandleButton(QuestMapFrame.DetailsFrame.AbandonButton)
-	S:HandleButton(QuestMapFrame.DetailsFrame.ShareButton, true)
-	S:HandleButton(QuestMapFrame.DetailsFrame.TrackButton)
-	-- This button is flashing. Needs review
-	S:HandleButton(QuestMapFrame.DetailsFrame.CompleteQuestFrame.CompleteButton, true)
-
-	QuestMapFrame.QuestsFrame.StoryTooltip:SetTemplate("Transparent")
-	QuestMapFrame.DetailsFrame.CompleteQuestFrame:StripTextures()
-
-	S:HandleCloseButton(WorldMapFrameCloseButton)
-	S:HandleButton(WorldMapFrameSizeDownButton, true)
-	WorldMapFrameSizeDownButton:SetSize(16, 16)
-	WorldMapFrameSizeDownButton:Point("RIGHT", WorldMapFrameCloseButton, "LEFT", 4, 0)
-	WorldMapFrameSizeDownButton:SetNormalTexture("Interface\\AddOns\\ElvUI\\media\\textures\\vehicleexit")
-	WorldMapFrameSizeDownButton:SetPushedTexture("Interface\\AddOns\\ElvUI\\media\\textures\\vehicleexit")
-	WorldMapFrameSizeDownButton:SetHighlightTexture("Interface\\AddOns\\ElvUI\\media\\textures\\vehicleexit")
-
-	S:HandleButton(WorldMapFrameSizeUpButton, true)
-	WorldMapFrameSizeUpButton:SetSize(16, 16)
-	WorldMapFrameSizeUpButton:Point("RIGHT", WorldMapFrameCloseButton, "LEFT", 4, 0)
-	WorldMapFrameSizeUpButton:SetNormalTexture("Interface\\AddOns\\ElvUI\\media\\textures\\vehicleexit")
-	WorldMapFrameSizeUpButton:SetPushedTexture("Interface\\AddOns\\ElvUI\\media\\textures\\vehicleexit")
-	WorldMapFrameSizeUpButton:SetHighlightTexture("Interface\\AddOns\\ElvUI\\media\\textures\\vehicleexit")
-	WorldMapFrameSizeUpButton:GetNormalTexture():SetTexCoord(1, 1, 1, -1.2246467991474e-016, 1.1102230246252e-016, 1, 0, -1.144237745222e-017)
-	WorldMapFrameSizeUpButton:GetPushedTexture():SetTexCoord(1, 1, 1, -1.2246467991474e-016, 1.1102230246252e-016, 1, 0, -1.144237745222e-017)
-	WorldMapFrameSizeUpButton:GetHighlightTexture():SetTexCoord(1, 1, 1, -1.2246467991474e-016, 1.1102230246252e-016, 1, 0, -1.144237745222e-017)
-
-
-	local rewardFrames = {
-		['MoneyFrame'] = true,
-		['XPFrame'] = true,
-		['SkillPointFrame'] = true, -- this may have extra textures.. need to check on it when possible
-	}
-
-	local function HandleReward(frame)
-		if frame.backdrop then return end
-		frame.NameFrame:SetAlpha(0)
-		frame.Icon:SetTexCoord(unpack(E.TexCoords))
-		frame:CreateBackdrop()
-		frame.backdrop:SetOutside(frame.Icon)
-		frame.Name:FontTemplate()
-		frame.Count:ClearAllPoints()
-		frame.Count:Point("BOTTOMRIGHT", frame.Icon, "BOTTOMRIGHT", 2, 0)
-		if(frame.CircleBackground) then
-			frame.CircleBackground:SetAlpha(0)
-			frame.CircleBackgroundGlow:SetAlpha(0)
-		end
+	if WorldMapFrame:GetAttribute('UIPanelLayout-allowOtherPanels') ~= true then
+		SetUIPanelAttribute(WorldMapFrame, "allowOtherPanels", true)
 	end
 
-	for frame, _ in pairs(rewardFrames) do
-		HandleReward(MapQuestInfoRewardsFrame[frame])
-	end
+	WorldMapFrameSizeUpButton:Hide()
+	WorldMapFrameSizeDownButton:Show()
 
-	hooksecurefunc('QuestInfo_GetRewardButton', function(rewardsFrame, index)
-		local button = MapQuestInfoRewardsFrame.RewardButtons[index]
-		if(button) then
-			HandleReward(button)
-		end
-	end)
-
-	S:HandleNextPrevButton(WorldMapFrame.UIElementsFrame.OpenQuestPanelButton)
-	S:HandleNextPrevButton(WorldMapFrame.UIElementsFrame.CloseQuestPanelButton)
-	SquareButton_SetIcon(WorldMapFrame.UIElementsFrame.CloseQuestPanelButton, 'LEFT')
-
-	-- WorldMapFrame Tooltip Statusbar
-	local function HandleTooltipStatusBar()
-		local bar = _G["WorldMapTaskTooltipStatusBar"].Bar
-		local label = bar.Label
-
-		if bar then
-			bar:StripTextures()
-			bar:SetStatusBarTexture(E["media"].normTex)
-			bar:SetTemplate("Transparent")
-
-			label:ClearAllPoints()
-			label:Point("CENTER", bar, 0, 0)
-			label:SetDrawLayer("OVERLAY")
-		end
-	end
-	hooksecurefunc("TaskPOI_OnEnter", HandleTooltipStatusBar)
+	WorldMapFrame:ClearAllPoints()
+	WorldMapFrame:Point("CENTER", UIParent, "CENTER", 0, 100)
+	WorldMapFrame:SetSize(1002, 668)
 end
 
-S:RegisterSkin('ElvUI', LoadSkin)
+function M:SetSmallWorldMap()
+	if InCombatLockdown() then return; end
+
+	WorldMapFrameSizeUpButton:Show()
+	WorldMapFrameSizeDownButton:Hide()
+end
+
+function M:PLAYER_REGEN_ENABLED()
+	WorldMapFrameSizeDownButton:Enable()
+	WorldMapFrameSizeUpButton:Enable()
+end
+
+function M:PLAYER_REGEN_DISABLED()
+	WorldMapFrameSizeDownButton:Disable()
+	WorldMapFrameSizeUpButton:Disable()
+end
+
+local inRestrictedArea = false
+function M:PLAYER_ENTERING_WORLD()
+	local x = GetPlayerMapPosition("player")
+	if not x then
+		inRestrictedArea = true
+		self:CancelTimer(self.CoordsTimer)
+		self.CoordsTimer = nil
+		CoordsHolder.playerCoords:SetText("")
+		CoordsHolder.mouseCoords:SetText("")
+	elseif not self.CoordsTimer then
+		inRestrictedArea = false
+		self.CoordsTimer = self:ScheduleRepeatingTimer('UpdateCoords', 0.05)
+	end
+end
+
+function M:UpdateCoords()
+	if (not WorldMapFrame:IsShown() or inRestrictedArea) then return end
+	local x, y = GetPlayerMapPosition("player")
+	x = E:Round(100 * x, 2)
+	y = E:Round(100 * y, 2)
+
+	if x ~= 0 and y ~= 0 then
+		CoordsHolder.playerCoords:SetText(PLAYER..":   "..x..", "..y)
+	else
+		CoordsHolder.playerCoords:SetText("")
+	end
+
+	local scale = WorldMapDetailFrame:GetEffectiveScale()
+	local width = WorldMapDetailFrame:GetWidth()
+	local height = WorldMapDetailFrame:GetHeight()
+	local centerX, centerY = WorldMapDetailFrame:GetCenter()
+	local x, y = GetCursorPosition()
+	local adjustedX = (x / scale - (centerX - (width/2))) / width
+	local adjustedY = (centerY + (height/2) - y / scale) / height
+
+	if (adjustedX >= 0  and adjustedY >= 0 and adjustedX <= 1 and adjustedY <= 1) then
+		adjustedX = E:Round(100 * adjustedX, 2)
+		adjustedY = E:Round(100 * adjustedY, 2)
+		CoordsHolder.mouseCoords:SetText(MOUSE_LABEL..":   "..adjustedX..", "..adjustedY)
+	else
+		CoordsHolder.mouseCoords:SetText("")
+	end
+end
+
+function M:PositionCoords()
+	local db = E.global.general.WorldMapCoordinates
+	local position = db.position
+	local xOffset = db.xOffset
+	local yOffset = db.yOffset
+
+	local x, y = 5, 5
+	if find(position, "RIGHT") then	x = -5 end
+	if find(position, "TOP") then y = -5 end
+
+	CoordsHolder.playerCoords:ClearAllPoints()
+	CoordsHolder.playerCoords:Point(position, WorldMapScrollFrame, position, x + xOffset, y + yOffset)
+	CoordsHolder.mouseCoords:ClearAllPoints()
+	CoordsHolder.mouseCoords:Point(position, CoordsHolder.playerCoords, INVERTED_POINTS[position], 0, y)
+end
+
+function M:Initialize()
+	if(E.global.general.WorldMapCoordinates.enable) then
+		local CoordsHolder = CreateFrame('Frame', 'CoordsHolder', WorldMapFrame)
+		CoordsHolder:SetFrameLevel(WorldMapDetailFrame:GetFrameLevel() + 1)
+		CoordsHolder:SetFrameStrata(WorldMapDetailFrame:GetFrameStrata())
+		CoordsHolder.playerCoords = CoordsHolder:CreateFontString(nil, 'OVERLAY')
+		CoordsHolder.mouseCoords = CoordsHolder:CreateFontString(nil, 'OVERLAY')
+		CoordsHolder.playerCoords:SetTextColor(1, 1 ,0)
+		CoordsHolder.mouseCoords:SetTextColor(1, 1 ,0)
+		CoordsHolder.playerCoords:SetFontObject(NumberFontNormal)
+		CoordsHolder.mouseCoords:SetFontObject(NumberFontNormal)
+		CoordsHolder.playerCoords:SetText(PLAYER..":   0, 0")
+		CoordsHolder.mouseCoords:SetText(MOUSE_LABEL..":   0, 0")
+
+		self.CoordsTimer = self:ScheduleRepeatingTimer('UpdateCoords', 0.05)
+		M:PositionCoords()
+
+		self:RegisterEvent("PLAYER_ENTERING_WORLD")
+	end
+
+	if(E.global.general.smallerWorldMap) then
+		BlackoutWorld:SetTexture(nil)
+		self:SecureHook("WorldMap_ToggleSizeDown", 'SetSmallWorldMap')
+		self:SecureHook("WorldMap_ToggleSizeUp", "SetLargeWorldMap")
+		self:RegisterEvent('PLAYER_REGEN_ENABLED')
+		self:RegisterEvent('PLAYER_REGEN_DISABLED')
+
+		if WORLDMAP_SETTINGS.size == WORLDMAP_FULLMAP_SIZE then
+			self:SetLargeWorldMap()
+		elseif WORLDMAP_SETTINGS.size == WORLDMAP_WINDOWED_SIZE then
+			self:SetSmallWorldMap()
+		end
+	end
+
+	--Set alpha used when moving
+	WORLD_MAP_MIN_ALPHA = E.global.general.mapAlphaWhenMoving
+	SetCVar("mapAnimMinAlpha", E.global.general.mapAlphaWhenMoving)
+	--Enable/Disable map fading when moving
+	SetCVar("mapFade", (E.global.general.fadeMapWhenMoving == true and 1 or 0))
+end
+
+E:RegisterInitialModule(M:GetName())

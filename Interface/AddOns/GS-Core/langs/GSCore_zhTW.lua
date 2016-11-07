@@ -1,4 +1,5 @@
 local L = LibStub("AceLocale-3.0"):NewLocale("GS-E", "zhTW", true)
+if not L then return; end
 
 -- L["Active Version "] = ""
 -- L["Active Version: "] = ""

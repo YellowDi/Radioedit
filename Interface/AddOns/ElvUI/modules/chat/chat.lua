@@ -113,7 +113,7 @@ local Var = {
 -- GLOBALS: CopyChatScrollFrame, CopyChatScrollFrameScrollBar, RightChatDataPanel
 -- GLOBALS: GeneralDockManagerOverflowButton, CombatLogQuickButtonFrame_Custom
 -- GLOBALS: UIParent, GeneralDockManagerScrollFrameChild, GameTooltip, CHAT_OPTIONS
--- GLOBALS: LOCALIZED_CLASS_NAMES_MALE, LOCALIZED_CLASS_NAMES_FEMALE, FriendsMicroButton
+-- GLOBALS: LOCALIZED_CLASS_NAMES_MALE, LOCALIZED_CLASS_NAMES_FEMALE, QuickJoinToastButton
 -- GLOBALS: ICON_TAG_LIST, ICON_LIST, GROUP_TAG_LIST, DEFAULT_CHAT_FRAME, ChatFrameMenuButton
 -- GLOBALS: WIM, ChatTypeGroup, GeneralDockManagerOverflowButtonList, GeneralDockManagerScrollFrame
 -- GLOBALS: CombatLogQuickButtonFrame_CustomAdditionalFilterButton, UISpecialFrames, ChatFontNormal
@@ -508,9 +508,11 @@ function CH:StyleChat(frame)
 
 	--copy chat button
 	frame.button = CreateFrame('Frame', format("CopyChatButton%d", id), frame)
+	frame.button:EnableMouse(true)
 	frame.button:SetAlpha(0.35)
 	frame.button:Size(20, 22)
 	frame.button:Point('TOPRIGHT')
+	frame.button:SetFrameLevel(frame:GetFrameLevel() + 5)
 
 	frame.button.tex = frame.button:CreateTexture(nil, 'OVERLAY')
 	frame.button.tex:SetInside()
@@ -594,7 +596,7 @@ function CH:CopyChat(frame)
 		if fontSize < 10 then fontSize = 12 end
 		FCF_SetChatWindowFontSize(frame, frame, 0.01)
 		CopyChatFrame:Show()
-		local lineCt = self:GetLines(frame:GetRegions())
+		local lineCt = self:GetLines(frame.FontStringContainer:GetRegions())
 		if not lineCt then return end
 		local text = tconcat(lines, "\n", 1, lineCt)
 		FCF_SetChatWindowFontSize(frame, frame, fontSize)
@@ -925,19 +927,24 @@ function CH:OnHyperlinkEnter(frame, refString)
 end
 
 function CH:OnHyperlinkLeave(frame, refString)
-	local linkToken = refString:match("^([^:]+)")
-	if hyperlinkTypes[linkToken] then
+	-- local linkToken = refString:match("^([^:]+)")
+	-- if hyperlinkTypes[linkToken] then
+		-- HideUIPanel(GameTooltip)
+		-- hyperLinkEntered = nil;
+	-- end
+	
+	if hyperLinkEntered then
 		HideUIPanel(GameTooltip)
 		hyperLinkEntered = nil;
 	end
 end
 
-function CH:OnMessageScrollChanged(frame)
-	if hyperLinkEntered == frame then
-		HideUIPanel(GameTooltip)
-		hyperLinkEntered = false;
-	end
-end
+-- function CH:OnMessageScrollChanged(frame)
+	-- if hyperLinkEntered == frame then
+		-- HideUIPanel(GameTooltip)
+		-- hyperLinkEntered = false;
+	-- end
+-- end
 
 function CH:EnableHyperlink()
 	for _, frameName in pairs(CHAT_FRAMES) do
@@ -945,7 +952,7 @@ function CH:EnableHyperlink()
 		if (not self.hooks or not self.hooks[frame] or not self.hooks[frame].OnHyperlinkEnter) then
 			self:HookScript(frame, 'OnHyperlinkEnter')
 			self:HookScript(frame, 'OnHyperlinkLeave')
-			self:HookScript(frame, 'OnMessageScrollChanged')
+		--	self:HookScript(frame, 'OnMessageScrollChanged')
 		end
 	end
 end
@@ -956,7 +963,7 @@ function CH:DisableHyperlink()
 		if self.hooks and self.hooks[frame] and self.hooks[frame].OnHyperlinkEnter then
 			self:Unhook(frame, 'OnHyperlinkEnter')
 			self:Unhook(frame, 'OnHyperlinkLeave')
-			self:Unhook(frame, 'OnMessageScrollChanged')
+		--	self:Unhook(frame, 'OnMessageScrollChanged')
 		end
 	end
 end
@@ -1194,7 +1201,10 @@ function CH:ChatFrame_MessageEventHandler(event, ...)
 			if (C_SocialIsSocialEnabled()) then
 				local achieveID = GetAchievementInfoFromHyperlink(arg1);
 				if (achieveID) then
-					message = message .. " " .. Social_GetShareAchievementLink(achieveID, true);
+					local isGuildAchievement = select(12, GetAchievementInfo(achieveID));
+ 					if (isGuildAchievement) then
+ 						message = message .. " " .. Social_GetShareAchievementLink(achieveID, true);
+ 					end
 				end
 			end
 			self:AddMessage(message, info.r, info.g, info.b, info.id);
@@ -1238,7 +1248,7 @@ function CH:ChatFrame_MessageEventHandler(event, ...)
 			end
 			local accessID = ChatHistory_GetAccessID(Chat_GetChatCategory(type), arg8);
 			local typeID = ChatHistory_GetAccessID(infoType, arg8, arg12);
-			self:AddMessage(format(globalstring, arg8, arg4), info.r, info.g, info.b, info.id, false, accessID, typeID)
+			self:AddMessage(format(globalstring, arg8, arg4), info.r, info.g, info.b, info.id, accessID, accessID, typeID)
 		elseif ( type == "BN_INLINE_TOAST_ALERT" ) then
 			local globalstring = _G["BN_INLINE_TOAST_"..arg1];
 			local message;
@@ -1424,7 +1434,7 @@ function CH:ChatFrame_MessageEventHandler(event, ...)
 				body = body:gsub("%[BN_CONVERSATION:", '%[1'.."")
 				body = body:gsub("^%["..Var.RAID_WARNING.."%]", '['..L["RW"]..']')
 			end
-			self:AddMessage(body, info.r, info.g, info.b, info.id, false, accessID, typeID);
+			self:AddMessage(body, info.r, info.g, info.b, info.id, accessID, accessID, typeID);
 		end
 
 		if ( type == "WHISPER" or type == "BN_WHISPER" ) then
@@ -1954,7 +1964,7 @@ function CH:Initialize()
 	self:UpdateFading()
 	E.Chat = self
 	self:SecureHook('ChatEdit_OnEnterPressed')
-	FriendsMicroButton:Kill()
+	QuickJoinToastButton:Kill()
 	ChatFrameMenuButton:Kill()
 
 

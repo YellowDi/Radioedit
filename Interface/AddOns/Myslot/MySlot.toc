@@ -1,4 +1,4 @@
-## Interface: 70000
+## Interface: 70100
 ## Title: |cffC495DDEUI|rMySlot
 ## Title-zhCN: |cffC495DDEUI|rMyslot按键保存
 ## Title-zhTW: |cffC495DDEUI|rMyslot按鍵保存
