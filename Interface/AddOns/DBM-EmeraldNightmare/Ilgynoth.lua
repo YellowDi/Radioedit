@@ -1,12 +1,12 @@
 local mod	= DBM:NewMod(1738, "DBM-EmeraldNightmare", nil, 768)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 15421 $"):sub(12, -3))
+mod:SetRevision(("$Revision: 15427 $"):sub(12, -3))
 mod:SetCreatureID(105393)
 mod:SetEncounterID(1873)
 mod:SetZone()
 mod:SetUsedIcons(8, 4, 3, 2, 1)
-mod:SetHotfixNoticeRev(15338)
+mod:SetHotfixNoticeRev(15422)
 mod.respawnTime = 29
 
 mod:RegisterCombat("combat")
@@ -100,7 +100,7 @@ local voiceGroundSlam				= mod:NewVoice(208689)--targetyou/watchwave
 
 mod:AddSetIconOption("SetIconOnSpew", 208929, false)
 mod:AddSetIconOption("SetIconOnOoze", "ej13186", false)
-mod:AddBoolOption("SetIconOnlyOnce", false)
+mod:AddBoolOption("SetIconOnlyOnce2", true)
 mod:AddRangeFrameOption(8, 215128)
 mod:AddInfoFrameOption(210099)
 mod:AddDropdownOption("InfoFrameBehavior", {"Fixates", "Adds"}, "Fixates", "misc")
@@ -228,7 +228,7 @@ do
 				end
 			end
 		end
-		if found and self.Options.SetIconOnlyOnce then
+		if found and self.Options.SetIconOnlyOnce2 then
 			--Abort until invoked again
 			autoMarkScannerActive = false
 			autoMarkBlocked = true

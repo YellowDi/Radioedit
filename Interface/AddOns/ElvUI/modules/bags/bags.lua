@@ -92,6 +92,38 @@ B.ProfessionColors = {
 	[0x010000] = {222/255, 13/255,  65/255} -- Cooking
 }
 
+local itemLevelCache = {}
+--Scan tooltip for item level information and cache the value
+local function GetItemLevel(itemLink)
+	if not itemLink or not GetItemInfo(itemLink) then
+		return
+	end
+
+	if not itemLevelCache[itemLink] then
+		local _, itemLevel = E:GetItemInfoActually(ItemLink)
+--		tooltip:ClearLines()
+--		tooltip:SetHyperlink(itemLink)
+
+--		local text, itemLevel
+--		for index = 1, #tooltipLines do
+--			text = _G[tooltipLines[index]]:GetText()
+
+--			if text then
+--				itemLevel = tonumber(match(text, itemLevelPattern))
+
+				if itemLevel then
+					itemLevelCache[itemLink] = itemLevel
+					return itemLevel
+				end
+--			end
+--		end
+
+		itemLevelCache[itemLink] = 0 --Cache items that don't have an item level so we don't loop over them again and again
+	end
+
+	return itemLevelCache[itemLink]
+end
+
 function B:GetContainerFrame(arg)
 	if type(arg) == 'boolean' and arg == true then
 		return self.BankFrame;
@@ -399,8 +431,7 @@ function B:UpdateSlot(bagID, slotID)
 		slot:SetBackdropBorderColor(unpack(B.ProfessionColors[bagType]))
 	elseif (clink) then
 		local iLvl, itemEquipLoc, itemClassID, itemSubClassID
-		slot.name, _, _, _, _, _, _, _, itemEquipLoc, _, _, itemClassID, itemSubClassID = GetItemInfo(clink);
-		iLvl = GetDetailedItemLevelInfo(clink)
+		slot.name, _, _, iLvl, _, _, _, _, itemEquipLoc, _, _, itemClassID, itemSubClassID = GetItemInfo(clink);
 
 		local isQuestItem, questId, isActiveQuest = GetContainerItemQuestInfo(bagID, slotID);
 		local r, g, b
@@ -1116,6 +1147,7 @@ function B:ContructContainerFrame(name, isBank)
 
 	--Allow dragging the frame around
 	f:SetMovable(true)
+	f:SetClampedToScreen(true)
 	f:RegisterForDrag("LeftButton", "RightButton")
 	f:RegisterForClicks("AnyUp");
 	f:SetScript("OnDragStart", function(self) self:StartMoving() end)

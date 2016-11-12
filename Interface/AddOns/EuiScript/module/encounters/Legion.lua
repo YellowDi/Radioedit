@@ -7,7 +7,7 @@ for spellID, encounterInfo in next, {
 	-- World
 	[227128] = {1790, 822, 14}, -- Ana-Mouz
 	[227129] = {1774, 822, 14}, -- Calamir
-	[228130] = {1789, 822, 14}, -- Drugon the Frostblood
+	[227130] = {1789, 822, 14}, -- Drugon the Frostblood
 	[227131] = {1795, 822, 14}, -- Flotsam
 	[227132] = {1770, 822, 14}, -- Humongris
 	[227133] = {1769, 822, 14}, -- Levantus
@@ -44,17 +44,17 @@ for spellID, encounterInfo in next, {
 	[232468] = {1829, 861}, -- Helya
 
 	-- Return to Karazhan (Mythic)
-	[232099] = {1825, 860, 23}, -- Maiden of Virtue
-	[232100] = {1820, 860, 23}, -- Opera Hall: Wikket
-	[232101] = {1826, 860, 23}, -- Opera Hall: Westfall Story
-	[232102] = {1827, 860, 23}, -- Opera Hall: Beautiful Beast
-	[232103] = {1835, 860, 23}, -- Attumen the Huntsman
-	[232104] = {1837, 860, 23}, -- Moroes
+	[232102] = {1820, 860, 23}, -- Opera Hall: Wikket
+	[232103] = {1826, 860, 23}, -- Opera Hall: Westfall Story
+	[232104] = {1827, 860, 23}, -- Opera Hall: Beautiful Beast
+	[232101] = {1825, 860, 23}, -- Maiden of Virtue
+	[232099] = {1835, 860, 23}, -- Attumen the Huntsman
+	[232100] = {1837, 860, 23}, -- Moroes
 	[232105] = {1836, 860, 23}, -- The Curator
 	[232106] = {1817, 860, 23}, -- Shade of Medivh
 	[232107] = {1818, 860, 23}, -- Mana Devourer
 	[232108] = {1838, 860, 23}, -- Viz'aduum the Watcher
-	-- XXX: there is one more ID (232109), hidden boss?
+	-- 232109 -- Nightbane (no dungeon journal entry)
 
 	-- Assault on Violet Hold (Mythic)
 	[226656] = {1693, 777, 23}, -- Festerface
@@ -63,8 +63,8 @@ for spellID, encounterInfo in next, {
 	[226659] = {1686, 777, 23}, -- Mindflayer Kaahrj
 	[226660] = {1688, 777, 23}, -- Millificent Manastorm
 	[226661] = {1696, 777, 23}, -- Anub'esset
-	[226662] = {1697, 777, 23}, -- Sael'orn
-	[226663] = {1711, 777, 23}, -- Fel Lord Betrug
+	[226662] = {1711, 777, 23}, -- Sael'orn
+	[226663] = {1697, 777, 23}, -- Fel Lord Betrug
 
 	-- Black Rook Hold (Mythic)
 	[226595] = {1518, 740, 23}, -- The Amalgam of Souls

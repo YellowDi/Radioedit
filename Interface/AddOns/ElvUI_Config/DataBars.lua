@@ -296,6 +296,12 @@ E.Options.args.databars = {
 					name = L["Combat Hide"],
 					set = function(info, value) mod.db.honor[ info[#info] ] = value; mod:UpdateHonor() end,
 				},
+				hideOutsidePvP = {
+					order = 3,
+					type = "toggle",
+					name = L["Hide Outside PvP"],
+					set = function(info, value) mod.db.honor[ info[#info] ] = value; mod:UpdateHonor() end,
+				},
 				reverseFill = {
 					order = 5,
 					type = "toggle",

@@ -216,6 +216,10 @@ function M:UpdateSettings()
 	E.MinimapWidth = E.MinimapSize
 	E.MinimapHeight = E.MinimapSize
 
+	--Hide the BlopRing on Minimap
+	Minimap:SetArchBlobRingScalar(0)
+	Minimap:SetQuestBlobRingScalar(0)
+
 	if E.private.general.minimap.enable then
 		Minimap:Size(E.MinimapSize, E.MinimapSize)
 	end

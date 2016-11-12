@@ -41,7 +41,7 @@
 --  Globals/Default Options  --
 -------------------------------
 DBM = {
-	Revision = tonumber(("$Revision: 15421 $"):sub(12, -3)),
+	Revision = tonumber(("$Revision: 15437 $"):sub(12, -3)),
 	DisplayVersion = "7.1.2 alpha", -- the string that is shown as version
 	ReleaseRevision = 15418 -- the revision of the latest stable version that is available
 }
@@ -275,7 +275,6 @@ DBM.DefaultOptions = {
 	NewsMessageShown = 4,
 	MoviesSeen = {},
 	MovieFilter = "AfterFirst",
-	TalkingHeadFilter = "Never",
 	LastRevision = 0,
 	FilterSayAndYell = false,
 	DebugMode = false,
@@ -418,10 +417,8 @@ local targetMonitor = nil
 local statusWhisperDisabled = false
 local wowVersionString, _, _, wowTOC = GetBuildInfo()
 local dbmToc = 0
-local isTalkingHeadLoaded = false
-local talkingHeadUnregistered = false
 
-local fakeBWVersion, fakeBWHash = 21, "93b8dd3"
+local fakeBWVersion, fakeBWHash = 21, "c6e921e"
 local versionQueryString, versionResponseString = "Q^%d^%s", "V^%d^%s"
 
 local enableIcons = true -- set to false when a raid leader or a promoted player has a newer version of DBM
@@ -1127,13 +1124,6 @@ do
 				self.Options.tempBreak2 = nil
 			end
 		end
-		if TalkingHeadFrame and not talkingHeadUnregistered and (self.Options.TalkingHeadFilter == "Always" or self.Options.TalkingHeadFilter == "CombatOnly" and InCombatLockdown() or self.Options.TalkingHeadFilter == "BossCombatOnly" and IsEncounterInProgress()) then
-			TalkingHeadFrame:UnregisterAllEvents()
-			--TalkingHeadFrame_CloseImmediately()--Calling this crashes wow apparently
-			isTalkingHeadLoaded = true--it laoded before DBM, so this secondary check just checks if frame exists and sets loaded = true
-			talkingHeadUnregistered = true
-			self:Debug("TalkingHead has been unregistered", 2)
-		end
 	end
 
 	-- register a callback that will be executed once the addon is fully loaded (ADDON_LOADED fired, saved vars are available)
@@ -1307,17 +1297,6 @@ do
 				healthCombatInitialized = true
 			end)
 			self:Schedule(10, runDelayedFunctions, self)
-		end
-		if modname == "Blizzard_TalkingHeadUI" and not isTalkingHeadLoaded then
-			isTalkingHeadLoaded = true
-			if not isLoaded then return end--DBM isn't loaded yet, options won't exist yet
-			self:Debug("Blizzard_TalkingHeadUI has been loaded", 2)
-			if self.Options.TalkingHeadFilter == "Always" or self.Options.TalkingHeadFilter == "CombatOnly" and InCombatLockdown() or self.Options.TalkingHeadFilter == "BossCombatOnly" and IsEncounterInProgress() then
-				TalkingHeadFrame:UnregisterAllEvents()
-				--TalkingHeadFrame_CloseImmediately()--Calling this crashes wow apparently
-				talkingHeadUnregistered = true
-				self:Debug("TalkingHead has been unregistered", 2)
-			end
 		end
 	end
 end
@@ -3567,14 +3546,6 @@ function DBM:PLAYER_REGEN_ENABLED()
 		guiRequested = false
 		self:LoadGUI()
 	end
-	if self.Options.TalkingHeadFilter == "CombatOnly" and talkingHeadUnregistered then
-		TalkingHeadFrame:RegisterEvent("TALKINGHEAD_REQUESTED")
-		TalkingHeadFrame:RegisterEvent("TALKINGHEAD_CLOSE")
-		TalkingHeadFrame:RegisterEvent("SOUNDKIT_FINISHED")
-		TalkingHeadFrame:RegisterEvent("LOADING_SCREEN_ENABLED")
-		talkingHeadUnregistered = false
-		self:Debug("TalkingHead has been restored")
-	end
 end
 
 function DBM:UPDATE_BATTLEFIELD_STATUS()
@@ -3947,14 +3918,14 @@ do
 				if mod and delay and (not mod.zones or mod.zones[LastInstanceMapID]) and (not mod.minSyncRevision or modRevision >= mod.minSyncRevision) then
 					DBM:StartCombat(mod, delay + lag, "SYNC from - "..sender, true, startHp)
 					if (mod.revision < modHFRevision) and (mod.revision > 1000) then--mod.revision because we want to compare to OUR revision not senders
-					--	if DBM:AntiSpam(3, "HOTFIX") then
-					--		if DBM.HighestRelease < modHFRevision then--There is a newer RELEASE version of DBM out that has this mods fixes
-					--			showConstantReminder = 2
-					--			DBM:AddMsg(DBM_CORE_UPDATEREMINDER_HOTFIX)
-					--		else--This mods fixes are in an alpha version
-					--			DBM:AddMsg(DBM_CORE_UPDATEREMINDER_HOTFIX_ALPHA)
-					--		end
-					--	end
+						if DBM:AntiSpam(3, "HOTFIX") then
+							if DBM.HighestRelease < modHFRevision then--There is a newer RELEASE version of DBM out that has this mods fixes
+							--	showConstantReminder = 2
+							--	DBM:AddMsg(DBM_CORE_UPDATEREMINDER_HOTFIX)
+							else--This mods fixes are in an alpha version
+							--	DBM:AddMsg(DBM_CORE_UPDATEREMINDER_HOTFIX_ALPHA)
+							end
+						end
 					end
 				end
 			end
@@ -4245,11 +4216,11 @@ do
 						--Disable if revision grossly out of date even if not major patch.
 						if revDifference > 180 then
 						--elseif revDifference > 180 then
-						--	if updateNotificationDisplayed < 3 then
-						--		updateNotificationDisplayed = 3
-						--		DBM:AddMsg(DBM_CORE_UPDATEREMINDER_DISABLE)
-						--		DBM:Disable(true)
-						--	end
+							if updateNotificationDisplayed < 3 then
+							--	updateNotificationDisplayed = 3
+							--	DBM:AddMsg(DBM_CORE_UPDATEREMINDER_DISABLE)
+							--	DBM:Disable(true)
+							end
 						end
 					end
 				end
@@ -5120,12 +5091,6 @@ do
 			end
 			self:PlaySoundFile(path)
 		end
-		if self.Options.TalkingHeadFilter == "CombatOnly" and not talkingHeadUnregistered and isTalkingHeadLoaded then
-			TalkingHeadFrame:UnregisterAllEvents()
-			--TalkingHeadFrame_CloseImmediately()--Calling this crashes wow apparently
-			talkingHeadUnregistered = true
-			self:Debug("TalkingHead has been unregistered", 2)
-		end
 	end
 
 	local function isBossEngaged(cId)
@@ -5969,8 +5934,8 @@ do
 				if watchFrameRestore then
 					ObjectiveTrackerFrame:Show()
 					watchFrameRestore = false
-					self.Bars:CancelBar(PLAYER_DIFFICULTY6.."+")
 				end
+				self.Bars:CancelBar(PLAYER_DIFFICULTY6.."+")
 				if tooltipsHidden then
 					--Better or cleaner way?
 					tooltipsHidden = false
@@ -6421,7 +6386,7 @@ do
 		end
 		C_TimerAfter(20, function() if not self.Options.ForumsMessageShown then self.Options.ForumsMessageShown = self.ReleaseRevision self:AddMsg(DBM_FORUMS_MESSAGE) end end)
 		C_TimerAfter(30, function() if not self.Options.SettingsMessageShown then self.Options.SettingsMessageShown = true self:AddMsg(DBM_HOW_TO_USE_MOD) end end)
-		C_TimerAfter(40, function() if self.Options.NewsMessageShown < 7 then self.Options.NewsMessageShown = 7 self:AddMsg(DBM_CORE_WHATS_NEW_LINK) end end)
+		C_TimerAfter(40, function() if self.Options.NewsMessageShown < 8 then self.Options.NewsMessageShown = 8 self:AddMsg(DBM_CORE_WHATS_NEW_LINK) end end)
 		if type(RegisterAddonMessagePrefix) == "function" then
 			if not RegisterAddonMessagePrefix("D4") then -- main prefix for DBM4
 				self:AddMsg("Error: unable to register DBM addon message prefix (reached client side addon message filter limit), synchronization will be unavailable") -- TODO: confirm that this actually means that the syncs won't show up
@@ -6629,12 +6594,6 @@ do
 			if self.Options.HideGuildChallengeUpdates or custom then
 				AlertFrame:UnregisterEvent("GUILD_CHALLENGE_COMPLETED")
 			end
-			if self.Options.TalkingHeadFilter == "CombatOnly" and not talkingHeadUnregistered and isTalkingHeadLoaded then
-				TalkingHeadFrame:UnregisterAllEvents()
-				--TalkingHeadFrame_CloseImmediately()--Calling this crashes wow apparently
-				talkingHeadUnregistered = true
-				self:Debug("TalkingHead has been unregistered", 2)
-			end
 		elseif toggle == 0 and blizzEventsUnregistered then
 			blizzEventsUnregistered = false
 			if self.Options.HideQuestTooltips then
@@ -6651,14 +6610,6 @@ do
 			end
 			if self.Options.HideGuildChallengeUpdates then
 				AlertFrame:RegisterEvent("GUILD_CHALLENGE_COMPLETED")
-			end
-			if self.Options.TalkingHeadFilter == "BossCombatOnly" and talkingHeadUnregistered then
-				TalkingHeadFrame:RegisterEvent("TALKINGHEAD_REQUESTED")
-				TalkingHeadFrame:RegisterEvent("TALKINGHEAD_CLOSE")
-				TalkingHeadFrame:RegisterEvent("SOUNDKIT_FINISHED")
-				TalkingHeadFrame:RegisterEvent("LOADING_SCREEN_ENABLED")
-				talkingHeadUnregistered = false
-				self:Debug("TalkingHead has been restored")
 			end
 		end
 	end
@@ -6822,18 +6773,6 @@ end
 
 function DBM:GetTOC()
 	return wowTOC
-end
-
-function DBM:TalkingHeadStatus()
-	return talkingHeadUnregistered, isTalkingHeadLoaded
-end
-
-function DBM:SetTalkingHeadState(disabled)
-	if disabled then
-		talkingHeadUnregistered = true
-	else
-		talkingHeadUnregistered = false
-	end
 end
 
 function DBM:FlashClientIcon()

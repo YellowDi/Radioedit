@@ -1,18 +1,18 @@
 local mod	= DBM:NewMod(1704, "DBM-EmeraldNightmare", nil, 768)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 15407 $"):sub(12, -3))
+mod:SetRevision(("$Revision: 15434 $"):sub(12, -3))
 mod:SetCreatureID(102679)--Ysondre, 102683 (Emeriss), 102682 (Lethon), 102681 (Taerar)
 mod:SetEncounterID(1854)
 mod:SetZone()
 mod:SetUsedIcons(8, 7, 6, 5, 4, 3, 2, 1)
---mod:SetHotfixNoticeRev(12324)
+mod:SetHotfixNoticeRev(15407)
 mod.respawnTime = 39
 
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 203028 204767 205300 203817 203888 204100 204078 214540",
+	"SPELL_CAST_START 203028 204767 205300 203817 203888 204100 204078 214540 207573",
 	"SPELL_CAST_SUCCESS 203787 205298 205329",
 	"SPELL_AURA_APPLIED 203102 203125 203124 203121 203110 203770 203787 204040",
 	"SPELL_AURA_APPLIED_DOSE 203102 203125 203124 203121",

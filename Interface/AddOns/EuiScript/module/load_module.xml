@@ -41,7 +41,7 @@
 	<!--Script file='vengeance.lua'/-->
 	<!--Script file='GemPlus.lua'/-->
 	<!--Script file='BanditsGuile.lua'/-->
-	<!--Script file='FriendGroups.lua'/-->
+	<Script file='FriendGroups.lua'/>
 	
 	<Script file='encounters\Pandaria.lua'/>
 	<Script file='encounters\Draenor.lua'/>

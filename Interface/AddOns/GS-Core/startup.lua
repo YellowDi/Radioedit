@@ -9,7 +9,7 @@ GSTRUnfoundSpells = {}
 
 GSModifiedSequences = {} -- [sequenceName] = true if we've already modified this sequence
 
-GSStaticCastCmds = { use = true, cast = true, spell = true, cancelaura = true }
+GSStaticCastCmds = { use = true, cast = true, spell = true, cancelaura = true, startattack = true, cancelform = true }
 
 GSStaticCleanStrings = {}
 GSStaticCleanStrings = {
@@ -62,6 +62,7 @@ GSStaticCleanStrings = {
 }
 
 GSStaticStringRESET = "|r"
+GSStaticCoreLoadedMessage = "GS-CoreLoaded"
 
 -- Sety defaults.  THese will be overriden once the addon is marked as loaded.
 GSAddInPacks = {}
@@ -193,6 +194,105 @@ GSStaticPriority = [[
     step = step % #macros + 1
   end
 ]]
+
+--- <code>GSStaticLoopPriority</code> is a static step function that goes 1121231234123451234561234567
+--    but it does this within an internal loop.  So more like 123343456
+--    If the macro has loopstart or loopstop defined then it will use this instead of GSStaticPriority
+GSStaticLoopPriority = [[
+  if step < loopstart then
+    step = step + 1
+  elseif looplimit <= 1 then
+    -- when we get to the end reset to loopstart
+    limit = limit or loopstart
+    if step == limit then
+      limit = limit % loopstop + 1
+      step = loopstart
+      if looplimit == loopiter then
+        loopiter = 1
+        self:SetAttribute('loopiter', loopiter)
+      end
+    else
+      step = step + 1
+    end
+  elseif step > looplimit then
+    step = step + 1
+  elseif loopiter == looplimit then
+    step = loopstop + 1
+  elseif step == #macros then
+    step = 1
+    self:SetAttribute('loopiter', 1)
+  else
+    limit = limit or loopstart
+    if step == limit then
+      limit = limit % loopstop + 1
+      step = loopstart
+      if limit == loopiter then
+        loopiter = loopiter + 1
+        self:SetAttribute('loopiter', loopiter)
+      end
+    else
+      step = step + 1
+    end
+  end
+]]
+
+--- <code>GSStaticLoopPriority</code> is a static step function that
+--    operates in a sequential mode but with an internal loop.
+--    eg 12342345
+GSStaticLoopSequential = [[
+  --print("Step" .. step)
+  --print("Num Mcros " .. #macros)
+  --print("Start " .. loopstart)
+  --print("Stop " .. loopstop)
+  --print("Limit " .. looplimit)
+  --print("iter " .. loopiter)
+
+  if step < loopstart then
+    -- I am before the loop increment to next step.
+    --print(step .. " I am before the loop increment to next step.")
+    step = step + 1
+  elseif looplimit <= 1 then
+    -- when we get to the end reset to loopstart
+    --print(step .. " When we get to the end reset to loopstart")
+    if step == loopstop then
+      step = loopstart
+      loopiter = loopiter + 1
+      self:SetAttribute('loopiter', loopiter)
+    else
+      step = step + 1
+    end
+  elseif step > loopstop then
+    -- I am outside the loop
+    --print(step .. " I am outside the loop")
+    step = step + 1
+  elseif loopiter == looplimit then
+    -- I am at the outside bound of the loop
+    --print(step .. " I am at the outside bound of the loop")
+    if step == #macros then
+      step = 1
+      loopiter = 1
+      self:SetAttribute('loopiter', 1)
+    else
+      step = step + 1
+    end
+  elseif step == loopstop then
+    --print("I am at loop stop")
+    step = loopstart 
+    loopiter = loopiter + 1
+    self:SetAttribute('loopiter', loopiter)
+  elseif step == #macros  then
+    -- I am at the very end reset
+    step = 1
+    self:SetAttribute('loopiter', 1)
+    --print(step .. " I am at the very end reset")
+  else
+    -- I am in the middle
+    --print(step .. " I am in the middle")
+    step = step + 1
+    --print("Incrementing")
+  end
+]]
+
 
 --- Experimental attempt to load a WeakAuras string.
 function GSLoadWeakauras(str)
@@ -341,10 +441,24 @@ function GSCheckMacroCreated(SequenceName, globalstub)
 
 end
 
+--- This removes a macro Stub.
+function GSdeleteMacroStub(sequenceName)
+  local mname, _, mbody = GetMacroInfo(sequenceName)
+  if mname == sequenceName then
+    trimmedmbody = mbody:gsub("[^%w ]", "")
+    compar = '#showtooltip\n/click ' .. mname
+    trimmedcompar = compar:gsub("[^%w ]", "")
+    if string.lower(trimmedmbody) == string.lower(trimmedcompar) then
+      GSPrint(L[" Deleted Orphaned Macro "] .. mname, GNOME)
+      DeleteMacro(sequenceName)
+    end
+  end
+end
+
 --- Disable all versions of a sequence and delete any macro stubs.
 function GSDisableSequence(SequenceName)
   GSMasterOptions.DisabledSequences[SequenceName] = true
-  deleteMacroStub(SequenceName)
+  GSdeleteMacroStub(SequenceName)
 end
 
 --- Enable all versions of a sequence and recreate any macro stubs.
@@ -431,7 +545,7 @@ function GSAddSequenceToCollection(sequenceName, sequence, version)
     end
     if makemacrostub then
       if GSMasterOptions.DisabledSequences[sequenceName] == true then
-        deleteMacroStub(sequenceName)
+        GSdeleteMacroStub(sequenceName)
       else
         GSCheckMacroCreated(sequenceName, globalstub)
       end
@@ -439,6 +553,16 @@ function GSAddSequenceToCollection(sequenceName, sequence, version)
   end
   if not GSisEmpty(confirmationtext) then
     GSPrint(GSMasterOptions.EmphasisColour .. sequenceName .. "|r" .. L[" was imported with the following errors."] .. " " .. confirmationtext, GNOME)
+  end
+end
+
+--- Load a collection of Sequences
+function GSImportMacroCollection(Sequences)
+  for k,v in pairs(Sequences) do
+    if GSisEmpty(v.version) then
+      v.version = 1
+    end
+    GSAddSequenceToCollection(k, v, v.version)
   end
 end
 

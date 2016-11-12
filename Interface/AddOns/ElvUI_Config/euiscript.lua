@@ -660,13 +660,13 @@ E.Options.args.euiscript = {
 							set = function(info, value) SetCVar("cameraDistanceMoveSpeed", value); E.db.euiscript.cameraspeed = value end,
 							get = function() return E.db.euiscript.cameraspeed end,
 						},
-					--	FriendGroups = {
-					--		order = 24,
-					--		type = 'toggle',
-					--		name = L["FriendGroups"],
-					--		set = function(info,value) E.db.euiscript.FriendGroups.enable = value; E:StaticPopup_Show("CONFIG_RL"); end,
-					--		get = function(info) return E.db.euiscript.FriendGroups.enable; end,
-					--	},
+						FriendGroups = {
+							order = 24,
+							type = 'toggle',
+							name = L["FriendGroups"],
+							set = function(info,value) E.db.euiscript.FriendGroups.enable = value; E:StaticPopup_Show("CONFIG_RL"); end,
+							get = function(info) return E.db.euiscript.FriendGroups.enable; end,
+						},
 						talentSetManager = {
 							order = 24,
 							type = 'toggle',

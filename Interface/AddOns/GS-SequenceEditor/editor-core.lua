@@ -6,11 +6,15 @@ local libS = LibStub:GetLibrary("AceSerializer-3.0")
 local libC = LibStub:GetLibrary("LibCompress")
 local libCE = libC:GetAddonEncodeTable()
 
+
 local currentSequence = ""
 local importStr = ""
 local otherversionlistboxvalue = ""
 local frame = AceGUI:Create("Frame")
 local editframe = AceGUI:Create("Frame")
+local recordframe = AceGUI:Create("Frame")
+local defautMacroIcon = "Interface\\Icons\\INV_MISC_BOOK_08"
+--local defautMacroIcon = "Interface\\Icons\\INV_MISC_QUESTIONMARK"
 
 local sequenceboxtext = AceGUI:Create("MultiLineEditBox")
 local remotesequenceboxtext = AceGUI:Create("MultiLineEditBox")
@@ -32,6 +36,7 @@ function GSSE:parsetext(editbox)
     editbox:SetCursorPosition(string.len(returntext)+2)
   end
 end
+
 
 
 function GSSE:getSequenceNames()
@@ -75,14 +80,24 @@ function GSSE:getSpecNames()
   return keyset
 end
 
+local viewiconpicker = AceGUI:Create("Icon")
+
 function GSSE:DisableSequence(currentSeq)
   GSToggleDisabledSequence(currentSeq)
   if GSMasterOptions.DisabledSequences[currentSeq] then
     disableSeqbutton:SetText(L["Enable Sequence"])
+    viewiconpicker:SetImage(defautMacroIcon)
   else
     disableSeqbutton:SetText(L["Disable Sequence"])
+    local reticon = GSSE:getMacroIcon(currentSeq)
+    if not tonumber(reticon) then
+      -- we have a starting
+      reticon = "Interface\\Icons\\" .. reticon
+    end
+    viewiconpicker:SetImage(reticon)
   end
   sequencebox:SetText(GSExportSequencebySeq(GSTranslateSequenceFromTo(GSMasterOptions.SequenceLibrary[currentSeq][GSGetActiveSequenceVersion(currentSeq)], (GSisEmpty(GSMasterOptions.SequenceLibrary[currentSeq][GSGetActiveSequenceVersion(currentSeq)].lang) and "enUS" or GSMasterOptions.SequenceLibrary[currentSeq][GSGetActiveSequenceVersion(currentSeq)].lang), GetLocale()), currentSeq))
+
 end
 
 local editOptionsbutton = AceGUI:Create("Button")
@@ -95,12 +110,34 @@ transbutton:SetText(L["Send"])
 transbutton:SetWidth(150)
 transbutton:SetCallback("OnClick", function() GSShowTransmissionGui(currentSequence) end)
 
+local iconpicker = AceGUI:Create("Icon")
+iconpicker:SetLabel(L["Macro Icon"])
+--iconpicker:OnClick(MacroPopupButton_SelectTexture(editframe:GetID() + (FauxScrollFrame_GetOffset(MacroPopupScrollFrame) * NUM_ICONS_PER_ROW)))
+iconpicker.frame:RegisterForDrag("LeftButton")
+iconpicker.frame:SetScript("OnDragStart", function()
+  if not GSisEmpty(currentSequence) then
+    PickupMacro(currentSequence)
+  end
+end)
+iconpicker:SetImage(defautMacroIcon)
+
+
+viewiconpicker:SetLabel(L["Macro Icon"])
+--iconpicker:OnClick(MacroPopupButton_SelectTexture(editframe:GetID() + (FauxScrollFrame_GetOffset(MacroPopupScrollFrame) * NUM_ICONS_PER_ROW)))
+viewiconpicker.frame:RegisterForDrag("LeftButton")
+viewiconpicker.frame:SetScript("OnDragStart", function()
+  if not GSisEmpty(currentSequence) then
+    PickupMacro(currentSequence)
+  end
+end)
+viewiconpicker:SetImage(defautMacroIcon)
+
 
 -- Create functions for tabs
 function GSSE:drawstandardwindow(container)
   sequencebox = AceGUI:Create("MultiLineEditBox")
   sequencebox:SetLabel(L["Sequence"])
-  sequencebox:SetNumLines(20)
+  sequencebox:SetNumLines(18)
   sequencebox:DisableButton(true)
   sequencebox:SetFullWidth(true)
   sequencebox:SetText(sequenceboxtext:GetText())
@@ -154,6 +191,12 @@ function GSSE:drawstandardwindow(container)
   eOptionsbutton:SetCallback("OnClick", function() GSSE:OptionsGuiDebugView() end)
   buttonGroup:AddChild(eOptionsbutton)
 
+  local recordwindowbutton = AceGUI:Create("Button")
+  recordwindowbutton:SetText(L["Record Macro"])
+  recordwindowbutton:SetWidth(150)
+  recordwindowbutton:SetCallback("OnClick", function() frame:Hide(); recordframe:Show() end)
+  buttonGroup:AddChild(recordwindowbutton)
+
   container:AddChild(buttonGroup)
 
   sequenceboxtext = sequencebox
@@ -205,16 +248,22 @@ frame:SetLayout("List")
 GSSE.viewframe = frame
 GSSE.editframe = editframe
 
-local btn = AceGUI:Create("Button") --by eui.cc
-btn:SetWidth(120)
-btn:SetText(CLOSE)
-btn:SetCallback("OnClick", function() GSSE:GSSlash("hide") end)
-frame:AddChild(btn)
+local viewerheadergroup = AceGUI:Create("SimpleGroup")
+viewerheadergroup:SetFullWidth(true)
+viewerheadergroup:SetLayout("Flow")
+
+
 GSSequenceListbox = AceGUI:Create("Dropdown")
 GSSequenceListbox:SetLabel(L["Load Sequence"])
 GSSequenceListbox:SetWidth(250)
-GSSequenceListbox:SetCallback("OnValueChanged", function (obj,event,key) GSSE:loadSequence(key) currentSequence = key end)
-frame:AddChild(GSSequenceListbox)
+GSSequenceListbox:SetCallback("OnValueChanged", function (obj,event,key) currentSequence = key GSSE:loadSequence(key)  end)
+
+local spacerlabel = AceGUI:Create("Label")
+spacerlabel:SetWidth(300)
+viewerheadergroup:AddChild(GSSequenceListbox)
+viewerheadergroup:AddChild(spacerlabel)
+viewerheadergroup:AddChild(viewiconpicker)
+frame:AddChild(viewerheadergroup)
 
 
 
@@ -239,6 +288,12 @@ end
 
 local stepvalue = 1
 
+editscroll = AceGUI:Create("ScrollFrame")
+editscroll:SetLayout("Flow") -- probably?
+editscroll:SetFullWidth(true)
+editscroll:SetHeight(340)
+
+
 local headerGroup = AceGUI:Create("SimpleGroup")
 headerGroup:SetFullWidth(true)
 headerGroup:SetLayout("Flow")
@@ -251,7 +306,6 @@ editframe:SetTitle(L["Sequence Editor"])
 --editframe:SetStatusText(L["Gnome Sequencer: Sequence Editor."])
 editframe:SetCallback("OnClose", function (self) editframe:Hide();  frame:Show(); end)
 editframe:SetLayout("List")
-
 
 local nameeditbox = AceGUI:Create("EditBox")
 nameeditbox:SetLabel(L["Sequence Name"])
@@ -298,11 +352,6 @@ helpeditbox:DisableButton( true)
 middleColumn:AddChild(helpeditbox)
 middleColumn:AddChild(speciddropdown)
 
-
-local iconpicker = AceGUI:Create("Icon")
---iconpicker:SetImage()
-iconpicker:SetLabel(L["Macro Icon"])
---iconpicker:OnClick(MacroPopupButton_SelectTexture(editframe:GetID() + (FauxScrollFrame_GetOffset(MacroPopupScrollFrame) * NUM_ICONS_PER_ROW)))
 headerGroup:AddChild(middleColumn)
 headerGroup:AddChild(iconpicker)
 editframe:AddChild(headerGroup)
@@ -316,7 +365,7 @@ premacrobox:DisableButton(true)
 premacrobox:SetFullWidth(true)
 --premacrobox.editBox:SetScript("OnLeave", OnTextChanged)
 
-editframe:AddChild(premacrobox)
+editscroll:AddChild(premacrobox)
 premacrobox.editBox:SetScript( "OnLeave",  function(self) GSSE:parsetext(self) end)
 premacrobox.editBox:SetScript("OnTextChanged", function () end)
 
@@ -327,7 +376,35 @@ spellbox:DisableButton(true)
 spellbox:SetFullWidth(true)
 spellbox.editBox:SetScript( "OnLeave",  function(self) GSSE:parsetext(self) end)
 spellbox.editBox:SetScript("OnTextChanged", function () end)
-editframe:AddChild(spellbox)
+
+local loopGroup = AceGUI:Create("SimpleGroup")
+loopGroup:SetFullWidth(true)
+loopGroup:SetLayout("Flow")
+
+editscroll:AddChild(loopGroup)
+
+local loopstart = AceGUI:Create("EditBox")
+loopstart:SetLabel(L["Inner Loop Start"])
+loopstart:DisableButton(true)
+loopstart:SetMaxLetters(3)
+loopstart.editbox:SetNumeric()
+loopGroup:AddChild(loopstart)
+
+local loopstop = AceGUI:Create("EditBox")
+loopstop:SetLabel(L["Inner Loop End"])
+loopstop:DisableButton(true)
+loopstop:SetMaxLetters(3)
+loopstop.editbox:SetNumeric()
+loopGroup:AddChild(loopstop)
+
+local looplimit = AceGUI:Create("EditBox")
+looplimit:SetLabel(L["Inner Loop Limit"])
+looplimit:DisableButton(true)
+looplimit:SetMaxLetters(4)
+looplimit.editbox:SetNumeric()
+loopGroup:AddChild(looplimit)
+editscroll:AddChild(spellbox)
+
 
 local postmacrobox = AceGUI:Create("MultiLineEditBox")
 postmacrobox:SetLabel(L["PostMacro"])
@@ -337,7 +414,8 @@ postmacrobox:SetFullWidth(true)
 postmacrobox.editBox:SetScript( "OnLeave",  function(self) GSSE:parsetext(self) end)
 postmacrobox.editBox:SetScript("OnTextChanged", function () end)
 
-editframe:AddChild(postmacrobox)
+editscroll:AddChild(postmacrobox)
+editframe:AddChild(editscroll)
 
 local editButtonGroup = AceGUI:Create("SimpleGroup")
 editButtonGroup:SetWidth(302)
@@ -421,12 +499,67 @@ end)
 othersequencebuttonGroup:AddChild(delbutton)
 
 
-
 versionframe:AddChild(othersequencebuttonGroup)
+-- Record Frame
+
+recordframe:SetTitle(L["Record Macro"])
+recordframe:SetStatusText(L["Gnome Sequencer: Record your rotation to a macro."])
+recordframe:SetCallback("OnClose", function(widget)  frame:Hide(); end)
+recordframe:SetLayout("List")
+
+local recordsequencebox = AceGUI:Create("MultiLineEditBox")
+recordsequencebox:SetLabel(L["Actions"])
+recordsequencebox:SetNumLines(20)
+recordsequencebox:DisableButton(true)
+recordsequencebox:SetFullWidth(true)
+recordframe:AddChild(recordsequencebox)
+
+local recButtonGroup = AceGUI:Create("SimpleGroup")
+recButtonGroup:SetLayout("Flow")
+
+
+local recbutton = AceGUI:Create("Button")
+recbutton:SetText(L["Record"])
+recbutton:SetWidth(150)
+recbutton:SetCallback("OnClick", function() GSSE:ManageRecord() end)
+recButtonGroup:AddChild(recbutton)
+
+local createmacrobutton = AceGUI:Create("Button")
+createmacrobutton:SetText(L["Create Macro"])
+createmacrobutton:SetWidth(150)
+createmacrobutton:SetCallback("OnClick", function() GSSE:SaveRecordMacro() end)
+createmacrobutton:SetDisabled(true)
+recButtonGroup:AddChild(createmacrobutton)
+
+recordframe:AddChild(recButtonGroup)
+
 
 -- Slash Commands
 
 GSSE:RegisterChatCommand("gsse", "GSSlash")
+
+function GSSE:SaveRecordMacro()
+  GSSE:LoadEditor( nil, recordsequencebox:GetText())
+  recordframe:Hide()
+
+end
+local recbuttontext = L["Record"]
+function GSSE:ManageRecord()
+  if recbuttontext == L["Record"] then
+    GSSE:RegisterEvent('UNIT_SPELLCAST_SUCCEEDED')
+    recbuttontext = L["Stop"]
+    createmacrobutton:SetDisabled(false)
+  else
+    recbuttontext = L["Record"]
+    GSSE:UnregisterEvent('UNIT_SPELLCAST_SUCCEEDED')
+  end
+  recbutton:SetText(recbuttontext)
+end
+
+function GSSE:UNIT_SPELLCAST_SUCCEEDED(event, unit, spell)
+  if unit ~= "player" then  return end
+  recordsequencebox:SetText(recordsequencebox:GetText() .. "/cast " .. spell .. "\n")
+end
 
 -- Functions
 function GSSE:SetActiveSequence(key)
@@ -515,9 +648,17 @@ function GSSE:loadSequence(SequenceName)
   end
   if GSMasterOptions.DisabledSequences[SequenceName] then
     disableSeqbutton:SetText(L["Enable Sequence"])
+    viewiconpicker:SetImage(defautMacroIcon)
   else
     disableSeqbutton:SetText(L["Disable Sequence"])
+    reticon = GSSE:getMacroIcon(SequenceName)
+    if not tonumber(reticon) then
+      -- we have a starting
+      reticon = "Interface\\Icons\\" .. reticon
+    end
+    viewiconpicker:SetImage(reticon)
   end
+
 end
 
 function GSSE:toggleClasses(buttonname)
@@ -530,7 +671,7 @@ function GSSE:toggleClasses(buttonname)
   end
 end
 
-function GSSE:LoadEditor(SequenceName)
+function GSSE:LoadEditor(SequenceName, recordstring)
   if not GSisEmpty(SequenceName) then
     nameeditbox:SetText(SequenceName)
     if GSisEmpty(GSMasterOptions.SequenceLibrary[SequenceName][GSGetActiveSequenceVersion(SequenceName)].StepFunction) then
@@ -566,6 +707,20 @@ function GSSE:LoadEditor(SequenceName)
     GSPrintDebugMessage("SequenceName: " .. SequenceName, GNOME)
     speciddropdown:SetValue(GSSpecIDList[GSMasterOptions.SequenceLibrary[SequenceName][GSGetActiveSequenceVersion(SequenceName)].specID])
     specdropdownvalue = GSSpecIDList[GSMasterOptions.SequenceLibrary[SequenceName][GSGetActiveSequenceVersion(SequenceName)].specID]
+    if not GSisEmpty(GSMasterOptions.SequenceLibrary[SequenceName][GSGetActiveSequenceVersion(SequenceName)].loopstart) then
+      loopstart:SetText(GSMasterOptions.SequenceLibrary[SequenceName][GSGetActiveSequenceVersion(SequenceName)].loopstart)
+    end
+    if not GSisEmpty(GSMasterOptions.SequenceLibrary[SequenceName][GSGetActiveSequenceVersion(SequenceName)].loopstop) then
+      loopstop:SetText(GSMasterOptions.SequenceLibrary[SequenceName][GSGetActiveSequenceVersion(SequenceName)].loopstop)
+    end
+    if not GSisEmpty(GSMasterOptions.SequenceLibrary[SequenceName][GSGetActiveSequenceVersion(SequenceName)].looplimit) then
+      looplimit:SetText(GSMasterOptions.SequenceLibrary[SequenceName][GSGetActiveSequenceVersion(SequenceName)].looplimit)
+    end
+  elseif not GSisEmpty(recordstring) then
+    iconpicker:SetImage("Interface\\Icons\\INV_MISC_QUESTIONMARK")
+    currentSequence = ""
+    helpeditbox:SetText("Talents: " .. GSSE:getCurrentTalents())
+    spellbox:SetText(recordstring)
   else
     GSPrintDebugMessage(L["No Sequence Icon setting to "] , GNOME)
     iconpicker:SetImage("Interface\\Icons\\INV_MISC_QUESTIONMARK")
@@ -599,6 +754,15 @@ function GSSE:UpdateSequenceDefinition(SequenceName)
     if not tonumber(sequence.icon) then
       sequence.icon = "INV_MISC_QUESTIONMARK"
     end
+    if not GSisEmpty(loopstart:GetText()) then
+      sequence.loopstart = loopstart:GetText()
+    end
+    if not GSisEmpty(loopstop:GetText()) then
+      sequence.loopstop = loopstop:GetText()
+    end
+    if not GSisEmpty(looplimit:GetText()) then
+      sequence.looplimit = looplimit:GetText()
+    end
     sequence.PostMacro = postmacrobox:GetText()
     sequence.version = nextVal
     GSTRUnEscapeSequence(sequence)
@@ -626,8 +790,10 @@ end
 
 function GSGuiShowViewer()
   if not InCombatLockdown() then
+    currentSequence = ""
     local names = GSSE:getSequenceNames()
     GSSequenceListbox:SetList(names)
+    sequenceboxtext:SetText("")
     frame:Show()
   else
     GSPrint(L["Please wait till you have left combat before using the Sequence Editor."], GNOME)
@@ -638,6 +804,8 @@ end
 function GSSE:GSSlash(input)
     if input == "hide" then
       frame:Hide()
+    elseif input == "record" then
+      recordframe:Show()
     elseif input == "debug" then
       GSShowDebugWindow()
     else
@@ -648,6 +816,7 @@ end
 
 
 function GSSE:OnInitialize()
+    recordframe:Hide()
     versionframe:Hide()
     editframe:Hide()
     frame:Hide()
@@ -665,7 +834,13 @@ end
 
 function GSSE:getMacroIcon(sequenceIndex)
   GSPrintDebugMessage(L["sequenceIndex: "] .. (GSisEmpty(sequenceIndex) and L["No value"] or sequenceIndex), GNOME)
-  GSPrintDebugMessage(L["Icon: "] .. (GSisEmpty(GSMasterOptions.SequenceLibrary[sequenceIndex][GSGetActiveSequenceVersion(currentSequence)].icon) and L["none"] or GSMasterOptions.SequenceLibrary[sequenceIndex][GSGetActiveSequenceVersion(currentSequence)].icon))
+  if not GSisEmpty(GSGetActiveSequenceVersion(currentSequence)) then
+    if not GSisEmpty(GSMasterOptions.SequenceLibrary[sequenceIndex][GSGetActiveSequenceVersion(currentSequence)].icon) then
+      GSPrintDebugMessage(L["Icon: "] .. GSMasterOptions.SequenceLibrary[sequenceIndex][GSGetActiveSequenceVersion(currentSequence)].icon, GNOME)
+    else
+      GSPrintDebugMessage(L["Icon: "] .. L["none"], GNOME)
+    end
+  end
   local macindex = GetMacroIndexByName(sequenceIndex)
   local a, iconid, c =  GetMacroInfo(macindex)
   if not GSisEmpty(a) then
