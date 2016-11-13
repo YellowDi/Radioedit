@@ -93,6 +93,15 @@ B.ProfessionColors = {
 }
 
 local itemLevelCache = {}
+local itemLevelPattern = gsub(ITEM_LEVEL, "%%d", "(%%d+)")
+local tooltipLines = { --These are the lines we wish to scan
+	"ElvUI_ItemScanningTooltipTextLeft2",
+	"ElvUI_ItemScanningTooltipTextLeft3",
+	"ElvUI_ItemScanningTooltipTextLeft4",
+}
+local tooltip = CreateFrame("GameTooltip", "ElvUI_ItemScanningTooltip", UIParent, "GameTooltipTemplate")
+tooltip:SetOwner(UIParent, "ANCHOR_NONE")
+
 --Scan tooltip for item level information and cache the value
 local function GetItemLevel(itemLink)
 	if not itemLink or not GetItemInfo(itemLink) then
@@ -100,24 +109,22 @@ local function GetItemLevel(itemLink)
 	end
 
 	if not itemLevelCache[itemLink] then
-		local _, itemLevel = E:GetItemInfoActually(ItemLink)
---		tooltip:ClearLines()
---		tooltip:SetHyperlink(itemLink)
+		tooltip:ClearLines()
+		tooltip:SetHyperlink(itemLink)
 
---		local text, itemLevel
---		for index = 1, #tooltipLines do
---			text = _G[tooltipLines[index]]:GetText()
+		local text, itemLevel
+		for index = 1, #tooltipLines do
+			text = _G[tooltipLines[index]]:GetText()
 
---			if text then
---				itemLevel = tonumber(match(text, itemLevelPattern))
+			if text then
+				itemLevel = tonumber(match(text, itemLevelPattern))
 
 				if itemLevel then
 					itemLevelCache[itemLink] = itemLevel
 					return itemLevel
 				end
---			end
---		end
-
+			end
+		end
 		itemLevelCache[itemLink] = 0 --Cache items that don't have an item level so we don't loop over them again and again
 	end
 
@@ -441,10 +448,10 @@ function B:UpdateSlot(bagID, slotID)
 			slot.shadow:SetBackdropBorderColor(r, g, b)
 		end
 
-		if B.db.useTooltipScanning then
+	--	if B.db.useTooltipScanning then
 			--GetItemLevel will return cached item level
 			iLvl = GetItemLevel(clink)
-		end
+	--	end
 
 		--Item Level
 		if iLvl and B.db.itemLevel and IsItemEligibleForItemLevelDisplay(itemClassID, itemSubClassID, itemEquipLoc, slot.rarity) then

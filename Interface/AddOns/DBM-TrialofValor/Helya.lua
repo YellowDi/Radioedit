@@ -1,12 +1,12 @@
 local mod	= DBM:NewMod(1829, "DBM-TrialofValor", nil, 861)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 15393 $"):sub(12, -3))
+mod:SetRevision(("$Revision: 15445 $"):sub(12, -3))
 mod:SetCreatureID(114537)
 mod:SetEncounterID(2008)
 mod:SetZone()
 mod:SetUsedIcons(1, 2, 3)
---mod:SetHotfixNoticeRev(14922)
+mod:SetHotfixNoticeRev(15445)
 --mod.respawnTime = 30--None, she doesn't despawn. Remains after a wipe period
 
 mod:RegisterCombat("combat")
@@ -91,12 +91,12 @@ local timerAnchorSlamCD				= mod:NewCDTimer(13.6, 228519, nil, "Tank", nil, 5, n
 ----Night Watch Mariner
 --Stage Three: Helheim's Last Stand
 local timerCorruptedBreathCD		= mod:NewNextTimer(40, 228565, nil, nil, nil, 2)
-local timerOrbOfCorrosionCD			= mod:NewNextTimer(25, 230267, nil, nil, nil, 3, nil, DBM_CORE_DEADLY_ICON)
+local timerOrbOfCorrosionCD			= mod:NewNextTimer(18.2, 230267, nil, nil, nil, 3, nil, DBM_CORE_DEADLY_ICON)
 
 --local berserkTimer					= mod:NewBerserkTimer(300)
 
 --Stage One: Low Tide
-local countdownOrbs					= mod:NewCountdown("AltTwo25", 229119)
+local countdownOrbs					= mod:NewCountdown("AltTwo18", 229119)
 local countdownOozeExplosions		= mod:NewCountdown(22.5, 227992)
 --Stage Two: From the Mists (65%)
 --Stage Three: Helheim's Last Stand
@@ -131,9 +131,14 @@ function mod:OnCombatStart(delay)
 	if self:IsLFR() then--was ONLY LFR that had diff timers, normal testing had same as heroic
 		timerOrbOfCorruptionCD:Start(19-delay)--SUCCESS
 		countdownOrbs:Start(19-delay)
-		timerBilewaterBreathCD:Start(42-delay)
+		timerBilewaterBreathCD:Start(42-delay)--Check if changed, because normals timers all match LFR except this
 		timerTentacleStrikeCD:Start(53-delay)
-	else--TODO, reverify normal/heroic though. maybe they changed after tested to match LFR
+	elseif self:IsNormal() then
+		timerBilewaterBreathCD:Start(13.3-delay)
+		timerOrbOfCorruptionCD:Start(19-delay)--SUCCESS
+		countdownOrbs:Start(19-delay)
+		timerTentacleStrikeCD:Start(53-delay)
+	else--TODO, reverify heroic. maybe they changed after tested to match LFR/normal
 		timerOrbOfCorruptionCD:Start(15-delay)--SUCCESS
 		countdownOrbs:Start(15-delay)
 		timerBilewaterBreathCD:Start(32-delay)
@@ -158,11 +163,15 @@ function mod:SPELL_CAST_START(args)
 		if self:IsLFR() then
 			timerBilewaterBreathCD:Start(52)
 		else
-			timerBilewaterBreathCD:Start()
+			if self:IsNormal() then
+				timerBilewaterBreathCD:Start(57)
+			else
+				timerBilewaterBreathCD:Start()
+			end
 		end
 	elseif spellId == 228730 then
 		specWarnTentacleStrike:Show()
-		if self:IsLFR() then
+		if self:IsEasy() then
 			timerTentacleStrikeCD:Start(40)
 		else
 			timerTentacleStrikeCD:Start()
@@ -178,26 +187,30 @@ function mod:SPELL_CAST_START(args)
 		timerSludgeNovaCD:Start()
 	elseif spellId == 228565 then
 		specWarnCorruptedBreath:Show()
-		if self:IsLFR() then
-			timerCorruptedBreathCD:Start(52.7)
+		if self:IsEasy() then
+			timerCorruptedBreathCD:Start(51)
 		else
 			timerCorruptedBreathCD:Start()
 		end
 	elseif spellId == 228032 then--Phase 3 Fury of the Maw
 		specWarnFuryofMaw:Show()
-		timerFuryofMawCD:Start(92)
+		if self:IsLFR() then
+			timerFuryofMawCD:Start(92)
+		else
+			timerFuryofMawCD:Start(76.4)
+		end
 	end
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
 	if spellId == 227903 then
-		if self:IsLFR() then
-			timerOrbOfCorruptionCD:Start(32.7)
-			countdownOrbs:Start(32.7)
+		if self:IsEasy() then
+			timerOrbOfCorruptionCD:Start(31.2)
+			countdownOrbs:Start(31.2)
 		else
 			timerOrbOfCorruptionCD:Start()
-			countdownOrbs:Start()
+			countdownOrbs:Start(25)
 		end
 	elseif spellId == 228056 then
 		if self:IsLFR() then
@@ -205,7 +218,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 			countdownOrbs:Start(32.7)
 		else
 			timerOrbOfCorrosionCD:Start()
-			countdownOrbs:Start()
+			countdownOrbs:Start(18.2)
 		end
 	elseif spellId == 227967 then
 		--Start ooze stuff here since all their stuff is hidden from combat log
@@ -391,9 +404,9 @@ end
 function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, _, spellGUID)
 	local spellId = tonumber(select(5, strsplit("-", spellGUID)), 10)
 	if spellId == 228088 then--Taint of Sea
-		if self:IsLFR() then--Cast MORE OFTEN in LFR
+		if self:IsEasy() then--Cast MORE OFTEN in LFR
 			if self.vb.phase == 3 then
-				timerTaintOfSeaCD:Start(20)
+				timerTaintOfSeaCD:Start(27)
 			else
 				timerTaintOfSeaCD:Start(12.1)
 			end

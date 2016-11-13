@@ -78,15 +78,15 @@ local function GSSendMessage(tab, channel, target)
 end
 
 local function performVersionCheck(version)
-	if(tonumber(version) ~= nil and tonumber(version) > tonumber(GSEVersion)) then
-		if not GSold then
-		  GSPrint(L["GS-E is out of date. You can download the newest version from https://mods.curse.com/addons/wow/gnomesequencer-enhanced."], GSStaticSourceTransmission)
-		  GSold = true
-		  if((tonumber(message) - tonumber(version)) >= 5) then
-			  StaticPopup_Show('GSE_UPDATE_AVAILABLE')
-		  end
-		end
-	end
+	-- if(tonumber(version) ~= nil and tonumber(version) > tonumber(GSEVersion)) then
+		-- if not GSold then
+		  -- GSPrint(L["GS-E is out of date. You can download the newest version from https://mods.curse.com/addons/wow/gnomesequencer-enhanced."], GSStaticSourceTransmission)
+		  -- GSold = true
+		  -- if((tonumber(message) - tonumber(version)) >= 5) then
+			  -- StaticPopup_Show('GSE_UPDATE_AVAILABLE')
+		  -- end
+		-- end
+	-- end
 end
 
 function GSEncodeMessage(Sequence)

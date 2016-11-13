@@ -129,7 +129,7 @@ function WorldQuest:TaskPOI_OnClick(button, click)
                 HideUIPanel(WorldMapFrame)
                 Addon:ShowModule('MainPanel')
                 MainPanel:SelectPanel(BrowsePanel)
-                BrowsePanel:QuickSearch(activityCode, 14, nil, title)
+                BrowsePanel:QuickSearch(activityCode, nil, nil, title)
             end
         },
     })
@@ -176,7 +176,7 @@ function WorldQuest:ObjectiveTracker_ToggleDropDown(block, init)
             func = function()
                 Addon:ShowModule('MainPanel')
                 MainPanel:SelectPanel(BrowsePanel)
-                BrowsePanel:QuickSearch(activityCode, 14, nil, title)
+                BrowsePanel:QuickSearch(activityCode, nil, nil, title)
             end
         },
     }, 'cursor')

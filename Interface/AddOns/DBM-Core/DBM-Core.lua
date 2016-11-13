@@ -41,7 +41,7 @@
 --  Globals/Default Options  --
 -------------------------------
 DBM = {
-	Revision = tonumber(("$Revision: 15437 $"):sub(12, -3)),
+	Revision = tonumber(("$Revision: 15450 $"):sub(12, -3)),
 	DisplayVersion = "7.1.2 alpha", -- the string that is shown as version
 	ReleaseRevision = 15418 -- the revision of the latest stable version that is available
 }
@@ -418,7 +418,7 @@ local statusWhisperDisabled = false
 local wowVersionString, _, _, wowTOC = GetBuildInfo()
 local dbmToc = 0
 
-local fakeBWVersion, fakeBWHash = 21, "c6e921e"
+local fakeBWVersion, fakeBWHash = 22, "645355d"
 local versionQueryString, versionResponseString = "Q^%d^%s", "V^%d^%s"
 
 local enableIcons = true -- set to false when a raid leader or a promoted player has a newer version of DBM
@@ -6019,7 +6019,7 @@ do
 	local autoTLog = false
 	
 	local function isCurrentContent()
-		if LastInstanceMapID == 1520 or LastInstanceMapID == 1530 or LastInstanceMapID == 1220 then--Legion
+		if LastInstanceMapID == 1520 or LastInstanceMapID == 1530 or LastInstanceMapID == 1220 or LastInstanceMapID == 1648 then--Legion
 			return true
 		end
 		return false

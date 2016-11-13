@@ -2,7 +2,7 @@
 local addonName
 WorldQuestTips = CreateFrame("Frame"), {};
 
-local version = 1.23
+local version = 1.24
 local versionSuffix = ""
 
 local playerName = UnitName("player")
@@ -147,13 +147,14 @@ local wqwp = {			-- "add" => add quest title to str;		"rop" => RemoveOnPickup (r
 	[43611] = { [1] = { x = 26.82,	y = 49.06,	str = L.WAYPOINT_PORTAL, 	add = true } },	-- WANTED: Inquisitor Tivos
 	[43612] = { [1] = { x = 50.20,	y = 07.80,	str = L.WAYPOINT_CAVE, 		add = true } },	-- WANTED: Normantis the Deposed	--unverified accuracy
 	[43432] = { [1] = { x = 50.20,	y = 07.80,	str = L.WAYPOINT_CAVE, 		add = true } },	-- WANTED: Normantis the Deposed
-	[42795] = { [1] = { x = 23.34,	y = 40.85,	str = L.WAYPOINT_CAVE, 		add = true } },	-- WANTED: Sanaar					--unverified accuracy
+	[42795] = { [1] = { x = 21.3,	y = 43.31,	m = 1033, str = L.WAYPOINT_CAVE, add = true, rop = true },	-- WANTED: Sanaar					--unverified accuracy
+				[2] = { x = 39.7,	y = 34.0,	m = 1033 } },								-- WANTED: Sanaar					--unverified accuracy
 	[43429] = { [1] = { x = 66.4,	y = 50.1,	str = L.WAYPOINT_PATH, 		add = true } },	-- WANTED: Syphonus					--unverified accuracy
 	[43613] = { [1] = { x = 66.4,	y = 50.1,	str = L.WAYPOINT_PATH,		add = true } },	-- WANTED: Syphonus
 	[43437] = { [1] = { x = 41.94,	y = 71.16,	str = L.WAYPOINT_BUILDING,	add = true } },	-- WANTED: Thane Irglov				--unverified accuracy
 	[43626] = { [1] = { x = 41.94,	y = 71.16,	str = L.WAYPOINT_BUILDING,	add = true } },	-- WANTED: Thane Irglov
-	[43451] = { [1] = { x = 64.8,	y = 51.8 } },											-- WANTED: Urgev the Flayer			--unverified accuracy
-	[43628] = { [1] = { x = 64.8,	y = 51.8 } },											-- WANTED: Urgev the Flayer
+	[43451] = { [1] = { x = 64.8,	y = 51.8, rop = true } },											-- WANTED: Urgev the Flayer			--unverified accuracy
+	[43628] = { [1] = { x = 64.8,	y = 51.8, rop = true } },											-- WANTED: Urgev the Flayer
 			                                                                                        
 	[44002] = {	[1] = { x = 80.36,	y = 70.53,	str = "Southern pylon" },					-- Undersea Survey					--confirmed
 				[2] = { x = 79.54,	y = 63.12,	str = "Eastern Pylon" },
@@ -166,7 +167,7 @@ local wqwp = {			-- "add" => add quest title to str;		"rop" => RemoveOnPickup (r
 				
 	[41950] = { [1] = { x = 37.46,	y = 64.18 } },											-- Cry More Thunder!				--confirmed
 	
-	[42077] = { [1] = { x = 50.0,	y = 85.6 } },											-- Waking Nightmares				--unverified
+	[42077] = { [1] = { x = 50.0,	y = 85.6, rop = true } },											-- Waking Nightmares				--unverified
 			                                                                                        
 	[43951] = {	[1] = { x = 40.7,	y = 68.9,	str = "Highmountain Prisoner" },			-- An Overdue Debt					--confirmed
 				[2] = { x = 40.2,	y = 68.5,	str = "Highmountain Prisoner" },
@@ -183,6 +184,14 @@ local wqwp = {			-- "add" => add quest title to str;		"rop" => RemoveOnPickup (r
 				[3] = { x = 40.2,	y = 26.3,	str = L.WAYPOINT_PATH, 		add = true, rop = true } },	  
 	[41687] = { [1] = { x = 42.63,	y = 25.21,	str = L.WAYPOINT_CAVE, 		add = true, rop = true } ,	-- Snail Fight!		--confirmed
 				[2] = { x = 44.58,	y = 22.55 } },  
+	
+	[44011] = { [1] = { x = 48.27,	y = 68.34, str = L.WAYPOINT_PATH, 		add = true, rop = true },										-- Lost Wisp		--unverified accuracy
+				[2] = { x = 48.40,	y = 64.32, rop = true } },  
+	
+	-- 	these quests appear to be missing the map id in the blizzrd api, and therefore falled to show waypoints
+	[41836] = { [1] = { x = 36.6,	y = 16.6,	m = 1024, rop = true } },											-- WANTED: Bodash the Hoarder		--unverified accuracy
+	[43616] = { [1] = { x = 36.6,	y = 16.6,	m = 1024, rop = true } },											-- WANTED: Bodash the Hoarder
+	[41692] = { [1] = { x = 46.6,	y = 7.6,	m = 1024, rop = true } },											-- Shipwreck Scavengers
 }
 local awqwp = {} -- Active WorldQuestWayPoints
 
@@ -399,10 +408,11 @@ local function addWayPoints( questID, source, m, f, x, y, title )
 					if wp.add then title = wp.str .. " " .. title
 					else title = wp.str end
 				end
+				if wp.m then m = wp.m end
 				awqwp[questID][i] = TomTom:AddMFWaypoint(m, 0, wp.x/100, wp.y/100, {title=title, persistent=false })
 			end
 		elseif source == "click" then
-			awqwp[questID][1] = TomTom:AddMFWaypoint(m, f, x, y, {title=title, persistent=false })
+			if ( m and f and x and y ) then awqwp[questID][1] = TomTom:AddMFWaypoint(m, f, x, y, {title=title, persistent=false }) end
 		elseif source == "leyrace" then
 			for j in pairs( awqwp[questID] ) do TomTom:RemoveWaypoint( awqwp[questID][j] ) end
 			for i, wp in pairs( leyraceWP[ m ].waypoints ) do
@@ -665,15 +675,15 @@ function WorldQuestTips:PLAYER_LOGOUT(...)
 					if objectiveText ~= data.objectives[obj] then progressed = true end
 					objectives[obj] = objectiveText
 				end
-				local percent = C_TaskQuest.GetQuestProgressBarInfo(questID);
-				if percent and percent ~= data.objectives.percent then
-					progressed = true
-					objectives.percent = percent
-				end
-				if progressed then
-					data.objectives = objectives
-					tracking[questID].duration = data.duration + ( time() - data.start )
-				end
+			end
+			local percent = C_TaskQuest.GetQuestProgressBarInfo(questID);
+			if percent and percent ~= data.objectives.percent then
+				progressed = true
+				objectives.percent = percent
+			end
+			if progressed then
+				data.objectives = objectives
+				tracking[questID].duration = data.duration + ( time() - data.start )
 			end
 		end
 	end
@@ -821,13 +831,20 @@ end
 local function addpetlines( tt, name, botbip )
 	if WorldQuestTipsData.global.options.PetFF then
 		local tamer = pet_tamers[name]
-		tt:AddLine("\n"..ACHIEVEMENT_PROGRESSED..":")
+		local headerAdded = false
+		--tt:AddLine("\n"..ACHIEVEMENT_PROGRESSED..":")
 		if botbip == false and not botbi.complete then
+			tt:AddLine("\n"..ACHIEVEMENT_PROGRESSED..":")
+			headerAdded = true
 			tt:AddDoubleLine("|cffffff00[" .. botbi.name .. "]", "|cffffffff(".. botbi.count .. "/30)")
 		end
 		if tamer ~= nil then
 			for f, complete in pairs(tamer) do
 				if not complete and WorldQuestTipsData.global.pets.ff[name][f] ~= false then
+					if not headerAdded then
+						tt:AddLine("\n"..ACHIEVEMENT_PROGRESSED..":")
+						headerAdded = true
+					end
 					tt:AddDoubleLine(pets[f].icon .. "|cffffff00[" .. pets[f].achName .. "]", "|cffffffff(".. pets[f].count .. "/12)")
 				end
 			end
@@ -919,7 +936,7 @@ hooksecurefunc ("TaskPOI_OnEnter", function (self)
 	-- Handling other addons changing the PoI frame name willynillily
 	if ( IsAltKeyDown() and WorldQuestTipsData.global.options.EditOnC ) and ( WorldQuestTrackerAddon or AngryWorldQuests ) then
 		local mtable = GetMouseFocus()
-		if mtable:HasScript("OnClick") then
+		if mtable and mtable:HasScript("OnClick") then
 			local orginalScript = mtable:GetScript("OnClick")
 			mtable:SetScript("OnClick", function (self, button)
 				if button == "LeftButton" and WorldQuestTipsData.global.options.EditOnC and IsAltKeyDown() then

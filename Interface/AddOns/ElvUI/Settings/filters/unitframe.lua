@@ -883,6 +883,31 @@ G.unitframe.aurafilters['RaidDebuffs'] = {
 		[207409] = Defaults(), -- Madness
 		[211634] = Defaults(), -- The Infinite Dark
 		[208385] = Defaults(), -- Tainted Discharge
+
+-- Trial of Valor
+	-- Odyn
+		[227959] = Defaults(), -- Storm of Justice
+		[227475] = Defaults(), -- Cleansing Flame
+		[192044] = Defaults(), -- Expel Light
+		[227781] = Defaults(), -- Glowing Fragment
+
+	-- Guarm
+		[228228] = Defaults(), -- Flame Lick
+		[228248] = Defaults(), -- Frost Lick
+		[228253] = Defaults(), -- Shadow Lick
+		[227539] = Defaults(), -- Fiery Phlegm
+		[227566] = Defaults(), -- Salty Spittle
+		[227570] = Defaults(), -- Dark Discharge
+
+	-- Helya
+		[227903] = Defaults(), -- Orb of Corruption
+		[228058] = Defaults(), -- Orb of Corrosion
+		[228054] = Defaults(), -- Taint of the Sea
+		[193367] = Defaults(), -- Fetid Rot
+		[227982] = Defaults(), -- Bilewater Redox
+		[228519] = Defaults(), -- Anchor Slam
+		[202476] = Defaults(), -- Rabid
+		[232450] = Defaults(), -- Corrupted Axion
 	},
 }
 

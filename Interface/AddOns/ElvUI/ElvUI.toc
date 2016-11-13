@@ -1,6 +1,6 @@
 ﻿## Interface: 70100
 ## Author: Elv
-## Version: 10.29
+## Version: 10.30
 ## Title: |cffC495DDEUI|rCore
 ## Title-zhCN: |cffC495DDEUI|r核心
 ## Title-zhTW: |cffC495DDEUI|r核心
