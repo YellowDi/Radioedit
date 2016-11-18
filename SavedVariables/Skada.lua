@@ -5,13 +5,7 @@ SkadaDB = {
 		},
 	},
 	["profileKeys"] = {
-		["雲遊惡魔 - 暗影之月"] = "Default",
-		["雲遊術士 - 暗影之月"] = "Default",
-		["雲遊倉庫 - 暗影之月"] = "Default",
-		["雲遊盜賊 - 語風"] = "Default",
-		["雲遊戰士 - 暗影之月"] = "Default",
-		["雲遊僧 - 語風"] = "Default",
-		["Radioedit - 奥蕾莉亚"] = "Default",
+		["Geronimo - 奥蕾莉亚"] = "Default",
 	},
 	["profiles"] = {
 		["Default"] = {
@@ -25,17 +19,17 @@ SkadaDB = {
 				{
 					["classicons"] = true,
 					["barslocked"] = true,
-					["y"] = 7.67469787597656,
-					["x"] = 1387.08039855957,
+					["y"] = 8.39682006835938,
+					["x"] = 1547.52395629883,
 					["point"] = "TOPRIGHT",
 					["barfontsize"] = 12,
-					["mode"] = "伤害",
+					["mode"] = "傷害",
 					["spark"] = false,
 					["bartexture"] = "Tukui",
-					["barwidth"] = 246.000045776367,
+					["barwidth"] = 185.999969482422,
 					["background"] = {
 						["bordertexture"] = "None",
-						["height"] = 166.478240966797,
+						["height"] = 165.555572509766,
 					},
 					["modeincombat"] = "傷害",
 				}, -- [1]
@@ -56,7 +50,7 @@ SkadaDB = {
 					["wipemode"] = "",
 					["set"] = "current",
 					["hidden"] = false,
-					["y"] = 7.67469787597656,
+					["y"] = 8.39682006835938,
 					["barfont"] = "EUI",
 					["name"] = "skada2",
 					["display"] = "bar",
@@ -65,7 +59,7 @@ SkadaDB = {
 					["classcolortext"] = false,
 					["strata"] = "LOW",
 					["point"] = "TOPRIGHT",
-					["x"] = 1638.08053588867,
+					["x"] = 1738.52391052246,
 					["barbgcolor"] = {
 						["a"] = 0.6,
 						["r"] = 0.3,
@@ -111,9 +105,9 @@ SkadaDB = {
 					},
 					["roleicons"] = false,
 					["barorientation"] = 1,
-					["mode"] = "治疗",
+					["mode"] = "治療",
 					["background"] = {
-						["height"] = 166.478240966797,
+						["height"] = 165.555572509766,
 						["bordercolor"] = {
 							["a"] = 1,
 							["r"] = 0,
@@ -147,7 +141,7 @@ SkadaDB = {
 					},
 					["spark"] = false,
 					["bartexture"] = "Tukui",
-					["barwidth"] = 169.305938720703,
+					["barwidth"] = 198.904556274414,
 					["barspacing"] = 0,
 					["reversegrowth"] = false,
 					["width"] = 600,

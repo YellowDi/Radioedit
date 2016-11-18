@@ -1,5 +1,0 @@
-
-StrataFixDB = {
-	["blacklist"] = {
-	},
-}

@@ -1,2 +1,0 @@
-
-LegionTreasuresDB = nil
