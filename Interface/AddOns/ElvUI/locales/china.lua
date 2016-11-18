@@ -56,6 +56,7 @@ L["Honor XP:"] = "荣誉值:"
 L["Honor Remaining:"] = "荣誉值剩余:"
 L["Bars"] = "条"
 L["Honor Bar"] = "荣誉条"
+L["Level Up Display / Boss Banner"] = "等级提升显示/Boss 条";
 --Minimap
 L["Reset Zoom"] = "缩放复位";
 L['Always Display'] = '总是显示';

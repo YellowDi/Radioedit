@@ -476,6 +476,8 @@ P['tooltip'].transparent = false
 P['tooltip'].hh = true
 P['tooltip'].mountinfo = true
 P['tooltip'].itemCount = 'BOTH'
+P['tooltip'].offsetX = 0
+P['tooltip'].offsetY = 0
 
 P["unitframe"].number = "K"
 P["unitframe"].colors.nameclasscolor = false

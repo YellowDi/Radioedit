@@ -190,7 +190,7 @@ function TT:GameTooltip_SetDefaultAnchor(tt, parent)
 			end
 		end
 		if(self.db.cursorAnchor) then
-			tt:SetOwner(parent, "ANCHOR_CURSOR")
+			tt:SetOwner(parent, "ANCHOR_CURSOR_RIGHT", self.db.offsetX, self.db.offsetY)
 			return
 		else
 			tt:SetOwner(parent, "ANCHOR_NONE")

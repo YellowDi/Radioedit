@@ -67,6 +67,7 @@ L["Honor XP:"] = true;
 L["Honor Remaining:"] = true;
 L["Bars"] = true;
 L["Honor Bar"] = true;
+L["Level Up Display / Boss Banner"] = true;
 
 --Minimap
 L["Reset Zoom"] = true;
