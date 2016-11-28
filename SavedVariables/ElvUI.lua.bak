@@ -1,0 +1,41 @@
+
+ElvDB = {
+	["profileKeys"] = {
+		["Geronimo - 奥蕾莉亚"] = "Geronimo - 奥蕾莉亚",
+	},
+	["gold"] = {
+		["奥蕾莉亚"] = {
+			["Geronimo"] = 179461951,
+		},
+	},
+	["namespaces"] = {
+		["LibDualSpec-1.0"] = {
+		},
+	},
+	["global"] = {
+		["uiScale"] = "0.89999997615814",
+	},
+	["profiles"] = {
+		["Geronimo - 奥蕾莉亚"] = {
+			["movers"] = {
+				["ElvUF_Raid40Mover"] = "TOPLEFT,ElvUIParent,BOTTOMLEFT,4,432",
+				["ShiftAB"] = "TOPLEFT,ElvUIParent,BOTTOMLEFT,4,896",
+				["ElvUF_PartyMover"] = "BOTTOMLEFT,ElvUIParent,BOTTOMLEFT,4,195",
+				["ElvUF_RaidMover"] = "TOPLEFT,ElvUIParent,BOTTOMLEFT,4,427",
+				["ElvUF_RaidpetMover"] = "TOPLEFT,ElvUIParent,BOTTOMLEFT,4,736",
+			},
+			["actionbar"] = {
+				["backdropSpacingConverted"] = true,
+			},
+		},
+	},
+}
+ElvPrivateDB = {
+	["profileKeys"] = {
+		["Geronimo - 奥蕾莉亚"] = "Geronimo - 奥蕾莉亚",
+	},
+	["profiles"] = {
+		["Geronimo - 奥蕾莉亚"] = {
+		},
+	},
+}
