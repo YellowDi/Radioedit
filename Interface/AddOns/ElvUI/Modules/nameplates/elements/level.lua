@@ -10,7 +10,7 @@ local UnitLevel = UnitLevel
 
 function mod:UpdateElement_Level(frame)
 	if(not self.db.units[frame.UnitType].showLevel and frame.UnitType ~= "PLAYER") then return end
-	if frame.UnitType == "PLAYER" and not self.db.units[frame.UnitType].showLevel then frame.Level:SetText() return end
+	if frame.UnitType == "PLAYER" and not self.db.units[frame.UnitType].showLevel then frame.Level:SetText() return end 
 	local level = UnitLevel(frame.displayedUnit)
 
 	local r, g, b
@@ -21,7 +21,7 @@ function mod:UpdateElement_Level(frame)
 		local color = GetCreatureDifficultyColor(level)
 		r, g, b = color.r, color.g, color.b
 	end
-
+	
 	if(self.db.units[frame.UnitType].healthbar.enable or frame.isTarget) then
 		frame.Level:SetText(level)
 	else
@@ -32,7 +32,7 @@ end
 
 function mod:ConfigureElement_Level(frame)
 	local level = frame.Level
-
+	
 	level:ClearAllPoints()
 
 	if(self.db.units[frame.UnitType].healthbar.enable or frame.isTarget) then

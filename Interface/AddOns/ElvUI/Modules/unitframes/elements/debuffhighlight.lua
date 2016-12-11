@@ -9,7 +9,7 @@ local UF = E:GetModule('UnitFrames');
 function UF:Construct_DebuffHighlight(frame)
 	local dbh = frame:CreateTexture(nil, "OVERLAY")
 	dbh:SetInside(frame.Health.backdrop)
-	dbh:SetTexture(E['media'].blankTex)
+	dbh:SetTexture("Interface\\AddOns\\ElvUI\\media\\textures\\statusbar\\line.tga")
 	dbh:SetVertexColor(0, 0, 0, 0)
 	dbh:SetBlendMode("ADD")
 	frame.DebuffHighlightFilter = true
@@ -32,6 +32,7 @@ function UF:Construct_DebuffHighlight(frame)
 end
 
 function UF:Configure_DebuffHighlight(frame)
+	local dbh = frame.DebuffHighlight
 	if E.db.unitframe.debuffHighlighting ~= 'NONE' then
 		frame:EnableElement('DebuffHighlight')
 		frame.DebuffHighlightFilterTable = E.global.unitframe.DebuffHighlightColors

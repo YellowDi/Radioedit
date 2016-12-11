@@ -164,7 +164,6 @@ local function MakeCategoryMenuTable(categoryId, baseFilter, isCreator)
             tinsert(menuTable, MakeGroupMenuTable(categoryId, list[i], baseFilter, isCreator))
         end
         for _, activityId in ipairs(C_LFGList.GetAvailableActivities(categoryId)) do
-            
             if select(4, C_LFGList.GetActivityInfo(activityId)) == 0 then
                 tinsert(menuTable, MakeCustomActivityMenuTable(activityId, baseFilter))
             end

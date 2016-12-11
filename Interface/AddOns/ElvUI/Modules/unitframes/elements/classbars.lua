@@ -4,7 +4,7 @@ local UF = E:GetModule('UnitFrames');
 --Cache global variables
 --Lua functions
 local select, unpack = select, unpack
-local floor, max = math.floor, math.max
+local ceil, floor, max = math.ceil, math.floor, math.max
 local find, sub, gsub = string.find, string.sub, string.gsub
 --WoW API / Variables
 local CreateFrame = CreateFrame
@@ -25,7 +25,7 @@ function UF:Configure_ClassBar(frame, cur)
 	local db = frame.db
 	bars.Holder = frame.ClassBarHolder
 	bars.origParent = frame
-
+	cur = cur or 0
 	--Fix height in case it is lower than the theme allows, or in case it's higher than 30px when not detached
 	if (not self.thinBorders and not E.PixelMode) and frame.CLASSBAR_HEIGHT > 0 and frame.CLASSBAR_HEIGHT < 7 then --A height of 7 means 6px for borders and just 1px for the actual power statusbar
 		frame.CLASSBAR_HEIGHT = 7
@@ -48,7 +48,7 @@ function UF:Configure_ClassBar(frame, cur)
 
 	local c = self.db.colors.classResources.bgColor
 	bars.backdrop.ignoreUpdates = true
-	bars.backdrop.backdropTexture:SetVertexColor(c.r, c.g, c.b)
+	bars.backdrop.backdropTexture:SetColorTexture(c.r, c.g, c.b)
 	if(not E.PixelMode) then
 		c = E.db.general.bordercolor
 		if(self.thinBorders) then
@@ -134,7 +134,7 @@ function UF:Configure_ClassBar(frame, cur)
 
 			if i <= frame.MAX_CLASS_BAR then
 				bars[i].backdrop.ignoreUpdates = true
-				bars[i].backdrop.backdropTexture:SetVertexColor(c.r, c.g, c.b)
+				bars[i].backdrop.backdropTexture:SetColorTexture(c.r, c.g, c.b)
 				if(not E.PixelMode) then
 					c = E.db.general.bordercolor
 					bars[i].backdrop:SetBackdropBorderColor(c.r, c.g, c.b)
@@ -324,7 +324,7 @@ function UF:Construct_ClassBar(frame)
 	return bars
 end
 
-function UF:UpdateClassBar(cur, max, hasMaxChanged)
+function UF:UpdateClassBar(cur, max, hasMaxChanged, powerType, event)
 	local frame = self.origParent or self:GetParent()
 	local db = frame.db
 	if not db then return; end
@@ -535,7 +535,7 @@ function UF:Construct_Stagger(frame)
 	return stagger
 end
 
-function UF:PostUpdateStagger(maxHealth, stagger)
+function UF:PostUpdateStagger(maxHealth, stagger, staggerPercent, r, g, b)
 	local frame = self.origParent or self:GetParent()
 	local db = frame.db
 
@@ -548,6 +548,7 @@ end
 
 function UF:PostUpdateVisibilityStagger(event, unit, isShown, stateChanged)
 	local frame = self
+	local db = frame.db
 
 	if(isShown) then
 		frame.ClassBar = 'Stagger'

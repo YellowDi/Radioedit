@@ -1,23 +1,29 @@
 local E, L, V, P, G = unpack(select(2, ...)); --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local UF = E:GetModule('UnitFrames');
-local _, ns = ...
-local ElvUF = ns.oUF
-assert(ElvUF, "ElvUI was unable to locate oUF.")
 
 --Cache global variables
 --Lua functions
 local _G = _G
+local pairs = pairs
 local tinsert = table.insert
+local format = format
 --WoW API / Variables
-local CreateFrame = CreateFrame
 local MAX_BOSS_FRAMES = MAX_BOSS_FRAMES
 
 --Global variables that we don't cache, list them here for mikk's FindGlobals script
 -- GLOBALS: BossHeaderMover
 
+local _, ns = ...
+local ElvUF = ns.oUF
+assert(ElvUF, "ElvUI was unable to locate oUF.")
+
 local BossHeader = CreateFrame('Frame', 'BossHeader', UIParent)
 function UF:Construct_BossFrames(frame)
+	if E.db["clickset"].enable then  
+		frame.ClickSet = E.db["clickset"]
+	end
 	frame.RaisedElementParent = CreateFrame('Frame', nil, frame)
+	frame.RaisedElementParent.TextureParent = CreateFrame('Frame', nil, frame.RaisedElementParent)
 	frame.RaisedElementParent:SetFrameLevel(frame:GetFrameLevel() + 100)
 
 	frame.Health = self:Construct_HealthBar(frame, true, true, 'RIGHT')
@@ -38,8 +44,23 @@ function UF:Construct_BossFrames(frame)
 	frame:RegisterEvent('PLAYER_TARGET_CHANGED', UF.UpdateTargetGlow)
 	frame:RegisterEvent('PLAYER_ENTERING_WORLD', UF.UpdateTargetGlow)
 	frame:RegisterEvent('GROUP_ROSTER_UPDATE', UF.UpdateTargetGlow)
+	tinsert(frame.__elements, UF.UpdateClickSet)
+	frame:RegisterEvent('UNIT_NAME_UPDATE', UF.UpdateClickSet)
+	frame:RegisterEvent('PLAYER_REGEN_ENABLED', UF.UpdateClickSet)
+	frame:RegisterEvent('PLAYER_SPECIALIZATION_CHANGED', UF.UpdateClickSet)
+	frame.MouseGlow = UF:Construct_MouseGlow(frame)
+	frame:HookScript("OnEnter", function(self)
+		if self.db and self.db.mouseGlow then
+			self.MouseGlow:Show()
+		end
+	end)
+	frame:HookScript("OnLeave", function(self)
+		if self.db and self.db.mouseGlow then
+			self.MouseGlow:Hide()
+		end
+	end)
 
-	frame.Castbar = self:Construct_Castbar(frame)
+	frame.Castbar = self:Construct_Castbar(frame, 'RIGHT')
 	frame.RaidIcon = UF:Construct_RaidIcon(frame)
 	frame.AltPowerBar = self:Construct_AltPowerBar(frame)
 	frame.ClassBar = "AltPowerBar"
@@ -92,7 +113,7 @@ function UF:Update_BossFrames(frame, db)
 		frame.BOTTOM_OFFSET = UF:GetHealthBottomOffset(frame)
 
 		frame.USE_TARGET_GLOW = db.targetGlow
-
+		
 		frame.VARIABLES_SET = true
 	end
 

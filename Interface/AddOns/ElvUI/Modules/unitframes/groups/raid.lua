@@ -1,29 +1,36 @@
 local E, L, V, P, G = unpack(select(2, ...)); --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local UF = E:GetModule('UnitFrames');
-local _, ns = ...
-local ElvUF = ns.oUF
-assert(ElvUF, "ElvUI was unable to locate oUF.")
 
 --Cache global variables
 --Lua functions
+local pairs = pairs
 local tinsert = table.insert
 --WoW API / Variables
 local CreateFrame = CreateFrame
-local GetInstanceInfo = GetInstanceInfo
 local InCombatLockdown = InCombatLockdown
 local IsInInstance = IsInInstance
-local RegisterStateDriver = RegisterStateDriver
+local GetInstanceInfo = GetInstanceInfo
 local UnregisterStateDriver = UnregisterStateDriver
+local RegisterStateDriver = RegisterStateDriver
 
 --Global variables that we don't cache, list them here for mikk's FindGlobals script
 -- GLOBALS: UnitFrame_OnEnter, UnitFrame_OnLeave, ElvUF_Raid
 
-function UF:Construct_RaidFrames()
+local _, ns = ...
+local ElvUF = ns.oUF
+assert(ElvUF, "ElvUI was unable to locate oUF.")
+
+function UF:Construct_RaidFrames(unitGroup)
 	self:SetScript('OnEnter', UnitFrame_OnEnter)
 	self:SetScript('OnLeave', UnitFrame_OnLeave)
 
 	self.RaisedElementParent = CreateFrame('Frame', nil, self)
+	self.RaisedElementParent.TextureParent = CreateFrame('Frame', nil, self.RaisedElementParent)
 	self.RaisedElementParent:SetFrameLevel(self:GetFrameLevel() + 100)
+
+	if E.db["clickset"].enable then  
+		self.ClickSet = E.db["clickset"]
+	end
 
 	self.Health = UF:Construct_HealthBar(self, true, true, 'RIGHT')
 
@@ -33,7 +40,7 @@ function UF:Construct_RaidFrames()
 	self.Portrait3D = UF:Construct_Portrait(self, 'model')
 	self.Portrait2D = UF:Construct_Portrait(self, 'texture')
 
-	self.Name = UF:Construct_NameText(self)
+	self.Name = UF:Construct_NameText(self, "raid")
 	self.Buffs = UF:Construct_Buffs(self)
 	self.Debuffs = UF:Construct_Debuffs(self)
 	self.AuraWatch = UF:Construct_AuraWatch(self)
@@ -43,9 +50,24 @@ function UF:Construct_RaidFrames()
 	self.LFDRole = UF:Construct_RoleIcon(self)
 	self.RaidRoleFramesAnchor = UF:Construct_RaidRoleFrames(self)
 	self.TargetGlow = UF:Construct_TargetGlow(self)
+	self.MouseGlow = UF:Construct_MouseGlow(self)
 	tinsert(self.__elements, UF.UpdateTargetGlow)
 	self:RegisterEvent('PLAYER_TARGET_CHANGED', UF.UpdateTargetGlow)
 	self:RegisterEvent('PLAYER_ENTERING_WORLD', UF.UpdateTargetGlow)
+	tinsert(self.__elements, UF.UpdateClickSet)
+	self:RegisterEvent('UNIT_NAME_UPDATE', UF.UpdateClickSet)
+	self:RegisterEvent('PLAYER_REGEN_ENABLED', UF.UpdateClickSet)
+	self:RegisterEvent('PLAYER_SPECIALIZATION_CHANGED', UF.UpdateClickSet)
+	self:HookScript("OnEnter", function(self)
+		if self.db and self.db.mouseGlow then
+			self.MouseGlow:Show()
+		end
+	end)
+	self:HookScript("OnLeave", function(self)
+		if self.db and self.db.mouseGlow then		
+			self.MouseGlow:Hide()
+		end
+	end)
 
 	self.Threat = UF:Construct_Threat(self)
 	self.RaidIcon = UF:Construct_RaidIcon(self)
@@ -75,7 +97,10 @@ function UF:RaidSmartVisibility(event)
 		self.isInstanceForced = nil
 		local inInstance, instanceType = IsInInstance()
 		if(inInstance and (instanceType == 'raid' or instanceType == 'pvp')) then
-			local _, _, _, _, maxPlayers, _, _, mapID = GetInstanceInfo()
+			local _, _, _, _, maxPlayers, _, _, mapID, maxPlayersInstance = GetInstanceInfo()
+			--[[if maxPlayersInstance > 0 then
+				maxPlayers = maxPlayersInstance
+			end]]
 
 			if UF.mapIDs[mapID] then
 				maxPlayers = UF.mapIDs[mapID]
@@ -83,7 +108,7 @@ function UF:RaidSmartVisibility(event)
 
 			UnregisterStateDriver(self, "visibility")
 
-			if(maxPlayers < 40) then
+			if(maxPlayers < 41) then
 				self:Show()
 				self.isInstanceForced = true
 				self.blockVisibilityChanges = false
@@ -107,7 +132,7 @@ function UF:RaidSmartVisibility(event)
 	end
 end
 
-function UF:Update_RaidHeader(header, db)
+function UF:Update_RaidHeader(header, db, isForced)
 	header:GetParent().db = db
 
 	local headerHolder = header:GetParent()
@@ -171,7 +196,7 @@ function UF:Update_RaidFrames(frame, db)
 		frame.BOTTOM_OFFSET = UF:GetHealthBottomOffset(frame)
 
 		frame.USE_TARGET_GLOW = db.targetGlow
-
+		
 		frame.VARIABLES_SET = true
 	end
 
@@ -184,7 +209,7 @@ function UF:Update_RaidFrames(frame, db)
 	UF:Configure_HealthBar(frame)
 
 	--Name
-	UF:UpdateNameSettings(frame)
+	UF:UpdateNameSettings(frame, "raid")
 
 	--Power
 	UF:Configure_Power(frame)

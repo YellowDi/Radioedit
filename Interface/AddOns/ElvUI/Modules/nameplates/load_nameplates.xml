@@ -11,6 +11,7 @@
 	<Script file='elements\healerIcon.lua'/>
 	<Script file='elements\glow.lua'/>
 	<Script file='elements\NPCTitle.lua'/>
+	<Script file='elements\targetArrow.lua'/>
 	<Script file='elements\elite.lua'/>
 	<Script file='elements\Detection.lua'/>
 </Ui>

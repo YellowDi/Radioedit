@@ -12,17 +12,16 @@ local NONE = NONE
 local ACD = LibStub("AceConfigDialog-3.0-ElvUI")
 
 local positionValues = {
-	TOPLEFT = 'TOPLEFT',
-	LEFT = 'LEFT',
-	BOTTOMLEFT = 'BOTTOMLEFT',
-	RIGHT = 'RIGHT',
-	TOPRIGHT = 'TOPRIGHT',
-	BOTTOMRIGHT = 'BOTTOMRIGHT',
-	CENTER = 'CENTER',
-	TOP = 'TOP',
-	BOTTOM = 'BOTTOM',
+	TOPLEFT = L['TOPLEFT'],
+	LEFT = L['LEFT'],
+	BOTTOMLEFT = L['BOTTOMLEFT'],
+	RIGHT = L['RIGHT'],
+	TOPRIGHT = L['TOPRIGHT'],
+	BOTTOMRIGHT = L['BOTTOMRIGHT'],
+	CENTER = L['CENTER'],
+	TOP = L['TOP'],
+	BOTTOM = L['BOTTOM'],
 };
-
 --[[This has not been implemented (yet?)
 local function UpdateFilterGroup()
 	if not selectedFilter or not E.global['nameplate']['filter'][selectedFilter] then
@@ -87,7 +86,6 @@ local function UpdateFilterGroup()
 	}
 end
 ]]
-
 local ORDER = 100
 local function GetUnitSettings(unit, name)
 	local copyValues = {}
@@ -155,7 +153,7 @@ local function GetUnitSettings(unit, name)
 						order = 3,
 						name = L["Width"],
 						type = "range",
-						min = 50, max = 200, step = 1,
+						min = 50, max = 600, step = 1,
 					},
 					textGroup = {
 						order = 100,
@@ -163,7 +161,7 @@ local function GetUnitSettings(unit, name)
 						name = L["Text"],
 						guiInline = true,
 						get = function(info) return E.db.nameplates.units[unit].healthbar.text[ info[#info] ] end,
-						set = function(info, value) E.db.nameplates.units[unit].healthbar.text[ info[#info] ] = value; NP:ConfigureAll() end,
+						set = function(info, value) E.db.nameplates.units[unit].healthbar.text[ info[#info] ] = value; NP:ConfigureAll() end,						
 						args = {
 							enable = {
 								order = 1,
@@ -275,33 +273,6 @@ local function GetUnitSettings(unit, name)
 						type = "range",
 						min = 4, max = 20, step = 1,
 					},
-					castTimeFormat = {
-						order = 5,
-						type = "select",
-						name = L["Cast Time Format"],
-						values = {
-							["CURRENT"] = L["Current"],
-							["CURRENT_MAX"] = L["Current / Max"],
-							["REMAINING"] = L["Remaining"],
-						},
-					},
-					channelTimeFormat = {
-						order = 6,
-						type = "select",
-						name = L["Channel Time Format"],
-						values = {
-							["CURRENT"] = L["Current"],
-							["CURRENT_MAX"] = L["Current / Max"],
-							["REMAINING"] = L["Remaining"],
-						},
-					},
-					timeToHold = {
-						order = 7,
-						type = "range",
-						name = L["Time To Hold"],
-						desc = L["How many seconds the castbar should stay visible after the cast failed or was interrupted."],
-						min = 0, max = 4, step = 0.1,
-					},
 				},
 			},
 			buffsGroup = {
@@ -329,19 +300,19 @@ local function GetUnitSettings(unit, name)
 						name = L["# Displayed Auras"],
 						desc = L["Controls how many auras are displayed, this will also affect the size of the auras."],
 						type = "range",
-						min = 1, max = 8, step = 1,
+						min = 1, max = 18, step = 1,
 						get = function(info) return E.db.nameplates.units[unit].buffs[ info[#info] ] end,
-						set = function(info, value) E.db.nameplates.units[unit].buffs[ info[#info] ] = value; NP:ConfigureAll() end,
-					},
+						set = function(info, value) E.db.nameplates.units[unit].buffs[ info[#info] ] = value; NP:ConfigureAll() end,						
+					},	
 					baseHeight = {
 						order = 3,
 						name = L["Icon Base Height"],
 						desc = L["Base Height for the Aura Icon"],
 						type = "range",
-						min = 6, max = 60, step = 1,
+						min = 6, max = 160, step = 1,
 						get = function(info) return E.db.nameplates.units[unit].buffs[ info[#info] ] end,
-						set = function(info, value) E.db.nameplates.units[unit].buffs[ info[#info] ] = value; NP:ConfigureAll() end,
-					},
+						set = function(info, value) E.db.nameplates.units[unit].buffs[ info[#info] ] = value; NP:ConfigureAll() end,						
+					},										
 					filtersGroup = {
 						name = L["Filters"],
 						order = 4,
@@ -364,19 +335,6 @@ local function GetUnitSettings(unit, name)
 								name = L["Maximum Duration"],
 								min = 5, max = 3000, step = 1,
 							},
-							-- filter = {
-								-- order = 4,
-								-- type = "select",
-								-- name = L["Filter"],
-								-- values = function()
-									-- local filters = {}
-									-- filters[''] = NONE
-									-- for filter in pairs(E.global.unitframe['aurafilters']) do
-										-- filters[filter] = filter
-									-- end
-									-- return filters
-								-- end,
-							-- },
 						},
 					},
 				},
@@ -387,7 +345,7 @@ local function GetUnitSettings(unit, name)
 				type = "group",
 				get = function(info) return E.db.nameplates.units[unit].debuffs.filters[ info[#info] ] end,
 				set = function(info, value) E.db.nameplates.units[unit].debuffs.filters[ info[#info] ] = value; NP:ConfigureAll() end,
-				disabled = function() return not E.db.nameplates.units[unit].healthbar.enable end,
+				disabled = function() return not E.db.nameplates.units[unit].healthbar.enable end,	
 				args = {
 					header = {
 						order = 0,
@@ -406,19 +364,19 @@ local function GetUnitSettings(unit, name)
 						name = L["# Displayed Auras"],
 						desc = L["Controls how many auras are displayed, this will also affect the size of the auras."],
 						type = "range",
-						min = 1, max = 8, step = 1,
+						min = 1, max = 18, step = 1,
 						get = function(info) return E.db.nameplates.units[unit].debuffs[ info[#info] ] end,
-						set = function(info, value) E.db.nameplates.units[unit].debuffs[ info[#info] ] = value; NP:ConfigureAll() end,
+						set = function(info, value) E.db.nameplates.units[unit].debuffs[ info[#info] ] = value; NP:ConfigureAll() end,						
 					},
 					baseHeight = {
 						order = 3,
 						name = L["Icon Base Height"],
 						desc = L["Base Height for the Aura Icon"],
 						type = "range",
-						min = 6, max = 60, step = 1,
+						min = 6, max = 160, step = 1,
 						get = function(info) return E.db.nameplates.units[unit].debuffs[ info[#info] ] end,
-						set = function(info, value) E.db.nameplates.units[unit].debuffs[ info[#info] ] = value; NP:ConfigureAll() end,
-					},
+						set = function(info, value) E.db.nameplates.units[unit].debuffs[ info[#info] ] = value; NP:ConfigureAll() end,						
+					},							
 					filtersGroup = {
 						name = L["Filters"],
 						order = 4,
@@ -434,26 +392,13 @@ local function GetUnitSettings(unit, name)
 								order = 2,
 								type = "toggle",
 								name = L["Boss Auras"],
-							},
+							},	
 							maxDuration = {
 								order = 3,
 								type = "range",
 								name = L["Maximum Duration"],
 								min = 5, max = 3000, step = 1,
 							},
-							-- filter = {
-								-- order = 4,
-								-- type = "select",
-								-- name = L["Filter"],
-								-- values = function()
-									-- local filters = {}
-									-- filters[''] = NONE
-									-- for filter in pairs(E.global.unitframe['aurafilters']) do
-										-- filters[filter] = filter
-									-- end
-									-- return filters
-								-- end,
-							-- },
 						},
 					},
 				},
@@ -461,7 +406,7 @@ local function GetUnitSettings(unit, name)
 			levelGroup = {
 				order = 6,
 				name = LEVEL,
-				type = "group",
+				type = "group",	
 				args = {
 					header = {
 						order = 0,
@@ -528,7 +473,7 @@ local function GetUnitSettings(unit, name)
 		group.args.combatFade = {
 			order = -11,
 			name = L["Combat Fade"],
-			desc = L["Hide the nameplate unless you are in combat, you are not on full health or have a target you can attack."],
+			desc = L["Hide the nameplate unless you are not on full health or have a target you can attack."],
 			type = "toggle",
 			set = function(info, value) E.db.nameplates.units[unit][ info[#info] ] = value; NP:UpdateVisibility() end,
 			disabled = function() return not E.db.nameplates.units[unit].alwaysShow end,
@@ -714,7 +659,7 @@ end
 
 E.Options.args.nameplate = {
 	type = "group",
-	name = L["NamePlates"],
+	name = "05."..L["NamePlates"],
 	childGroups = "tree",
 	get = function(info) return E.db.nameplates[ info[#info] ] end,
 	set = function(info, value) E.db.nameplates[ info[#info] ] = value; NP:ConfigureAll() end,
@@ -744,7 +689,7 @@ E.Options.args.nameplate = {
 		generalShortcut = {
 			order = 5,
 			type = "execute",
-			name = L["General Options"],
+			name = L["General"],
 			func = function() ACD:SelectGroup("ElvUI", "nameplate", "generalGroup") end,
 		},
 		playerShortcut = {
@@ -793,11 +738,10 @@ E.Options.args.nameplate = {
 			name = L["Enemy NPC Frames"],
 			func = function() ACD:SelectGroup("ElvUI", "nameplate", "enemyNPCGroup") end,
 		},
-		
 		generalGroup = {
 			order = 20,
 			type = "group",
-			name = L["General Options"],
+			name = L["General"],
 			childGroups = "tab",
 			disabled = function() return not E.NamePlates; end,
 			args = {
@@ -921,7 +865,7 @@ E.Options.args.nameplate = {
 							type = "range",
 							name = L["Clickable Width"],
 							desc = L["Controls how big of an area on the screen will accept clicks to target unit."],
-							min = 50, max = 200, step = 1,
+							min = 50, max = 600, step = 1,
 							set = function(info, value) E.db.nameplates.clickableWidth = value; E:StaticPopup_Show("CONFIG_RL") end,
 						},
 						clickableHeight = {
@@ -933,7 +877,6 @@ E.Options.args.nameplate = {
 							set = function(info, value) E.db.nameplates.clickableHeight = value; E:StaticPopup_Show("CONFIG_RL") end,
 						},
 					},
-					
 				},
 				fontGroup = {
 					order = 100,
@@ -993,7 +936,7 @@ E.Options.args.nameplate = {
 							name = L["Position"],
 							values = {
 								ABOVE = L["Above"],
-								BELOW = L["Below"],
+								BELOW = L["Below"],	
 							},
 						},
 					},
@@ -1063,7 +1006,7 @@ E.Options.args.nameplate = {
 							type = 'color',
 							hasAlpha = false,
 							disabled = function() return (not E.db.nameplates.threat.beingTankedByTank or not E.db.nameplates.threat.useThreatColor) end,
-						},
+						},		
 						goodScale = {
 							name = L["Good Scale"],
 							order = 8,
@@ -1171,68 +1114,75 @@ E.Options.args.nameplate = {
 		enemyPlayerGroup = GetUnitSettings("ENEMY_PLAYER", L["Enemy Player Frames"]),
 		friendlyNPCGroup = GetUnitSettings("FRIENDLY_NPC", L["Friendly NPC Frames"]),
 		enemyNPCGroup = GetUnitSettings("ENEMY_NPC", L["Enemy NPC Frames"]),
-		--[[Not implemented (yet?)
-		filters = {
+		targetIndicator = {
 			type = "group",
-			order = -100,
-			name = L["Filters"],
-			disabled = function() return not E.NamePlates; end,
+			order = 4,
+			name = L["Target Indicator"],
+			get = function(info) return E.db.nameplates.targetIndicator[ info[#info] ] end,
+			set = function(info, value) E.db.nameplates.targetIndicator[ info[#info] ] = value; NP:ConfigureAll() end,
 			args = {
-				addname = {
-					type = 'input',
+				enable = {
 					order = 1,
-					name = L["Add Name"],
-					get = function(info) return "" end,
-					set = function(info, value)
-						if E.global['nameplate']['filter'][value] then
-							E:Print(L["Filter already exists!"])
-							return
-						end
-
-						E.global['nameplate']['filter'][value] = {
-							['enable'] = true,
-							['hide'] = false,
-							['customColor'] = false,
-							['customScale'] = 1,
-							['color'] = {r = 104/255, g = 138/255, b = 217/255},
-						}
-						UpdateFilterGroup()
-						NP:UpdateAllPlates()
-					end,
+					type = "toggle",
+					name = L["Enable"],
 				},
-				deletename = {
-					type = 'input',
+				width = {
 					order = 2,
-					name = L["Remove Name"],
-					get = function(info) return "" end,
-					set = function(info, value)
-						if G['nameplate']['filter'][value] then
-							E.global['nameplate']['filter'][value].enable = false;
-							E:Print(L["You can't remove a default name from the filter, disabling the name."])
-						else
-							E.global['nameplate']['filter'][value] = nil;
-							E.Options.args.nameplate.args.filters.args.filterGroup = nil;
-						end
-						UpdateFilterGroup()
-						NP:UpdateAllPlates();
-					end,
+					name = L["Width"],
+					type = "range",
+					min = 0, max = 220, step = 1,
+					disabled = function() return (NP.db.targetIndicator.style == "glow") end,
 				},
-				selectFilter = {
+				height = {
 					order = 3,
-					type = 'select',
-					name = L["Select Filter"],
-					get = function(info) return selectedFilter end,
-					set = function(info, value) selectedFilter = value; UpdateFilterGroup() end,
-					values = function()
-						filters = {}
-						for filter in pairs(E.global['nameplate']['filter']) do
-							filters[filter] = filter
-						end
-						return filters
-					end,
+					name = L["Height"],
+					type = "range",
+					min = 0, max = 220, step = 1,
+					disabled = function() return (NP.db.targetIndicator.style == "glow") end,
 				},
+				style = {
+					order = 4,
+					name = L["Style"],
+					type = "select",
+					values = {
+						arrow = L["Vertical Arrow"],
+						doubleArrow = L["Horrizontal Arrows"],
+						doubleArrowInverted = L["Horrizontal Arrows (Inverted)"],
+						doubleTPArrow = L["Sharp triangular arrow"],
+					--	glow = L["Glow"]
+					},
+				},
+				xOffset = {
+					order = 5,
+					name = L["X Offset"],
+					type = 'range',
+					min = -100, max = 100, step = 1,
+				--	disabled = function() return (NP.db.targetIndicator.style ~= "doubleArrow" and NP.db.targetIndicator.style ~= "doubleArrowInverted") end
+				},
+				yOffset = {
+					order = 6,
+					name = L["Y Offset"],
+					type = 'range',
+					min = -100, max = 100, step = 1,
+				--	disabled = function() return (NP.db.targetIndicator.style ~= "arrow") end
+				},
+				color = {
+					type = "color",
+					name = L["Color"],
+					order = 11,
+					get = function(info)
+						local t = E.db.nameplates.targetIndicator[ info[#info] ]
+						local d = P.nameplates.targetIndicator[ info[#info] ]
+						return t.r, t.g, t.b, t.a, d.r, d.g, d.b
+					end,
+					set = function(info, r, g, b)
+						E.db.nameplates.targetIndicator[ info[#info] ] = {}
+						local t = E.db.nameplates.targetIndicator[ info[#info] ]
+						t.r, t.g, t.b = r, g, b
+						NP:ConfigureAll()
+					end,
+				},			
 			},
 		},
-		]]
 	},
 }

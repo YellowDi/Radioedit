@@ -26,7 +26,7 @@ function mod:UpdateElement_Glow(frame)
 			else
 				r, g, b = 1, 1, 0
 			end
-
+			
 			shouldShow = true
 		end
 	end
@@ -41,6 +41,7 @@ function mod:UpdateElement_Glow(frame)
 	elseif(frame.Glow:IsShown()) then
 		frame.Glow:Hide()
 	end
+	
 end
 
 function mod:ConfigureElement_Glow(frame)

@@ -45,7 +45,7 @@ function AB:UPDATE_SHAPESHIFT_COOLDOWN()
 	self:StyleShapeShift("UPDATE_SHAPESHIFT_COOLDOWN")
 end
 
-function AB:StyleShapeShift()
+function AB:StyleShapeShift(event)
 	local numForms = GetNumShapeshiftForms();
 	local texture, name, isActive, isCastable, _;
 	local buttonName, button, icon, cooldown;
@@ -343,7 +343,7 @@ end
 function AB:CreateBarShapeShift()
 	bar:CreateBackdrop('Default');
 	bar.backdrop:SetAllPoints();
-	bar:Point('TOPLEFT', E.UIParent, 'TOPLEFT', 4, -4);
+	bar:Point('TOPLEFT', E.UIParent, 'TOPLEFT', 4, -28);
 	bar.buttons = {};
 	bar:SetAttribute("_onstate-show", [[
 		if newstate == "hide" then
@@ -363,7 +363,7 @@ function AB:CreateBarShapeShift()
 	self:RegisterEvent('UPDATE_SHAPESHIFT_FORM', 'StyleShapeShift');
 	self:RegisterEvent('ACTIONBAR_PAGE_CHANGED', 'StyleShapeShift');
 
-	E:CreateMover(bar, 'ShiftAB', L["Stance Bar"], nil, -3, nil, 'ALL,ACTIONBARS');
+	E:CreateMover(bar, 'ShiftAB', L['Stance Bar'], nil, -3, nil, 'ALL,ACTIONBARS', function() return E.db.actionbar.stanceBar.enabled; end);
 	self:AdjustMaxStanceButtons();
 	self:PositionAndSizeBarShapeShift();
 	self:StyleShapeShift();

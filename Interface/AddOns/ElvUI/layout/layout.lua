@@ -9,7 +9,7 @@ local UIFrameFadeIn, UIFrameFadeOut = UIFrameFadeIn, UIFrameFadeOut
 
 --Global variables that we don't cache, list them here for the mikk's Find Globals script
 -- GLOBALS: HideLeftChat, HideRightChat, HideBothChat, LeftChatPanel, RightChatPanel, Minimap
--- GLOBALS: GameTooltip, LeftChatTab, RightChatTab, LeftChatToggleButton, RightChatToggleButton
+-- GLOBALS: GameTooltip, LeftChatTab, RightChatTab
 -- GLOBALS: LeftChatDataPanel, LeftMiniPanel, RightChatDataPanel, RightMiniPanel, ElvConfigToggle
 
 local PANEL_HEIGHT = 22;
@@ -22,10 +22,87 @@ local function Panel_OnShow(self)
 	self:SetFrameStrata('BACKGROUND')
 end
 
+local menuFrame = CreateFrame("Frame", "MinimapRightClickMenu", E.UIParent)
+local menuList = {
+	{text = CHARACTER_BUTTON,
+	func = function() ToggleCharacter("PaperDollFrame") end},
+	{text = SPELLBOOK_ABILITIES_BUTTON,
+	func = function() if not SpellBookFrame:IsShown() then ShowUIPanel(SpellBookFrame) else HideUIPanel(SpellBookFrame) end end},
+	{text = TALENTS_BUTTON,
+	func = function()
+		if not PlayerTalentFrame then
+			TalentFrame_LoadUI()
+		end
+
+		if not PlayerTalentFrame:IsShown() then
+			ShowUIPanel(PlayerTalentFrame)
+		else
+			HideUIPanel(PlayerTalentFrame)
+		end
+	end},
+	{text = COLLECTIONS,
+	func = function()
+		ToggleCollectionsJournal()
+	end},
+	{text = TIMEMANAGER_TITLE,
+	func = function() ToggleFrame(TimeManagerFrame) end},		
+	{text = ACHIEVEMENT_BUTTON,
+	func = function() ToggleAchievementFrame() end},
+	{text = SOCIAL_BUTTON,
+	func = function() ToggleFriendsFrame(1) end},
+	{text = L["Calendar"],
+	func = function() GameTimeFrame:Click() end},
+	{text = GARRISON_LANDING_PAGE_TITLE,
+	func = function() GarrisonLandingPageMinimapButton_OnClick() end},
+	{text = ACHIEVEMENTS_GUILD_TAB,
+	func = function()
+		if IsInGuild() then
+			if not GuildFrame then GuildFrame_LoadUI() end
+			GuildFrame_Toggle()
+		else
+			if not LookingForGuildFrame then LookingForGuildFrame_LoadUI() end
+			if not LookingForGuildFrame then return end
+			LookingForGuildFrame_Toggle()
+		end
+	end},
+	{text = LFG_TITLE,
+	func = function() ToggleLFDParentFrame(); end},
+--	{text = L["Raid Browser"],
+--	func = function() ToggleFrame(RaidBrowserFrame); end},
+	{text = ENCOUNTER_JOURNAL,  
+	func = function() if not IsAddOnLoaded('Blizzard_EncounterJournal') then EncounterJournal_LoadUI(); end ToggleFrame(EncounterJournal) end},	
+	{text = BLIZZARD_STORE,
+	func = function() StoreMicroButton:Click() end},
+	{text = MAINMENU_BUTTON,
+	func = function() 
+		if ( not GameMenuFrame:IsShown() ) then
+			if ( VideoOptionsFrame:IsShown() ) then
+				VideoOptionsFrameCancel:Click();
+			elseif ( AudioOptionsFrame:IsShown() ) then
+				AudioOptionsFrameCancel:Click();
+			elseif ( InterfaceOptionsFrame:IsShown() ) then
+				InterfaceOptionsFrameCancel:Click();
+			end		
+			CloseMenus();
+			CloseAllWindows()
+			PlaySound("igMainMenuOpen");
+			ShowUIPanel(GameMenuFrame);
+		else
+			PlaySound("igMainMenuQuit");
+			HideUIPanel(GameMenuFrame);
+			MainMenuMicroButton_SetNormal();
+		end
+	end},
+	{text = HELP_BUTTON,
+	func = function() ToggleHelpFrame() end},
+}
+LO.menuList = menuList
 function LO:Initialize()
+	menuFrame:SetTemplate("Transparent", true)
 	self:CreateChatPanels()
 	self:CreateMinimapPanels()
-
+	self:CreateActionbarInfobar()
+	self:InfoBar()
 
 	self.BottomPanel = CreateFrame('Frame', 'ElvUI_BottomPanel', E.UIParent)
 	self.BottomPanel:SetTemplate('Transparent')
@@ -45,6 +122,9 @@ function LO:Initialize()
 	self.TopPanel:SetScript('OnShow', Panel_OnShow)
 	Panel_OnShow(self.TopPanel)
 	E.FrameLocks['ElvUI_TopPanel'] = true;
+	E.FrameLocks['AB1Infobar'] = true;
+	E.FrameLocks['AB5Infobar'] = true;
+	E.FrameLocks['AB3Infobar'] = true;
 	self:TopPanelVisibility()
 end
 
@@ -64,15 +144,15 @@ function LO:TopPanelVisibility()
 	end
 end
 
-local function ChatPanelLeft_OnFade()
+local function ChatPanelLeft_OnFade(self)
 	LeftChatPanel:Hide()
 end
 
-local function ChatPanelRight_OnFade()
+local function ChatPanelRight_OnFade(self)
 	RightChatPanel:Hide()
 end
 
-local function ChatButton_OnEnter(self)
+local function ChatButton_OnEnter(self, ...)
 	if E.db[self.parent:GetName()..'Faded'] then
 		self.parent:Show()
 		UIFrameFadeIn(self.parent, 0.2, self.parent:GetAlpha(), 1)
@@ -87,7 +167,7 @@ local function ChatButton_OnEnter(self)
 	end
 end
 
-local function ChatButton_OnLeave(self)
+local function ChatButton_OnLeave(self, ...)
 	if E.db[self.parent:GetName()..'Faded'] then
 		UIFrameFadeOut(self.parent, 0.2, self.parent:GetAlpha(), 0)
 		UIFrameFadeOut(self, 0.2, self:GetAlpha(), 0)
@@ -96,7 +176,7 @@ local function ChatButton_OnLeave(self)
 	GameTooltip:Hide()
 end
 
-local function ChatButton_OnClick(self)
+local function ChatButton_OnClick(self, btn)
 	GameTooltip:Hide()
 
 	if E.db[self.parent:GetName()..'Faded'] then
@@ -233,6 +313,76 @@ function LO:ToggleChatPanels()
 	end
 end
 
+function LO:GetLocTextColor()
+	local pvpType = GetZonePVPInfo()
+	if pvpType == "arena" then
+		return 0.84, 0.03, 0.03
+	elseif pvpType == "friendly" then
+		return 0.05, 0.85, 0.03
+	elseif pvpType == "contested" then
+		return 0.9, 0.85, 0.05
+	elseif pvpType == "hostile" then 
+		return 0.84, 0.03, 0.03
+	elseif pvpType == "sanctuary" then
+		return 0.035, 0.58, 0.84
+	elseif pvpType == "combat" then
+		return 0.84, 0.03, 0.03
+	else
+		return 0.84, 0.03, 0.03
+	end	
+end
+
+function LO:CreateActionbarInfobar()
+	local db = E.db.actionbar
+	local backdrop = 0
+	
+	local mbar = CreateFrame('Frame', 'AB1Infobar', E.UIParent)
+	mbar:SetFrameLevel(2)
+	mbar:SetTemplate("Default", true)
+	mbar:CreateShadow("Default")
+	mbar:Point("BOTTOM", E.UIParent, "BOTTOM", 0, 4)
+	E:GetModule('DataTexts'):RegisterPanel(mbar, 3, 'ANCHOR_TOPLEFT', -17, 4)
+	
+	
+	local num = (min(db.bar1.buttons, db.bar1.buttonsPerRow)) / 2
+	
+	local lbar = CreateFrame('Frame', 'AB5Infobar', E.UIParent)
+	lbar:SetFrameLevel(2)
+	lbar:SetTemplate("Default", true)
+	lbar:CreateShadow("Default")
+	lbar:Point('BOTTOMRIGHT', 'ElvUIParent', 'BOTTOM', -(4 + db['bar1'].buttonsize * num + db['bar1'].buttonspacing * (num + 1)), 4)
+	
+	E:GetModule('DataTexts'):RegisterPanel(lbar, 1, 'ANCHOR_TOPLEFT', -17, 4)
+
+	local rbar = CreateFrame('Frame', 'AB3Infobar', E.UIParent)
+	rbar:SetFrameLevel(2)
+	rbar:SetTemplate("Default", true)
+	rbar:CreateShadow("Default")
+	rbar:Point('BOTTOMLEFT', 'ElvUIParent', 'BOTTOM', 4 + db['bar4'].buttonsize * num + db['bar4'].buttonspacing * (num + 1), 4)
+	
+	E:GetModule('DataTexts'):RegisterPanel(rbar, 1, 'ANCHOR_TOPLEFT', -17, 4)
+	
+	self:UpdateActionbarInfobar()
+end
+
+function LO:UpdateActionbarInfobar()
+	if E.db.datatexts.panels.AB1Infobar.left == '' and E.db.datatexts.panels.AB1Infobar.middle == '' and E.db.datatexts.panels.AB1Infobar.right == '' and E.db.datatexts.panels.AB3Infobar == '' and E.db.datatexts.panels.AB5Infobar == '' then return; end
+
+	local db = E.db.actionbar
+	local backdrop = 0
+	
+	if db.bar1.backdrop then backdrop = 8 else backdrop = 0 end
+	AB1Infobar:Size(min(db.bar1.buttons, db.bar1.buttonsPerRow) * (db.bar1.buttonsize + db.bar1.buttonspacing) - db.bar1.buttonspacing + backdrop, 23)
+	if db.bar5.backdrop then backdrop = 4 else backdrop = 0 end
+	AB5Infobar:Size(min(db.bar5.buttons, db.bar5.buttonsPerRow) * (db.bar5.buttonsize + db.bar5.buttonspacing) + backdrop, 23)
+	if db.bar3.backdrop then backdrop = 4 else backdrop = 0 end
+	AB3Infobar:Size(min(db.bar3.buttons, db.bar3.buttonsPerRow) * (db.bar3.buttonsize + db.bar3.buttonspacing) + backdrop, 23)
+	
+	E:CreateMover(AB1Infobar, 'AB1InfobarMover', L['AB1Infobar'] , nil, nil, nil, 'ALL,EUI', function() if E.db.datatexts.panels.AB1Infobar.left == '' and E.db.datatexts.panels.AB1Infobar.middle == '' and E.db.datatexts.panels.AB1Infobar.right == '' then return false; else return true; end; end)
+	E:CreateMover(AB5Infobar, 'AB5InfobarMover', L['AB5Infobar'], nil, nil, nil, 'ALL,EUI', function() if E.db.datatexts.panels.AB5Infobar == '' then return false; else return true; end; end)
+	E:CreateMover(AB3Infobar, 'AB3InfobarMover', L['AB3Infobar'], nil, nil, nil, 'ALL,EUI', function() if E.db.datatexts.panels.AB3Infobar == '' then return false; else return true; end; end)
+end
+
 function LO:CreateChatPanels()
 	local SPACING = E.Border*3 - E.Spacing
 
@@ -255,8 +405,8 @@ function LO:CreateChatPanels()
 
 	--Left Chat Tab
 	local lchattab = CreateFrame('Frame', 'LeftChatTab', LeftChatPanel)
-	lchattab:Point('TOPLEFT', lchat, 'TOPLEFT', SPACING, -SPACING)
-	lchattab:Point('BOTTOMRIGHT', lchat, 'TOPRIGHT', -SPACING, -(SPACING + PANEL_HEIGHT))
+	lchattab:Point('TOPLEFT', lchat, 'TOPLEFT', SPACING, E.db["euiscript"].chatbar and -(SPACING + PANEL_HEIGHT) or -SPACING)
+	lchattab:Point('BOTTOMRIGHT', lchat, 'TOPRIGHT', -SPACING, E.db["euiscript"].chatbar and -(SPACING + PANEL_HEIGHT)*2 or -(SPACING + PANEL_HEIGHT))
 	lchattab:SetTemplate(E.db.chat.panelTabTransparency == true and 'Transparent' or 'Default', true)
 
 	--Left Chat Data Panel
@@ -274,6 +424,7 @@ function LO:CreateChatPanels()
 	lchattb:Point('TOPRIGHT', lchatdp, 'TOPLEFT', E.Border - E.Spacing*3, 0)
 	lchattb:Point('BOTTOMLEFT', lchat, 'BOTTOMLEFT', SPACING, SPACING)
 	lchattb:SetTemplate(E.db.datatexts.panelTransparency and 'Transparent' or 'Default', true)
+	lchattb:RegisterForClicks('AnyUp')
 	lchattb:SetScript('OnEnter', ChatButton_OnEnter)
 	lchattb:SetScript('OnLeave', ChatButton_OnLeave)
 	lchattb:SetScript('OnClick', ChatButton_OnClick)

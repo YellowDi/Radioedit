@@ -4,7 +4,7 @@ local TT = E:GetModule('Tooltip')
 
 E.Options.args.tooltip = {
 	type = "group",
-	name = L["Tooltip"],
+	name = '08.'..L["Tooltip"],
 	childGroups = "tab",
 	get = function(info) return E.db.tooltip[ info[#info] ] end,
 	set = function(info, value) E.db.tooltip[ info[#info] ] = value; end,
@@ -38,20 +38,34 @@ E.Options.args.tooltip = {
 					name = L["Cursor Anchor"],
 					desc = L["Should tooltip be anchored to mouse cursor"],
 				},
-				targetInfo = {
+				offsetX = {
 					order = 2,
+					type = 'range',
+					name = L['X Offset'],
+					min = -500, max = 500, step = 1,
+					disabled = function() return not (E.db.tooltip.cursorAnchor) end,
+				},
+				offsetY = {
+					order = 3,
+					type = 'range',
+					name = L['Y Offset'],
+					min = -500, max = 500, step = 1,
+					disabled = function() return not (E.db.tooltip.cursorAnchor) end,
+				},
+				targetInfo = {
+					order = 4,
 					type = 'toggle',
 					name = L["Target Info"],
 					desc = L["When in a raid group display if anyone in your raid is targeting the current tooltip unit."],
 				},
 				playerTitles = {
-					order = 3,
+					order = 5,
 					type = 'toggle',
 					name = L["Player Titles"],
 					desc = L["Display player titles."],
 				},
 				guildRanks = {
-					order = 4,
+					order = 6,
 					type = 'toggle',
 					name = L["Guild Ranks"],
 					desc = L["Display guild ranks if a unit is guilded."],
@@ -80,15 +94,36 @@ E.Options.args.tooltip = {
 						["NONE"] = L["None"],
 					},
 				},
+				range = {
+					order = 9,
+					type = "toggle",
+					name = L["Range"],
+				},
+				hh = {
+					order = 10,
+					type = "toggle",
+					name = L["Transmogrify sort"],
+				},
+				mountinfo = {
+					order = 11,
+					type = "toggle",
+					name = L["Mount Info"],
+				},
+				transparent = {
+					order = 11,
+					type = 'toggle',
+					name = L["No Transparent Theme"],
+					disabled = function() return E.db.general.transparent == false end,
+				},
 				colorAlpha = {
-					order = 8,
+					order = 18,
 					type = "range",
 					name = OPACITY,
 					isPercent = true,
 					min = 0, max = 1, step = 0.01,
 				},
 				fontGroup = {
-					order = 9,
+					order = 19,
 					type = "group",
 					guiInline = true,
 					name = L["Tooltip Font Settings"],
@@ -147,7 +182,7 @@ E.Options.args.tooltip = {
 					},
 				},
 				factionColors = {
-					order = 10,
+					order = 20,
 					type = "group",
 					name = L["Custom Faction Colors"],
 					guiInline = true,

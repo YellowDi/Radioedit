@@ -6,24 +6,17 @@ local DT = E:GetModule('DataTexts')
 local select = select
 local format, join = string.format, string.join
 --WoW API / Variables
-local EasyMenu = EasyMenu
-local GetActiveSpecGroup = GetActiveSpecGroup
-local GetLootSpecialization = GetLootSpecialization
-local GetNumSpecGroups = GetNumSpecGroups
-local GetSpecialization = GetSpecialization
-local GetSpecializationInfo = GetSpecializationInfo
-local GetSpecializationInfoByID = GetSpecializationInfoByID
-local HideUIPanel = HideUIPanel
-local IsShiftKeyDown = IsShiftKeyDown
 local SetLootSpecialization = SetLootSpecialization
-local SetSpecialization = SetSpecialization
-local ShowUIPanel = ShowUIPanel
+local GetSpecialization = GetSpecialization
+local GetActiveSpecGroup = GetActiveSpecGroup
+local GetSpecializationInfo = GetSpecializationInfo
+local GetLootSpecialization = GetLootSpecialization
+local GetSpecializationInfoByID = GetSpecializationInfoByID
+local GetNumSpecGroups = GetNumSpecGroups
+local EasyMenu = EasyMenu
 local LOOT = LOOT
 local SELECT_LOOT_SPECIALIZATION = SELECT_LOOT_SPECIALIZATION
 local LOOT_SPECIALIZATION_DEFAULT = LOOT_SPECIALIZATION_DEFAULT
-
---Global variables that we don't cache, list them here for the mikk's Find Globals script
--- GLOBALS: PlayerTalentFrame, LoadAddOn, 
 
 local lastPanel, active
 local displayString = '';
@@ -134,6 +127,7 @@ local function OnClick(self, button)
 		if not PlayerTalentFrame then
 			LoadAddOn("Blizzard_TalentUI")
 		end
+		
 		if IsShiftKeyDown() then 
 			if not PlayerTalentFrame:IsShown() then
 				ShowUIPanel(PlayerTalentFrame)
@@ -145,7 +139,17 @@ local function OnClick(self, button)
 				local id, name, _, texture = GetSpecializationInfo(index);
 				if ( id ) then
 					specList[index + 1].text = format('|T%s:14:14:0:0:64:64:4:60:4:60|t  %s', texture, name)
-					specList[index + 1].func = function() SetSpecialization(index) end
+					specList[index + 1].func = function() 
+						SetSpecialization(index)
+						local spec = E.db.datatexts["spec"..index]
+						if (spec ~= '') and (spec ~= NONE) then
+							if GetEquipmentSetInfoByName(spec) then
+								E:ScheduleTimer(UseEquipmentSet, 6, spec); 
+							else
+								E:Print(L['Invalid Equipment: |cffFFFFFF'].. spec.. '|r');
+							end
+						end
+					end
 				else
 					specList[index + 1] = nil
 				end

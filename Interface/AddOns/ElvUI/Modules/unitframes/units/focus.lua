@@ -1,16 +1,22 @@
 local E, L, V, P, G = unpack(select(2, ...)); --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local UF = E:GetModule('UnitFrames');
-local _, ns = ...
-local ElvUF = ns.oUF
-assert(ElvUF, "ElvUI was unable to locate oUF.")
 
 --Cache global variables
 --Lua functions
 local _G = _G
+local pairs = pairs
 local tinsert = table.insert
+local format = format
+--WoW API / Variables
+local RAID_CLASS_COLORS = RAID_CLASS_COLORS
+local CUSTOM_CLASS_COLORS = CUSTOM_CLASS_COLORS
 
 --Global variables that we don't cache, list them here for mikk's FindGlobals script
 -- GLOBALS: ElvUF_Target
+
+local _, ns = ...
+local ElvUF = ns.oUF
+assert(ElvUF, "ElvUI was unable to locate oUF.")
 
 function UF:Construct_FocusFrame(frame)
 	frame.Health = self:Construct_HealthBar(frame, true, true, 'RIGHT')
@@ -24,8 +30,10 @@ function UF:Construct_FocusFrame(frame)
 	frame.Portrait2D = self:Construct_Portrait(frame, 'texture')
 
 	frame.Buffs = self:Construct_Buffs(frame)
+	frame:RegisterEvent('PLAYER_FOCUS_CHANGED', UF.UpdateRangeText)
+	frame.RangeText = self:Construct_RangeText(frame)
 
-	frame.Castbar = self:Construct_Castbar(frame, L["Focus Castbar"])
+	frame.Castbar = self:Construct_Castbar(frame, 'LEFT', L["Focus Castbar"])
 	frame.Castbar.SafeZone = nil
 	frame.Castbar.LatencyTexture:Hide()
 	frame.RaidIcon = UF:Construct_RaidIcon(frame)
@@ -69,7 +77,7 @@ function UF:Update_FocusFrame(frame, db)
 		frame.INFO_PANEL_HEIGHT = frame.USE_INFO_PANEL and db.infoPanel.height or 0
 
 		frame.BOTTOM_OFFSET = UF:GetHealthBottomOffset(frame)
-
+		
 		frame.VARIABLES_SET = true
 	end
 
@@ -112,6 +120,9 @@ function UF:Update_FocusFrame(frame, db)
 
 	--Range
 	UF:Configure_Range(frame)
+
+	--RangeText
+	UF:Configure_RangeText(frame)
 
 	--CustomTexts
 	UF:Configure_CustomTexts(frame)

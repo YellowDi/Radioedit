@@ -12,7 +12,7 @@ V['general'] = {
 	['chatBubbles'] = 'backdrop',
 	['chatBubbleFont'] = "PT Sans Narrow",
 	['chatBubbleFontSize'] = 14,
-	['pixelPerfect'] = true,
+	['pixelPerfect'] = false,
 	['replaceBlizzFonts'] = true,
 	['minimap'] = {
 		['enable'] = true,
@@ -38,6 +38,7 @@ V['auras'] = {
 	["masque"] = {
 		["buffs"] = false,
 		["debuffs"] = false,
+		["consolidatedBuffs"] = false,
 	},
 }
 
@@ -47,6 +48,9 @@ V['chat'] = {
 
 V['skins'] = {
 	['ace3'] = {
+		['enable'] = true,
+	},
+	['rematch'] = {
 		['enable'] = true,
 	},
 	['blizzard'] = {

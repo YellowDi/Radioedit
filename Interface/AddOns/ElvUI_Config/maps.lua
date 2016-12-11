@@ -1,123 +1,11 @@
 local E, L, V, P, G, _ = unpack(ElvUI); --Import: Engine, Locales, ProfileDB, GlobalDB
-local WM = E:GetModule("WorldMap")
 local MM = E:GetModule("Minimap")
 
 E.Options.args.maps = {
 	type = "group",
-	name = L["Maps"],
+	name = "01.2"..MINIMAP_LABEL,
 	childGroups = "tab",
 	args = {
-		worldMap = {
-			order = 1,
-			type = "group",
-			name = WORLD_MAP,
-			args = {
-				header = {
-					order = 0,
-					type = "header",
-					name = WORLD_MAP,
-				},
-				generalGroup = {
-					order = 1,
-					type = "group",
-					name = L["General"],
-					guiInline = true,
-					args = {
-						smallerWorldMap = {
-							order = 1,
-							type = "toggle",
-							name = L["Smaller World Map"],
-							desc = L["Make the world map smaller."],
-							get = function(info) return E.global.general.smallerWorldMap end,
-							set = function(info, value) E.global.general.smallerWorldMap = value; E:StaticPopup_Show("GLOBAL_RL") end,
-						},
-						fadeMapWhenMoving = {
-							order = 2,
-							type = "toggle",
-							name = MAP_FADE_TEXT,
-							get = function(info) return E.global.general.fadeMapWhenMoving end,
-							set = function(info, value)
-								E.global.general.fadeMapWhenMoving = value;
-								SetCVar("mapFade", (value == true and 1 or 0))
-							end,
-						},
-						mapAlphaWhenMoving = {
-							order = 3,
-							type = "range",
-							name = L["Map Opacity When Moving"],
-							isPercent = true,
-							min = 0, max = 1, step = 0.01,
-							get = function(info) return E.global.general.mapAlphaWhenMoving end,
-							set = function(info, value)
-								E.global.general.mapAlphaWhenMoving = value;
-								WORLD_MAP_MIN_ALPHA = value;
-								SetCVar("mapAnimMinAlpha", value)
-							end,
-						},
-					},
-				},
-				spacer = {
-					order = 2,
-					type = "description",
-					name = "\n"
-				},
-				coordinatesGroup = {
-					order = 3,
-					type = "group",
-					name = L["World Map Coordinates"],
-					guiInline = true,
-					args = {
-						enable = {
-							order = 1,
-							type = "toggle",
-							name = L["Enable"],
-							desc = L["Puts coordinates on the world map."],
-							get = function(info) return E.global.general.WorldMapCoordinates.enable end,
-							set = function(info, value) E.global.general.WorldMapCoordinates.enable = value; E:StaticPopup_Show("GLOBAL_RL") end,
-						},
-						spacer = {
-							order = 2,
-							type = "description",
-							name = " "
-						},
-						position = {
-							order = 3,
-							type = "select",
-							name = L["Position"],
-							get = function(info) return E.global.general.WorldMapCoordinates.position end,
-							set = function(info, value) E.global.general.WorldMapCoordinates.position = value; WM:PositionCoords() end,
-							disabled = function() return not E.global.general.WorldMapCoordinates.enable end,
-							values = {
-								["TOP"] = "TOP",
-								["TOPLEFT"] = "TOPLEFT",
-								["TOPRIGHT"] = "TOPRIGHT",
-								["BOTTOM"] = "BOTTOM",
-								["BOTTOMLEFT"] = "BOTTOMLEFT",
-								["BOTTOMRIGHT"] = "BOTTOMRIGHT",
-							},
-						},
-						xOffset = {
-							order = 4,
-							type = "range",
-							name = L["X-Offset"],
-							get = function(info) return E.global.general.WorldMapCoordinates.xOffset end,
-							set = function(info, value) E.global.general.WorldMapCoordinates.xOffset = value; WM:PositionCoords()end,
-							disabled = function() return not E.global.general.WorldMapCoordinates.enable end,
-							min = -200, max = 200, step = 1,
-						},
-						yOffset = {
-							order = 5,
-							type = "range",
-							name = L["Y-Offset"],
-							get = function(info) return E.global.general.WorldMapCoordinates.yOffset end,
-							set = function(info, value) E.global.general.WorldMapCoordinates.yOffset = value; WM:PositionCoords() end,
-							disabled = function() return not E.global.general.WorldMapCoordinates.enable end,
-							min = -200, max = 200, step = 1,
-						},
-					},
-				},
-			},
-		},
 		minimap = {
 			order = 2,
 			type = "group",
@@ -134,7 +22,6 @@ E.Options.args.maps = {
 					order = 1,
 					type = "group",
 					name = L["General"],
-					guiInline = true,
 					args = {
 						enable = {
 							order = 1,

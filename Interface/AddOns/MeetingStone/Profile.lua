@@ -21,7 +21,7 @@ function Profile:OnInitialize()
     local cdb = {
         profile = {
             settings = {
-                storage   = { point = 'TOP', x = 0, y = -20},
+                storage   = { point = 'TOP', x = 0, y = -28},
                 panel     = true,
                 panelLock = false,
                 sound     = true,

@@ -4,6 +4,7 @@ E.Misc = M;
 
 --Cache global variables
 --Lua functions
+local floor = math.floor
 local format, gsub = string.format, string.gsub
 --WoW API / Variables
 local UnitGUID = UnitGUID
@@ -49,7 +50,7 @@ local LE_GAME_ERR_NOT_ENOUGH_MONEY = LE_GAME_ERR_NOT_ENOUGH_MONEY
 --Global variables that we don't cache, list them here for mikk's FindGlobals script
 -- GLOBALS: RaidBossEmoteFrame, ChatTypeInfo, QueueStatusMinimapButton, LFGInvitePopup
 
-local interruptMsg = INTERRUPTED.." %s's \124cff71d5ff\124Hspell:%d:0\124h[%s]\124h\124r!"
+local interruptMsg = "EUI:%s ".. INTERRUPT.." %s's \124cff71d5ff\124Hspell:%d:0\124h[%s]\124h\124r!"
 
 function M:ErrorFrameToggle(event)
 	if not E.db.general.hideErrorFrame then return end
@@ -60,10 +61,11 @@ function M:ErrorFrameToggle(event)
 	end
 end
 
-function M:COMBAT_LOG_EVENT_UNFILTERED(_, _, event, _, sourceGUID, _, _, _, _, destName, _, _, _, _, _, spellID, spellName)
+function M:COMBAT_LOG_EVENT_UNFILTERED(_, _, event, _, sourceGUID, sourceName, _, _, _, destName, _, _, _, _, _, spellID, spellName)
 	if E.db.general.interruptAnnounce == "NONE" then return end -- No Announcement configured, exit.
-	if not (event == "SPELL_INTERRUPT" and (sourceGUID == UnitGUID('player') or sourceGUID == UnitGUID('pet'))) then return end -- No announce-able interrupt from player or pet, exit.
-
+	if (event ~= "SPELL_INTERRUPT") or (select(2, IsInInstance()) == "pvp") then return end
+	
+	if not GetPlayerInfoByGUID(sourceGUID) then return; end
 	local inGroup, inRaid, inPartyLFG = IsInGroup(), IsInRaid(), IsPartyLFG()
 	if not inGroup then return end -- not in group, exit.
 
@@ -78,20 +80,17 @@ function M:COMBAT_LOG_EVENT_UNFILTERED(_, _, event, _, sourceGUID, _, _, _, _, d
 		inRaid = false --IsInRaid() returns true for arenas and they should not be considered a raid
 	end
 
+	if not IsInInstance() or not sourceName or not destName then return; end
 	if E.db.general.interruptAnnounce == "PARTY" then
-		SendChatMessage(format(interruptMsg, destName, spellID, spellName), inPartyLFG and "INSTANCE_CHAT" or "PARTY")
+		SendChatMessage(format(interruptMsg, sourceName, destName, spellID, spellName), inPartyLFG and "INSTANCE_CHAT" or "PARTY")
 	elseif E.db.general.interruptAnnounce == "RAID" then
 		if inRaid then
-			SendChatMessage(format(interruptMsg, destName, spellID, spellName), inPartyLFG and "INSTANCE_CHAT" or "RAID")
+			SendChatMessage(format(interruptMsg, sourceName, destName, spellID, spellName), inPartyLFG and "INSTANCE_CHAT" or "RAID")		
 		else
-			SendChatMessage(format(interruptMsg, destName, spellID, spellName), inPartyLFG and "INSTANCE_CHAT" or "PARTY")
-		end
-	elseif E.db.general.interruptAnnounce == "RAID_ONLY" then
-		if inRaid then
-			SendChatMessage(format(interruptMsg, destName, spellID, spellName), inPartyLFG and "INSTANCE_CHAT" or "RAID")
-		end
+			SendChatMessage(format(interruptMsg, sourceName, destName, spellID, spellName), inPartyLFG and "INSTANCE_CHAT" or "PARTY")
+		end	
 	elseif E.db.general.interruptAnnounce == "SAY" then
-		SendChatMessage(format(interruptMsg, destName, spellID, spellName), "SAY")
+		SendChatMessage(format(interruptMsg, sourceName, destName, spellID, spellName), "SAY")	
 	elseif E.db.general.interruptAnnounce == "EMOTE" then
 		SendChatMessage(format(interruptMsg, destName, spellID, spellName), "EMOTE")
 	end
@@ -151,9 +150,9 @@ function M:MERCHANT_CLOSED()
 end
 
 function M:MERCHANT_SHOW()
-	if E.db.general.vendorGrays then
-		C_Timer_After(0.5, VendorGrays)
-	end
+--	if E.db.general.vendorGrays then
+--		C_Timer_After(0.5, VendorGrays)
+--	end
 
 	local autoRepair = E.db.general.autoRepair
 	if IsShiftKeyDown() or autoRepair == 'NONE' or not CanMerchantRepair() then return end

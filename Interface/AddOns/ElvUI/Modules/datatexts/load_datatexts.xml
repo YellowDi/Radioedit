@@ -29,6 +29,14 @@
 	<Script file='system.lua'/>
 	<Script file='time.lua'/>
 	<Script file='versatility.lua'/>
-	<Script file='Currencies.lua'/>
-	<Script file='CustomCurrency.lua'/>
+	<Script file='currencies.lua'/>
+
+	<Script file='e_coord.lua'/>
+	<Script file='e_menu.lua'/>
+	<Script file='e_raidtool.lua'/>
+	<Script file='e_range.lua'/>
+	<Script file='e_shortopt.lua'/>
+	<Script file='e_zone.lua'/>
+	<Script file='ResurrectCD.lua'/>
+	<Script file='Valor.lua'/>
 </Ui>

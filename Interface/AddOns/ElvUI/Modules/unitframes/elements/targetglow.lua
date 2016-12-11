@@ -32,7 +32,7 @@ function UF:Construct_TargetGlow(frame)
 	return x
 end
 
-function UF:UpdateTargetGlow()
+function UF:UpdateTargetGlow(event)
 	if not self.unit then return; end
 	local unit = self.unit
 
@@ -42,24 +42,27 @@ function UF:UpdateTargetGlow()
 			self.TargetGlow.powerGlow:Show()
 		end
 		local reaction = UnitReaction(unit, 'player')
-
-		if UnitIsPlayer(unit) then
-			local _, class = UnitClass(unit)
-			if class then
-				local color = CUSTOM_CLASS_COLORS and CUSTOM_CLASS_COLORS[class] or RAID_CLASS_COLORS[class]
+		if UF.db and UF.db.colors.healthclass then --by eui.cc
+			self.TargetGlow:SetBackdropBorderColor(UF.db.colors.targetGlowColor.r, UF.db.colors.targetGlowColor.g, UF.db.colors.targetGlowColor.b)
+		else
+			if UnitIsPlayer(unit) then
+				local _, class = UnitClass(unit)
+				if class then
+					local color = CUSTOM_CLASS_COLORS and CUSTOM_CLASS_COLORS[class] or RAID_CLASS_COLORS[class]
+					self.TargetGlow:SetBackdropBorderColor(color.r, color.g, color.b)
+					self.TargetGlow.powerGlow:SetBackdropBorderColor(color.r, color.g, color.b)
+				else
+					self.TargetGlow:SetBackdropBorderColor(1, 1, 1)
+					self.TargetGlow.powerGlow:SetBackdropBorderColor(1, 1, 1)
+				end
+			elseif reaction then
+				local color = FACTION_BAR_COLORS[reaction]
 				self.TargetGlow:SetBackdropBorderColor(color.r, color.g, color.b)
 				self.TargetGlow.powerGlow:SetBackdropBorderColor(color.r, color.g, color.b)
 			else
 				self.TargetGlow:SetBackdropBorderColor(1, 1, 1)
 				self.TargetGlow.powerGlow:SetBackdropBorderColor(1, 1, 1)
 			end
-		elseif reaction then
-			local color = FACTION_BAR_COLORS[reaction]
-			self.TargetGlow:SetBackdropBorderColor(color.r, color.g, color.b)
-			self.TargetGlow.powerGlow:SetBackdropBorderColor(color.r, color.g, color.b)
-		else
-			self.TargetGlow:SetBackdropBorderColor(1, 1, 1)
-			self.TargetGlow.powerGlow:SetBackdropBorderColor(1, 1, 1)
 		end
 	else
 		self.TargetGlow:Hide()
@@ -76,25 +79,25 @@ function UF:Configure_TargetGlow(frame)
 
 	if frame.USE_POWERBAR_OFFSET then
 		if frame.ORIENTATION == "RIGHT" then
-			targetHealthGlow:Point("TOPLEFT", frame.Health.backdrop, "TOPLEFT", -SHADOW_SPACING - frame.SPACING, SHADOW_SPACING + frame.SPACING + (frame.USE_CLASSBAR and (frame.USE_MINI_CLASSBAR and 0 or frame.CLASSBAR_HEIGHT) or 0))
-			targetHealthGlow:Point("BOTTOMRIGHT", frame.Health.backdrop, "BOTTOMRIGHT", SHADOW_SPACING + frame.SPACING, -SHADOW_SPACING - frame.SPACING)
+			targetHealthGlow:Point("TOPLEFT", frame.Health.backdrop, "TOPLEFT", -frame.SHADOW_SPACING - frame.SPACING, frame.SHADOW_SPACING + frame.SPACING + (frame.USE_CLASSBAR and (frame.USE_MINI_CLASSBAR and 0 or frame.CLASSBAR_HEIGHT) or 0))
+			targetHealthGlow:Point("BOTTOMRIGHT", frame.Health.backdrop, "BOTTOMRIGHT", frame.SHADOW_SPACING + frame.SPACING, -frame.SHADOW_SPACING - frame.SPACING)
 		else
-			targetHealthGlow:Point("TOPLEFT", frame.Health.backdrop, "TOPLEFT", -SHADOW_SPACING - frame.SPACING, SHADOW_SPACING + frame.SPACING + (frame.USE_CLASSBAR and (frame.USE_MINI_CLASSBAR and 0 or frame.CLASSBAR_HEIGHT) or 0))
-			targetHealthGlow:Point("BOTTOMRIGHT", frame.Health.backdrop, "BOTTOMRIGHT", SHADOW_SPACING + frame.SPACING, -SHADOW_SPACING - frame.SPACING)
+			targetHealthGlow:Point("TOPLEFT", frame.Health.backdrop, "TOPLEFT", -frame.SHADOW_SPACING - frame.SPACING, frame.SHADOW_SPACING + frame.SPACING + (frame.USE_CLASSBAR and (frame.USE_MINI_CLASSBAR and 0 or frame.CLASSBAR_HEIGHT) or 0))
+			targetHealthGlow:Point("BOTTOMRIGHT", frame.Health.backdrop, "BOTTOMRIGHT", frame.SHADOW_SPACING + frame.SPACING, -frame.SHADOW_SPACING - frame.SPACING)
 		end
 
 		targetPowerGlow:ClearAllPoints()
-		targetPowerGlow:Point("TOPLEFT", frame.Power.backdrop, "TOPLEFT", -SHADOW_SPACING - frame.SPACING, SHADOW_SPACING + frame.SPACING)
-		targetPowerGlow:Point("BOTTOMRIGHT", frame.Power.backdrop, "BOTTOMRIGHT", SHADOW_SPACING + frame.SPACING, -SHADOW_SPACING - frame.SPACING)
+		targetPowerGlow:Point("TOPLEFT", frame.Power.backdrop, "TOPLEFT", -frame.SHADOW_SPACING - frame.SPACING, frame.SHADOW_SPACING + frame.SPACING)
+		targetPowerGlow:Point("BOTTOMRIGHT", frame.Power.backdrop, "BOTTOMRIGHT", frame.SHADOW_SPACING + frame.SPACING, -frame.SHADOW_SPACING - frame.SPACING)
 	else
-		targetHealthGlow:Point("TOPLEFT", -SHADOW_SPACING, SHADOW_SPACING-(frame.USE_MINI_CLASSBAR and frame.CLASSBAR_YOFFSET or 0))
+		targetHealthGlow:Point("TOPLEFT", -frame.SHADOW_SPACING, frame.SHADOW_SPACING-(frame.USE_MINI_CLASSBAR and frame.CLASSBAR_YOFFSET or 0))
 
 		if frame.USE_MINI_POWERBAR then
-			targetHealthGlow:Point("BOTTOMLEFT", -SHADOW_SPACING, -SHADOW_SPACING + (frame.POWERBAR_HEIGHT/2))
-			targetHealthGlow:Point("BOTTOMRIGHT", SHADOW_SPACING, -SHADOW_SPACING + (frame.POWERBAR_HEIGHT/2))
+			targetHealthGlow:Point("BOTTOMLEFT", -frame.SHADOW_SPACING, -frame.SHADOW_SPACING + (frame.POWERBAR_HEIGHT/2))
+			targetHealthGlow:Point("BOTTOMRIGHT", frame.SHADOW_SPACING, -frame.SHADOW_SPACING + (frame.POWERBAR_HEIGHT/2))
 		else
-			targetHealthGlow:Point("BOTTOMLEFT", -SHADOW_SPACING, -SHADOW_SPACING)
-			targetHealthGlow:Point("BOTTOMRIGHT", SHADOW_SPACING, -SHADOW_SPACING)
+			targetHealthGlow:Point("BOTTOMLEFT", -frame.SHADOW_SPACING, -frame.SHADOW_SPACING)
+			targetHealthGlow:Point("BOTTOMRIGHT", frame.SHADOW_SPACING, -frame.SHADOW_SPACING)
 		end
 	end
 end

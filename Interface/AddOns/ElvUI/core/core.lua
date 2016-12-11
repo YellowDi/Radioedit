@@ -1,4 +1,4 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+﻿local E, L, V, P, G = unpack(select(2, ...)); --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local LSM = LibStub("LibSharedMedia-3.0")
 local Masque = LibStub("Masque", true)
 
@@ -9,11 +9,12 @@ local tonumber, pairs, ipairs, error, unpack, select, tostring = tonumber, pairs
 local assert, print, type, collectgarbage, pcall, date = assert, print, type, collectgarbage, pcall, date
 local twipe, tinsert, tremove = table.wipe, tinsert, tremove
 local floor = floor
-local format, find, strrep, len, sub = string.format, string.find, strrep, string.len, string.sub
+local format, find, split, match, strrep, len, sub, gsub = string.format, string.find, string.split, string.match, strrep, string.len, string.sub, string.gsub
 --WoW API / Variables
 local CreateFrame = CreateFrame
 local C_Timer_After = C_Timer.After
 local C_PetBattles_IsInBattle = C_PetBattles.IsInBattle
+local DoEmote = DoEmote
 local GetBonusBarOffset = GetBonusBarOffset
 local GetCombatRatingBonus = GetCombatRatingBonus
 local GetCVar, SetCVar, GetCVarBool = GetCVar, SetCVar, GetCVarBool
@@ -26,8 +27,10 @@ local GetSpellInfo = GetSpellInfo
 local InCombatLockdown = InCombatLockdown
 local IsAddOnLoaded = IsAddOnLoaded
 local IsInInstance, IsInGroup, IsInRaid = IsInInstance, IsInGroup, IsInRaid
+local PlayMusic, StopMusic = PlayMusic, StopMusic
 local RequestBattlefieldScoreData = RequestBattlefieldScoreData
 local SendAddonMessage = SendAddonMessage
+local SendChatMessage = SendChatMessage
 local UnitGroupRolesAssigned = UnitGroupRolesAssigned
 local UnitHasVehicleUI = UnitHasVehicleUI
 local UnitLevel, UnitStat, UnitAttackPower = UnitLevel, UnitStat, UnitAttackPower
@@ -36,6 +39,7 @@ local CUSTOM_CLASS_COLORS = CUSTOM_CLASS_COLORS
 local ERR_NOT_IN_COMBAT = ERR_NOT_IN_COMBAT
 local LE_PARTY_CATEGORY_HOME = LE_PARTY_CATEGORY_HOME
 local LE_PARTY_CATEGORY_INSTANCE = LE_PARTY_CATEGORY_INSTANCE
+local NUM_PET_ACTION_SLOTS = NUM_PET_ACTION_SLOTS
 local RAID_CLASS_COLORS = RAID_CLASS_COLORS
 
 --Global variables that we don't cache, list them here for the mikk's Find Globals script
@@ -45,7 +49,6 @@ local RAID_CLASS_COLORS = RAID_CLASS_COLORS
 -- GLOBALS: ElvUI_StanceBar, ObjectiveTrackerFrame, GameTooltip, Minimap
 -- GLOBALS: ElvUIParent, ElvUI_TopPanel, hooksecurefunc, InterfaceOptionsCameraPanelMaxDistanceSlider
 
-
 --Constants
 E.myclass = select(2, UnitClass("player"));
 E.myspec = GetSpecialization()
@@ -53,13 +56,19 @@ E.myrace = select(2, UnitRace("player"))
 E.myfaction = select(2, UnitFactionGroup('player'))
 E.myname = UnitName("player");
 E.myguid = UnitGUID('player');
+E.mylevel = UnitLevel('player');
 E.version = GetAddOnMetadata("ElvUI", "Version");
+E.Version = GetAddOnMetadata("EuiScript", "Version")
+if E.Version then E.Version = string.sub(E.Version,1,8); end
+E.ValColor = '|cff1784d1'
 E.myrealm = GetRealmName();
 E.wowbuild = select(2, GetBuildInfo()); E.wowbuild = tonumber(E.wowbuild);
 --Currently in Legion logging in while in Windowed mode will cause the game to use "Custom" resolution and GetCurrentResolution() returns 0. We use GetCVar("gxWindowedResolution") as fail safe
 E.resolution = ({GetScreenResolutions()})[GetCurrentResolution()] or GetCVar("gxWindowedResolution")
 E.screenwidth, E.screenheight = DecodeResolution(E.resolution)
 E.isMacClient = IsMacClient()
+if ((GetLocale() == 'zhCN') or (GetLocale() == 'zhTW')) then E.zhlocale = true; else E.zhlocale = false; end;
+E.myfullname = E.myname..'-'..E.myrealm
 E.LSM = LSM
 
 --Tables
@@ -282,7 +291,7 @@ function E:UpdateMedia()
 end
 
 E.LockedCVars = {}
-function E:PLAYER_REGEN_ENABLED(_)
+function E:PLAYER_REGEN_ENABLED(event)
 	if(self.CVarUpdate) then
 		for cvarName, value in pairs(self.LockedCVars) do
 			if(GetCVar(cvarName) ~= value) then
@@ -329,7 +338,7 @@ local MasqueGroupToTableElement = {
 	["Debuffs"] = {"auras", "debuffs"},
 }
 
-local function MasqueCallback(_, Group, _, _, _, _, Disabled)
+local function MasqueCallback(Addon, Group, SkinID, Gloss, Backdrop, Colors, Disabled)
 	if not E.private then return; end
 	local element = MasqueGroupToTableElement[Group]
 
@@ -583,7 +592,7 @@ end
 
 function E:IncompatibleAddOn(addon, module)
 	E.PopupDialogs['INCOMPATIBLE_ADDON'].button1 = addon
-	E.PopupDialogs['INCOMPATIBLE_ADDON'].button2 = 'ElvUI '..module
+	E.PopupDialogs['INCOMPATIBLE_ADDON'].button2 = 'EUI '..module
 	E.PopupDialogs['INCOMPATIBLE_ADDON'].addon = addon
 	E.PopupDialogs['INCOMPATIBLE_ADDON'].module = module
 	E:StaticPopup_Show('INCOMPATIBLE_ADDON', addon, module)
@@ -609,6 +618,16 @@ function E:CheckIncompatible()
 
 	if IsAddOnLoaded('Healers-Have-To-Die') and E.private.nameplates.enable then
 		E:IncompatibleAddOn('Healers-Have-To-Die', 'NamePlates')
+	end
+	if not IsAddOnLoaded('EuiScript') then
+		E:StaticPopup_Show('EUISCRIPT_REQUEST')
+	end
+	if IsAddOnLoaded('Duowan') or IsAddOnLoaded('BigFoot') then
+		E:StaticPopup_Show('BigDW_Loaded')
+	end
+	if GetLocale() ~= 'zhCN' then
+		DisableAddOn('NetEaseFeedback')
+		DisableAddOn('MeetingStone')
 	end
 end
 
@@ -850,10 +869,11 @@ function E:SplitString(s, delim)
 end
 
 function E:SendMessage()
+	local _, instanceType = IsInInstance()
 	if IsInRaid() then
-		SendAddonMessage("ELVUI_VERSIONCHK", E.version, (not IsInRaid(LE_PARTY_CATEGORY_HOME) and IsInRaid(LE_PARTY_CATEGORY_INSTANCE)) and "INSTANCE_CHAT" or "RAID")
+		SendAddonMessage("EUI_VERSIONCHK", E.Version, (not IsInRaid(LE_PARTY_CATEGORY_HOME) and IsInRaid(LE_PARTY_CATEGORY_INSTANCE)) and "INSTANCE_CHAT" or "RAID")
 	elseif IsInGroup() then
-		SendAddonMessage("ELVUI_VERSIONCHK", E.version, (not IsInGroup(LE_PARTY_CATEGORY_HOME) and IsInGroup(LE_PARTY_CATEGORY_INSTANCE)) and "INSTANCE_CHAT" or "PARTY")
+		SendAddonMessage("EUI_VERSIONCHK", E.Version, (not IsInGroup(LE_PARTY_CATEGORY_HOME) and IsInGroup(LE_PARTY_CATEGORY_INSTANCE)) and "INSTANCE_CHAT" or "PARTY")
 	end
 
 	if E.SendMSGTimer then
@@ -864,19 +884,20 @@ end
 
 local myName = E.myname.."-"..E.myrealm;
 myName = myName:gsub("%s+", "")
+local frames = {}
 
-local function SendRecieve(_, event, prefix, message, _, sender)
+local function SendRecieve(self, event, prefix, message, channel, sender)
 
 	if event == "CHAT_MSG_ADDON" then
 		if(sender == myName) then return end
 
-		if prefix == "ELVUI_VERSIONCHK" and not E.recievedOutOfDateMessage then
-			if(tonumber(message) ~= nil and tonumber(message) > tonumber(E.version)) then
+		if prefix == "EUI_VERSIONCHK" and not E.recievedOutOfDateMessage then
+			if(E.Version and tonumber(message) ~= nil and tonumber(message) > tonumber(E.Version)) then
 				E:Print(L["ElvUI is out of date. You can download the newest version from www.tukui.org. Get premium membership and have ElvUI automatically updated with the Tukui Client!"]:gsub("ElvUI", E.UIName))
 
-				if((tonumber(message) - tonumber(E.version)) >= 0.05) then
-					E:StaticPopup_Show("ELVUI_UPDATE_AVAILABLE")
-				end
+			--	if((tonumber(message) - tonumber(E.version)) >= 0.05) then
+			--		E:StaticPopup_Show("ELVUI_UPDATE_AVAILABLE")
+			--	end
 
 				E.recievedOutOfDateMessage = true
 			end
@@ -886,7 +907,7 @@ local function SendRecieve(_, event, prefix, message, _, sender)
 	end
 end
 
-RegisterAddonMessagePrefix('ELVUI_VERSIONCHK')
+RegisterAddonMessagePrefix('EUI_VERSIONCHK')
 
 local f = CreateFrame('Frame')
 f:RegisterEvent("GROUP_ROSTER_UPDATE")
@@ -953,6 +974,8 @@ function E:UpdateAll(ignoreInstall)
 	DT.db = self.db.datatexts
 	DT:LoadDataTexts()
 
+	local LO = self:GetModule('Layout')
+	LO:UpdateActionbarInfobar()
 	local NP = self:GetModule('NamePlates')
 	NP.db = self.db.nameplates
 	NP:ConfigureAll()
@@ -970,6 +993,23 @@ function E:UpdateAll(ignoreInstall)
 	T:UpdatePosition()
 	T:ToggleEnable()
 
+--	local ALM = self:GetModule('ALM')
+--	ALM.db = self.db.ALM
+--	ALM:Toggle()
+
+	local RLBox = self:GetModule('RLBox')
+	RLBox.db = self.db.RLBox
+	RLBox.Players = {}
+	RLBox:Toggle()
+
+	self:GetModule('CooldownFlash').db = self.db.CooldownFlash
+	self:GetModule('AutoButton').db = self.db.euiscript.autobutton
+	self:GetModule('AuraWatch').db = self.db.AuraWatch
+	self:GetModule('SoraClassTimer').db = self.db.SoraClassTimer
+--	self:GetModule('Execute').db = self.db.euiscript.executebutton
+--	if self.myclass == 'MAGE' then
+--		self:GetModule('FireMage').db = self.db.euiscript.fsbutton
+--	end
 	self:GetModule('Auras').db = self.db.auras
 	self:GetModule('Tooltip').db = self.db.tooltip
 
@@ -981,6 +1021,13 @@ function E:UpdateAll(ignoreInstall)
 		E:GetModule('Auras'):UpdateHeader(ElvUIPlayerDebuffs)
 	end
 
+	local RaidCD = self:GetModule('RAIDCD')
+	RaidCD.db = self.db.euiscript
+	RaidCD:CreateAnchor()
+	RaidCD:ToggleRaidCD()
+	
+	local AutoButton = E:GetModule('AutoButton')
+	AutoButton:ToggleAutoButton()
 	if self.private.install_complete == nil or (self.private.install_complete and type(self.private.install_complete) == 'boolean') or (self.private.install_complete and type(tonumber(self.private.install_complete)) == 'number' and tonumber(self.private.install_complete) <= 3.83) then
 		if not ignoreInstall then
 			self:Install()
@@ -1017,7 +1064,7 @@ function E:RemoveNonPetBattleFrames()
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "AddNonPetBattleFrames")
 end
 
-function E:AddNonPetBattleFrames()
+function E:AddNonPetBattleFrames(event)
 	if InCombatLockdown() then return end
 	for object, data in pairs(E.FrameLocks) do
 		local obj = _G[object] or object
@@ -1081,7 +1128,7 @@ function E:UnregisterPetBattleHideFrames(object)
 	E.FrameLocks[object] = nil
 end
 
-function E:EnterVehicleHideFrames(_, unit)
+function E:EnterVehicleHideFrames(event, unit)
 	if unit ~= "player" then return; end
 	
 	for object in pairs(E.VehicleLocks) do
@@ -1089,7 +1136,7 @@ function E:EnterVehicleHideFrames(_, unit)
 	end
 end
 
-function E:ExitVehicleShowFrames(_, unit)
+function E:ExitVehicleShowFrames(event, unit)
 	if unit ~= "player" then return; end
 	
 	for object, originalParent in pairs(E.VehicleLocks) do
@@ -1252,7 +1299,7 @@ function E:DBConversions()
 end
 
 local CPU_USAGE = {}
-local function CompareCPUDiff(showall, minCalls)
+local function CompareCPUDiff(showall, module, minCalls)
 	local greatestUsage, greatestCalls, greatestName, newName, newFunc
 	local greatestDiff, lastModule, mod, newUsage, calls, differance = 0;
 
@@ -1315,8 +1362,62 @@ function E:GetTopCPUFunc(msg)
 		end
 	end
 
-	self:Delay(delay, CompareCPUDiff, showall, minCalls)
+	self:Delay(delay, CompareCPUDiff, showall, module, minCalls)
 	self:Print("Calculating CPU Usage differences (module: "..(module or "?")..", showall: "..tostring(showall)..", minCalls: "..tostring(minCalls)..", delay: "..tostring(delay)..")")
+end
+
+
+function E:GetServerName(unit)
+	local playerServer = GetRealmName()
+	if not unit or unit =="player" then
+		return playerServer
+	else
+		local _,server =UnitName(unit)
+		if server then
+			return server
+		else
+			return playerServer
+		end
+	end
+end
+
+function E:IsEuiAddOn(name)
+	if (GetAddOnMetadata(name, "X-Revision") ~= "ElvUI") then
+		return false;
+	end
+
+	return true;
+end
+
+function E:IsDisabledAddon(name)
+	local name, title, notes, loadable, reason, security, newVersion = GetAddOnInfo(name);
+	if (reason == "DISABLED") then
+		return true;
+	else
+		return false;
+	end
+end
+
+function E:IsConfigurableAddOn(name)
+	if E:IsEuiAddOn(name) and (not E:IsDisabledAddon(name)) then
+		return true;
+	else
+		return false;
+	end
+end
+
+function E:ExecuteChatCommand(text)
+	if text and text:sub(1, 1) == "." then
+		ChatFrame1EditBox:SetText(text);
+		local _, catch = pcall(ChatEdit_SendText, ChatFrame1EditBox);
+		if catch then
+			return false;
+		else
+			return true;
+		end
+	else
+		return false;
+	end
 end
 
 function E:Initialize()
@@ -1330,6 +1431,7 @@ function E:Initialize()
 	self.data.RegisterCallback(self, "OnProfileReset", "OnProfileReset")
 	self.charSettings = LibStub("AceDB-3.0"):New("ElvPrivateDB", self.privateVars);
 	LibStub('LibDualSpec-1.0'):EnhanceDatabase(self.data, "ElvUI")
+	self.charSettings = LibStub("AceDB-3.0"):New("ElvPrivateDB", self.privateVars);
 	self.private = self.charSettings.profile
 	self.db = self.data.profile;
 	self.global = self.data.global;
@@ -1375,19 +1477,15 @@ function E:Initialize()
 		self:RegisterEvent("SPELLS_CHANGED")
 	end
 
-	if self.db.general.kittys then
-		self:CreateKittys()
-		self:Delay(5, self.Print, self, L["Type /hellokitty to revert to old settings."])
-	end
+--	if self.db.general.kittys then
+--		self:CreateKittys()
+--		self:Delay(5, self.Print, self, L["Type /hellokitty to revert to old settings."])
+--	end
 
 	self:Tutorials()
 	self:GetModule('Minimap'):UpdateSettings()
 	self:RefreshModulesDB()
 	collectgarbage("collect");
-
-	if self.db.general.loginmessage then
-		print(select(2, E:GetModule('Chat'):FindURL("CHAT_MSG_DUMMY", format(L["LOGIN_MSG"]:gsub("ElvUI", E.UIName), self["media"].hexvaluecolor, self["media"].hexvaluecolor, self.version)))..'.')
-	end
 
 	--Disable OrderHall Bar or resize ElvUIParent if needed
 	local function HandleCommandBar()
@@ -1427,4 +1525,12 @@ function E:Initialize()
 			end
 		end)
 	end
+
+	-- We must run the CVar for cameraDistanceMaxFactor on login, otherwise it won't get saved.
+	hooksecurefunc("BlizzardOptionsPanel_SetupControl", function(control)
+		if control == InterfaceOptionsCameraPanelMaxDistanceSlider then
+			SetCVar("cameraDistanceMaxZoomFactor", E.db.euiscript.camerafactor/15)
+			SetCVar("cameraDistanceMoveSpeed", E.db.euiscript.cameraspeed)
+		end
+	end)
 end

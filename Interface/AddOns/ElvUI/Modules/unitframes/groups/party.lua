@@ -1,32 +1,39 @@
 local E, L, V, P, G = unpack(select(2, ...)); --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local UF = E:GetModule('UnitFrames');
-local _, ns = ...
-local ElvUF = ns.oUF
-assert(ElvUF, "ElvUI was unable to locate oUF.")
 
 --Cache global variables
 --Lua functions
 local _G = _G
+local pairs = pairs
 local tinsert = table.insert
 --WoW API / Variables
 local CreateFrame = CreateFrame
 local InCombatLockdown = InCombatLockdown
-local IsInInstance = IsInInstance
-local RegisterStateDriver = RegisterStateDriver
 local UnregisterStateDriver = UnregisterStateDriver
+local RegisterStateDriver = RegisterStateDriver
+local IsInInstance = IsInInstance
 
 --Global variables that we don't cache, list them here for mikk's FindGlobals script
 -- GLOBALS: UnitFrame_OnEnter, UnitFrame_OnLeave
 
-function UF:Construct_PartyFrames()
+local _, ns = ...
+local ElvUF = ns.oUF
+assert(ElvUF, "ElvUI was unable to locate oUF.")
+
+function UF:Construct_PartyFrames(unitGroup)
 	self:SetScript('OnEnter', UnitFrame_OnEnter)
 	self:SetScript('OnLeave', UnitFrame_OnLeave)
 
 	self.RaisedElementParent = CreateFrame('Frame', nil, self)
+	self.RaisedElementParent.TextureParent = CreateFrame('Frame', nil, self.RaisedElementParent)
 	self.RaisedElementParent:SetFrameLevel(self:GetFrameLevel() + 100)
 	self.BORDER = E.Border
 	self.SPACING = E.Spacing
 	self.SHADOW_SPACING = 3
+
+	if E.db["clickset"].enable then
+		self.ClickSet = E.db["clickset"]
+	end
 	if self.isChild then
 		self.Health = UF:Construct_HealthBar(self, true)
 
@@ -63,12 +70,17 @@ function UF:Construct_PartyFrames()
 		self:RegisterEvent('PLAYER_ENTERING_WORLD', UF.UpdateTargetGlow)
 		self:RegisterEvent('GROUP_ROSTER_UPDATE', UF.UpdateTargetGlow)
 		self.Threat = UF:Construct_Threat(self)
+		tinsert(self.__elements, UF.UpdateClickSet)
+		self:RegisterEvent('UNIT_NAME_UPDATE', UF.UpdateClickSet)
+		self:RegisterEvent('PLAYER_REGEN_ENABLED', UF.UpdateClickSet)
+		self:RegisterEvent('PLAYER_SPECIALIZATION_CHANGED', UF.UpdateClickSet)
 		self.RaidIcon = UF:Construct_RaidIcon(self)
 		self.ReadyCheck = UF:Construct_ReadyCheckIcon(self)
 		self.HealPrediction = UF:Construct_HealComm(self)
 		self.customTexts = {}
 		self.Sparkle = CreateFrame("Frame", nil, self)
 		self.Sparkle:SetAllPoints(self.Health)
+		self.Castbar = UF:Construct_Castbar(self, 'LEFT')
 
 		self.unitframeType = "party"
 	end
@@ -165,7 +177,7 @@ function UF:Update_PartyFrames(frame, db)
 		frame.BOTTOM_OFFSET = UF:GetHealthBottomOffset(frame)
 
 		frame.USE_TARGET_GLOW = db.targetGlow
-
+		
 		frame.VARIABLES_SET = true
 	end
 
@@ -249,6 +261,8 @@ function UF:Update_PartyFrames(frame, db)
 		UF:Configure_ReadyCheckIcon(frame)
 
 		UF:Configure_CustomTexts(frame)
+
+		UF:Configure_Castbar(frame)
 	end
 
 	UF:Configure_Range(frame)

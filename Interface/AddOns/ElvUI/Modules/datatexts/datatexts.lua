@@ -25,7 +25,6 @@ function DT:Initialize()
 	TT:HookScript(self.tooltip, 'OnShow', 'SetStyle')
 
 	self:RegisterLDB()
-	self:RegisterCustomCurrencyDT() --Register all the user created currency datatexts from the "CustomCurrency" DT.
 	self:LoadDataTexts()
 
 	self:RegisterEvent('PLAYER_ENTERING_WORLD', 'LoadDataTexts')
@@ -74,9 +73,9 @@ function DT:RegisterLDB()
 			obj.OnClick(self, button)
 		end
 
-		local function textUpdate(_, name, _, value)
+		local function textUpdate(event, name, key, value, dataobj)
 			if value == nil or (len(value) >= 3) or value == 'n/a' or name == value then
-				curFrame.text:SetText(value ~= 'n/a' and value or name)
+				curFrame.text:SetText(value ~= 'n/a' and (value or name) or name)
 			else
 				curFrame.text:SetFormattedText("%s: %s%s|r", name, hex, value)
 			end
@@ -89,7 +88,7 @@ function DT:RegisterLDB()
 			LDB.callbacks:Fire("LibDataBroker_AttributeChanged_"..name.."_text", name, nil, obj.text, obj)
 		end
 
-		self:RegisterDatatext(name, {'PLAYER_ENTER_WORLD'}, OnEvent, nil, OnClick, OnEnter, OnLeave)
+		self:RegisterDatatext(name, {'PLAYER_ENTERING_WORLD'}, OnEvent, nil, OnClick, OnEnter, OnLeave)
 	end
 end
 
@@ -148,13 +147,17 @@ function DT:RegisterPanel(panel, numPoints, anchor, xOff, yOff)
 	for i=1, numPoints do
 		local pointIndex = DT.PointLocation[i]
 		if not panel.dataPanels[pointIndex] then
-			panel.dataPanels[pointIndex] = CreateFrame('Button', 'DataText'..i, panel)
+			panel.dataPanels[pointIndex] = CreateFrame('Button', panel:GetName()..'DataText'..i, panel) --by eui.cc
 			panel.dataPanels[pointIndex]:RegisterForClicks("AnyUp")
 			panel.dataPanels[pointIndex].text = panel.dataPanels[pointIndex]:CreateFontString(nil, 'OVERLAY')
 			panel.dataPanels[pointIndex].text:SetAllPoints()
 			panel.dataPanels[pointIndex].text:FontTemplate()
 			panel.dataPanels[pointIndex].text:SetJustifyH("CENTER")
 			panel.dataPanels[pointIndex].text:SetJustifyV("MIDDLE")
+			panel.dataPanels[pointIndex].text:SetWordWrap(false)
+			panel.dataPanels[pointIndex].tex = panel.dataPanels[pointIndex]:CreateTexture(nil, 'OVERLAY')
+			panel.dataPanels[pointIndex].tex:SetPoint("RIGHT", panel.dataPanels[pointIndex].text, "LEFT", -2, 0)
+			panel.dataPanels[pointIndex].tex:SetAlpha(0.7)
 		end
 
 		panel.dataPanels[pointIndex]:Point(DT:GetDataPanelPoint(panel, i, numPoints))
@@ -162,6 +165,21 @@ function DT:RegisterPanel(panel, numPoints, anchor, xOff, yOff)
 
 	panel:SetScript('OnSizeChanged', DT.UpdateAllDimensions)
 	DT.UpdateAllDimensions(panel)
+end
+
+function DT:ColorText()
+	for panelName, panel in pairs(DT.RegisteredPanels) do
+		for i = 1, panel.numPoints do
+			local pointIndex = DT.PointLocation[i]
+			if E.db.datatexts.customColor == 1 then
+				panel.dataPanels[pointIndex].text:SetTextColor(RAID_CLASS_COLORS[E.myclass].r, RAID_CLASS_COLORS[E.myclass].g, RAID_CLASS_COLORS[E.myclass].b)
+			elseif E.db.datatexts.customColor == 2 then
+				panel.dataPanels[pointIndex].text:SetTextColor(E.db.datatexts.userColor.r, E.db.datatexts.userColor.g, E.db.datatexts.userColor.b)
+			else
+				panel.dataPanels[pointIndex].text:SetTextColor(E.db.general.valuecolor.r, E.db.general.valuecolor.g, E.db.general.valuecolor.b)
+			end	
+		end
+	end
 end
 
 function DT:AssignPanelToDataText(panel, data)
@@ -219,14 +237,41 @@ function DT:LoadDataTexts()
 	self.db = E.db.datatexts
 	for name, obj in LDB:DataObjectIterator() do
 		LDB:UnregisterAllCallbacks(self)
+	end	
+	
+	if self.db.panels.AB1Infobar.left == '' and self.db.panels.AB1Infobar.middle == '' and self.db.panels.AB1Infobar.right == '' then
+		if AB1Infobar then AB1Infobar:Hide() end
+	else
+		if AB1Infobar then AB1Infobar:Show() end
 	end
-
+	if AB5Infobar then
+		if self.db.panels.AB5Infobar == '' then
+			AB5Infobar:Hide()
+		else
+			AB5Infobar:Show()
+		end
+	end
+	if AB3Infobar then
+		if self.db.panels.AB3Infobar == '' then
+			AB3Infobar:Hide()
+		else
+			AB3Infobar:Show()
+		end
+	end
+	local panelnum = 3
+	if self.db.panels.TopDataTextsBar3['left'] == '' then panelnum = panelnum -1; end
+	if self.db.panels.TopDataTextsBar3['middle'] == '' then panelnum = panelnum -1; end
+	if self.db.panels.TopDataTextsBar3['right'] == '' then panelnum = panelnum -1; end
+	if TopDataTextsBar3 then if panelnum == 0 then TopDataTextsBar3:Hide() else TopDataTextsBar3:Show() end end
+	if TopDataTextsBar1 then if self.db.panels.TopDataTextsBar1 == '' then TopDataTextsBar1:Hide() else TopDataTextsBar1:Show() end end
+	if TopDataTextsBar2 then if self.db.panels.TopDataTextsBar2 == '' then TopDataTextsBar2:Hide() else TopDataTextsBar2:Show() end end
+	if TopDataTextsBar4 then if self.db.panels.TopDataTextsBar4 == '' then TopDataTextsBar4:Hide() else TopDataTextsBar4:Show() end end
+	
 	local inInstance, instanceType = IsInInstance()
 	local fontTemplate = LSM:Fetch("font", self.db.font)
 	if ElvConfigToggle then
 		ElvConfigToggle.text:FontTemplate(fontTemplate, self.db.fontSize, self.db.fontOutline)
 	end
-	
 	for panelName, panel in pairs(DT.RegisteredPanels) do
 		--Restore Panels
 		for i=1, panel.numPoints do
@@ -239,6 +284,8 @@ function DT:LoadDataTexts()
 			panel.dataPanels[pointIndex].text:FontTemplate(fontTemplate, self.db.fontSize, self.db.fontOutline)
 			panel.dataPanels[pointIndex].text:SetWordWrap(self.db.wordWrap)
 			panel.dataPanels[pointIndex].text:SetText(nil)
+			panel.dataPanels[pointIndex].tex:Size(E.db.infobar.height-2)
+			panel.dataPanels[pointIndex].tex:SetTexture(nil)
 			panel.dataPanels[pointIndex].pointIndex = pointIndex
 
 			if (panelName == 'LeftChatDataPanel' or panelName == 'RightChatDataPanel') and (inInstance and (instanceType == "pvp")) and not DT.ForceHideBGStats and E.db.datatexts.battleground then
@@ -270,6 +317,8 @@ function DT:LoadDataTexts()
 	if DT.ForceHideBGStats then
 		DT.ForceHideBGStats = nil;
 	end
+	
+	DT:ColorText()
 end
 
 --[[

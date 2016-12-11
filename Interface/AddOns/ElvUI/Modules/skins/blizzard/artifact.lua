@@ -21,4 +21,4 @@ local function LoadSkin()
 	ArtifactFrame.ForgeBadgeFrame.ForgeLevelBackground:SetPoint("TOPLEFT", ArtifactFrame)
 end
 
-S:AddCallbackForAddon("Blizzard_ArtifactUI", "Artifact", LoadSkin)
+S:RegisterSkin("Blizzard_ArtifactUI", LoadSkin)

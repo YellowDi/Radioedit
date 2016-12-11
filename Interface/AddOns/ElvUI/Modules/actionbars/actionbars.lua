@@ -21,6 +21,7 @@ local UnitOnTaxi = UnitOnTaxi
 local VehicleExit = VehicleExit
 local PetDismiss = PetDismiss
 local CanExitVehicle = CanExitVehicle
+local ActionBarController_GetCurrentActionBarState = ActionBarController_GetCurrentActionBarState
 local TaxiRequestEarlyLanding = TaxiRequestEarlyLanding
 local MainMenuBarVehicleLeaveButton_OnEnter = MainMenuBarVehicleLeaveButton_OnEnter
 local RegisterStateDriver = RegisterStateDriver
@@ -38,11 +39,16 @@ local GetNumFlyouts, GetFlyoutInfo = GetNumFlyouts, GetFlyoutInfo
 local GetFlyoutID = GetFlyoutID
 local GetMouseFocus = GetMouseFocus
 local HasOverrideActionBar, HasVehicleActionBar = HasOverrideActionBar, HasVehicleActionBar
-local SetCVar = SetCVar
+local GetCVarBool, SetCVar = GetCVarBool, SetCVar
 local C_PetBattlesIsInBattle = C_PetBattles.IsInBattle
 local NUM_ACTIONBAR_BUTTONS = NUM_ACTIONBAR_BUTTONS
+local LE_ACTIONBAR_STATE_MAIN = LE_ACTIONBAR_STATE_MAIN
+local BOTTOMLEFT_ACTIONBAR_PAGE = BOTTOMLEFT_ACTIONBAR_PAGE
+local BOTTOMRIGHT_ACTIONBAR_PAGE = BOTTOMRIGHT_ACTIONBAR_PAGE
+local RIGHT_ACTIONBAR_PAGE = RIGHT_ACTIONBAR_PAGE
+local LEFT_ACTIONBAR_PAGE = LEFT_ACTIONBAR_PAGE
 
---Global variables that we don't need to cache, list them here for mikk's FindGlobals script
+--Global variables that we don't cache, list them here for mikk's FindGlobals script
 -- GLOBALS: LeaveVehicleButton, Minimap, SpellFlyout, SpellFlyoutHorizontalBackground
 -- GLOBALS: SpellFlyoutVerticalBackground, IconIntroTracker, MultiCastActionBarFrame
 -- GLOBALS: PetActionBarFrame, PossessBarFrame, OverrideActionBar, StanceBarFrame
@@ -53,13 +59,14 @@ local NUM_ACTIONBAR_BUTTONS = NUM_ACTIONBAR_BUTTONS
 -- GLOBALS: InterfaceOptionsActionBarsPanelBottomRight, InterfaceOptionsActionBarsPanelBottomLeft
 -- GLOBALS: InterfaceOptionsActionBarsPanelRight, InterfaceOptionsActionBarsPanelRightTwo
 -- GLOBALS: InterfaceOptionsActionBarsPanelPickupActionKeyDropDownButton
--- GLOBALS: InterfaceOptionsActionBarsPanelLockActionBars, LOCK_ACTIONBAR
+-- GLOBALS: InterfaceOptionsActionBarsPanelLockActionBars
 -- GLOBALS: InterfaceOptionsActionBarsPanelPickupActionKeyDropDown
--- GLOBALS: InterfaceOptionsStatusTextPanelXP, ArtifactWatchBar, HonorWatchBar
+-- GLOBALS: InterfaceOptionsStatusTextPanelXP
 -- GLOBALS: PlayerTalentFrame, SpellFlyoutBackgroundEnd, UIParent
 -- GLOBALS: VIEWABLE_ACTION_BAR_PAGES, SHOW_MULTI_ACTIONBAR_1, SHOW_MULTI_ACTIONBAR_2
 -- GLOBALS: SHOW_MULTI_ACTIONBAR_3, SHOW_MULTI_ACTIONBAR_4
 
+local Sticky = LibStub("LibSimpleSticky-1.0");
 local _LOCK
 local LAB = LibStub("LibActionButton-1.0-ElvUI")
 local LSM = LibStub("LibSharedMedia-3.0")
@@ -104,15 +111,33 @@ AB["barDefaults"] = {
 		['position'] = "RIGHT,ElvUI_Bar1,LEFT,-4,0",
 	},
 	["bar6"] = {
-		['page'] = 2,
+		['page'] = 8,
 		['bindButtons'] = "ELVUIBAR6BUTTON",
 		['conditions'] = "",
-		['position'] = "BOTTOM,ElvUI_Bar2,TOP,0,2",
-	},
+		['position'] = "BOTTOM,ElvUI_Bar1,TOP,0,100",
+	},	
+	["bar7"] = {
+		['page'] = 9,
+		['bindButtons'] = "ELVUIBAR7BUTTON",
+		['conditions'] = "",
+		['position'] = "BOTTOM,ElvUI_Bar1,TOP,0,150",
+	},	
+	["bar8"] = {
+		['page'] = 10,
+		['bindButtons'] = "ELVUIBAR8BUTTON",
+		['conditions'] = "",
+		['position'] = "BOTTOM,ElvUI_Bar1,TOP,0,200",
+	},	
+	["bar9"] = {
+		['page'] = 7,
+		['bindButtons'] = "ELVUIBAR9BUTTON",
+		['conditions'] = "",
+		['position'] = "BOTTOM,ElvUI_Bar1,TOP,0,250",
+	},	
 }
 
 AB.customExitButton = {
-	func = function()
+	func = function(button)
 		if UnitExists('vehicle') then
 			VehicleExit()
 		else
@@ -404,7 +429,7 @@ function AB:CreateBar(id)
 	]]);
 
 	self["handledBars"]['bar'..id] = bar;
-	E:CreateMover(bar, 'ElvAB_'..id, L["Bar "]..id, nil, nil, nil,'ALL,ACTIONBARS')
+	E:CreateMover(bar, 'ElvAB_'..id, L["Bar "]..id, nil, nil, nil,'ALL,ACTIONBARS', function() return E.db.actionbar['bar'..id].enabled; end)
 	self:PositionAndSizeBar('bar'..id);
 	return bar
 end
@@ -414,7 +439,7 @@ function AB:PLAYER_REGEN_ENABLED()
 	self:UnregisterEvent('PLAYER_REGEN_ENABLED')
 end
 
-local function Vehicle_OnEvent(self)
+local function Vehicle_OnEvent(self, event)
 	if ( CanExitVehicle() ) and not E.db.general.minimap.icons.vehicleLeave.hide then
 		self:Show()
 		self:GetNormalTexture():SetVertexColor(1, 1, 1)
@@ -510,11 +535,11 @@ function AB:RemoveBindings()
 end
 
 function AB:UpdateBar1Paging()
-	if self.db.bar6.enabled then
-		E.ActionBars.barDefaults.bar1.conditions = format("[possessbar] %d; [overridebar] %d; [shapeshift] 13; [form,noform] 0; [bar:3] 3; [bar:4] 4; [bar:5] 5; [bar:6] 6;", GetVehicleBarIndex(), GetOverrideBarIndex())
-	else
-		E.ActionBars.barDefaults.bar1.conditions = format("[possessbar] %d; [overridebar] %d; [shapeshift] 13; [form,noform] 0; [bar:2] 2; [bar:3] 3; [bar:4] 4; [bar:5] 5; [bar:6] 6;", GetVehicleBarIndex(), GetOverrideBarIndex())
-	end
+--	if self.db.bar6.enabled then
+--		E.ActionBars.barDefaults.bar1.conditions = format("[possessbar] %d; [overridebar] %d; [shapeshift] 13; [form,noform] 0; [bar:3] 3; [bar:4] 4; [bar:5] 5; [bar:6] 6;", GetVehicleBarIndex(), GetOverrideBarIndex())
+--	else
+--		E.ActionBars.barDefaults.bar1.conditions = format("[possessbar] %d; [overridebar] %d; [shapeshift] 13; [form,noform] 0; [bar:2] 2; [bar:3] 3; [bar:4] 4; [bar:5] 5; [bar:6] 6;", GetVehicleBarIndex(), GetOverrideBarIndex())
+--	end
 
 	if (E.private.actionbar.enable ~= true or InCombatLockdown()) or not self.isInitialized then return; end
 	local bar2Option = InterfaceOptionsActionBarsPanelBottomRight
@@ -577,7 +602,7 @@ function AB:UpdateButtonSettings()
 		self:UpdateButtonConfig(bar, bar.bindButtons)
 	end
 
-	for i=1, 6 do
+	for i=1, 9 do
 		self:PositionAndSizeBar('bar'..i)
 	end
 	self:PositionAndSizeBarPet()
@@ -603,9 +628,11 @@ function AB:StyleButton(button, noBackdrop, useMasque)
 	local flash	 = _G[name.."Flash"];
 	local hotkey = _G[name.."HotKey"];
 	local border  = _G[name.."Border"];
+	local macroName = _G[name.."Name"];
 	local normal  = _G[name.."NormalTexture"];
 	local normal2 = button:GetNormalTexture()
 	local shine = _G[name.."Shine"];
+	local combat = InCombatLockdown()
 	local color = self.db.fontColor
 
 	if not button.noBackdrop then
@@ -648,6 +675,10 @@ function AB:StyleButton(button, noBackdrop, useMasque)
 	if self.db.hotkeytext then
 		hotkey:FontTemplate(LSM:Fetch("font", self.db.font), self.db.fontSize, self.db.fontOutline)
 		hotkey:SetTextColor(color.r, color.g, color.b)
+	end
+
+	if self.db.macrotext and macroName then
+		macroName:FontTemplate(LSM:Fetch("font", self.db.font), self.db.fontSize, self.db.fontOutline)
 	end
 
 	--Extra Action Button
@@ -726,7 +757,7 @@ function AB:BlizzardOptionsPanel_OnEvent()
 	InterfaceOptionsActionBarsPanelRight:SetScript('OnEnter', nil)
 end
 
-function AB:FadeParent_OnEvent()
+function AB:FadeParent_OnEvent(event)
 	local cur, max = UnitHealth("player"), UnitHealthMax("player")
 	local cast, channel = UnitCastingInfo("player"), UnitChannelInfo("player")
 	local target, focus = UnitExists("target"), UnitExists("focus")
@@ -854,7 +885,7 @@ function AB:DisableBlizzard()
 	InterfaceOptionsActionBarsPanelPickupActionKeyDropDown:SetAlpha(0)
 	InterfaceOptionsActionBarsPanelPickupActionKeyDropDown:SetScale(0.0001)
 	self:SecureHook('BlizzardOptionsPanel_OnEvent')
-	--InterfaceOptionsFrameCategoriesButton6:SetScale(0.00001)
+	--InterfaceOptionsFrameCategoriesButton6:SetScale(0.0001)
 	if PlayerTalentFrame then
 		PlayerTalentFrame:UnregisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
 	else
@@ -994,6 +1025,10 @@ function AB:StyleFlyout(button)
 		end
 	end
 
+	if button:GetParent() and button:GetParent():GetParent() and button:GetParent():GetParent():GetName() and button:GetParent():GetParent():GetName() == "SpellBookSpellIconsFrame" then
+		return
+	end
+
 	--Change arrow direction depending on what bar the button is on
 	local arrowDistance
 	if ((SpellFlyout:IsShown() and SpellFlyout:GetParent() == button) or GetMouseFocus() == button) then
@@ -1001,31 +1036,28 @@ function AB:StyleFlyout(button)
 	else
 		arrowDistance = 2
 	end
-
-	if button:GetParent() and button:GetParent():GetParent() and button:GetParent():GetParent():GetName() and button:GetParent():GetParent():GetName() == "SpellBookSpellIconsFrame" then
-		return
-	end
-
-	if button:GetParent() then
-		local point = E:GetScreenQuadrant(button:GetParent())
+	local actionbar = button:GetParent()
+	if actionbar then
+		local direction = actionbar.db and actionbar.db.flyoutDirection or "AUTOMATIC"
+		local point = E:GetScreenQuadrant(actionbar)
 		if point == "UNKNOWN" then return end
 
-		if strfind(point, "TOP") then
+		if ((direction == "AUTOMATIC" and strfind(point, "TOP")) or direction == "DOWN") then
 			button.FlyoutArrow:ClearAllPoints()
 			button.FlyoutArrow:Point("BOTTOM", button, "BOTTOM", 0, -arrowDistance)
 			SetClampedTextureRotation(button.FlyoutArrow, 180)
 			if not combat then button:SetAttribute("flyoutDirection", "DOWN") end
-		elseif point == "RIGHT" then
+		elseif ((direction == "AUTOMATIC" and point == "RIGHT") or direction == "LEFT") then
 			button.FlyoutArrow:ClearAllPoints()
 			button.FlyoutArrow:Point("LEFT", button, "LEFT", -arrowDistance, 0)
 			SetClampedTextureRotation(button.FlyoutArrow, 270)
 			if not combat then button:SetAttribute("flyoutDirection", "LEFT") end
-		elseif point == "LEFT" then
+		elseif ((direction == "AUTOMATIC" and point == "LEFT") or direction == "RIGHT") then
 			button.FlyoutArrow:ClearAllPoints()
 			button.FlyoutArrow:Point("RIGHT", button, "RIGHT", arrowDistance, 0)
 			SetClampedTextureRotation(button.FlyoutArrow, 90)
 			if not combat then button:SetAttribute("flyoutDirection", "RIGHT") end
-		elseif point == "CENTER" or strfind(point, "BOTTOM") then
+		elseif ((direction == "AUTOMATIC" and (point == "CENTER" or strfind(point, "BOTTOM"))) or direction == "UP") then
 			button.FlyoutArrow:ClearAllPoints()
 			button.FlyoutArrow:Point("TOP", button, "TOP", 0, arrowDistance)
 			SetClampedTextureRotation(button.FlyoutArrow, 0)
@@ -1075,6 +1107,42 @@ function AB:VehicleFix()
 	end
 end
 
+function AB:EuiStyle(value)
+	if E.db.movers == nil then E.db.movers = {} end
+	if not value then value = self.db.euiabstyle end
+	local offsetX1, offsetX3, offsetX5 = 0, 0, 0
+	
+	if AB1Infobar:IsShown() then offsetX1 = 25 end
+	if AB5Infobar:IsShown() then offsetX5 = 25 end
+	if AB3Infobar:IsShown() then offsetX3 = 25 end
+	
+	for i = 1, 5 do
+		E:ResetMovers('ElvAB_'..i)
+	end
+	E:ResetMovers('PetAB')
+
+	E.db.movers.ElvAB_1 = string.format('%s,%s,%s,%d,%d','BOTTOM', 'ElvUIParent', 'BOTTOM', 0, 4 + offsetX1)
+	if value == 'Low' then	
+		E.db.movers.ElvAB_2 = string.format('%s,%s,%s,%d,%d','BOTTOM', 'ElvUIParent', 'BOTTOM', 0, 4 + self.db['bar1'].buttonsize + self.db['bar1'].buttonspacing + offsetX1)
+		E.db.movers.ElvAB_3 = string.format('%s,%s,%s,%d,%d', 'BOTTOM', 'ElvUIParent', 'BOTTOM', 0, 4 + self.db['bar1'].buttonsize + self.db['bar1'].buttonspacing + self.db['bar2'].buttonsize + self.db['bar2'].buttonspacing + offsetX1)
+		E.db.movers.ElvAB_4 = string.format('%s,%s,%s,%d,%d', 'RIGHT', 'ElvUIParent', 'RIGHT', -4, 0)
+		E.db.movers.ElvAB_5 = string.format('%s,%s,%s,%d,%d', 'RIGHT', 'ElvUIParent', 'RIGHT', -(4 + self.db['bar4'].buttonsize + self.db['bar4'].buttonspacing), 0)
+		E.db.movers.PetAB = string.format('%s,%s,%s,%d,%d', 'RIGHT', 'ElvUIParent', 'RIGHT', -(4 + self.db['bar4'].buttonsize + self.db['bar4'].buttonspacing) - self.db['bar5'].buttonsize - self.db['bar5'].buttonspacing * 2 - 4, 0)
+	elseif value == 'Middle' then
+		E.db.movers.ElvAB_2 = string.format('%s,%s,%s,%d,%d', 'BOTTOM', 'ElvUIParent', 'BOTTOM', 0, 4 + self.db['bar1'].buttonsize + self.db['bar1'].buttonspacing + offsetX1)
+		E.db.movers.ElvAB_4 = string.format('%s,%s,%s,%d,%d', 'BOTTOM', 'ElvUIParent', 'BOTTOM', 0, 4 + self.db['bar1'].buttonsize + self.db['bar1'].buttonspacing + self.db['bar2'].buttonsize + self.db['bar2'].buttonspacing + offsetX1)
+		E.db.movers.ElvAB_3 = string.format('%s,%s,%s,%d,%d', 'BOTTOMLEFT', 'ElvUIParent', 'BOTTOM', 4 + self.db['bar4'].buttonsize * 6 + self.db['bar4'].buttonspacing * 7, 4 + offsetX3)
+		E.db.movers.ElvAB_5 = string.format('%s,%s,%s,%d,%d', 'BOTTOMRIGHT', 'ElvUIParent', 'BOTTOM', -(4 + self.db['bar4'].buttonsize * 6 + self.db['bar4'].buttonspacing * 7), 4 + offsetX5)
+		E.db.movers.PetAB = string.format('%s,%s,%s,%d,%d', 'RIGHT', 'ElvUIParent', 'RIGHT', -4, 0)
+	elseif value == 'High' then
+		E.db.movers.ElvAB_2 = string.format('%s,%s,%s,%d,%d', 'BOTTOM', 'ElvUIParent', 'BOTTOM', 0, 4 + self.db['bar1'].buttonsize + self.db['bar1'].buttonspacing + offsetX1)
+		E.db.movers.ElvAB_4 = string.format('%s,%s,%s,%d,%d', 'RIGHT', 'ElvUIParent', 'RIGHT', -4, 0)
+		E.db.movers.ElvAB_3 = string.format('%s,%s,%s,%d,%d', 'BOTTOMLEFT', 'ElvUIParent', 'BOTTOM', 4 + self.db['bar4'].buttonsize * 6 + self.db['bar4'].buttonspacing * 7, 4 + offsetX3)
+		E.db.movers.ElvAB_5 = string.format('%s,%s,%s,%d,%d', 'BOTTOMRIGHT', 'ElvUIParent', 'BOTTOM', -(4 + self.db['bar4'].buttonsize * 6 + self.db['bar4'].buttonspacing * 7), 4 + offsetX5)
+		E.db.movers.PetAB = string.format('%s,%s,%s,%d,%d', 'RIGHT', 'ElvUIParent', 'RIGHT', -(4 + self.db['bar4'].buttonsize + self.db['bar4'].buttonspacing * 2 + 4), 0)
+	end
+end
+
 local color
 --Update text color when button is updated
 function AB:LAB_ButtonUpdate(button)
@@ -1109,7 +1177,7 @@ function AB:Initialize()
 	self:SetupMicroBar()
 	self:UpdateBar1Paging()
 
-	for i=1, 6 do
+	for i=1, 9 do
 		self:CreateBar(i)
 	end
 	self:CreateBarPet()
@@ -1125,6 +1193,7 @@ function AB:Initialize()
 	self:RegisterEvent('PET_BATTLE_OPENING_DONE', 'RemoveBindings')
 	self:RegisterEvent('UPDATE_VEHICLE_ACTIONBAR', 'VehicleFix')
 	self:RegisterEvent('UPDATE_OVERRIDE_ACTIONBAR', 'VehicleFix')
+	self:RegisterEvent('VEHICLE_UPDATE', 'UpdateButtonSettings')
 
 	if C_PetBattlesIsInBattle() then
 		self:RemoveBindings()
@@ -1134,7 +1203,7 @@ function AB:Initialize()
 
 	--We handle actionbar lock for regular bars, but the lock on PetBar needs to be handled by WoW so make some necessary updates
 	SetCVar('lockActionBars', (self.db.lockActionBars == true and 1 or 0))
-	LOCK_ACTIONBAR = (self.db.lockActionBars == true and "1" or "0") --Keep an eye on this, in case it taints
+	LOCK_ACTIONBAR = (self.db.lockActionBars == true and "1" or "0")
 
 	SpellFlyout:HookScript("OnShow", SetupFlyoutButton)
 end

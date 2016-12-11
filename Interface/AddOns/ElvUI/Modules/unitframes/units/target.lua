@@ -7,9 +7,18 @@ assert(ElvUF, "ElvUI was unable to locate oUF.")
 --Cache global variables
 --Lua functions
 local _G = _G
+local pairs, unpack = pairs, unpack
 local tinsert = table.insert
+local ceil = math.ceil
+local format = format
 --WoW API / Variables
 local IsAddOnLoaded = IsAddOnLoaded
+local RAID_CLASS_COLORS = RAID_CLASS_COLORS
+local CUSTOM_CLASS_COLORS = CUSTOM_CLASS_COLORS
+local MAX_COMBO_POINTS = MAX_COMBO_POINTS
+
+--Global variables that we don't cache, list them here for mikk's FindGlobals script
+-- GLOBALS: ElvUF_Player
 
 function UF:Construct_TargetFrame(frame)
 	frame.Health = self:Construct_HealthBar(frame, true, true, 'RIGHT')
@@ -22,12 +31,16 @@ function UF:Construct_TargetFrame(frame)
 
 	frame.Portrait3D = self:Construct_Portrait(frame, 'model')
 	frame.Portrait2D = self:Construct_Portrait(frame, 'texture')
+	frame.RangeText = self:Construct_RangeText(frame)
 
 	frame.Buffs = self:Construct_Buffs(frame)
+	frame:RegisterEvent('PLAYER_TARGET_CHANGED', UF.UpdateTargetRare)
+	frame:RegisterEvent('UNIT_TARGET', UF.UpdateTargetRare)
+	frame.Rare = self:Construct_RareElite(frame) --Rare Elite Texture	
 
 	frame.Debuffs = self:Construct_Debuffs(frame)
 	frame.Threat = self:Construct_Threat(frame)
-	frame.Castbar = self:Construct_Castbar(frame, L["Target Castbar"])
+	frame.Castbar = self:Construct_Castbar(frame, 'RIGHT', L["Target Castbar"])
 	frame.Castbar.SafeZone = nil
 	frame.Castbar.LatencyTexture:Hide()
 	frame.RaidIcon = UF:Construct_RaidIcon(frame)
@@ -38,7 +51,7 @@ function UF:Construct_TargetFrame(frame)
 	frame.Range = UF:Construct_Range(frame)
 	frame.PvP = UF:Construct_PvPIcon(frame)
 	frame.customTexts = {}
-	frame:Point('BOTTOMRIGHT', E.UIParent, 'BOTTOM', 413, 68)
+	frame:Point('BOTTOMRIGHT', E.UIParent, 'BOTTOM', 413, 135)
 	E:CreateMover(frame, frame:GetName()..'Mover', L["Target Frame"], nil, nil, nil, 'ALL,SOLO')
 
 	frame.unitframeType = "target"
@@ -70,7 +83,7 @@ function UF:Update_TargetFrame(frame, db)
 		frame.INFO_PANEL_HEIGHT = frame.USE_INFO_PANEL and db.infoPanel.height or 0
 
 		frame.BOTTOM_OFFSET = UF:GetHealthBottomOffset(frame)
-
+		
 		frame.VARIABLES_SET = true
 	end
 
@@ -133,6 +146,12 @@ function UF:Update_TargetFrame(frame, db)
 
 	--CustomTexts
 	UF:Configure_CustomTexts(frame)
+	
+	--Rare
+	UF:Configure_RareElite(frame)
+	
+	--RangeText
+	UF:Configure_RangeText(frame)
 
 	E:SetMoverSnapOffset(frame:GetName()..'Mover', -(12 + db.castbar.height))
 	frame:UpdateAllElements("ElvUI_UpdateAllElements")

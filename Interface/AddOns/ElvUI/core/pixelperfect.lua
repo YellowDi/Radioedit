@@ -81,6 +81,11 @@ function E:UIScale(event)
 			UIParent:SetScale(scale)
 		end
 	end
+	
+	--SetCVar for UI scale only accepts value as low as 0.64, so scale UIParent if needed
+	if (scale < 0.64) then
+		UIParent:SetScale(scale)
+	end
 
 	if (event == 'PLAYER_LOGIN' or event == 'UI_SCALE_CHANGED') then
 		if IsMacClient() then
@@ -146,5 +151,6 @@ end
 
 -- pixel perfect script of custom ui scale.
 function E:Scale(x)
+	if type(x) ~= "number" then return; end
 	return self.mult*floor(x/self.mult+.5);
 end

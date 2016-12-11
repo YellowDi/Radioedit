@@ -389,13 +389,13 @@ local function UpdateFilterGroup()
 						order = 2,
 						type = 'range',
 						name = L["xOffset"],
-						min = -75, max = 75, step = 1,
+						min = -750, max = 750, step = 1,
 					},
 					yOffset = {
 						order = 3,
 						type = 'range',
 						name = L["yOffset"],
-						min = -75, max = 75, step = 1,
+						min = -750, max = 750, step = 1,
 					},
 					style = {
 						name = L["Style"],
@@ -497,7 +497,7 @@ local function UpdateFilterGroup()
 							UpdateFilterGroup();
 
 							UF:UpdateAuraWatchFromHeader('raid')
-							UF:UpdateAuraWatchFromHeader('raid40')
+							-- UF:UpdateAuraWatchFromHeader('raid40')
 							UF:UpdateAuraWatchFromHeader('party')
 							UF:UpdateAuraWatchFromHeader('raidpet', true)
 							selectedSpell = nil;
@@ -528,7 +528,7 @@ local function UpdateFilterGroup()
 						selectedSpell = nil;
 						UpdateFilterGroup();
 						UF:UpdateAuraWatchFromHeader('raid')
-						UF:UpdateAuraWatchFromHeader('raid40')
+						-- UF:UpdateAuraWatchFromHeader('raid40')
 						UF:UpdateAuraWatchFromHeader('party')
 						UF:UpdateAuraWatchFromHeader('raidpet', true)
 					end,
@@ -566,7 +566,7 @@ local function UpdateFilterGroup()
 					E.global.unitframe.buffwatch[E.myclass][selectedSpell][ info[#info] ] = value;
 
 					UF:UpdateAuraWatchFromHeader('raid')
-					UF:UpdateAuraWatchFromHeader('raid40')
+					-- UF:UpdateAuraWatchFromHeader('raid40')
 					UF:UpdateAuraWatchFromHeader('party')
 					UF:UpdateAuraWatchFromHeader('raidpet', true)
 				end,
@@ -596,13 +596,13 @@ local function UpdateFilterGroup()
 						order = 2,
 						type = 'range',
 						name = L["xOffset"],
-						min = -75, max = 75, step = 1,
+						min = -750, max = 750, step = 1,
 					},
 					yOffset = {
 						order = 3,
 						type = 'range',
 						name = L["yOffset"],
-						min = -75, max = 75, step = 1,
+						min = -750, max = 750, step = 1,
 					},
 					style = {
 						name = L["Style"],
@@ -626,7 +626,7 @@ local function UpdateFilterGroup()
 							local t = E.global.unitframe.buffwatch[E.myclass][selectedSpell][ info[#info] ]
 							t.r, t.g, t.b = r, g, b
 							UF:UpdateAuraWatchFromHeader('raid')
-							UF:UpdateAuraWatchFromHeader('raid40')
+							-- UF:UpdateAuraWatchFromHeader('raid40')
 							UF:UpdateAuraWatchFromHeader('party')
 							UF:UpdateAuraWatchFromHeader('raidpet', true)
 						end,
@@ -653,7 +653,7 @@ local function UpdateFilterGroup()
 							local t = E.global.unitframe.buffwatch[E.myclass][selectedSpell][ info[#info] ]
 							t.r, t.g, t.b = r, g, b
 							UF:UpdateAuraWatchFromHeader('raid')
-							UF:UpdateAuraWatchFromHeader('raid40')
+							-- UF:UpdateAuraWatchFromHeader('raid40')
 							UF:UpdateAuraWatchFromHeader('party')
 							UF:UpdateAuraWatchFromHeader('raidpet', true)
 						end,
@@ -682,16 +682,554 @@ local function UpdateFilterGroup()
 						order = 11,
 						type = 'toggle',
 					},
-				},
+					haveAnimation = {
+						name = L['have Animation'],
+						order = 13,
+						type = 'toggle',
+					},					
+				},	
 			}
 		end
+
+		buffs = nil;
+	elseif selectedFilter == 'Raid Damage reduction' then
+		local buffs = {};
+		if not E.global.unitframe.buffwatch['ALL'] then E.global.unitframe.buffwatch['ALL'] = {} end
+		for _, value in pairs(E.global.unitframe.buffwatch['ALL']) do
+			tinsert(buffs, value);
+		end		
+		
+		if not E.global.unitframe.buffwatch['ALL'] then
+			E.global.unitframe.buffwatch['ALL'] = {};
+		end		
+
+		
+		E.Options.args.filters.args.filterGroup = {
+			type = 'group',
+			name = L[selectedFilter],
+			guiInline = true,
+			order = -10,
+			childGroups = "tab",
+			args = {
+				addSpellID = {
+					order = 1,
+					name = L['Add SpellID'],
+					desc = L['Add a spell to the filter.'],
+					type = 'input',
+					get = function(info) return "" end,
+					set = function(info, value) 
+						if not tonumber(value) then
+							E:Print(L["Value must be a number"])					
+						elseif not GetSpellInfo(value) then
+							E:Print(L["Not valid spell id"])
+						else	
+							tinsert(E.global.unitframe.buffwatch['ALL'], {["enabled"] = true, ["id"] = tonumber(value), ["point"] = "TOP", ["color"] = {["r"] = 1, ["g"] = 0, ["b"] = 0}, ["anyUnit"] = true, ['style'] = 'texturedIcon'})
+							E.global.unitframe.buffwatch['ALL'][tonumber(value)] = {["enabled"] = true, ["id"] = tonumber(value), ["point"] = "TOP", ["color"] = {["r"] = 1, ["g"] = 0, ["b"] = 0}, ["anyUnit"] = true, ['style'] = 'texturedIcon', ["xOffset"] = 0, ["yOffset"] = 0}
+							UpdateFilterGroup();
+							
+							UF:UpdateAuraWatchFromHeader('raid')
+							-- UF:UpdateAuraWatchFromHeader('raid40')
+							UF:UpdateAuraWatchFromHeader('party')
+							UF:UpdateAuraWatchFromHeader('raidpet', true)
+							selectedSpell = nil;
+						end
+					end,					
+				},
+				removeSpellID = {
+					order = 2,
+					name = L['Remove SpellID'],
+					desc = L['Remove a spell from the filter.'],
+					type = 'input',
+					get = function(info) return "" end,
+					set = function(info, value) 
+						if not tonumber(value) then
+							E:Print(L["Value must be a number"])
+						elseif not GetSpellInfo(value) then
+							E:Print(L["Not valid spell id"])
+						else	
+							local spellID = tonumber(value)
+							if P.unitframe.filters.buffwatch['ALL'][spellID] then
+								E.db.unitframe.filters.buffwatch['ALL'][spellID].enabled = false
+								E:Print(L["You may not remove a spell from a default filter that is not customly added. Setting spell to false instead."])
+							else
+								E.db.unitframe.filters.buffwatch['ALL'][spellID] = nil
+							end							
+							local match
+							for x, y in pairs(E.global.unitframe.buffwatch['ALL']) do
+								if y["id"] == tonumber(value) then
+									match = y
+									if G.unitframe.buffwatch['ALL'][x] then
+										E.global.unitframe.buffwatch['ALL'][x].enabled = false
+										E:Print(L['You may not remove a spell from a default filter that is not customly added. Setting spell to false instead.'])
+									else
+										E.global.unitframe.buffwatch['ALL'][x] = nil
+									end
+								end
+							end
+							if match == nil then
+								E:Print(L["Spell not found in list."])
+							else
+								UpdateFilterGroup()							
+							end									
+						end		
+						
+						selectedSpell = nil;
+						UpdateFilterGroup();
+						UF:UpdateAuraWatchFromHeader('raid')
+						-- UF:UpdateAuraWatchFromHeader('raid40')
+						UF:UpdateAuraWatchFromHeader('party')
+						UF:UpdateAuraWatchFromHeader('raidpet', true)
+					end,				
+				},
+				selectSpell = {
+					name = L["Select Spell"],
+					type = "select",
+					order = 3,
+					values = function()
+						local values = {};
+						buffs = {};
+						for _, value in pairs(E.global.unitframe.buffwatch['ALL']) do
+							tinsert(buffs, value);
+						end			
+						
+						for _, spell in pairs(E.db.unitframe.filters.buffwatch['ALL']) do
+							if spell.id then
+								local name = GetSpellInfo(spell.id)
+								values[spell.id] = name;
+							end
+						end
+						return values
+					end,
+					get = function(info) return selectedSpell end,
+					set = function(info, value) 
+						selectedSpell = value;
+						UpdateFilterGroup()
+					end,
+				},				
+			},
+		}
+		
+		local tableIndex
+		for i, spell in pairs(E.global.unitframe.buffwatch['ALL']) do
+			if spell.id == selectedSpell then
+				tableIndex = i;
+			end
+		end
+
+		if selectedSpell then --if selectedSpell and tableIndex then
+			local name = GetSpellInfo(selectedSpell)
+			E.Options.args.filters.args.filterGroup.args[name] = {
+				name = name..' ('..selectedSpell..')',
+				type = 'group',
+				get = function(info) return E.global.unitframe.buffwatch['ALL'][selectedSpell][ info[#info] ] end,
+				set = function(info, value) 
+					E.global.unitframe.buffwatch['ALL'][selectedSpell][ info[#info] ] = value;
+					UF:UpdateAuraWatchFromHeader('raid')
+					-- UF:UpdateAuraWatchFromHeader('raid40')
+					UF:UpdateAuraWatchFromHeader('party')
+					UF:UpdateAuraWatchFromHeader('raidpet', true)
+				end,
+				order = -10,
+				args = {
+					enabled = {
+						name = L['Enable'],
+						order = 0,
+						type = 'toggle',
+					},
+					point = {
+						name = L['Anchor Point'],
+						order = 1,
+						type = 'select',
+						values = {
+							['TOPLEFT'] = L['TOPLEFT'],
+							['TOPRIGHT'] = L['TOPRIGHT'],
+							['BOTTOMLEFT'] = L['BOTTOMLEFT'],
+							['BOTTOMRIGHT'] = L['BOTTOMRIGHT'],
+							['LEFT'] = L['LEFT'],
+							['RIGHT'] = L['RIGHT'],
+							['TOP'] = L['TOP'],
+							['BOTTOM'] = L['BOTTOM'],
+						}
+					},
+					xOffset = {
+						order = 2,
+						type = 'range',
+						name = L['xOffset'],
+						min = -750, max = 750, step = 1,
+					},		
+					yOffset = {
+						order = 3,
+						type = 'range',
+						name = L['yOffset'],
+						min = -750, max = 750, step = 1,
+					},						
+					style = {
+						name = L['Style'],
+						order = 4,
+						type = 'select',	
+						values = {
+							['coloredIcon'] = L['Colored Icon'],
+							['texturedIcon'] = L['Textured Icon'],
+							['NONE'] = NONE,
+						},
+					},					
+					color = {
+						name = L['Color'],
+						type = 'color',
+						order = 5,
+						get = function(info)
+							local t = E.global.unitframe.buffwatch['ALL'][selectedSpell][ info[#info] ]
+							return t.r, t.g, t.b, t.a
+						end,
+						set = function(info, r, g, b)
+							local t = E.global.unitframe.buffwatch['ALL'][selectedSpell][ info[#info] ]
+							t.r, t.g, t.b = r, g, b
+							UF:UpdateAuraWatchFromHeader('raid')
+							-- UF:UpdateAuraWatchFromHeader('raid40')
+							UF:UpdateAuraWatchFromHeader('party')
+							UF:UpdateAuraWatchFromHeader('raidpet', true)
+						end,						
+					},
+					displayText = {
+						name = L['Display Text'],
+						type = 'toggle',
+						order = 6,
+					},
+					textColor = {
+						name = L['Text Color'],
+						type = 'color',
+						order = 7,
+						get = function(info)
+							local t = E.global.unitframe.buffwatch['ALL'][selectedSpell][ info[#info] ]
+							if t then
+								return t.r, t.g, t.b, t.a
+							else
+								return 1, 1, 1, 1
+							end
+						end,
+						set = function(info, r, g, b)
+							E.global.unitframe.buffwatch['ALL'][selectedSpell][ info[#info] ] = E.global.unitframe.buffwatch['ALL'][selectedSpell][ info[#info] ] or {}
+							local t = E.global.unitframe.buffwatch['ALL'][selectedSpell][ info[#info] ]
+							t.r, t.g, t.b = r, g, b
+							UF:UpdateAuraWatchFromHeader('raid')
+							-- UF:UpdateAuraWatchFromHeader('raid40')
+							UF:UpdateAuraWatchFromHeader('party')
+							UF:UpdateAuraWatchFromHeader('raidpet', true)
+						end,						
+					},			
+					decimalThreshold = {
+						name = L["Decimal Threshold"],
+						desc = L["Threshold before text goes into decimal form. Set to -1 to disable decimals."],
+						type = 'range',
+						order = 8,
+						min = -1, max = 10, step = 1,
+					},					
+					textThreshold = {
+						name = L['Text Threshold'],
+						desc = L['At what point should the text be displayed. Set to -1 to disable.'],
+						type = 'range',
+						order = 9,
+						min = -1, max = 60, step = 1,
+					},
+					anyUnit = {
+						name = L['Show Aura From Other Players'],
+						order = 10,
+						type = 'toggle',	
+					},
+					onlyShowMissing = {
+						name = L['Show When Not Active'],
+						order = 11,
+						type = 'toggle',	
+						disabled = function() return E.global.unitframe.buffwatch['ALL'][selectedSpell].style == 'text' end,
+					},
+					size = {
+						name = L['Size'],
+						order = 12,
+						type = 'range',
+						min = 4, max = 40, step = 1,
+					},
+					haveAnimation = {
+						name = L['have Animation'],
+						order = 13,
+						type = 'toggle',
+					},					
+				},			
+			}
+		end
+	
+		buffs = nil;
+	elseif selectedFilter == 'Char Damage reduction' then
+		local buffs = {};
+		if not E.global.unitframe.buffwatch['CHAR'] then E.global.unitframe.buffwatch['CHAR'] = {} end
+		for _, value in pairs(E.global.unitframe.buffwatch['CHAR']) do
+			tinsert(buffs, value);
+		end		
+		
+		if not E.global.unitframe.buffwatch['CHAR'] then
+			E.global.unitframe.buffwatch['CHAR'] = {};
+		end		
+
+		
+		E.Options.args.filters.args.filterGroup = {
+			type = 'group',
+			name = L[selectedFilter],
+			guiInline = true,
+			order = -10,
+			childGroups = "tab",
+			args = {
+				addSpellID = {
+					order = 1,
+					name = L['Add SpellID'],
+					desc = L['Add a spell to the filter.'],
+					type = 'input',
+					get = function(info) return "" end,
+					set = function(info, value) 
+						if not tonumber(value) then
+							E:Print(L["Value must be a number"])					
+						elseif not GetSpellInfo(value) then
+							E:Print(L["Not valid spell id"])
+						else	
+							tinsert(E.global.unitframe.buffwatch['CHAR'], {["enabled"] = true, ["id"] = tonumber(value), ["point"] = "BOTTOM", ["color"] = {["r"] = 1, ["g"] = 0, ["b"] = 0}, ["anyUnit"] = true, ['style'] = 'texturedIcon'})
+							E.global.unitframe.buffwatch['CHAR'][tonumber(value)] = {["enabled"] = true, ["id"] = tonumber(value), ["point"] = "BOTTOM", ["color"] = {["r"] = 1, ["g"] = 0, ["b"] = 0}, ["anyUnit"] = true, ['style'] = 'texturedIcon', ["xOffset"] = 0, ["yOffset"] = 0}
+							UpdateFilterGroup();
+							
+							UF:UpdateAuraWatchFromHeader('raid')
+							-- UF:UpdateAuraWatchFromHeader('raid40')
+							UF:UpdateAuraWatchFromHeader('party')
+							UF:UpdateAuraWatchFromHeader('raidpet', true)
+							selectedSpell = nil;
+						end
+					end,					
+				},
+				removeSpellID = {
+					order = 2,
+					name = L['Remove SpellID'],
+					desc = L['Remove a spell from the filter.'],
+					type = 'input',
+					get = function(info) return "" end,
+					set = function(info, value) 
+						if not tonumber(value) then
+							E:Print(L["Value must be a number"])
+						elseif not GetSpellInfo(value) then
+							E:Print(L["Not valid spell id"])
+						else
+							local spellID = tonumber(value)
+							if P.unitframe.filters.buffwatch['CHAR'][spellID] then
+								E.db.unitframe.filters.buffwatch['CHAR'][spellID].enabled = false
+								E:Print(L["You may not remove a spell from a default filter that is not customly added. Setting spell to false instead."])
+							else
+								E.db.unitframe.filters.buffwatch['CHAR'][spellID] = nil
+							end
+							local match
+							for x, y in pairs(E.global.unitframe.buffwatch['CHAR']) do
+								if y["id"] == tonumber(value) then
+									match = y
+									if G.unitframe.buffwatch['CHAR'][x] then
+										E.global.unitframe.buffwatch['CHAR'][x].enabled = false
+										E:Print(L['You may not remove a spell from a default filter that is not customly added. Setting spell to false instead.'])
+									else
+										E.global.unitframe.buffwatch['CHAR'][x] = nil
+									end
+								end
+							end
+							if match == nil then
+								E:Print(L["Spell not found in list."])
+							else
+								UpdateFilterGroup()							
+							end									
+						end		
+						
+						selectedSpell = nil;
+						UpdateFilterGroup();
+						UF:UpdateAuraWatchFromHeader('raid')
+						-- UF:UpdateAuraWatchFromHeader('raid40')
+						UF:UpdateAuraWatchFromHeader('party')
+						UF:UpdateAuraWatchFromHeader('raidpet', true)
+					end,				
+				},
+				selectSpell = {
+					name = L["Select Spell"],
+					type = "select",
+					order = 3,
+					values = function()
+						local values = {};
+						buffs = {};
+						for _, value in pairs(E.global.unitframe.buffwatch['CHAR']) do
+							tinsert(buffs, value);
+						end			
+						
+						for _, spell in pairs(E.global.unitframe.buffwatch['CHAR']) do
+							if spell.id then
+								local name = GetSpellInfo(spell.id)
+								values[spell.id] = name;
+							end
+						end
+						return values
+					end,
+					get = function(info) return selectedSpell end,
+					set = function(info, value) 
+						selectedSpell = value;
+						UpdateFilterGroup()
+					end,
+				},				
+			},
+		}
+		
+		local tableIndex
+		for i, spell in pairs(E.global.unitframe.buffwatch['CHAR']) do
+			if spell.id == selectedSpell then
+				tableIndex = i;
+			end
+		end
+		if selectedSpell then --if selectedSpell and tableIndex then
+			local name = GetSpellInfo(selectedSpell)
+			E.Options.args.filters.args.filterGroup.args[name] = {
+				name = name..' ('..selectedSpell..')',
+				type = 'group',
+				get = function(info) return E.global.unitframe.buffwatch['CHAR'][selectedSpell][ info[#info] ] end,
+				set = function(info, value) 
+					E.global.unitframe.buffwatch['CHAR'][selectedSpell][ info[#info] ] = value;
+					UF:UpdateAuraWatchFromHeader('raid')
+					-- UF:UpdateAuraWatchFromHeader('raid40')
+					UF:UpdateAuraWatchFromHeader('party')
+					UF:UpdateAuraWatchFromHeader('raidpet', true)
+				end,
+				order = -10,
+				args = {
+					enabled = {
+						name = L['Enable'],
+						order = 0,
+						type = 'toggle',
+					},
+					point = {
+						name = L['Anchor Point'],
+						order = 1,
+						type = 'select',
+						values = {
+							['TOPLEFT'] = L['TOPLEFT'],
+							['TOPRIGHT'] = L['TOPRIGHT'],
+							['BOTTOMLEFT'] = L['BOTTOMLEFT'],
+							['BOTTOMRIGHT'] = L['BOTTOMRIGHT'],
+							['LEFT'] = L['LEFT'],
+							['RIGHT'] = L['RIGHT'],
+							['TOP'] = L['TOP'],
+							['BOTTOM'] = L['BOTTOM'],
+						}
+					},
+					xOffset = {
+						order = 2,
+						type = 'range',
+						name = L['xOffset'],
+						min = -750, max = 750, step = 1,
+					},		
+					yOffset = {
+						order = 3,
+						type = 'range',
+						name = L['yOffset'],
+						min = -750, max = 750, step = 1,
+					},						
+					style = {
+						name = L['Style'],
+						order = 4,
+						type = 'select',	
+						values = {
+							['coloredIcon'] = L['Colored Icon'],
+							['texturedIcon'] = L['Textured Icon'],
+							['NONE'] = NONE,
+						},
+					},					
+					color = {
+						name = L['Color'],
+						type = 'color',
+						order = 5,
+						get = function(info)
+							local t = E.global.unitframe.buffwatch['CHAR'][selectedSpell][ info[#info] ]
+							return t.r, t.g, t.b, t.a
+						end,
+						set = function(info, r, g, b)
+							local t = E.global.unitframe.buffwatch['CHAR'][selectedSpell][ info[#info] ]
+							t.r, t.g, t.b = r, g, b
+							UF:UpdateAuraWatchFromHeader('raid')
+							-- UF:UpdateAuraWatchFromHeader('raid40')
+							UF:UpdateAuraWatchFromHeader('party')
+							UF:UpdateAuraWatchFromHeader('raidpet', true)
+						end,						
+					},
+					displayText = {
+						name = L['Display Text'],
+						type = 'toggle',
+						order = 6,
+					},
+					textColor = {
+						name = L['Text Color'],
+						type = 'color',
+						order = 7,
+						get = function(info)
+							local t = E.global.unitframe.buffwatch['CHAR'][selectedSpell][ info[#info] ]
+							if t then
+								return t.r, t.g, t.b, t.a
+							else
+								return 1, 1, 1, 1
+							end
+						end,
+						set = function(info, r, g, b)
+							E.global.unitframe.buffwatch['CHAR'][selectedSpell][ info[#info] ] = E.global.unitframe.buffwatch['CHAR'][selectedSpell][ info[#info] ] or {}
+							local t = E.global.unitframe.buffwatch['CHAR'][selectedSpell][ info[#info] ]
+							t.r, t.g, t.b = r, g, b
+							UF:UpdateAuraWatchFromHeader('raid')
+							-- UF:UpdateAuraWatchFromHeader('raid40')
+							UF:UpdateAuraWatchFromHeader('party')
+							UF:UpdateAuraWatchFromHeader('raidpet', true)
+						end,						
+					},			
+					decimalThreshold = {
+						name = L["Decimal Threshold"],
+						desc = L["Threshold before text goes into decimal form. Set to -1 to disable decimals."],
+						type = 'range',
+						order = 8,
+						min = -1, max = 10, step = 1,
+					},					
+					textThreshold = {
+						name = L['Text Threshold'],
+						desc = L['At what point should the text be displayed. Set to -1 to disable.'],
+						type = 'range',
+						order = 9,
+						min = -1, max = 60, step = 1,
+					},
+					anyUnit = {
+						name = L['Show Aura From Other Players'],
+						order = 10,
+						type = 'toggle',	
+					},
+					onlyShowMissing = {
+						name = L['Show When Not Active'],
+						order = 11,
+						type = 'toggle',	
+						disabled = function() return E.global.unitframe.buffwatch['CHAR'][selectedSpell].style == 'text' end,
+					},
+					size = {
+						name = L['Size'],
+						order = 12,
+						type = 'range',
+						min = 4, max = 40, step = 1,
+					},
+					haveAnimation = {
+						name = L['have Animation'],
+						order = 13,
+						type = 'toggle',
+					},					
+				},			
+			}
+		end
+	
+		buffs = nil;
 	elseif selectedFilter == 'Buff Indicator (Profile)' then
 		E.Options.args.filters.args.filterGroup = {
 			type = 'group',
 			name = selectedFilter,
 			guiInline = true,
 			order = -10,
-			childGroups = "select",
+			childGroups = "tab",
 			args = {
 				addSpellID = {
 					order = 1,
@@ -709,7 +1247,7 @@ local function UpdateFilterGroup()
 							UpdateFilterGroup();
 
 							UF:UpdateAuraWatchFromHeader('raid')
-							UF:UpdateAuraWatchFromHeader('raid40')
+							-- UF:UpdateAuraWatchFromHeader('raid40')
 							UF:UpdateAuraWatchFromHeader('party')
 							selectedSpell = nil;
 						end
@@ -739,7 +1277,7 @@ local function UpdateFilterGroup()
 						selectedSpell = nil;
 						UpdateFilterGroup();
 						UF:UpdateAuraWatchFromHeader('raid')
-						UF:UpdateAuraWatchFromHeader('raid40')
+						-- UF:UpdateAuraWatchFromHeader('raid40')
 						UF:UpdateAuraWatchFromHeader('party')
 					end,
 				},
@@ -781,7 +1319,7 @@ local function UpdateFilterGroup()
 					E.db.unitframe.filters.buffwatch[selectedSpell][ info[#info] ] = value;
 
 					UF:UpdateAuraWatchFromHeader('raid')
-					UF:UpdateAuraWatchFromHeader('raid40')
+					-- UF:UpdateAuraWatchFromHeader('raid40')
 					UF:UpdateAuraWatchFromHeader('party')
 				end,
 				order = -10,
@@ -810,13 +1348,13 @@ local function UpdateFilterGroup()
 						order = 2,
 						type = 'range',
 						name = L["xOffset"],
-						min = -75, max = 75, step = 1,
+						min = -750, max = 750, step = 1,
 					},
 					yOffset = {
 						order = 3,
 						type = 'range',
 						name = L["yOffset"],
-						min = -75, max = 75, step = 1,
+						min = -750, max = 750, step = 1,
 					},
 					style = {
 						name = L["Style"],
@@ -842,7 +1380,7 @@ local function UpdateFilterGroup()
 							local t = E.db.unitframe.filters.buffwatch[selectedSpell][ info[#info] ]
 							t.r, t.g, t.b = r, g, b
 							UF:UpdateAuraWatchFromHeader('raid')
-							UF:UpdateAuraWatchFromHeader('raid40')
+							-- UF:UpdateAuraWatchFromHeader('raid40')
 							UF:UpdateAuraWatchFromHeader('party')
 						end,
 					},
@@ -870,7 +1408,7 @@ local function UpdateFilterGroup()
 							local t = E.db.unitframe.filters.buffwatch[selectedSpell][ info[#info] ]
 							t.r, t.g, t.b = r, g, b
 							UF:UpdateAuraWatchFromHeader('raid')
-							UF:UpdateAuraWatchFromHeader('raid40')
+							-- UF:UpdateAuraWatchFromHeader('raid40')
 							UF:UpdateAuraWatchFromHeader('party')
 						end,
 					},
@@ -1067,7 +1605,7 @@ end
 
 E.Options.args.filters = {
 	type = 'group',
-	name = L["Filters"],
+	name = '16.|cff880303'.. L['Filters']..'|r',
 	order = -10, --Always Last Hehehe
 	args = {
 		createFilter = {
@@ -1108,14 +1646,17 @@ E.Options.args.filters = {
 				filters = {}
 				filters[''] = NONE
 				for filter in pairs(E.global.unitframe['aurafilters']) do
-					filters[filter] = filter
+					filters[filter] = L[filter] or filter
 				end
 
-				filters['Buff Indicator'] = 'Buff Indicator'
-				filters['Buff Indicator (Pet)'] = 'Buff Indicator (Pet)'
-				filters['Buff Indicator (Profile)'] = 'Buff Indicator (Profile)'
-				filters['AuraBar Colors'] = 'AuraBar Colors'
-				filters['Debuff Highlight'] = 'Debuff Highlight'
+				filters['Buff Indicator'] = L['Buff Indicator']
+				filters['Buff Indicator (Pet)'] = L['Buff Indicator (Pet)']
+				filters['Buff Indicator (Profile)'] = L['Buff Indicator (Profile)']
+				filters['AuraBar Colors'] = L['AuraBar Colors']
+				filters['Blacklist (Strict)'] = L['Blacklist (Strict)']
+				filters['Raid Damage reduction'] = L['Raid Damage reduction']
+				filters['Char Damage reduction'] = L['Char Damage reduction']
+				filters['Debuff Highlight'] = L['Debuff Highlight']
 				return filters
 			end,
 		},

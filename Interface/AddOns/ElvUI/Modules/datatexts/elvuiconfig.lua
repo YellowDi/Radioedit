@@ -13,7 +13,7 @@ local IsShiftKeyDown = IsShiftKeyDown
 local ReloadUI = ReloadUI
 
 local displayString = ""
-local configText = "ElvUI"
+local configText = "ElvUI Config"
 local reloadText = RELOADUI
 local plugins
 local lastPanel
@@ -32,7 +32,7 @@ local function OnEvent(self, event)
 		end
 	end
 
-	self.text:SetFormattedText(displayString, configText)
+	self.text:SetFormattedText(displayString, L[configText])
 end
 
 local function OnEnter(self)
@@ -42,7 +42,7 @@ local function OnEnter(self)
 	DT.tooltip:AddDoubleLine(L["Hold Shift + Right Click:"], reloadText, 1, 1, 1)
 	if plugins then
 		DT.tooltip:AddLine(" ")
-		DT.tooltip:AddDoubleLine("Plugins:", "Version:")
+		DT.tooltip:AddDoubleLine(L["Plugins:"], L["Version:"])
 		for plugin, version in pairs(plugins) do
 			DT.tooltip:AddDoubleLine(plugin, version, 1, 1, 1, 1, 1, 1)
 		end

@@ -5,9 +5,8 @@ G['general'] = {
 	["autoScale"] = true,
 	["minUiScale"] = 0.64,
 	["eyefinity"] = false,
+	['newFuncShown'] = true,
 	['smallerWorldMap'] = true,
-	["fadeMapWhenMoving"] = true,
-	["mapAlphaWhenMoving"] = 0.35,
 	['WorldMapCoordinates'] = {
 		["enable"] = true,
 		["position"] = "BOTTOMLEFT",
@@ -26,11 +25,9 @@ G['unitframe'] = {
 	['aurafilters'] = {},
 	['buffwatch'] = {},
 }
+G.gtData = {};
+G.gtTime = {};
 
 G["bags"] = {
 	["ignoredItems"] = {},
-}
-
-G["datatexts"] = {
-	["customCurrencies"] = {},
 }

@@ -27,6 +27,52 @@ local STATICPOPUP_TEXTURE_ALERTGEAR = STATICPOPUP_TEXTURE_ALERTGEAR
 E.PopupDialogs = {};
 E.StaticPopup_DisplayedFrames = {};
 
+E.PopupDialogs["Transparent_Theme_Style"] = {
+	text = 	L['Transparent Theme Style']..'\n'..L["Yes:New Style;\nNo:Old Style"],
+	button1 = YES,
+	button2 = NO,
+	OnAccept = function(self)
+		E.db.general.transparentStyle = 1;
+		E.db.general.ShadowEnable = true;
+		E.db.unitframe.colors.health = { r = .31,g = .31,b = .31 };
+		E.db.unitframe.colors.healthclass = true;
+		E.db.unitframe.colors.health_backdrop = { r = .8,g = .01,b = .01 };
+		E:StaticPopup_Show("PRIVATE_RL");
+	end,
+	OnCancel = function(self)
+		E.db.general.transparentStyle = 2;
+		E.db.general.ShadowEnable = false;
+		E.db.unitframe.colors.health = { r = .9,g = 0,b = 0 };
+		E.db.unitframe.colors.healthclass = false;
+		E.db.unitframe.colors.health_backdrop = { r = .8,g = .01,b = .01 };
+		E.db.unitframe.units.player.power.offset = 0;
+		E.db.unitframe.units.target.power.offset = 0;
+		E.db.unitframe.units.targettarget.power.offset = 0;
+		E.db.unitframe.units.focus.power.offset = 0;
+		E.db.unitframe.units.party.power.offset = 0;
+		E.db.unitframe.units.boss.power.offset = 0;
+		E.db.unitframe.units.raid.power.offset = 0;
+		E:StaticPopup_Show("PRIVATE_RL");
+	end,
+	timeout = 0,
+	whileDead = 1,
+	showAlert = 1,	
+}
+
+E.PopupDialogs['EUISCRIPT_REQUEST'] = {
+	text = L["Can't detected euiscript addon, please reenable this addon!."],
+	button1 = OKAY,
+	OnAccept = E.noop,
+	showAlert = 1,
+}
+
+E.PopupDialogs['BigDW_Loaded'] = {
+	text = L["Find BigFoot or DuoWan is loaded! please delete its."],
+	button1 = OKAY,
+	OnAccept = E.noop,
+	showAlert = 1,
+}
+
 E.PopupDialogs['ELVUI_UPDATE_AVAILABLE'] = {
 	text = L["ElvUI is five or more revisions out of date. You can download the newest version from www.tukui.org. Get premium membership and have ElvUI automatically updated with the Tukui Client!"],
 	hasEditBox = 1,
@@ -34,7 +80,7 @@ E.PopupDialogs['ELVUI_UPDATE_AVAILABLE'] = {
 		self.editBox:SetAutoFocus(false)
 		self.editBox.width = self.editBox:GetWidth()
 		self.editBox:Width(220)
-		self.editBox:SetText("http://www.tukui.org/dl.php")
+		self.editBox:SetText("http://www.eui.cc")
 		self.editBox:HighlightText()
 		ChatEdit_FocusActiveWindow();
 	end,
@@ -54,8 +100,8 @@ E.PopupDialogs['ELVUI_UPDATE_AVAILABLE'] = {
 		self:GetParent():Hide();
 	end,
 	EditBoxOnTextChanged = function(self)
-		if(self:GetText() ~= "http://www.tukui.org/dl.php") then
-			self:SetText("http://www.tukui.org/dl.php")
+		if(self:GetText() ~= "http://www.www.eui.cc") then
+			self:SetText("http://www.www.eui.cc")
 		end
 		self:HighlightText()
 		self:ClearFocus()
@@ -85,11 +131,11 @@ E.PopupDialogs["CONFIRM_LOSE_BINDING_CHANGES"] = {
 	text = CONFIRM_LOSE_BINDING_CHANGES,
 	button1 = OKAY,
 	button2 = CANCEL,
-	OnAccept = function()
+	OnAccept = function(self)
 		E:GetModule('ActionBars'):ChangeBindingProfile()
 		E:GetModule('ActionBars').bindingsChanged = nil;
 	end,
-	OnCancel = function()
+	OnCancel = function(self)
 		if ( ElvUIBindPopupWindowCheckButton:GetChecked() ) then
 			ElvUIBindPopupWindowCheckButton:SetChecked();
 		else
@@ -125,8 +171,8 @@ E.PopupDialogs['DISABLE_INCOMPATIBLE_ADDON'] = {
 
 E.PopupDialogs['INCOMPATIBLE_ADDON'] = {
 	text = L["INCOMPATIBLE_ADDON"],
-	OnAccept = function() DisableAddOn(E.PopupDialogs['INCOMPATIBLE_ADDON'].addon); ReloadUI(); end,
-	OnCancel = function() E.private[lower(E.PopupDialogs['INCOMPATIBLE_ADDON'].module)].enable = false; ReloadUI(); end,
+	OnAccept = function(self) DisableAddOn(E.PopupDialogs['INCOMPATIBLE_ADDON'].addon); ReloadUI(); end,
+	OnCancel = function(self) E.private[lower(E.PopupDialogs['INCOMPATIBLE_ADDON'].module)].enable = false; ReloadUI(); end,
 	button3 = L["Disable Warning"],
 	OnAlt = function ()
 		E:StaticPopup_Hide('INCOMPATIBLE_ADDON')
@@ -224,7 +270,7 @@ E.PopupDialogs["BUY_BANK_SLOT"] = {
 	text = CONFIRM_BUY_BANK_SLOT,
 	button1 = YES,
 	button2 = NO,
-	OnAccept = function()
+	OnAccept = function(self)
 		PurchaseSlot()
 	end,
 	OnShow = function(self)
@@ -253,7 +299,7 @@ E.PopupDialogs["RESETUI_CHECK"] = {
 	text = L["Are you sure you want to reset every mover back to it's default position?"],
 	button1 = ACCEPT,
 	button2 = CANCEL,
-	OnAccept = function()
+	OnAccept = function(self)
 		E:ResetAllUI()
 	end,
 	timeout = 0,

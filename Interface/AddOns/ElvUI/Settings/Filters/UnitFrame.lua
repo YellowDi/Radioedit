@@ -5,7 +5,7 @@ local E, L, V, P, G, _ = unpack(select(2, ...)); --Engine
 local print, unpack, select, pairs = print, unpack, select, pairs
 local lower = string.lower
 --WoW API / Variables
-local GetSpellInfo = GetSpellInfo
+local GetSpellInfo, IsSpellKnown = GetSpellInfo, IsSpellKnown
 local UnitClass, IsEquippedItem = UnitClass, IsEquippedItem
 
 local function SpellName(id)
@@ -589,7 +589,6 @@ G.unitframe.aurafilters['PlayerBuffs'] = {
 		[230935] = Defaults(), --Drums of the Mountain
 	},
 }
-
 --[[
 	Buffs that really we dont need to see
 ]]
@@ -636,15 +635,30 @@ G.unitframe.aurafilters['Blacklist'] = {
 G.unitframe.aurafilters['Whitelist'] = {
 	['type'] = 'Whitelist',
 	['spells'] = {
-		[31821] = Defaults(),  -- Devotion Aura
-		[2825] = Defaults(),   -- Bloodlust
-		[32182] = Defaults(),  -- Heroism
-		[80353] = Defaults(),  -- Time Warp
-		[90355] = Defaults(),  -- Ancient Hysteria
-		[47788] = Defaults(),  -- Guardian Spirit
-		[33206] = Defaults(),  -- Pain Suppression
-		[116849] = Defaults(), -- Life Cocoon
-		[22812] = Defaults(),  -- Barkskin
+		[31821] = Defaults(), -- Devotion Aura
+		[2825] = Defaults(), -- Bloodlust
+		[32182] = Defaults(), -- Heroism
+		[80353] = Defaults(), --Time Warp
+		[90355] = Defaults(), --Ancient Hysteria
+		[47788] = Defaults(), --Guardian Spirit
+		[33206] = Defaults(), --Pain Suppression
+		[116849] = Defaults(), --Life Cocoon
+		[22812] = Defaults(), --Barkskin
+		[116631] = Defaults(), --风暴之盾(FM)
+		[138242] = Defaults(), --荣耀之盾(T15)	
+		[137590] = Defaults(), --橙色多彩(肾上腺素-急速+30%)
+		[137593] = Defaults(), --橙色多彩(刚毅-减伤+20%)
+		[137596] = Defaults(), --橙色多彩(电荷)
+		[137288] = Defaults(), --橙色多彩(节能施法,5.3改名叫'清醒')
+		[136431] = Defaults(), --龟壳震荡(DEBUFF)
+		[142535] = Defaults(), -- 征服之魂
+		[142530] = Defaults(), -- 血腥舞钢		
+		[173322] = Defaults(), --血环之印
+		[159234] = Defaults(), --雷神之印
+		[159673] = Defaults(), --影月之印
+		[159674] = Defaults(), --黑石之印
+		[159675] = Defaults(), --战歌之印
+		[159676] = Defaults(), --霜狼之印
 		[192132] = Defaults(), -- Mystic Empowerment: Thunder (Hyrja, Halls of Valor)
 		[192133] = Defaults(), -- Mystic Empowerment: Holy (Hyrja, Halls of Valor)
 	},
@@ -658,6 +672,39 @@ G.unitframe.aurafilters['RaidDebuffs'] = {
 	['type'] = 'Whitelist',
 	['spells'] = {
 -- Legion
+		--尼珊德拉
+		[202977] = Defaults(),
+		[203552] = Defaults(),
+		--伊格诺斯@腐蚀之心
+		[208931] = Defaults(),
+		[215234] = Defaults(),
+		[208689] = Defaults(),
+		--艾乐瑞瑟
+		[210948] = Defaults(),
+		[210229] = Defaults(),
+		[215582] = Defaults(),
+		[212993] = Defaults(),
+		[215443] = Defaults(),
+		[215288] = Defaults(),
+		--乌索克
+		[197942] = Defaults(),
+		[108109] = Defaults(),
+		[199237] = Defaults(),
+		--梦魇之龙
+		[203028] = Defaults(),
+		[204122] = Defaults(),
+		[203690] = Defaults(),
+		[203771] = Defaults(),
+		--塞纳留斯
+		[210346] = Defaults(),
+		[212630] = Defaults(),
+		[211368] = Defaults(),
+		[211178] = Defaults(),
+		[211180] = Defaults(),
+		--萨维斯
+		[210264] = Defaults(),
+		[209288] = Defaults(),
+		-- The Nighthold
 -- The Nighthold
 	-- Skorpyron
 		[204766] = Defaults(), -- Energy Surge
@@ -788,10 +835,10 @@ G.unitframe.aurafilters['RaidDebuffs'] = {
 		[218519] = Defaults(), -- Wind Burn (Mythic)
 
 	-- Il'gynoth, Heart of the Corruption
-		[208929] = Defaults(),  -- Spew Corruption
-		[210984] = Defaults(),  -- Eye of Fate
+		[208929] = Defaults(), -- Spew Corruption
+		[210984] = Defaults(), -- Eye of Fate
 		[209469] = Defaults(5), -- Touch of Corruption
-		[208697] = Defaults(),  -- Mind Flay
+		[208697] = Defaults(), -- Mind Flay
 		[215143] = Defaults(),  -- Cursed Blood
 
 	-- Ursoc
@@ -803,10 +850,10 @@ G.unitframe.aurafilters['RaidDebuffs'] = {
 		[197980] = Defaults(), -- Nightmarish Cacophony
 
 	-- Dragons of Nightmare
-		[203102] = Defaults(),  -- Mark of Ysondre
-		[203121] = Defaults(),  -- Mark of Taerar
-		[203125] = Defaults(),  -- Mark of Emeriss
-		[203124] = Defaults(),  -- Mark of Lethon
+		[203102] = Defaults(), -- Mark of Ysondre
+		[203121] = Defaults(), -- Mark of Taerar
+		[203125] = Defaults(), -- Mark of Emeriss
+		[203124] = Defaults(), -- Mark of Lethon
 		[204731] = Defaults(5), -- Wasting Dread
 		[203110] = Defaults(5), -- Slumbering Nightmare
 		[207681] = Defaults(5), -- Nightmare Bloom
@@ -871,7 +918,7 @@ E.ReverseTimer = {
 
 --BuffWatch
 --List of personal spells to show on unitframes as icon
-local function ClassBuff(id, point, color, anyUnit, onlyShowMissing, style, displayText, decimalThreshold, textColor, textThreshold, xOffset, yOffset)
+local function ClassBuff(id, point, color, anyUnit, onlyShowMissing, style, displayText, decimalThreshold, textColor, textThreshold, xOffset, yOffset, size, haveAnimation)
 	local r, g, b = unpack(color)
 
 	local r2, g2, b2 = 1, 1, 1
@@ -881,7 +928,7 @@ local function ClassBuff(id, point, color, anyUnit, onlyShowMissing, style, disp
 
 	return {["enabled"] = true, ["id"] = id, ["point"] = point, ["color"] = {["r"] = r, ["g"] = g, ["b"] = b},
 	["anyUnit"] = anyUnit, ["onlyShowMissing"] = onlyShowMissing, ['style'] = style or 'coloredIcon', ['displayText'] = displayText or false, ['decimalThreshold'] = decimalThreshold or 5,
-	['textColor'] = {["r"] = r2, ["g"] = g2, ["b"] = b2}, ['textThreshold'] = textThreshold or -1, ['xOffset'] = xOffset or 0, ['yOffset'] = yOffset or 0}
+	['textColor'] = {["r"] = r2, ["g"] = g2, ["b"] = b2}, ['textThreshold'] = textThreshold or -1, ['xOffset'] = xOffset or 0, ['yOffset'] = yOffset or 0, ['size'] = size, ['haveAnimation'] = haveAnimation}
 end
 
 G.unitframe.buffwatch = {
@@ -901,7 +948,8 @@ G.unitframe.buffwatch = {
 		[188550] = ClassBuff(188550, "TOPLEFT", {0.4, 0.8, 0.2}), -- Lifebloom T18 4pc
 		[48438] = ClassBuff(48438, "BOTTOMRIGHT", {0.8, 0.4, 0}), -- Wild Growth
 		[207386] = ClassBuff(207386, "TOP", {0.4, 0.2, 0.8}),     -- Spring Blossoms
-		[102352] = ClassBuff(102352, "LEFT", {0.2, 0.8, 0.8}),    -- Cenarion Ward
+		[102351] = ClassBuff(102351, "LEFT", {0.2, 0.8, 0.8}),    -- Cenarion Ward
+		[102352] = ClassBuff(102352, "LEFT", {0.2, 0.8, 0.8}),    -- Cenarion Ward (HoT)
 		[200389] = ClassBuff(200389, "BOTTOM", {1, 1, 0.4}),      -- Cultivation
 	},
 	PALADIN = {
@@ -937,6 +985,51 @@ G.unitframe.buffwatch = {
 	WARLOCK = {},
 	MAGE = {},
 	DEATHKNIGHT = {},
+	ALL = {
+	--	ClassBuff(740, "TOP", {1, 0, 0}, true, nil, "texturedIcon", nil, nil, nil, nil, nil, nil, 14, true), --宁静
+		[97463] = ClassBuff(97463, "TOP", {1, 0, 0}, true, nil, "texturedIcon", nil, nil, nil, nil, -10, 0, 14, true),--集结呐喊*
+		[64844] = ClassBuff(64844, "TOP", {1, 0, 0}, true, nil, "texturedIcon", nil, nil, nil, nil, -10, nil, 14, true), --神圣赞美诗*
+		[81782] = ClassBuff(81782, "TOP", {1, 0, 0}, true, nil, "texturedIcon", nil, nil, nil, nil, -10, nil, 14, true), --真言术：障*
+		[15286] = ClassBuff(15286, "TOP", {1, 0, 0}, true, nil, "texturedIcon", nil, nil, nil, nil, -10, nil, 14, true), --吸血鬼的拥抱
+		[31821] = ClassBuff(31821, "TOP", {1, 0, 0}, true, nil, "texturedIcon", nil, nil, nil, nil, -10, nil, 14, true), --虔诚光环
+		[88611] = ClassBuff(88611, "TOP", {1, 0, 0}, true, nil, "texturedIcon", nil, nil, nil, nil, -10, nil, 14, true), --烟雾弹*
+		[145629] = ClassBuff(145629, "TOP", {1, 0, 0}, true, nil, "texturedIcon", nil, nil, nil, nil, -10, nil, 14, true), --反魔法领域
+	--	[108280] = ClassBuff(108280, "TOP", {1, 0, 0}, true, nil, "texturedIcon", nil, nil, nil, nil, nil, nil, 14, true), --治疗之潮图腾
+		[98007] = ClassBuff(98007, "TOP", {1, 0, 0}, true, nil, "texturedIcon", nil, nil, nil, nil, -10, nil, 14, true), --灵魂链接图腾*
+	--	[172106] = ClassBuff(172106, "TOP", {1, 0, 0}, true, nil, "texturedIcon", nil, nil, nil, nil, -10, nil, 14, true), --灵狐守护*
+	--	[159916] = ClassBuff(159916, "TOP", {1, 0, 0}, true, nil, "texturedIcon", nil, nil, nil, nil, -10, nil, 14, true), --魔法增效
+	},
+	CHAR = { --个人减伤组
+		[48707] = ClassBuff(48707, "TOP", {1, 0, 0}, true, nil, "texturedIcon", nil, nil, nil, nil, 10, nil, 14, true), --反魔法护罩
+		[30823] = ClassBuff(30823, "TOP", {1, 0, 0}, true, nil, "texturedIcon", nil, nil, nil, nil, 10, nil, 14, true), --萨满之怒
+		[108271] = ClassBuff(108271, "TOP", {1, 0, 0}, true, nil, "texturedIcon", nil, nil, nil, nil, 10, nil, 14, true), --萨满之怒
+		[33206] = ClassBuff(33206, "TOP", {1, 0, 0}, true, nil, "texturedIcon", nil, nil, nil, nil, 10, nil, 14, true), --痛苦压制
+		[47585] = ClassBuff(47585, "TOP", {1, 0, 0}, true, nil, "texturedIcon", nil, nil, nil, nil, 10, nil, 14, true), --消散
+		[871] = ClassBuff(871, "TOP", {1, 0, 0}, true, nil, "texturedIcon", nil, nil, nil, nil, 10, nil, 14, true), --盾墙
+		[48792] = ClassBuff(48792, "TOP", {1, 0, 0}, true, nil, "texturedIcon", nil, nil, nil, nil, 10, nil, 14, true), --冰封之韧
+		[498] = ClassBuff(498, "TOP", {1, 0, 0}, true, nil, "texturedIcon", nil, nil, nil, nil, 10, nil, 14, true), --圣佑术
+		[22812] = ClassBuff(22812, "TOP", {1, 0, 0}, true, nil, "texturedIcon", nil, nil, nil, nil, 10, nil, 14, true), --树皮术
+		[61336] = ClassBuff(61336, "TOP", {1, 0, 0}, true, nil, "texturedIcon", nil, nil, nil, nil, 10, nil, 14, true), --生存本能
+		[5277] = ClassBuff(5277, "TOP", {1, 0, 0}, true, nil, "texturedIcon", nil, nil, nil, nil, 10, nil, 14, true), --闪避
+		[74001] = ClassBuff(74001, "TOP", {1, 0, 0}, true, nil, "texturedIcon", nil, nil, nil, nil, 10, nil, 14, true), --备战就绪
+		[47788] = ClassBuff(47788, "TOP", {1, 0, 0}, true, nil, "texturedIcon", nil, nil, nil, nil, 10, nil, 14, true), --守护之魂
+		[19263] = ClassBuff(19263, "TOP", {1, 0, 0}, true, nil, "texturedIcon", nil, nil, nil, nil, 10, nil, 14, true), --威慑
+		[6940] = ClassBuff(6940, "TOP", {1, 0, 0}, true, nil, "texturedIcon", nil, nil, nil, nil, 10, nil, 14, true), --牺牲之手
+		[31850] = ClassBuff(31850, "TOP", {1, 0, 0}, true, nil, "texturedIcon", nil, nil, nil, nil, 10, nil, 14, true), --炽热防御者
+		[31224] = ClassBuff(31224, "TOP", {1, 0, 0}, true, nil, "texturedIcon", nil, nil, nil, nil, 10, nil, 14, true), --暗影斗篷
+		[42650] = ClassBuff(42650, "TOP", {1, 0, 0}, true, nil, "texturedIcon", nil, nil, nil, nil, 10, nil, 14, true), --亡者大军
+		[86657] = ClassBuff(86657, "TOP", {1, 0, 0}, true, nil, "texturedIcon", nil, nil, nil, nil, 10, nil, 14, true), --远古守卫
+		[118038] = ClassBuff(118038, "TOP", {1, 0, 0}, true, nil, "texturedIcon", nil, nil, nil, nil, 10, nil, 14, true), --剑在人在
+		[115176] = ClassBuff(115176, "TOP", {1, 0, 0}, true, nil, "texturedIcon", nil, nil, nil, nil, 10, nil, 14, true), --禅悟冥想
+		[115308] = ClassBuff(115308, "TOP", {1, 0, 0}, true, nil, "texturedIcon", nil, nil, nil, nil, 10, nil, 14, true), --飘渺酒
+		[120954] = ClassBuff(120954, "TOP", {1, 0, 0}, true, nil, "texturedIcon", nil, nil, nil, nil, 10, nil, 14, true), --壮胆酒
+		[115295] = ClassBuff(115295, "TOP", {1, 0, 0}, true, nil, "texturedIcon", nil, nil, nil, nil, 10, nil, 14, true), --金钟罩
+		[51271] = ClassBuff(51271, "TOP", {1, 0, 0}, true, nil, "texturedIcon", nil, nil, nil, nil, 10, nil, 14, true), --冰霜之柱
+		[12975] = ClassBuff(12975, "TOP", {1, 0, 0}, true, nil, "texturedIcon", nil, nil, nil, nil, 10, nil, 14, true), --破釜沉舟
+		[97463] = ClassBuff(97463, "TOP", {1, 0, 0}, true, nil, "texturedIcon", nil, nil, nil, nil, 10, nil, 14, true), --集结呐喊
+		[102342] = ClassBuff(102342, "TOP", {1, 0, 0}, true, nil, "texturedIcon", nil, nil, nil, nil, 10, nil, 14, true), --铁木树皮
+		[114039] = ClassBuff(114039, "TOP", {1, 0, 0}, true, nil, "texturedIcon", nil, nil, nil, nil, 10, nil, 14, true), --纯净之手
+	},
 }
 
 --Profile specific BuffIndicator
@@ -958,13 +1051,14 @@ G.unitframe.ChannelTicks = {
 	--Mage
 	[SpellName(5143)] = 5, -- "Arcane Missiles"
 	[SpellName(12051)] = 3, -- "Evocation"
+	[SpellName(205021)] = 10, -- "Ray of Frost"
 }
 
 local priestTier17 = {115560,115561,115562,115563,115564}
 local f = CreateFrame("Frame")
 f:RegisterEvent("PLAYER_ENTERING_WORLD")
 f:RegisterEvent("PLAYER_EQUIPMENT_CHANGED")
-f:SetScript("OnEvent", function()
+f:SetScript("OnEvent", function(self, event)
 	local class = select(2, UnitClass("player"))
 	if lower(class) ~= "priest" then return; end
 
@@ -989,7 +1083,7 @@ G.unitframe.ChannelTicksSize = {
 
 --Spells Effected By Haste
 G.unitframe.HastedChannelTicks = {
-
+	[SpellName(205021)] = true, -- "Ray of Frost"
 }
 
 --This should probably be the same as the whitelist filter + any personal class ones that may be important to watch

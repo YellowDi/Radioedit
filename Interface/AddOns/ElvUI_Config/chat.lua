@@ -3,7 +3,7 @@ local CH = E:GetModule('Chat')
 
 E.Options.args.chat = {
 	type = "group",
-	name = L["Chat"],
+	name = '06.'..L["Chat"],
 	childGroups = "tab",
 	get = function(info) return E.db.chat[ info[#info] ] end,
 	set = function(info, value) E.db.chat[ info[#info] ] = value end,
@@ -75,6 +75,21 @@ E.Options.args.chat = {
 						CH:UpdateFading()
 					end,
 				},
+				autojoin = {
+					order = 9,
+					name = L["Auto join BigFootChannel"],
+					type = "toggle",
+					set = function(info, value)
+						E.db.chat.autojoin = value
+						if value then
+							JoinTemporaryChannel(L["BigFootChannel"])
+							ChatFrame_RemoveChannel(DEFAULT_CHAT_FRAME, L["BigFootChannel"])
+							ChatFrame_AddChannel(DEFAULT_CHAT_FRAME, L["BigFootChannel"])
+						else
+							SlashCmdList["LEAVE"](L["BigFootChannel"])
+						end
+					end,
+				},
 				emotionIcons = {
 					order = 5,
 					type = 'toggle',
@@ -136,6 +151,7 @@ E.Options.args.chat = {
 					name = L["Class Color Mentions"],
 					desc = L["Use class color for the names of players when they are mentioned."],
 				},
+
 				throttleInterval = {
 					order = 12,
 					type = 'range',
@@ -165,21 +181,9 @@ E.Options.args.chat = {
 					name = L["Allowed Combat Repeat"],
 					desc = L["Number of repeat characters while in combat before the chat editbox is automatically closed."],
 					min = 2, max = 10, step = 1,
-				},
-				numScrollMessages = {
-					order = 15,
-					type = "range",
-					name = L["Scroll Messages"],
-					desc = L["Number of messages you scroll for each step."],
-					min = 1, max = 10, step = 1,
-				},
-				spacer = {
-					order = 16,
-					type = "description",
-					name = " ",
-				},
+				},				
 				timeStampFormat = {
-					order = 17,
+					order = 15,
 					type = 'select',
 					name = TIMESTAMPS_LABEL,
 					desc = OPTION_TOOLTIP_TIMESTAMPS,
@@ -194,13 +198,13 @@ E.Options.args.chat = {
 					},
 				},
 				useCustomTimeColor = {
-					order = 18,
+					order = 16,
 					type = "toggle",
 					name = L["Custom Timestamp Color"],
 					disabled = function() return not E.db.chat.timeStampFormat == "NONE" end,
 				},
 				customTimeColor = {
-					order = 19,
+					order = 17,
 					type = "color",
 					hasAlpha = false,
 					name = L["Timestamp Color"],
@@ -381,7 +385,7 @@ E.Options.args.chat = {
 						E:GetModule('Chat'):PositionChat(true);
 						E:GetModule('Bags'):Layout();
 					end,
-					min = 50, max = 1000, step = 1,
+					min = 50, max = 700, step = 1,
 				},
 				panelBackdropNameLeft = {
 					order = 13,
@@ -432,6 +436,7 @@ E.Options.args.chat = {
 					values = {
 						['NONE'] = L["None"],
 						['OUTLINE'] = 'OUTLINE',
+
 						['MONOCHROMEOUTLINE'] = 'MONOCHROMEOUTLINE',
 						['THICKOUTLINE'] = 'THICKOUTLINE',
 					},

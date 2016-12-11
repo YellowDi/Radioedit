@@ -1,23 +1,23 @@
 local E, L, V, P, G = unpack(select(2, ...)); --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local UF = E:GetModule('UnitFrames');
-local _, ns = ...
-local ElvUF = ns.oUF
-assert(ElvUF, "ElvUI was unable to locate oUF.")
 
 --Cache global variables
 --Lua functions
 local _G = _G
-local tinsert = tinsert
+local unpack, pairs = unpack, pairs
 local max = math.max
+local format = format
 --WoW API / Variables
-local CreateFrame = CreateFrame
-local MAX_COMBO_POINTS = MAX_COMBO_POINTS
+local C_TimerAfter = C_Timer.After
+local RAID_CLASS_COLORS = RAID_CLASS_COLORS
+local CUSTOM_CLASS_COLORS = CUSTOM_CLASS_COLORS
 
---Global variables that we don't cache, list them here for mikk's FindGlobals script
--- GLOBALS: ElvUF_Target
+local _, ns = ...
+local ElvUF = ns.oUF
+assert(ElvUF, "ElvUI was unable to locate oUF.")
 
 function UF:Construct_PlayerFrame(frame)
-	frame.Threat = self:Construct_Threat(frame)
+	frame.Threat = self:Construct_Threat(frame, true)
 
 	frame.Health = self:Construct_HealthBar(frame, true, true, 'RIGHT')
 	frame.Health.frequentUpdates = true;
@@ -34,7 +34,7 @@ function UF:Construct_PlayerFrame(frame)
 
 	frame.Debuffs = self:Construct_Debuffs(frame)
 
-	frame.Castbar = self:Construct_Castbar(frame, L["Player Castbar"])
+	frame.Castbar = self:Construct_Castbar(frame, 'LEFT', L["Player Castbar"])
 
 	--Create a holder frame all "classbars" can be positioned into
 	frame.ClassBarHolder = CreateFrame("Frame", nil, frame)
@@ -43,6 +43,7 @@ function UF:Construct_PlayerFrame(frame)
 	--Combo points was moved to the ClassIcons element, so all classes need to have a ClassBar now.
 	frame.ClassIcons = self:Construct_ClassBar(frame)
 	frame.ClassBar = 'ClassIcons'
+	frame.TankShield = self:Construct_TankShield(frame)
 
 	--Some classes need another set of different classbars.
 	if E.myclass == "DEATHKNIGHT" then
@@ -64,13 +65,17 @@ function UF:Construct_PlayerFrame(frame)
 	frame.PvPText = self:Construct_PvPIndicator(frame)
 	frame.DebuffHighlight = self:Construct_DebuffHighlight(frame)
 	frame.HealPrediction = self:Construct_HealComm(frame)
+
 	frame.AuraBars = self:Construct_AuraBarHeader(frame)
+	frame.Swing = self:Construct_SwingBar(frame)
+	frame.GCD = self:Construct_GCDBar(frame)
+
+	frame.CombatFade = true
 	frame.InfoPanel = self:Construct_InfoPanel(frame)
 	frame.PvP = UF:Construct_PvPIcon(frame)
-	frame.CombatFade = true
 	frame.customTexts = {}
 
-	frame:Point('BOTTOMLEFT', E.UIParent, 'BOTTOM', -413, 68) --Set to default position
+	frame:Point('BOTTOMLEFT', E.UIParent, 'BOTTOM', -413, 135) --Set to default position
 	E:CreateMover(frame, frame:GetName()..'Mover', L["Player Frame"], nil, nil, nil, 'ALL,SOLO')
 
 	frame.unitframeType = "player"
@@ -114,7 +119,7 @@ function UF:Update_PlayerFrame(frame, db)
 		frame.INFO_PANEL_HEIGHT = frame.USE_INFO_PANEL and db.infoPanel.height or 0
 
 		frame.BOTTOM_OFFSET = UF:GetHealthBottomOffset(frame)
-
+		
 		frame.VARIABLES_SET = true
 	end
 
@@ -184,6 +189,11 @@ function UF:Update_PlayerFrame(frame, db)
 	if E.db.unitframe.units.target.aurabar.attachTo == "PLAYER_AURABARS" and ElvUF_Target then
 		UF:Configure_AuraBars(ElvUF_Target)
 	end
+
+	--Swing bar
+	UF:Configure_SwingBar(frame)
+	--TankShield
+	UF:Configure_TankShield(frame)
 
 	--PvP & Prestige Icon
 	UF:Configure_PVPIcon(frame)

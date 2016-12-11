@@ -18,8 +18,6 @@ local defaults = {
 		['EmbedBelowTop'] = false,
 		['TransparentEmbed'] = false,
 		['EmbedIsHidden'] = false,
-		['EmbedFrameStrata'] = "3-MEDIUM",
-		['EmbedFrameLevel'] = 1,
 	-- Misc
 		['RecountBackdrop'] = true,
 		['SkadaBackdrop'] = true,
@@ -27,7 +25,7 @@ local defaults = {
 		['DetailsBackdrop'] = true,
 		['MiscFixes'] = true,
 		['DBMSkinHalf'] = false,
-		['DBMFont'] = 'Tukui',
+		['DBMFont'] = 'EUI',
 		['DBMFontSize'] = 12,
 		['DBMFontFlag'] = 'OUTLINE',
 		['DBMRadarTrans'] = false,
@@ -119,7 +117,7 @@ function AS:GetOptions()
 	local Options = {
 		order = 100,
 		type = "group",
-		name = AS.Title,
+		name = "11."..AS.Title,
 		args = {
 			addons = {
 				order = 0,
@@ -175,6 +173,16 @@ function AS:GetOptions()
 						type = "toggle",
 						name = ASL["DBM|VEM Half-bar Skin"],
 						order = 4,
+						set = function(info, value)
+							AS:SetOption(info[#info], value)
+							if value then
+								DBM.Bars:SetOption('BarYOffset', 18)
+								DBM.Bars:SetOption('HugeBarYOffset', 18)
+							else
+								DBM.Bars:SetOption('BarYOffset', 2)
+								DBM.Bars:SetOption('HugeBarYOffset', 2)
+							end
+						end,
 					},
 					DBMRadarTrans = {
 						type = "toggle",
@@ -193,19 +201,36 @@ function AS:GetOptions()
 					desc = {
 						type = "description",
 						name = ASL["Settings to control Embedded AddOns:\n\nAvailable Embeds: alDamageMeter | Details | Omen | Skada | Recount | TinyDPS"],
-						order = 1
+						order = 0
 					},
 					EmbedSystem = {
 						type = "toggle",
 						name = ASL["Single Embed System"],
-						order = 2,
+						order = 1,
 						disabled = function() return AS:CheckOption("EmbedSystemDual") end,
+						set = function(info, value)
+							AS:SetOption(info[#info], value);
+							AS:Embed_Check();
+							if Skada and (not value) then Skada.db:ResetProfile(); end
+						end,
 					},
 					EmbedMain = {
-						type = "input",
-						width = "full",
+						type = 'select',
 						name = ASL["Embed for Main Panel"],
 						disabled = function() return not AS:CheckOption("EmbedSystem") end,
+						order = 2,
+						values = {
+							['alDamageMeter'] = 'alDamageMeter',
+							['Omen'] = 'Omen',
+							['Skada'] = 'Skada',
+							['Recount'] = 'Recount',
+							['TinyDPS'] = 'TinyDPS',
+							['Details'] = 'Details',
+						},
+					},				
+					spacer = {
+						type = 'description',
+						name = '',
 						order = 3,
 					},
 					EmbedSystemDual = {
@@ -213,20 +238,39 @@ function AS:GetOptions()
 						name = ASL["Dual Embed System"],
 						order = 4,
 						disabled = function() return AS:CheckOption("EmbedSystem") end,
+						set = function(info, value)
+							AS:SetOption(info[#info], value);
+							AS:Embed_Check();
+							if not value then SkadaDB=nil;ElvUI[1]:StaticPopup_Show('CONFIG_RL'); end
+						end,						
 					},
 					EmbedLeft = {
-						type = "input",
-						width = "full",
+						type = 'select',					
 						name = ASL["Embed for Left Window"],
 						disabled = function() return not AS:CheckOption("EmbedSystemDual") end,
 						order = 5,
+						values = {
+							['alDamageMeter'] = 'alDamageMeter',
+							['Omen'] = 'Omen',
+							['Skada'] = 'Skada',
+							['Recount'] = 'Recount',
+							['TinyDPS'] = 'TinyDPS',
+							['Details'] = 'Details',
+						},
 					},
 					EmbedRight = {
-						type = "input",
-						width = "full",
+						type = 'select',
 						name = ASL["Embed for Right Window"],
 						disabled = function() return not AS:CheckOption("EmbedSystemDual") end,
 						order = 6,
+						values = {
+							['alDamageMeter'] = 'alDamageMeter',
+							['Omen'] = 'Omen',
+							['Skada'] = 'Skada',
+							['Recount'] = 'Recount',
+							['TinyDPS'] = 'TinyDPS',
+							['Details'] = 'Details',
+						},
 					},
 					EmbedLeftWidth = {
 						type = "range",
@@ -238,44 +282,19 @@ function AS:GetOptions()
 						disabled = function() return not AS:CheckOption("EmbedSystemDual") end,
 						width = "full",
 					},
-					EmbedSystemMessage = {
-						type = "toggle",
-						name = ASL["Embed System Message"],
-						order = 9,
-					},
-					EmbedFrameStrata = {
-						name = ASL["Embed Frame Strata"],
-						order = 10,
-						type = "select",
-						values = {
-							["1-BACKGROUND"] = "BACKGROUND",
-							["2-LOW"] = "LOW",
-							["3-MEDIUM"] = "MEDIUM",
-							["4-HIGH"] = "HIGH",
-							["5-DIALOG"] = "DIALOG",
-							["6-FULLSCREEN"] = "FULLSCREEN",
-							["7-FULLSCREEN_DIALOG"] = "FULLSCREEN_DIALOG",
-							["8-TOOLTIP"] = "TOOLTIP",
-						},
-						disabled = function() return not (AS:CheckOption("EmbedSystemDual") or AS:CheckOption("EmbedSystem")) end,
-					},
-					EmbedFrameLevel = {
-						name = ASL["Embed Frame Level"],
-						order = 11,
-						type = "range",
-						min = 1,
-						max = 255,
-						step = 1,
-						disabled = function() return not (AS:CheckOption("EmbedSystemDual") or AS:CheckOption("EmbedSystem")) end,
-					},
 					EmbedOoC = {
 						type = "toggle",
 						name = ASL["Out of Combat (Hide)"],
-						order = 12,
+						order = 8,
+					},
+					EmbedSystemMessage = {
+						type = "toggle",
+						name = ASL["Enable the Embed System Message"],
+						order = 9,
 					},
 					EmbedOoCDelay = {
 						name = ASL["Embed OoC Delay"],
-						order = 13,
+						order = 10,
 						type = "range",
 						min = 1,
 						max = 30,
@@ -284,61 +303,61 @@ function AS:GetOptions()
 					},
 					HideChatFrame = {
 						name = ASL["Hide Chat Frame"],
-						order = 14,
+						order = 11,
 						type = "select",
 						values = AS:GetChatWindowInfo(),
 						disabled = function() return not (AS:CheckOption("EmbedSystemDual") or AS:CheckOption("EmbedSystem")) end,
 					},
-					EmbedRightChat = {
-						type = "toggle",
-						name = ASL["Embed into Right Chat Panel"],
-						order = 15,
-					},
-					TransparentEmbed = {
-						type = "toggle",
-						name = ASL["Embed Transparancy"],
-						order = 16,
-					},
-					EmbedBelowTop = {
-						type = "toggle",
-						name = ASL["Embed Below Top Tab"],
-						order = 17,
-					},
-					DetailsBackdrop = { 
-						type = "toggle", 
-						name = ASL["Details Backdrop"], 
-						order = 18, 
-						disabled = function() return not (AS:CheckOption("Details", "Details") and AS:CheckEmbed("Details")) end 
-					},
-					RecountBackdrop = {
-						type = "toggle",
-						name = ASL["Recount Backdrop"],
-						order = 19,
-						disabled = function() return not (AS:CheckOption("Recount", "Recount") and AS:CheckEmbed("Recount")) end
-					},
-					SkadaBackdrop = {
-						type = "toggle",
-						name = ASL["Skada Backdrop"],
-						order = 20,
-						disabled = function() return not (AS:CheckOption("Skada", "Skada") and AS:CheckEmbed("Skada")) end
-					},
-					OmenBackdrop = {
-						type = "toggle",
-						name = ASL["Omen Backdrop"],
-						order = 21,
-						disabled = function() return not (AS:CheckOption("Omen", "Omen") and AS:CheckEmbed("Omen")) end
-					},
 					EmbedSexyCooldown = {
 						type = "toggle",
 						name = ASL["Attach SexyCD to action bar"],
-						order = 22,
+						order = 12,
 						disabled = function() return not AS:CheckOption("SexyCooldown", "SexyCooldown2") end,
 					},
 					EmbedCoolLine = {
 						type = "toggle",
 						name = ASL["Attach CoolLine to action bar"],
-						order = 23,
+						order = 13,
 						disabled = function() return not AS:CheckOption("CoolLine", "CoolLine") end,
+					},
+					EmbedRightChat = {
+						type = "toggle",
+						name = ASL["Embed into Right Chat Panel"],
+						order = 14,
+					},
+					TransparentEmbed = {
+						type = "toggle",
+						name = ASL["Embed Transparancy"],
+						order = 15,
+					},
+					EmbedBelowTop = {
+						type = "toggle",
+						name = ASL["Embed Below Top Tab"],
+						order = 16,
+					},
+					DetailsBackdrop = { 
+						type = "toggle", 
+						name = ASL["Details Backdrop"], 
+						order = 17, 
+						disabled = function() return not (AS:CheckOption("Details", "Details") and AS:CheckEmbed("Details")) end 
+					},
+					RecountBackdrop = {
+						type = "toggle",
+						name = ASL["Recount Backdrop"],
+						order = 18,
+						disabled = function() return not (AS:CheckOption("Recount", "Recount") and AS:CheckEmbed("Recount")) end
+					},
+					SkadaBackdrop = {
+						type = "toggle",
+						name = ASL["Skada Backdrop"],
+						order = 19,
+						disabled = function() return not (AS:CheckOption("Skada", "Skada") and AS:CheckEmbed("Skada")) end
+					},
+					OmenBackdrop = {
+						type = "toggle",
+						name = ASL["Omen Backdrop"],
+						order = 20,
+						disabled = function() return not (AS:CheckOption("Omen", "Omen") and AS:CheckEmbed("Omen")) end
 					},
 				},
 			},
@@ -376,7 +395,7 @@ function AS:GetOptions()
 					},
 					LoginMsg = {
 						type = "toggle",
-						name = ASL["Login Message"],
+						name = ASL["Enable the Login Message"],
 						order = 4,
 					},
 				},
@@ -460,14 +479,17 @@ function AS:GetOptions()
 	local order, blizzorder = 0, 0
 	for skinName, _ in AS:OrderedPairs(AS.register) do
 		if strfind(skinName, "Blizzard_") then
-			Options.args.blizzard.args[skinName] = GenerateOptionTable(skinName, blizzorder)
-			blizzorder = blizzorder + 1
+		--	Options.args.blizzard.args[skinName] = GenerateOptionTable(skinName, blizzorder)
+		--	blizzorder = blizzorder + 1
 		else
 			Options.args.addons.args[skinName] = GenerateOptionTable(skinName, order)
 			order = order + 1
 		end
 	end
 
+	if blizzorder == 0 then
+		Options.args.blizzard = nil
+	end
 	if IsAddOnLoaded("ElvUI") then
 		Options.args.misc.args.WeakAuraIconCooldown = {
 			type = "toggle",
@@ -491,6 +513,15 @@ function AS:GetOptions()
 	if EP then
 		local Ace3OptionsPanel = IsAddOnLoaded("ElvUI") and ElvUI[1] or Enhanced_Config and Enhanced_Config[1]
 		Ace3OptionsPanel.Options.args.addonskins = Options
+		local E,L = unpack(ElvUI)
+		E.Options.args.chat.args.EmbedRight = {
+			order = 4,
+			type = 'group',
+			name = L['Embed Settings'],
+			get = function(info) return AS:CheckOption(info[#info]) end,
+			set = function(info, value) AS:SetOption(info[#info], value) AS:Embed_Check() end,
+			args = E.Options.args.addonskins.args.embed.args,
+		}		
 	else
 		local ACR, ACD = LibStub("AceConfigRegistry-3.0", true), LibStub("AceConfigDialog-3.0", true)
 		if not (ACR or ACD) then return end

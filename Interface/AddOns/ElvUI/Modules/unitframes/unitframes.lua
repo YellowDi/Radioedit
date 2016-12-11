@@ -7,9 +7,6 @@ UF.LSM = LSM
 --Lua functions
 local _G = _G
 local select, pairs, type, unpack, assert, tostring = select, pairs, type, unpack, assert, tostring
-local min = math.min
-local tinsert = table.insert
-local find, gsub, format = string.find, string.gsub, string.format
 --WoW API / Variables
 local hooksecurefunc = hooksecurefunc
 local CreateFrame = CreateFrame
@@ -26,8 +23,10 @@ local RegisterStateDriver = RegisterStateDriver
 local UnregisterAttributeDriver = UnregisterAttributeDriver
 local CompactRaidFrameManager_UpdateShown = CompactRaidFrameManager_UpdateShown
 local CompactRaidFrameContainer = CompactRaidFrameContainer
+local CompactUnitFrame_UnregisterEvents = CompactUnitFrame_UnregisterEvents
 local MAX_RAID_MEMBERS = MAX_RAID_MEMBERS
 local MAX_BOSS_FRAMES = MAX_BOSS_FRAMES
+local GetSpecialization = GetSpecialization
 
 --Global variables that we don't cache, list them here for mikk's FindGlobals script
 -- GLOBALS: UIParent, ElvCharacterDB, ElvUF_Parent, oUF_RaidDebuffs, CompactRaidFrameManager
@@ -37,7 +36,13 @@ local MAX_BOSS_FRAMES = MAX_BOSS_FRAMES
 
 local _, ns = ...
 local ElvUF = ns.oUF
+local AceTimer = LibStub:GetLibrary("AceTimer-3.0")
 assert(ElvUF, "ElvUI was unable to locate oUF.")
+
+local opposites = {
+	['DEBUFFS'] = 'BUFFS',
+	['BUFFS'] = 'DEBUFFS'
+}
 
 UF['headerstoload'] = {}
 UF['unitgroupstoload'] = {}
@@ -213,6 +218,10 @@ local DIRECTION_TO_VERTICAL_SPACING_MULTIPLIER = {
 	LEFT_UP = 1,
 }
 
+local find, gsub, split, format = string.find, string.gsub, string.split, string.format
+local min, abs = math.min, math.abs
+local tremove, tinsert = table.remove, table.insert
+
 function UF:ConvertGroupDB(group)
 	local db = self.db.units[group.groupName]
 	if db.point and db.columnAnchorPoint then
@@ -249,6 +258,7 @@ function UF:Construct_UF(frame, unit)
 	frame.BOTTOM_OFFSET = 0 --placeholder
 
 	frame.RaisedElementParent = CreateFrame('Frame', nil, frame)
+	frame.RaisedElementParent.TextureParent = CreateFrame('Frame', nil, frame.RaisedElementParent)
 	frame.RaisedElementParent:SetFrameLevel(frame:GetFrameLevel() + 100)
 
 	if not self['groupunits'][unit] then
@@ -464,7 +474,7 @@ function UF:Update_AllFrames()
 	self:UpdateAllHeaders()
 end
 
-function UF:CreateAndUpdateUFGroup(group, numGroup)
+function UF:CreateAndUpdateUFGroup(group, numGroup, template)
 	if InCombatLockdown() then self:RegisterEvent('PLAYER_REGEN_ENABLED'); return end
 
 	for i=1, numGroup do
@@ -636,6 +646,7 @@ function UF.groupPrototype:Configure_Groups(self)
 	if self.mover then
 		self.mover.positionOverride = DIRECTION_TO_GROUP_ANCHOR_POINT[direction]
 		E:UpdatePositionOverride(self.mover:GetName())
+		self:GetScript("OnSizeChanged")(self) --Mover size is not updated if frame is hidden, so call an update manually
 	end
 
 	self:SetSize(width - db.horizontalSpacing, height - db.verticalSpacing)
@@ -751,6 +762,7 @@ function UF:CreateHeader(parent, groupFilter, overrideName, template, groupName,
 	return header
 end
 
+local maxGroupsTip = false
 function UF:CreateAndUpdateHeaderGroup(group, groupFilter, template, headerUpdate, headerTemplate)
 	if InCombatLockdown() then self:RegisterEvent('PLAYER_REGEN_ENABLED'); return end
 	local db = self.db['units'][group]
@@ -759,7 +771,10 @@ function UF:CreateAndUpdateHeaderGroup(group, groupFilter, template, headerUpdat
 	if(raidFilter and numGroups and (self[group] and not self[group].blockVisibilityChanges)) then
 		local inInstance, instanceType = IsInInstance()
 		if(inInstance and (instanceType == 'raid' or instanceType == 'pvp')) then
-			local _, _, _, _, maxPlayers, _, _, mapID = GetInstanceInfo()
+			local _, _, _, _, maxPlayers, _, _, mapID, maxPlayersInstance = GetInstanceInfo()
+			--[[if maxPlayersInstance > 0 then
+				maxPlayers = maxPlayersInstance
+			end]]
 
 			if UF.mapIDs[mapID] then
 				maxPlayers = UF.mapIDs[mapID]
@@ -767,7 +782,10 @@ function UF:CreateAndUpdateHeaderGroup(group, groupFilter, template, headerUpdat
 
 			if maxPlayers > 0 then
 				numGroups = E:Round(maxPlayers/5)
-				E:Print(group, "Forcing maxGroups to: "..numGroups.." because maxPlayers is: "..maxPlayers)
+				if maxGroupsTip == false then
+					E:Print(group, L["Forcing maxGroups to: %d because maxPlayers is: %d"]:format(numGroups, maxPlayers))
+					maxGroupsTip = truep
+				end
 			end
 		end
 	end
@@ -942,14 +960,20 @@ function UF:UpdateAllHeaders(event)
 
 	local _, instanceType = IsInInstance();
 	local ORD = ns.oUF_RaidDebuffs or oUF_RaidDebuffs
+	local filterName
 	if ORD then
 		ORD:ResetDebuffData()
-
+		
 		if instanceType == "party" or instanceType == "raid" then
-			ORD:RegisterDebuffs(E.global.unitframe.aurafilters.RaidDebuffs.spells)
+			filterName = E.global.unitframe.aurafilters.RaidDebuffs.spells
 		else
-			ORD:RegisterDebuffs(E.global.unitframe.aurafilters.CCDebuffs.spells)
+			filterName = E.global.unitframe.aurafilters.CCDebuffs.spells
 		end
+		
+		if ElvUI[1].db.unitframe.units.raid.rdebuffs.useFilter then
+			filterName = E.global.unitframe.aurafilters[ElvUI[1].db.unitframe.units.raid.rdebuffs.useFilter].spells
+		end
+		ORD:RegisterDebuffs(filterName)
 	end
 
 	if E.private["unitframe"]["disabledBlizzardFrames"].party then
@@ -984,7 +1008,7 @@ local function HideRaid()
 	end
 end
 
-function UF:DisableBlizzard()
+function UF:DisableBlizzard(event)
 	if (not E.private["unitframe"]["disabledBlizzardFrames"].raid) and (not E.private["unitframe"]["disabledBlizzardFrames"].party) then return; end
 	if not CompactRaidFrameManager_UpdateShown then
 		E:StaticPopup_Show("WARNING_BLIZZARD_ADDONS")
@@ -997,6 +1021,7 @@ function UF:DisableBlizzard()
 		CompactRaidFrameContainer:UnregisterAllEvents()
 
 		HideRaid()
+		--hooksecurefunc("CompactUnitFrame_RegisterEvents", CompactUnitFrame_UnregisterEvents) -- breaks nameplates names
 	end
 end
 
@@ -1109,7 +1134,7 @@ function UF:ADDON_LOADED(event, addon)
 end
 
 local hasEnteredWorld = false
-function UF:PLAYER_ENTERING_WORLD()
+function UF:PLAYER_ENTERING_WORLD(event)
 	if not hasEnteredWorld then
 		--We only want to run Update_AllFrames once when we first log in or /reload
 		self:Update_AllFrames()
@@ -1163,7 +1188,7 @@ function UF:Initialize()
 	end
 
 	if (not E.private["unitframe"]["disabledBlizzardFrames"].party) and (not E.private["unitframe"]["disabledBlizzardFrames"].raid) then
-		E.RaidUtility.Initialize = E.noop
+	--	E.RaidUtility.Initialize = E.noop  RaidUtilityÄ£¿éÒÑ½ûÓÃ
 	end
 
 	if E.private["unitframe"]["disabledBlizzardFrames"].arena then
@@ -1355,6 +1380,118 @@ function UF:ToggleTransparentStatusBar(isTransparent, statusBar, backdropTex, ad
 		if backdropTex.multiplier then
 			backdropTex.multiplier = 0.25
 		end
+	end
+end
+
+local UpdaterOnUpdateH = function(Updater)
+	local b = Updater:GetParent()
+	local tex = b:GetStatusBarTexture()
+	local Unit = b:GetParent()
+	if Unit.unit and UnitIsDeadOrGhost(Unit.unit) then b:SetValue(1); end
+	tex:ClearAllPoints()
+	tex:Point("BOTTOMRIGHT")
+	tex:Point("TOPLEFT", b, "TOPRIGHT", ((b:GetValue()/select(2,b:GetMinMaxValues())-1)*b:GetWidth()) or 0, 0)
+end
+local UpdaterOnUpdateV = function(Updater)
+	local b = Updater:GetParent()
+	local tex = b:GetStatusBarTexture()
+	local Unit = b:GetParent()
+	if Unit.unit and UnitIsDeadOrGhost(Unit.unit) then b:SetValue(1); end
+	tex:ClearAllPoints()
+	tex:Point("TOPRIGHT")
+	tex:Point("BOTTOMLEFT", b, "TOPLEFT", 0, ((b:GetValue()/select(2,b:GetMinMaxValues())-1)*b:GetHeight()) or 0)
+end
+local OnChanged = function(bar)
+	bar.Updater:Show()
+end
+function E:TranseBar(f, orientation)
+	if not orientation then orientation = "HORIZONTAL" end
+	
+	local bar = CreateFrame("StatusBar", nil, f, nil) --separate frame for OnUpdates
+	bar.Updater = CreateFrame("Frame", nil, bar)
+	if orientation == "HORIZONTAL" then
+		bar.Updater:SetScript("OnUpdate", UpdaterOnUpdateH)
+	else
+		bar.Updater:SetScript("OnUpdate", UpdaterOnUpdateV)
+	end
+	bar:SetScript("OnSizeChanged", OnChanged)
+	bar:SetScript("OnValueChanged", OnChanged)
+	bar:SetScript("OnMinMaxChanged", OnChanged)
+	return bar;
+end
+
+function UF:Construct_Range(frame)
+	return {insideAlpha = 1, outsideAlpha = E.db.unitframe.OORAlpha}
+end
+
+function UF:UpdateClickSet()
+	if InCombatLockdown() then return; end
+	if not self.unit then return; end
+	local unit = self.unit
+
+	local spec = 'spec1'
+	if not self.ClickSet then return; end
+	
+	local spec = 'spec1'
+	if self.ClickSet.specswap == true and GetSpecialization() == 2 then
+		spec = 'spec2'
+	elseif self.ClickSet.specswap == true and GetSpecialization() == 3 then
+		spec = 'spec3'
+	elseif self.ClickSet.specswap == true and GetSpecialization() == 4 then
+		spec = 'spec4'
+	end
+	
+	if E.db["clickset"][spec] == nil then return end
+
+	local key_tmp
+	for key, value in pairs(E.db["clickset"][spec]) do
+		key_tmp = string.gsub(key,"z","-")
+		if value == "NONE" then
+			self:SetAttribute(key_tmp, nil)
+		elseif value == "target" or value == "menu" or value == "focus" then
+			self:SetAttribute(key_tmp, value)
+		elseif value ~= "NONE" and key ~= "enable" and type(value) == "string" then
+			if string.sub(value, 1, 2) ~= "#*" then
+				self:SetAttribute(key_tmp, 'spell')
+				self:SetAttribute(string.gsub(key_tmp,"type",'spell'), value)
+			else
+				self:SetAttribute(key_tmp, 'macro')
+				self:SetAttribute(string.gsub(key_tmp,"type","macrotext"), string.sub(value, 3))
+			end
+		end
+	end
+end
+
+function UF:UpdateTargetGlow(event)
+	if not self.unit then return; end
+	local unit = self.unit
+
+	if UnitIsUnit(unit, 'target') then
+		self.TargetGlow:Show()
+		
+		if UF.db and UF.db.colors.healthclass then
+			self.TargetGlow:SetBackdropBorderColor(UF.db.colors.targetGlowColor.r, UF.db.colors.targetGlowColor.g, UF.db.colors.targetGlowColor.b)
+		else
+			local reaction = UnitReaction(unit, 'player')
+
+			if UnitIsPlayer(unit) then
+				local _, class = UnitClass(unit)
+				if class then
+					local color = CUSTOM_CLASS_COLORS and CUSTOM_CLASS_COLORS[class] or RAID_CLASS_COLORS[class]
+					self.TargetGlow:SetBackdropBorderColor(color.r, color.g, color.b)
+				else
+					self.TargetGlow:SetBackdropBorderColor(1, 1, 1)
+				end
+			elseif reaction then
+				local color = FACTION_BAR_COLORS[reaction]
+				if unit:find("boss%d") then color = E.db.unitframe.units.boss.targetBossColor end
+				self.TargetGlow:SetBackdropBorderColor(color.r, color.g, color.b)
+			else
+				self.TargetGlow:SetBackdropBorderColor(1, 1, 1)
+			end
+		end
+	else
+		self.TargetGlow:Hide()
 	end
 end
 

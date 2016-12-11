@@ -37,7 +37,8 @@ function S:SetOriginalBackdrop()
 end
 
 function S:HandleButton(f, strip)
-	assert(f, "doesn't exist!")
+	if not f then return; end
+
 	if f.Left then f.Left:SetAlpha(0) end
 	if f.Middle then f.Middle:SetAlpha(0) end
 	if f.Right then f.Right:SetAlpha(0) end
@@ -57,6 +58,23 @@ function S:HandleButton(f, strip)
 	f:SetTemplate("Default", true)
 	f:HookScript("OnEnter", S.SetModifiedBackdrop)
 	f:HookScript("OnLeave", S.SetOriginalBackdrop)
+end
+
+function S:HandleButtonB(f, strip)
+	if not f then return; end
+	if f.Left then f.Left:SetAlpha(0) end
+	if f.Middle then f.Middle:SetAlpha(0) end
+	if f.Right then f.Right:SetAlpha(0) end
+
+	if f.SetNormalTexture then f:SetNormalTexture("") end
+	
+	if f.SetPushedTexture then f:SetPushedTexture("") end
+	
+	if f.SetDisabledTexture then f:SetDisabledTexture("") end
+	
+	if strip then f:StripTextures() end
+	
+	f:SetTemplate("Default", true)
 end
 
 function S:HandleScrollBar(frame, thumbTrim)
@@ -201,6 +219,7 @@ function S:HandleTab(tab)
 end
 
 function S:HandleNextPrevButton(btn, useVertical, inverseDirection)
+	local norm, pushed, disabled
 	local inverseDirection = inverseDirection or btn:GetName() and (find(btn:GetName():lower(), 'left') or find(btn:GetName():lower(), 'prev') or find(btn:GetName():lower(), 'decrement') or find(btn:GetName():lower(), 'back'))
 
 	btn:StripTextures()
@@ -327,10 +346,10 @@ function S:HandleDropDownBox(frame, width)
 	if(button) then
 		button:ClearAllPoints()
 		button:Point("RIGHT", frame, "RIGHT", -10, 3)
-		hooksecurefunc(button, "SetPoint", function(self, _, _, _, _, _, noReset)
+		hooksecurefunc(button, "SetPoint", function(self, point, attachTo, anchorPoint, xOffset, yOffset, noReset)
 			if not noReset then
-				self:ClearAllPoints()
-				self:SetPoint("RIGHT", frame, "RIGHT", E:Scale(-10), E:Scale(3), true)
+				button:ClearAllPoints()
+				button:SetPoint("RIGHT", frame, "RIGHT", E:Scale(-10), E:Scale(3), true)
 			end
 		end)
 
@@ -342,7 +361,8 @@ function S:HandleDropDownBox(frame, width)
 end
 
 function S:HandleCheckBox(frame, noBackdrop, noReplaceTextures)
-	assert(frame, 'does not exist.')
+	if not frame then return; end
+
 	frame:StripTextures()
 	if noBackdrop then
 		frame:SetTemplate("Default")
@@ -469,7 +489,8 @@ function S:HandleCloseButton(f, point, text)
 end
 
 function S:HandleSliderFrame(frame)
-	assert(frame)
+	if not frame then return; end
+
 	local orientation = frame:GetOrientation()
 	local SIZE = 12
 	frame:StripTextures()
@@ -499,6 +520,7 @@ function S:HandleSliderFrame(frame)
 		end
 	end
 end
+
 
 function S:HandleFollowerPage(follower, hasItems)
 	local abilities = follower.followerTab.AbilitiesFrame.Abilities
@@ -643,6 +665,7 @@ function S:RegisterSkin(name, loadFunc, forceLoad, bypass)
 		self.addonsToLoad[name] = loadFunc;
 	end
 end
+
 
 --Add callback for skin that relies on another addon.
 --These events will be fired when the addon is loaded.

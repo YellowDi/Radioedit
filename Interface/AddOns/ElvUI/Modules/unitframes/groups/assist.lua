@@ -1,27 +1,29 @@
 local E, L, V, P, G = unpack(select(2, ...)); --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local UF = E:GetModule('UnitFrames');
-local _, ns = ...
-local ElvUF = ns.oUF
-assert(ElvUF, "ElvUI was unable to locate oUF.")
 
 --Cache global variables
---Lua functions
-local max = math.max
 --WoW API / Variables
-local CreateFrame = CreateFrame
-local InCombatLockdown = InCombatLockdown
 local RegisterAttributeDriver = RegisterAttributeDriver
+local InCombatLockdown = InCombatLockdown
 
 --Global variables that we don't cache, list them here for mikk's FindGlobals script
 -- GLOBALS: UnitFrame_OnEnter, UnitFrame_OnLeave
 
-function UF:Construct_AssistFrames()
+local _, ns = ...
+local ElvUF = ns.oUF
+assert(ElvUF, "ElvUI was unable to locate oUF.")
+
+function UF:Construct_AssistFrames(unitGroup)
 	self:SetScript('OnEnter', UnitFrame_OnEnter)
 	self:SetScript('OnLeave', UnitFrame_OnLeave)
 
 	self.RaisedElementParent = CreateFrame('Frame', nil, self)
+	self.RaisedElementParent.TextureParent = CreateFrame('Frame', nil, self.RaisedElementParent)
 	self.RaisedElementParent:SetFrameLevel(self:GetFrameLevel() + 100)
 
+	if E.db["clickset"].enable then  
+		self.ClickSet = E.db["clickset"]
+	end
 	self.Health = UF:Construct_HealthBar(self, true)
 	self.Name = UF:Construct_NameText(self)
 	self.Threat = UF:Construct_Threat(self)
@@ -44,6 +46,10 @@ function UF:Construct_AssistFrames()
 	UF:Update_StatusBars()
 	UF:Update_FontStrings()
 
+	tinsert(self.__elements, UF.UpdateClickSet)
+	self:RegisterEvent('UNIT_NAME_UPDATE', UF.UpdateClickSet)
+	self:RegisterEvent('PLAYER_REGEN_ENABLED', UF.UpdateClickSet)
+	self:RegisterEvent('PLAYER_SPECIALIZATION_CHANGED', UF.UpdateClickSet)
 	self.originalParent = self:GetParent()
 
 	return self
@@ -115,7 +121,7 @@ function UF:Update_AssistFrames(frame, db)
 
 		frame.CLASSBAR_YOFFSET = 0
 		frame.BOTTOM_OFFSET = 0
-
+		
 		frame.VARIABLES_SET = true
 	end
 

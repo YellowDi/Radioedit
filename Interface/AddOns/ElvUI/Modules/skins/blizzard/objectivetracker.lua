@@ -20,6 +20,14 @@ local function LoadSkin()
 	WORLD_QUEST_TRACKER_MODULE.Header:StripTextures()
 	WORLD_QUEST_TRACKER_MODULE.Header.Text:FontTemplate()
 
+	hooksecurefunc("ObjectiveTracker_Collapse", function()
+		if EuiAutoQuestButton then EuiAutoQuestButton:Hide(); end
+	end)
+
+	hooksecurefunc("ObjectiveTracker_Expand", function()
+		if EuiAutoQuestButton then EuiAutoQuestButton:Show(); end
+	end)
+
 	local function OnClick(self)
 		local textObject = self.text
 		local text = textObject:GetText()

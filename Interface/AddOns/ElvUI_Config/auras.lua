@@ -89,6 +89,49 @@ local function GetAuraOptions(headerName)
 				[1] = L["Your Auras First"],
 			},
 		},
+		fontSize = {
+			order = 3,
+			name = L["Font Size"],
+			type = "range",
+			min = 4, max = 212, step = 1,
+		},
+		fontOutline = {
+			order = 4,
+			name = L["Font Outline"],
+			desc = L["Set the font outline."],
+			type = "select",
+			values = {
+				['NONE'] = L["None"],
+				['OUTLINE'] = 'OUTLINE',
+
+				['MONOCHROMEOUTLINE'] = 'MONOCROMEOUTLINE',
+				['THICKOUTLINE'] = 'THICKOUTLINE',
+			},
+		},
+		timeXOffset = {
+			order = 5,
+			name = L["Time xOffset"],
+			type = 'range',
+			min = -60, max = 60, step = 1,
+		},
+		timeYOffset = {
+			order = 6,
+			name = L["Time yOffset"],
+			type = 'range',
+			min = -60, max = 60, step = 1,
+		},
+		countXOffset = {
+			order = 7,
+			name = L["Count xOffset"],
+			type = 'range',
+			min = -60, max = 60, step = 1,
+		},
+		countYOffset = {
+			order = 8,
+			name = L["Count yOffset"],
+			type = 'range',
+			min = -60, max = 60, step = 1,
+		},
 	}
 	
 	return auraOptions
@@ -96,7 +139,7 @@ end
 
 E.Options.args.auras = {
 	type = 'group',
-	name = BUFFOPTIONS_LABEL,
+	name = '02.'.. BUFFOPTIONS_LABEL,
 	childGroups = "tab",
 	get = function(info) return E.db.auras[ info[#info] ] end,
 	set = function(info, value) E.db.auras[ info[#info] ] = value; A:UpdateHeader(ElvUIPlayerBuffs); A:UpdateHeader(ElvUIPlayerDebuffs) end,
@@ -212,6 +255,13 @@ E.Options.args.auras = {
 							type = "toggle",
 							name = L["Debuffs"],
 							desc = L["Allow Masque to handle the skinning of this element."],
+						},
+						openConfig = {
+							order = 10,
+							type = "execute",
+							name = L['Open Config'],
+							disabled = function() return not E:IsConfigurableAddOn("Masque"); end,
+							func = function() LibStub("AceAddon-3.0"):GetAddon("Masque"):ShowOptions();E:ToggleConfig(); end,
 						},
 					},
 				},

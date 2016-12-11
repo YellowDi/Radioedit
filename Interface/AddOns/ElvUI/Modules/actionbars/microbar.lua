@@ -12,15 +12,15 @@ local UpdateMicroButtonsParent = UpdateMicroButtonsParent
 --Global variables that we don't cache, list them here for mikk's FindGlobals script
 -- GLOBALS: ElvUI_MicroBar, MainMenuBarPerformanceBar, MainMenuMicroButton
 -- GLOBALS: MICRO_BUTTONS, CharacterMicroButton, GuildMicroButtonTabard
--- GLOBALS: GuildMicroButton, MicroButtonPortrait, CollectionsMicroButtonAlert
+-- GLOBALS: GuildMicroButton, MicroButtonPortrait
 
-local function Button_OnEnter()
+local function Button_OnEnter(self)
 	if AB.db.microbar.mouseover then
 		E:UIFrameFadeIn(ElvUI_MicroBar, 0.2, ElvUI_MicroBar:GetAlpha(), AB.db.microbar.alpha)
 	end
 end
 
-local function Button_OnLeave()
+local function Button_OnLeave(self)
 	if AB.db.microbar.mouseover then
 		E:UIFrameFadeOut(ElvUI_MicroBar, 0.2, ElvUI_MicroBar:GetAlpha(), 0)
 	end
@@ -153,5 +153,5 @@ function AB:SetupMicroBar()
 	self:UpdateMicroPositionDimensions()
 	MainMenuBarPerformanceBar:Kill()
 	CollectionsMicroButtonAlert:Kill()
-	E:CreateMover(microBar, 'MicrobarMover', L["Micro Bar"], nil, nil, nil, 'ALL,ACTIONBARS');
+	E:CreateMover(microBar, 'MicrobarMover', L["Micro Bar"], nil, nil, nil, 'ALL,ACTIONBARS', function() return E.db.actionbar.microbar.enabled; end);
 end

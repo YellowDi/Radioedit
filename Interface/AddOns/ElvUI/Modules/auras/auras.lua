@@ -7,6 +7,7 @@ local LSM = LibStub("LibSharedMedia-3.0")
 local GetTime = GetTime
 local select, unpack = select, unpack
 local floor = math.floor
+local format, find, join = string.format, string.find, string.join
 --WoW API / Variables
 local CreateFrame = CreateFrame
 local C_TimerAfter = C_Timer.After
@@ -20,7 +21,7 @@ local GetInventoryItemTexture = GetInventoryItemTexture
 local IsAddOnLoaded = IsAddOnLoaded
 
 --Global variables that we don't cache, list them here for mikk's FindGlobals script
--- GLOBALS: BuffFrame, TemporaryEnchantFrame, DebuffTypeColor, Minimap, MMHolder
+-- GLOBALS: BuffFrame, TemporaryEnchantFrame, DebuffTypeColor, Minimap 
 -- GLOBALS: LeftMiniPanel, InterfaceOptionsFrameCategoriesButton12
 
 local Masque = LibStub("Masque", true)
@@ -37,6 +38,7 @@ local DIRECTION_TO_POINT = {
 	RIGHT_UP = "BOTTOMLEFT",
 	LEFT_DOWN = "TOPRIGHT",
 	LEFT_UP = "BOTTOMRIGHT",
+	CENTER = "CENTER",
 }
 
 local DIRECTION_TO_HORIZONTAL_SPACING_MULTIPLIER = {
@@ -48,6 +50,7 @@ local DIRECTION_TO_HORIZONTAL_SPACING_MULTIPLIER = {
 	RIGHT_UP = 1,
 	LEFT_DOWN = -1,
 	LEFT_UP = -1,
+	CENTER = 1,
 }
 
 local DIRECTION_TO_VERTICAL_SPACING_MULTIPLIER = {
@@ -59,6 +62,7 @@ local DIRECTION_TO_VERTICAL_SPACING_MULTIPLIER = {
 	RIGHT_UP = 1,
 	LEFT_DOWN = -1,
 	LEFT_UP = 1,
+	CENTER = 0,
 }
 
 local IS_HORIZONTAL_GROWTH = {
@@ -106,18 +110,24 @@ end
 
 function A:CreateIcon(button)
 	local font = LSM:Fetch("font", self.db.font)
+	local header = button:GetParent()
+	local auraType = header:GetAttribute("filter")
+	local db = self.db.debuffs
+	if auraType == 'HELPFUL' then
+		db = self.db.buffs
+	end
 
 	button.texture = button:CreateTexture(nil, "BORDER")
 	button.texture:SetInside()
 	button.texture:SetTexCoord(unpack(E.TexCoords))
 
 	button.count = button:CreateFontString(nil, "ARTWORK")
-	button.count:Point("BOTTOMRIGHT", -1 + self.db.countXOffset, 1 + self.db.countYOffset)
-	button.count:FontTemplate(font, self.db.fontSize, self.db.fontOutline)
+	button.count:Point("BOTTOMRIGHT", -1 + db.countXOffset, 1 + db.countYOffset)
+	button.count:FontTemplate(font, db.fontSize, db.fontOutline)
 
 	button.time = button:CreateFontString(nil, "ARTWORK")
-	button.time:Point("TOP", button, 'BOTTOM', 1 + self.db.timeXOffset, 0 + self.db.timeYOffset)
-	button.time:FontTemplate(font, self.db.fontSize, self.db.fontOutline)
+	button.time:Point("TOP", button, 'BOTTOM', 1 + db.timeXOffset, 0 + db.timeYOffset)
+	button.time:FontTemplate(font, db.fontSize, db.fontOutline)
 
 	button.highlight = button:CreateTexture(nil, "HIGHLIGHT")
 	button.highlight:SetColorTexture(1, 1, 1, 0.45)
@@ -146,9 +156,6 @@ function A:CreateIcon(button)
 		AutoCast = nil,
 	}
 
-	local header = button:GetParent()
-	local auraType = header:GetAttribute("filter")
-
 	if auraType == "HELPFUL" then
 		if MasqueGroupBuffs and E.private.auras.masque.buffs then
 			MasqueGroupBuffs:AddButton(button, ButtonData)
@@ -173,7 +180,7 @@ end
 function A:UpdateAura(button, index)
 	local filter = button:GetParent():GetAttribute('filter')
 	local unit = button:GetParent():GetAttribute("unit")
-	local name, _, texture, count, dtype, duration, expirationTime = UnitAura(unit, index, filter)
+	local name, rank, texture, count, dtype, duration, expirationTime, caster, isStealable, shouldConsolidate, spellID, canApplyAura, isBossDebuff = UnitAura(unit, index, filter)
 
 	if(name) then
 		if(duration > 0 and expirationTime) then
@@ -292,12 +299,12 @@ function A:UpdateHeader(header)
 		if(child.time) then
 			local font = LSM:Fetch("font", self.db.font)
 			child.time:ClearAllPoints()
-			child.time:Point("TOP", child, 'BOTTOM', 1 + self.db.timeXOffset, 0 + self.db.timeYOffset)
-			child.time:FontTemplate(font, self.db.fontSize, self.db.fontOutline)
+			child.time:Point("TOP", child, 'BOTTOM', 1 + db.timeXOffset, 0 + db.timeYOffset)
+			child.time:FontTemplate(font, db.fontSize, db.fontOutline)
 
 			child.count:ClearAllPoints()
-			child.count:Point("BOTTOMRIGHT", -1 + self.db.countXOffset, 0 + self.db.countYOffset)
-			child.count:FontTemplate(font, self.db.fontSize, self.db.fontOutline)
+			child.count:Point("BOTTOMRIGHT", -1 + db.countXOffset, 0 + db.countYOffset)
+			child.count:FontTemplate(font, db.fontSize, db.fontOutline)
 		end
 
 		--Blizzard bug fix, icons arent being hidden when you reduce the amount of maximum buttons
@@ -353,7 +360,7 @@ function A:Initialize()
 
 	self.DebuffFrame = self:CreateAuraHeader("HARMFUL")
 	self.DebuffFrame:Point("BOTTOMRIGHT", MMHolder, "BOTTOMLEFT", -(6 + E.Border), E.Border + E.Spacing)
-	E:CreateMover(self.DebuffFrame, "DebuffsMover", L["Player Debuffs"])
+	E:CreateMover(self.DebuffFrame, "DebuffsMover", L["Player Debuffs"], nil, nil, nil, nil, function() return E.private.auras.enable; end)
 
 	if Masque then
 		if MasqueGroupBuffs then A.BuffsMasqueGroup = MasqueGroupBuffs end
@@ -365,7 +372,7 @@ end
 --We need to call :ReSkin() when icons are created, but we only do it if StrataFix is enabled
 local function CheckForStrataFix(self, event)
 	if not E.private.auras.enable then return; end
-	if IsAddOnLoaded("StrataFix") then
+	if IsAddOnLoaded("StrataFix") or E:IsConfigurableAddOn("!NoTaint") then
 		StrataFixEnabled = true
 	end
 	self:UnregisterEvent(event)

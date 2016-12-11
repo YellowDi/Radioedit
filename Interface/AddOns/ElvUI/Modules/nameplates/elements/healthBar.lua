@@ -49,7 +49,7 @@ function mod:UpdateElement_HealthColor(frame)
 				r, g, b = self.db.reactions.tapped.r, self.db.reactions.tapped.g, self.db.reactions.tapped.b
 			else
 				-- Use color based on the type of unit (neutral, etc.)
-				local _, status = UnitDetailedThreatSituation("player", frame.unit)
+				local isTanking, status = UnitDetailedThreatSituation("player", frame.unit)
 				if status then
 					if(status == 3) then --Securely Tanking
 						if(E:GetPlayerRole() == "TANK") then
@@ -145,7 +145,9 @@ function mod:UpdateElement_HealPrediction(frame)
 	local myCurrentHealAbsorb = UnitGetTotalHealAbsorbs(unit) or 0
 	local health, maxHealth = UnitHealth(unit), UnitHealthMax(unit)
 
+	local overHealAbsorb = false
 	if(health < myCurrentHealAbsorb) then
+		overHealAbsorb = true
 		myCurrentHealAbsorb = health
 	end
 
@@ -161,7 +163,13 @@ function mod:UpdateElement_HealPrediction(frame)
 		otherIncomingHeal = allIncomingHeal - myIncomingHeal
 	end
 
+	local overAbsorb = false
 	if(health - myCurrentHealAbsorb + allIncomingHeal + totalAbsorb >= maxHealth or health + totalAbsorb >= maxHealth) then
+		if(totalAbsorb > 0) then
+			overAbsorb = true
+		end
+
+
 		if(allIncomingHeal > myCurrentHealAbsorb) then
 			totalAbsorb = max(0, maxHealth - (health - myCurrentHealAbsorb + allIncomingHeal))
 		else
@@ -216,6 +224,7 @@ end
 function mod:ConfigureElement_HealthBar(frame, configuring)
 	local healthBar = frame.HealthBar
 	local absorbBar = frame.AbsorbBar
+	local isShown = healthBar:IsShown()
 
 	--Position
 	healthBar:SetPoint("BOTTOM", frame, "BOTTOM", 0, self.db.units[frame.UnitType].castbar.height + 3)

@@ -51,6 +51,10 @@ local function LoadSkin()
 		"WhoFrameColumnHeader4",
 		"ChannelListScrollFrame",
 		"ChannelRoster",
+	--	"FriendsFramePendingButton1",
+	--	"FriendsFramePendingButton2",
+	--	"FriendsFramePendingButton3",
+	--	"FriendsFramePendingButton4",
 		"ChannelFrameDaughterFrame",
 		"AddFriendFrame",
 		"AddFriendNoteFrame",
@@ -130,6 +134,20 @@ local function LoadSkin()
 	ScrollOfResurrectionSelectionFrameList:SetTemplate('Default')
 	S:HandleScrollBar(ScrollOfResurrectionSelectionFrameListScrollFrameScrollBar, 4)
 	S:HandleEditBox(ScrollOfResurrectionSelectionFrameTargetEditBox)
+
+	--Pending invites
+	S:HandleButton(FriendsFrameFriendsScrollFrame.PendingInvitesHeaderButton)
+	local function SkinFriendRequest(frame)
+		if frame.isSkinned then return; end
+		S:HandleButton(frame.DeclineButton)
+		S:HandleButton(frame.AcceptButton)
+		frame.isSkinned = true
+	end
+	hooksecurefunc(FriendsFrameFriendsScrollFrame.invitePool, "Acquire", function()
+		for object in pairs(FriendsFrameFriendsScrollFrame.invitePool.activeObjects) do
+			SkinFriendRequest(object)
+		end
+	end)
 
 	--Who Frame
 	local function UpdateWhoSkins()

@@ -64,8 +64,7 @@ local function LoadSkin()
 		LFDRoleCheckPopupRoleButtonTank,
 		LFDRoleCheckPopupRoleButtonDPS,
 		LFDRoleCheckPopupRoleButtonHealer,
-	}
-
+	}	
 	LFDRoleCheckPopup:StripTextures()
 	LFDRoleCheckPopup:SetTemplate("Transparent")
 	S:HandleButton(LFDRoleCheckPopupAcceptButton)
@@ -98,27 +97,27 @@ local function LoadSkin()
 	if not IsAddOnLoaded("ConsolePort") then
 		-- reskin all esc/menu buttons
 		local BlizzardMenuButtons = {
-			"GameMenuButtonOptions",
-			"GameMenuButtonSoundOptions",
-			"GameMenuButtonUIOptions",
-			"GameMenuButtonKeybindings",
-			"GameMenuButtonMacros",
-			"GameMenuButtonAddOns",
-			"GameMenuButtonWhatsNew",
-			"GameMenuButtonRatings",
-			"GameMenuButtonAddons",
-			"GameMenuButtonLogout",
-			"GameMenuButtonQuit",
-			"GameMenuButtonContinue",
-			"GameMenuButtonMacOptions",
-			"GameMenuButtonStore",
-			"GameMenuButtonHelp"
+			"Options",
+			"SoundOptions",
+			"UIOptions",
+			"Keybindings",
+			"Macros",
+			"AddOns",
+			"WhatsNew",
+			"Ratings",
+			"Addons",
+			"Logout",
+			"Quit",
+			"Continue",
+			"MacOptions",
+			"Store",
+			"Help"
 		}
 
-		for i = 1, #BlizzardMenuButtons do
-			local menuButton = _G[BlizzardMenuButtons[i]]
-			if menuButton then
-				S:HandleButton(menuButton)
+		for i = 1, getn(BlizzardMenuButtons) do
+			local ElvuiMenuButtons = _G["GameMenuButton"..BlizzardMenuButtons[i]]
+			if ElvuiMenuButtons then
+				S:HandleButton(ElvuiMenuButtons)
 			end
 		end
 

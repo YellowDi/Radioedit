@@ -7,6 +7,7 @@ local LBG = LibStub("LibButtonGlow-1.0", true)
 local unpack, pairs = unpack, pairs
 local tinsert = table.insert
 local max = math.max
+local sf = string.format
 --WoW API / Variables
 local CreateFrame = CreateFrame
 local LootSlotHasItem = LootSlotHasItem
@@ -35,7 +36,6 @@ local LOOT = LOOT
 
 --Global variables that we don't cache, list them here for mikk's FindGlobals script
 -- GLOBALS: GameTooltip, LootFrame, LootSlot, GroupLootDropDown, UISpecialFrames
--- GLOBALS: UIParent
 
 local coinTextureIDs = {
 	[133784] = true,
@@ -50,7 +50,7 @@ local coinTextureIDs = {
 local lootFrame, lootFrameHolder
 local iconSize = 30;
 
-local ss
+local sq, ss, sn
 local OnEnter = function(self)
 	local slot = self:GetID()
 	if(LootSlotHasItem(slot)) then
@@ -87,6 +87,8 @@ local OnClick = function(self)
 	else
 		StaticPopup_Hide("CONFIRM_LOOT_DISTRIBUTION")
 		ss = self:GetID()
+		sq = self.quality
+		sn = self.name:GetText()
 		LootSlot(ss)
 	end
 end
@@ -237,7 +239,7 @@ function M:LOOT_OPENED(event, autoloot)
 	if(items > 0) then
 		for i=1, items do
 			local slot = lootFrame.slots[i] or createSlot(i)
-			local textureID, item, quantity, quality, _, isQuestItem, questId, isActive = GetLootSlotInfo(i)
+			local textureID, item, quantity, quality, locked, isQuestItem, questId, isActive = GetLootSlotInfo(i)
 			local color = ITEM_QUALITY_COLORS[quality]
 
 			if coinTextureIDs[textureID] then
@@ -306,12 +308,59 @@ function M:LOOT_OPENED(event, autoloot)
 	end
 	anchorSlots(lootFrame)
 
-	w = w + 60
+	w = w + 80
 	t = t + 5
 
 	local color = ITEM_QUALITY_COLORS[m]
 	lootFrame:SetBackdropBorderColor(color.r, color.g, color.b, .8)
 	lootFrame:Width(max(w, t))
+end
+
+local output = { }
+function M:LinkLoot()
+	local inGroup, inRaid, inPartyLFG = IsInGroup(), IsInRaid(), IsPartyLFG()
+	local output, key, buffer = output, 1
+	local channel = 'SAY'
+	
+	if inRaid then
+		if inPartyLFG then
+			channel = "INSTANCE_CHAT"
+		else
+			channel = "RAID"
+		end
+	elseif inGroup then
+		if inPartyLFG then
+			channel = "INSTANCE_CHAT"
+		else
+			channel = "PARTY"
+		end
+	end
+	
+	if UnitExists('target') then
+		output[1] = sf('%s:', UnitName('target'))
+	end
+
+	for i=1, GetNumLootItems() do
+		if GetLootSlotType(i) == LOOT_SLOT_ITEM then 
+			local texture, item, quantity, rarity = GetLootSlotInfo(i)
+			local link = GetLootSlotLink(i)
+			if rarity >= 2 then
+				buffer = sf('%s%s%s', (output[key] and output[key].." " or ""), (quantity > 1 and quantity.."x" or ""), link)
+				if strlen(buffer) > 255 then
+					key = key + 1
+					output[key] = (quantity > 1 and quantity.."x" or "")..link
+				else
+					output[key] = buffer
+				end
+			end
+		end
+	end
+
+	for k, v in pairs(output) do
+		v  = gsub(v, "\n", " ", 1, true) -- DIE NEWLINES, DIE A HORRIBLE DEATH
+		SendChatMessage(v, channel)
+		output[k] = nil
+	end
 end
 
 function M:LoadLoot()
@@ -332,9 +381,26 @@ function M:LoadLoot()
 	lootFrame.title:FontTemplate(nil, nil, 'OUTLINE')
 	lootFrame.title:Point('BOTTOMLEFT', lootFrame, 'TOPLEFT', 0,  1)
 	lootFrame.slots = {}
-	lootFrame:SetScript("OnHide", function()
+	lootFrame:SetScript("OnHide", function(self)
 		StaticPopup_Hide"CONFIRM_LOOT_DISTRIBUTION"
 		CloseLoot()
+	end)
+	
+	lootFrame.linkAll = CreateFrame('Button', nil, lootFrame)
+	lootFrame.linkAll:SetPoint('TOPLEFT', lootFrame, 'BOTTOMLEFT', 0, -2)
+	lootFrame.linkAll:Size(46, 16)
+	lootFrame.linkAll.text = lootFrame.linkAll:CreateFontString(nil, 'OVERLAY')
+	lootFrame.linkAll.text:FontTemplate(nil, nil, 'OUTLINE')
+	lootFrame.linkAll.text:SetPoint('TOPLEFT')
+	lootFrame.linkAll.text:SetText(L['Link All']..'..')
+	lootFrame.linkAll:SetScript('OnClick', function(self)
+		M:LinkLoot()
+	end)
+	lootFrame.linkAll:SetScript('OnEnter', function(self)
+		self.text:SetTextColor(.78, .67, .35)
+	end)
+	lootFrame.linkAll:SetScript('OnLeave', function(self)
+		self.text:SetTextColor(1, 1, 1)
 	end)
 	E["frames"][lootFrame] = nil;
 
@@ -344,7 +410,7 @@ function M:LoadLoot()
 	self:RegisterEvent("OPEN_MASTER_LOOT_LIST")
 	self:RegisterEvent("UPDATE_MASTER_LOOT_LIST")
 
-	E:CreateMover(lootFrameHolder, "LootFrameMover", L["Loot Frame"])
+	E:CreateMover(lootFrameHolder, "LootFrameMover", L["Loot Frame"], nil, nil, nil, nil, function() return E.private.general.loot; end)
 	if(GetCVar("lootUnderMouse") == "1") then
 		E:DisableMover("LootFrameMover")
 	end

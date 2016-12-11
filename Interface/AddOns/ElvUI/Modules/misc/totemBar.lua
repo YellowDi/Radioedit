@@ -125,7 +125,7 @@ function TOTEMS:Initialize()
 
 	self:PositionAndSize()
 
-	E:CreateMover(bar, 'TotemBarMover', L["Class Bar"]);
+	E:CreateMover(bar, 'TotemBarMover', L['Class Bar'], nil, nil, nil, nil, function() return E.db.general.totems.enable; end);
 	self:ToggleEnable()
 end
 

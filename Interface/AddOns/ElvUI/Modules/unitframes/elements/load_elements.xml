@@ -28,4 +28,11 @@
 	<Script file='targetglow.lua'/>
 	<Script file='threat.lua'/>
 	<Script file='trinket.lua'/>
+	
+	<Script file='mouseGlow.lua'/>
+	<Script file='rareElite.lua'/>
+	<Script file='rangeText.lua'/>
+	<Script file='swing.lua'/>
+	<Script file='tankShield.lua'/>
+	<Script file='arenatargeticon.lua'/>
 </Ui>

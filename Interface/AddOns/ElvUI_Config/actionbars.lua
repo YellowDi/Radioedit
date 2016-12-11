@@ -10,7 +10,7 @@ local points = {
 }
 
 local function BuildABConfig()
-	for i=1, 6 do
+	for i=1, 9 do
 		local name = L["Bar "]..i
 		group['bar'..i] = {
 			order = i,
@@ -38,12 +38,10 @@ local function BuildABConfig()
 					desc = L["Restore the actionbars default settings"],
 					func = function() E:CopyTable(E.db.actionbar['bar'..i], P.actionbar['bar'..i]); E:ResetMovers('Bar '..i); AB:PositionAndSizeBar('bar'..i) end,
 				},
-				point = {
+				spacer = {
 					order = 3,
-					type = 'select',
-					name = L["Anchor Point"],
-					desc = L["The first button anchors itself to this point on the bar."],
-					values = points,
+					type = "description",
+					name = " ",
 				},
 				backdrop = {
 					order = 4,
@@ -68,23 +66,43 @@ local function BuildABConfig()
 					type = 'toggle',
 					name = L["Inherit Global Fade"],
 					desc = L["Inherit the global fade, mousing over, targetting, setting focus, losing health, entering combat will set the remove transparency. Otherwise it will use the transparency level in the general actionbar settings for global fade alpha."],
+				},
+				point = {
+					order = 8,
+					type = 'select',
+					name = L["Anchor Point"],
+					desc = L["The first button anchors itself to this point on the bar."],
+					values = points,
+				},
+				flyoutDirection = {
+					order = 9,
+					type = "select",
+					name = L["Flyout Direction"],
+					set = function(info, value) E.db.actionbar['bar'..i][ info[#info] ] = value; AB:PositionAndSizeBar('bar'..i); AB:UpdateButtonSettingsForBar("bar"..i) end,
+					values = {
+						["UP"] = L["Up"],
+						["DOWN"] = L["Down"],
+						["LEFT"] = L["Left"],
+						["RIGHT"] = L["Right"],
+						["AUTOMATIC"] = L["Automatic"],
+					},
 				},				
 				buttons = {
-					order = 8,
+					order = 10,
 					type = 'range',
 					name = L["Buttons"],
 					desc = L["The amount of buttons to display."],
 					min = 1, max = NUM_ACTIONBAR_BUTTONS, step = 1,
 				},
 				buttonsPerRow = {
-					order = 9,
+					order = 11,
 					type = 'range',
 					name = L["Buttons Per Row"],
 					desc = L["The amount of buttons to display per row."],
 					min = 1, max = NUM_ACTIONBAR_BUTTONS, step = 1,
 				},
 				buttonsize = {
-					order = 10,
+					order = 12,
 					type = 'range',
 					name = L["Button Size"],
 					desc = L["The size of the action buttons."],
@@ -92,7 +110,7 @@ local function BuildABConfig()
 					disabled = function() return not E.private.actionbar.enable end,
 				},
 				buttonspacing = {
-					order = 11,
+					order = 13,
 					type = 'range',
 					name = L["Button Spacing"],
 					desc = L["The spacing between buttons."],
@@ -100,7 +118,7 @@ local function BuildABConfig()
 					disabled = function() return not E.private.actionbar.enable end,
 				},
 				backdropSpacing = {
-					order = 12,
+					order = 14,
 					type = 'range',
 					name = L["Backdrop Spacing"],
 					desc = L["The spacing between the backdrop and the buttons."],
@@ -108,21 +126,21 @@ local function BuildABConfig()
 					disabled = function() return not E.private.actionbar.enable end,
 				},
 				heightMult = {
-					order = 13,
+					order = 15,
 					type = 'range',
 					name = L["Height Multiplier"],
 					desc = L["Multiply the backdrops height or width by this value. This is usefull if you wish to have more than one bar behind a backdrop."],
 					min = 1, max = 5, step = 1,
 				},
 				widthMult = {
-					order = 14,
+					order = 16,
 					type = 'range',
 					name = L["Width Multiplier"],
 					desc = L["Multiply the backdrops height or width by this value. This is usefull if you wish to have more than one bar behind a backdrop."],
 					min = 1, max = 5, step = 1,
 				},
 				alpha = {
-					order = 15,
+					order = 17,
 					type = 'range',
 					name = L["Alpha"],
 					isPercent = true,
@@ -130,7 +148,7 @@ local function BuildABConfig()
 				},
 				paging = {
 					type = 'input',
-					order = 16,
+					order = 18,
 					name = L["Action Paging"],
 					desc = L["This works like a macro, you can run different situations to get the actionbar to page differently.\n Example: '[combat] 2;'"],
 					width = 'full',
@@ -147,7 +165,7 @@ local function BuildABConfig()
 				},
 				visibility = {
 					type = 'input',
-					order = 17,
+					order = 20,
 					name = L["Visibility State"],
 					desc = L["This works like a macro, you can run different situations to get the actionbar to show/hide differently.\n Example: '[combat] show;hide'"],
 					width = 'full',
@@ -160,10 +178,10 @@ local function BuildABConfig()
 			},
 		}
 
-		if i == 6 then
+		if i > 5 then
 			group['bar'..i].args.enabled.set = function(info, value)
 				E.db.actionbar['bar'..i].enabled = value;
-				AB:PositionAndSizeBar("bar6")
+				AB:PositionAndSizeBar("bar"..i)
 				
 				--Update Bar 1 paging when Bar 6 is enabled/disabled
 				AB:UpdateBar1Paging()
@@ -427,7 +445,7 @@ end
 
 E.Options.args.actionbar = {
 	type = "group",
-	name = L["ActionBars"],
+	name = '03.'.. L["ActionBars"],
 	childGroups = "tree",
 	get = function(info) return E.db.actionbar[ info[#info] ] end,
 	set = function(info, value) E.db.actionbar[ info[#info] ] = value; AB:UpdateButtonSettings() end,
@@ -512,11 +530,11 @@ E.Options.args.actionbar = {
 			end,
 		},
 		movementModifier = {
-			order = 10,
 			type = 'select',
 			name = PICKUP_ACTION_KEY_TEXT,
 			desc = L["The button you must hold down in order to drag an ability to another action button."],
 			disabled = function() return (not E.private.actionbar.enable or not E.db.actionbar.lockActionBars) end,
+			order = 10,
 			values = {
 				['NONE'] = NONE,
 				['SHIFT'] = SHIFT_KEY,
@@ -533,8 +551,25 @@ E.Options.args.actionbar = {
 			isPercent = true,	
 			set = function(info, value) E.db.actionbar[ info[#info] ] = value; AB.fadeParent:SetAlpha(1-value) end,
 		},
-		colorGroup = {
+		euiabstyle = {
 			order = 12,
+			type = 'select',
+			name = E.ValColor..L["Eui AB Style"].."|r",
+			disabled = function() return not E.private.actionbar.enable end,
+			desc = L["EuiABStyle_desc"],
+			values = {
+				['None'] = "None",
+				['Low'] = L["Low ScreenResolution Style"],
+				['Middle'] = L["Middle ScreenResolution Style"],
+				['High'] = L["High ScreenResolution Style"],
+			},
+			set = function(info, value)
+				E.db.actionbar[ info[#info] ] = value;
+				E:SetupActionbar(value)
+			end,
+		},
+		colorGroup = {
+			order = 13,
 			type = "group",
 			name = L["Colors"],
 			guiInline = true,
@@ -578,7 +613,7 @@ E.Options.args.actionbar = {
 			},
 		},
 		fontGroup = {
-			order = 13,
+			order = 14,
 			type = 'group',
 			guiInline = true,
 			disabled = function() return not E.private.actionbar.enable end,
@@ -628,7 +663,7 @@ E.Options.args.actionbar = {
 			},
 		},
 		masque = {
-			order = 14,
+			order = 15,
 			type = "group",
 			guiInline = true,
 			name = L["Masque Support"],
@@ -653,6 +688,28 @@ E.Options.args.actionbar = {
 					type = "toggle",
 					name = L["Stance Bar"],
 					desc = L["Allow Masque to handle the skinning of this element."],
+				},
+				closeActionBackrop = {
+					order = 4,
+					type = "execute",
+					name = CLOSE..ALL..L['Bar ']..L['Backdrop'],
+					func = function()
+						E.db.actionbar['barPet'].backdrop = false;
+						E.db.actionbar['stanceBar'].backdrop = false;
+						for i = 1, 9 do
+							E.db.actionbar['bar'..i].backdrop = false;
+							AB:PositionAndSizeBar('bar'..i)
+						end
+						AB:PositionAndSizeBarPet()
+						AB:PositionAndSizeBarShapeShift()
+					end,
+				},
+				openConfig = {
+					order = 10,
+					type = "execute",
+					name = L['Open Config'],
+					disabled = function() return not E:IsConfigurableAddOn("Masque"); end,
+					func = function() LibStub("AceAddon-3.0"):GetAddon("Masque"):ShowOptions();E:ToggleConfig(); end,
 				},
 			},
 		},

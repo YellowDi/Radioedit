@@ -2,10 +2,26 @@ local E, L, V, P, G = unpack(ElvUI); --Inport: Engine, Locales, PrivateDB, Profi
 local DT = E:GetModule('DataTexts')
 
 local datatexts = {}
+local GetSpecializationInfo = GetSpecializationInfo
+local GetNumEquipmentSets = GetNumEquipmentSets
+local GetEquipmentSetInfo = GetEquipmentSetInfo
+
+local function GetEquipmentList()
+	local num = GetNumEquipmentSets()
+	local list = {['NONE'] = NONE}
+	if num == 0 then return list; end
+	
+	for i = 1, num do
+		local name = GetEquipmentSetInfo(i)
+		list[name] = name;
+	end
+	
+	return list;
+end
 
 function DT:PanelLayoutOptions()
 	for name, _ in pairs(DT.RegisteredDataTexts) do
-		datatexts[name] = name
+		datatexts[name] = L[name]
 	end
 	datatexts[''] = NONE
 
@@ -31,7 +47,11 @@ function DT:PanelLayoutOptions()
 					name = L[option] or option:upper(),
 					values = datatexts,
 					get = function(info) return E.db.datatexts.panels[pointLoc][ info[#info] ] end,
-					set = function(info, value) E.db.datatexts.panels[pointLoc][ info[#info] ] = value; DT:LoadDataTexts() end,
+					set = function(info, value)
+						E.db.datatexts.panels[pointLoc][ info[#info] ] = value;
+						if pointLoc == 'TopDataTextsBar3' then E:StaticPopup_Show("PRIVATE_RL") end;
+						DT:LoadDataTexts()
+					end,
 				}
 			end
 		elseif type(tab) == 'string' then
@@ -46,100 +66,9 @@ function DT:PanelLayoutOptions()
 	end
 end
 
-local function CreateCustomCurrencyOptions(currencyID)
-	local currency = E.global.datatexts.customCurrencies[currencyID] --The datatext has been registered prior to this
-	if currency then
-		E.Options.args.datatexts.args.customCurrency.args.currencies.args[currency.NAME] = {
-			order = 1,
-			type = "group",
-			name = currency.NAME,
-			guiInline = false,
-			args = {
-				removeDT = {
-					order = 1,
-					type = "execute",
-					name = DELETE,
-					func = function()
-						--Remove stored entries of this currency datatext
-						DT:RemoveCustomCurrency(currency.NAME)
-						--Remove options group
-						E.Options.args.datatexts.args.customCurrency.args.currencies.args[currency.NAME] = nil
-						--Remove entry from registered datatext storage
-						DT.RegisteredDataTexts[currency.NAME] = nil
-						--Remove from persistent storage
-						E.global.datatexts.customCurrencies[currencyID] = nil
-						--Remove currency from datatext selection
-						datatexts[currency.NAME] = nil
-						DT:PanelLayoutOptions()
-						--Reload datatexts to clear panel
-						DT:LoadDataTexts()
-					end,
-				},
-				spacer = {
-					order = 2,
-					type = "description",
-					name = "\n",
-				},
-				displayStyle = {
-					order = 3,
-					type = "select",
-					name = L["Display Style"],
-					get = function(info) return E.global.datatexts.customCurrencies[currencyID].DISPLAY_STYLE end,
-					set = function(info, value)
-						--Save new display style
-						E.global.datatexts.customCurrencies[currencyID].DISPLAY_STYLE = value
-						--Update internal value
-						DT:UpdateCustomCurrencySettings(currency.NAME, "DISPLAY_STYLE", value)
-						--Reload datatexts
-						DT:LoadDataTexts()
-					end,
-					values = {
-						["ICON"] = L["Icons Only"],
-						["ICON_TEXT"] = L["Icons and Text"],
-						["ICON_TEXT_ABBR"] = L["Icons and Text (Short)"],
-					},
-				},
-				showMax = {
-					order = 4,
-					type = "toggle",
-					name = L["Current / Max"],
-					get = function(info) return E.global.datatexts.customCurrencies[currencyID].SHOW_MAX end,
-					set = function(info, value)
-						--Save new value
-						E.global.datatexts.customCurrencies[currencyID].SHOW_MAX = value
-						--Update internal value
-						DT:UpdateCustomCurrencySettings(currency.NAME, "SHOW_MAX", value)
-						--Reload datatexts
-						DT:LoadDataTexts()
-					end,
-				},
-				useTooltip = {
-					order = 5,
-					type = "toggle",
-					name = L["Use Tooltip"],
-					get = function(info) return E.global.datatexts.customCurrencies[currencyID].USE_TOOLTIP end,
-					set = function(info, value)
-						--Save new value
-						E.global.datatexts.customCurrencies[currencyID].USE_TOOLTIP = value
-						--Update internal value
-						DT:UpdateCustomCurrencySettings(currency.NAME, "USE_TOOLTIP", value)
-					end,
-				},
-			},
-		}
-	end
-end
-
-local function SetupCustomCurrencies()
-	--Create options for all stored custom currency datatexts
-	for currencyID in pairs(E.global.datatexts.customCurrencies) do
-		CreateCustomCurrencyOptions(currencyID)
-	end
-end
-
 E.Options.args.datatexts = {
 	type = "group",
-	name = L["DataTexts"],
+	name = '12.'..L["DataTexts"],
 	childGroups = "tab",
 	get = function(info) return E.db.datatexts[ info[#info] ] end,
 	set = function(info, value) E.db.datatexts[ info[#info] ] = value; DT:LoadDataTexts() end,
@@ -216,6 +145,49 @@ E.Options.args.datatexts = {
 							type = 'toggle',
 							name = L["Show Coins"],
 							desc = L["Use coin icons instead of colored text."],
+						},
+						width = {
+							order = 16,
+							name = L['TopInfobar width'],
+							type = 'range',
+							min = 20, max = 200, step = 1,
+							set = function(info, value)
+								E.db.infobar.width = value
+								E:GetModule('Layout'):ChangeSize(TopDataTextsBar1);
+								E:GetModule('Layout'):ChangeSize(TopDataTextsBar2);
+								E:GetModule('Layout'):ChangeSize(TopDataTextsBar3, 3);
+								E:GetModule('Layout'):ChangeSize(TopDataTextsBar4, 2);
+								E:GetModule('Layout'):ChangePositon()
+								DT:UpdateAllDimensions()
+							end,
+							get = function(info) return E.db.infobar.width; end,
+						},
+						height = {
+							order = 17,
+							type = 'range',
+							min = 10, max = 100, step = 1,
+							name = L['TopInfobar height'],
+							set = function(info, value)
+								E.db.infobar.height = value
+								E:GetModule('Layout'):ChangeSize(TopDataTextsBar1);
+								E:GetModule('Layout'):ChangeSize(TopDataTextsBar2);
+								E:GetModule('Layout'):ChangeSize(TopDataTextsBar3, 3);
+								E:GetModule('Layout'):ChangeSize(TopDataTextsBar4, 2);
+								E:GetModule('Layout'):ChangePositon()
+								DT:UpdateAllDimensions()
+							end,
+							get = function(info) return E.db.infobar.height; end,
+						},
+						alignABInfo = {
+							order = 18,
+							type = 'execute',
+							name = L['Align Actionbar Infobar'],
+							desc = L['Align Actionbar Infobar desc'],
+							func = function() 
+								if E.db.actionbar.euiabstyle ~= 'None' then
+									E:SetupActionbar(E.db.actionbar.euiabstyle)
+								end
+							end,
 						},
 					},
 				},
@@ -378,12 +350,12 @@ E.Options.args.datatexts = {
 		currencies = {
 			order = 5,
 			type = "group",
-			name = "Currencies", --Name of datatext, which isn't localized
+			name = L["Currencies"], --Name of datatext, which isn't localized
 			args = {
 				header = {
 					order = 1,
 					type = "header",
-					name = "Currencies",
+					name = L["Currencies"],
 				},
 				displayedCurrency = {
 					order = 2,
@@ -436,49 +408,45 @@ E.Options.args.datatexts = {
 				},
 			},
 		},
-		customCurrency = {
-			order = 7,
-			type = "group",
-			name = L["Custom Currency"],
+		spec = {
+			order = 130,
+			type = 'group',
+			guiInline = true,
+			name = L['Spec Binding Equipment'],
 			args = {
-				header = {
+				spec1 = {
+					type = 'select',
 					order = 1,
-					type = "header",
-					name = L["Custom Currency"],
+					name = select(2, GetSpecializationInfo(1)),
+					values = GetEquipmentList,
+					get = function(info, k) return E.db.datatexts.spec1; end,
+					set = function(info, k, v) E.db.datatexts.spec1 = k; end,
 				},
-				description = {
+				spec2 = {
+					type = 'select',
 					order = 2,
-					type = "description",
-					name = L["This allows you to create a new datatext which will track the currency with the supplied currency ID. The datatext can be added to a panel immediately after creation."],
+					name = select(2, GetSpecializationInfo(2)),
+					values = GetEquipmentList,
+					get = function(info, k) return E.db.datatexts.spec2; end,
+					set = function(info, k, v) E.db.datatexts.spec2 = k; end,
 				},
-				addCustomCurrency = {
-					order = 3,
-					type = "input",
-					name = L["Add Currency ID"],
-					desc = "http://www.wowhead.com/currencies",
-					get = function() return "" end,
-					set = function(info, value)
-						local currencyID = tonumber(value)
-						if not currencyID then return; end
-						--Register a new datatext where name is the name of the currency
-						DT:RegisterCustomCurrencyDT(currencyID)
-						--Create options for this datatext
-						CreateCustomCurrencyOptions(currencyID)
-						DT:PanelLayoutOptions()
-						--Reload datatexts in case the currency we just added was already selected on a panel
-						DT:LoadDataTexts()
-					end,
+				spec3 = {
+					type = 'select',
+					order = 1,
+					name = select(2, GetSpecializationInfo(3)) or " ",
+					hidden = function() return not GetSpecializationInfo(3) end,
+					values = GetEquipmentList,
+					get = function(info, k) return E.db.datatexts.spec3; end,
+					set = function(info, k, v) E.db.datatexts.spec3 = k; end,
 				},
-				spacer = {
-					order = 4,
-					type = "description",
-					name = "\n",
-				},
-				currencies = {
-					order = 5,
-					type = "group",
-					name = L["Custom Currencies"],
-					args = {}
+				spec4 = {
+					type = 'select',
+					order = 2,
+					name = select(2, GetSpecializationInfo(4)) or " ",
+					hidden = function() return not GetSpecializationInfo(4) end,
+					values = GetEquipmentList,
+					get = function(info, k) return E.db.datatexts.spec4; end,
+					set = function(info, k, v) E.db.datatexts.spec4 = k; end,
 				},
 			},
 		},
@@ -486,4 +454,3 @@ E.Options.args.datatexts = {
 }
 
 DT:PanelLayoutOptions()
-SetupCustomCurrencies()

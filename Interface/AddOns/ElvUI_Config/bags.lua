@@ -3,7 +3,7 @@ local B = E:GetModule('Bags')
 
 E.Options.args.bags = {
 	type = 'group',
-	name = L["Bags"],
+	name = "10."..L["Bags"],
 	childGroups = "tab",
 	get = function(info) return E.db.bags[ info[#info] ] end,
 	set = function(info, value) E.db.bags[ info[#info] ] = value end,
@@ -172,7 +172,7 @@ E.Options.args.bags = {
 							set = function(info, value) E.db.bags.itemLevel = value; B:UpdateItemLevelDisplay() end,
 						},
 						itemLevelThreshold = {
-							order = 2,
+							order = 3,
 							name = L["Item Level Threshold"],
 							desc = L["The minimum item level required for it to be shown."],
 							type = 'range',
@@ -181,7 +181,7 @@ E.Options.args.bags = {
 							set = function(info, value) E.db.bags.itemLevelThreshold = value; B:UpdateItemLevelDisplay() end,
 						},
 						itemLevelFont = {
-							order = 3,
+							order = 4,
 							type = "select",
 							dialogControl = 'LSM30_Font',
 							name = L["Font"],
@@ -190,7 +190,7 @@ E.Options.args.bags = {
 							set = function(info, value) E.db.bags.itemLevelFont = value; B:UpdateItemLevelDisplay() end,
 						},
 						itemLevelFontSize = {
-							order = 4,
+							order = 5,
 							type = "range",
 							name = L["Font Size"],
 							min = 4, max = 212, step = 1,
@@ -198,7 +198,7 @@ E.Options.args.bags = {
 							set = function(info, value) E.db.bags.itemLevelFontSize = value; B:UpdateItemLevelDisplay() end,
 						},
 						itemLevelFontOutline = {
-							order = 5,
+							order = 6,
 							type = "select",
 							name = L["Font Outline"],
 							disabled = function() return not E.db.bags.itemLevel end,
@@ -323,7 +323,7 @@ E.Options.args.bags = {
 					},
 				},
 				growthDirection = {
-					order = 7,
+					order = 8,
 					type = 'select',
 					name = L["Bar Direction"],
 					desc = L["The direction that the bag frames be (Horizontal or Vertical)."],

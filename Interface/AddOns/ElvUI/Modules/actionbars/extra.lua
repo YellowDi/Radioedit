@@ -11,7 +11,7 @@ local GetActionCooldown = GetActionCooldown
 local HasExtraActionBar = HasExtraActionBar
 
 --Global variables that we don't cache, list them here for mikk's FindGlobals script
--- GLOBALS: ExtraActionBarFrame, ZoneAbilityFrame
+-- GLOBALS: ExtraActionBarFrame, DraenorZoneAbilityFrame
 
 local ExtraActionBarHolder, ZoneAbilityHolder
 
@@ -21,10 +21,17 @@ local function FixExtraActionCD(cd)
 	E.OnSetCooldown(cd, start, duration, 0, 0)
 end
 
+local function RemoveTexture(self, texture)
+	if texture and (string.sub(texture, 1, 9) == "Interface" or string.sub(texture, 1, 9) == "INTERFACE") then
+		self:SetTexture("")
+	end
+end
+
 function AB:Extra_SetAlpha()
 	if not E.private.actionbar.enable then return; end
 	local alpha = E.db.actionbar.extraActionButton.alpha
 
+	local alpha = E.db.actionbar.extraActionButton.alpha
 	for i=1, ExtraActionBarFrame:GetNumChildren() do
 		local button = _G["ExtraActionButton"..i]
 		if button then
@@ -95,7 +102,7 @@ function AB:SetupExtraButton()
 	end
 
 	local button = ZoneAbilityFrame.SpellButton
-	if button then
+		if button then
 		button:SetNormalTexture('')
 		button:StyleButton(nil, nil, nil, true)
 		button:SetTemplate()
@@ -112,8 +119,8 @@ function AB:SetupExtraButton()
 		ExtraActionBarFrame:Show();
 	end
 
-	E:CreateMover(ExtraActionBarHolder, 'BossButton', L["Boss Button"], nil, nil, nil, 'ALL,ACTIONBARS');
-	E:CreateMover(ZoneAbilityHolder, 'ZoneAbility', L["Zone Ability"], nil, nil, nil, 'ALL,ACTIONBARS');
+	E:CreateMover(ExtraActionBarHolder, 'BossButton', L["Boss Button"], nil, nil, nil, 'ALL,ACTIONBARS', function() return E.private.actionbar.enable; end);
+	E:CreateMover(ZoneAbilityHolder, 'ZoneAbility', L["Zone Ability"], nil, nil, nil, 'ALL,ACTIONBARS', function() return E.private.actionbar.enable; end);
 
 	AB:Extra_SetAlpha()
 	AB:Extra_SetScale()

@@ -4,7 +4,8 @@ local LSM = LibStub("LibSharedMedia-3.0")
 --Cache global variables
 --Lua functions
 local _G = _G
-local unpack, type, select, getmetatable, assert = unpack, type, select, getmetatable, assert
+local unpack, type, select, getmetatable = unpack, type, select, getmetatable
+local floor = math.floor
 --WoW API / Variables
 local CreateFrame = CreateFrame
 local RAID_CLASS_COLORS = RAID_CLASS_COLORS
@@ -35,6 +36,11 @@ local function GetTemplate(t, isPixelPerfectForced)
 		borderr, borderg, borderb = unpack(E["media"].bordercolor)
 		backdropr, backdropg, backdropb = unpack(E["media"].backdropcolor)
 	end
+
+	if E.db.general.transparent and t ~= 'notrans' then
+		backdropa = E.db.general.backdropfadecolor.a or 0.6
+		E["media"].blankTex = "Interface\\ChatFrame\\ChatFrameBackground"
+	end
 	
 	if(isPixelPerfectForced) then
 		borderr, borderg, borderb = 0, 0, 0
@@ -42,7 +48,8 @@ local function GetTemplate(t, isPixelPerfectForced)
 end
 
 local function Size(frame, width, height)
-	assert(width)
+	if not width then return end
+
 	frame:SetSize(E:Scale(width), E:Scale(height or width))
 end
 
@@ -58,7 +65,8 @@ local function Width(frame, width)
 end
 
 local function Height(frame, height)
-	assert(height)
+	if not height then return; end
+
 	frame:SetHeight(E:Scale(height))
 end
 
@@ -66,6 +74,7 @@ local function Point(obj, arg1, arg2, arg3, arg4, arg5)
 	if arg2 == nil then
 		arg2 = obj:GetParent()
 	end
+	if not arg1 then return; end
 
 	if type(arg1)=="number" then arg1 = E:Scale(arg1) end
 	if type(arg2)=="number" then arg2 = E:Scale(arg2) end
@@ -104,8 +113,13 @@ local function SetInside(obj, anchor, xOffset, yOffset, anchor2)
 	obj:Point('BOTTOMRIGHT', anchor2 or anchor, 'BOTTOMRIGHT', -xOffset, yOffset)
 end
 
-local function SetTemplate(f, t, glossTex, ignoreUpdates, forcePixelMode)
+local function SetTemplate(f, t, glossTex, ignoreUpdates, forcePixelMode, trans)
 	GetTemplate(t, f.forcePixelMode or forcePixelMode)
+
+	if E.db.general.transparent and t and t~= notrans then
+		glossTex = "Interface\\AddOns\\ElvUI\\media\\textures\\glow"
+	end
+	if E.db.general.ShadowEnable then f:CreateShadow(t) end
 
 	if(t) then
 	   f.template = t
@@ -122,6 +136,7 @@ local function SetTemplate(f, t, glossTex, ignoreUpdates, forcePixelMode)
 	if(forcePixelMode) then
 		f.forcePixelMode = forcePixelMode
 	end
+	
 	if t ~= "NoBackdrop" then
 		if E.private.general.pixelPerfect or f.forcePixelMode then
 			f:SetBackdrop({
@@ -144,7 +159,7 @@ local function SetTemplate(f, t, glossTex, ignoreUpdates, forcePixelMode)
 			backdropTexture:SetDrawLayer("BACKGROUND", 1)
 			f.backdropTexture = backdropTexture
 		elseif t == 'Transparent' then
-			f:SetBackdropColor(backdropr, backdropg, backdropb, backdropa)
+			f:SetBackdropColor(backdropr, backdropg, backdropb, trans and .7 or backdropa)
 
 			if f.backdropTexture then
 				f.backdropTexture:Hide()
@@ -159,7 +174,7 @@ local function SetTemplate(f, t, glossTex, ignoreUpdates, forcePixelMode)
 					edgeSize = E.mult,
 					insets = { left = E.mult, right = E.mult, top = E.mult, bottom = E.mult }
 				})
-				border:SetBackdropBorderColor(0, 0, 0, 1)
+				border:SetBackdropBorderColor(0, 0, 0, E.db.general.transparent and backdropa or 1)
 				f.iborder = border
 
 				if f.oborder then return end
@@ -171,7 +186,7 @@ local function SetTemplate(f, t, glossTex, ignoreUpdates, forcePixelMode)
 					edgeSize = E.mult,
 					insets = { left = E.mult, right = E.mult, top = E.mult, bottom = E.mult }
 				})
-				border:SetBackdropBorderColor(0, 0, 0, 1)
+				border:SetBackdropBorderColor(0, 0, 0, E.db.general.transparent and backdropa or 1)
 				f.oborder = border
 			end
 		end
@@ -196,6 +211,7 @@ local function SetTemplate(f, t, glossTex, ignoreUpdates, forcePixelMode)
 		f:SetBackdrop(nil)
 		if f.backdropTexture then f.backdropTexture:SetTexture(nil) end
 	end
+
 	f:SetBackdropBorderColor(borderr, borderg, borderb)
 
 	if not f.ignoreUpdates and not f.forcePixelMode then
@@ -225,6 +241,7 @@ end
 
 local function CreateShadow(f)
 	if f.shadow then return end
+	local w = E.db.general.ShadowWidth
 
 	borderr, borderg, borderb = 0, 0, 0
 	backdropr, backdropg, backdropb = 0, 0, 0
@@ -232,13 +249,13 @@ local function CreateShadow(f)
 	local shadow = CreateFrame("Frame", nil, f)
 	shadow:SetFrameLevel(1)
 	shadow:SetFrameStrata(f:GetFrameStrata())
-	shadow:SetOutside(f, 3, 3)
+	shadow:SetOutside(f, w, w)
 	shadow:SetBackdrop( {
-		edgeFile = LSM:Fetch("border", "ElvUI GlowBorder"), edgeSize = E:Scale(3),
-		insets = {left = E:Scale(5), right = E:Scale(5), top = E:Scale(5), bottom = E:Scale(5)},
+		edgeFile = LSM:Fetch("border", "ElvUI GlowBorder"), edgeSize = E:Scale(w),
+		insets = {left = E:Scale(w+2), right = E:Scale(w+2), top = E:Scale(w+2), bottom = E:Scale(w+2)},
 	})
 	shadow:SetBackdropColor(backdropr, backdropg, backdropb, 0)
-	shadow:SetBackdropBorderColor(borderr, borderg, borderb, 0.9)
+	shadow:SetBackdropBorderColor(borderr, borderg, borderb, E.db.general.ShadowAlpha)
 	f.shadow = shadow
 end
 

@@ -7,6 +7,7 @@ local random = random
 --WoW API / Variables
 local CreateFrame = CreateFrame
 local UnitIsTapDenied = UnitIsTapDenied
+local UnitIsTapDeniedByPlayer = UnitIsTapDeniedByPlayer
 local UnitReaction = UnitReaction
 local UnitIsPlayer = UnitIsPlayer
 local UnitClass = UnitClass
@@ -16,7 +17,14 @@ local _, ns = ...
 local ElvUF = ns.oUF
 assert(ElvUF, "ElvUI was unable to locate oUF.")
 
-function UF:Construct_HealthBar(frame, bg, text, textPos)
+function UF:Construct_HealthBar(frame, bg, text, textPos, orientation)
+--	local health
+--	if E.db.unitframe.transparent and E.db.general.transparentStyle == 2 then
+--		health = E:TranseBar(frame, orientation)
+--	else
+--		health = CreateFrame('StatusBar', nil, frame)
+--	end
+
 	local health = CreateFrame('StatusBar', nil, frame)
 	UF['statusbars'][health] = true
 
@@ -24,9 +32,24 @@ function UF:Construct_HealthBar(frame, bg, text, textPos)
 	health.PostUpdate = self.PostUpdateHealth
 
 	if bg then
-		health.bg = health:CreateTexture(nil, 'BORDER')
-		health.bg:SetAllPoints()
-		health.bg:SetTexture(E["media"].blankTex)
+		if E.db.unitframe.transparent and E.db.general.transparentStyle == 2 then
+			local hbg = CreateFrame("Frame", nil, health)
+			hbg:SetFrameLevel(health:GetFrameLevel()-2)
+			hbg:SetAllPoints(health)
+			hbg:SetAlpha(0)
+			local b = hbg:CreateTexture(nil, "BACKGROUND")
+			b:SetTexture(E["media"].normTex)
+			b:SetAllPoints(health)
+			health.bg = b
+			health.hbg = hbg
+		else
+			health.bg = health:CreateTexture(nil, 'BORDER')
+			health.bg:SetAllPoints()
+			health.bg:SetTexture(E["media"].blankTex)
+			if E.db.unitframe.transparent then
+				health.bg:SetAlpha(E.db.general.backdropfadecolor.a or 0.4)
+			end
+		end
 		health.bg.multiplier = 0.25
 	end
 

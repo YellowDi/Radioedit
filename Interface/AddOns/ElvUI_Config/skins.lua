@@ -3,7 +3,7 @@ local S = E:GetModule('Skins')
 
 E.Options.args.skins = {
 	type = "group",
-	name = L["Skins"],
+	name = '09.'..L["Skins"],
 	childGroups = "tree",
 	args = {
 		intro = {
@@ -24,6 +24,13 @@ E.Options.args.skins = {
 			name = 'Ace3',
 			get = function(info) return E.private.skins.ace3.enable end,
 			set = function(info, value) E.private.skins.ace3.enable = value; E:StaticPopup_Show("PRIVATE_RL") end,
+		},
+		rematch = {
+			order = 4,
+			type = 'toggle',
+			name = 'Rematch',
+			get = function(info) return E.private.skins.rematch.enable end,
+			set = function(info, value) E.private.skins.rematch.enable = value; E:StaticPopup_Show("PRIVATE_RL") end,
 		},
 		blizzard = {
 			order = 300,

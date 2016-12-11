@@ -6,7 +6,7 @@ local UF = E:GetModule('UnitFrames');
 
 --WoW API / Variables
 
-function UF:Construct_Range()
+function UF:Construct_Range(frame)
 	return {insideAlpha = 1, outsideAlpha = E.db.unitframe.OORAlpha}
 end
 

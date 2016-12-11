@@ -98,6 +98,8 @@ local function BuildGuildTable()
 	for i = 1, totalMembers do
 		name, rank, rankIndex, level, _, zone, note, officernote, connected, memberstatus, class, _, _, isMobile = GetGuildRosterInfo(i)
 		if not name then return end
+		local shortName, realm = split("-", name)
+		if E.myrealm == realm then name = shortName end
 
 		statusInfo = isMobile and mobilestatus[memberstatus]() or onlinestatus[memberstatus]()
 		zone = (isMobile and not connected) and REMOTE_CHAT or zone
@@ -154,7 +156,6 @@ local eventHandlers = {
 	["ELVUI_FORCE_RUN"] = function() end,
 	["ELVUI_COLOR_UPDATE"] = function() end,
 }
-
 
 local function OnEvent(self, event, ...)
 	lastPanel = self

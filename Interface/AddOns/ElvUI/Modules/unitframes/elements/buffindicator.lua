@@ -18,6 +18,7 @@ function UF:Construct_AuraWatch(frame)
 	auras.missingAlpha = 0
 	auras.strictMatching = true;
 	auras.icons = {}
+	E:SetUpAnimGroup(auras, "Scale")
 
 	return auras
 end
@@ -86,6 +87,20 @@ function UF:UpdateAuraWatch(frame, petOverride, db)
 			if value.style == 'text' then value.style = 'NONE' end --depreciated
 			tinsert(buffs, value);
 		end
+		if E.db.unitframe.units.raid.raidTurtleBuffs then
+			local allBuffWatch = E.global['unitframe'].buffwatch['ALL'] or {}
+			for _, value in pairs(allBuffWatch) do
+				if value.style == 'text' then value.style = 'NONE' end --depreciated
+				tinsert(buffs, value);
+			end
+		end
+		if E.db.unitframe.units.raid.charTurtleBuffs then
+			local charBuffWatch = E.global['unitframe'].buffwatch['CHAR'] or {}
+			for _, value in pairs(charBuffWatch) do
+				if value.style == 'text' then value.style = 'NONE' end --depreciated
+				tinsert(buffs, value);
+			end
+		end
 	end
 
 	--CLEAR CACHE
@@ -129,6 +144,7 @@ function UF:UpdateAuraWatch(frame, petOverride, db)
 				icon.textThreshold = buffs[i].textThreshold or -1
 				icon.displayText = buffs[i].displayText
 				icon.decimalThreshold = buffs[i].decimalThreshold
+				icon.haveAnimation = buffs[i].haveAnimation
 
 				icon:Width(db.size);
 				icon:Height(db.size);

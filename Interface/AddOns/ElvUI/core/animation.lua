@@ -34,11 +34,22 @@ function E:SetUpAnimGroup(object, type, ...)
 		object.anim.fadeout:SetToAlpha(0)		
 		object.anim.fadeout:SetOrder(1)
 
-		object.anim:SetScript("OnFinished", function(_, requested)
+		object.anim:SetScript("OnFinished", function(self, requested)
 			if(not requested) then
 				object.anim:Play()
 			end
 		end)
+	elseif type == 'Scale' then
+		object.anim = object:CreateAnimationGroup("Scale")
+		object.anim.scaleOut = object.anim:CreateAnimation("Scale")
+		object.anim.scaleOut:SetDuration(0)
+		object.anim.scaleOut:SetScale(1.5, 1.5)
+		object.anim.scaleOut:SetOrder(1)
+		
+		object.anim.scaleIn = object.anim:CreateAnimation("Scale")
+		object.anim.scaleIn:SetDuration(0.35)
+		object.anim.scaleIn:SetScale(1/1.5, 1/1.5)
+		object.anim.scaleIn:SetOrder(2)	
 	elseif type == 'Shake' then
 		object.shake = object:CreateAnimationGroup("Shake")
 		object.shake:SetLooping("REPEAT")
@@ -109,6 +120,25 @@ function E:SetUpAnimGroup(object, type, ...)
 		object[customName].in2:SetOffset(E:Scale(-x), E:Scale(-y))
 		object[customName].out2:SetOffset(E:Scale(x), E:Scale(y))
 		object[customName].out1:SetScript("OnFinished", function() object:Hide() end)
+	end
+end
+
+function E:ScaleAnimation(object, duration)
+	if not object.anim then
+		E:SetUpAnimGroup(object, "Scale")
+	end
+	if not object.anim.playing then
+		object.anim.scaleOut:SetDuration(duration)
+		object.anim.scaleIn:SetDuration(duration)
+		object.anim:Play()
+		object.anim.playing = true
+	end
+end
+
+function E:StopScaleAnimation(object)
+	if object.anim and object.anim.playing then
+		object.anim:Stop()
+		object.anim.playing = nil;
 	end
 end
 
@@ -233,6 +263,7 @@ function E:UIFrameFade(frame, fadeInfo)
 	if ( not fadeInfo.mode ) then
 		fadeInfo.mode = "IN";
 	end
+	local alpha;
 	if ( fadeInfo.mode == "IN" ) then
 		if ( not fadeInfo.startAlpha ) then
 			fadeInfo.startAlpha = 0;
@@ -240,6 +271,7 @@ function E:UIFrameFade(frame, fadeInfo)
 		if ( not fadeInfo.endAlpha ) then
 			fadeInfo.endAlpha = 1.0;
 		end
+		alpha = 0;
 	elseif ( fadeInfo.mode == "OUT" ) then
 		if ( not fadeInfo.startAlpha ) then
 			fadeInfo.startAlpha = 1.0;
@@ -247,6 +279,7 @@ function E:UIFrameFade(frame, fadeInfo)
 		if ( not fadeInfo.endAlpha ) then
 			fadeInfo.endAlpha = 0;
 		end
+		alpha = 1.0;
 	end
 	frame:SetAlpha(fadeInfo.startAlpha);
 

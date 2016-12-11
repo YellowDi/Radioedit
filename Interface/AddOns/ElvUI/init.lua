@@ -12,8 +12,9 @@ To load the AddOn engine inside another addon add this to the top of your file:
 
 --Cache global variables
 local _G = _G
-local pairs = pairs
+local pairs, unpack = pairs, unpack
 local GameMenuFrame = GameMenuFrame
+local GameMenuFrameHeader = GameMenuFrameHeader
 local GameMenuButtonLogout = GameMenuButtonLogout
 local GameMenuButtonAddons = GameMenuButtonAddons
 
@@ -26,7 +27,7 @@ AddOn.callbacks = AddOn.callbacks or
 AddOn.DF = {}; AddOn.DF["profile"] = {}; AddOn.DF["global"] = {}; AddOn.privateVars = {}; AddOn.privateVars["profile"] = {}; -- Defaults
 AddOn.Options = {
 	type = "group",
-	name = AddOnName,
+	name = "EUI",
 	args = {},
 }
 
@@ -38,7 +39,8 @@ Engine[4] = AddOn.DF["profile"];
 Engine[5] = AddOn.DF["global"];
 
 _G[AddOnName] = Engine;
-Engine[1].UIName = AddOnName
+_G["EUI"] = Engine;
+Engine[1].UIName = "EUI"
 local tcopy = table.copy
 function AddOn:OnInitialize()
 	if not ElvCharacterDB then
@@ -97,8 +99,8 @@ function AddOn:OnInitialize()
 	end
 	
 	local GameMenuButton = CreateFrame("Button", nil, GameMenuFrame, "GameMenuButtonTemplate")
-	GameMenuButton:SetText(AddOnName)
-	GameMenuButton:SetScript("OnClick", function()
+	GameMenuButton:SetText('|cff1784d1EUI|r')
+	GameMenuButton:SetScript("OnClick", function(self)
 		AddOn:ToggleConfig()
 		HideUIPanel(GameMenuFrame)
 	end)
@@ -109,12 +111,6 @@ function AddOn:OnInitialize()
 		GameMenuButton:Point("TOPLEFT", GameMenuButtonAddons, "BOTTOMLEFT", 0, -1)
 		hooksecurefunc('GameMenuFrame_UpdateVisibleButtons', self.PositionGameMenuButton)
 	else
-		if GameMenuButton.Middle then
-			GameMenuButton.Middle:Hide()
-			GameMenuButton.Left:Hide()
-			GameMenuButton.Right:Hide()
-		end
-		ConsolePort:GetData().Atlas.SetFutureButtonStyle(GameMenuButton, nil, nil, true)
 		GameMenuButton:Size(240, 46)
 		GameMenuButton:Point("TOP", GameMenuButtonWhatsNew, "BOTTOMLEFT", 0, -1)
 		GameMenuFrame:Size(530, 576)

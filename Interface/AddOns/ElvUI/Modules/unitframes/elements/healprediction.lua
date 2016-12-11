@@ -72,8 +72,14 @@ local function UpdateFillBar(frame, previousTexture, bar, amount)
 	local orientation = frame.Health:GetOrientation()
 	bar:ClearAllPoints()
 	if orientation == 'HORIZONTAL' then
-		bar:Point("TOPLEFT", previousTexture, "TOPRIGHT");
-		bar:Point("BOTTOMLEFT", previousTexture, "BOTTOMRIGHT");
+		if E.db.unitframe.transparent and E.db.general.transparentStyle == 2 then
+			local w = (frame.Health:GetValue()/select(2,frame.Health:GetMinMaxValues())-1)*frame.Health:GetWidth()
+			bar:Point('BOTTOMLEFT', frame.Health:GetStatusBarTexture(), 'BOTTOMRIGHT', w, 0)
+			bar:Point('TOPLEFT', frame.Health:GetStatusBarTexture(), 'TOPRIGHT', w, 0)
+		else
+			bar:Point("TOPLEFT", previousTexture, "TOPRIGHT");
+			bar:Point("BOTTOMLEFT", previousTexture, "BOTTOMRIGHT");
+		end
 	else
 		bar:Point("BOTTOMRIGHT", previousTexture, "TOPRIGHT");
 		bar:Point("BOTTOMLEFT", previousTexture, "TOPLEFT");

@@ -46,6 +46,8 @@ function D:ModifyErrorFrame()
 	end]]
 	local function ScriptErrors_UnHighlightText()
 		ScriptErrorsFrameScrollFrameText:HighlightText(0, 0)
+		if not E.global.luaError then E.global.luaError = {} end
+		E.global.luaError[ScriptErrorsFrame.index] = ScriptErrorsFrameScrollFrameText:GetText() or ''
 	end
 	hooksecurefunc('ScriptErrorsFrame_Update', ScriptErrors_UnHighlightText)
 
@@ -55,6 +57,7 @@ function D:ModifyErrorFrame()
 	end
 	ScriptErrorsFrameScrollFrameText:HookScript("OnEscapePressed", UnHighlightText)
 
+
 	ScriptErrorsFrame:SetSize(500, 300)
 	ScriptErrorsFrameScrollFrame:SetSize(ScriptErrorsFrame:GetWidth() - 45, ScriptErrorsFrame:GetHeight() - 71)
 
@@ -62,13 +65,19 @@ function D:ModifyErrorFrame()
 	local BUTTON_HEIGHT = 24
 	local BUTTON_SPACING = 2
 
+	--Add Eui version label
+	local verLabel = ScriptErrorsFrame:CreateFontString(nil, "Overlay")
+	verLabel:FontTemplate(nil, 14, 'OUTLINE')
+	verLabel:SetPoint("TOPLEFT", 8, -6)
+	verLabel:SetText(E.build and 'EUI: '..E.build or '')
+	
 	-- Add a first button
 	local firstButton = CreateFrame("Button", nil, ScriptErrorsFrame, "UIPanelButtonTemplate")
 	firstButton:Point("BOTTOMRIGHT", ScriptErrorsFrame.previous, "BOTTOMLEFT", -BUTTON_SPACING, 0)
 	firstButton:SetText("First")
 	firstButton:Height(BUTTON_HEIGHT)
 	firstButton:Width(BUTTON_WIDTH)
-	firstButton:SetScript("OnClick", function()
+	firstButton:SetScript("OnClick", function(self)
 		ScriptErrorsFrame.index = 1
 		ScriptErrorsFrame_Update()
 	end)
@@ -80,7 +89,7 @@ function D:ModifyErrorFrame()
 	lastButton:Height(BUTTON_HEIGHT)
 	lastButton:Width(BUTTON_WIDTH)
 	lastButton:SetText("Last")
-	lastButton:SetScript("OnClick", function()
+	lastButton:SetScript("OnClick", function(self)
 		ScriptErrorsFrame.index = #(ScriptErrorsFrame.order)
 		ScriptErrorsFrame_Update()
 	end)

@@ -16,15 +16,15 @@ function AS:ServerHop()
 		end
 		if Button and Text then
 			AS:StripTextures(Frame)
-			Frame:SetWidth(Width or 155)
+			Frame:Width(Width or 155)
 			Text:ClearAllPoints()
-			Text:SetPoint("RIGHT", Button, "LEFT", -2, 0)
+			Text:Point("RIGHT", Button, "LEFT", -2, 0)
 			Button:ClearAllPoints()
-			Button:SetPoint("RIGHT", Frame, "RIGHT", -10, 3)
+			Button:Point("RIGHT", Frame, "RIGHT", -10, 3)
 			AS:SkinNextPrevButton(Button, true)
 			AS:CreateBackdrop(Frame)
-			Frame.Backdrop:SetPoint("TOPLEFT", 20, -2)
-			Frame.Backdrop:SetPoint("BOTTOMRIGHT", Button, "BOTTOMRIGHT", 2, -2)
+			Frame.Backdrop:Point("TOPLEFT", 20, -2)
+			Frame.Backdrop:Point("BOTTOMRIGHT", Button, "BOTTOMRIGHT", 2, -2)
 		end
 	end
 

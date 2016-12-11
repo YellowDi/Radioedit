@@ -20,10 +20,10 @@ function AS:Bartender4()
 		Button:SetNormalTexture("")
 	 
 		Count:ClearAllPoints()
-		Count:SetPoint("BOTTOMRIGHT", 0, 2)
+		Count:Point("BOTTOMRIGHT", 0, 2)
 		
 		HotKey:ClearAllPoints()
-		HotKey:SetPoint("TOPRIGHT", 0, -3)
+		HotKey:Point("TOPRIGHT", 0, -3)
 		
 		if Border and Button.isSkinned then
 			Border:SetTexture('')

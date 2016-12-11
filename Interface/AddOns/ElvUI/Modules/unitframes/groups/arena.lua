@@ -1,26 +1,28 @@
 local E, L, V, P, G = unpack(select(2, ...)); --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local UF = E:GetModule('UnitFrames');
-local _, ns = ...
-local ElvUF = ns.oUF
-assert(ElvUF, "ElvUI was unable to locate oUF.")
 
 --Cache global variables
 --Lua functions
 local _G = _G
-local unpack = unpack
+local pairs, unpack = pairs, unpack
 local tinsert = table.insert
+local format = format
 --WoW API / Variables
 local CreateFrame = CreateFrame
-local GetArenaOpponentSpec = GetArenaOpponentSpec
-local GetSpecializationInfoByID = GetSpecializationInfoByID
 local IsInInstance = IsInInstance
 local UnitExists = UnitExists
-local CUSTOM_CLASS_COLORS = CUSTOM_CLASS_COLORS
+local GetArenaOpponentSpec = GetArenaOpponentSpec
+local GetSpecializationInfoByID = GetSpecializationInfoByID
 local LOCALIZED_CLASS_NAMES_MALE = LOCALIZED_CLASS_NAMES_MALE
 local RAID_CLASS_COLORS = RAID_CLASS_COLORS
+local CUSTOM_CLASS_COLORS = CUSTOM_CLASS_COLORS
 
 --Global variables that we don't cache, list them here for mikk's FindGlobals script
 -- GLOBALS: UIParent, ArenaHeaderMover
+
+local _, ns = ...
+local ElvUF = ns.oUF
+assert(ElvUF, "ElvUI was unable to locate oUF.")
 
 local ArenaHeader = CreateFrame('Frame', 'ArenaHeader', UIParent)
 
@@ -53,12 +55,16 @@ end
 
 function UF:Construct_ArenaFrames(frame)
 	frame.RaisedElementParent = CreateFrame('Frame', nil, frame)
+	frame.RaisedElementParent.TextureParent = CreateFrame('Frame', nil, frame.RaisedElementParent)
 	frame.RaisedElementParent:SetFrameLevel(frame:GetFrameLevel() + 100)
 
 	frame.Health = self:Construct_HealthBar(frame, true, true, 'RIGHT')
 	frame.Name = self:Construct_NameText(frame)
 
 	if(not frame.isChild) then
+		if E.db["clickset"].enable then  
+			frame.ClickSet = E.db["clickset"]
+		end
 		frame.Power = self:Construct_PowerBar(frame, true, true, 'LEFT')
 
 		frame.Portrait3D = self:Construct_Portrait(frame, 'model')
@@ -68,12 +74,14 @@ function UF:Construct_ArenaFrames(frame)
 
 		frame.Debuffs = self:Construct_Debuffs(frame)
 
-		frame.Castbar = self:Construct_Castbar(frame)
+		frame.Castbar = self:Construct_Castbar(frame, 'RIGHT')
 
 		frame.HealPrediction = UF:Construct_HealComm(frame)
 		frame.Trinket = self:Construct_Trinket(frame)
 		frame.PVPSpecIcon = self:Construct_PVPSpecIcon(frame)
 		frame.Range = UF:Construct_Range(frame)
+		frame.ArenaTargetIcon = UF:Construct_ArenaTargetIcon(frame)
+
 		frame:SetAttribute("type2", "focus")
 
 		frame.TargetGlow = UF:Construct_TargetGlow(frame)
@@ -81,6 +89,10 @@ function UF:Construct_ArenaFrames(frame)
 		frame:RegisterEvent('PLAYER_TARGET_CHANGED', UF.UpdateTargetGlow)
 		frame:RegisterEvent('PLAYER_ENTERING_WORLD', UF.UpdateTargetGlow)
 		frame:RegisterEvent('GROUP_ROSTER_UPDATE', UF.UpdateTargetGlow)
+		tinsert(frame.__elements, UF.UpdateClickSet)
+		frame:RegisterEvent('UNIT_NAME_UPDATE', UF.UpdateClickSet)
+		frame:RegisterEvent('PLAYER_REGEN_ENABLED', UF.UpdateClickSet)
+		frame:RegisterEvent('PLAYER_SPECIALIZATION_CHANGED', UF.UpdateClickSet)
 
 		frame.customTexts = {}
 		frame.InfoPanel = self:Construct_InfoPanel(frame)
@@ -157,7 +169,7 @@ function UF:Update_ArenaFrames(frame, db)
 
 		frame.USE_TARGET_GLOW = db.targetGlow
 		frame.PVPINFO_WIDTH = db.pvpSpecIcon and frame.UNIT_HEIGHT or 0
-
+		
 		frame.VARIABLES_SET = true
 	end
 
@@ -197,6 +209,9 @@ function UF:Update_ArenaFrames(frame, db)
 	--Trinket
 	UF:Configure_Trinket(frame)
 
+	--TargetIcon
+	UF:Configure_ArenaTargetIcon(frame)
+	
 	--Range
 	UF:Configure_Range(frame)
 

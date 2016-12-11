@@ -6,7 +6,7 @@ E.Minimap = M
 --Lua functions
 local _G = _G
 local tinsert = table.insert
-local strsub = strsub
+local gsub, upper, strsub = string.gsub, string.upper, strsub
 --WoW API / Variables
 local CloseAllWindows = CloseAllWindows
 local CloseMenus = CloseMenus
@@ -18,6 +18,7 @@ local GetZonePVPInfo = GetZonePVPInfo
 local GuildInstanceDifficulty = GuildInstanceDifficulty
 local InCombatLockdown = InCombatLockdown
 local IsAddOnLoaded = IsAddOnLoaded
+local IsInGuild = IsInGuild
 local IsShiftKeyDown = IsShiftKeyDown
 local MainMenuMicroButton_SetNormal = MainMenuMicroButton_SetNormal
 local Minimap_OnClick = Minimap_OnClick
@@ -35,7 +36,7 @@ local ToggleLFDParentFrame = ToggleLFDParentFrame
 
 --Global variables that we don't cache, list them here for mikk's FindGlobals script
 -- GLOBALS: GetMinimapShape, SpellBookFrame, PlayerTalentFrame, TalentFrame_LoadUI
--- GLOBALS: PlayerTalentFrame, TimeManagerFrame, HelpOpenTicketButton, HelpOpenWebTicketButton
+-- GLOBALS: PlayerTalentFrame, TimeManagerFrame
 -- GLOBALS: GameTimeFrame, GuildFrame, GuildFrame_LoadUI, Minimap, MinimapCluster
 -- GLOBALS: BuffsMover, DebuffsMover, LookingForGuildFrame, MiniMapWorldMapButton
 -- GLOBALS: LookingForGuildFrame_LoadUI, EncounterJournal_LoadUI, EncounterJournal
@@ -154,6 +155,9 @@ function M:Minimap_OnMouseUp(btn)
 			E:DropDown(menuList, menuFrame, -160, 0)
 		end
 	elseif btn == "RightButton" then
+		local xoff = -1
+
+		if position:match("RIGHT") then xoff = E:Scale(-16) end
 		ToggleDropDownMenu(1, nil, MiniMapTrackingDropDown, "cursor")
 	else
 		Minimap_OnClick(self)
@@ -211,6 +215,10 @@ function M:UpdateSettings()
 	E.MinimapSize = E.private.general.minimap.enable and E.db.general.minimap.size or Minimap:GetWidth() + 10
 	E.MinimapWidth = E.MinimapSize
 	E.MinimapHeight = E.MinimapSize
+
+	--Hide the BlopRing on Minimap
+	Minimap:SetArchBlobRingScalar(0)
+	Minimap:SetQuestBlobRingScalar(0)
 
 	if E.private.general.minimap.enable then
 		Minimap:Size(E.MinimapSize, E.MinimapSize)
@@ -439,10 +447,6 @@ function M:Initialize()
 
 	MiniMapMailBorder:Hide()
 	MiniMapMailIcon:SetTexture("Interface\\AddOns\\ElvUI\\media\\textures\\mail")
-
-	--Hide the BlopRing on Minimap
-	Minimap:SetArchBlobRingScalar(0)
-	Minimap:SetQuestBlobRingScalar(0)
 
 	if E.private.general.minimap.hideClassHallReport then
 		GarrisonLandingPageMinimapButton:Kill()

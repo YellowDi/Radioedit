@@ -22,17 +22,19 @@ local function LoadSkin()
 		self.Icon:Point("CENTER", self, "CENTER", 0, 0)
 
 		self.AbilityName:ClearAllPoints()
-		self.AbilityName:Point("BOTTOM", self, 0, -28)
+		self.AbilityName:Point("TOP", self.Icon, "BOTTOM", 0, -6)
 		self.AbilityName.scrollTime = nil;
 		self.AbilityName:FontTemplate(font, 20, 'OUTLINE')
 
 		self.TimeLeft.NumberText:ClearAllPoints()
-		self.TimeLeft.NumberText:Point("BOTTOM", self, 4, -58)
+	--	self.TimeLeft.NumberText:Point("BOTTOM", self, 4, -58)
+		self.TimeLeft.NumberText:Point("CENTER", self.Icon, "CENTER", 0, 0)
+		self.TimeLeft:SetFrameLevel(99)
 		self.TimeLeft.NumberText.scrollTime = nil;
 		self.TimeLeft.NumberText:FontTemplate(font, 20, 'OUTLINE')
 
 		self.TimeLeft.SecondsText:ClearAllPoints()
-		self.TimeLeft.SecondsText:Point("BOTTOM", self, 0, -80)
+		self.TimeLeft.SecondsText:Point("LEFT", self.TimeLeft.NumberText, "RIGHT", 10, 0)
 		self.TimeLeft.SecondsText.scrollTime = nil;
 		self.TimeLeft.SecondsText:FontTemplate(font, 20, 'OUTLINE')
 

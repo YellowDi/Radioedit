@@ -8,6 +8,10 @@ local GetRaidTargetIndex = GetRaidTargetIndex
 local SetRaidTargetIconTexture = SetRaidTargetIconTexture
 
 function mod:UpdateElement_RaidIcon(frame)
+	if (self.db.units[frame.UnitType].enable == false) then
+		return;
+	end
+
 	local icon = frame.RaidIcon;
 	local index = GetRaidTargetIndex(frame.unit);
 	icon:ClearAllPoints()
@@ -16,7 +20,7 @@ function mod:UpdateElement_RaidIcon(frame)
 	else
 		icon:SetPoint("BOTTOM", frame.Name, "TOP", 0, 3)
 	end
-
+	
 	if ( index ) then
 		SetRaidTargetIconTexture(icon, index);
 		icon:Show();
@@ -31,6 +35,6 @@ function mod:ConstructElement_RaidIcon(frame)
 	texture:SetSize(40, 40)
 	texture:SetTexture([[Interface\TargetingFrame\UI-RaidTargetingIcons]])
 	texture:Hide()
-
+	
 	return texture
 end

@@ -1,27 +1,30 @@
 local E, L, V, P, G = unpack(select(2, ...)); --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local UF = E:GetModule('UnitFrames');
-local _, ns = ...
-local ElvUF = ns.oUF
-assert(ElvUF, "ElvUI was unable to locate oUF.")
 
 --Cache global variables
 --Lua functions
+local pairs = pairs
 local tinsert = table.insert
 --WoW API / Variables
 local CreateFrame = CreateFrame
-local InCombatLockdown = InCombatLockdown
 local IsInInstance = IsInInstance
-local RegisterStateDriver = RegisterStateDriver
+local InCombatLockdown = InCombatLockdown
 local UnregisterStateDriver = UnregisterStateDriver
+local RegisterStateDriver = RegisterStateDriver
 
 --Global variables that we don't cache, list them here for mikk's FindGlobals script
 -- GLOBALS: UnitFrame_OnEnter, UnitFrame_OnLeave
 
-function UF:Construct_RaidpetFrames()
+local _, ns = ...
+local ElvUF = ns.oUF
+assert(ElvUF, "ElvUI was unable to locate oUF.")
+
+function UF:Construct_RaidpetFrames(unitGroup)
 	self:SetScript('OnEnter', UnitFrame_OnEnter)
 	self:SetScript('OnLeave', UnitFrame_OnLeave)
 
 	self.RaisedElementParent = CreateFrame('Frame', nil, self)
+	self.RaisedElementParent.TextureParent = CreateFrame('Frame', nil, self.RaisedElementParent)
 	self.RaisedElementParent:SetFrameLevel(self:GetFrameLevel() + 100)
 
 	self.Health = UF:Construct_HealthBar(self, true, true, 'RIGHT')
@@ -34,6 +37,14 @@ function UF:Construct_RaidpetFrames()
 	self.RaidDebuffs = UF:Construct_RaidDebuffs(self)
 	self.DebuffHighlight = UF:Construct_DebuffHighlight(self)
 	self.TargetGlow = UF:Construct_TargetGlow(self)
+	if E.db["clickset"].enable then  
+		self.ClickSet = E.db["clickset"]
+	end
+	
+	tinsert(self.__elements, UF.UpdateClickSet)
+	self:RegisterEvent('UNIT_NAME_UPDATE', UF.UpdateClickSet)
+	self:RegisterEvent('PLAYER_REGEN_ENABLED', UF.UpdateClickSet)
+	self:RegisterEvent('PLAYER_SPECIALIZATION_CHANGED', UF.UpdateClickSet)
 	tinsert(self.__elements, UF.UpdateTargetGlow)
 	self:RegisterEvent('PLAYER_TARGET_CHANGED', UF.UpdateTargetGlow)
 	self:RegisterEvent('PLAYER_ENTERING_WORLD', UF.UpdateTargetGlow)
@@ -131,7 +142,7 @@ function UF:Update_RaidpetFrames(frame, db)
 		frame.BOTTOM_OFFSET = 0
 
 		frame.USE_TARGET_GLOW = db.targetGlow
-
+		
 		frame.VARIABLES_SET = true
 	end
 

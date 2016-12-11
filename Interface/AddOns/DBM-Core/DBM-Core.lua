@@ -41,9 +41,9 @@
 --  Globals/Default Options  --
 -------------------------------
 DBM = {
-	Revision = tonumber(("$Revision: 15490 $"):sub(12, -3)),
-	DisplayVersion = "7.1.3", -- the string that is shown as version
-	ReleaseRevision = 15490 -- the revision of the latest stable version that is available
+	Revision = tonumber(("$Revision: 15512 $"):sub(12, -3)),
+	DisplayVersion = "7.1.4", -- the string that is shown as version
+	ReleaseRevision = 15512 -- the revision of the latest stable version that is available
 }
 DBM.HighestRelease = DBM.ReleaseRevision --Updated if newer version is detected, used by update nags to reflect critical fixes user is missing on boss pulls
 
@@ -271,7 +271,6 @@ DBM.DefaultOptions = {
 	CRT_Enabled = false,
 	ShowRespawn = true,
 	ShowQueuePop = true,
-	MythicPlusChestTimer = true,
 	HelpMessageVersion = 3,
 	NewsMessageShown = 4,
 	MoviesSeen = {},
@@ -420,7 +419,7 @@ local wowVersionString, _, _, wowTOC = GetBuildInfo()
 local dbmToc = 0
 local UpdateChestTimer
 
-local fakeBWVersion, fakeBWHash = 24, "55aa1a7"
+local fakeBWVersion, fakeBWHash = 25, "3df7123"
 local versionQueryString, versionResponseString = "Q^%d^%s", "V^%d^%s"
 
 local enableIcons = true -- set to false when a raid leader or a promoted player has a newer version of DBM
@@ -437,6 +436,16 @@ local bannedMods = { -- a list of "banned" (meaning they are replaced by another
 	"DBM-VPKiwiBeta",--Renamed to DBM-VPKiwi in final version.
 	"DBM-Suramar",--Renamed to DBM-Nighthold
 }
+--by eui.cc
+updateNotificationDisplayed = 3
+DBM.DefaultOptions.CountdownVoice = "VP:Yike"
+DBM.DefaultOptions.CountdownVoice2 = "VP:Yike"
+DBM.DefaultOptions.CountdownVoice3v2 = "VP:Yike"
+DBM.DefaultOptions.ChosenVoicePack = "Yike"
+DBM.DefaultOptions.AutoRespond = false
+DBM.DefaultOptions.ShowMinimapButton = false
+DBM.DefaultOptions.HideObjectivesFrame = false
+DBM.DefaultOptions.MovieFilter = "Never"
 
 
 -----------------
@@ -1272,9 +1281,6 @@ do
 				"UPDATE_BATTLEFIELD_STATUS",
 				"CINEMATIC_START",
 				"PLAYER_LEVEL_UP",
-				"CHALLENGE_MODE_START",
-				"CHALLENGE_MODE_RESET",
-				"CHALLENGE_MODE_COMPLETED",
 				"PLAYER_SPECIALIZATION_CHANGED",
 				"PARTY_INVITE_REQUEST",
 				"LOADING_SCREEN_DISABLED",
@@ -3569,51 +3575,6 @@ function DBM:SCENARIO_CRITERIA_UPDATE()
 	end
 end
 
-do
-	function UpdateChestTimer(self)
-		local _, elapsedTime = GetWorldElapsedTime(1)--Should always be 1, with only one world state timer active.
-		local _, _, maxTime = C_ChallengeMode.GetMapInfo(LastInstanceMapID);
-		maxTime = maxTime * 0.8--Two chests
-		local remaining = (maxTime or 0) - (elapsedTime or 0)
-		if remaining and remaining > 0 then--Safey check in case it fails
-			self.Bars:CreateBar(remaining, "2 "..CHESTSLOT)
-			self:Schedule(remaining+1, UpdateChestTimer, self)
-		end
-	end
-
-	function DBM:CHALLENGE_MODE_START(mapID)
-		self:Debug("CHALLENGE_MODE_START fired for mapID "..mapID)
-		if not self.Options.MythicPlusChestTimer then return end
-		self:Unschedule(UpdateChestTimer)
-		local _, elapsedTime = GetWorldElapsedTime(1)--Should always be 1, with only one world state timer active.
-		local _, _, maxTime = C_ChallengeMode.GetMapInfo(LastInstanceMapID);
-		maxTime = maxTime * 0.6--Three Chests
-		local remaining = (maxTime or 0) - (elapsedTime or 0)
-		if remaining and remaining > 0 then--Safey check in case it fails
-			self.Bars:CreateBar(remaining, "3 "..CHESTSLOT)
-			self:Schedule(remaining+1, UpdateChestTimer, self)
-		end
-	end
-
-	function DBM:CHALLENGE_MODE_RESET()
-		self:Debug("CHALLENGE_MODE_RESET fired")
-		self.Bars:CancelBar(PLAYER_DIFFICULTY6.."+")
-		if not self.Options.MythicPlusChestTimer then return end
-		self:Unschedule(UpdateChestTimer)
-		self.Bars:CancelBar("3 "..CHESTSLOT)
-		self.Bars:CancelBar("2 "..CHESTSLOT)
-	end
-
-	function DBM:CHALLENGE_MODE_COMPLETED()
-		self:Debug("CHALLENGE_MODE_COMPLETED fired for mapID "..LastInstanceMapID)
-		self.Bars:CancelBar(PLAYER_DIFFICULTY6.."+")
-		if not self.Options.MythicPlusChestTimer then return end
-		self:Unschedule(UpdateChestTimer)
-		self.Bars:CancelBar("3 "..CHESTSLOT)
-		self.Bars:CancelBar("2 "..CHESTSLOT)
-	end
-end
-
 --------------------------------
 --  Load Boss Mods on Demand  --
 --------------------------------
@@ -3941,10 +3902,10 @@ do
 					if (mod.revision < modHFRevision) and (mod.revision > 1000) then--mod.revision because we want to compare to OUR revision not senders
 						if DBM:AntiSpam(3, "HOTFIX") then
 							if DBM.HighestRelease < modHFRevision then--There is a newer RELEASE version of DBM out that has this mods fixes
-								showConstantReminder = 2
-								DBM:AddMsg(DBM_CORE_UPDATEREMINDER_HOTFIX)
+							--	showConstantReminder = 2
+							--	DBM:AddMsg(DBM_CORE_UPDATEREMINDER_HOTFIX)
 							else--This mods fixes are in an alpha version
-								DBM:AddMsg(DBM_CORE_UPDATEREMINDER_HOTFIX_ALPHA)
+							--	DBM:AddMsg(DBM_CORE_UPDATEREMINDER_HOTFIX_ALPHA)
 							end
 						end
 					end
@@ -4220,11 +4181,11 @@ do
 							end
 						end
 						--Find min revision.
-						updateNotificationDisplayed = 2
-						DBM:AddMsg(DBM_CORE_UPDATEREMINDER_HEADER:match("([^\n]*)"))
-						DBM:AddMsg(DBM_CORE_UPDATEREMINDER_HEADER:match("\n(.*)"):format(displayVersion, version))
-						DBM:AddMsg(("|HDBM:update:%s:%s|h|cff3588ff[%s]"):format(displayVersion, version, DBM_CORE_UPDATEREMINDER_URL or "http://www.deadlybossmods.com"))
-						showConstantReminder = 1
+					--	updateNotificationDisplayed = 2
+					--	DBM:AddMsg(DBM_CORE_UPDATEREMINDER_HEADER:match("([^\n]*)"))
+					--	DBM:AddMsg(DBM_CORE_UPDATEREMINDER_HEADER:match("\n(.*)"):format(displayVersion, version))
+					--	DBM:AddMsg(("|HDBM:update:%s:%s|h|cff3588ff[%s]"):format(displayVersion, version, DBM_CORE_UPDATEREMINDER_URL or "http://www.deadlybossmods.com"))
+					--	showConstantReminder = 1
 					elseif #newerVersionPerson == 3 then--Requires 3 for force disable.
 						--Find min revision.
 						local revDifference = mmin((raid[newerVersionPerson[1]].revision - DBM.Revision), (raid[newerVersionPerson[2]].revision - DBM.Revision), (raid[newerVersionPerson[3]].revision - DBM.Revision))
@@ -4238,9 +4199,9 @@ do
 						if revDifference > 180 then
 						--elseif revDifference > 180 then
 							if updateNotificationDisplayed < 3 then
-								updateNotificationDisplayed = 3
-								DBM:AddMsg(DBM_CORE_UPDATEREMINDER_DISABLE)
-								DBM:Disable(true)
+							--	updateNotificationDisplayed = 3
+							--	DBM:AddMsg(DBM_CORE_UPDATEREMINDER_DISABLE)
+							--	DBM:Disable(true)
 							end
 						end
 					end
@@ -4248,18 +4209,18 @@ do
 			end
 			if DBM.DisplayVersion:find("alpha") and #newerVersionPerson < 2 and #newerRevisionPerson < 2 and updateNotificationDisplayed < 2 and (revision - DBM.Revision) > 20 then
 				if not checkEntry(newerRevisionPerson, sender) then
-					newerRevisionPerson[#newerRevisionPerson + 1] = sender
-					DBM:Debug("Newer revision detected from "..sender.." : Rev - "..revision..", Ver - "..version..", Rev Diff - "..(revision - DBM.Revision))
+				--	newerRevisionPerson[#newerRevisionPerson + 1] = sender
+				--	DBM:Debug("Newer revision detected from "..sender.." : Rev - "..revision..", Ver - "..version..", Rev Diff - "..(revision - DBM.Revision))
 				end
 				if #newerRevisionPerson == 2 then
 					local revDifference = mmin((raid[newerRevisionPerson[1]].revision - DBM.Revision), (raid[newerRevisionPerson[2]].revision - DBM.Revision))
 					if testBuild and revDifference > 5 then
-						updateNotificationDisplayed = 3
-						DBM:AddMsg(DBM_CORE_UPDATEREMINDER_DISABLE)
-						DBM:Disable(true)
+					--	updateNotificationDisplayed = 3
+					--	DBM:AddMsg(DBM_CORE_UPDATEREMINDER_DISABLE)
+					--	DBM:Disable(true)
 					else
-						updateNotificationDisplayed = 2
-						DBM:AddMsg(DBM_CORE_UPDATEREMINDER_HEADER_ALPHA:format(revDifference))
+					--	updateNotificationDisplayed = 2
+					--	DBM:AddMsg(DBM_CORE_UPDATEREMINDER_HEADER_ALPHA:format(revDifference))
 					end
 				end
 			end
@@ -5184,7 +5145,7 @@ do
 			if not v.combatInfo then return end
 			if v.noEEDetection then return end
 			if v.respawnTime and success == 0 and self.Options.ShowRespawn and not self.Options.DontShowBossTimers then--No special hacks needed for bad wrath ENCOUNTER_END. Only mods that define respawnTime have a timer, since variable per boss.
-				self.Bars:CreateBar(v.respawnTime, DBM_CORE_TIMER_RESPAWN, "Interface\\Icons\\Spell_Holy_BorrowedTime")
+				self.Bars:CreateBar(v.respawnTime, DBM_CORE_TIMER_RESPAWN:format(name), "Interface\\Icons\\Spell_Holy_BorrowedTime")
 			end
 			if v.multiEncounterPullDetection then
 				for _, eId in ipairs(v.multiEncounterPullDetection) do
@@ -5521,22 +5482,10 @@ do
 			--process global options
 			self:HideBlizzardEvents(1)
 			self:StartLogging(0, nil)
-			if self.Options.HideObjectivesFrame and mod.addon.type ~= "SCENARIO" and GetNumTrackedAchievements() == 0 then
+			if self.Options.HideObjectivesFrame and mod.addon.type ~= "SCENARIO" and GetNumTrackedAchievements() == 0 and difficultyIndex ~= 8 then
 				if ObjectiveTrackerFrame:IsVisible() then
 					ObjectiveTrackerFrame:Hide()
 					watchFrameRestore = true
-				end
-				--When hiding objectives frame in Mythic+, start our own timer to show time remaining during boss fight
-				if difficultyIndex == 8 then
-					local _, elapsedTime = GetWorldElapsedTime(1)--Should always be 1, with only one world state timer active.
-					local _, _, maxTime = C_ChallengeMode.GetMapInfo(LastInstanceMapID);
-					local remaining = (maxTime or 0) - (elapsedTime or 0)
-					if remaining and remaining > 0 then--No remaining, already failed timer, do nothing
-						self.Bars:CreateBar(remaining, PLAYER_DIFFICULTY6.."+")
-					end
-					--Maybe do more with this later
-					--local threeChests = maxTime * 0.6
-					--local twoChests = maxTime * 0.8;
 				end
 			end
 			fireEvent("pull", mod, delay, synced, startHp)
@@ -5961,7 +5910,6 @@ do
 					ObjectiveTrackerFrame:Show()
 					watchFrameRestore = false
 				end
-				self.Bars:CancelBar(PLAYER_DIFFICULTY6.."+")
 				if tooltipsHidden then
 					--Better or cleaner way?
 					tooltipsHidden = false
@@ -6200,27 +6148,6 @@ function DBM:UNIT_DIED(args)
 		self:FlashClientIcon()
 		self:PlaySoundFile("Sound\\Creature\\CThun\\CThunYouWillDIe.ogg")--So fire an alert sound to save yourself from this person's behavior.
 		self:AddMsg(DBM_CORE_AFK_WARNING:format(0))
-	end
-	--UGLY INEFFICIENT PLACE to have this. TODO see if CHALLENGE_MODE event exists for timer changing to do this more properly
-	if difficultyIndex == 8 and self.Options.MythicPlusChestTimer and bband(args.destFlags, COMBATLOG_OBJECT_TYPE_PLAYER) ~= 0 then
-		self:Unschedule(UpdateChestTimer)
-		self.Bars:CancelBar("3 "..CHESTSLOT)
-		self.Bars:CancelBar("2 "..CHESTSLOT)
-		local _, elapsedTime = GetWorldElapsedTime(1)--Should always be 1, with only one world state timer active.
-		local _, _, maxTime = C_ChallengeMode.GetMapInfo(LastInstanceMapID);
-		local threeChest = maxTime * 0.6
-		local twoChest = maxTime * 0.8
-		local remaining = (threeChest or 0) - (elapsedTime or 0)
-		if remaining and remaining > 0 then--Safey check in case it fails
-			self.Bars:CreateBar(remaining, "3 "..CHESTSLOT)
-			self:Schedule(remaining+1, UpdateChestTimer, self)
-		else
-			remaining = (twoChest or 0) - (elapsedTime or 0)
-			if remaining and remaining > 0 then--Safey check in case it fails
-				self.Bars:CreateBar(remaining, "2 "..CHESTSLOT)
-				self:Schedule(remaining+1, UpdateChestTimer, self)
-			end
-		end
 	end
 end
 DBM.UNIT_DESTROYED = DBM.UNIT_DIED

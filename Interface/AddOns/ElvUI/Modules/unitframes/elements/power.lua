@@ -12,16 +12,37 @@ local _, ns = ...
 local ElvUF = ns.oUF
 assert(ElvUF, "ElvUI was unable to locate oUF.")
 
-function UF:Construct_PowerBar(frame, bg, text, textPos)
-	local power = CreateFrame('StatusBar', nil, frame)
+function UF:Construct_PowerBar(frame, bg, text, textPos, orientation)
+	local power
+--	if E.db.unitframe.transparent and E.db.unitframe.powertrans and E.db.general.transparentStyle == 2 then
+--		power = E:TranseBar(frame, orientation)
+--	else
+		power = CreateFrame('StatusBar', nil, frame)
+--	end
+
 	UF['statusbars'][power] = true
 
 	power.PostUpdate = self.PostUpdatePower
 
 	if bg then
-		power.bg = power:CreateTexture(nil, 'BORDER')
-		power.bg:SetAllPoints()
-		power.bg:SetTexture(E["media"].blankTex)
+		if E.db.unitframe.transparent and E.db.unitframe.powertrans and E.db.general.transparentStyle == 2 then
+			local pbg = CreateFrame("Frame", nil, power)
+			pbg:SetFrameLevel(power:GetFrameLevel()-2)
+			pbg:SetAllPoints(power)
+			pbg:SetAlpha(0)
+			local b = pbg:CreateTexture(nil, "BACKGROUND")
+			b:SetTexture(E["media"].normTex)
+			b:SetAllPoints(power)
+			power.bg = b
+			power.pbg = pbg
+		else
+			power.bg = power:CreateTexture(nil, 'BORDER')
+			power.bg:SetAllPoints()
+			power.bg:SetTexture(E["media"].blankTex)
+			if E.db.unitframe.transparent then
+				power.bg:SetAlpha(E.db.general.backdropfadecolor.a or 0.4)
+			end
+		end
 		power.bg.multiplier = 0.2
 	end
 
@@ -53,6 +74,7 @@ function UF:Configure_Power(frame)
 	if frame.USE_POWERBAR then
 		if not frame:IsElementEnabled('Power') then
 			frame:EnableElement('Power')
+
 			power:Show()
 		end
 
@@ -167,7 +189,7 @@ function UF:Configure_Power(frame)
 		--Hide mover until we detach again
 		if not frame.POWERBAR_DETACHED then
 			if power.Holder and power.Holder.mover then
-				power.Holder.mover:SetScale(0.0001)
+				power.Holder.mover:SetScale(0.000001)
 				power.Holder.mover:SetAlpha(0)
 			end
 		end
@@ -202,14 +224,15 @@ end
 
 local tokens = { [0] = "MANA", "RAGE", "FOCUS", "ENERGY", "RUNIC_POWER" }
 function UF:PostUpdatePower(unit, min, max)
+	local pType, _, altR, altG, altB = UnitPowerType(unit)
 	local parent = self.origParent or self:GetParent()
 
 	if parent.isForced then
-		local pType = random(0, 4)
-		local color = ElvUF['colors'].power[tokens[pType]]
 		min = random(1, max)
+		pType = random(0, 4)
 		self:SetValue(min)
-
+		local color = ElvUF['colors'].power[tokens[pType]]
+		
 		if not self.colorClass then
 			self:SetStatusBarColor(color[1], color[2], color[3])
 			local mu = self.bg.multiplier or 1

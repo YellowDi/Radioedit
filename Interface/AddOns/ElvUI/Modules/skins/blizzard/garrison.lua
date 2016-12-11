@@ -172,7 +172,6 @@ local function LoadSkin()
 				reward.border = CreateFrame("Frame", nil, reward)
 				S:HandleIcon(reward.Icon, reward.border)
 				reward.Quantity:SetParent(reward.border)
-				reward.IconBorder:SetAlpha(0)
 			end
 		end
 	end

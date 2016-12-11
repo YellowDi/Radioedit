@@ -89,7 +89,7 @@ local function LoadSkin()
 	ArcheologyDigsiteProgressBar:ClearAllPoints()
 	ArcheologyDigsiteProgressBar:Point("TOP", UIParent, "TOP", 0, -400)
 	UIPARENT_MANAGED_FRAME_POSITIONS["ArcheologyDigsiteProgressBar"] = nil
-	E:CreateMover(ArcheologyDigsiteProgressBar, "DigSiteProgressBarMover", L["Archeology Progress Bar"])
+	E:CreateMover(ArcheologyDigsiteProgressBar, "DigSiteProgressBarMover", ARCHAEOLOGY_DIGSITE_PROGRESS_BAR_TITLE)
 end
 
 S:AddCallbackForAddon("Blizzard_ArchaeologyUI", "Archaeology", LoadSkin)

@@ -56,7 +56,7 @@ function mod:UpdateArtifact(event)
 		elseif textFormat == 'CURREM' then
 			text = format('%s - %s', E:ShortValue(xp), E:ShortValue(xpForNextPoint - xp))
 		end
-
+		
 		bar.text:SetText(text)
 	end
 end

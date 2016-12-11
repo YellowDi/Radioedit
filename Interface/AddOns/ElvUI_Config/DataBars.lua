@@ -5,7 +5,7 @@ local databars = {}
 
 E.Options.args.databars = {
 	type = "group",
-	name = L["DataBars"],
+	name = '01.1'..L["DataBars"],
 	childGroups = "tab",
 	get = function(info) return E.db.databars[ info[#info] ] end,
 	set = function(info, value) E.db.databars[ info[#info] ] = value; end,
@@ -13,7 +13,7 @@ E.Options.args.databars = {
 		intro = {
 			order = 1,
 			type = "description",
-			name = L["Setup on-screen display of information bars."],
+			name = L["DATABAR_DESC"],
 		},
 		spacer = {
 			order = 2,
@@ -38,12 +38,6 @@ E.Options.args.databars = {
 					type = "toggle",
 					name = L["Mouseover"],
 				},
-				hideAtMaxLevel = {
-					order = 2,
-					type = "toggle",
-					name = L["Hide At Max Level"],
-					set = function(info, value) mod.db.experience[ info[#info] ] = value; mod:UpdateExperience() end,
-				},
 				hideInVehicle = {
 					order = 3,
 					type = "toggle",
@@ -53,7 +47,7 @@ E.Options.args.databars = {
 				hideInCombat = {
 					order = 4,
 					type = "toggle",
-					name = L["Hide In Combat"],
+					name = L["Combat Hide"],
 					set = function(info, value) mod.db.experience[ info[#info] ] = value; mod:UpdateExperience() end,
 				},
 				reverseFill = {
@@ -133,7 +127,7 @@ E.Options.args.databars = {
 				hideInCombat = {
 					order = 3,
 					type = "toggle",
-					name = L["Hide In Combat"],
+					name = L["Combat Hide"],
 					set = function(info, value) mod.db.reputation[ info[#info] ] = value; mod:UpdateReputation() end,
 				},
 				reverseFill = {
@@ -157,12 +151,12 @@ E.Options.args.databars = {
 					name = L["Text Format"],
 					values = {
 						NONE = NONE,
+						PERCENT = L["Percent"],
 						CUR = L["Current"],
 						REM = L["Remaining"],
-						PERCENT = L["Percent"],
 						CURMAX = L["Current - Max"],
 						CURPERC = L["Current - Percent"],
-						CURREM = L["Current - Remaining"],						
+						CURREM = L["Current - Remaining"],
 					},
 					set = function(info, value) mod.db.reputation[ info[#info] ] = value; mod:UpdateReputation() end,
 				},
@@ -213,7 +207,7 @@ E.Options.args.databars = {
 				hideInCombat = {
 					order = 3,
 					type = "toggle",
-					name = L["Hide In Combat"],
+					name = L["Combat Hide"],
 					set = function(info, value) mod.db.artifact[ info[#info] ] = value; mod:UpdateArtifact() end,
 				},
 				reverseFill = {
@@ -255,9 +249,9 @@ E.Options.args.databars = {
 					name = L["Text Format"],
 					values = {
 						NONE = NONE,
+						PERCENT = L["Percent"],
 						CUR = L["Current"],
 						REM = L["Remaining"],
-						PERCENT = L["Percent"],
 						CURMAX = L["Current - Max"],
 						CURPERC = L["Current - Percent"],
 						CURREM = L["Current - Remaining"],
@@ -284,16 +278,22 @@ E.Options.args.databars = {
 					type = "toggle",
 					name = L["Mouseover"],
 				},
-				hideInVehicle = {
+				hideAtMaxLevel = {
 					order = 2,
+					type = "toggle",
+					name = L["Hide At Max Level"],
+					set = function(info, value) mod.db.honor[ info[#info] ] = value; mod:UpdateHonor() end,
+				},
+				hideInVehicle = {
+					order = 3,
 					type = "toggle",
 					name = L["Hide In Vehicle"],
 					set = function(info, value) mod.db.honor[ info[#info] ] = value; mod:UpdateHonor() end,
 				},
 				hideInCombat = {
-					order = 3,
+					order = 4,
 					type = "toggle",
-					name = L["Hide In Combat"],
+					name = L["Combat Hide"],
 					set = function(info, value) mod.db.honor[ info[#info] ] = value; mod:UpdateHonor() end,
 				},
 				hideOutsidePvP = {
@@ -303,12 +303,12 @@ E.Options.args.databars = {
 					set = function(info, value) mod.db.honor[ info[#info] ] = value; mod:UpdateHonor() end,
 				},
 				reverseFill = {
-					order = 4,
+					order = 5,
 					type = "toggle",
 					name = L["Reverse Fill Direction"],
 				},
 				orientation = {
-					order = 5,
+					order = 6,
 					type = "select",
 					name = L["Statusbar Fill Orientation"],
 					desc = L["Direction the bar moves on gains/losses"],
@@ -318,25 +318,25 @@ E.Options.args.databars = {
 					}
 				},
 				width = {
-					order = 6,
+					order = 7,
 					type = "range",
 					name = L["Width"],
 					min = 5, max = ceil(GetScreenWidth() or 800), step = 1,
 				},
 				height = {
-					order = 7,
+					order = 8,
 					type = "range",
 					name = L["Height"],
 					min = 5, max = ceil(GetScreenHeight() or 800), step = 1,
 				},
 				textSize = {
-					order = 8,
+					order = 9,
 					name = L["Font Size"],
 					type = "range",
 					min = 6, max = 22, step = 1,
 				},
 				textFormat = {
-					order = 9,
+					order = 10,
 					type = 'select',
 					name = L["Text Format"],
 					values = {

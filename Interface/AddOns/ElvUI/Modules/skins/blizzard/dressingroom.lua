@@ -17,7 +17,7 @@ local function LoadSkin()
 	DressUpFrameOutfitDropDown:SetSize(195, 34)
 	
 	S:HandleCloseButton(DressUpFrameCloseButton, DressUpFrame.backdrop)
-	
+
 	-- Wardrobe edit frame
 	WardrobeOutfitFrame:StripTextures(true)
 	WardrobeOutfitFrame:SetTemplate("Transparent")

@@ -18,7 +18,7 @@ local timerText = L["Combat"]
 local function OnUpdate(self)
 	timer = GetTime() - startTime
 
-	self.text:SetFormattedText(displayNumberString, timerText, format("%02d:%02d.%02d", floor(timer/60), timer % 60, (timer - floor(timer)) * 100))
+	self.text:SetFormattedText(displayNumberString, timerText, format("%02d:%02d:%02d", floor(timer/60), timer % 60, (timer - floor(timer)) * 100))
 end
 
 local function DelayOnUpdate(self, elapsed)
@@ -31,13 +31,14 @@ local function DelayOnUpdate(self, elapsed)
 	end
 end
 
-local function OnEvent(self, event, _, timeSeconds)
+local function OnEvent(self, event, timerType, timeSeconds, totalTime)
 	local _, instanceType = IsInInstance()
 	if(event == "START_TIMER" and instanceType == "arena") then
 		startTime = timeSeconds
 		timer = 0
 		timerText = L["Arena"]
 		self.text:SetFormattedText(displayNumberString, timerText, "00:00:00")
+		self.text:SetJustifyH("LEFT")
 		self:SetScript("OnUpdate", DelayOnUpdate)
 	elseif(event == "PLAYER_ENTERING_WORLD" or (event == "PLAYER_REGEN_ENABLED" and instanceType ~= "arena")) then
 		self:SetScript("OnUpdate", nil)
@@ -48,6 +49,7 @@ local function OnEvent(self, event, _, timeSeconds)
 		self:SetScript("OnUpdate", OnUpdate)
 	elseif(not self.text:GetText()) then
 		self.text:SetFormattedText(displayNumberString, timerText, format("%02d:%02d:%02d", floor(timer/60), timer % 60, (timer - floor(timer)) * 100))
+		self.text:SetJustifyH("LEFT")
 	end
 
 	lastPanel = self

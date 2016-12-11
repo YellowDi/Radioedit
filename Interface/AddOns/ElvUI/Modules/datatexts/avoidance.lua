@@ -24,6 +24,7 @@ local displayString, lastPanel
 local targetlv, playerlv
 local basemisschance, leveldifference, dodge, parry, block, avoidance, unhittable, avoided, blocked, numAvoidances, unhittableMax
 local chanceString = "%.2f%%"
+local modifierString = join("", "%d (+", chanceString, ")")
 local AVD_DECAY_RATE = 1.5
 
 local function IsWearingShield()
@@ -36,7 +37,7 @@ local function IsWearingShield()
 	end
 end
 
-local function OnEvent(self)
+local function OnEvent(self, event, unit)
 	targetlv, playerlv = UnitLevel("target"), UnitLevel("player")
 
 	basemisschance = E.myrace == "NightElf" and 7 or 5
@@ -118,7 +119,7 @@ local function OnEnter(self)
 end
 
 
-local function ValueColorUpdate(hex)
+local function ValueColorUpdate(hex, r, g, b)
 	displayString = join("", "%s", hex, "%.2f%%|r")
 
 	if lastPanel ~= nil then

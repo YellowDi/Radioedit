@@ -11,11 +11,6 @@ local IsShiftKeyDown = IsShiftKeyDown
 local IsAltKeyDown = IsAltKeyDown
 local IsControlKeyDown = IsControlKeyDown
 local UnitIsFriend = UnitIsFriend
-local CUSTOM_CLASS_COLORS = CUSTOM_CLASS_COLORS
-local RAID_CLASS_COLORS = RAID_CLASS_COLORS
-
---Global variables that we don't want to cache, list them here for mikk's FindGlobals script
--- GLOBALS: ElvUF_Player
 
 function UF:Construct_AuraBars()
 	local bar = self.statusBar
@@ -194,6 +189,7 @@ function UF:AuraBarFilter(unit, name, rank, icon, count, debuffType, duration, e
 	local playerOnlyFilter = false
 	local isPlayer = unitCaster == 'player' or unitCaster == 'vehicle'
 	local isFriend = UnitIsFriend('player', unit)
+	local auraType = isFriend and db.friendlyAuraType or db.enemyAuraType
 
 	if UF:CheckFilter(db.playerOnly, isFriend) then
 		if isPlayer then
@@ -281,7 +277,7 @@ end
 
 local GOTAK_ID = 86659
 local GOTAK = GetSpellInfo(GOTAK_ID)
-function UF:ColorizeAuraBars()
+function UF:ColorizeAuraBars(event, unit)
 	local bars = self.bars
 	for index = 1, #bars do
 		local frame = bars[index]

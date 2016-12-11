@@ -28,7 +28,7 @@ local base, posBuff, negBuff, effective, Rbase, RposBuff, RnegBuff, Reffective, 
 local displayNumberString = ''
 local lastPanel;
 
-local function OnEvent(self)
+local function OnEvent(self, event, unit)
 	if E.myclass == "HUNTER" then
 		Rbase, RposBuff, RnegBuff = UnitRangedAttackPower("player");
 		Reffective = Rbase + RposBuff + RnegBuff;
@@ -104,7 +104,7 @@ local function OnEnter(self)
 	DT.tooltip:Show()
 end
 
-local function ValueColorUpdate(hex)
+local function ValueColorUpdate(hex, r, g, b)
 	displayNumberString = join("", "%s: ", hex, "%d|r")
 
 	if lastPanel ~= nil then

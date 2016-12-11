@@ -12,70 +12,71 @@ local random = math.random
 local len, gsub, find, sub, gmatch, format, split = string.len, string.gsub, string.find, string.sub, string.gmatch, string.format, string.split
 local strlower, strsub, strlen, strupper = strlower, strsub, strlen, strupper
 --WoW API / Variables
-local BetterDate = BetterDate
-local BNet_GetClientEmbeddedTexture = BNet_GetClientEmbeddedTexture
-local BNet_GetValidatedCharacterName = BNet_GetValidatedCharacterName
-local BNGetFriendInfo = BNGetFriendInfo
-local BNGetFriendInfoByID = BNGetFriendInfoByID
-local BNGetGameAccountInfo = BNGetGameAccountInfo
-local BNGetNumFriendInvites = BNGetNumFriendInvites
-local BNGetNumFriends = BNGetNumFriends
-local ChatEdit_ActivateChat = ChatEdit_ActivateChat
-local ChatEdit_ChooseBoxForSend = ChatEdit_ChooseBoxForSend
-local ChatEdit_ParseText = ChatEdit_ParseText
-local ChatEdit_SetLastTellTarget = ChatEdit_SetLastTellTarget
-local ChatFrame_ConfigEventHandler = ChatFrame_ConfigEventHandler
-local ChatFrame_GetMobileEmbeddedTexture = ChatFrame_GetMobileEmbeddedTexture
-local ChatFrame_SendTell = ChatFrame_SendTell
-local ChatFrame_SystemEventHandler = ChatFrame_SystemEventHandler
-local ChatHistory_GetAccessID = ChatHistory_GetAccessID
-local Chat_GetChatCategory = Chat_GetChatCategory
-local CreateFrame = CreateFrame
-local C_SocialGetLastItem = C_Social.GetLastItem
-local C_SocialIsSocialEnabled = C_Social.IsSocialEnabled
-local FCFManager_ShouldSuppressMessage = FCFManager_ShouldSuppressMessage
-local FCFManager_ShouldSuppressMessageFlash = FCFManager_ShouldSuppressMessageFlash
-local FCFTab_UpdateAlpha = FCFTab_UpdateAlpha
-local FCF_Close = FCF_Close
-local FCF_GetChatWindowInfo = FCF_GetChatWindowInfo
-local FCF_GetCurrentChatFrame = FCF_GetCurrentChatFrame
-local FCF_SavePositionAndDimensions = FCF_SavePositionAndDimensions
-local FCF_SetChatWindowFontSize = FCF_SetChatWindowFontSize
-local FCF_StartAlertFlash = FCF_StartAlertFlash
-local FlashClientIcon = FlashClientIcon
-local FloatingChatFrame_OnEvent = FloatingChatFrame_OnEvent
-local GetAchievementInfoFromHyperlink = GetAchievementInfoFromHyperlink
-local GetChannelName = GetChannelName
-local GetChatWindowSavedPosition = GetChatWindowSavedPosition
-local GetCVar, GetCVarBool = GetCVar, GetCVarBool
-local GetGuildRosterMOTD = GetGuildRosterMOTD
-local GetItemInfoFromHyperlink = GetItemInfoFromHyperlink
-local GetMouseFocus = GetMouseFocus
-local GetNumGroupMembers = GetNumGroupMembers
-local GetPlayerInfoByGUID = GetPlayerInfoByGUID
-local GetRaidRosterInfo = GetRaidRosterInfo
-local GetTime = GetTime
-local GMChatFrame_IsGM = GMChatFrame_IsGM
 local hooksecurefunc = hooksecurefunc
-local InCombatLockdown = InCombatLockdown
-local IsInInstance, IsInRaid, IsInGroup = IsInInstance, IsInRaid, IsInGroup
-local IsMouseButtonDown = IsMouseButtonDown
-local IsShiftKeyDown = IsShiftKeyDown
-local PlaySound = PlaySound
-local PlaySoundFile = PlaySoundFile
-local RemoveExtraSpaces = RemoveExtraSpaces
-local RemoveNewlines = RemoveNewlines
-local ScrollFrameTemplate_OnMouseWheel = ScrollFrameTemplate_OnMouseWheel
-local ShowUIPanel, HideUIPanel = ShowUIPanel, HideUIPanel
-local Social_GetShareAchievementLink = Social_GetShareAchievementLink
-local Social_GetShareItemLink = Social_GetShareItemLink
-local StaticPopup_Visible = StaticPopup_Visible
-local ToggleFrame = ToggleFrame
-local UnitExists, UnitIsUnit = UnitExists, UnitIsUnit
-local UnitFullName = UnitFullName
-local UnitGroupRolesAssigned = UnitGroupRolesAssigned
+local CreateFrame = CreateFrame
+local GetTime = GetTime
 local UnitName, UnitGUID = UnitName, UnitGUID
 local UnitRealmRelationship = UnitRealmRelationship
+local IsShiftKeyDown = IsShiftKeyDown
+local IsInInstance, IsInRaid, IsInGroup = IsInInstance, IsInRaid, IsInGroup
+local InCombatLockdown = InCombatLockdown
+local ChatFrame_SendTell = ChatFrame_SendTell
+local ChatEdit_ParseText = ChatEdit_ParseText
+local GetChannelName = GetChannelName
+local ToggleFrame = ToggleFrame
+local FCF_GetChatWindowInfo = FCF_GetChatWindowInfo
+local FCF_SetChatWindowFontSize = FCF_SetChatWindowFontSize
+local GetMouseFocus = GetMouseFocus
+local GetChatWindowSavedPosition = GetChatWindowSavedPosition
+local IsMouseButtonDown = IsMouseButtonDown
+local FCF_SavePositionAndDimensions = FCF_SavePositionAndDimensions
+local PlaySoundFile = PlaySoundFile
+local ChatEdit_ChooseBoxForSend = ChatEdit_ChooseBoxForSend
+local ChatEdit_ActivateChat = ChatEdit_ActivateChat
+local ShowUIPanel, HideUIPanel = ShowUIPanel, HideUIPanel
+local BetterDate = BetterDate
+local BNGetGameAccountInfo = BNGetGameAccountInfo
+local BNGetFriendInfo = BNGetFriendInfo
+local BNGetNumFriends = BNGetNumFriends
+local Ambiguate = Ambiguate
+local GetPlayerInfoByGUID = GetPlayerInfoByGUID
+local StaticPopup_Visible = StaticPopup_Visible
+local Chat_GetChatCategory = Chat_GetChatCategory
+local FCFManager_ShouldSuppressMessage = FCFManager_ShouldSuppressMessage
+local GetCVar, GetCVarBool = GetCVar, GetCVarBool
+local GetItemInfoFromHyperlink = GetItemInfoFromHyperlink
+local GetAchievementInfoFromHyperlink = GetAchievementInfoFromHyperlink
+local Social_GetShareItemLink = Social_GetShareItemLink
+local Social_GetShareAchievementLink = Social_GetShareAchievementLink
+local ChatHistory_GetAccessID = ChatHistory_GetAccessID
+local BNGetNumFriendInvites = BNGetNumFriendInvites
+local BNGetFriendInfoByID = BNGetFriendInfoByID
+local BNet_GetValidatedCharacterName = BNet_GetValidatedCharacterName
+local BNet_GetClientEmbeddedTexture = BNet_GetClientEmbeddedTexture
+local RemoveExtraSpaces = RemoveExtraSpaces
+local RemoveNewlines = RemoveNewlines
+local GMChatFrame_IsGM = GMChatFrame_IsGM
+local GetNumGroupMembers = GetNumGroupMembers
+local GetRaidRosterInfo = GetRaidRosterInfo
+local ChatFrame_GetMobileEmbeddedTexture = ChatFrame_GetMobileEmbeddedTexture
+local ChatEdit_SetLastTellTarget = ChatEdit_SetLastTellTarget
+local PlaySound = PlaySound
+local FlashClientIcon = FlashClientIcon
+local BNIsSelf = BNIsSelf
+local FCFManager_ShouldSuppressMessageFlash = FCFManager_ShouldSuppressMessageFlash
+local FCF_StartAlertFlash = FCF_StartAlertFlash
+local ChatFrame_ConfigEventHandler = ChatFrame_ConfigEventHandler
+local ChatFrame_SystemEventHandler = ChatFrame_SystemEventHandler
+local FloatingChatFrame_OnEvent = FloatingChatFrame_OnEvent
+local FCFTab_UpdateAlpha = FCFTab_UpdateAlpha
+local FCF_GetCurrentChatFrame = FCF_GetCurrentChatFrame
+local FCF_Close = FCF_Close
+local GetGuildRosterMOTD = GetGuildRosterMOTD
+local UnitGroupRolesAssigned = UnitGroupRolesAssigned
+local UnitExists, UnitIsUnit = UnitExists, UnitIsUnit
+local ScrollFrameTemplate_OnMouseWheel = ScrollFrameTemplate_OnMouseWheel
+local C_SocialIsSocialEnabled = C_Social.IsSocialEnabled
+local C_SocialGetLastItem = C_Social.GetLastItem
 local NUM_CHAT_WINDOWS = NUM_CHAT_WINDOWS
 local PET_BATTLE_COMBAT_LOG = PET_BATTLE_COMBAT_LOG
 local LE_REALM_RELATION_SAME = LE_REALM_RELATION_SAME
@@ -116,13 +117,18 @@ local Var = {
 -- GLOBALS: ICON_TAG_LIST, ICON_LIST, GROUP_TAG_LIST, DEFAULT_CHAT_FRAME, ChatFrameMenuButton
 -- GLOBALS: WIM, ChatTypeGroup, GeneralDockManagerOverflowButtonList, GeneralDockManagerScrollFrame
 -- GLOBALS: CombatLogQuickButtonFrame_CustomAdditionalFilterButton, UISpecialFrames, ChatFontNormal
--- GLOBALS: ChatFrame_AddMessageEventFilter, ChatFrame_GetMessageEventFilters
 
 local CreatedFrames = 0;
 local lines = {};
 local lfgRoles = {};
 local msgList, msgCount, msgTime = {}, {}, {}
+local good, maybe, filter, login = {}, {}, {}, false
 local chatFilters = {};
+local cvars = {
+	["bnWhisperMode"] = true,
+	["conversationMode"] = true,
+	["whisperMode"] = true,
+}
 
 local PLAYER_REALM = gsub(E.myrealm,'[%s%-]','')
 local PLAYER_NAME = E.myname.."-"..PLAYER_REALM
@@ -130,6 +136,7 @@ local PLAYER_NAME = E.myname.."-"..PLAYER_REALM
 local RAID_CLASS_COLORS = RAID_CLASS_COLORS
 local CUSTOM_CLASS_COLORS = CUSTOM_CLASS_COLORS
 
+local TIMESTAMP_FORMAT
 local DEFAULT_STRINGS = {
 	GUILD = L["G"],
 	PARTY = L["P"],
@@ -139,7 +146,13 @@ local DEFAULT_STRINGS = {
 	RAID_LEADER = L["RL"],
 	INSTANCE_CHAT = L["I"],
 	INSTANCE_CHAT_LEADER = L["IL"],
+	-- zhCN
+	Battleground = L['BG'],
+	Guild = L['G'],
+	raid = L['R'],
+	Party = L['P'],
 	PET_BATTLE_COMBAT_LOG = PET_BATTLE_COMBAT_LOG,
+	PET_BATTLE_INFO = PET_BATTLE_INFO,
 }
 
 local hyperlinkTypes = {
@@ -247,33 +260,28 @@ local specialChatIcons = {
 	["Shattrath"] = {
 		["Merathilis"] = "|TInterface\\AddOns\\ElvUI\\media\\textures\\chatLogos\\elvui.blp:13:22|t",
 		["Melisendra"] = "|TInterface\\AddOns\\ElvUI\\media\\textures\\chatLogos\\elvui.blp:13:22|t",
-	},
-	["Kil'jaeden"] = {
-		["Elvz"] = "|TInterface\\AddOns\\ElvUI\\media\\textures\\chatLogos\\elvui.blp:13:22|t",
-	},
+	},	
 }
 
 CH.Keywords = {};
 CH.ClassNames = {}
 
-local numScrollMessages
 local function ChatFrame_OnMouseScroll(frame, delta)
-	numScrollMessages = CH.db.numScrollMessages or 3
 	if delta < 0 then
 		if IsShiftKeyDown() then
 			frame:ScrollToBottom()
 		else
-			for i = 1, numScrollMessages do
+		--	for i = 1, 3 do
 				frame:ScrollDown()
-			end
+		--	end
 		end
 	elseif delta > 0 then
 		if IsShiftKeyDown() then
 			frame:ScrollToTop()
 		else
-			for i = 1, numScrollMessages do
+		--	for i = 1, 3 do
 				frame:ScrollUp()
-			end
+		--	end
 		end
 
 		if CH.db.scrollDownInterval ~= 0 then
@@ -301,8 +309,14 @@ function CH:GetGroupDistribution()
 end
 
 function CH:InsertEmotions(msg)
-	for k,v in pairs(smileyKeys) do
-		msg = gsub(msg,k,"|T"..smileyPack[v]..":16|t");
+	if E.zhlocale then
+		for k, v in pairs(self.emotes) do
+			msg = gsub(msg, v[1], "|T"..v[2]..":16|t");
+		end
+	else
+		for k,v in pairs(smileyKeys) do
+			msg = gsub(msg,k,"|T"..smileyPack[v]..":16|t");
+		end
 	end
 	return msg;
 end
@@ -340,6 +354,7 @@ function CH:StyleChat(frame)
 	local name = frame:GetName()
 	_G[name.."TabText"]:FontTemplate(LSM:Fetch("font", self.db.tabFont), self.db.tabFontSize, self.db.tabFontOutline)
 
+	if not frame.oldAlpha then frame.oldAlpha = 1 end
 	if frame.styled then return end
 
 	frame:SetFrameLevel(4)
@@ -365,10 +380,10 @@ function CH:StyleChat(frame)
 
 	tab.text = _G[name.."TabText"]
 	tab.text:SetTextColor(unpack(E["media"].rgbvaluecolor))
-	hooksecurefunc(tab.text, "SetTextColor", function(self, r, g, b)
+	hooksecurefunc(tab.text, "SetTextColor", function(t, r, g, b, a)
 		local rR, gG, bB = unpack(E["media"].rgbvaluecolor)
 		if r ~= rR or g ~= gG or b ~= bB then
-			self:SetTextColor(rR, gG, bB)
+			t:SetTextColor(rR, gG, bB)
 		end
 	end)
 
@@ -453,7 +468,7 @@ function CH:StyleChat(frame)
 	_G[format(editbox:GetName().."Left", id)]:Kill()
 	_G[format(editbox:GetName().."Mid", id)]:Kill()
 	_G[format(editbox:GetName().."Right", id)]:Kill()
-	editbox:SetTemplate('Default', true)
+	editbox:SetTemplate('notrans')
 	editbox:SetAltArrowKeyMode(CH.db.useAltKey)
 	editbox:HookScript("OnEditFocusGained", function(self) self:Show(); if not LeftChatPanel:IsShown() then LeftChatPanel.editboxforced = true; LeftChatToggleButton:GetScript('OnEnter')(LeftChatToggleButton) end end)
 	editbox:HookScript("OnEditFocusLost", function(self) if LeftChatPanel.editboxforced then LeftChatPanel.editboxforced = nil; if LeftChatPanel:IsShown() then LeftChatToggleButton:GetScript('OnLeave')(LeftChatToggleButton) end end self:Hide() end)
@@ -466,7 +481,7 @@ function CH:StyleChat(frame)
 	editbox.historyIndex = 0
 	editbox:HookScript("OnArrowPressed", OnArrowPressed)
 	editbox:Hide()
-
+	
 	for i, text in pairs(ElvCharacterDB.ChatEditHistory) do
 		editbox:AddHistoryLine(text)
 	end
@@ -557,7 +572,7 @@ local function removeIconFromLine(text)
 	for i=1, 8 do
 		text = gsub(text, "|TInterface\\TargetingFrame\\UI%-RaidTargetingIcon_"..i..":0|t", "{"..strlower(_G["RAID_TARGET_"..i]).."}")
 	end
-	text = gsub(text, "|TInterface(.-)|t", "")
+	text = gsub(text, "(|TInterface(.*)|t)", "") --We need to look at this, battle net friend online/offline message gets messed up
 
 	return text
 end
@@ -602,6 +617,7 @@ function CH:CopyChat(frame)
 		FCF_SetChatWindowFontSize(frame, frame, 0.01)
 		CopyChatFrame:Show()
 		local lineCt = self:GetLines(frame)
+		if not lineCt then return end
 		local text = tconcat(lines, "\n", 1, lineCt)
 		FCF_SetChatWindowFontSize(frame, frame, fontSize)
 		CopyChatFrameEditBox:SetText(text)
@@ -626,6 +642,7 @@ function CH:OnLeave(frame)
 	end
 end
 
+local x = CreateFrame('Frame')
 function CH:SetupChatTabs(frame, hook)
 	if hook and (not self.hooks or not self.hooks[frame] or not self.hooks[frame].OnEnter) then
 		self:HookScript(frame, 'OnEnter')
@@ -663,13 +680,13 @@ function CH:UpdateAnchors()
 		if not frame then break; end
 		if(not E.db.datatexts.leftChatPanel and (self.db.panelBackdrop == "HIDEBOTH" or self.db.panelBackdrop == "RIGHT")) then
 			frame:ClearAllPoints()
-			if(E.db.chat.editBoxPosition == 'BELOW_CHAT') then
-				frame:SetPoint("TOPLEFT", ChatFrame1, "BOTTOMLEFT")
-				frame:SetPoint("BOTTOMRIGHT", ChatFrame1, "BOTTOMRIGHT", 0, -LeftChatTab:GetHeight())
-			else
+		--	if(E.db.chat.editBoxPosition == 'BELOW_CHAT') then  --左聊天框下面的信息面板禁用时，强制使输入框显示在聊天框上方
+		--		frame:SetPoint("TOPLEFT", ChatFrame1, "BOTTOMLEFT")
+		--		frame:SetPoint("BOTTOMRIGHT", ChatFrame1, "BOTTOMRIGHT", 0, -LeftChatTab:GetHeight())
+		--	else
 				frame:SetPoint("BOTTOMLEFT", ChatFrame1, "TOPLEFT")
-				frame:SetPoint("TOPRIGHT", ChatFrame1, "TOPRIGHT", 0, LeftChatTab:GetHeight())
-			end
+				frame:SetPoint("TOPRIGHT", ChatFrame1, "TOPRIGHT", 0, LeftChatTab:GetHeight())			
+		--	end
 		else
 			if E.db.datatexts.leftChatPanel and E.db.chat.editBoxPosition == 'BELOW_CHAT' then
 				frame:SetAllPoints(LeftChatDataPanel)
@@ -748,7 +765,7 @@ function CH:PositionChat(override)
 
 	if not self.db.lockPositions or E.private.chat.enable ~= true then return end
 
-	local chat, chatbg, tab, id, point, isDocked
+	local chat, chatbg, tab, id, point, button, isDocked
 	local fadeUndockedTabs = E.db["chat"].fadeUndockedTabs
 	local fadeTabsNoBackdrop = E.db["chat"].fadeTabsNoBackdrop
 
@@ -757,6 +774,7 @@ function CH:PositionChat(override)
 
 		chat = _G[format("ChatFrame%d", i)]
 		chatbg = format("ChatFrame%dBackground", i)
+		button = _G[format("ButtonCF%d", i)]
 		id = chat:GetID()
 		tab = _G[format("ChatFrame%sTab", i)]
 		point = GetChatWindowSavedPosition(id)
@@ -813,7 +831,7 @@ function CH:PositionChat(override)
 					BASE_OFFSET = BASE_OFFSET - 24
 					chat:Point("BOTTOMLEFT", LeftChatToggleButton, "BOTTOMLEFT", 1, 1)
 				end
-				chat:SetSize(E.db.chat.panelWidth - 11, (E.db.chat.panelHeight - BASE_OFFSET))
+				chat:SetSize(E.db.chat.panelWidth - 11, E.db["euiscript"].chatbar and (E.db.chat.panelHeight - BASE_OFFSET - 26) or (E.db.chat.panelHeight - BASE_OFFSET))
 
 				--Pass a 2nd argument which prevents an infinite loop in our ON_FCF_SavePositionAndDimensions function
 				FCF_SavePositionAndDimensions(chat, true)
@@ -872,13 +890,20 @@ function CH:FindURL(event, msg, ...)
 		return false, msg, ...
 	end
 
+	-- http://example.com
 	local newMsg, found = gsub(msg, "(%a+)://(%S+)%s?", CH:PrintURL("%1://%2"))
 	if found > 0 then return false, CH:GetSmileyReplacementText(CH:CheckKeyword(newMsg)), ... end
-
+	-- www.example.com
 	newMsg, found = gsub(msg, "www%.([_A-Za-z0-9-]+)%.(%S+)%s?", CH:PrintURL("www.%1.%2"))
 	if found > 0 then return false, CH:GetSmileyReplacementText(CH:CheckKeyword(newMsg)), ... end
-
+	-- example@example.com
 	newMsg, found = gsub(msg, "([_A-Za-z0-9-%.]+)@([_A-Za-z0-9-]+)(%.+)([_A-Za-z0-9-%.]+)%s?", CH:PrintURL("%1@%2%3%4"))
+	if found > 0 then return false, CH:GetSmileyReplacementText(CH:CheckKeyword(newMsg)), ... end
+	-- IP address with port 1.1.1.1:1
+	newMsg, found = gsub(msg, "(%d%d?%d?)%.(%d%d?%d?)%.(%d%d?%d?)%.(%d%d?%d?)(:%d+)%s?", CH:PrintURL("%1.%2.%3.%4%5"))
+	if found > 0 then return false, CH:GetSmileyReplacementText(CH:CheckKeyword(newMsg)), ... end
+	-- IP address 1.1.1.1
+	newMsg, found = gsub(msg, "(%d%d?%d?)%.(%d%d?%d?)%.(%d%d?%d?)%.(%d%d?%d?)%s?", CH:PrintURL("%1.%2.%3.%4"))
 	if found > 0 then return false, CH:GetSmileyReplacementText(CH:CheckKeyword(newMsg)), ... end
 
 	msg = CH:CheckKeyword(msg)
@@ -954,7 +979,7 @@ function CH:EnableHyperlink()
 		if (not self.hooks or not self.hooks[frame] or not self.hooks[frame].OnHyperlinkEnter) then
 			self:HookScript(frame, 'OnHyperlinkEnter')
 			self:HookScript(frame, 'OnHyperlinkLeave')
-			-- self:HookScript(frame, 'OnMessageScrollChanged')
+		--	self:HookScript(frame, 'OnMessageScrollChanged')
 		end
 	end
 end
@@ -965,7 +990,7 @@ function CH:DisableHyperlink()
 		if self.hooks and self.hooks[frame] and self.hooks[frame].OnHyperlinkEnter then
 			self:Unhook(frame, 'OnHyperlinkEnter')
 			self:Unhook(frame, 'OnHyperlinkLeave')
-			-- self:Unhook(frame, 'OnMessageScrollChanged')
+		--	self:Unhook(frame, 'OnMessageScrollChanged')
 		end
 	end
 end
@@ -1030,6 +1055,7 @@ function CH:GetPluginIcon(sender)
 end
 
 local function GetChatIcons(sender)
+	local pflag
 	if(specialChatIcons[PLAYER_REALM] and specialChatIcons[PLAYER_REALM][E.myname] ~= true) then
 		for realm, _ in pairs(specialChatIcons) do
 			for character, texture in pairs(specialChatIcons[realm]) do
@@ -1260,7 +1286,7 @@ function CH:ChatFrame_MessageEventHandler(event, ...)
 			elseif ( arg1 == "FRIEND_REMOVED" or arg1 == "BATTLETAG_FRIEND_REMOVED" ) then
 				message = format(globalstring, arg2);
 			elseif ( arg1 == "FRIEND_ONLINE" or arg1 == "FRIEND_OFFLINE" ) then
-				local _, _, _, _, characterName, _, client = BNGetFriendInfoByID(arg13);
+				local _, accountName, battleTag, _, characterName, _, client = BNGetFriendInfoByID(arg13);
 				if (client and client ~= "") then
 					local _, _, battleTag = BNGetFriendInfoByID(arg13);
 					characterName = BNet_GetValidatedCharacterName(characterName, battleTag, client) or "";
@@ -1354,7 +1380,7 @@ function CH:ChatFrame_MessageEventHandler(event, ...)
 					local groupIndex = GROUP_TAG_LIST[term];
 					local groupList = "[";
 					for i=1, GetNumGroupMembers() do
-						local name, _, subgroup, _, _, classFileName = GetRaidRosterInfo(i);
+						local name, rank, subgroup, level, class, classFileName = GetRaidRosterInfo(i);
 						if ( name and subgroup == groupIndex ) then
 							local classColorTable = CUSTOM_CLASS_COLORS and CUSTOM_CLASS_COLORS[classFileName] or RAID_CLASS_COLORS[classFileName];
 							if ( classColorTable ) then
@@ -1480,7 +1506,7 @@ function CH:FloatingChatFrame_OnEvent(event, ...)
 	FloatingChatFrame_OnEvent(self, event, ...);
 end
 
-function CH:SetupChat()
+function CH:SetupChat(event, ...)
 	if E.private.chat.enable ~= true then return end
 	for _, frameName in pairs(CHAT_FRAMES) do
 		local frame = _G[frameName]
@@ -1554,6 +1580,7 @@ function CH:ChatThrottleHandler(event, ...)
 	end
 end
 
+local locale = GetLocale()
 function CH:CHAT_MSG_CHANNEL(event, message, author, ...)
 	local blockFlag = false
 	local msg = PrepareMessage(author, message)
@@ -1643,7 +1670,7 @@ function CH:CheckKeyword(message)
 				end
 			end
 		end
-
+		
 		if self.db.classColorMentionsChat then
 			if(CH.ClassNames[lowerCaseWord]) then
 				classColorTable = CUSTOM_CLASS_COLORS and CUSTOM_CLASS_COLORS[CH.ClassNames[lowerCaseWord]] or RAID_CLASS_COLORS[CH.ClassNames[lowerCaseWord]];
@@ -1855,7 +1882,7 @@ function CH:ChatFrame_RemoveMessageEventFilter (event, filter)
 	end
 end
 
-function CH:FCF_SetWindowAlpha(frame, alpha)
+function CH:FCF_SetWindowAlpha(frame, alpha, doNotSave)
 	frame.oldAlpha = alpha or 1;
 end
 
@@ -1907,6 +1934,14 @@ function CH:CheckLFGRoles()
 	end
 end
 
+-- Remove player's realm name
+local function RemoveRealmName(self, event, msg, author, ...)--5.4.2
+	local realm = string.gsub(E.myrealm, " ", "")
+	if msg:find("-" .. realm) then
+		return false, gsub(msg, "%-"..realm, ""), author, ...
+	end
+end
+
 function CH:ON_FCF_SavePositionAndDimensions(_, noLoop)
 	if not noLoop then
 		CH:PositionChat()
@@ -1915,6 +1950,12 @@ function CH:ON_FCF_SavePositionAndDimensions(_, noLoop)
 	if not E.db.chat.lockPositions then
 		CH:UpdateChatTabs() --It was not done in PositionChat, so do it now
 	end
+end
+
+function CH:JoinBigfootChannel()
+	JoinTemporaryChannel(L["BigFootChannel"])
+--	ChatFrame_RemoveChannel(DEFAULT_CHAT_FRAME, L["BigFootChannel"])
+	ChatFrame_AddChannel(DEFAULT_CHAT_FRAME, L["BigFootChannel"])		
 end
 
 function CH:Initialize()
@@ -1950,8 +1991,9 @@ function CH:Initialize()
 	self:UpdateFading()
 	E.Chat = self
 	self:SecureHook('ChatEdit_OnEnterPressed')
-	ChatFrameMenuButton:Kill()
 	QuickJoinToastButton:Kill()
+	ChatFrameMenuButton:Kill()
+
 
 	if WIM then
 	  WIM.RegisterWidgetTrigger("chat_display", "whisper,chat,w2w,demo", "OnHyperlinkClick", function(self) CH.clickedframe = self end);
@@ -1965,6 +2007,9 @@ function CH:Initialize()
 	self:RegisterEvent('UPDATE_FLOATING_CHAT_WINDOWS', 'SetupChat')
 	self:RegisterEvent('PET_BATTLE_CLOSE')
 
+	self:LoadChatbar()
+	self:LoadChatEmote()
+	self:LoadStatReport()
 	self:SetupChat()
 	self:UpdateAnchors()
 	if not E.db.chat.lockPositions then
@@ -2024,7 +2069,7 @@ function CH:Initialize()
 
 	self:SecureHook("FCF_SetWindowAlpha")
 
-
+	ChatFrame_AddMessageEventFilter("CHAT_MSG_SYSTEM", RemoveRealmName)--5.4.2
 	ChatFrame_AddMessageEventFilter("CHAT_MSG_CHANNEL", CH.CHAT_MSG_CHANNEL)
 	ChatFrame_AddMessageEventFilter("CHAT_MSG_YELL", CH.CHAT_MSG_YELL)
 	ChatFrame_AddMessageEventFilter("CHAT_MSG_SAY", CH.CHAT_MSG_SAY)
@@ -2136,6 +2181,9 @@ function CH:Initialize()
 
 	S:HandleCloseButton(close)
 
+	if E.db.chat.autojoin then
+		CH:ScheduleTimer('JoinBigfootChannel', 12.5)
+	end
 
 	CombatLogQuickButtonFrame_CustomAdditionalFilterButton:Size(20, 22)
 	CombatLogQuickButtonFrame_CustomAdditionalFilterButton:Point("TOPRIGHT", CombatLogQuickButtonFrame_Custom, "TOPRIGHT", 0, -1)

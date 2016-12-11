@@ -34,6 +34,7 @@ local ORDER_HALL_MISSIONS = ORDER_HALL_MISSIONS
 
 local GARRISON_CURRENCY = 1220
 local GARRISON_ICON = format("\124T%s:%d:%d:0:0:64:64:4:60:4:60\124t", select(3, GetCurrencyInfo(GARRISON_CURRENCY)), 16, 16)
+local MAGIC_ICON = format("\124T%s:%d:%d:0:0:64:64:4:60:4:60\124t", select(3, GetCurrencyInfo(1155)), 16, 16)--1155Ô¶¹ÅÄ§Á¦
 
 local function sortFunction(a, b)
 	return a.missionEndTime < b.missionEndTime
@@ -143,8 +144,22 @@ local function OnEnter(self, _, noUpdate)
 			end
 		end
 	end
+	
+	-- Get Magic MAX
+	local hasMagicResources = false
+	local localName, numMagicResources, _, _, _, maxMagicResources = GetCurrencyInfo(1155)
+	if numMagicResources and numMagicResources > -1 then
+		hasMagicResources = true
+		if not firstLine then
+			DT.tooltip:AddLine(" ")
+		end
+		firstLine = false
+		DT.tooltip:AddLine(GetMapNameByID(1033))
+		DT.tooltip:AddDoubleLine(localName..":", numMagicResources.." / "..maxMagicResources, 1,1,1, 1, 1, 1)
+	end
+	
 
-	if(numMissions > 0 or hasFollowers or hasLoose or hasTalent) then
+	if(numMissions > 0 or hasFollowers or hasLoose or hasTalent or hasMagicResources) then
 		DT.tooltip:Show()
 	else
 		DT.tooltip:Hide()
@@ -178,7 +193,8 @@ local function OnEvent(self, event)
 	end
 
 	local _, numGarrisonResources = GetCurrencyInfo(GARRISON_CURRENCY)
-	self.text:SetFormattedText("%s %s", GARRISON_ICON, numGarrisonResources)
+	local _, numMagicResources = GetCurrencyInfo(1155)
+	self.text:SetFormattedText("%s %s %s %s", GARRISON_ICON, numGarrisonResources, MAGIC_ICON, numMagicResources)
 end
 
 DT:RegisterDatatext('Orderhall', {"PLAYER_ENTERING_WORLD", "CURRENCY_DISPLAY_UPDATE", "GARRISON_LANDINGPAGE_SHIPMENTS", "GARRISON_TALENT_UPDATE", "GARRISON_TALENT_COMPLETE"}, OnEvent, nil, OnClick, OnEnter)

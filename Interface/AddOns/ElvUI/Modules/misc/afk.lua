@@ -7,36 +7,36 @@ local CH = E:GetModule("Chat")
 --Lua functions
 local _G = _G
 local GetTime = GetTime
-local tostring, pcall = tostring, pcall
+local tostring = tostring
 local floor = floor
-local format, strsub, gsub = string.format, string.sub, string.gsub
+local format, strsub = string.format, string.sub
 --WoW API / Variables
-local ChatFrame_GetMobileEmbeddedTexture = ChatFrame_GetMobileEmbeddedTexture
-local ChatHistory_GetAccessID = ChatHistory_GetAccessID
-local Chat_GetChatCategory = Chat_GetChatCategory
-local CinematicFrame = CinematicFrame
-local CloseAllWindows = CloseAllWindows
 local CreateFrame = CreateFrame
-local GetBattlefieldStatus = GetBattlefieldStatus
-local GetColoredName = GetColoredName
-local GetGuildInfo = GetGuildInfo
-local GetScreenHeight = GetScreenHeight
-local GetScreenWidth = GetScreenWidth
 local InCombatLockdown = InCombatLockdown
-local IsInGuild = IsInGuild
-local IsShiftKeyDown = IsShiftKeyDown
+local CinematicFrame = CinematicFrame
+local MovieFrame = MovieFrame
 local MoveViewLeftStart = MoveViewLeftStart
 local MoveViewLeftStop = MoveViewLeftStop
-local MovieFrame = MovieFrame
+local CloseAllBags = CloseAllBags
+local IsInGuild = IsInGuild
+local GetGuildInfo = GetGuildInfo
 local PVEFrame_ToggleFrame = PVEFrame_ToggleFrame
-local RemoveExtraSpaces = RemoveExtraSpaces
-local Screenshot = Screenshot
-local SetCVar = SetCVar
-local UnitFactionGroup = UnitFactionGroup
+local GetBattlefieldStatus = GetBattlefieldStatus
 local UnitIsAFK = UnitIsAFK
+local SetCVar = SetCVar
+local Screenshot = Screenshot
+local IsShiftKeyDown = IsShiftKeyDown
+local GetColoredName = GetColoredName
+local RemoveExtraSpaces = RemoveExtraSpaces
+local Chat_GetChatCategory = Chat_GetChatCategory
+local ChatFrame_GetMobileEmbeddedTexture = ChatFrame_GetMobileEmbeddedTexture
+local ChatHistory_GetAccessID = ChatHistory_GetAccessID
+local GetScreenWidth = GetScreenWidth
+local GetScreenHeight = GetScreenHeight
+local UnitFactionGroup = UnitFactionGroup
+local RAID_CLASS_COLORS = RAID_CLASS_COLORS
 local CUSTOM_CLASS_COLORS = CUSTOM_CLASS_COLORS
 local DND = DND
-local RAID_CLASS_COLORS = RAID_CLASS_COLORS
 
 --Global variables that we don't cache, list them here for mikk's FindGlobals script
 -- GLOBALS: UIParent, PVEFrame, ElvUIAFKPlayerModel, ChatTypeInfo
@@ -58,6 +58,7 @@ end
 function AFK:UpdateTimer()
 	local time = GetTime() - self.startTime
 	self.AFKMode.bottom.time:SetFormattedText("%02d:%02d", floor(time/60), time % 60)
+	self.AFKMode.bottom.date:SetText(date())
 end
 
 function AFK:SetAFK(status)
@@ -279,9 +280,9 @@ function AFK:Initialize()
 	self.AFKMode.bottom:Height(GetScreenHeight() * (1 / 10))
 
 	self.AFKMode.bottom.logo = self.AFKMode:CreateTexture(nil, 'OVERLAY')
-	self.AFKMode.bottom.logo:SetSize(320, 150)
-	self.AFKMode.bottom.logo:Point("CENTER", self.AFKMode.bottom, "CENTER", 0, 50)
-	self.AFKMode.bottom.logo:SetTexture("Interface\\AddOns\\ElvUI\\media\\textures\\logo.tga")
+	self.AFKMode.bottom.logo:SetSize(256, 128)
+	self.AFKMode.bottom.logo:Point("CENTER", self.AFKMode.bottom, "CENTER", 0, 10)
+	self.AFKMode.bottom.logo:SetTexture("Interface\\AddOns\\ElvUI\\media\\textures\\eui_logo.tga")
 
 	local factionGroup = UnitFactionGroup("player");
 	--factionGroup = "Alliance"
@@ -314,6 +315,12 @@ function AFK:Initialize()
 	self.AFKMode.bottom.time:SetText("00:00")
 	self.AFKMode.bottom.time:Point("TOPLEFT", self.AFKMode.bottom.guild, "BOTTOMLEFT", 0, -6)
 	self.AFKMode.bottom.time:SetTextColor(0.7, 0.7, 0.7)
+
+	self.AFKMode.bottom.date = self.AFKMode.bottom:CreateFontString(nil, 'OVERLAY')
+	self.AFKMode.bottom.date:FontTemplate(nil, 20)
+	self.AFKMode.bottom.date:SetText("24/10/14 00:00:00")
+	self.AFKMode.bottom.date:SetPoint("RIGHT", self.AFKMode.bottom, "RIGHT", -10, 6)
+	self.AFKMode.bottom.date:SetTextColor(0.7, 0.7, 0.7)
 
 	--Use this frame to control position of the model
 	self.AFKMode.bottom.modelHolder = CreateFrame("Frame", nil, self.AFKMode.bottom)

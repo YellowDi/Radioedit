@@ -88,4 +88,11 @@ function E:DropDown(list, frame, xOffset, yOffset)
 	frame:Point("TOPLEFT", UIParent, "BOTTOMLEFT", x + xOffset, y + yOffset)
 
 	ToggleFrame(frame)
+	frame:SetScript("OnLeave", function(self)
+		local arg = GetMouseFocus()
+		if arg ~= self and arg:GetParent() ~= self then
+			ToggleFrame(self)
+			self:SetScript("OnLeave", nil)
+		end
+	end)
 end

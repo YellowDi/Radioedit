@@ -14,10 +14,10 @@ local lastPanel
 local armorString = ARMOR..": "
 local chanceString = "%.2f%%";
 local displayString = '';
-local effectiveArmor, _
+local baseArmor, effectiveArmor, armor, posBuff, negBuff
 
-local function OnEvent(self)
-	_, effectiveArmor = UnitArmor("player");
+local function OnEvent(self, event, unit)
+	baseArmor, effectiveArmor, armor, posBuff, negBuff = UnitArmor("player");
 
 	self.text:SetFormattedText(displayString, armorString, effectiveArmor)
 	lastPanel = self
@@ -44,7 +44,7 @@ local function OnEnter(self)
 	DT.tooltip:Show()
 end
 
-local function ValueColorUpdate(hex)
+local function ValueColorUpdate(hex, r, g, b)
 	displayString = join("", "%s", hex, "%d|r")
 
 	if lastPanel ~= nil then

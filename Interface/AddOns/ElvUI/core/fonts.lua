@@ -3,6 +3,7 @@ local LSM = LibStub("LibSharedMedia-3.0")
 
 --Cache global variables
 --WoW API / Variables
+local GetChatWindowInfo = GetChatWindowInfo
 local SetCVar = SetCVar
 
 --Global variables that we don't cache, list them here for the mikk's Find Globals script
@@ -16,7 +17,7 @@ local SetCVar = SetCVar
 -- GLOBALS: SystemFont_Shadow_Outline_Huge2, SystemFont_Shadow_Small, SystemFont_Small
 -- GLOBALS: SystemFont_Tiny, Tooltip_Med,  Tooltip_Small, ZoneTextString, SubZoneTextString
 -- GLOBALS: PVPInfoTextString, PVPArenaTextString, CombatTextFont, FriendsFont_Normal
--- GLOBALS: FriendsFont_Small, FriendsFont_Large, FriendsFont_UserText, GameFontHighlightMedium
+-- GLOBALS: FriendsFont_Small, FriendsFont_Large, FriendsFont_UserText
 
 local function SetFont(obj, font, size, style, r, g, b, sr, sg, sb, sox, soy)
 	obj:SetFont(font, size, style)
@@ -32,6 +33,7 @@ function E:UpdateBlizzardFonts()
 	local NUMBER     = self["media"].normFont
 	local NAMEFONT		 = LSM:Fetch('font', self.private.general.namefont)
 	local MONOCHROME = ''
+	local _, editBoxFontSize, _, _, _, _, _, _, _, _ = GetChatWindowInfo(1)
 
 	CHAT_FONT_HEIGHTS = {6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20}
 
@@ -50,7 +52,9 @@ function E:UpdateBlizzardFonts()
 	end
 
 	UNIT_NAME_FONT     = NAMEFONT
-	--NAMEPLATE_FONT     = NAMEFONT
+	if E.private["nameplates"].enable then
+		NAMEPLATE_FONT     = NAMEFONT
+	end
 	DAMAGE_TEXT_FONT   = COMBAT
 	STANDARD_TEXT_FONT = NORMAL
 
@@ -67,9 +71,16 @@ function E:UpdateBlizzardFonts()
 		SetFont(NumberFont_Shadow_Small,            NORMAL, self.db.general.fontSize)
 		SetFont(QuestFont,                          NORMAL, self.db.general.fontSize)
 		SetFont(QuestFont_Large,                    NORMAL, 14)
+		SetFont(QuestFont_Shadow_Huge, 				NORMAL, 19)
+		SetFont(QuestFont_Shadow_Small, 			NORMAL, 15)
+		SetFont(QuestFont_Super_Huge, 				NORMAL, 20)
+		SetFont(QuestFont_Huge,						NORMAL, 17)	
+		SetFont(QuestFontNormalSmall,				NORMAL, 14)
+		SetFont(GameFontHighlightMedium,            NORMAL, 15)
+		SetFont(QuestMapRewardsFont,				NORMAL, 12)
+		SetFont(ObjectiveFont,						NORMAL, self.db.general.questfontSize)
 		SetFont(SystemFont_Large,                   NORMAL, 15)
 		SetFont(GameFontNormalMed3,					NORMAL, 15)
-		SetFont(GameFontHighlightMedium,            NORMAL, 15)
 		SetFont(SystemFont_Shadow_Huge1,			NORMAL, 20, MONOCHROME.."OUTLINE") -- Raid Warning, Boss emote frame too
 		SetFont(SystemFont_Med1,                    NORMAL, self.db.general.fontSize)
 		SetFont(SystemFont_Med3,                    NORMAL, self.db.general.fontSize*1.1)
@@ -88,10 +99,11 @@ function E:UpdateBlizzardFonts()
 		SetFont(SubZoneTextString,					NORMAL, 25, MONOCHROME.."OUTLINE")
 		SetFont(PVPInfoTextString,					NORMAL, 22, MONOCHROME.."OUTLINE")
 		SetFont(PVPArenaTextString,					NORMAL, 22, MONOCHROME.."OUTLINE")
-		SetFont(CombatTextFont,                     COMBAT, 200, MONOCHROME.."OUTLINE") -- number here just increase the font quality.
+		SetFont(CombatTextFont,                     COMBAT, 200, "OUTLINE") -- number here just increase the font quality.
 		SetFont(FriendsFont_Normal, NORMAL, self.db.general.fontSize)
 		SetFont(FriendsFont_Small, NORMAL, self.db.general.fontSize)
 		SetFont(FriendsFont_Large, NORMAL, self.db.general.fontSize)
 		SetFont(FriendsFont_UserText, NORMAL, self.db.general.fontSize)
+		SetFont(WhiteNormalNumberFont, NORMAL, 11)
 	end
 end

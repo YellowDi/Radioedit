@@ -189,4 +189,5 @@ local function LoadSkin()
 	ConquestTooltip:SetTemplate("Transparent")
 	PVPRewardTooltip:SetTemplate("Transparent")
 end
+
 S:AddCallbackForAddon('Blizzard_PVPUI', "PvPUI", LoadSkin)

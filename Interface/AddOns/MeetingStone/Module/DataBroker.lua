@@ -64,6 +64,7 @@ function DataBroker:OnInitialize()
             BrokerPanel:SetScript('OnClick', BrokerObject.OnClick)
             BrokerPanel:RegisterForClicks('anyUp')
         end
+		BrokerPanel:SetTemplate("Transparent")
         BrokerPanel:RegisterConfig(self.db.profile.settings.storage)
         BrokerPanel:MakeDraggable()
         BrokerPanel:RestorePosition()

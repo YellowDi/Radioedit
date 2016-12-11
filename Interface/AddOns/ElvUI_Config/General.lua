@@ -1,9 +1,9 @@
-﻿local E, L, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+﻿local E, L, V, P, G = unpack(ElvUI); --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local B = E:GetModule("Blizzard")
 
 E.Options.args.general = {
 	type = "group",
-	name = L["General"],
+	name = '01.'..L["General"],
 	order = 1,
 	childGroups = "tab",
 	get = function(info) return E.db.general[ info[#info] ] end,
@@ -63,12 +63,12 @@ E.Options.args.general = {
 					desc = L["Automatically accept invites from guild/friends."],
 					type = 'toggle',
 				},
-				vendorGrays = {
-					order = 6,
-					name = L["Vendor Grays"],
-					desc = L["Automatically vendor gray items when visiting a vendor."],
-					type = 'toggle',
-				},
+			--	vendorGrays = {
+			--		order = 6,
+			--		name = L["Vendor Grays"],
+			--		desc = L["Automatically vendor gray items when visiting a vendor."],
+			--		type = 'toggle',
+			--	},
 				autoRoll = {
 					order = 7,
 					name = L["Auto Greed/DE"],
@@ -92,8 +92,35 @@ E.Options.args.general = {
 					get = function(info) return E.private.general.lootRoll end,
 					set = function(info, value) E.private.general.lootRoll = value; E:StaticPopup_Show("PRIVATE_RL") end
 				},
-				eyefinity = {
+				autoScale = {
+					order = 10,
+					name = L["Auto Scale"],
+					desc = L["Automatically scale the User Interface based on your screen resolution"],
+					type = "toggle",
+					get = function(info) return E.global.general.autoScale end,
+					set = function(info, value) E.global.general[ info[#info] ] = value; E:StaticPopup_Show("GLOBAL_RL") end
+				},
+				minUiScale = {
 					order = 11,
+					type = "range",
+					name = L["Lowest Allowed UI Scale"],
+					min = 0.32, max = 0.64, step = 0.01,
+					get = function(info) return E.global.general.minUiScale end,
+					set = function(info, value) E.global.general.minUiScale = value; E:StaticPopup_Show("GLOBAL_RL") end
+				},
+				uiscale = {
+					order = 12,
+					name = L["UI Scale"],
+					desc = L["Controls the scaling of the entire User Interface"],
+					disabled = function(info) return E.global.general.autoScale end,
+					type = "range",
+					min = 0.64, max = 1.15, step = 0.01,
+					isPercent = true,
+					set = function(info, value) SetCVar("uiScale", value); E:StaticPopup_Show('CONFIG_RL') end,
+					get = function() return tonumber(format('%.2f', GetCVar('uiScale'))) end,
+				},
+				eyefinity = {
+					order = 13,
 					name = L["Multi-Monitor Support"],
 					desc = L["Attempt to support eyefinity/nvidia surround."],
 					type = "toggle",
@@ -101,19 +128,19 @@ E.Options.args.general = {
 					set = function(info, value) E.global.general[ info[#info] ] = value; E:StaticPopup_Show("GLOBAL_RL") end
 				},
 				hideErrorFrame = {
-					order = 12,
+					order = 14,
 					name = L["Hide Error Text"],
 					desc = L["Hides the red error text at the top of the screen while in combat."],
 					type = "toggle"
 				},
 				taintLog = {
-					order = 13,
+					order = 15,
 					type = "toggle",
 					name = L["Log Taints"],
 					desc = L["Send ADDON_ACTION_BLOCKED errors to the Lua Error frame. These errors are less important in most cases and will not effect your game performance. Also a lot of these errors cannot be fixed. Please only report these errors if you notice a Defect in gameplay."],
 				},
 				bottomPanel = {
-					order = 14,
+					order = 16,
 					type = 'toggle',
 					name = L["Bottom Panel"],
 					desc = L["Display a panel across the bottom of the screen. This is for cosmetic only."],
@@ -121,7 +148,7 @@ E.Options.args.general = {
 					set = function(info, value) E.db.general.bottomPanel = value; E:GetModule('Layout'):BottomPanelVisibility() end
 				},
 				topPanel = {
-					order = 15,
+					order = 16,
 					type = 'toggle',
 					name = L["Top Panel"],
 					desc = L["Display a panel across the top of the screen. This is for cosmetic only."],
@@ -129,7 +156,7 @@ E.Options.args.general = {
 					set = function(info, value) E.db.general.topPanel = value; E:GetModule('Layout'):TopPanelVisibility() end
 				},
 				afk = {
-					order = 16,
+					order = 17,
 					type = 'toggle',
 					name = L["AFK Mode"],
 					desc = L["When you go AFK display the AFK screen."],
@@ -138,34 +165,18 @@ E.Options.args.general = {
 
 				},
 				enhancedPvpMessages = {
-					order = 17,
+					order = 18,
 					type = 'toggle',
 					name = L["Enhanced PVP Messages"],
 					desc = L["Display battleground messages in the middle of the screen."],
 				},
 				disableTutorialButtons = {
-					order = 18,
+					order = 19,
 					type = 'toggle',
 					name = L["Disable Tutorial Buttons"],
 					desc = L["Disables the tutorial button found on some frames."],
 					get = function(info) return E.global.general.disableTutorialButtons end,
 					set = function(info, value) E.global.general.disableTutorialButtons = value; E:StaticPopup_Show("GLOBAL_RL") end,
-				},
-				autoScale = {
-					order = 19,
-					name = L["Auto Scale"],
-					desc = L["Automatically scale the User Interface based on your screen resolution"],
-					type = "toggle",
-					get = function(info) return E.global.general.autoScale end,
-					set = function(info, value) E.global.general[ info[#info] ] = value; E:StaticPopup_Show("GLOBAL_RL") end
-				},
-				minUiScale = {
-					order = 20,
-					type = "range",
-					name = L["Lowest Allowed UI Scale"],
-					min = 0.32, max = 0.64, step = 0.01,
-					get = function(info) return E.global.general.minUiScale end,
-					set = function(info, value) E.global.general.minUiScale = value; E:StaticPopup_Show("GLOBAL_RL") end
 				},
 				talkingHeadFrameScale = {
 					order = 21,
@@ -175,19 +186,6 @@ E.Options.args.general = {
 					min = 0.5, max = 2, step = 0.01,
 					get = function(info) return E.db.general.talkingHeadFrameScale end,
 					set = function(info, value) E.db.general.talkingHeadFrameScale = value; B:ScaleTalkingHeadFrame() end,
-				},
-				numberPrefixStyle = {
-					order = 22,
-					type = "select",
-					name = L["Number Prefix"],
-					desc = L["The unit prefixes you want to use when values are shortened in ElvUI. This is mostly used on UnitFrames."],
-					get = function(info) return E.db.general.numberPrefixStyle end,
-					set = function(info, value) E.db.general.numberPrefixStyle = value; E:StaticPopup_Show("CONFIG_RL") end,
-					values = {
-						["METRIC"] = "k, M, G",
-						["ENGLISH"] = "K, M, B",
-						["CHINESE"] = "W, Y",
-					},
 				},
 				commandBarSetting = {
 					order = 23,
@@ -224,16 +222,23 @@ E.Options.args.general = {
 					min = 4, max = 212, step = 1,
 					set = function(info, value) E.db.general[ info[#info] ] = value; E:UpdateMedia(); E:UpdateFontTemplates(); end,
 				},
+				questfontSize = {
+					order = 3,
+					name = L["Quest Font Size"],
+					type = "range",
+					min = 4, max = 22, step = 1,
+					set = function(info, value) ObjectiveFont:SetFont(E.media.normFont,value);E.db.general.questfontSize=value; end,
+				},
 				font = {
 					type = "select", dialogControl = 'LSM30_Font',
-					order = 3,
+					order = 4,
 					name = L["Default Font"],
 					desc = L["The font that the core of the UI will use."],
 					values = AceGUIWidgetLSMlists.font,
 					set = function(info, value) E.db.general[ info[#info] ] = value; E:UpdateMedia(); E:UpdateFontTemplates(); end,
 				},
 				applyFontToAll = {
-					order = 4,
+					order = 5,
 					type = 'execute',
 					name = L["Apply Font To All"],
 					desc = L["Applies the font and font size settings throughout the entire user interface. Note: Some font size settings will be skipped due to them having a smaller font size by default."],
@@ -241,7 +246,7 @@ E.Options.args.general = {
 				},
 				dmgfont = {
 					type = "select", dialogControl = 'LSM30_Font',
-					order = 5,
+					order = 6,
 					name = L["CombatText Font"],
 					desc = L["The font that combat text will use. |cffFF0000WARNING: This requires a game restart or re-log for this change to take effect.|r"],
 					values = AceGUIWidgetLSMlists.font,
@@ -250,7 +255,7 @@ E.Options.args.general = {
 				},
 				namefont = {
 					type = "select", dialogControl = 'LSM30_Font',
-					order = 6,
+					order = 7,
 					name = L["Name Font"],
 					desc = L["The font that appears on the text above players heads. |cffFF0000WARNING: This requires a game restart or re-log for this change to take effect.|r"],
 					values = AceGUIWidgetLSMlists.font,
@@ -258,7 +263,7 @@ E.Options.args.general = {
 					set = function(info, value) E.private.general[ info[#info] ] = value; E:UpdateMedia(); E:UpdateFontTemplates(); E:StaticPopup_Show("PRIVATE_RL"); end,
 				},
 				replaceBlizzFonts = {
-					order = 7,
+					order = 8,
 					type = 'toggle',
 					name = L["Replace Blizzard Fonts"],
 					desc = L["Replaces the default Blizzard fonts on various panels and frames with the fonts chosen in the Media section of the ElvUI config. NOTE: Any font that inherits from the fonts ElvUI usually replaces will be affected as well if you disable this. Enabled by default."],
@@ -309,7 +314,7 @@ E.Options.args.general = {
 						E:UpdateFrameTemplates()
 					end
 				},
-				applyTextureToAll = {
+				applyFontToAll = {
 					order = 23,
 					type = 'execute',
 					name = L["Apply Texture To All"],
@@ -404,6 +409,61 @@ E.Options.args.general = {
 						local t = E.db.general[ info[#info] ]
 						t.r, t.g, t.b, t.a = r, g, b, a
 						E:UpdateMedia()
+					end,
+				},
+				transparent = {
+					type = "toggle",
+					order = 35,
+					name = L["Transparent Theme"],
+					desc = L["Transparent Theme desc"],
+					set = function(info, value)
+						E.db.general.transparent = value
+						E.db.unitframe.transparent = value
+						if value then E:SetupTheme("transparent", true) else E:SetupTheme("classic", true) end
+						E:StaticPopup_Show("PRIVATE_RL")
+					end,
+				},
+				transparentStyle = {
+					type = "range",
+					order = 36,
+					min = 1, max = 2, step = 1,
+					name = L['Transparent Theme Style'],
+					desc = L["1:New Style;\n2:Old Style"],
+					disabled = function() return not E.db.general.transparent end,
+					set = function(info, value)
+						E.db.general.transparentStyle = value
+						E:StaticPopup_Show("PRIVATE_RL")
+					end,
+				},
+				ShadowEnable = {
+					type = "toggle",
+					order = 37,
+					name = L["Shadow"],
+					set = function(info, value)
+						E.db.general.ShadowEnable = value;
+						E:StaticPopup_Show("PRIVATE_RL")
+					end,
+				},
+				ShadowWidth = {
+					type = "range",
+					order = 38,
+					min = 1, max = 10, step = 1,
+					name = L["Shadow Width"],
+				--	disabled = function() return not E.db.general.ShadowEnable end,
+					set = function(info, value)
+						E.db.general.ShadowWidth = value;
+						E:StaticPopup_Show("PRIVATE_RL")
+					end,
+				},
+				ShadowAlpha = {
+					type = "range",
+					min = 0, max = 1, step = 0.1,
+					order = 39,
+					name = L["Shadow Alpha"],
+					disabled = function() return not E.db.general.ShadowEnable end,
+					set = function(info, value)
+						E.db.general.ShadowAlpha = value;
+						E:StaticPopup_Show("PRIVATE_RL")
 					end,
 				},
 			},
@@ -528,6 +588,14 @@ E.Options.args.general = {
 					order = 8,
 					name = L["Days"],
 					desc = L["Color when the text is in the days format."],
+				},
+				fontSize = {
+					type = 'range',
+					order = 9,
+					name = L["Font Size"],
+					min = 4, max = 50, step = 1,
+					get = function(info) return E.db.cooldown[ info[#info] ] end,
+					set = function(info, value) E.db.cooldown[ info[#info] ] = value; E:UpdateCooldownSettings(); end
 				},
 			},
 		},

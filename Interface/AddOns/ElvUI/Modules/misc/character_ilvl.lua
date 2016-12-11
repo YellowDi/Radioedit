@@ -1,113 +1,114 @@
 local E, L, V, P, G = unpack(select(2, ...)); --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
-local mod = E:NewModule('ChatILvL', 'AceEvent-3.0', 'AceTimer-3.0');
 
---Cache global variables
---Lua functions
-local unpack = unpack
---WoW API / Variables
-local CreateFrame = CreateFrame
-
---Global variables that we don't cache, list them here for mikk's FindGlobals script
--- GLOBALS: PaperDollItemsFrame
-
-mod.ignoreSlots = {
-	[6] = true,
-	[7] = true,
+----------------------------------------------------------------------------------------
+--	Item level on slot buttons in Character/InspectFrame(by Tukz)
+----------------------------------------------------------------------------------------
+local slots = {
+	"HeadSlot", "NeckSlot", "ShoulderSlot", "BackSlot", "ChestSlot", "ShirtSlot", "TabardSlot",
+	"WristSlot", "MainHandSlot", "SecondaryHandSlot", "HandsSlot", "WaistSlot",
+	"LegsSlot", "FeetSlot", "Finger0Slot", "Finger1Slot", "Trinket0Slot", "Trinket1Slot"
 }
-mod.InvSlotID = { 1,2,3,6,5,10,11,12,8,9,13,14,15,16,4,17,18,7 }
-mod.emptySockets = {
-		["Meta "] = "INTERFACE/ITEMSOCKETINGFRAME/UI-EmptySocket-Meta",
-		["Red "] = "INTERFACE/ITEMSOCKETINGFRAME/UI-EmptySocket-Red",
-		["Blue "] = "INTERFACE/ITEMSOCKETINGFRAME/UI-EmptySocket-Blue",
-		["Yellow "]	= "INTERFACE/ITEMSOCKETINGFRAME/UI-EmptySocket-Yellow",
-		["Prismatic "] = "INTERFACE/ITEMSOCKETINGFRAME/UI-EmptySocket-Prismatic",
-}
+local S_ITEM_LEVEL = ITEM_LEVEL:gsub( "%%d", "(%%d+)" )
+local GetDetailedItemLevelInfo = GetDetailedItemLevelInfo
 
-function mod:Update_Frame()
-
+local function CreateButtonsText(frame)
+	for _, slot in pairs(slots) do
+		local button = _G[frame..slot]
+		button.t = button:CreateFontString(nil, "OVERLAY", "SystemFont_Outline_Small")
+		button.t:SetPoint("TOPRIGHT", button, "TOPRIGHT", -1, -2)
+		button.t:SetText("")
+	end
 end
 
-function mod:Player_Update()
+local isClose = false
+local function UpdateButtonsText(frame)
+	if frame == "Inspect" and not InspectFrame:IsShown() then return end
 
-end
+	if isClose then return; end
 
-function mod:Inspect_Update()
+	if not E.db.euiscript.char_ilvl then
+		for _, slot in pairs(slots) do
+			local text = _G[frame..slot].t
+			text:SetText('')
+		end
+		isClose = true;
+		return;
+	else
+		isClose = false;
+	end
 
-end
+	local unit, itemM, itemS, itemMlv, itemSlv, itemMMax
+	if frame == "Inspect" then
+		unit = "target"
+	else
+		unit = "player"
+	end
 
-function mod:CreatePlayerObjects(frame)
-	local slots = { frame:GetChildren() };
+	for _, slot in pairs(slots) do
+		local id = GetInventorySlotInfo(slot)
+		local text = _G[frame..slot].t
+		local item
 
-	for i=1, #slots do
-		if not(self.ignoreSlots[i]) then
-			local button = slots[i]
+		item = GetInventoryItemLink(unit, id)
+		itemM = GetInventoryItemLink(unit, 16)
+		itemS = GetInventoryItemLink(unit, 17)
+		itemMlv = itemM and GetDetailedItemLevelInfo(itemM) or 0
+		itemSlv = itemS and GetDetailedItemLevelInfo(itemS) or 0
+		itemMMax = (itemMlv > itemSlv) and itemMlv or itemSlv
 
-			button.slotID = self.InvSlotID[i]
-			button.ilvlText = button:CreateFontString(nil, 'OVERLAY')
-			button.ilvlText:FontTemplate()
-			button.ilvlText:Point("BOTTOMRIGHT", -1, 2)
-			button.ilvlText:SetText("625")
+		if slot == "ShirtSlot" or slot == "TabardSlot" then
+			text:SetText("")
+		elseif item then
+			local oldilevel = text:GetText()
+			local _, _, q = GetItemInfo(item)
+			local ilevel = GetDetailedItemLevelInfo(item)
 
-			local point, anchorPoint, mult = "RIGHT", "LEFT", -1
-			if(i < 9 or i == 18) then
-				point = "LEFT"
-				anchorPoint = "RIGHT"
-				mult = 1
+			if ilevel then
+				if q == 6 and ilevel == 750 and (id == 16 or id == 17) then--修正神器副手itemLink字串不含升级物品信息的问题
+					text:SetText("|cFFFFFF00".. itemMMax)
+				else
+					if ilevel ~= oldilevel then
+						if ilevel == 1 then
+							text:SetText("")
+						else
+							text:SetText("|cFFFFFF00".. ilevel)
+						end
+					end
+				end
+			else
+				text:SetText("")
 			end
-
-			button.enchant = CreateFrame("Button", nil, button)
-			button.enchant:SetSize(15, 15)
-			button.enchant:Point("TOP"..point, button, "TOP"..anchorPoint, (mult * 4), 0)
-			button.enchant:SetScript("OnEnter", TODO_SCRIPT)
-			button.enchant:SetTemplate()
-			button.enchant.texture = button.enchant:CreateTexture(nil, 'OVERLAY')
-			button.enchant.texture:SetInside()
-			button.enchant.texture:SetTexture("INTERFACE/ICONS/INV_Jewelry_Talisman_08")
-			button.enchant.texture:SetTexCoord(unpack(E.TexCoords))
-
-			button.gem1 = CreateFrame("Button", nil, button)
-			button.gem1:SetSize(15, 15)
-			button.gem1:Point("BOTTOM"..point, button, "BOTTOM"..anchorPoint, (mult * 4), 0)
-			button.gem1:SetScript("OnEnter", TODO_SCRIPT)
-			button.gem1:SetTemplate()
-			button.gem1.texture = button.gem1:CreateTexture(nil, 'OVERLAY')
-			button.gem1.texture:SetInside()
-			button.gem1.texture:SetTexture(mod.emptySockets["Prismatic "])
-			button.gem1.texture:SetTexCoord(unpack(E.TexCoords))
-
-			button.gem2 = CreateFrame("Button", nil, button)
-			button.gem2:SetSize(15, 15)
-			button.gem2:Point(point, button.gem1, anchorPoint, (mult * 2), 0)
-			button.gem2:SetScript("OnEnter", TODO_SCRIPT)
-			button.gem2:SetTemplate()
-			button.gem2.texture = button.gem2:CreateTexture(nil, 'OVERLAY')
-			button.gem2.texture:SetInside()
-			button.gem2.texture:SetTexture(mod.emptySockets["Prismatic "])
-			button.gem2.texture:SetTexCoord(unpack(E.TexCoords))
-
-			button.gem3 = CreateFrame("Button", nil, button)
-			button.gem3:SetSize(15, 15)
-			button.gem3:Point(point, button.gem2, anchorPoint, (mult * 2), 0)
-			button.gem3:SetScript("OnEnter", TODO_SCRIPT)
-			button.gem3:SetTemplate()
-			button.gem3.texture = button.gem3:CreateTexture(nil, 'OVERLAY')
-			button.gem3.texture:SetInside()
-			button.gem3.texture:SetTexture(mod.emptySockets["Prismatic "])
-			button.gem3.texture:SetTexCoord(unpack(E.TexCoords))
+		else
+			text:SetText("")
 		end
 	end
 end
 
-function mod:Initialize()
-	self:CreatePlayerObjects(PaperDollItemsFrame)
-	self:RegisterEvent("PLAYER_EQUIPMENT_CHANGED", "Player_Update")
-	self:RegisterEvent("PLAYER_ENTERING_WORLD", "Player_Update")
+local OnEvent = CreateFrame("Frame")
+OnEvent:RegisterEvent("PLAYER_LOGIN")
+OnEvent:RegisterEvent("PLAYER_EQUIPMENT_CHANGED")
+OnEvent:SetScript("OnEvent", function(self, event)
+	if event == "PLAYER_LOGIN" then
+		CreateButtonsText("Character")
+		UpdateButtonsText("Character")
+		self:UnregisterEvent("PLAYER_LOGIN")
+		CharacterFrame:HookScript("OnShow", function(self) UpdateButtonsText("Character") end)
+	elseif event == "PLAYER_EQUIPMENT_CHANGED" then
+		UpdateButtonsText("Character")
+	else
+		UpdateButtonsText("Inspect")
+	end
+end)
 
-	self:RegisterEvent("SOCKET_INFO_CLOSE", "Player_Update")
-	self:RegisterEvent("SOCKET_INFO_SUCCESS", "Player_Update")
-	self:RegisterEvent("SOCKET_INFO_UPDATE", "Player_Update")
-
-	self:RegisterEvent("INSPECT_READY", "Inspect_Update")
-end
-
---E:RegisterModule(mod:GetName())
+local OnLoad = CreateFrame("Frame")
+OnLoad:RegisterEvent("ADDON_LOADED")
+OnLoad:SetScript("OnEvent", function(self, event, addon)
+	if addon == "Blizzard_InspectUI" then
+		CreateButtonsText("Inspect")
+		InspectFrame:HookScript("OnShow", function(self) UpdateButtonsText("Inspect") end)
+		OnEvent:RegisterEvent("UNIT_INVENTORY_CHANGED")
+		OnEvent:RegisterEvent("PLAYER_TARGET_CHANGED")
+		OnEvent:RegisterEvent("INSPECT_READY")
+		self:UnregisterEvent("ADDON_LOADED")
+	end
+end)

@@ -13,6 +13,8 @@ local match, gmatch, find = string.match, string.gmatch, string.find
 local GetTime = GetTime
 local InCombatLockdown = InCombatLockdown
 local GetItemInfo = GetItemInfo
+local GetAuctionItemClasses = GetAuctionItemClasses
+local GetAuctionItemSubClasses = GetAuctionItemSubClasses
 local GetContainerItemID = GetContainerItemID
 local GetGuildBankItemInfo = GetGuildBankItemInfo
 local GetContainerItemInfo = GetContainerItemInfo
@@ -32,6 +34,7 @@ local GetCursorInfo = GetCursorInfo
 local QueryGuildBankTab = QueryGuildBankTab
 local GetCurrentGuildBankTab = GetCurrentGuildBankTab
 local C_PetJournalGetPetInfoBySpeciesID = C_PetJournal.GetPetInfoBySpeciesID
+local ARMOR, ENCHSLOT_WEAPON = ARMOR, ENCHSLOT_WEAPON
 local LE_ITEM_CLASS_ARMOR = LE_ITEM_CLASS_ARMOR
 local LE_ITEM_CLASS_WEAPON = LE_ITEM_CLASS_WEAPON
 
@@ -85,7 +88,7 @@ local specialtyBags = {};
 local emptySlots = {};
 
 local moveRetries = 0
-local lastItemID, lockStop, lastDestination, lastMove
+local movesUnderway, lastItemID, lockStop, lastDestination, lastMove
 local moveTracker = {}
 
 local inventorySlots = {
@@ -212,7 +215,6 @@ local function DefaultSort(a, b)
 
 	aRarity = bagQualities[a]
 	bRarity = bagQualities[b]
-
 
 	if bagPetIDs[a] then
 		aRarity = 1
@@ -359,7 +361,7 @@ end
 function B:GetNumSlots(bag, role)
 	if IsGuildBankBag(bag) then
 		if not role then role = "deposit" end
-		local name, _, canView, canDeposit, numWithdrawals = GetGuildBankTabInfo(bag - 50)
+		local name, icon, canView, canDeposit, numWithdrawals = GetGuildBankTabInfo(bag - 50)
 		if name and canView --[[and ((role == "withdraw" and numWithdrawals ~= 0) or (role == "deposit" and canDeposit) or (role == "both" and numWithdrawals ~= 0 and canDeposit))]] then
 			return 98
 		end
@@ -520,11 +522,11 @@ local blackListQueries = {}
 
 local function buildBlacklist(...)
 	for entry in pairs(...) do
-		local itemName = GetItemInfo(entry)
+		local itemName = entry and GetItemInfo(entry)
 
 		if itemName then
 			blackList[itemName] = true
-		elseif entry ~= "" then
+		elseif entry and entry ~= "" then
 			if find(entry, "%[") and find(entry, "%]") then
 				--For some reason the entry was not treated as a valid item. Extract the item name.
 				entry = match(entry, "%[(.*)%]")
@@ -556,8 +558,13 @@ function B.Sort(bags, sorter, invertDirection)
 			end
 
 			if not blackListedSlots[bagSlot] then
+				local method
 				for _,itemsearchquery in pairs(blackListQueries) do
-					local success, result = pcall(Search.Matches, Search, link, itemsearchquery)
+					method = Search.Matches
+					if Search.Filters.tipPhrases.keywords[itemsearchquery] then
+						method = Search.TooltipPhrase
+					end
+					local success, result = pcall(method, Search, link, itemsearchquery)
 					if success and result then
 						blackListedSlots[bagSlot] = result
 						break
@@ -639,7 +646,7 @@ function B.Fill(sourceBags, targetBags, reverse, canMove)
 	for _, bag, slot in B.IterateBags(sourceBags, not reverse, "withdraw") do
 		if #emptySlots == 0 then break end
 		local bagSlot = B:Encode_BagSlot(bag, slot)
-		local targetBag = B:Decode_BagSlot(emptySlots[1])
+		local targetBag, targetSlot = B:Decode_BagSlot(emptySlots[1])
 		local link = B:GetItemLink(bag, slot);
 
 		if link and blackList[GetItemInfo(link)] then
@@ -725,6 +732,7 @@ function B:DoMove(move)
 		return false, 'source/target_locked'
 	end
 
+	local sourceLink = B:GetItemLink(sourceBag, sourceSlot)
 	local sourceItemID = self:GetItemID(sourceBag, sourceSlot)
 	local targetItemID = self:GetItemID(targetBag, targetSlot)
 
@@ -821,7 +829,8 @@ function B:DoMoves()
 	lastItemID, lockStop, lastDestination, lastMove = nil, nil, nil, nil
 	twipe(moveTracker)
 
-	local success, moveID, targetID, moveSource, moveTarget, wasGuild
+	local start, success, moveID, targetID, moveSource, moveTarget, wasGuild
+	start = GetTime()
 	if #moves > 0 then
 		for i = #moves, 1, -1 do
 			success, moveID, moveSource, targetID, moveTarget, wasGuild = B:DoMove(moves[i])
