@@ -4,7 +4,7 @@ local S = E:NewModule('Skins', 'AceTimer-3.0', 'AceHook-3.0', 'AceEvent-3.0')
 --Cache global variables
 --Lua functions
 local _G = _G
-local unpack, assert, pairs, select, type, pcall = unpack, assert, pairs, select, type, pcall
+local unpack, assert, pairs, ipairs, select, type, pcall = unpack, assert, pairs, ipairs, select, type, pcall
 local tinsert, wipe = table.insert, table.wipe
 --WoW API / Variables
 local SquareButton_SetIcon = SquareButton_SetIcon
@@ -22,7 +22,7 @@ S.addonsToLoad = {}
 S.nonAddonsToLoad = {}
 S.allowBypass = {}
 S.addonCallbacks = {}
-S.nonAddonCallbacks = {}
+S.nonAddonCallbacks = {["CallPriority"] = {}}
 
 local find = string.find
 
@@ -38,7 +38,6 @@ end
 
 function S:HandleButton(f, strip)
 	if not f then return; end
-
 	if f.Left then f.Left:SetAlpha(0) end
 	if f.Middle then f.Middle:SetAlpha(0) end
 	if f.Right then f.Right:SetAlpha(0) end
@@ -219,7 +218,6 @@ function S:HandleTab(tab)
 end
 
 function S:HandleNextPrevButton(btn, useVertical, inverseDirection)
-	local norm, pushed, disabled
 	local inverseDirection = inverseDirection or btn:GetName() and (find(btn:GetName():lower(), 'left') or find(btn:GetName():lower(), 'prev') or find(btn:GetName():lower(), 'decrement') or find(btn:GetName():lower(), 'back'))
 
 	btn:StripTextures()
@@ -346,10 +344,10 @@ function S:HandleDropDownBox(frame, width)
 	if(button) then
 		button:ClearAllPoints()
 		button:Point("RIGHT", frame, "RIGHT", -10, 3)
-		hooksecurefunc(button, "SetPoint", function(self, point, attachTo, anchorPoint, xOffset, yOffset, noReset)
+		hooksecurefunc(button, "SetPoint", function(self, _, _, _, _, _, noReset)
 			if not noReset then
-				button:ClearAllPoints()
-				button:SetPoint("RIGHT", frame, "RIGHT", E:Scale(-10), E:Scale(3), true)
+				self:ClearAllPoints()
+				self:SetPoint("RIGHT", frame, "RIGHT", E:Scale(-10), E:Scale(3), true)
 			end
 		end)
 
@@ -362,7 +360,6 @@ end
 
 function S:HandleCheckBox(frame, noBackdrop, noReplaceTextures)
 	if not frame then return; end
-
 	frame:StripTextures()
 	if noBackdrop then
 		frame:SetTemplate("Default")
@@ -490,7 +487,6 @@ end
 
 function S:HandleSliderFrame(frame)
 	if not frame then return; end
-
 	local orientation = frame:GetOrientation()
 	local SIZE = 12
 	frame:StripTextures()
@@ -520,7 +516,6 @@ function S:HandleSliderFrame(frame)
 		end
 	end
 end
-
 
 function S:HandleFollowerPage(follower, hasItems)
 	local abilities = follower.followerTab.AbilitiesFrame.Abilities
@@ -623,14 +618,15 @@ end
 
 function S:ADDON_LOADED(event, addon)
 	if self.allowBypass[addon] then
-		if S.addonsToLoad[addon] then
+		if self.addonsToLoad[addon] then
 			--Load addons using the old deprecated register method
-			S.addonsToLoad[addon]()
-			S.addonsToLoad[addon] = nil
-		elseif S.addonCallbacks[addon] then
+			self.addonsToLoad[addon]()
+			self.addonsToLoad[addon] = nil
+		elseif self.addonCallbacks[addon] then
 			--Fire events to the skins that rely on this addon
-			for event in pairs(S.addonCallbacks[addon]) do
-				S.addonCallbacks[addon][event] = nil;
+			for index, event in ipairs(self.addonCallbacks[addon]["CallPriority"]) do
+				self.addonCallbacks[addon][event] = nil;
+				self.addonCallbacks[addon]["CallPriority"][index] = nil
 				E.callbacks:Fire(event)
 			end
 		end
@@ -639,12 +635,13 @@ function S:ADDON_LOADED(event, addon)
 
 	if not E.initialized then return end
 
-	if S.addonsToLoad[addon] then
-		S.addonsToLoad[addon]()
-		S.addonsToLoad[addon] = nil
-	elseif S.addonCallbacks[addon] then
-		for event in pairs(S.addonCallbacks[addon]) do
-			S.addonCallbacks[addon][event] = nil;
+	if self.addonsToLoad[addon] then
+		self.addonsToLoad[addon]()
+		self.addonsToLoad[addon] = nil
+	elseif self.addonCallbacks[addon] then
+		for index, event in ipairs(self.addonCallbacks[addon]["CallPriority"]) do
+			self.addonCallbacks[addon][event] = nil;
+			self.addonCallbacks[addon]["CallPriority"][index] = nil
 			E.callbacks:Fire(event)
 		end
 	end
@@ -666,7 +663,6 @@ function S:RegisterSkin(name, loadFunc, forceLoad, bypass)
 	end
 end
 
-
 --Add callback for skin that relies on another addon.
 --These events will be fired when the addon is loaded.
 function S:AddCallbackForAddon(addonName, eventName, loadFunc, forceLoad, bypass)
@@ -687,7 +683,7 @@ function S:AddCallbackForAddon(addonName, eventName, loadFunc, forceLoad, bypass
 
 	--Create an event registry for this addon, so that we can fire multiple events when this addon is loaded
 	if not self.addonCallbacks[addonName] then
-		self.addonCallbacks[addonName] = {}
+		self.addonCallbacks[addonName] = {["CallPriority"] = {}}
 	end
 	
 	if self.addonCallbacks[addonName][eventName] then
@@ -704,6 +700,7 @@ function S:AddCallbackForAddon(addonName, eventName, loadFunc, forceLoad, bypass
 	else
 		--Insert eventName in this addons' registry
 		self.addonCallbacks[addonName][eventName] = true
+		self.addonCallbacks[addonName]["CallPriority"][#self.addonCallbacks[addonName]["CallPriority"] + 1] = eventName
 	end
 end
 
@@ -726,6 +723,7 @@ function S:AddCallback(eventName, loadFunc)
 
 	--Add event name to registry
 	self.nonAddonCallbacks[eventName] = true
+	self.nonAddonCallbacks["CallPriority"][#self.nonAddonCallbacks["CallPriority"] + 1] = eventName
 
 	--Register loadFunc to be called when event is fired
 	E.RegisterCallback(E, eventName, loadFunc)
@@ -735,18 +733,20 @@ function S:Initialize()
 	self.db = E.private.skins
 
 	--Fire events for Blizzard addons that are already loaded
-	for addon, events in pairs(self.addonCallbacks) do
+	for addon in pairs(self.addonCallbacks) do
 		if IsAddOnLoaded(addon) then
-			for event in pairs(events) do
+			for index, event in ipairs(S.addonCallbacks[addon]["CallPriority"]) do
 				self.addonCallbacks[addon][event] = nil;
+				self.addonCallbacks[addon]["CallPriority"][index] = nil
 				E.callbacks:Fire(event)
 			end
 		end
 	end
 	--Fire event for all skins that doesn't rely on a Blizzard addon
-	for eventName in pairs(self.nonAddonCallbacks) do
-		self.addonCallbacks[eventName] = nil;
-		E.callbacks:Fire(eventName)
+	for index, event in ipairs(self.nonAddonCallbacks["CallPriority"]) do
+		self.nonAddonCallbacks[event] = nil;
+		self.nonAddonCallbacks["CallPriority"][index] = nil
+		E.callbacks:Fire(event)
 	end
 
 	--Old deprecated load functions. We keep this for the time being in case plugins make use of it.

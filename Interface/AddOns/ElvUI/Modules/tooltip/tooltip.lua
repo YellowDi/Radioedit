@@ -122,7 +122,6 @@ local tooltips = {
 	DropDownList1MenuBackdrop,
 	DropDownList2MenuBackdrop,
 	DropDownList3MenuBackdrop,
-	BNToastFrame
 }
 
 --- PVP Item Detect ---
@@ -223,24 +222,64 @@ function TT:GameTooltip_SetDefaultAnchor(tt, parent)
 	end
 end
 
+function TT:GetAvailableTooltip()
+	for i=1, #GameTooltip.shoppingTooltips do
+		if(not GameTooltip.shoppingTooltips[i]:IsShown()) then
+			return GameTooltip.shoppingTooltips[i]
+		end
+	end
+end
+
+function TT:ScanForItemLevel(itemLink)
+	local tooltip = self:GetAvailableTooltip();
+	tooltip:SetOwner(UIParent, "ANCHOR_NONE");
+	tooltip:SetHyperlink(itemLink);
+	tooltip:Show();
+
+	local itemLevel = 0;
+	for i = 2, tooltip:NumLines() do
+		local text = _G[ tooltip:GetName() .."TextLeft"..i]:GetText();
+		if(text and text ~= "") then
+			local value = tonumber(text:match(S_ITEM_LEVEL));
+			if(value) then
+				itemLevel = value;
+			end
+		end
+	end
+
+	tooltip:Hide();
+	return itemLevel
+end
+
 function TT:GetItemLvL(unit)
 	local total, item, boa, pvp = 0, 15, 0, 0 --装备总数默认15件，双持职业就+1
 	local ulvl = UnitLevel(unit)
 	local not2hand
 	local findItem = 0
+	local itemM, itemS, itemMlv, itemSlv, itemMMax
+	
+	itemM = GetInventoryItemLink(unit, 16)
+	itemS = GetInventoryItemLink(unit, 17)
+	itemMlv = itemM and TT:ScanForItemLevel(itemM) or 0
+	itemSlv = itemS and TT:ScanForItemLevel(itemS) or 0
+	itemMMax = (itemMlv > itemSlv) and itemMlv or itemSlv
 
 	for i = 1, #SlotName do
 		local slotLink = GetInventoryItemLink(unit, GetInventorySlotInfo(("%sSlot"):format(SlotName[i])))
 		if (slotLink ~= nil) then
-			local _, _, quality, _, _, _, _, _,ItemEquipLoc = GetItemInfo(slotLink)
-			ilvl = GetDetailedItemLevelInfo(slotLink)
+			local _, _, quality, ilvl, _, _, _, _,ItemEquipLoc = GetItemInfo(slotLink)
 			if ilvl ~= nil then
 				if quality == 7 then
 					boa = boa + 1
 				elseif IsPVPItem(slotLink) then
 					pvp = pvp + 1
 				end
-				total = total + ilvl
+				if quality == 6 and ilvl == 750 and (SlotName[i] == "SecondaryHand" or SlotName[i] == "MainHand") then --修正神器副手itemLink字串不含升级物品信息的问题
+					total = total + itemMMax
+				else
+					total = total + TT:ScanForItemLevel(slotLink)
+				end
+				
 			end
 
 			if ((SlotName[i] == 'SecondaryHand') or (SlotName[i] == 'MainHand' and ItemEquipLoc ~= "INVTYPE_2HWEAPON" and ItemEquipLoc ~= "INVTYPE_RANGED" and ItemEquipLoc ~= "INVTYPE_RANGEDRIGHT")) and not not2hand then

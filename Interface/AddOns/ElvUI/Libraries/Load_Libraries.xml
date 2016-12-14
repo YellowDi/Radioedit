@@ -25,6 +25,7 @@
 	<Include file="..\..\libs\LibCompress\lib.xml"/>
 	<Include file="..\..\libs\LibBase64-1.0\lib.xml"/>
 	<Script file="..\..\libs\LibAnim\LibAnim.lua"/>
+	<Include file="..\..\libs\DropDownMenu\DropDownMenu.xml"/>
 
 	<Script file="..\..\libs\LibRangeCheck-2.0\LibRangeCheck-2.0.lua"/>
 	<Script file="..\..\libs\LibItemUpgradeInfo-1.0\Core.lua"/>

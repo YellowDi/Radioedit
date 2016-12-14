@@ -5,4 +5,8 @@
 	<Script file='UnitRole.lua'/>
 
 	<Script file='hh.lua'/>
+
+	<Script file='RelicInspector\ArtifactData.lua'/>
+	<Script file='RelicInspector\TraitSpellIDs.lua'/>
+	<Script file='RelicInspector\RelicInspector.lua'/>
 </Ui>

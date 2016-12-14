@@ -6,33 +6,46 @@ E.Minimap = M
 --Lua functions
 local _G = _G
 local tinsert = table.insert
-local gsub, upper, strsub = string.gsub, string.upper, strsub
+local strsub = strsub
 --WoW API / Variables
+local ClearAllTracking = ClearAllTracking
 local CloseAllWindows = CloseAllWindows
 local CloseMenus = CloseMenus
 local CreateFrame = CreateFrame
 local C_Timer_After = C_Timer.After
 local GarrisonLandingPageMinimapButton_OnClick = GarrisonLandingPageMinimapButton_OnClick
 local GetMinimapZoneText = GetMinimapZoneText
+local GetNumTrackingTypes = GetNumTrackingTypes
+local GetTrackingInfo = GetTrackingInfo
 local GetZonePVPInfo = GetZonePVPInfo
 local GuildInstanceDifficulty = GuildInstanceDifficulty
 local InCombatLockdown = InCombatLockdown
 local IsAddOnLoaded = IsAddOnLoaded
-local IsInGuild = IsInGuild
 local IsShiftKeyDown = IsShiftKeyDown
+local Lib_ToggleDropDownMenu = Lib_ToggleDropDownMenu
+local Lib_UIDropDownMenu_AddButton = Lib_UIDropDownMenu_AddButton
+local Lib_UIDropDownMenu_CreateInfo = Lib_UIDropDownMenu_CreateInfo
 local MainMenuMicroButton_SetNormal = MainMenuMicroButton_SetNormal
+local MiniMapTrackingDropDownButton_IsActive = MiniMapTrackingDropDownButton_IsActive
+local MiniMapTrackingDropDown_IsNoTrackingActive = MiniMapTrackingDropDown_IsNoTrackingActive
+local MiniMapTracking_SetTracking = MiniMapTracking_SetTracking
 local Minimap_OnClick = Minimap_OnClick
 local PlaySound = PlaySound
 local ShowUIPanel, HideUIPanel = ShowUIPanel, HideUIPanel
 local ToggleAchievementFrame = ToggleAchievementFrame
 local ToggleCharacter = ToggleCharacter
 local ToggleCollectionsJournal = ToggleCollectionsJournal
-local ToggleDropDownMenu = ToggleDropDownMenu
 local ToggleFrame = ToggleFrame
 local ToggleFriendsFrame = ToggleFriendsFrame
 local ToggleGuildFrame = ToggleGuildFrame
 local ToggleHelpFrame = ToggleHelpFrame
 local ToggleLFDParentFrame = ToggleLFDParentFrame
+local UnitClass = UnitClass
+local HUNTER_TRACKING = HUNTER_TRACKING
+local HUNTER_TRACKING_TEXT = HUNTER_TRACKING_TEXT
+local MINIMAP_TRACKING_NONE = MINIMAP_TRACKING_NONE
+local TOWNSFOLK = TOWNSFOLK
+local TOWNSFOLK_TRACKING_TEXT = TOWNSFOLK_TRACKING_TEXT
 
 --Global variables that we don't cache, list them here for mikk's FindGlobals script
 -- GLOBALS: GetMinimapShape, SpellBookFrame, PlayerTalentFrame, TalentFrame_LoadUI
@@ -53,8 +66,94 @@ local ToggleLFDParentFrame = ToggleLFDParentFrame
 -- GLOBALS: BottomMiniPanel, BottomLeftMiniPanel, BottomRightMiniPanel, TopMiniPanel
 -- GLOBALS: TopLeftMiniPanel, TopRightMiniPanel, MinimapBackdrop
 
-local menuFrame = CreateFrame("Frame", "MinimapRightClickMenu", E.UIParent)
+local function MiniMapTrackingDropDown_Initialize(self, level)
+	local name, texture, active, category, nested, numTracking;
+	local count = GetNumTrackingTypes();
+	local info;
+	local _, class = UnitClass("player");
+	
+	if (level == 1) then 
+		info = Lib_UIDropDownMenu_CreateInfo();
+		info.text=MINIMAP_TRACKING_NONE;
+		info.checked = MiniMapTrackingDropDown_IsNoTrackingActive;
+		info.func = ClearAllTracking;
+		info.icon = nil;
+		info.arg1 = nil;
+		info.isNotRadio = true;
+		info.keepShownOnClick = true;
+		Lib_UIDropDownMenu_AddButton(info, level);
+		
+		if (class == "HUNTER") then --only show hunter dropdown for hunters
+			numTracking = 0;
+			-- make sure there are at least two options in dropdown
+			for id=1, count do
+				name, texture, active, category, nested = GetTrackingInfo(id);
+				if (nested == HUNTER_TRACKING and category == "spell") then
+					numTracking = numTracking + 1;
+				end
+			end
+			if (numTracking > 1) then 
+				info.text = HUNTER_TRACKING_TEXT;
+				info.func =  nil;
+				info.notCheckable = true;
+				info.keepShownOnClick = false;
+				info.hasArrow = true;
+				info.value = HUNTER_TRACKING;
+				Lib_UIDropDownMenu_AddButton(info, level)
+			end
+		end
+		
+		info.text = TOWNSFOLK_TRACKING_TEXT;
+		info.func =  nil;
+		info.notCheckable = true;
+		info.keepShownOnClick = false;
+		info.hasArrow = true;
+		info.value = TOWNSFOLK;
+		Lib_UIDropDownMenu_AddButton(info, level)
+	end
 
+	for id=1, count do
+		name, texture, active, category, nested  = GetTrackingInfo(id);
+		info = Lib_UIDropDownMenu_CreateInfo();
+		info.text = name;
+		info.checked = MiniMapTrackingDropDownButton_IsActive;
+		info.func = MiniMapTracking_SetTracking;
+		info.icon = texture;
+		info.arg1 = id;
+		info.isNotRadio = true;
+		info.keepShownOnClick = true;
+		if ( category == "spell" ) then
+			info.tCoordLeft = 0.0625;
+			info.tCoordRight = 0.9;
+			info.tCoordTop = 0.0625;
+			info.tCoordBottom = 0.9;
+		else
+			info.tCoordLeft = 0;
+			info.tCoordRight = 1;
+			info.tCoordTop = 0;
+			info.tCoordBottom = 1;
+		end
+		if (level == 1 and 
+			(nested < 0 or -- this tracking shouldn't be nested
+			(nested == HUNTER_TRACKING and class ~= "HUNTER") or 
+			(numTracking == 1 and category == "spell"))) then -- this is a hunter tracking ability, but you only have one
+			Lib_UIDropDownMenu_AddButton(info, level);
+		elseif (level == 2 and (nested == TOWNSFOLK or (nested == HUNTER_TRACKING and class == "HUNTER")) and nested == LIB_UIDROPDOWNMENU_MENU_VALUE) then
+			Lib_UIDropDownMenu_AddButton(info, level);
+		end
+	end
+end
+
+--Create the new minimap tracking dropdown frame and initialize it
+local ElvUIMiniMapTrackingDropDown = CreateFrame("Frame", "ElvUIMiniMapTrackingDropDown", UIParent, "Lib_UIDropDownMenuTemplate")
+ElvUIMiniMapTrackingDropDown:SetID(1)
+ElvUIMiniMapTrackingDropDown:SetClampedToScreen(true)
+ElvUIMiniMapTrackingDropDown:Hide()
+Lib_UIDropDownMenu_Initialize(ElvUIMiniMapTrackingDropDown, MiniMapTrackingDropDown_Initialize, "MENU");
+ElvUIMiniMapTrackingDropDown.noResize = true
+
+--Create the minimap micro menu
+local menuFrame = CreateFrame("Frame", "MinimapRightClickMenu", E.UIParent)
 local menuList = {
 	{text = CHARACTER_BUTTON,
 	func = function() ToggleCharacter("PaperDollFrame") end},
@@ -158,7 +257,7 @@ function M:Minimap_OnMouseUp(btn)
 		local xoff = -1
 
 		if position:match("RIGHT") then xoff = E:Scale(-16) end
-		ToggleDropDownMenu(1, nil, MiniMapTrackingDropDown, "cursor")
+		Lib_ToggleDropDownMenu(1, nil, ElvUIMiniMapTrackingDropDown, "cursor");
 	else
 		Minimap_OnClick(self)
 	end

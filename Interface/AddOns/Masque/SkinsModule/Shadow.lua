@@ -96,10 +96,10 @@ MSQ:AddSkin("Masque: Shadow",
 	HotKey = {
 		Width = 42,
 		Height = 10,
-		JustifyH = "CENTER",
+		JustifyH = "RIGHT",
 		JustifyV = "TOP",
 		OffsetX = -2,
-		OffsetY = 3,
+		OffsetY = -2,
 	},
 	Count = {
 		Width = 42,

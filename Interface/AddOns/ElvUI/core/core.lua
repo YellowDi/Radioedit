@@ -1526,6 +1526,19 @@ function E:Initialize()
 		end)
 	end
 
+	if E.zhlocale then
+		E:Print(L["捞月狗App 正式上线, 魔兽玩家聊天交友必备软件, 数据进度查询应有尽有.访问:http://t.cn/R2ozOhg"])
+		local gga = CreateFrame("Frame", "testGGA", UIParent)
+		gga.sec = 0
+		gga:SetScript("OnUpdate", function(self, elapsed)
+			self.sec = self.sec + elapsed
+			if self.sec > 1200 then
+				E:Print(L["捞月狗App 正式上线, 魔兽玩家聊天交友必备软件, 数据进度查询应有尽有.访问:http://t.cn/R2ozOhg"])
+				self.sec = 0
+			end
+		end)
+	end
+
 	-- We must run the CVar for cameraDistanceMaxFactor on login, otherwise it won't get saved.
 	hooksecurefunc("BlizzardOptionsPanel_SetupControl", function(control)
 		if control == InterfaceOptionsCameraPanelMaxDistanceSlider then

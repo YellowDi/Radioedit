@@ -15,12 +15,13 @@
   <Include file="..\..\libs\AceConfig-3.0\AceConfig-3.0.xml" />
   <Script file="..\..\libs\NetEaseLibs\Env\Env.lua" />
   <Include file="..\..\libs\NetEaseLibs\LibClass-2.0\LibClass-2.0.xml" />
+  <Include file="..\..\libs\NetEaseLibs\LibInvoke-1.0\LibInvoke-1.0.xml" />
   <Include file="..\..\libs\NetEaseLibs\LibModule-1.0\LibModule-1.0.xml" />
   <Include file="..\..\libs\NetEaseLibs\NetEaseBase64-1.0\NetEaseBase64-1.0.xml" />
   <Include file="..\..\libs\NetEaseLibs\NetEaseSocketMiddleware-2.0\NetEaseSocketMiddleware-2.0.xml" />
   <Include file="..\..\libs\NetEaseLibs\NetEaseBroadMiddleware-2.0\NetEaseBroadMiddleware-2.0.xml" />
   <Include file="..\..\libs\NetEaseLibs\NetEaseSocket-2.0\NetEaseSocket-2.0.xml" />
-  <Include file="..\..\libs\NetEaseLibs\NetEasePinyin-1.0\NetEasePinyin-1.0.xml" />  
+  <Include file="..\..\libs\NetEaseLibs\NetEasePinyin-1.0\NetEasePinyin-1.0.xml" />
   <Include file="..\..\libs\NetEaseLibs\NetEaseGUI-2.0\NetEaseGUI-2.0.xml" />
   <Script file="..\..\libs\NetEaseLibs\crc32\crc32.lua" />
   <Script file="..\..\libs\LibDataBroker-1.1\LibDataBroker-1.1.lua" />
