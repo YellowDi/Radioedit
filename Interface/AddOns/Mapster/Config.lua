@@ -174,7 +174,6 @@ function Mapster:SetupMapButton()
 	self.optionsButton:SetText("Mapster")
 	self.optionsButton:ClearAllPoints()
 	self.optionsButton:SetPoint("TOPRIGHT", WorldMapTitleButton, "TOPRIGHT", 0, -3)
-	ElvUI[1].Skins:HandleButton(self.optionsButton, true)
 
 	if self.db.profile.hideMapButton then
 		self.optionsButton:Hide()

@@ -1,0 +1,21 @@
+﻿<Ui xmlns="http://www.blizzard.com/wow/ui/">
+
+	<script file = "Config.lua" />
+
+	<script file = "Bar\BagBar.lua" />
+	<script file = "Bar\PetBar.lua" />
+	<script file = "Bar\MainBar.lua" />
+	<script file = "Bar\MenuBar.lua" />
+	<script file = "Bar\SideBar.lua" />
+	<script file = "Bar\ExtraBar.lua" />
+	<script file = "Bar\TotemBar.lua" />
+	<script file = "Bar\StanceBar.lua" />
+	<script file = "Bar\PossessBar.lua" />
+	<script file = "Bar\OverrideBar.lua" />
+	<script file = "Bar\LeaveVehicle.lua" />
+
+	<script file = "Plugin\Hider.lua" />
+	<script file = "Plugin\Style.lua" />
+	<script file = "Plugin\HotKey.lua" />
+
+</Ui>

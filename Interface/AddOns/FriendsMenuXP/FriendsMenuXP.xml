@@ -91,7 +91,7 @@
 				</Backdrop>
 			</Frame>
 			<Frame name="$parentMenuBackdrop" setAllPoints="true">
-				<Backdrop bgFile="Interface\Tooltips\UI-Tooltip-Background" edgeFile="" tile="true">
+				<Backdrop bgFile="Interface\Tooltips\UI-Tooltip-Background" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
 					<EdgeSize>
 						<AbsValue val="16"/>
 					</EdgeSize>
@@ -184,7 +184,7 @@
 				</Backdrop>
 			</Frame>
 			<Frame name="$parentMenuBackdrop" setAllPoints="true">
-				<Backdrop bgFile="Interface\Tooltips\UI-Tooltip-Background" edgeFile="" tile="true">
+				<Backdrop bgFile="Interface\Tooltips\UI-Tooltip-Background" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
 					<EdgeSize>
 						<AbsValue val="16"/>
 					</EdgeSize>

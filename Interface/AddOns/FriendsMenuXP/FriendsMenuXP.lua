@@ -1,5 +1,3 @@
-
-
 --[[------------------------------------------------------------
 FriendsMenuXP.lua
 ---------------------------------------------------------------]]
@@ -170,7 +168,7 @@ function FriendsMenuXP_OnLoad(self)
     self:RegisterEvent("PLAYER_REGEN_DISABLED");
     self:RegisterEvent("PLAYER_REGEN_ENABLED");
 
- --   if(FRIENDS_MENU_XP_LOADED) then DEFAULT_CHAT_FRAME:AddMessage(FRIENDS_MENU_XP_LOADED,1,1,0); end
+    if(FRIENDS_MENU_XP_LOADED) then DEFAULT_CHAT_FRAME:AddMessage(FRIENDS_MENU_XP_LOADED,1,1,0); end
 	-- 5.4.1, fix IsDisabledByParentalControls taint
 	--setfenv(MainMenuMicroButton:GetScript("OnMouseUp"), setmetatable({ UpdateMicroButtons = function() end }, { __index = _G }))
 end
@@ -335,7 +333,6 @@ function FriendsMenuXP_Show(listFrame, arg2, appendBottom, name, connected, line
 
     listFrame:ClearAllPoints();
     listFrame:SetPoint(anchorPoint, nil, "BOTTOMLEFT", cursorX, cursorY);
-	listFrame:SetTemplate("Transparent")
 end
 
 function FriendsMenu_Initialize(dropDownList, buttonSet, appendBottom)

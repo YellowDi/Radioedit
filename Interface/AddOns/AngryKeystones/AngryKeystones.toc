@@ -1,14 +1,10 @@
-﻿## Interface: 70100
+## Interface: 70100
 ## Title: Angry Keystones
-## Title-zhCN: |cffC495DDEUI|r |cFF00D1FF大秘境计时|r
-## Title-zhTW: |cffC495DDEUI|r |cFF00D1FF大秘境計時|r
 ## Notes: Displays additional information for Mythic Keystone dungeons
 ## Author: Ermad
 ## SavedVariables: AngryKeystones_Config, AngryKeystones_Data
 ## SavedVariablesPerCharacter: AngryKeystones_CharacterConfig
-## X-Packaged-Version: v0.9.2
-## Dependencies: ElvUI
-## X-Revision: ElvUI
+## X-Packaged-Version: v0.9.5
 
 Core.lua
 Locale.lua

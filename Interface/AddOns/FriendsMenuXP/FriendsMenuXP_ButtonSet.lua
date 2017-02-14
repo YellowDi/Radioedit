@@ -308,37 +308,6 @@ FriendsMenuXP_Buttons["TRADE"] = {
     func = function (name) InitiateTrade("target"); end,
 }
 
-FriendsMenuXP_Buttons["Chat_BlackName"] = {
-	text = FMXP_BUTTON_CHAT_BLACKLIST,
-	show = function(name)
-		if not ElvUI then 
-			DEFAULT_CHAT_FRAME:AddMessage('Not find EUI!',1,1,0);
-			return;
-		end
-		if ElvUI[1].global.InfoFilter.blackName[name] then
-			return false;
-		else
-			return true;
-		end
-	end,
-	func = function(name, dropdownFrame)
-		if not ElvUI then 
-			DEFAULT_CHAT_FRAME:AddMessage('Not find EUI!',1,1,0);
-			return;
-		end
-		if not name:find('-') then
-			name = name..'-'..ElvUI[1].myrealm
-		end
-		ElvUI[1].global.InfoFilter.blackName[name] = true
-		DEFAULT_CHAT_FRAME:AddMessage(name.. FMXP_BUTTON_CHAT_BLACKLIST_INTRO,1,1,0);
-		if IsAddOnLoaded('ElvUI_Config') then
-			for k, v in pairs(ElvUI[1].global.InfoFilter.blackName) do
-				ElvUI[1].Options.args.InfoFilter.args.blackName.args.List.values[k] = k
-			end
-		end
-	end,
-}
-
 --ÖÇÁ¦
 FriendsMenuXP_Buttons["SPELL_MAGE_INTELLECT"] = {
     spellId = 1459,
@@ -468,7 +437,6 @@ FriendsMenuXP_ButtonSet["NORMAL"] = {
     "TRADE",
     "ACHIEVEMENTS",
     "ARMORY",
-	"Chat_BlackName",
     "CANCEL",
 }
 

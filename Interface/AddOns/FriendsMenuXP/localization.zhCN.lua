@@ -10,6 +10,4 @@ if ( GetLocale() == "zhCN" ) then
 	FMXP_BUTTON_ARMORY = "英雄榜"
 
     FMXP_BUTTON_REPORT_PLAYER_FOR = "举报-"
-	FMXP_BUTTON_CHAT_BLACKLIST = "EUI: 屏蔽发言"
-	FMXP_BUTTON_CHAT_BLACKLIST_INTRO = ' 已被加入EUI信息过滤黑名单!'
 end

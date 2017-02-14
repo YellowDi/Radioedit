@@ -1,0 +1,17 @@
+## Interface: 70100
+## Title: TinyInspect
+## Notes: TinyInspect
+## Author: M
+## Version: 7.0.0
+
+Libs\lib.xml
+
+Inspect.lua
+InspectStats.lua
+InspectGemAndEnchant.lua
+InspectSpecialization.lua
+
+ItemLevelForBag.lua
+ItemLevelForParty.lua
+ItemLevelForPaperDoll.lua
+##ItemLevelForMouse.lua
