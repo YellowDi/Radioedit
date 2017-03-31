@@ -1,0 +1,9 @@
+------------------------------------------------------------------------
+r22 | cybermind | 2016-12-04 14:55:35 -0600 (Sun, 04 Dec 2016) | 1 line
+Changed paths:
+   M /trunk/BloodTrader.lua
+   M /trunk/BloodTrader.toc
+
+- fix small bug where Blood of Sargeras tooltip would show up instead of another merchant's currency
+------------------------------------------------------------------------
+

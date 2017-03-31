@@ -1,0 +1,97 @@
+tag 74e229892763123c5d98a271198fd3be79bd5cc3 7.2.0
+Author:	subversion <svn@deadlybossmods.com>
+Date:	Tue Mar 28 19:02:44 2017 +0200
+
+Tagging as 7.2.0
+
+commit bbf4d511355bfd1a7754b2feb99b6cc93f0083c8
+Author: subversion <svn@deadlybossmods.com>
+Date:   Tue Mar 28 19:02:44 2017 +0200
+
+    increment version number to 7.2.0
+
+commit f212052aa4899ac90a2abfbf10996c965c4bc390
+Author: subversion <svn@deadlybossmods.com>
+Date:   Tue Mar 28 11:18:01 2017 +0200
+
+    Omega via svn r16096:
+    Bump Tocs
+
+commit 30c8f00bf2e8d34fb6cf305a6de51747f77e7208
+Author: subversion <svn@deadlybossmods.com>
+Date:   Tue Mar 28 06:50:32 2017 +0200
+
+    Omega via svn r16095:
+    Add Icon Only yells to star signs
+
+commit 73126b44d69d62cf91d532a4c4c3d88764123db4
+Author: subversion <svn@deadlybossmods.com>
+Date:   Tue Mar 28 05:14:47 2017 +0200
+
+    Omega via svn r16094:
+    move trash warning to correct mod
+
+commit 75a331950690445e4b496bc5316139f46a9fad8a
+Author: subversion <svn@deadlybossmods.com>
+Date:   Tue Mar 28 03:40:06 2017 +0200
+
+    Omega via svn r16093:
+    Finish Domatrax and Mephistroth
+
+commit fd99b69db36d7c12f93c026529cc505c05f667fd
+Author: subversion <svn@deadlybossmods.com>
+Date:   Tue Mar 28 02:15:39 2017 +0200
+
+    Omega via svn r16092:
+    uncomplicate all the moveto warnings that were pointing to a place instead of player, by broadening description of moveto warning description
+
+commit b9b9c5c1177312bf23d7afc638d4adce596d27d9
+Author: subversion <svn@deadlybossmods.com>
+Date:   Mon Mar 27 19:23:00 2017 +0200
+
+    Omega via svn r16091:
+    Fix several invalid spellids in dungeon mods
+
+commit 491d303b9e892d608b9a75425d7c8455b96f5444
+Author: subversion <svn@deadlybossmods.com>
+Date:   Mon Mar 27 00:39:55 2017 +0200
+
+    Omega via svn r16090:
+    Change alpha identifier
+
+commit 9406cca0ffa28e2c6ff75db0b9d1b051fef98adc
+Author: subversion <svn@deadlybossmods.com>
+Date:   Mon Mar 27 00:38:48 2017 +0200
+
+    Omega via svn r16089:
+    Delete hudmap and friendly nameplate support, everywhere.
+    Also fixed two icon bugs that?\226?\128?\153d break if hudmap options were toggled off in two nightmare mods, oops.
+
+commit d6d0fe0cdf2dd74c0da2ebee3ca0e9a9b6f65dbd
+Author: subversion <svn@deadlybossmods.com>
+Date:   Sun Mar 26 23:30:28 2017 +0200
+
+    Omega via svn r16088:
+    Fix bats name being nil and add protections against that kind of mistake throwing too many errors in future.
+
+commit 0faf670c0319eeaae6aeecd3393cd9daac646f13
+Author: subversion <svn@deadlybossmods.com>
+Date:   Sun Mar 26 01:45:53 2017 +0100
+
+    Omega via svn r16087:
+    Thrashbite prep
+
+commit c72e3fd249fcc1771de6681403f7d62a1ea4ae2b
+Author: subversion <svn@deadlybossmods.com>
+Date:   Sat Mar 25 00:40:21 2017 +0100
+
+    Omega via svn r16086:
+    Couple maiden tweaks
+
+commit 05470a7a160c7cd2116294822588fa89cf77a64f
+Author: subversion <svn@deadlybossmods.com>
+Date:   Fri Mar 24 21:02:25 2017 +0100
+
+    tandanu via svn r16085:
+    increment alpha version
+

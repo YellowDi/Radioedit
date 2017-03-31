@@ -1,6 +1,0 @@
-﻿<Ui xmlns="http://www.blizzard.com/wow/ui/">
-
-	<Script file = "DBM.lua" />
-	<Script file = "AdiBagsDB.lua" />
-
-</Ui>

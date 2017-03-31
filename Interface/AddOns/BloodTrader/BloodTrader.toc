@@ -1,0 +1,6 @@
+## Interface: 70100 
+## Title: Improved Blood Trader
+## Notes: Allows you to shift-click to buy stacks at the new Blood Trader and other small mods
+## Version: 2.1.1
+
+BloodTrader.lua
