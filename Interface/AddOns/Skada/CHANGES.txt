@@ -1,0 +1,15 @@
+------------------------------------------------------------------------
+r727 | zarnivoop | 2017-01-26 16:06:58 -0600 (Thu, 26 Jan 2017) | 1 line
+Changed paths:
+   M /trunk/.pkgmeta
+   M /trunk/embeds.xml
+
+screw that then - disembedded disabled until someone with more patience than me takes a look
+------------------------------------------------------------------------
+r726 | zarnivoop | 2017-01-26 15:50:36 -0600 (Thu, 26 Jan 2017) | 1 line
+Changed paths:
+   M /trunk/Skada.toc
+
+another bump, just to see if the packager/curse client will make nice with disembedded now
+------------------------------------------------------------------------
+

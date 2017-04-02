@@ -1,0 +1,13 @@
+tag 3.2.0-beta8
+284125bcae0a877c652b0eda795574f7b5875afd
+Feraldin (Nick) <git@bockmeulen.nl>
+2016-10-28 02:30:40 +0200
+
+3.2.0-beta8
+* fixed hide roleicon on combat (https://github.com/nickbock/ElvUI_Enhanced_Again/issues/14)
+
+
+--------------------
+
+Feraldin (Nick):
+	- fixed hide roleicon on combat
