@@ -1308,3 +1308,40 @@ GTFO.SpellID["228993"] = {
   sound = 1;
 };
 
+-- **************************
+-- * Cathedral of the Night *
+-- **************************
+
+GTFO.SpellID["238656"] = {
+  --desc = "Shadow Wave (Dul'zak)";
+  sound = 1;
+};
+
+GTFO.SpellID["237325"] = {
+  --desc = "Toxic Pollen (Felborne Botanist)";
+  applicationOnly = true;
+  sound = 1;
+};
+
+GTFO.SpellID["240556"] = {
+  --desc = "Tome of Everlasting Silence";
+  sound = 1;
+  test = true;
+};
+
+GTFO.SpellID["240951"] = {
+  --desc = "Destructive Rampage (Thrashbite the Scornful)";
+  sound = 3;
+  tankSound = 1;
+};
+
+GTFO.SpellID["239326"] = {
+  --desc = "Felblaze Orb (Nal'asha)";
+  sound = 1;
+  test = true;
+};
+
+GTFO.SpellID["233177"] = {
+  --desc = "Carrion Swarm (Mephistroth)";
+  sound = 1;
+};

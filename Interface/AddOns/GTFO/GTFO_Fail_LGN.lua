@@ -1598,3 +1598,50 @@ GTFO.SpellID["229151"] = {
   --desc = "Disintegrate (Viz'aduum the Watcher)";
   sound = 3;
 };
+
+-- **************************
+-- * Cathedral of the Night *
+-- **************************
+
+GTFO.SpellID["239558"] = {
+  --desc = "Shadow Swipe (Dreadwing)";
+  sound = 3;
+  tankSound = 0;
+};
+
+GTFO.SpellID["237599"] = {
+  --desc = "Devastating Swipe (Helblaze Felbringer)";
+  sound = 3;
+  tankSound = 0;
+};
+
+GTFO.SpellID["239201"] = {
+  --desc = "Fel Glare (Gazerax)";
+  sound = 3;
+};
+
+GTFO.SpellID["239217"] = {
+  --desc = "Blinding Glare (Gazerax)";
+  sound = 3;
+};
+
+GTFO.SpellID["237276"] = {
+  --desc = "Pulverizing Cudgel (Thrashbite the Scornful)";
+  sound = 3;
+};
+
+GTFO.SpellID["238469"] = {
+  --desc = "Scornful Charge (Thrashbite the Scornful)";
+  sound = 3;
+};
+
+GTFO.SpellID["236543"] = {
+  --desc = "Felsoul Cleave (Domatrax)";
+  sound = 3;
+};
+
+GTFO.SpellID["243152"] = {
+  --desc = "Demonic Upheaval (Mephistroth)";
+  sound = 3;
+  test = true;
+};

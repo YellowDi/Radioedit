@@ -1211,3 +1211,7 @@ Change Log:
 
 4.42.8
 * Updated for patch 7.2
+
+4.42.9
+* Added Legion spells for Cathedral of the Night
+

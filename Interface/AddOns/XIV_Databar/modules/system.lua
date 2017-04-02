@@ -33,7 +33,7 @@ end
 function SystemModule:Refresh()
   local db = xb.db.profile
   if self.systemFrame == nil then return; end
-  if not db.modules.system.enabled then return; end
+  if not db.modules.system.enabled then self:Disable(); return; end
 
   if InCombatLockdown() then
     self:UpdateTexts()
@@ -96,11 +96,17 @@ function SystemModule:Refresh()
   --self.systemFrame:SetSize()
   local relativeAnchorPoint = 'LEFT'
   local xOffset = db.general.moduleSpacing
-  if not xb:GetFrame('goldFrame'):IsVisible() then
-    relativeAnchorPoint = 'RIGHT'
-    xOffset = 0
+  local parentFrame = xb:GetFrame('goldFrame');
+  if not xb.db.profile.modules.gold.enabled then
+	if xb.db.profile.modules.travel.enabled then
+	  parentFrame = xb:GetFrame('travelFrame');
+	else
+	  relativeAnchorPoint = 'RIGHT'
+	  xOffset = 0
+	  parentFrame = self.systemFrame:GetParent();
+	end
   end
-  self.systemFrame:SetPoint('RIGHT', xb:GetFrame('goldFrame'), relativeAnchorPoint, -(xOffset), 0)
+  self.systemFrame:SetPoint('RIGHT', parentFrame, relativeAnchorPoint, -(xOffset), 0)
 end
 
 function SystemModule:UpdateTexts()
@@ -109,8 +115,8 @@ function SystemModule:UpdateTexts()
   
   self.fpsText:SetText(floor(GetFramerate())..FPS_ABBR)
   local _, _, homePing, worldPing = GetNetStats()
-  self.pingText:SetText(floor(homePing)..MILLISECONDS_ABBR)
-  self.worldPingText:SetText(floor(worldPing)..MILLISECONDS_ABBR)
+  self.pingText:SetText(L['L']..": "..floor(homePing)..MILLISECONDS_ABBR)
+  self.worldPingText:SetText(L['W']..": "..floor(worldPing)..MILLISECONDS_ABBR)
 end
 
 function SystemModule:CreateFrames()
@@ -133,7 +139,7 @@ function SystemModule:HoverFunction()
     self.pingText:SetTextColor(unpack(xb:HoverColors()))
     self.worldPingText:SetTextColor(unpack(xb:HoverColors()))
   end
-  if xb.db.profile.modules.system.showTooltip then
+  if xb.db.profile.modules.system.showTooltip and not self.fpsFrame:IsMouseOver() then
     self:ShowTooltip()
   end
 end

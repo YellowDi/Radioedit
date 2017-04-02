@@ -22,6 +22,7 @@ function TravelModule:OnInitialize()
     37118, -- Scroll of Recall 1
     44314, -- Scroll of Recall 2
     44315, -- Scroll of Recall 3
+    142542, -- Tome of Town Portal
   }
 
   self.portButtons = {}
@@ -48,15 +49,15 @@ function TravelModule:OnDisable()
 end
 
 function TravelModule:CreateFrames()
-  self.hearthButton = self.hearthButton or CreateFrame('BUTTON', nil, self.hearthFrame, "SecureActionButtonTemplate")
+  self.hearthButton = self.hearthButton or CreateFrame('BUTTON', "hearthButton", self.hearthFrame, "SecureActionButtonTemplate")
   self.hearthIcon = self.hearthIcon or self.hearthButton:CreateTexture(nil, 'OVERLAY')
   self.hearthText = self.hearthText or self.hearthButton:CreateFontString(nil, 'OVERLAY')
 
-  self.portButton = self.portButton or CreateFrame('BUTTON', nil, self.hearthFrame, "SecureActionButtonTemplate")
+  self.portButton = self.portButton or CreateFrame('BUTTON', "portButton", self.hearthFrame, "SecureActionButtonTemplate")
   self.portIcon = self.portIcon or self.portButton:CreateTexture(nil, 'OVERLAY')
   self.portText = self.portText or self.portButton:CreateFontString(nil, 'OVERLAY')
 
-  self.portPopup = self.portPopup or CreateFrame('BUTTON', nil, self.portButton)
+  self.portPopup = self.portPopup or CreateFrame('BUTTON', "portPopup", self.portButton)
   self.popupTexture = self.popupTexture or self.portPopup:CreateTexture(nil, 'BACKGROUND')
 end
 
@@ -238,7 +239,7 @@ function TravelModule:SetPortColor()
     v = self:FindFirstOption()
     v = v.portId
     if not (self:IsUsable(v)) then
-      self.portButton:Hide()
+      --self.portButton:Hide()
       return
     end
   end
@@ -365,6 +366,7 @@ end
 function TravelModule:Refresh()
   if self.hearthFrame == nil then return; end
 
+  if not xb.db.profile.modules.travel.enabled then self:Disable(); return; end
   if InCombatLockdown() then
     self.hearthText:SetText(GetBindLocation())
     self.portText:SetText(xb.db.char.portItem.text)
@@ -429,11 +431,13 @@ function TravelModule:Refresh()
   self.portPopup:Hide()
 
   local totalWidth = self.hearthButton:GetWidth() + db.general.barPadding
+  self.portButton:Show()
   if self.portButton:IsVisible() then
     totalWidth = totalWidth + self.portButton:GetWidth()
   end
   self.hearthFrame:SetSize(totalWidth, xb:GetHeight())
   self.hearthFrame:SetPoint("RIGHT", -(db.general.barPadding), 0)
+  self.hearthFrame:Show()
 end
 
 function TravelModule:FindFirstOption()

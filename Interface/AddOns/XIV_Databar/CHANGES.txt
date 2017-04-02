@@ -1,0 +1,128 @@
+Changes since tag v2.0.14
+
+commit cb1861ae4298f39dfa84afd4b38d282677f8ada6
+Author: Micha├½l FAVEL-GUIDET <mfavelguidet@smart-traffik.io>
+Date:   Thu Mar 30 11:12:27 2017 +0200
+
+    Restored data broker lib
+
+commit cb1861ae4298f39dfa84afd4b38d282677f8ada6
+Author: Micha├½l FAVEL-GUIDET <mfavelguidet@smart-traffik.io>
+Date:   Thu Mar 30 11:12:27 2017 +0200
+
+    Restored data broker lib
+
+commit ae0f45de7901687da0e989c11ee8db20b3cff330
+Author: Mikeprod <mikeprod.tm@gmail.com>
+Date:   Thu Mar 30 11:12:27 2017 +0200
+
+    Restored data broker lib
+
+commit e46166ca1d134c278a0e74e4d384036c32f262a7
+Author: Micha├½l FAVEL-GUIDET <mfavelguidet@smart-traffik.io>
+Date:   Thu Mar 30 10:56:18 2017 +0200
+
+    Proper libArtifact update
+
+commit 13ac8c6d5519808bc1549c4ff2fc8a453547ec7d
+Author: Mikeprod <mikeprod.tm@gmail.com>
+Date:   Thu Mar 30 10:56:18 2017 +0200
+
+    Proper libArtifact update
+
+commit 36830b72dd6078b439abca0e113740ea7737aebb
+Author: Mikeprod <mikeprod.tm@gmail.com>
+Date:   Wed Mar 29 20:01:30 2017 +0200
+
+    Bump TOC 7.2
+
+commit 4c814bc9615360e6433a9bda1ff5731a95ade247
+Author: Mikeprod <mikeprod.tm@gmail.com>
+Date:   Wed Mar 29 19:51:36 2017 +0200
+
+    Libraries updated
+
+commit 32c8989ead7b900a692a4ca25f4455c22e814b0a
+Author: Mikeprod <mikeprod.tm@gmail.com>
+Date:   Sun Mar 5 13:56:04 2017 +0100
+
+    Found a possible hiding port button source
+
+commit b7c659614a7f400ac8e8473165783fd13b35fe03
+Author: Mikeprod <mikeprod.tm@gmail.com>
+Date:   Sat Feb 25 20:42:02 2017 +0100
+
+    should fix the frames disappearing
+
+commit b83b8ba1d638bf0e7b969c12688cdc7547a0bae7
+Author: Mikeprod <mikeprod.tm@gmail.com>
+Date:   Sat Feb 25 19:41:14 2017 +0100
+
+    quickfix hearthstone ?
+
+commit 99d23af87b78205a0dce2d4d83af4b364d1ad0ef
+Author: Mikeprod <mikeprod.tm@gmail.com>
+Date:   Sun Feb 12 17:15:54 2017 +0100
+
+    Bump TOC
+
+commit 52976f0d1fdc5df4270467ddc2bea47522dacd48
+Author: Mikeprod <mikeprod.tm@gmail.com>
+Date:   Sun Feb 12 17:08:39 2017 +0100
+
+    Changing frame strata for the talent menus to close #20
+
+commit 0d347be59ac7a915fdcc50ae14187d64e9f73a5c
+Author: Mikeprod <mikeprod.tm@gmail.com>
+Date:   Sun Feb 12 13:54:39 2017 +0100
+
+    Should fix the issue #20 and update LibArtifactData for 7.2
+
+commit 0bba8466b073fed650626292f01ac52d1eb57cb2
+Author: srclark <stephen.r.clark@hsutx.edu>
+Date:   Mon Feb 6 00:14:27 2017 -0600
+
+    added tome of town portal to travel module
+
+commit 05e965dbea68051abc5b980a9d157096280f1c68
+Author: Mikeprod <Mikeprod@users.noreply.github.com>
+Date:   Tue Jan 17 15:23:15 2017 +0100
+
+    Talent module not raising any error when disabled
+
+commit 6a8393b4f59f7cdd0b42fdbdde7733b815e8ab52
+Author: Mikeprod <Mikeprod@users.noreply.github.com>
+Date:   Thu Jan 5 22:47:42 2017 +0100
+
+    Set theme jekyll-theme-time-machine
+
+commit b8fde0a81a9b115409bc7c878b29c94a3ea2a915
+Author: Mikeprod <mikeprod.tm@gmail.com>
+Date:   Fri Dec 23 04:56:13 2016 +0100
+
+    Fixes Addon bugging from pr#67
+
+commit adaa33cf649285be9d46c694d7222a541f1ceb99
+Author: Merathilis <neo0608@gmail.com>
+Date:   Thu Dec 22 12:15:51 2016 +0100
+
+    Add skin support for ElvUI/TukUI
+
+commit d22f150077b5d10e400b2d15def0e3753dddbccc
+Author: Merathilis <neo0608@gmail.com>
+Date:   Wed Dec 21 22:16:24 2016 +0100
+
+    Update german locales
+
+commit b796210230b6c0753c9d9215c74b1d1c684ebcc2
+Author: Merathilis <neo0608@gmail.com>
+Date:   Wed Dec 21 21:07:32 2016 +0100
+
+    Fix options for Font selection to use LibSharedMedia. The previous method seems a bit buggy.
+
+commit 1375a74fd2075e2823c257b832e207218d093d13
+Author: Mikeprod <mikeprod.tm@gmail.com>
+Date:   Thu Dec 15 12:36:16 2016 +0100
+
+    Fix gold module Issue #12
+

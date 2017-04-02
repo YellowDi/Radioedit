@@ -1,12 +1,13 @@
 ------------------------------------------------------------------------
-r317 | Zensunim | 2017-03-29 10:08:31 -0500 (Wed, 29 Mar 2017) | 3 lines
+r319 | Zensunim | 2017-03-30 22:39:59 -0500 (Thu, 30 Mar 2017) | 2 lines
 Changed paths:
    M /trunk/GTFO.lua
    M /trunk/GTFO.toc
+   M /trunk/GTFO_Fail_LGN.lua
+   M /trunk/GTFO_Spells_LGN.lua
    M /trunk/ReadMe.txt
 
-4.42.8
-* Updated for patch 7.2
+Added Legion spells for Cathedral of the Night
 
 ------------------------------------------------------------------------
 
