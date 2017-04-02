@@ -1,0 +1,34 @@
+
+MSBTProfiles_SavedVars = {
+	["profiles"] = {
+		["Default"] = {
+			["scrollAreas"] = {
+				["Notification"] = {
+					["disabled"] = true,
+				},
+				["Outgoing"] = {
+					["behavior"] = "MSBT_NORMAL",
+					["direction"] = "Up",
+					["animationStyle"] = "Straight",
+				},
+				["Incoming"] = {
+					["behavior"] = "MSBT_NORMAL",
+					["direction"] = "Up",
+					["animationStyle"] = "Straight",
+				},
+				["Static"] = {
+					["disabled"] = true,
+				},
+			},
+			["creationVersion"] = "5.7.147",
+			["enableBlizzardHealing"] = false,
+			["enableBlizzardDamage"] = false,
+		},
+	},
+}
+MSBT_SavedMedia = {
+	["fonts"] = {
+	},
+	["sounds"] = {
+	},
+}
