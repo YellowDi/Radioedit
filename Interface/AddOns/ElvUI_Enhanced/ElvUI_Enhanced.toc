@@ -1,18 +1,14 @@
-## Interface: 70100
+## Interface: 70200
 ## Title: |cff1784d1ElvUI|r Enhanced (Legion)
 ## Author: Feraldin
 ## X-Credits: Instant, Tristimdorio (Omega1970), Azilroka, Lockslap, Sortokk, Repooc, moresunders
-## Version: 3.2.0-beta8
+## Version: 3.2.1-beta1
 ## Notes: Plugin-Enhancements for |cff1784d1ElvUI|r.
 ## X-Category: Plugins
 ## URL: https://wow.curseforge.com/addons/elvui-enhanced-again/
 ## X-Website: https://wow.curseforge.com/addons/elvui-enhanced-again/
 ## RequiredDeps: ElvUI
 ## DefaultState: Enabled
-## X-Curse-Packaged-Version: 3.2.0-beta8
-## X-Curse-Project-Name: ElvUI Enhanced Again (Legion)
-## X-Curse-Project-ID: elvui-enhanced-again
-## X-Curse-Repository-ID: wow/elvui-enhanced-again/mainline
 
 ## OptionalDeps: LibRangeCheck-2.0
 ## X-Embeds: LibRangeCheck-2.0

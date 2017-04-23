@@ -346,6 +346,31 @@ GTFO.SpellID["204042"] = {
   sound = 3;
 };
 
+GTFO.SpellID["235085"] = {
+  --desc = "Fel Bombardment";
+  sound = 3;
+};
+
+GTFO.SpellID["237716"] = {
+  --desc = "Fel Imp-losion (Fel Imp)";
+  sound = 3;
+};
+
+GTFO.SpellID["238005"] = {
+  --desc = "Cataclysmic Force Nova (Xeritas)";
+  sound = 3;
+};
+
+GTFO.SpellID["233228"] = {
+  --desc = "Scorching Swipe (Xeritas)";
+  sound = 3;
+};
+
+GTFO.SpellID["239164"] = {
+  --desc = "War Stomp (Fel Commander Erixtol)";
+  sound = 3;
+};
+
 -- **********
 -- * Mardum *
 -- **********
@@ -1383,6 +1408,16 @@ GTFO.SpellID["231006"] = {
   --desc = "Carve (Flightmaster Volnath)";
   sound = 3;
   tankSound = 0;
+};
+
+GTFO.SpellID["229948"] = {
+  --desc = "Fel Obelisk (Gul'dan)";
+  sound = 3;
+};
+
+GTFO.SpellID["208546"] = {
+  --desc = "Anguished Spirits (Gul'dan)";
+  sound = 3;
 };
 
 --- ******************

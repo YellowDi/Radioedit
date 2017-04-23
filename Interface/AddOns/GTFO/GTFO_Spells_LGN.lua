@@ -327,6 +327,41 @@ GTFO.SpellID["239085"] = {
   sound = 1;
 };
 
+GTFO.SpellID["237671"] = {
+  --desc = "Fel-Fire Ejection (Fel Fire Ejector 1-Piece)";
+  sound = 1;
+};
+
+GTFO.SpellID["239180"] = {
+  --desc = "Fel Burn";
+  sound = 1;
+};
+
+GTFO.SpellID["239176"] = {
+  --desc = "Rain of Fire (Fel Commander Erixtol)";
+  sound = 1;
+};
+
+GTFO.SpellID["240865"] = {
+  --desc = "Sentinax Destruction Zone";
+  sound = 1;
+};
+
+GTFO.SpellID["233850"] = {
+  --desc = "Virulent Infection";
+  sound = 1;
+};
+
+GTFO.SpellID["239863"] = {
+  --desc = "A Mother's Love (Mother Mirenda)";
+  sound = 1;
+};
+
+GTFO.SpellID["233868"] = {
+  --desc = "Fel Fire";
+  sound = 1;
+};
+
 
 -- **********
 -- * Mardum *
@@ -1165,6 +1200,12 @@ GTFO.SpellID["221781"] = {
   sound = 1;
 };
 
+GTFO.SpellID["206896"] = {
+  --desc = "Torn Soul (Gul'dan)";
+  applicationOnly = true;
+  sound = 1;
+};
+
 GTFO.SpellID["231008"] = {
   --desc = "Explosive Trap (Flightmaster Volnath)";
   sound = 1;
@@ -1345,3 +1386,4 @@ GTFO.SpellID["233177"] = {
   --desc = "Carrion Swarm (Mephistroth)";
   sound = 1;
 };
+

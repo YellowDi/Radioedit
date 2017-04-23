@@ -1215,3 +1215,6 @@ Change Log:
 4.42.9
 * Added Legion spells for Cathedral of the Night
 
+4.42.10
+* Added Legion spells for The Broken Isles (world)
+* Added Legion spells for Nighthold

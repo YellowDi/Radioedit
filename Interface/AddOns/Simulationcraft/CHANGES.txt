@@ -1,0 +1,12 @@
+tag 4d1603b0c050a969d2e558d693fd3114062ce847 v1.6.2
+Author:	Navv <navv1234@gmail.com>
+Date:	Thu Apr 13 19:28:33 2017 +0300
+
+release
+
+commit e8c2b6068da7dd23081a2ecad5228af44f880b6f
+Author: Navv <navv1234@gmail.com>
+Date:   Thu Apr 13 19:28:24 2017 +0300
+
+    Less breaking
+
