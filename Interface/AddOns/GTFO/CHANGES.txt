@@ -1,0 +1,30 @@
+------------------------------------------------------------------------
+r323 | Zensunim | 2017-04-18 02:17:09 -0500 (Tue, 18 Apr 2017) | 4 lines
+Changed paths:
+   M /trunk/GTFO.lua
+   M /trunk/GTFO.toc
+   M /trunk/GTFO_Fail_LGN.lua
+   M /trunk/GTFO_Spells_LGN.lua
+   M /trunk/ReadMe.txt
+
+4.42.10
+* Added Legion spells for The Broken Isles (world)
+* Added Legion spells for Nighthold
+
+------------------------------------------------------------------------
+r322 | Zensunim | 2017-04-09 16:39:50 -0500 (Sun, 09 Apr 2017) | 2 lines
+Changed paths:
+   M /trunk/GTFO_Spells_LGN.lua
+
+Added Legion spells for Broken Isles (world)
+
+------------------------------------------------------------------------
+r321 | Zensunim | 2017-04-08 11:53:36 -0500 (Sat, 08 Apr 2017) | 2 lines
+Changed paths:
+   M /trunk/GTFO_Fail_LGN.lua
+   M /trunk/GTFO_Spells_LGN.lua
+
+Added Legion spells for Broken Isles (world)
+
+------------------------------------------------------------------------
+
