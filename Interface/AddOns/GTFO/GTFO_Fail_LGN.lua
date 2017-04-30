@@ -371,6 +371,17 @@ GTFO.SpellID["239164"] = {
   sound = 3;
 };
 
+GTFO.SpellID["199036"] = {
+  --desc = "Fel Meteor";
+  sound = 3;
+};
+
+GTFO.SpellID["223425"] = {
+  --desc = "Chaotic Felburst (Felbringer Xar'thok)";
+  sound = 3;
+};
+
+
 -- **********
 -- * Mardum *
 -- **********

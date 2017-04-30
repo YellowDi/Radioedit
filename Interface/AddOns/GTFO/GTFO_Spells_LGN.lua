@@ -441,6 +441,26 @@ GTFO.SpellID["216319"] = {
   sound = 1;
 };
 
+GTFO.SpellID["222631"] = {
+  --desc = "Chaos Pyre (Lysanis Shadesoul)";
+  sound = 1;
+};
+
+GTFO.SpellID["199229"] = {
+  --desc = "Fel Fire Wall";
+  sound = 1;
+};
+
+GTFO.SpellID["211834"] = {
+  --desc = "Hellfire";
+  sound = 1;
+};
+
+GTFO.SpellID["238691"] = {
+  --desc = "Spear of Vengeance";
+  sound = 1;
+};
+
 
 -- ********************
 -- * The Broken Shore *
@@ -1017,8 +1037,6 @@ GTFO.SpellID["211634"] = {
 -- TODO: Volatile Fragment (Skorpyron)
 -- TODO: Arcing Bonds (Trilliax) -- FF Damage
 -- TODO: Fel Stomp (Spellblade Aluriel)
--- TODO: Flames of Argus (Tichondrius)
--- TODO: Ring of Shadows (Tichondrius)
 -- TODO: Isolated Rage (Krosus)
 -- TODO: Call of Night (High Botanist Tel'arn) -- when marked and not standing by someone unmarked
 -- TODO: Collapse of Night (High Botanist Tel'arn) -- when marked and not standing by someone unmarked
@@ -1133,6 +1151,11 @@ GTFO.SpellID["216027"] = {
   sound = 1;
 };
 
+GTFO.SpellID["216726"] = {
+  --desc = "Ring of Shadows (Tichondrius)";
+  sound = 1;
+};
+
 GTFO.SpellID["224978"] = {
   --desc = "Infinite Abyss (Abyss Watcher)";
   sound = 1;
@@ -1204,6 +1227,22 @@ GTFO.SpellID["206896"] = {
   --desc = "Torn Soul (Gul'dan)";
   applicationOnly = true;
   sound = 1;
+};
+
+GTFO.SpellID["227550"] = {
+  --desc = "Fel Scythe (Gul'dan)";
+	soundFunction = function() 
+		if (GTFO.TankMode) then
+			if (not GTFO_FindEvent("FelScythe")) then
+				GTFO_AddEvent("FelScythe", 4);
+				return 0;
+			end
+			if (UnitIsUnit("Boss1Target", "player")) then
+				return 4;
+			end
+		end
+		return 1;
+	end;
 };
 
 GTFO.SpellID["231008"] = {
