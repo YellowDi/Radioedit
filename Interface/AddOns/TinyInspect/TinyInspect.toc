@@ -2,7 +2,7 @@
 ## Title: TinyInspect
 ## Notes: TinyInspect
 ## Author: M
-## Version: 7.2.4.2
+## Version: 7.2.5
 ## SavedVariables: TinyInspectDB
 
 Libs\lib.xml
