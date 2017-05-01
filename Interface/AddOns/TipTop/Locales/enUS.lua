@@ -1,4 +1,4 @@
-﻿local L = LibStub("AceLocale-3.0"):NewLocale("TipTop", "enUS", true)
+local L = LibStub("AceLocale-3.0"):NewLocale("TipTop", "enUS", true)
 
 ---------- TipTopOptions ----------
 L["None"] = true
@@ -129,6 +129,7 @@ L["elite"] = true
 L["rareelite"] = true
 L["boss"] = true
 L["worldboss"] = true
+L["Cast by"] = true
 
 ---------- id ----------
 L["SpellID:"] = true

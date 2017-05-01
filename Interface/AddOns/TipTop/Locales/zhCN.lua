@@ -130,6 +130,7 @@ L["elite"] = "|cff6699ff精英|r";
 L["rareelite"] = "|cff6699ff稀有精英|r";
 L["boss"] = "|cffFF0000BOSS|r";
 L["worldboss"] = "|cffFF0000世界BOSS|r";
+L["Cast by"] = "施法者";
 
 ---------- id ----------
 L["SpellID:"] = "法术编号";

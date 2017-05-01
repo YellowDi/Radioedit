@@ -4,7 +4,7 @@ local hugeLevel = 140
 
 --CREATE & ASSIGN FRAMES--
 TipTop = CreateFrame("FRAME", nil, GameTooltip)
-	local TipTop = TipTop
+local TipTop = TipTop
 local tt = GameTooltip
 local ttSBar = GameTooltipStatusBar
 local ttSBarBG = CreateFrame("Frame", nil, ttSBar)
@@ -268,7 +268,7 @@ local function Appendices()	--appends info to the name/guild of the unit - ALSO 
 			local text = nil
 			text = GameTooltipTextLeft2:GetText()
 			if text == guild then
-				GameTooltipTextLeft2:SetFormattedText("|cffFF0000<%s>|r |cff00FF96%s|r", text, rank)
+				GameTooltipTextLeft2:SetFormattedText("|cffFFD200[%s]|r |cff00FF96%s|r", text, rank)
 				tt:Show()
 			end
 		end
@@ -313,6 +313,7 @@ local function BorderClassColor()	--colors tip border and adds class icon
 			end
 			local x1, x2, y1, y2 = unpack(CLASS_ICON_TCOORDS[class])
 			GameTooltipTextLeft1:SetFormattedText("|T%s:22:22:0:0:256:256:%d:%d:%d:%d|t %s", path, x1*256, x2*256, y1*256, y2*256, text)
+			GameTooltipTextLeft1:SetTextColor(color[class].r, color[class].g, color[class].b)
 			tt:Show()
 		end
 	end
@@ -629,7 +630,23 @@ local function PlayerLogin()
 	PlayerLogin = nil	--let this function be garbage collected
 end
 
-
 TipTop:RegisterEvent("PLAYER_LOGIN")
 TipTop:SetScript("OnEvent", PlayerLogin)
 TipTop:SetScript("OnShow", TipShow)
+
+--Cast
+local function SetUnitAura(self, unit, index, filter)
+local name, rank, icon, count, debuffType, duration, expires, caster = UnitAura(unit, index, filter)
+	if(caster) then
+	local _, class = UnitClass(caster)
+	local name, realm = UnitName(caster)
+		if(realm) then
+			name = ("%s-%s"):format(name, realm)
+		end
+		GameTooltip:AddDoubleLine(L["Cast by"], name, caster)
+		GameTooltipTextRight3:SetTextColor(color[class].r, color[class].g, color[class].b)
+		tt:Show()
+	end
+end
+
+hooksecurefunc(GameTooltip, "SetUnitAura", SetUnitAura)
