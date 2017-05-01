@@ -487,6 +487,10 @@ GTFO.SpellID["183737"] = {
   sound = 1;
 };
 
+GTFO.SpellID["234636"] = {
+  --desc = "Fel Discharge";
+  sound = 1;
+};
 
 
 -- *********************
@@ -1424,5 +1428,44 @@ GTFO.SpellID["239326"] = {
 GTFO.SpellID["233177"] = {
   --desc = "Carrion Swarm (Mephistroth)";
   sound = 1;
+};
+
+-- ********************
+-- * Tomb of Sargeras *
+-- ********************
+
+GTFO.SpellID["231363"] = {
+  --desc = "Burning Armor (Goroth)";
+  sound = 4;
+  negatingDebuffSpellID = 231363; -- Burning Armor
+  negatingIgnoreTime = 2;
+};
+
+GTFO.SpellID["241265"] = {
+  --desc = "Shocking Squall (Tidescale Witch)";
+  sound = 1;
+};
+
+GTFO.SpellID["231770"] = {
+  --desc = "Drenched (Harjatan)";
+  applicationOnly = true;
+  sound = 1;
+};
+
+GTFO.SpellID["231768"] = {
+  --desc = "Drenching Waters (Harjatan)";
+  applicationOnly = true;
+  sound = 1;
+};
+
+GTFO.SpellID["240176"] = {
+  --desc = "Lightning Storm (Undersea Custodian)";
+  sound = 1;
+};
+
+GTFO.SpellID["230959"] = {
+  --desc = "Concealing Murk (Mistress Sassz'ine)";
+  sound = 2;
+  test = true;
 };
 
