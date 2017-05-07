@@ -1,0 +1,30 @@
+tag af3fbd7834ee73c0f187e16f1ba4af486c8a3a56 v1.7.0
+Author:	Navv <navv1234@gmail.com>
+Date:	Thu May 4 23:29:44 2017 +0300
+
+release
+
+commit 8e8c6d5dcaa9a8518feb31754f8883dc023ce9d9
+Author: Navv <navv1234@gmail.com>
+Date:   Thu May 4 23:28:59 2017 +0300
+
+    Update version
+
+commit 4667602e7c688c4b710e109c0ec77f3eb6022ce5
+Author: Navv <navv1234@gmail.com>
+Date:   Thu May 4 23:27:27 2017 +0300
+
+    Fix links with old-style upgrade information
+
+commit ff2485e7a006f12bd9992b6c48771c33ec069a14
+Author: Dave Hendler <sollaires@gmail.com>
+Date:   Mon May 1 20:21:46 2017 -0700
+
+    Add gear from bags as comments to output
+
+commit ff2485e7a006f12bd9992b6c48771c33ec069a14
+Author: Dave Hendler <sollaires@gmail.com>
+Date:   Mon May 1 20:21:46 2017 -0700
+
+    Add gear from bags as comments to output
+
