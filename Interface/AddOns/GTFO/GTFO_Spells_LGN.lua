@@ -1469,3 +1469,65 @@ GTFO.SpellID["230959"] = {
   test = true;
 };
 
+GTFO.SpellID["236241"] = {
+  --desc = "Soul Rot (Engine of Souls)";
+  sound = 1;
+};
+
+GTFO.SpellID["236464"] = {
+  --desc = "Soulbind (Engine of Souls)";
+  sound = 4;
+  test = true;
+};
+
+GTFO.SpellID["235989"] = {
+  --desc = "Tormented Cries (Engine of Souls)";
+  sound = 1;
+};
+
+GTFO.SpellID["235907"] = {
+  --desc = "Collapsing Fissure (Engine of Souls)";
+  sound = 1;
+};
+
+GTFO.SpellID["236011"] = {
+  --desc = "Tormented Cries (Engine of Souls)";
+  sound = 1;
+  alwaysAlert = true;
+};
+
+GTFO.SpellID["234550"] = {
+  --desc = "Bone Saw (Atrigan)";
+  sound = 1;
+};
+
+GTFO.SpellID["233444"] = {
+  --desc = "Bone Saw (Atrigan)";
+  sound = 1;
+};
+
+GTFO.SpellID["235237"] = {
+  --desc = "Fel Squall (Belac)";
+  sound = 1;
+};
+
+GTFO.SpellID["241032"] = {
+  --desc = "Desolation of the Moon (Lunar Guard)";
+  sound = 1;
+};
+
+GTFO.SpellID["241169"] = {
+  --desc = "Umbra Destruction (Umbral Guard)";
+  sound = 1;
+};
+
+GTFO.SpellID["237351"] = {
+  --desc = "Lunar Barrage (Sisters of the Moon)";
+  sound = 1;
+};
+
+GTFO.SpellID["236516"] = {
+  --desc = "Twilight Volley (Sisters of the Moon)";
+  sound = 1;
+};
+

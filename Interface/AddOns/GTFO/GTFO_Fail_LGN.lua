@@ -1769,3 +1769,33 @@ GTFO.SpellID["232885"] = {
   --desc = "Devour Whole (Mistress Sassz'ine)";
   sound = 3;
 };
+
+GTFO.SpellID["236011"] = {
+  --desc = "Tormented Cries (Engine of Souls)";
+  sound = 3;
+  affirmingDebuffSpellID = 209166; -- Tormented Cries  
+  test = true;
+};
+
+GTFO.SpellID["233426"] = {
+  --desc = "Scythe Sweep (Atrigan)";
+  sound = 3;
+  tankSound = 0;
+};
+
+GTFO.SpellID["241173"] = {
+  --desc = "Umbra Cleave (Umbral Guard)";
+  sound = 3;
+	tankSound = 0;
+};
+
+GTFO.SpellID["236480"] = {
+  --desc = "Glaive Storm (Sisters of the Moon)";
+  sound = 3;
+};
+
+GTFO.SpellID["239810"] = {
+  --desc = "Sever Soul (Eternal Soulguard)";
+  sound = 3;
+};
+
