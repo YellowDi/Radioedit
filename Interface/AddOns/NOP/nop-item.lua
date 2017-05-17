@@ -33,7 +33,7 @@ function NOP:ItemGetItem(itemID) -- looking for usable item by itemID returns (c
       local name, rank, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, shouldConsolidate, spellID  = UnitAura(private.UNITID_PLAYER, n,private.AURA_HELPFUL)
       if spellID and spellID == a then -- already have aura from that item
         if aura == private.AURA_MINERS_COFFEE then -- extra handling for this aura
-          if count >= self.DB.cofeeStacks then -- it has enough of stacks?
+          if count >= NOP.DB.cofeeStacks then -- it has enough of stacks?
             self:Verbose("itemID",itemID,"rejected already have aura",name,"with",count,"stacks")
             return
           end
@@ -47,19 +47,24 @@ function NOP:ItemGetItem(itemID) -- looking for usable item by itemID returns (c
   end
   return count, 2, z, m, a
 end
-function NOP:ItemGetPattern(itemID) -- looking for usable item via pattern in tooltip returns (count, 2, zone, map) or nil
-  if self.DB.profession and self.pickLockLevel and (self.scanFrame:NumLines() > 2) then -- rogue picklock in use
+function NOP:ItemGetLockPattern(itemID) -- test tooltip for locked item
+  if NOP.DB.profession and self.pickLockLevel and (self.scanFrame:NumLines() > 2) then -- rogue picklock in use
     local locked = -1 
     if string.match(_G[private.TOOLTIP_SCAN .. "TextLeft" .. 2]:GetText(),"^" .. LOCKED .. "$") then locked = 3 end -- LOCKED is Blizzard's UI global variable and is localized text of Locked, it must be at start of 2dn line in tooltip
     if string.match(_G[private.TOOLTIP_SCAN .. "TextLeft" .. 3]:GetText(),"^" .. LOCKED .. "$") then locked = 4 end -- color-blind mode adds extra line
     if locked > 0 then 
       local lockLevel = tonumber(string.match(_G[private.TOOLTIP_SCAN .. "TextLeft" .. locked]:GetText(),"%d+")) -- this line must contain unlock level
       if lockLevel and (self.pickLockLevel >= lockLevel) then -- I can picklock this!
+        self:Verbose(itemID,"Locked:",lockLevel)
         T_PICK[itemID] = true
         return 1, 2
       end
     end
   end
+end
+function NOP:ItemGetPattern(itemID) -- looking for usable item via pattern in tooltip returns (count, 2, zone, map) or nil
+  local n, p = self:ItemGetLockPattern(itemID)
+  if n then return n,p end
   for i=1,self.scanFrame:NumLines() do -- scan all lines in tooltip
     local headingLine = private.TOOLTIP_SCAN .. "TextLeft" .. i
     local heading = _G[headingLine]:GetText() -- get line from tooltip
@@ -213,6 +218,27 @@ function NOP:ItemIsUsable(itemID) -- look in tooltip if there is no red text
   --self:Verbose("itemID",itemID,"Empty tooltip!")
   return false
 end
+function NOP:ItemToPicklock(itemID) -- need to find which item really need to unlock, locked and unlocked items have same itemID
+  for bag = BACKPACK_CONTAINER, NUM_BAG_SLOTS, 1 do
+    for slot = 1, GetContainerNumSlots(bag), 1 do
+      local id = GetContainerItemID(bag,slot)
+      if (id == itemID) then
+        self.scanFrame:ClearLines() -- clean tooltip frame
+        self.scanFrame:SetBagItem(bag, slot) -- fill up tooltip
+        if (self.scanFrame:NumLines() < 1) then -- bug, all items should have tooltip!
+          self:Verbose("Broken tooltip on " .. id)
+          self.scanFrame = self:TooltipCreate(private.TOOLTIP_SCAN) -- workaround for this obscure bug is reset parent for tooltip
+          self.scanFrame:SetBagItem(bag, slot) -- fill up tooltip
+        end
+        if self:ItemGetLockPattern(id) then
+          self.BF.bagID, self.BF.slotID = bag, slot -- this item really need to unlock
+          self:Verbose("Locked item",id,"bag",bag,"slot",slot)
+          return true
+        end
+      end
+    end
+  end
+end
 function NOP:ItemShow(bagID,slotID,itemID,itemCount,itemTexture) -- add item to button
   local button = self.BF
   if not button then return end
@@ -231,14 +257,14 @@ function NOP:ItemShow(bagID,slotID,itemID,itemCount,itemTexture) -- add item to 
     end
   end
   if bagID and slotID and itemID and itemTexture then -- time to update button with 1st item
-    if self.pickLockID == itemID then
-      button.mtext = format(private.MACRO_PICKLOCK,self.pickLockSpell,itemID) -- format(private.MACRO_PICKLOCK,self.pickLockSpell,bagID,slotID)
+    if (self.pickLockID == itemID) and self:ItemToPicklock(itemID) then -- search what item really need to unlock!
+      button.mtext = format(private.MACRO_PICKLOCK,self.pickLockSpell,button.bagID,button.slotID) -- bagId and slotID could change in self:ItemToPicklock(itemID)!
     else
-      button.mtext = format(private.MACRO_ACTIVE,itemID) -- format(private.MACRO_ACTIVE,NOP.DB.script and private.MACRO_CLOSE or "",bagID,slotID)
+      button.mtext = format(private.MACRO_ACTIVE,itemID)
     end
-    self:Verbose("itemID",itemID,"in bag",bagID,"and slot",slotID,"placed on button")
-    button.showID = itemID
-    self.AceDB.char.itemID = itemID
+    self:Verbose("itemID",itemID,"bag",button.bagID,"slot",button.slotID,"placed on button")
+    button.showID = itemID -- from now every item in bag is new one
+    self.AceDB.char.itemID = itemID -- store for restore as last item on button after logout/login
     self:ButtonShow() -- show button
   else -- need hide button
     if self:BlacklistClear() then -- no more items to show, may be some are just temporary blacklisted

@@ -1,4 +1,13 @@
 -- Revisions:
+--[[<p>07.28 10.05.2017</p>
+<ul>
+<li>UIError messages are now handled and cleared out. It prevent showing errow when bashing NOP button. Errors now are not handled only on pre-caching items and spells, but all the time.</li>
+<li>Fix for lockpicking. Because now macro have form /use item:itemID, UI could try to use locked item or unlock unlocked item. Logic now for unlock use old macro form /use bag slot as target for spell.</li>
+<li>Added Artifact Research Compendium: Volumes I-IV.</li>
+<li>Removed old code for bank and guild frame, now button can be used with any kind of open frames like trade, vendor and bank.</li>
+<li>Other code cleanup, frame in combat handling etc.</li>
+</ul>
+]]
 --[[<p>07.26 18.04.2017</p>
 <ul>
 <li>Preserved Mining Pick and Miners's Cofee as well all items using Aura check fix, should be shown only in proper sub-zone and map without <b>zone unlock</b> setting influence.</li>

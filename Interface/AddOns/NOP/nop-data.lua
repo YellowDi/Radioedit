@@ -76,6 +76,7 @@ NOP.T_RECIPES = { -- [ItemId] = {count_to_use, "gsub regex" | tooltip-line-numbe
   [147727] = {1,1,nil}, -- Greater Legionfall Insignia
 }
 NOP.T_ITEMS = { -- [itemID] = {count_to_use,{"sub-Zone",...},{[mapID]=true,...},auraID}, table for opening/use item by itemID, is no possible to check any common text
+  [144435] = {1,nil,nil}, -- Artifact Research Compendium: Volumes I-IV
   [128373] = {1,{private.SHIPYARD_HORDE,private.SHIPYARD_ALLIANCE},{[private.FROSTWALL]=true,[private.LUNARFALL]=true}}, -- Rush Order: Shipyard, special handling for sub-zone
   [136806] = {1,nil,nil}, -- Glass of Arcwine
   [147729] = {1,nil,nil}, -- Netherchunk

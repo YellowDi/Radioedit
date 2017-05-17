@@ -46,8 +46,6 @@ function NOP:ButtonSkin(button,skin) -- skin or restore button look
     button.pt = pt
     button:SetPushedTexture(pt)
     if button.cooldown then
-      -- if button.cooldown.ClearAllPoints then button.cooldown:ClearAllPoints() end
-      -- if button.cooldown.SetInside then button.cooldown:SetInside() else SetInside(button.cooldown) end
       if button.cooldown.SetDrawEdge then button.cooldown:SetDrawEdge(false) end
       if button.cooldown.SetDrawBling then button.cooldown:SetDrawBling(false) end
       if button.cooldown.SetDrawSwipe then button.cooldown:SetDrawSwipe(false) end
@@ -116,16 +114,12 @@ function NOP:ButtonOnLeave(button) -- hide tooltip
   if self:inCombat() then return; end
   GameTooltip:Hide()
 end
-function NOP:ButtonPreClick(button) -- pre click, let recheck item
-  -- not needed anymore if self.DB.script then self:ButtonClose() end
-  if WoWBox then WoWBox.itemClick = nil end
-  self.itemClick = true -- can trigger updater after spell ends
-end
 function NOP:ButtonPostClick(button) -- post click on button
   if button then
     if (button == 'RightButton') then
       NOP:BlacklistItem(IsControlKeyDown(),self.BF.itemID)
     end
+    if WoWBox then WoWBox.itemClick = nil end
     if not self.timerItemShowNew then self.timerItemShowNew = self:ScheduleTimer("ItemShowNew", private.TIMER_IDLE) end -- back to timer
   end
 end
@@ -136,19 +130,14 @@ end
 function NOP:ButtonOnDragStop(button) -- stop moving and save new position
   button:StopMovingOrSizing()
   self:ButtonSave()
-  self:QBAnchorSave() -- now always save if self.DB.qb_sticky then self:QBAnchorSave() end
-end
-function NOP:ButtonResetTimer() -- reset button to default position
-  if self:inCombat() then self:ScheduleTimer("ButtonResetTimer", private.TIMER_IDLE); return; end
-  self.timerButtonReset = nil
-  self:ButtonReset()
+  self:QBAnchorSave() -- now always save if NOP.DB.qb_sticky then self:QBAnchorSave() end
 end
 function NOP:ButtonReset() -- reset button to default position
   if self:inCombat() then
-    if not self.timerButtonReset then self.timerButtonReset = self:ScheduleTimer("ButtonResetTimer", private.TIMER_IDLE) end
+    if not self.timerButtonReset then self.timerButtonReset = self:ScheduleTimer("ButtonReset", private.TIMER_IDLE) end
     return
   end
-  if self.timerButtonReset then return end
+  self.timerButtonReset = nil
   self.DB["iconSize"] = private.DEFAULT_ICON_SIZE -- default size
   self.DB["lockButton"] = false -- unlock
   self.DB["button"] = {"CENTER", nil, "CENTER", 0, 0}
@@ -157,43 +146,33 @@ function NOP:ButtonReset() -- reset button to default position
   self:QBUpdate()
   self.printt(private.L["Reset and move button to middle of screen!"])
 end
-function NOP:ButtonSizeTimer() -- resize button
-  if self:inCombat() then self:ScheduleTimer("ButtonSizeTimer", private.TIMER_IDLE); return; end
-  self.timerButtonSize = nil
-  self:ButtonSize()
-end
 function NOP:ButtonSize() -- resize button
   if self:inCombat() then
-    if not self.timerButtonSize then self.timerButtonSize = self:ScheduleTimer("ButtonSizeTimer", private.TIMER_IDLE) end
+    if not self.timerButtonSize then self.timerButtonSize = self:ScheduleTimer("ButtonSize", private.TIMER_IDLE) end
     return
   end
-  if self.timerButtonSize then return end
+  self.timerButtonSize = nil
   if not self.BF then return end
-  local iconSize = self.DB.iconSize or private.DEFAULT_ICON_SIZE
+  local iconSize = NOP.DB.iconSize or private.DEFAULT_ICON_SIZE
   if WoWBox and WoWBox.scaleDown then iconSize = math.floor(iconSize * 0.75) end
   self.BF:SetWidth(iconSize)
   self.BF:SetHeight(iconSize)
-  if self.DB.qb_sticky then self:QBAnchorSize(); self:QBUpdate(); end -- Quest Bar is locked to Item Button
+  if NOP.DB.qb_sticky then self:QBAnchorSize(); self:QBUpdate(); end -- Quest Bar is locked to Item Button
 end
 function NOP:ButtonSave() -- save button position after move
   if not self.BF then return end
   local point, relativeTo, relativePoint, xOfs, yOfs = self.BF:GetPoint()
-  self.DB.button = {point or "CENTER", "UIParent", relativePoint or "CENTER", xOfs or 0, yOfs or 0}
-end
-function NOP:ButtonMoveTimer() -- move button from UI config
-  if self:inCombat() then self:ScheduleTimer("ButtonMoveTimer", private.TIMER_IDLE); return; end
-  self.timerButtonMove = nil
-  self:ButtonMove()
+  NOP.DB.button = {point or "CENTER", "UIParent", relativePoint or "CENTER", xOfs or 0, yOfs or 0}
 end
 function NOP:ButtonMove() -- move button from UI config
   if self:inCombat() then
-    if not self.timerButtonMove then self.timerButtonMove = self:ScheduleTimer("ButtonMoveTimer", private.TIMER_IDLE) end
+    if not self.timerButtonMove then self.timerButtonMove = self:ScheduleTimer("ButtonMove", private.TIMER_IDLE) end
     return
   end
-  if self.timerButtonMove then return end
+  self.timerButtonMove = nil
   self.BF:SetClampedToScreen(true)
   self.BF:ClearAllPoints()
-  self.BF:SetPoint(self.DB.button[1] or "CENTER", self.frameHider, self.DB.button[3] or "CENTER", self.DB.button[4] or 0, self.DB.button[5] or 0)
+  self.BF:SetPoint(NOP.DB.button[1] or "CENTER", self.frameHider, NOP.DB.button[3] or "CENTER", NOP.DB.button[4] or 0, NOP.DB.button[5] or 0)
   self:ButtonSave()
 end
 function NOP:ButtonStore(button) -- save default properties
@@ -221,20 +200,14 @@ function NOP:ButtonBackdrop(bt) -- create backdrop for button
   btex:SetColorTexture(0, 0, 0, 1)
   btex:SetDrawLayer("BACKGROUND", -1)
   if btex.SetOutside then btex:SetOutside(bt) else SetOutside(btex,bt) end
-  -- todo set strata bellow button
   bt.backdropTexture = btex
-end
-function NOP:ButtonLoadTimer() -- create button, restore his position
-  if self:inCombat() then self:ScheduleTimer("ButtonLoadTimer", private.TIMER_IDLE); return; end
-  self.timerButtonLoad = nil
-  self:ButtonLoad()
 end
 function NOP:ButtonLoad() -- create button, restore his position
   if self:inCombat() then
-    if not self.timerButtonLoad then self.timerButtonLoad = self:ScheduleTimer("ButtonLoadTimer", private.TIMER_IDLE) end
+    if not self.timerButtonLoad then self.timerButtonLoad = self:ScheduleTimer("ButtonLoad", private.TIMER_IDLE) end
     return
   end
-  if self.timerButtonLoad then return end
+  self.timerButtonLoad = nil
   if not self.BF then -- new button
     self.BF = CreateFrame("Button", private.BUTTON_FRAME, self.frameHider, "SecureActionButtonTemplate, ActionButtonTemplate")
     self:ButtonSize() -- set or restore size
@@ -246,7 +219,6 @@ function NOP:ButtonLoad() -- create button, restore his position
     bt:RegisterForClicks("AnyUp") -- act on key release 
     bt:SetScript("OnEnter",     function(self) NOP:ButtonOnEnter(self) end)
     bt:SetScript("OnLeave",     function(self) NOP:ButtonOnLeave(self) end)
-    bt:SetScript("PreClick",    function(self,button) NOP:ButtonPreClick(button) end)
     bt:SetScript("PostClick",   function(self,button) NOP:ButtonPostClick(button) end)
     bt:SetScript("OnDragStart", function(self) NOP:ButtonOnDragStart(self) end)
     bt:SetScript("OnDragStop",  function(self) NOP:ButtonOnDragStop(self) end)
@@ -269,13 +241,9 @@ function NOP:ButtonSwap(swap) -- swap count and timer text sides on button
   if swap then
     bt.count:ClearAllPoints()
     bt.count:SetPoint('BOTTOMLEFT',bt,'BOTTOMLEFT', 1, -1)
-    -- bt.timer:ClearAllPoints()
-    -- bt.timer:SetPoint("BOTTOMRIGHT",bt,"BOTTOMRIGHT", 1, -1)
   else
     bt.count:ClearAllPoints()
     bt.count:SetPoint("BOTTOMRIGHT",bt,"BOTTOMRIGHT", 1, -1)
-    -- bt.timer:ClearAllPoints()
-    -- bt.timer:SetPoint('BOTTOMLEFT',bt,'BOTTOMLEFT', 1, -1)
   end
 end
 function NOP:ButtonCount(count) -- update counter on button
@@ -292,7 +260,8 @@ function NOP:ButtonShow() -- display button
   local bt = self.BF; self:ButtonCount(bt.itemCount); bt.icon:SetTexture(bt.itemTexture or private.DEFAULT_ICON)
   if (GetMouseFocus() == bt) then self:ButtonOnEnter(bt) end
   bt:SetAttribute("type1", "macro") -- "type1" Unmodified left click.
-  bt:SetAttribute("macrotext1", bt.mtext);
+  bt:SetAttribute("macrotext1", bt.mtext)
+  self:Verbose("Set Macro:",bt.mtext)
   if not (bt:IsVisible() or bt:IsShown()) then bt:Show() end
   if NOP.DB.glowButton then
     if self.priorityItem and self.priorityItem == bt.itemID then
@@ -302,17 +271,12 @@ function NOP:ButtonShow() -- display button
     end
   end
 end
-function NOP:ButtonHideTimer() -- hide button in combat
-  if self:inCombat() then self:ScheduleTimer("ButtonHideTimer", private.TIMER_IDLE); return; end -- in combat postspone
-  self.timerButtonHide = nil
-  self:ButtonHide()
-end
 function NOP:ButtonHide() -- hide button
   if self:inCombat() then
-    if not self.timerButtonHide then self.timerButtonHide = self:ScheduleTimer("ButtonHideTimer", private.TIMER_IDLE) end -- start combat timer
+    if not self.timerButtonHide then self.timerButtonHide = self:ScheduleTimer("ButtonHide", private.TIMER_IDLE) end -- start combat timer
     return
   end
-  if self.timerButtonHide then return end
+  self.timerButtonHide = nil
   local bt = self.BF; bt.itemCount = 0; bt.bagID = nil; bt.itemID = nil; bt.mtext = private.MACRO_INACTIVE; bt.itemTexture = nil -- reset to defaults
   bt.icon:SetTexture(private.DEFAULT_ICON); 
   bt:SetAttribute("macrotext1", private.MACRO_INACTIVE); self:ButtonCount(bt.itemCount); self.ActionButton_HideOverlayGlow(bt)
@@ -322,15 +286,6 @@ function NOP:ButtonHide() -- hide button
     if bt:IsShown() or bt:IsVisible() then bt:Hide() end
   end
 end
---[[ function NOP:ButtonClose() -- close unvanted frames before button use, prevent moving item from backpack to bank, guild bank or trader
-  ClearCursor() -- if something is hold in drag, put that item back
-  if self.bankOpen then CloseBankFrame() end -- bank frame must be gone
-  if self.guildOpen then CloseGuildBankFrame() end -- guild bank frame must be gone
-  for i = 1, #NOP.T_FRAMES do
-    local frame = _G[NOP.T_FRAMES[i]] --[[ get pointer to global frame
-    if frame and frame.IsShown and frame.Hide and (frame:IsShown() or frame:IsVisible()) then frame:Hide() end -- close it if is shown
-  end
-end ]]
 function NOP:ButtonHotKey(key) -- abbreviation for hotkey string
   if key and (string.len(key) > 0) then
     key = key:gsub('ALT%-', 'A')

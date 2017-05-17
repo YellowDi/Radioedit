@@ -7,21 +7,21 @@ function NOP:QBAnchorMove() -- move anchor for quest bar
   if not self.QB then return end
   self.QB:SetClampedToScreen(true)
   self.QB:ClearAllPoints()
-  if self.DB.qb_sticky then
+  if NOP.DB.qb_sticky then
     self.QB:SetAllPoints(private.BUTTON_FRAME)
   else
-    self.QB:SetPoint(self.DB.qb[1] or "CENTER", self.frameHider, self.DB.qb[3] or "CENTER", self.DB.qb[4] or 0, self.DB.qb[5] or 0)
+    self.QB:SetPoint(NOP.DB.qb[1] or "CENTER", self.frameHider, NOP.DB.qb[3] or "CENTER", NOP.DB.qb[4] or 0, NOP.DB.qb[5] or 0)
   end
 end
 function NOP:QBAnchorSave() -- save Anchor pos after button position change
   if not self.QB then return end
   local point, relativeTo, relativePoint, xOfs, yOfs = self.QB:GetPoint()
-  self.DB.qb = {point or "CENTER", "UIParent", relativePoint or "CENTER", xOfs or 0, yOfs or 0}
+  NOP.DB.qb = {point or "CENTER", "UIParent", relativePoint or "CENTER", xOfs or 0, yOfs or 0}
 end
 function NOP:QBAnchorSize() -- resize quest bar anchor to current icon size
   if not self.QB then return end
   self.QB:SetClampedToScreen(true)
-  local iconSize = self.DB.iconSize or private.DEFAULT_ICON_SIZE
+  local iconSize = NOP.DB.iconSize or private.DEFAULT_ICON_SIZE
   if WoWBox and WoWBox.scaleDown then iconSize = math.floor(iconSize * 0.75) end
   self.QB:SetWidth(iconSize)
   self.QB:SetHeight(iconSize)
@@ -45,7 +45,7 @@ function NOP:QBAnchor() -- create quest bar anchor frame
   NOP.LQI.RegisterCallback(self, "LibQuestItem_Update","QBUpdate")
 end
 function NOP:QBButtonSize(bt) -- resize button to current icon size
-  local iconSize = self.DB.iconSize or private.DEFAULT_ICON_SIZE
+  local iconSize = NOP.DB.iconSize or private.DEFAULT_ICON_SIZE
   if WoWBox and WoWBox.scaleDown then iconSize = math.floor(iconSize * 0.75) end
   bt:SetWidth(iconSize)
   bt:SetHeight(iconSize)
@@ -120,18 +120,13 @@ function NOP:QBPostClick(bt,mouse) -- click on button, place hotkey if none
     self:QBKeyBind(bt)
   end
 end
-function NOP:QBKeyBindTimer(bt, i) -- define hotkey after combat ends
-  if self:inCombat() then self:ScheduleTimer("QBKeyBindTimer", private.TIMER_IDLE, bt, i); return; end
-  self.timerQBKeyBind = nil
-  self:QBKeyBind(bt, i)
-end
 function NOP:QBKeyBind(bt,i) -- define hotkey
   if not (bt and NOP.DB.keyBind and string.len(NOP.DB.keyBind) > 0) then return end
   if self:inCombat() then
-    if not self.timerQBKeyBind then self.timerQBKeyBind = self:ScheduleTimer("QBKeyBindTimer", private.TIMER_IDLE, bt, i) end
+    if not self.timerQBKeyBind then self.timerQBKeyBind = self:ScheduleTimer("QBKeyBind", private.TIMER_IDLE, bt, i) end
     return
   end
-  if self.timerQBKeyBind then return end
+  self.timerQBKeyBind = nil
   self:QBClearBind()
   SetBindingClick(NOP.DB.keyBind, bt:GetName(), 'LeftButton')
   if bt.hotkey then bt.hotkey:SetText(self:ButtonHotKey(NOP.DB.keyBind)) end
@@ -149,7 +144,7 @@ function NOP:QBButtonAnchor(i) -- anchor buttons
   local button = self.QB.buttons[i]
   local parent = (i == 1 or mod(i-1, NOP.DB.slots) == 0) and (private.QB_NAME.."Anchor") or (private.QB_NAME..(i-1)) -- anchor to anchor frame or last button
   local rowspace = 0
-  if (i > 1) and (mod(i-1, NOP.DB.slots) == 0) then rowspace = -NOP.DB.expand * (self.DB.iconSize + NOP.DB.spacing) * floor(i/NOP.DB.slots) end
+  if (i > 1) and (mod(i-1, NOP.DB.slots) == 0) then rowspace = -NOP.DB.expand * (NOP.DB.iconSize + NOP.DB.spacing) * floor(i/NOP.DB.slots) end
   button:ClearAllPoints()
   if NOP.DB.direction == "RIGHT" then
     button:SetPoint("LEFT", parent, "RIGHT", NOP.DB.spacing, -rowspace)
@@ -182,11 +177,6 @@ function NOP:QBButtonAdd(i, itemID) -- set new item
   end
   if not(button:IsShown() or button:IsVisible()) then button:Show() end
 end
-function NOP:QBUpdateTimer() -- update all buttons after combat ends
-  if self:inCombat() then self:ScheduleTimer("QBUpdateTimer", private.TIMER_IDLE); return; end
-  self.timerQBUpdate = nil
-  NOP:QBUpdate()
-end
 function NOP:QBReset() -- hide and clear buttons on quest bar
   self.QB.refreshBar = false -- post refresh by calling NOP.LQI:Scan()
   if not (self.QB and self.QB.buttons) then return end
@@ -201,15 +191,15 @@ function NOP:QBReset() -- hide and clear buttons on quest bar
 end
 function NOP:QBUpdate() -- update all buttons on quest bar
   if not self.QB or not self.QB.buttons then return end -- not yet initialized
+  if self:inCombat() then -- postspone update in combat
+    if not self.timerQBUpdate then self.timerQBUpdate = self:ScheduleTimer("QBUpdate", private.TIMER_IDLE) end
+    return 
+  end
+  self.timerQBUpdate = nil
   if not NOP.DB.quest then 
     if self.QB:IsShown() or self.QB:IsVisible() then self.QB:Hide() end
     return
   end -- quest bar is disabled and hidden nothing to do
-  if self:inCombat() then -- postspone update in combat
-    if not self.timerQBUpdate then self.timerQBUpdate = self:ScheduleTimer("QBUpdateTimer", private.TIMER_IDLE) end
-    return 
-  end
-  if self.timerQBUpdate then return end -- update will come from timer soon
   self:QBClearBind() -- remove hotkey
   self:QBReset() -- clear and hide all buttons on quest bar
   if not (self.QB:IsShown() or self.QB:IsVisible()) then self.QB:Show() end
@@ -237,18 +227,14 @@ function NOP:QBSkin() -- skin buttons on quest bar
   if not self.QB then return end
   for i = 1, #self.QB.buttons do self:ButtonSkin(self.QB.buttons[i],NOP.DB.skinButton) end
 end
-function NOP:QBQuestAcceptTimer() -- postspone timer in combat
-  if self:inCombat() then self:ScheduleTimer("QBQuestAcceptTimer", private.TIMER_IDLE); return; end
-  self.timerQBQuestAccept = nil
-  self:QBQuestAccept() -- call it again after combat
-end
 function NOP:QBQuestAccept() -- refresh items on Quest Items Bar when quest is accepted, some items can change state, but bags get not update event!
+  if not (self.LQI and self.QB and self.QB.refreshBar) then return end -- nothing to do
   if self:inCombat() then -- postspone update in combat
-    if not self.timerQBQuestAccept then self.timerQBQuestAccept = self:ScheduleTimer("QBQuestAcceptTimer", private.TIMER_IDLE) end
+    if not self.timerQBQuestAccept then self.timerQBQuestAccept = self:ScheduleTimer("QBQuestAccept", private.TIMER_IDLE) end
     return 
   end
-  if self.timerQBQuestAccept then return end -- update will come from timer soon
-  if NOP.LQI and self.QB and self.QB.refreshBar then NOP.LQI:Scan() end
+  self.timerQBQuestAccept = nil
+  self.LQI:Scan()
 end
 function NOP:QBAutoQuest()
   hooksecurefunc("AutoQuestPopupTracker_AddPopUp", 
@@ -261,7 +247,7 @@ function NOP:QBAutoQuest()
           else
             ShowQuestComplete(index)
           end
-          AutoQuestPopupTracker_RemovePopUp(questID)
+          -- AutoQuestPopupTracker_RemovePopUp(questID)
         end
       end
     end
