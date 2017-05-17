@@ -147,6 +147,37 @@ local function LoadSkin()
 
 			line.ProgressBar:CreateBackdrop("Default")
 			line.ProgressBar.backdrop:SetOutside(line.ProgressBar.Bar.Icon)
+
+			--Sometimes the glow effect looks weird, so hide them
+			line.ProgressBar.Bar.BarGlow:Hide()
+			line.ProgressBar.Bar.Starburst:Hide()
+			line.ProgressBar.Bar.Sheen:Hide()
+			line.ProgressBar.FullBarFlare1.BarGlow:Hide()
+			line.ProgressBar.FullBarFlare2.BarGlow:Hide()
+		end
+
+		line.ProgressBar.backdrop:SetShown(line.ProgressBar.Bar.Icon:IsShown())
+	end)
+
+	--Bonus Objective Tracker ProgressBar
+	hooksecurefunc(BONUS_OBJECTIVE_TRACKER_MODULE, "AddProgressBar", function(_, _, line)
+		if not line.ProgressBar.Bar.backdrop then
+			line.ProgressBar.Bar:Height(18)
+			line.ProgressBar.Bar:CreateBackdrop("Transparent")
+			line.ProgressBar.Bar:SetStatusBarTexture(E["media"].normTex)
+			E:RegisterStatusBar(line.ProgressBar.Bar)
+			line.ProgressBar.Bar.BarFrame:Hide()
+			line.ProgressBar.Bar.IconBG:SetAlpha(0)
+			line.ProgressBar.Bar.BarFrame2:Hide()
+			line.ProgressBar.Bar.BarFrame3:Hide()
+
+			line.ProgressBar.Bar.Icon:ClearAllPoints()
+			line.ProgressBar.Bar.Icon:SetPoint("LEFT", line.ProgressBar.Bar, "RIGHT", E.Border*3, 0)
+			line.ProgressBar.Bar.Icon:SetMask("")
+			line.ProgressBar.Bar.Icon:SetTexCoord(unpack(E.TexCoords))
+
+			line.ProgressBar:CreateBackdrop("Default")
+			line.ProgressBar.backdrop:SetOutside(line.ProgressBar.Bar.Icon)
 		end
 
 		line.ProgressBar.backdrop:SetShown(line.ProgressBar.Bar.Icon:IsShown())
