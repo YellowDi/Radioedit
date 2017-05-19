@@ -1,22 +1,91 @@
-tag 63300a3c38bd423464b814fbb222a27b52368d0e 2.4.1
+tag cc472f038011271c3d6c47383a0f1ffd47d20ab6 2.4.2
 Author:	Benjamin Staneck <staneck@gmail.com>
-Date:	Tue Apr 25 22:02:28 2017 +0200
+Date:	Thu May 18 11:57:08 2017 +0200
 
-commit 69766856d8162ee78188bce7a1d303e0f99a2255
+commit b41afd99e0a0141417830a02edb9db97b0c9914f
+Author: Benjamin Staneck <staneck@gmail.com>
+Date:   Mon May 15 07:17:06 2017 +0200
+
+    Update VSCode ignore setting
+
+commit fbfb52bd93c147e045aa3e138124f5f6f7913c14
+Author: Benjamin Staneck <staneck@gmail.com>
+Date:   Mon May 15 07:16:51 2017 +0200
+
+    Set a size when creating the glow frame so the initial one is not wrong.
+
+commit ff96a5aace6995690cdb525df4f92f0487423257
+Author: Benjamin Staneck <staneck@gmail.com>
+Date:   Tue May 9 10:47:05 2017 +0200
+
+    Delay WA_DELAYED_PLAYER_ENTERING_WORLD a bit more
+    
+    Fixes some API failures during login
+
+commit 8258d0dd97685f6da31f78e63198f219331849b6
 Author: Infus <infus@squorn.de>
-Date:   Tue Apr 25 21:44:28 2017 +0200
+Date:   Sat May 6 21:26:32 2017 +0200
 
-    Fix upgrade code for Icons
+    Fix Condition toggling inverse for Progress Bar breaking the display
+    
+    Apparently setting the bar to a zero width resets!! the width. The code
+    contains a work around for that ensuring that progress is at least
+    0.00001. Apply the same to when we inverse progress in SetInverse.
+    
+    Also rename region.inverse to region.inverseDirection, as SetDurationInfo
+    does already use region.inverse
+    
+    Ticket-Nr: 955
 
-commit 6b6d641b69a77a1d908ebba81c70629cc7e81abf
+commit 23e162d30a00ead20b8f1bc082814ce5b31ddfc2
+Author: Infus <infus@squorn.de>
+Date:   Sat May 6 20:09:19 2017 +0200
+
+    Fix aura_env being nil in the options dialog
+    
+    Broke in Oct 2015 with commit 78820c4a2a15f1e639e031e6b22a806550c79207
+    
+    Ticket-Nr: 938
+
+commit c3aa41da43450f8499a0aa292318f281d6742e02
+Author: Infus <infus@squorn.de>
+Date:   Mon May 1 13:25:59 2017 +0200
+
+    Add Orientation and Inverse property to Progress Texture/Aurabar
+    
+    Actually requires a new property type.
+    
+    Ticket-Nr: 939
+
+commit 62bea572807d1b46173dd96a4bfe3a73a49e5a77
+Author: Infus <infus@squorn.de>
+Date:   Sat Apr 29 21:26:11 2017 +0200
+
+    Make Condition on "On Cooldown" not be triggered by gcd
+    
+    This is much saner.
+    
+    Ticket-Nr: 940
+
+commit 84146554b905b518e4c3971b6a1ce5de407190d7
+Author: Infus <infus@squorn.de>
+Date:   Sat Apr 29 21:21:02 2017 +0200
+
+    ConstructTests: If the test is a static "true", do return nil
+    
+    As that's probably faster
+
+commit c82e4daaec2853b95cbb3a4ccd5725742326d883
+Author: Infus <infus@squorn.de>
+Date:   Sat Apr 29 20:53:34 2017 +0200
+
+    Fix Equipment Set Trigger
+    
+    Ticket-Nr: 941
+
+commit 2ade94d188c0c4615dd1ea4f2cfb0a193a5e1424
 Author: Benjamin Staneck <staneck@gmail.com>
-Date:   Mon Apr 24 02:30:49 2017 +0200
+Date:   Thu Apr 27 02:09:19 2017 +0200
 
-    prefix a few more prints with the addon name
-
-commit 79e666e770e7720b5259aa0e747583d3cd8f2a76
-Author: Benjamin Staneck <staneck@gmail.com>
-Date:   Mon Apr 24 01:51:02 2017 +0200
-
-    avoid the table access here, trips up the locale import on WowAce
+    fix a typo
 
