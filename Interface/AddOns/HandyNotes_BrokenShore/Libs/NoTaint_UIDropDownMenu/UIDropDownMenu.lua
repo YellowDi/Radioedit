@@ -1,4 +1,4 @@
--- $Id: UIDropDownMenu.lua 17 2017-05-12 11:11:43Z arith-179865 $
+-- $Id: UIDropDownMenu.lua 20 2017-05-19 15:59:28Z arith-179865 $
 -- ----------------------------------------------------------------------------
 -- Localized Lua globals.
 -- ----------------------------------------------------------------------------
@@ -14,7 +14,7 @@ local CreateFrame, GetCursorPosition, GetCVar, GetScreenHeight, GetScreenWidth, 
 
 -- ----------------------------------------------------------------------------
 local MAJOR_VERSION = "NoTaint_UIDropDownMenu-7.2.0"
-local MINOR_VERSION = 90000 + tonumber(("$Rev: 17 $"):match("%d+"))
+local MINOR_VERSION = 90000 + tonumber(("$Rev: 20 $"):match("%d+"))
 
 local LibStub = _G.LibStub
 if not LibStub then error(MAJOR_VERSION .. " requires LibStub.") end
@@ -23,7 +23,7 @@ if not Lib then return end
 
 -- //////////////////////////////////////////////////////////////
 LIB_UIDROPDOWNMENU_MINBUTTONS = 8;
-LIB_UIDROPDOWNMENU_MAXBUTTONS = 8;
+LIB_UIDROPDOWNMENU_MAXBUTTONS = 24;
 LIB_UIDROPDOWNMENU_MAXLEVELS = 2;
 LIB_UIDROPDOWNMENU_BUTTON_HEIGHT = 16;
 LIB_UIDROPDOWNMENU_BORDER_HEIGHT = 15;
@@ -119,7 +119,6 @@ function Lib_UIDropDownMenu_Initialize(frame, initFunction, displayMode, level, 
 		button:SetPoint("RIGHT", name.."Text", "RIGHT", 6, 0);
 		frame.displayMode = "MENU";
 	end
-
 end
 
 function Lib_UIDropDownMenu_SetInitializeFunction(frame, initFunction)

@@ -1,4 +1,4 @@
--- $Id: zhTW.lua 55 2017-05-17 11:57:08Z arith $
+-- $Id: zhTW.lua 58 2017-05-20 07:01:08Z arith $
 
 local L = LibStub("AceLocale-3.0"):NewLocale("HandyNotes_BrokenShore", "zhTW", false)
 
@@ -6,8 +6,8 @@ if not L then return end
 
 if L then
 L["Add all Ancient Shrine nodes to TomTom waypoints"] = "將所有的上古聖壇節點加到 TomTom 路徑上"
-L["Add all Nether Unstable Portal nodes to TomTom waypoints"] = "將所有不穩定的虛空傳送門節點加到 TomTom 路徑上"
 L["Add all treasure nodes to TomTom waypoints"] = "將所有的寶箱節點加到 TomTom 路徑上"
+L["Add all Unstable Nether Portal nodes to TomTom waypoints"] = "將所有不穩定的虛空傳送門節點加到 TomTom 路徑上"
 L["AddOn Settings"] = "插件設定"
 L["Ancient Shrine"] = "上古聖壇"
 L["Ancient Tomb"] = "古墓"

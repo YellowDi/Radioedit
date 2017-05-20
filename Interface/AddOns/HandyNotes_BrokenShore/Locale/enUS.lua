@@ -1,12 +1,12 @@
--- $Id: enUS.lua 55 2017-05-17 11:57:08Z arith $
+-- $Id: enUS.lua 58 2017-05-20 07:01:08Z arith $
 
 local AceLocale = LibStub:GetLibrary("AceLocale-3.0");
 local L = AceLocale:NewLocale("HandyNotes_BrokenShore", "enUS", true, true);
 
 if L then
 L["Add all Ancient Shrine nodes to TomTom waypoints"] = "Add all Ancient Shrine nodes to TomTom waypoints"
-L["Add all Nether Unstable Portal nodes to TomTom waypoints"] = "Add all Nether Unstable Portal nodes to TomTom waypoints"
 L["Add all treasure nodes to TomTom waypoints"] = "Add all treasure nodes to TomTom waypoints"
+L["Add all Unstable Nether Portal nodes to TomTom waypoints"] = "Add all Unstable Nether Portal nodes to TomTom waypoints"
 L["AddOn Settings"] = "AddOn Settings"
 L["Ancient Shrine"] = "Ancient Shrine"
 L["Ancient Tomb"] = "Ancient Tomb"

@@ -1,6 +1,14 @@
-$Id: Revision.txt 18 2017-05-12 11:20:43Z arith-179865 $
+$Id: Revision.txt 20 2017-05-19 15:59:28Z arith-179865 $
 Revision History:
 =================
+
+v7.2.0.24015-r2 (2017/05/19)
+----------------------------
+- added version number to EasyMenu
+- increased LIB_UIDROPDOWNMENU_MAXBUTTONS to 24
+- renamed packaged folder name to !NoTaint_UIDropDownMenu
+  - No impact to addons which embedded this lib
+  - For users who installed this lib separately, please remove the old "NoTaint_UIDropDownMenu" folder
 
 v7.2.0.24015 (2017/05/12)
 -------------------------

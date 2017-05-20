@@ -1,3 +1,4 @@
+== About ==
 Standard UIDropDownMenu global functions using protected frames and causing taints 
 when used by third-party addons. But it is possible to avoid taints by using same 
 functionality with that library.
@@ -8,6 +9,11 @@ UIDropDownMenu.xml and UIDropDownMenuTemplates.xml with frames, tables, variable
 and functions renamed to:
 * constants (typed with all CAPS): "LIB_" added at the start
 * functions: "Lib_" added at the start
+
+== How to use it (for addon developer) ==
+* Add UIDropDownMenu.xml to your toc. 
+* If your addon doesn't embed LibStub, you will need it.
+* Like ordinal code for UIDropDownMenu with "Lib_" instead.
 
 == Constants ==
 * LIB_UIDROPDOWNMENU_MINBUTTONS
@@ -77,7 +83,3 @@ and functions renamed to:
 * Lib_UIDropDownMenu_IsEnabled
 * Lib_UIDropDownMenu_GetValue
 
-== How to use it ==
-
-* Add UIDropDownMenu.xml to your toc. 
-* Like ordinal code for UIDropDownMenu with "Lib_" instead.

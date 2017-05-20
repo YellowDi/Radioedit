@@ -6,8 +6,8 @@ if not L then return end
 
 if L then
 L["Add all Ancient Shrine nodes to TomTom waypoints"] = "Добавить все заметки Древнего святилища в точку назначения TomTom"
-L["Add all Nether Unstable Portal nodes to TomTom waypoints"] = "Добавить все заметки Нестабильного портала Пустоты в точку назначения TomTom"
 L["Add all treasure nodes to TomTom waypoints"] = "Добавить все заметки сокровищ в точку назначения TomTom"
+L["Add all Unstable Nether Portal nodes to TomTom waypoints"] = "Добавить все заметки Нестабильного портала Пустоты в точку назначения TomTom"
 L["AddOn Settings"] = "Настройки аддона"
 L["Ancient Shrine"] = "Древнее святилище"
 L["Ancient Tomb"] = "Древняя гробница"

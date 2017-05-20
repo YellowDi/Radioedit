@@ -1,7 +1,14 @@
-$Id: ChangeLog.txt 56 2017-05-18 16:37:12Z arith $
+$Id: ChangeLog.txt 58 2017-05-20 07:01:08Z arith $
 
 Revision History:
 =================
+
+* v1.14 (May 20, 2017)
+-----------------------
+- Lib update:
+  - NoTaint_UIDropDownMenu
+- Localization update:
+  - German (pas06)
 
 * v1.13 (May 18, 2017)
 -----------------------

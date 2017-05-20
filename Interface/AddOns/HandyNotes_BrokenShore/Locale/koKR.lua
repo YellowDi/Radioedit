@@ -6,8 +6,8 @@ if not L then return end
 
 if L then
 L["Add all Ancient Shrine nodes to TomTom waypoints"] = "모든 고대 제단 노드를 TomTom 웨이포인트에 추가"
-L["Add all Nether Unstable Portal nodes to TomTom waypoints"] = "모든 불안정한 황천 차원문 노드를 TomTom 웨이포인트에 추가"
 L["Add all treasure nodes to TomTom waypoints"] = "모든 보물 노드를 TomTom 웨이포인트에 추가"
+L["Add all Unstable Nether Portal nodes to TomTom waypoints"] = "모든 불안정한 황천 차원문 노드를 TomTom 웨이포인트에 추가"
 L["AddOn Settings"] = "애드온 설정"
 L["Ancient Shrine"] = "고대 제단"
 L["Ancient Tomb"] = "고대 무덤"
