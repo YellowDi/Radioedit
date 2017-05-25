@@ -74,7 +74,7 @@ local function GetInspectItemListFrame(parent)
                 itemframe:SetPoint("TOPLEFT", frame["item"..(i-1)], "BOTTOMLEFT")
             end
             itemframe.label = CreateFrame("Frame", nil, itemframe)
-            itemframe.label:SetSize(36, 16)
+            itemframe.label:SetSize(38, 16)
             itemframe.label:SetPoint("LEFT")
             itemframe.label:SetBackdrop(backdrop)
             itemframe.label:SetBackdropBorderColor(0, 0.9, 0.9, 0.2)

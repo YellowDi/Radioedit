@@ -30,7 +30,7 @@ function lib:HasLocalCached(item)
     end
 end
 
---獲取TIP中的屬性信息
+--獲取TIP中的屬性信息 (zhTW|zhCN|enUS)
 function lib:GetStatsViaTooltip(tip, stats)
     if (type(stats) == "table") then
         local line, text, r, g, b, statValue, statName
@@ -38,7 +38,38 @@ function lib:GetStatsViaTooltip(tip, stats)
             line = _G[tip:GetName().."TextLeft" .. i]
             text = line:GetText() or ""
             r, g, b = line:GetTextColor()
-            if (locale == "koKR") then
+            for statValue, statName in string.gmatch(text, "%+([0-9,]+)([^%+%|]+)") do
+                statName = strtrim(statName)
+                statName = statName:gsub("與$", "") --zhTW
+                statName = statName:gsub("，", "")  --zhCN
+                statName = statName:gsub("%s*&$", "") --enUS
+                statValue = statValue:gsub(",","")
+                statValue = tonumber(statValue) or 0
+                if (not stats[statName]) then
+                    stats[statName] = { value = statValue, r = r, g = g, b = b }
+                else
+                    stats[statName].value = stats[statName].value + statValue
+                    if (g > stats[statName].g) then
+                        stats[statName].r = r
+                        stats[statName].g = g
+                        stats[statName].b = b
+                    end
+                end
+            end
+        end
+    end
+    return stats
+end
+
+-- koKR
+if (locale == "koKR") then
+    function lib:GetStatsViaTooltip(tip, stats)
+        if (type(stats) == "table") then
+            local line, text, r, g, b, statValue, statName
+            for i = 2, tip:NumLines() do
+                line = _G[tip:GetName().."TextLeft" .. i]
+                text = line:GetText() or ""
+                r, g, b = line:GetTextColor()
                 for statName, statValue in string.gmatch(text, "([^%+]+)%+([0-9,]+)") do
                     statName = statName:gsub("|c%x%x%x%x%x%x%x%x", "")
                     statName = statName:gsub(".-:", "")
@@ -57,30 +88,12 @@ function lib:GetStatsViaTooltip(tip, stats)
                         end
                     end
                 end
-            else
-                for statValue, statName in string.gmatch(text, "%+([0-9,]+)([^%+%|]+)") do
-                    statName = strtrim(statName)
-                    statName = statName:gsub("與$", "") --zhTW
-                    statName = statName:gsub("，", "")  --zhCN
-                    statName = statName:gsub("%s*&$", "") --enUS
-                    statValue = statValue:gsub(",","")
-                    statValue = tonumber(statValue) or 0
-                    if (not stats[statName]) then
-                        stats[statName] = { value = statValue, r = r, g = g, b = b }
-                    else
-                        stats[statName].value = stats[statName].value + statValue
-                        if (g > stats[statName].g) then
-                            stats[statName].r = r
-                            stats[statName].g = g
-                            stats[statName].b = b
-                        end
-                    end
-                end
             end
         end
+        return stats
     end
-    return stats
 end
+
 
 --獲取物品實際等級信息
 function lib:GetItemInfo(link, stats)

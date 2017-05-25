@@ -5,7 +5,7 @@
 
 local LibEvent = LibStub:GetLibrary("LibEvent.7000")
 
-local VERSION = 2.0
+local VERSION = 2.1
 
 local addon, ns = ...
 
@@ -21,6 +21,15 @@ local DefaultDB = {
     EnableItemLevel  = true,              --物品等級
       ShowColoredItemLevelString = false, --裝等文字隨物品品質
       ShowItemSlotString = true,          --物品部位文字
+        EnableItemLevelBag = true,
+        EnableItemLevelBank = true,
+        EnableItemLevelMerchant = true,
+        EnableItemLevelTrade = true,
+        EnableItemLevelGuildBank = true,
+        EnableItemLevelAuction = true,
+        EnableItemLevelAltEquipment = true,
+        EnableItemLevelPaperDoll = true,
+        EnableItemLevelGuildNews = true,
     ShowInspectAngularBorder = false,     --觀察面板直角邊框
     ShowInspectColoredLabel = true,       --觀察面板高亮橙裝武器標簽
     ShowOwnFrameWhenInspecting = false,   --觀察同時顯示自己裝備列表
@@ -30,7 +39,8 @@ local DefaultDB = {
         SendPartyItemLevelToParty = true, --發送小隊裝等到隊伍頻道
         ShowPartySpecialization = true,   --顯示隊友天賦
     EnableRaidItemLevel = false,          --團隊裝等
-    EnableMouseItemLevel = false,         --鼠標裝等
+    EnableMouseItemLevel = true,          --鼠標裝等
+    PaperDollItemLevelOutsideString = false, --PaperDoll文字外邊顯示(沒有在配置面板)
 }
 
 local options = {
@@ -39,6 +49,17 @@ local options = {
       child = {
         { key = "ShowColoredItemLevelString" },
         { key = "ShowItemSlotString" },
+      },
+      subtype = {
+        { key = "Bag" },
+        { key = "Bank" },
+        { key = "Merchant" },
+        { key = "Trade" },
+        { key = "Auction" },
+        { key = "AltEquipment" },
+        { key = "GuildBank" },
+        { key = "GuildNews" },
+        { key = "PaperDoll" },
       }
     },
     { key = "ShowInspectAngularBorder" },
@@ -75,8 +96,15 @@ local function StatusSubCheckbox(self, status)
     local checkbox
     for i = 1, self:GetNumChildren() do
         checkbox = select(i, self:GetChildren())
-        checkbox:SetEnabled(status)
-        StatusSubCheckbox(checkbox, status)
+        if (checkbox.key) then
+            checkbox:SetEnabled(status)
+            StatusSubCheckbox(checkbox, status)
+        end
+    end
+    if (status and self.SubtypeFrame) then
+        self.SubtypeFrame:Show()
+    elseif (not status and self.SubtypeFrame) then
+        self.SubtypeFrame:Hide()
     end
 end
 
@@ -85,6 +113,39 @@ local function OnClickCheckbox(self)
     TinyInspectDB[self.key] = status
     StatusSubCheckbox(self, status)
     CallCustomFunc(self)
+end
+
+local function CreateSubtypeFrame(list, parent)
+    if (not list) then return end
+    if (not parent.SubtypeFrame) then
+        parent.SubtypeFrame = CreateFrame("Frame", nil, parent)
+        parent.SubtypeFrame:SetScale(0.92)
+        parent.SubtypeFrame:SetPoint("TOPLEFT", 333, 0)
+        parent.SubtypeFrame:SetBackdrop({
+            bgFile   = "Interface\\Tooltips\\UI-Tooltip-Background",
+            edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
+            tile     = true,
+            tileSize = 8,
+            edgeSize = 16,
+            insets   = {left = 4, right = 4, top = 4, bottom = 4}
+        })
+        parent.SubtypeFrame:SetBackdropColor(0, 0, 0, 0.6)
+        parent.SubtypeFrame:SetBackdropBorderColor(0.6, 0.6, 0.6)
+        parent.SubtypeFrame.title = parent.SubtypeFrame:CreateFontString(nil, "BORDER", "GameFontNormalOutline")
+        parent.SubtypeFrame.title:SetPoint("TOPLEFT", 16, -18)
+        parent.SubtypeFrame.title:SetText(L[parent.key])
+    end
+    local checkbox
+    for i, v in ipairs(list) do
+        checkbox = CreateFrame("CheckButton", nil, parent.SubtypeFrame, "InterfaceOptionsCheckButtonTemplate")
+        checkbox.key = parent.key .. v.key
+        checkbox.checkedFunc = v.checkedFunc
+        checkbox.uncheckedFunc = v.uncheckedFunc
+        checkbox.Text:SetText(L[v.key])
+        checkbox:SetScript("OnClick", OnClickCheckbox)
+        checkbox:SetPoint("TOPLEFT", parent.SubtypeFrame, "TOPLEFT", 16, -46-(i-1)*32)
+    end
+    parent.SubtypeFrame:SetSize(168, #list*32+58)
 end
 
 local function CreateCheckbox(list, parent, anchor, offsetx, offsety)
@@ -101,6 +162,7 @@ local function CreateCheckbox(list, parent, anchor, offsetx, offsety)
         checkbox:SetPoint("TOPLEFT", anchor, "BOTTOMLEFT", offsetx, -6-offsety)
         offsety = offsety + stepy
         offsety = CreateCheckbox(v.child, checkbox, anchor, offsetx+stepx, offsety)
+        CreateSubtypeFrame(v.subtype, checkbox)
     end
     return offsety
 end
@@ -116,6 +178,9 @@ local function InitCheckbox(parent)
             InitCheckbox(checkbox)
         end
     end
+    if (parent.SubtypeFrame) then
+        InitCheckbox(parent.SubtypeFrame)
+    end
 end
 
 local frame = CreateFrame("Frame", nil, UIParent)
@@ -130,6 +195,7 @@ LibEvent:attachEvent("VARIABLES_LOADED", function()
     if (not TinyInspectDB or not TinyInspectDB.version) then
         TinyInspectDB = DefaultDB
     elseif (TinyInspectDB.version < DefaultDB.version) then
+        TinyInspectDB.version = DefaultDB.version
         for k, v in pairs(DefaultDB) do
             if (not TinyInspectDB[k]) then
                 TinyInspectDB[k] = v

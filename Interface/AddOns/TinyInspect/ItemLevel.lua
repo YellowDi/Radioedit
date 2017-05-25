@@ -11,8 +11,8 @@ local ARMOR = ARMOR or "Armor"
 local RELICSLOT = RELICSLOT or "Relic"
 local ARTIFACT_POWER = ARTIFACT_POWER or "Artifact"
 
---框架
-local function GetItemLevelFrame(self)
+--框架 #category Bag|Bank|Merchant|Trade|GuildBank|Auction|AltEquipment|PaperDoll
+local function GetItemLevelFrame(self, category)
     if (not self.ItemLevelFrame) then
         local fontAdjust = GetLocale():sub(1,2) == "zh" and 0 or -3
         self.ItemLevelFrame = CreateFrame("Frame", nil, self)
@@ -34,6 +34,7 @@ local function GetItemLevelFrame(self)
     end
     if (TinyInspectDB and TinyInspectDB.EnableItemLevel) then
         self.ItemLevelFrame:Show()
+        LibEvent:trigger("ITEMLEVEL_FRAME_SHOWN", self.ItemLevelFrame, self, category)
     else
         self.ItemLevelFrame:Hide()
     end
@@ -67,9 +68,9 @@ local function SetItemSlotString(self, class, equipSlot, link)
 end
 
 --設置物品等級
-local function SetItemLevel(self, link)
+local function SetItemLevel(self, link, category)
     if (not self) then return end
-    local frame = GetItemLevelFrame(self)
+    local frame = GetItemLevelFrame(self, category)
     if (self.OrigItemLink == link) then
         SetItemLevelString(frame.levelString, self.OrigItemLevel, self.OrigItemQuality)
         SetItemSlotString(frame.slotString, self.OrigItemClass, self.OrigItemEquipSlot, self.OrigItemLink)
@@ -98,19 +99,27 @@ hooksecurefunc("ContainerFrame_Update", function(self)
     local button
     for i = 1, self.size do
         button = _G[name.."Item"..i]
-        SetItemLevel(button, GetContainerItemLink(id, button:GetID()))
+        SetItemLevel(button, GetContainerItemLink(id, button:GetID()), "Bag")
     end
 end)
 
 -- Bank
 hooksecurefunc("BankFrameItemButton_Update", function(self)
     if (self.isBag) then return end
-    SetItemLevel(self, GetContainerItemLink(self:GetParent():GetID(), self:GetID()))
+    SetItemLevel(self, GetContainerItemLink(self:GetParent():GetID(), self:GetID()), "Bank")
 end)
 
 -- Merchant
 hooksecurefunc("MerchantFrameItem_UpdateQuality", function(self, link)
-    SetItemLevel(self.ItemButton, link)
+    SetItemLevel(self.ItemButton, link, "Merchant")
+end)
+
+-- Trade
+hooksecurefunc("TradeFrame_UpdatePlayerItem", function(id)
+    SetItemLevel(_G["TradePlayerItem"..id.."ItemButton"], GetTradePlayerItemLink(id), "Trade")
+end)
+hooksecurefunc("TradeFrame_UpdateTargetItem", function(id)
+    SetItemLevel(_G["TradeRecipientItem"..id.."ItemButton"], GetTradeTargetItemLink(id), "Trade")
 end)
 
 -- GuildBank
@@ -127,7 +136,7 @@ LibEvent:attachEvent("ADDON_LOADED", function(self, addonName)
                     end
                     column = ceil((i-0.5)/NUM_SLOTS_PER_GUILDBANK_GROUP)
                     button = _G["GuildBankColumn"..column.."Button"..index]
-                    SetItemLevel(button, GetGuildBankItemLink(tab, i))
+                    SetItemLevel(button, GetGuildBankItemLink(tab, i), "GuildBank")
                 end
             end
         end)
@@ -143,7 +152,7 @@ LibEvent:attachEvent("ADDON_LOADED", function(self, addonName)
             for i = 1, NUM_BROWSE_TO_DISPLAY do
                 itemButton = _G["BrowseButton"..i.."Item"]
                 if (itemButton) then
-                    SetItemLevel(itemButton, GetAuctionItemLink("list", offset+i))
+                    SetItemLevel(itemButton, GetAuctionItemLink("list", offset+i), "Auction")
                 end
             end
         end)
@@ -153,7 +162,7 @@ LibEvent:attachEvent("ADDON_LOADED", function(self, addonName)
             for i = 1, NUM_BIDS_TO_DISPLAY do
                 itemButton = _G["BidButton"..i.."Item"]
                 if (itemButton) then
-                    SetItemLevel(itemButton, GetAuctionItemLink("bidder", offset+i))
+                    SetItemLevel(itemButton, GetAuctionItemLink("bidder", offset+i), "Auction")
                 end
             end
         end)
@@ -164,7 +173,7 @@ LibEvent:attachEvent("ADDON_LOADED", function(self, addonName)
             for i = 1, NUM_AUCTIONS_TO_DISPLAY do
                 itemButton = _G["AuctionsButton"..i.."Item"]
                 if (itemButton) then
-                    SetItemLevel(itemButton, GetAuctionItemLink("owner", offset-tokenCount+i))
+                    SetItemLevel(itemButton, GetAuctionItemLink("owner", offset-tokenCount+i), "Auction")
                 end
             end
         end)
@@ -185,7 +194,7 @@ if (EquipmentFlyout_DisplayButton) then
         else
             link = GetInventoryItemLink("player", slot)
         end
-        SetItemLevel(button, link)
+        SetItemLevel(button, link, "AltEquipment")
     end)
 end
 
@@ -196,7 +205,7 @@ LibEvent:attachEvent("PLAYER_LOGIN", function()
         local origFunc = Bagnon.ItemSlot.Update
         function Bagnon.ItemSlot:Update()
             origFunc(self)
-            SetItemLevel(self, self:GetItem())
+            SetItemLevel(self, self:GetItem(), "Bag")
         end
     end
     -- For Combuctor
@@ -204,13 +213,13 @@ LibEvent:attachEvent("PLAYER_LOGIN", function()
         local origFunc = Combuctor.ItemSlot.Update
         function Combuctor.ItemSlot:Update()
             origFunc(self)
-            SetItemLevel(self, self:GetItem())
+            SetItemLevel(self, self:GetItem(), "Bag")
         end
     end
     -- For LiteBag
     if (LiteBagItemButton_UpdateItem) then
         hooksecurefunc("LiteBagItemButton_UpdateItem", function(self)
-            SetItemLevel(self, GetContainerItemLink(self:GetParent():GetID(), self:GetID()))
+            SetItemLevel(self, GetContainerItemLink(self:GetParent():GetID(), self:GetID()), "Bag")
         end)
     end
     -- For ArkInventory
@@ -220,7 +229,7 @@ LibEvent:attachEvent("PLAYER_LOGIN", function()
             origFunc(button)
             local i = ArkInventory.Frame_Item_GetDB(button)
             if (i) then
-                SetItemLevel(button, i.h)
+                SetItemLevel(button, i.h, "Bag")
             end
         end
     end
@@ -231,6 +240,11 @@ LibEvent:attachEvent("ADDON_LOADED", function(self, addonName)
     if (addonName == "Blizzard_GuildUI") then
         GuildNewsItemCache = {}
         hooksecurefunc("GuildNewsButton_SetText", function(button, text_color, text, text1, text2, ...)
+            if (not TinyInspectDB or 
+                not TinyInspectDB.EnableItemLevel or 
+                not TinyInspectDB.EnableItemLevelGuildNews) then
+              return
+            end
             if (text2 and type(text2) == "string") then
                 local link = string.match(text2, "|H(item:%d+:.-)|h.-|h")
                 if (link) then
@@ -254,7 +268,7 @@ end)
 local function SetPaperDollItemLevel(self, unit)
     if (not self) then return end
     local id = self:GetID()
-    local frame = GetItemLevelFrame(self)
+    local frame = GetItemLevelFrame(self, "PaperDoll")
     if (unit and self.hasItem) then
         local count, level, _, link, quality = LibItemInfo:GetUnitItemInfo(unit, id)
         SetItemLevelString(frame.levelString, level > 0 and level or "", quality)
@@ -288,6 +302,32 @@ LibEvent:attachTrigger("UNIT_INSPECT_READY", function(self, data)
              InspectTrinket0Slot,InspectTrinket1Slot,InspectMainHandSlot,InspectSecondaryHandSlot
             }) do
             SetPaperDollItemLevel(button, InspectFrame.unit)
+        end
+    end
+end)
+
+LibEvent:attachTrigger("ITEMLEVEL_FRAME_SHOWN", function(self, frame, parent, category)
+    if (TinyInspectDB and not TinyInspectDB["EnableItemLevel"..category]) then
+        frame:Hide()
+    end
+end)
+
+-- OutsideString For PaperDoll ItemLevel
+LibEvent:attachTrigger("ITEMLEVEL_FRAME_CREATED", function(self, frame, parent)
+    if (TinyInspectDB and TinyInspectDB.PaperDollItemLevelOutsideString) then
+        local name = parent:GetName()
+        if (name and string.match(name, "^[IC].+Slot$")) then
+            local id = parent:GetID()
+            frame:ClearAllPoints()
+            if (id <= 5 or id == 9 or id == 15 or id == 19) then
+                frame:SetPoint("LEFT", parent, "RIGHT", 1, -2)
+            elseif (id == 16) then
+                frame:SetPoint("RIGHT", parent, "LEFT", -1, 4)
+            elseif (id == 17) then
+                frame:SetPoint("LEFT", parent, "RIGHT", 1, 4)
+            else
+                frame:SetPoint("RIGHT", parent, "LEFT", -1, -2)
+            end
         end
     end
 end)

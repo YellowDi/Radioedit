@@ -131,9 +131,9 @@ end
 
 --打印裝等
 local function PrintItemLevel(members)
-    local num, pattern = 26, "   %s %.1f |c%s%s|r"
+    local num, pattern = 26, "  %s %.1f |c%s%s|r"
     if (TinyInspectDB and TinyInspectDB.ShowPartySpecialization) then
-        num, pattern = 32, "   %s %.1f |c%s%s|r |cffcccccc%s|r"
+        num, pattern = 32, "  %s %.1f |c%s%s|r |cffcccccc%s|r"
     end
     DEFAULT_CHAT_FRAME:AddMessage(string.rep("-", num), 1, 0.64, 0)
     for _, v in pairs(members) do

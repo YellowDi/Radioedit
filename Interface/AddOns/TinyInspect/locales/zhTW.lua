@@ -18,4 +18,13 @@ ns.L = {
     ShowPartySpecialization     = "顯示隊友天賦文字",
     EnableRaidItemLevel         = "團隊成員裝等",
     EnableMouseItemLevel        = "鼠標目標裝等",
+    Bag                         = "背包",
+    Bank                        = "銀行",
+    Merchant                    = "商人",
+    Trade                       = "交易",
+    Auction                     = "拍賣行",
+    AltEquipment                = "ALT換裝",
+    GuildBank                   = "公會銀行",
+    GuildNews                   = "公會新聞",
+    PaperDoll                   = "人物面板",
 }

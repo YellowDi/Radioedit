@@ -26,7 +26,7 @@ local function SetItemAngularBorder(self, quality, itemIDOrLink)
         self.angularFrame.border:SetBackdrop({edgeFile = "Interface\\Buttons\\WHITE8X8", edgeSize = 1})
     end
     if (TinyInspectDB and TinyInspectDB.ShowItemBorder) then
-        LibEvent:trigger("SET_ITEM_ANGULARBORDER", self.angularFrame, quality)
+        LibEvent:trigger("SET_ITEM_ANGULARBORDER", self.angularFrame, quality, itemIDOrLink)
     else
         self.angularFrame:Hide()
     end
@@ -44,7 +44,7 @@ LibEvent:attachEvent("ADDON_LOADED", function(self, addonName)
 end)
 
 --設置物品直角邊框
-LibEvent:attachTrigger("SET_ITEM_ANGULARBORDER", function(self, frame, quality)
+LibEvent:attachTrigger("SET_ITEM_ANGULARBORDER", function(self, frame, quality, itemIDOrLink)
     if (quality) then
         local r, g, b = GetItemQualityColor(quality)
         if (quality <= 1) then

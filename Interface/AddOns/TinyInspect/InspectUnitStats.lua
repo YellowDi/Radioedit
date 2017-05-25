@@ -5,6 +5,11 @@
 -- @DepandsOn: InspectUnit.lua
 -------------------------------------
 
+local locale = GetLocale()
+
+if (locale == "koKR" or locale == "enUS" or locale == "zhCN" or locale == "zhTW") then
+else return end
+
 local LibItemInfo = LibStub:GetLibrary("LibItemInfo.7000")
 
 local states = {
