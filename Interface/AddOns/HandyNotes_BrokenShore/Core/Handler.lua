@@ -1,4 +1,4 @@
--- $Id: Handler.lua 58 2017-05-20 07:01:08Z arith $
+-- $Id: Handler.lua 62 2017-05-25 06:46:53Z arith $
 -----------------------------------------------------------------------
 -- Upvalued Lua API.
 -----------------------------------------------------------------------
@@ -171,7 +171,7 @@ local function hideNode(button, mapFile, coord)
 end
 
 local function closeAllDropdowns()
-	Lib_CloseDropDownMenus(1)
+	L_CloseDropDownMenus(1)
 end
 
 local function addTomTomWaypoint(button, mapFile, coord)
@@ -239,59 +239,59 @@ do
 		if (not level) then return end
 		if (level == 1) then
 			-- Create the title of the menu
-			info = Lib_UIDropDownMenu_CreateInfo()
+			info = L_UIDropDownMenu_CreateInfo()
 			info.isTitle 		= 1
-			info.text 		= "HandyNotes - " ..L["PLUGIN_NAME"]
+			info.text 		= "HandyNotes - " ..addon.pluginName
 			info.notCheckable 	= 1
-			Lib_UIDropDownMenu_AddButton(info, level)
+			L_UIDropDownMenu_AddButton(info, level)
 
 			if TomTom then
 				-- Waypoint menu item
-				info = Lib_UIDropDownMenu_CreateInfo()
+				info = L_UIDropDownMenu_CreateInfo()
 				info.text = LH["Add this location to TomTom waypoints"]
 				info.notCheckable = 1
 				info.func = addTomTomWaypoint
 				info.arg1 = currentZone
 				info.arg2 = currentCoord
-				Lib_UIDropDownMenu_AddButton(info, level)
+				L_UIDropDownMenu_AddButton(info, level)
 
-				info = Lib_UIDropDownMenu_CreateInfo()
+				info = L_UIDropDownMenu_CreateInfo()
 				info.text = L["Add all treasure nodes to TomTom waypoints"]
 				info.notCheckable = 1
 				info.func = addAllTreasureToWayPoint
 				info.arg1 = currentZone
-				Lib_UIDropDownMenu_AddButton(info, level)
+				L_UIDropDownMenu_AddButton(info, level)
 
-				info = Lib_UIDropDownMenu_CreateInfo()
+				info = L_UIDropDownMenu_CreateInfo()
 				info.text = L["Add all Ancient Shrine nodes to TomTom waypoints"]
 				info.notCheckable = 1
 				info.func = addAllShrineToWayPoint
 				info.arg1 = currentZone
-				Lib_UIDropDownMenu_AddButton(info, level)
+				L_UIDropDownMenu_AddButton(info, level)
 
-				info = Lib_UIDropDownMenu_CreateInfo()
+				info = L_UIDropDownMenu_CreateInfo()
 				info.text = L["Add all Unstable Nether Portal nodes to TomTom waypoints"]
 				info.notCheckable = 1
 				info.func = addAllNetherPortalToWayPoint
 				info.arg1 = currentZone
-				Lib_UIDropDownMenu_AddButton(info, level)
+				L_UIDropDownMenu_AddButton(info, level)
 			end
 
 			-- Hide menu item
-			info = Lib_UIDropDownMenu_CreateInfo()
+			info = L_UIDropDownMenu_CreateInfo()
 			info.text		= HIDE 
 			info.notCheckable 	= 1
 			info.func		= hideNode
 			info.arg1		= currentZone
 			info.arg2		= currentCoord
-			Lib_UIDropDownMenu_AddButton(info, level)
+			L_UIDropDownMenu_AddButton(info, level)
 
 			-- Close menu item
-			info = Lib_UIDropDownMenu_CreateInfo()
+			info = L_UIDropDownMenu_CreateInfo()
 			info.text		= CLOSE
 			info.func		= closeAllDropdowns
 			info.notCheckable 	= 1
-			Lib_UIDropDownMenu_AddButton(info, level)
+			L_UIDropDownMenu_AddButton(info, level)
 		end
 	end
 	local HL_Dropdown = CreateFrame("Frame", private.addon_name.."DropdownMenu")
@@ -302,7 +302,7 @@ do
 		if button == "RightButton" and not down then
 			currentZone = string.gsub(mapFile, "_terrain%d+$", "")
 			currentCoord = coord
-			Lib_ToggleDropDownMenu(1, nil, HL_Dropdown, self, 0, 0)
+			L_ToggleDropDownMenu(1, nil, HL_Dropdown, self, 0, 0)
 		end
 	end
 end
@@ -416,6 +416,10 @@ end
 
 function addon:ENCOUNTER_LOOT_RECEIVED()
 	addon:Refresh()
+end
+
+function addon:CLOSE_WORLD_MAP()
+	closeAllDropdowns()
 end
 
 -- //////////////////////////////////////////////////////////////////////////
