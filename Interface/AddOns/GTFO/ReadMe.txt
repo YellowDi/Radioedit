@@ -1229,3 +1229,7 @@ Change Log:
 
 4.42.13
 * Added Legion spells for Tomb of Sargeras
+
+4.42.14
+* Added Legion spells for The Broken Isles (world)
+* Added Legion spells for Tomb of Sargeras

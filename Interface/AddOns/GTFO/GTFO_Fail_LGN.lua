@@ -387,6 +387,24 @@ GTFO.SpellID["234686"] = {
   sound = 3;
 };
 
+GTFO.SpellID["234394"] = {
+  --desc = "Rupture (Brutallus)";
+  applicationOnly = true;
+  sound = 3;
+};
+
+GTFO.SpellID["233519"] = {
+  --desc = "Crashing Embers (Brutallus)";
+  applicationOnly = true;
+  sound = 3;
+};
+
+GTFO.SpellID["223435"] = {
+  --desc = "Blazing Leap (Lord Vazuun)";
+  sound = 3;
+};
+
+
 -- **********
 -- * Mardum *
 -- **********
@@ -480,6 +498,11 @@ GTFO.SpellID["200465"] = {
 
 GTFO.SpellID["181559"] = {
   --desc = "Gaze of Sargeras (Gul'dan)";
+  sound = 3;
+};
+
+GTFO.SpellID["199062"] = {
+  --desc = "Shatter (Fel Spike)";
   sound = 3;
 };
 
@@ -1679,6 +1702,7 @@ GTFO.SpellID["239217"] = {
 GTFO.SpellID["237276"] = {
   --desc = "Pulverizing Cudgel (Thrashbite the Scornful)";
   sound = 3;
+  damageMinimum = 1500000;
 };
 
 GTFO.SpellID["238469"] = {
@@ -1695,6 +1719,12 @@ GTFO.SpellID["243152"] = {
   --desc = "Demonic Upheaval (Mephistroth)";
   sound = 3;
   test = true;
+};
+
+GTFO.SpellID["238583"] = {
+  --desc = "Devour Magic (Felblight Stalker)";
+  applicationOnly = true;
+  sound = 3;
 };
 
 -- ********************
@@ -1799,3 +1829,38 @@ GTFO.SpellID["239810"] = {
   sound = 3;
 };
 
+GTFO.SpellID["239739"] = {
+  --desc = "Dark Mark - Debuff (Fallen Avatar)";
+	soundFunction = function() 
+		GTFO_AddEvent("DarkMark", 8);
+		return 0;
+	end;
+};
+
+GTFO.SpellID["239742"] = {
+  --desc = "Dark Mark - Explosion (Fallen Avatar)";
+  sound = 4;
+  ignoreEvent = "DarkMark";
+};
+
+GTFO.SpellID["240970"] = {
+  --desc = "Shadowy Blades (Fallen Avatar)";
+  sound = 3;
+  test = true;  -- Don't sound if you have the debuff
+};
+
+GTFO.SpellID["240209"] = {
+  --desc = "Unstable Soul (Maiden of Vigiliance)";
+  applicationOnly = true;
+  sound = 3;
+};
+
+GTFO.SpellID["235125"] = {
+  --desc = "Unstable Soul (Maiden of Vigiliance)";
+  sound = 4;
+};
+
+GTFO.SpellID["239486"] = {
+  --desc = "Chaotic Eruption (Volatile Corruption)";
+  sound = 3;
+};
