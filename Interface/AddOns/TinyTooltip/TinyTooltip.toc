@@ -1,0 +1,12 @@
+## Interface: 70200
+## Title: TinyTooltip
+## Notes: TinyTooltip
+## Author: M
+## Version: 7.2.5.9
+## SavedVariables: TinyTooltipDB
+
+libs\lib.xml
+TinyTooltip.lua
+
+locales\locales.xml
+Options.lua
