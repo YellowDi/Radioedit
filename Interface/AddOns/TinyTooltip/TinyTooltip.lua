@@ -5,7 +5,7 @@
 
 local LibEvent = LibStub:GetLibrary("LibEvent.7000")
 
-local addon = ...
+local addonName = ...
 
 local tooltips = {
     GameTooltip,
@@ -33,7 +33,7 @@ LibEvent:attachEvent("PLAYER_LOGIN", function()
                 OnlyMouseoverUnit = true,           --僅鼠標目標時跟隨
                 OriginalInCombat = true,            --戰鬥時回原始位置
             AppendLevelToName = false,              --等級種族職業顯示在名稱之後
-            DisplayStyleMask = true,                --顯示遮罩
+            DisplayStyleMask = false,               --顯示遮罩
             ShowAngularBorder = true,               --直角邊框
             ShowColoredClassBorder = false,         --邊框按職業顔色
             ShowColoredItemBorder = false,          --物品品質邊框
@@ -110,7 +110,7 @@ do
     GameTooltipStatusBar:SetPoint("BOTTOMLEFT", 5, 5)
     GameTooltipStatusBar:SetPoint("BOTTOMRIGHT", -5 ,5)
     GameTooltipStatusBar:SetHeight(12)
-    GameTooltipStatusBar:SetStatusBarTexture("Interface\\AddOns\\"..addon.."\\texture\\StatusBar")
+    GameTooltipStatusBar:SetStatusBarTexture("Interface\\AddOns\\"..addonName.."\\texture\\StatusBar")
     GameTooltipStatusBar.bg = GameTooltipStatusBar:CreateTexture(nil, "BACKGROUND")
     GameTooltipStatusBar.bg:SetAllPoints()
     GameTooltipStatusBar.bg:SetColorTexture(1, 1, 1)
@@ -159,6 +159,16 @@ do
         LibEvent:trigger("TOOLTIP_ANCHOR", self, parent)
     end)
 
+    --内置tip設置物品邊框
+    hooksecurefunc("EmbeddedItemTooltip_OnTooltipSetItem", function(self)
+        local tooltip = self:GetParent()
+        local r, g, b = self.IconBorder:GetVertexColor()
+        local border = (tooltip.border and tooltip.border:IsShown()) and tooltip.border or tooltip
+        if (TinyTooltipDB.ShowColoredItemBorder) then
+            border:SetBackdropBorderColor(r, g, b, 0.6)
+        end
+    end)
+    
     local backdrop = { edgeFile = "Interface\\Buttons\\WHITE8X8", edgeSize = 1 }
 
     for _, tooltip in ipairs(tooltips) do
@@ -374,7 +384,7 @@ LibEvent:attachTrigger("TOOLTIP_UNIT_NAME", function(self, tooltip, unit)
     end
 
     if (TinyTooltipDB.name.FactionIcon) then
-        text = text .. NameIcons[factionGroup] or ""
+        text = text .. (NameIcons[factionGroup] or "")
     end
     if (TinyTooltipDB.name.ClassIcon) then
         local x1, x2, y1, y2 = unpack(CLASS_ICON_TCOORDS[strupper(class)])
@@ -576,6 +586,7 @@ local function ParseHyperLink(link)
 end
 
 local function ShowId(tooltip, name, value, noBlankLine)
+    if (not name or not value) then return end
     if (IsShiftKeyDown() or IsControlKeyDown() or IsAltKeyDown()) then
         local line = FindLine(tooltip, name)
         if (not line) then
@@ -587,9 +598,7 @@ local function ShowId(tooltip, name, value, noBlankLine)
 end
 
 local function ShowLinkIdInfo(tooltip, link)
-    local name, value = ParseHyperLink(link)
-    if (not name) then return end
-    ShowId(tooltip, name, value)
+    ShowId(tooltip, ParseHyperLink(link))
 end
 
 local function ShowItemIdInfo(tooltip)
@@ -617,10 +626,11 @@ ShoppingTooltip1:HookScript("OnTooltipSetItem", ShowItemIdInfo)
 ShoppingTooltip2:HookScript("OnTooltipSetItem", ShowItemIdInfo)
 
 -- Spell
-GameTooltip:HookScript("OnTooltipSetSpell", function(self) ShowId(self, "Spell:", select(3,self:GetSpell())) end)
-hooksecurefunc(GameTooltip, "SetUnitAura", function(self, ...) ShowId(self, "Spell:", select(11,UnitAura(...))) end)
-hooksecurefunc(GameTooltip, "SetUnitBuff", function(self, ...) ShowId(self, "Spell:", select(11,UnitBuff(...))) end)
-hooksecurefunc(GameTooltip, "SetUnitDebuff", function(self, ...) ShowId(self, "Spell:", select(11,UnitDebuff(...))) end)
-
--- CastBy
--- hooksecurefunc(GameTooltip, "SetUnitAura", ShowCastByInfo)
+GameTooltip:HookScript("OnTooltipSetSpell", function(self) ShowId(self, "Spell:", (select(3,self:GetSpell()))) end)
+hooksecurefunc(GameTooltip, "SetUnitAura", function(self, ...) ShowId(self, "Spell:", (select(11,UnitAura(...)))) end)
+hooksecurefunc(GameTooltip, "SetUnitBuff", function(self, ...) ShowId(self, "Spell:", (select(11,UnitBuff(...)))) end)
+hooksecurefunc(GameTooltip, "SetUnitDebuff", function(self, ...) ShowId(self, "Spell:", (select(11,UnitDebuff(...)))) end)
+hooksecurefunc(GameTooltip, "SetArtifactPowerByID", function(self, powerID)
+    ShowId(self, "Power:", powerID)
+    ShowId(self, "Spell:", C_ArtifactUI.GetPowerInfo(powerID).spellID, 1)
+end)

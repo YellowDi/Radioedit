@@ -2,10 +2,11 @@
 ## Title: TinyTooltip
 ## Notes: TinyTooltip
 ## Author: M
-## Version: 7.2.5.9
+## Version: 7.2.5.10
 ## SavedVariables: TinyTooltipDB
 
 libs\lib.xml
+core.lua
 TinyTooltip.lua
 
 locales\locales.xml
