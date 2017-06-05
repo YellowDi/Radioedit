@@ -1,24 +1,24 @@
-tag 3df1627872da64cb68d3c68fac97858c21772add v1.7.1
+tag 45f27b2349580ea540877d839cb0af147d34f68d v1.7.2
 Author:	Navv <navv1234@gmail.com>
-Date:	Fri May 12 21:59:57 2017 +0300
+Date:	Sun Jun 4 14:54:09 2017 +0300
 
-release
+Release v1.7.2
 
-commit 42eb92dcbe31209075d3d1c86f32609cbb5390bb
+commit 2430e9f2f2ec475b6d87f30ecd5e6e92583ddcd4
 Author: Navv <navv1234@gmail.com>
-Date:   Fri May 12 21:59:42 2017 +0300
+Date:   Sun Jun 4 14:53:30 2017 +0300
 
-    Update version
+    Release 1.7.2
 
-commit b99901320202ad9bd470e41f7d78ab0ce8e18092
-Author: Dave Hendler <sollaires@gmail.com>
-Date:   Tue May 9 18:47:43 2017 -0700
+commit e61236c2ff677c638c25f68cf455c9316dfe5b7b
+Author: Navv <navv1234@gmail.com>
+Date:   Sun Jun 4 14:51:17 2017 +0300
 
-    FIX: Remove slot lookup - breaks on non-English clients and also unnecessary using the equipment manager APIs
+    More sanity checks with artifact panels and usability
 
-commit b99901320202ad9bd470e41f7d78ab0ce8e18092
-Author: Dave Hendler <sollaires@gmail.com>
-Date:   Tue May 9 18:47:43 2017 -0700
+commit e64a4b2ec381e0227cb55f77982f9302b68f528e
+Author: Navv <navv1234@gmail.com>
+Date:   Sat Jun 3 15:59:17 2017 +0300
 
-    FIX: Remove slot lookup - breaks on non-English clients and also unnecessary using the equipment manager APIs
+    Add sanity check for the artifact UI processing
 
