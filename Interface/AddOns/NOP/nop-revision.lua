@@ -1,4 +1,11 @@
 -- Revisions:
+--[[<p>07.30 02.06.2017</p>
+<ul>
+<li>Added Legionfall Insignia for exalted.</li>
+<li>Added Horn of Winter, Pile of Bits and Bones, Stolen Tome of Artifact Lore and A Master Plan.</li>
+<li>Fix mapIDs for Rush Order: Shipyard. Is not in garrison but at map where garrison is located.</li>
+</ul>
+]]
 --[[<p>07.28 10.05.2017</p>
 <ul>
 <li>UIError messages are now handled and cleared out. It prevent showing errow when bashing NOP button. Errors now are not handled only on pre-caching items and spells, but all the time.</li>

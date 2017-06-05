@@ -89,7 +89,7 @@ function NOP:ItemToUse(itemID,count,prio,zone,map,aura) -- store item into table
   local pt = NOP.T_USE[itemID]
   if not pt then -- new item
     if (self.BF and self.BF.showID == nil) and (itemID == self.AceDB.char.itemID) then -- first time looking for item then get last item from last session
-      NOP.T_USE[itemID] = {count, prio, zone, map, aura, GetTime()+5.0, GetItemCount(itemID)}
+      NOP.T_USE[itemID] = {count, prio, zone, map, aura, GetTime()+1.0, GetItemCount(itemID)}
     else
       NOP.T_USE[itemID] = {count, prio, zone, map, aura, GetTime()+offset, GetItemCount(itemID)} -- seed with time
       offset = offset + 0.001
@@ -302,7 +302,7 @@ function NOP:ItemShowNew() -- check bags for usable item and place it on button
         p = 1
       else
         if NOP.DB.zoneUnlock and not a then
-          p = (p + ((itemID == private.RO_SHIPYARD) and 11 or 10))
+          p = p + 10 -- shift priority behind items not zone locked
           inZone = true
         else
           p = nil

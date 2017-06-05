@@ -76,13 +76,18 @@ NOP.T_RECIPES = { -- [ItemId] = {count_to_use, "gsub regex" | tooltip-line-numbe
   [147727] = {1,1,nil}, -- Greater Legionfall Insignia
 }
 NOP.T_ITEMS = { -- [itemID] = {count_to_use,{"sub-Zone",...},{[mapID]=true,...},auraID}, table for opening/use item by itemID, is no possible to check any common text
+  [139591] = {1,nil,nil}, -- Stolen Tome of Artifact Lore
+  [139428] = {1,nil,nil}, -- A Master Plan
+  [140749] = {1,nil,nil}, -- Horn of Winter
+  [140767] = {5,nil,nil}, -- Pile of Bits and Bones
   [144435] = {1,nil,nil}, -- Artifact Research Compendium: Volumes I-IV
-  [128373] = {1,{private.SHIPYARD_HORDE,private.SHIPYARD_ALLIANCE},{[private.FROSTWALL]=true,[private.LUNARFALL]=true}}, -- Rush Order: Shipyard, special handling for sub-zone
+  [128373] = {1,{private.SHIPYARD_HORDE,private.SHIPYARD_ALLIANCE},{[private.FROSTFIRE_RIDGE]=true,[private.SHADOWMOON_VALLEY]=true}}, -- Rush Order: Shipyard, special handling for sub-zone
   [136806] = {1,nil,nil}, -- Glass of Arcwine
   [147729] = {1,nil,nil}, -- Netherchunk
   [136342] = {100,nil,nil},-- Obliterum Ash
   [146757] = {10,nil,nil},-- Prepared Ingredients
   [146949] = {1,nil,nil}, -- Legionfall Insignia
+  [146950] = {1,nil,nil}, -- Legionfall Insignia
   [147350] = {1,nil,nil}, -- Invincible Armor Set
   [147349] = {1,nil,nil}, -- Spiked Armor Set
   [147348] = {1,nil,nil}, -- Bulky Armor Set
