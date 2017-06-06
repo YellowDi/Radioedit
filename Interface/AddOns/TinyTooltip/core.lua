@@ -13,6 +13,7 @@ local DEAD = DEAD
 local ELITE = ELITE
 local FEMALE = FEMALE
 local TARGET = TARGET
+local PLAYER = PLAYER
 local RARE = GARRISON_MISSION_RARE
 local OFFLINE = FRIENDS_LIST_OFFLINE
 
@@ -38,7 +39,22 @@ addon.icons = {
     pvp       = "|TInterface\\TargetingFrame\\UI-PVP-FFA:16:16:0:0:64:64:10:36:0:38|t",
     class     = "|TInterface\\TargetingFrame\\UI-Classes-Circles:16:16:0:0:256:256:%d:%d:%d:%d|t",
     questboss = "|TInterface\\TargetingFrame\\PortraitQuestBadge:0|t",
+    --Alliance  = "|TInterface\\FriendsFrame\\PlusManz-Alliance:16|t",
+    --Horde     = "|TInterface\\FriendsFrame\\PlusManz-Horde:16|t",
 }
+
+-- 配置 (elements鍵不合併)
+function addon:MergeVariable(src, dst)
+    dst.version = src.version
+    for k, v in pairs(src) do
+        if (dst[k] == nil) then
+            dst[k] = v
+        elseif (type(dst[k]) == "table" and k~="elements") then
+            self:MergeVariable(v, dst[k])
+        end
+    end
+    return dst
+end
 
 -- 找行
 function addon:FindLine(tooltip, keyword)
@@ -55,7 +71,7 @@ end
 -- 刪行
 function addon:HideLine(tooltip, keyword)
     local line, text
-    for i = 3, tooltip:NumLines() do
+    for i = 2, tooltip:NumLines() do
         line = _G[tooltip:GetName() .. "TextLeft" .. i]
         text = line:GetText() or ""
         if (strfind(text, keyword)) then
@@ -65,11 +81,20 @@ function addon:HideLine(tooltip, keyword)
     end
 end
 
+-- 刪行
+function addon:HideAllLine(tooltip, number)
+    local line, text
+    for i = number, tooltip:NumLines() do
+        _G[tooltip:GetName() .. "TextLeft" .. i]:SetText(nil)
+    end
+end
+
 -- 取行
 function addon:GetLine(tooltip, number)
-    if (not _G[tooltip:GetName() .. "TextLeft" .. number]) then
+    local num = tooltip:NumLines()
+    if (number > num) then
         tooltip:AddLine(" ")
-        return self:GetLine(tooltip, number)
+        return self:GetLine(tooltip, num+1)
     end
     return _G[tooltip:GetName() .. "TextLeft" .. number]
 end
@@ -88,10 +113,12 @@ end
 
 -- 顔色
 function addon:GetRGBColor(hex)
-    local r = tonumber(strsub(hex,1,2),16) or 255
-	local g = tonumber(strsub(hex,3,4),16) or 255
-	local b = tonumber(strsub(hex,5,6),16) or 255
-	return r/255, g/255, b/255
+    if (string.match(hex, "^%x%x%x%x%x%x$")) then
+        local r = tonumber(strsub(hex,1,2),16) or 255
+        local g = tonumber(strsub(hex,3,4),16) or 255
+        local b = tonumber(strsub(hex,5,6),16) or 255
+        return r/255, g/255, b/255
+    end
 end
 
 -- 任務怪
@@ -128,14 +155,14 @@ function addon:GetClassIcon(class)
     return format(self.icons.class, x1*256, x2*256, y1*256, y2*256)
 end
 
--- 頭銜 @param2:false為前綴
+-- 頭銜 @param2:true為前綴
 function addon:GetTitle(name, pvpName)
     if (not pvpName) then return end
     local pos = string.find(pvpName, name)
     local title = pvpName:gsub(name, "", 1)
     title = title:gsub(",", ""):gsub("，", "")
     title = strtrim(title)
-    return title, pos == 1
+    return title, pos ~= 1
 end
 
 -- 性別
@@ -165,8 +192,9 @@ function addon:GetUnitInfo(unit)
     local factionGroup, factionName = UnitFactionGroup(unit)
     local reaction = UnitReaction(unit, "player")
     local guildName, guildRank, guildIndex, guildRealm = GetGuildInfo(unit)
+    local classif = UnitClassification(unit)
 
-    return {
+    local t = {
         raidIcon     = self:GetRaidIcon(unit),
         pvpIcon      = self:GetPVPIcon(unit),
         factionIcon  = self:GetFactionIcon(factionGroup),
@@ -175,7 +203,6 @@ function addon:GetUnitInfo(unit)
         factionName  = factionName,
         name         = name,
         gender       = self:GetGender(gender),
-        title        = self:GetTitle(name, pvpName),
         realm        = realm,
         levelValue   = level >= 0 and level or "??",
         className    = className,
@@ -192,6 +219,7 @@ function addon:GetUnitInfo(unit)
         classifBoss  = (level==-1 or classif == "worldboss") and BOSS,
         classifElite = classif == "elite" and ELITE,
         classifRare  = (classif == "rare" or classif == "rareelite") and RARE,
+        isPlayer     = UnitIsPlayer(unit) and PLAYER,
 
         unit         = unit,                     --unit
         level        = level,                    --1~113|-1
@@ -199,81 +227,157 @@ function addon:GetUnitInfo(unit)
         class        = class,                    --DRUID|HUNTER...
         factionGroup = factionGroup,             --Alliance|Horde|Neutral
         reaction     = reaction,                 --nil|1|2|3|4|5|6|7|8
-        classif      = UnitClassification(unit), --normal|worldboss|elite|rare|rareelite
+        classif      = classif, --normal|worldboss|elite|rare|rareelite
     }
+    t.title, t.titleIsPrefix = self:GetTitle(name, pvpName)
+    return t
+end
+
+-- Filter
+function addon:CheckFilter(config, raw)
+    if IsAltKeyDown() then return true end
+    if (not config.enable) then return end
+    if (config.filter == "" or config.filter == "none") then
+        return true
+    end
+    if (config.filter) then
+        local key, oppo, func
+        key = strsplit(":", config.filter)
+        key, oppo = key:gsub("not%s+", "")
+        func = self.filterfunc[key]
+        if (func) then
+            local res = func(raw, select(2,strsplit(":", config.filter)))
+            if (oppo > 0) then
+                return not res
+            else
+                return res
+            end
+        end
+    end
+    return true
 end
 
 -- 格式化數據
 function addon:FormatData(value, config, raw)
     local color, wildcard = config.color, config.wildcard
     if (self.colorfunc[color]) then
-        color = self.colorfunc[color](raw)
+        color = select(4, self.colorfunc[color](raw))
     end
-    if (color == "") then
+    if (color == "" or color == "default" or color == "none") then
         return (wildcard):format(value)
     else
+        if (type(color)=="table") then color = self:GetHexColor(color) end
         return ("|cff"..color..wildcard.."|r"):format(value)
     end
 end
 
 -- 獲取數據
-function addon:GetUnitData(unit, configs, raw)
+function addon:GetUnitData(unit, elements, raw)
     local data = {}
+    local config, name, title
     if (not raw) then
         raw = self:GetUnitInfo(unit)
     end
-    for i, v in ipairs(configs) do
+    for i, v in ipairs(elements) do
         data[i] = {}
-        for _, config in ipairs(v) do
-            if (raw[config.key]) then
+        for ii, e in ipairs(v) do
+            config = elements[e]
+            if (raw[e] and self:CheckFilter(config, raw)) then
+                if (e == "name") then name = #data[i]+1 end   --name位置
+                if (e == "title") then title = #data[i]+1 end --title位置
                 if (config.color and config.wildcard) then
-                    tinsert(data[i], self:FormatData(raw[config.key], config, raw))
+                    if (e == "title" and name == #data[i] and raw.titleIsPrefix) then
+                        tinsert(data[i], name, self:FormatData(raw[e], config, raw))
+                    elseif (e == "name" and title == #data[i] and not raw.titleIsPrefix) then
+                        tinsert(data[i], title, self:FormatData(raw[e], config, raw))
+                    else
+                        tinsert(data[i], self:FormatData(raw[e], config, raw))
+                    end
                 else
-                    tinsert(data[i], raw[config.key])
+                    tinsert(data[i], raw[e])
                 end
             end
         end
     end
-    for i, v in ipairs(data) do
-        if (not v[1]) then tremove(data, i) end
+    for i = #data, 1, -1 do
+        if (not data[i][1]) then tremove(data, i) end
     end
     return data
 end
 
 
-addon.datafunc, addon.colorfunc = {}, {}
+addon.filterfunc, addon.colorfunc = {}, {}
 
 addon.colorfunc.class = function(raw)
-    return addon:GetHexColor(GetClassColor(raw.class))
+    local r, g, b = GetClassColor(raw.class)
+    return r, g, b, addon:GetHexColor(r, g, b)
 end
 
 addon.colorfunc.level = function(raw)
     local color = GetCreatureDifficultyColor(raw.level>0 and raw.level or 999)
-    return addon:GetHexColor(color)
+    return color.r, color.g, color.b, addon:GetHexColor(color)
 end
 
 addon.colorfunc.reaction = function(raw)
-    return addon:GetHexColor(FACTION_BAR_COLORS[raw.reaction or 3])
+    local color = FACTION_BAR_COLORS[raw.reaction or 4]
+    return color.r, color.g, color.b, addon:GetHexColor(color)
 end
 
 addon.colorfunc.itemQuality = function(raw)
-    return addon:GetHexColor(ITEM_QUALITY_COLORS[raw.itemQuality or 0])
+    local color = ITEM_QUALITY_COLORS[raw.itemQuality or 0]
+    return color.r, color.g, color.b, addon:GetHexColor(color)
 end
 
 addon.colorfunc.selection = function(raw)
-    return addon:GetHexColor(UnitSelectionColor(raw.unit))
+    local r, g, b = UnitSelectionColor(raw.unit)
+    return r, g, b, addon:GetHexColor(r, g, b)
 end
 
 addon.colorfunc.faction = function(raw)
     if (raw.factionGroup == "Neutral") then
-        return "e5b200"
+        return 0.9, 0.7, 0, "e5b200"
     elseif (raw.factionGroup == UnitFactionGroup("player")) then
-        return "00cc33"
+        return 0, 0.9, 0.2, "00cc33"
     else
-        return "dd3300"
+        return 0.9, 0.2, 0, "dd3300"
     end
 end
 
+addon.filterfunc.reaction6 = function(raw, reaction)
+    return (raw.reaction or 4) >= 6
+end
+
+addon.filterfunc.reaction5 = function(raw, reaction)
+    return (raw.reaction or 4) >= 5
+end
+
+addon.filterfunc.reaction = function(raw, reaction)
+    return (raw.reaction or 4) >= (tonumber(reaction) or 5)
+end
+
+addon.filterfunc.inraid = function(raw)
+    return IsInRaid()
+end
+
+addon.filterfunc.incombat = function(raw)
+    return InCombatLockdown()
+end
+
+addon.filterfunc.samerealm = function(raw)
+    return raw.realm == raw.guildRealm
+end
+
+addon.filterfunc.inpvp = function(raw)
+    return select(2, IsInInstance()) == "pvp"
+end
+
+addon.filterfunc.inarena = function(raw)
+    return select(2, IsInInstance()) == "arena"
+end
+
+addon.filterfunc.ininstance = function(raw)
+    return IsInInstance()
+end
 
 LibEvent:attachTrigger("tooltip.scale", function(self, frame, scale)
     frame:SetScale(scale)
@@ -286,13 +390,13 @@ end)
 
 LibEvent:attachTrigger("tooltip.anchor.cursor.right", function(self, frame, parent, offsetX, offsetY)
     frame:SetOwner(parent, "ANCHOR_NONE")
-    frame:SetOwner(parent, "ANCHOR_CURSOR_RIGHT", offsetX or 30, offsetY or 0)
+    frame:SetOwner(parent, "ANCHOR_CURSOR_RIGHT", tonumber(offsetX) or 30, tonumber(offsetY) or -16)
 end)
 
 LibEvent:attachTrigger("tooltip.anchor.static", function(self, frame, offsetX, offsetY)
     local anchor = select(2, frame:GetPoint())
     if (anchor == UIParent) then
-        frame:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", offsetX or (-CONTAINER_OFFSET_X-13), offsetY or CONTAINER_OFFSET_Y)
+        frame:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", tonumber(offsetX) or (-CONTAINER_OFFSET_X-13), tonumber(offsetY) or CONTAINER_OFFSET_Y)
     end
 end)
 
@@ -312,6 +416,7 @@ end)
 LibEvent:attachTrigger("tooltip.style.border.size", function(self, frame, size)
     LibEvent:trigger("tooltip.style.init", frame)
     local backdrop = frame.style:GetBackdrop()
+    local r, g, b, a = frame.style:GetBackdropColor()
     if (backdrop.edgeFile == "Interface\\Buttons\\WHITE8X8") then
         backdrop.edgeSize = size
         backdrop.insets.top = size
@@ -319,16 +424,25 @@ LibEvent:attachTrigger("tooltip.style.border.size", function(self, frame, size)
         backdrop.insets.right = size
         backdrop.insets.bottom = size
         frame.style:SetBackdrop(backdrop)
+        frame.style:SetBackdropColor(r, g, b, a)
+        frame.style.inside:SetPoint("TOPLEFT", frame.style, "TOPLEFT", size, -size)
+        frame.style.inside:SetPoint("BOTTOMRIGHT", frame.style, "BOTTOMRIGHT", -size, size)
     end
 end)
 
 LibEvent:attachTrigger("tooltip.style.border.corner", function(self, frame, corner)
     LibEvent:trigger("tooltip.style.init", frame)
     local backdrop = frame.style:GetBackdrop()
+    local r, g, b, a = frame.style:GetBackdropColor()
     if (corner == "angular") then
         backdrop.edgeFile = "Interface\\Buttons\\WHITE8X8"
+        backdrop.edgeSize = min(backdrop.edgeSize, 6)
         frame.style.mask:SetPoint("TOPLEFT", 1, -1)
         frame.style.mask:SetPoint("BOTTOMRIGHT", frame.style, "TOPRIGHT", -1, -32)
+        frame.style.outside:Show()
+        frame.style.inside:Show()
+        frame.style.inside:SetPoint("TOPLEFT", frame.style, "TOPLEFT", backdrop.edgeSize, -backdrop.edgeSize)
+        frame.style.inside:SetPoint("BOTTOMRIGHT", frame.style, "BOTTOMRIGHT", -backdrop.edgeSize, backdrop.edgeSize)
     else
         backdrop.edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border"
         backdrop.edgeSize = 16
@@ -338,8 +452,11 @@ LibEvent:attachTrigger("tooltip.style.border.corner", function(self, frame, corn
         backdrop.insets.bottom = 3
         frame.style.mask:SetPoint("TOPLEFT", 3, -3)
         frame.style.mask:SetPoint("BOTTOMRIGHT", frame.style, "TOPRIGHT", -3, -32)
+        frame.style.inside:Hide()
+        frame.style.outside:Hide()
     end
     frame.style:SetBackdrop(backdrop)
+    frame.style:SetBackdropColor(r, g, b, a)
 end)
 
 LibEvent:attachTrigger("tooltip.style.border.color", function(self, frame, r, g, b, a)
@@ -364,13 +481,13 @@ LibEvent:attachTrigger("tooltip.statusbar.position", function(self, position)
     GameTooltipStatusBar:ClearAllPoints()
     local backdrop = GameTooltip.style:GetBackdrop()
     if (not GameTooltipStatusBar:IsShown()) then position = "" end
-    if (position == "BOTTOM") then
+    if (position == "bottom") then
         local offset = backdrop.edgeFile == "Interface\\Tooltips\\UI-Tooltip-Border" and 5 or backdrop.edgeSize + 1
         GameTooltipStatusBar:SetPoint("TOPLEFT", GameTooltip, "BOTTOMLEFT", offset, 2)
         GameTooltipStatusBar:SetPoint("TOPRIGHT", GameTooltip, "BOTTOMRIGHT", -offset, 2)
         GameTooltip.style:SetPoint("TOPLEFT")
         GameTooltip.style:SetPoint("BOTTOMRIGHT", GameTooltipStatusBar, "BOTTOMRIGHT", offset, -offset)
-    elseif (position == "TOP") then
+    elseif (position == "top") then
         local offset = backdrop.edgeFile == "Interface\\Tooltips\\UI-Tooltip-Border" and 4 or backdrop.edgeSize
         GameTooltipStatusBar:SetPoint("BOTTOMLEFT", GameTooltip, "TOPLEFT", offset, 0)
         GameTooltipStatusBar:SetPoint("BOTTOMRIGHT", GameTooltip, "TOPRIGHT", -offset, 0)
@@ -399,6 +516,18 @@ LibEvent:attachTrigger("tooltip.style.init", function(self, tip)
     tip.style:SetBackdrop(backdrop)
     tip.style:SetBackdropColor(0, 0, 0, 0.9)
     tip.style:SetBackdropBorderColor(0.6, 0.6, 0.6, 0.8)
+    tip.style.inside = CreateFrame("Frame", nil, tip.style)
+    tip.style.inside:SetBackdrop({edgeSize=1,edgeFile="Interface\\Buttons\\WHITE8X8"})
+    tip.style.inside:SetPoint("TOPLEFT", tip.style, "TOPLEFT", 1, -1)
+    tip.style.inside:SetPoint("BOTTOMRIGHT", tip.style, "BOTTOMRIGHT", -1, 1)
+    tip.style.inside:SetBackdropBorderColor(0.1, 0.1, 0.1, 0.8)
+    tip.style.inside:Hide()
+    tip.style.outside = CreateFrame("Frame", nil, tip.style)
+    tip.style.outside:SetBackdrop({edgeSize=1,edgeFile="Interface\\Buttons\\WHITE8X8"})
+    tip.style.outside:SetPoint("TOPLEFT", tip.style, "TOPLEFT", -1, 1)
+    tip.style.outside:SetPoint("BOTTOMRIGHT", tip.style, "BOTTOMRIGHT", 1, -1)
+    tip.style.outside:SetBackdropBorderColor(0, 0, 0, 0.5)
+    tip.style.outside:Hide()
     tip.style.mask = tip.style:CreateTexture(nil, "OVERLAY")
     tip.style.mask:SetTexture("Interface\\Tooltips\\UI-Tooltip-Background")
     tip.style.mask:SetPoint("TOPLEFT", 3, -3)
@@ -428,6 +557,9 @@ LibEvent:attachTrigger("tooltip.style.init", function(self, tip)
     if (tip:HasScript("OnTooltipCleared")) then
         tip:HookScript("OnTooltipCleared", function(self) LibEvent:trigger("tooltip:cleared", self) end)
     end
+    if (tip:HasScript("OnTooltipSetQuest")) then
+        tip:HookScript("OnTooltipSetQuest", function(self) LibEvent:trigger("tooltip:quest", self) end)
+    end
     LibEvent:trigger("tooltip:init", tip)
 end)
 
@@ -447,4 +579,5 @@ end)
 -- tooltip:unit
 -- tooltip:item
 -- tooltip:spell
+-- tooltip:quest
 -- tooltip:cleared

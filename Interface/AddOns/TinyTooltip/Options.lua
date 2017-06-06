@@ -1,405 +1,416 @@
 
---------------------------------
--- Configuration Panel
---------------------------------
-
 local LibEvent = LibStub:GetLibrary("LibEvent.7000")
 
-local addon, ns = ...
+local addonName, addon = ...
 
-local L = ns.L or {}
-
-setmetatable(L, { __index = function(_, k)
-    return k:gsub("([a-z])([A-Z])", "%1 %2")
+addon.L = addon.L or {}
+setmetatable(addon.L, { __index = function(_, k)
+    local s = {strsplit(".", k)}
+    return (s[#s]:gsub("([a-z])([A-Z])", "%1 %2"):gsub("^(%a)", function(c) return strupper(c) end))
 end})
+local L = addon.L
 
-local DefaultDB = {
-    version = 1.3,
-    Scale = 1,
-    Alpha = 0.9,
-    BorderSize = 1,
-    HPHeight = 12,
-    StaticPosition = false,
-    UseMouseAnchor = true,
-    AnchorCursorRight = true,
-    OnlyMouseoverUnit = true,
-    OriginalInCombat = true,
-    AppendLevelToName = false,
-    DisplayStyleMask = false,
-    ShowAngularBorder = true,
-    ShowColoredClassBorder = false,
-    ShowStatusBar   = true,
-    StatusBarText = true,
-    DynamicStatusBarColor = false,
-    ShowTarget      = true,
-    ShowColoredItemBorder = false,
-    name = {
-        PVPIcon     = true,
-        FactionIcon = true,
-        ClassIcon   = true,
-        Title       = "|cffCCFFFF%s|r",
-        Realm       = "|cff00EEEE%s|r",
-        Race        = "|cffcccccc%s|r",
-        Class       = "|cffffffff%s|r",
-        AFK         = "|cffFFD200(%s)|r",
-        DND         = "|cffFFD200(%s)|r",
-        OFFLINE     = "|cff999999(%s)|r",
-    },
-    guild = {
-        Guild       = "|cffFF00FF<%.36s>|r",
-        Rank        = "|cffCC88FF(%s:%s)|r",
-        Realm       = "|cff00CCCC%s|r",
-    },
-    npc = {
-        Title       = "|cff99E8E8<%s>|r",
-        Boss        = "|cffff0000(%s)|r",
-        Elite       = "|cffffff33(%s)|r",
-        Rare        = "|cffffaaff(%s)|r",
-        Reaction    = "|cff33ffff<%s>|r",
-        Friendly    = "|cff99ff66%1|r",
-    },
-}
+local function CallTrigger(keystring, value)
+    for _, tip in ipairs(addon.tooltips) do
+        if (keystring == "general.mask") then
+            LibEvent:trigger("tooltip.style.mask", tip, value)
+        elseif (keystring == "general.scale") then
+            LibEvent:trigger("tooltip.scale", tip, value)
+        elseif (keystring == "general.background") then
+            LibEvent:trigger("tooltip.style.background", tip, unpack(value))
+        elseif (keystring == "general.borderColor") then
+            LibEvent:trigger("tooltip.style.border.color", tip, unpack(value))
+        elseif (keystring == "general.borderSize") then
+            LibEvent:trigger("tooltip.style.border.size", tip, value)
+        elseif (keystring == "general.borderCorner") then
+            LibEvent:trigger("tooltip.style.border.corner", tip, value)
+        end
+    end
+    if (keystring == "general.statusbarText") then
+        LibEvent:trigger("tooltip.statusbar.text", value)
+    elseif (keystring == "general.statusbarHeight") then
+        LibEvent:trigger("tooltip.statusbar.height", value)
+    end
+end
+
+local function GetVariable(keystring, tbl)
+    local keys = {strsplit(".", keystring)}
+    local value = tbl or addon.db
+    for i, key in ipairs(keys) do
+        if (value[key] == nil) then return end
+        value = value[key]
+    end
+    return value
+end
+
+local function SetVariable(keystring, value, tbl)
+    local keys = {strsplit(".", keystring)}
+    local num = #keys
+    local tab = tbl or addon.db
+    local lastKey
+    for i, key in ipairs(keys) do
+        if (i < num) then
+            if (not tab[key]) then tab[key] = {} end
+            tab = tab[key]
+        elseif (i == num) then
+            lastKey = key
+        end
+    end
+    tab[lastKey] = value
+    CallTrigger(keystring, value)
+end
+
+local widgets = {}
+
+function widgets:checkbox(parent, config, labelText)
+    local frame = CreateFrame("CheckButton", nil, parent, "InterfaceOptionsCheckButtonTemplate")
+    frame.keystring = config.keystring
+    frame.Text:SetText(labelText or L[config.keystring])
+    frame:SetChecked(GetVariable(config.keystring))
+    frame:SetScript("OnClick", function(self) SetVariable(self.keystring, self:GetChecked()) end)
+    return frame
+end
+
+function widgets:slider(parent, config)
+    local frame = CreateFrame("Slider", nil, parent, "OptionsSliderTemplate")
+    frame:SetWidth(118)
+    frame.Text = frame:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
+    frame.Text:SetPoint("LEFT", frame, "RIGHT", 8, 0)
+    frame.keystring = config.keystring
+    frame.Low:SetText("")
+    frame.High:SetTextColor(1, 0.82, 0)
+    frame.High:ClearAllPoints()
+    frame.High:SetPoint("RIGHT", frame, "LEFT", -1, 0)
+    frame.Text:SetText(L[config.keystring])
+    frame.High:SetText(GetVariable(config.keystring))
+    frame:SetMinMaxValues(config.min, config.max)
+    frame:SetValueStep(config.step)
+    frame:SetValue(GetVariable(config.keystring))
+    frame:SetScript("OnValueChanged", function(self, value)
+        local step = self:GetValueStep() or 1
+        if (step < 1) then
+            value = format("%.1f", value)
+        else
+            value = floor(value+0.5)
+        end
+        if (self:GetValue() ~= value) then
+            SetVariable(self.keystring, value)
+            self.High:SetText(value)
+        end
+    end)
+    return frame
+end
+
+function widgets:editbox(parent, config)
+    local frame = CreateFrame("EditBox", nil, parent, "InputBoxTemplate")
+    frame.keystring = config.keystring
+    frame:SetAutoFocus(false)
+    frame:SetSize(88, 14)
+    frame:SetText(GetVariable(config.keystring))
+    frame:SetCursorPosition(0)
+    frame:SetScript("OnEnterPressed", function(self)
+        SetVariable(self.keystring, self:GetText())
+        self:ClearFocus()
+    end)
+    return frame
+end
+
+function widgets:colorpick(parent, config)
+    local a, r, g, b = 1
+    if (config.colortype == "hex") then
+        r, g, b = addon:GetRGBColor(GetVariable(config.keystring))
+    else
+        r, g, b, a = unpack(GetVariable(config.keystring))
+    end
+    local frame = CreateFrame("Button", nil, parent)
+    frame.keystring = config.keystring
+    frame.colortype = config.colortype
+    frame.hasopacity = config.hasopacity
+    frame:SetSize(16, 16)
+    frame:SetNormalTexture("Interface\\ChatFrame\\ChatFrameColorSwatch")
+    frame.bg = frame:CreateTexture(nil, "BACKGROUND")
+    frame.bg:SetColorTexture(1, 1, 1)
+    frame.bg:SetSize(14, 14)
+    frame.bg:SetPoint("CENTER")
+    frame.Text = frame:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
+    frame.Text:SetPoint("LEFT", frame, "RIGHT", 5, 0)
+    frame.Text:SetText(L[config.keystring])
+    frame.Text:SetShown(not config.hidetitle)
+    frame:GetNormalTexture():SetVertexColor(r, g, b, a)
+    frame:SetScript("OnClick", function(self)
+        local r, g, b, a = self:GetNormalTexture():GetVertexColor()
+        local info = {
+            r = r, g = g, b = b, opacity = a, hasOpacity = self.hasopacity,
+            opacityFunc = self.hasopacity and function()
+                local r, g, b = ColorPickerFrame:GetColorRGB()
+                local a = format("%.2f", OpacitySliderFrame:GetValue())
+                local aa = select(4, ColorPickerFrame.tipframe:GetNormalTexture():GetVertexColor())
+                if (a ~= aa) then
+                    ColorPickerFrame.tipframe:GetNormalTexture():SetVertexColor(r,g,b,a)
+                    SetVariable(ColorPickerFrame.tipframe.keystring, {r,g,b,a})
+                end
+            end,
+            swatchFunc = function()
+                local r, g, b = ColorPickerFrame:GetColorRGB()
+                local a = format("%.2f", OpacitySliderFrame:GetValue())
+                ColorPickerFrame.tipframe:GetNormalTexture():SetVertexColor(r,g,b,a)
+                if (ColorPickerFrame.tipframe.colortype == "hex") then
+                    SetVariable(ColorPickerFrame.tipframe.keystring, addon:GetHexColor(r,g,b))
+                else
+                    SetVariable(ColorPickerFrame.tipframe.keystring, {r,g,b,a})
+                end
+                --for element color
+                if (ColorPickerFrame.tipframe:GetParent().colordropdown) then
+                    UIDropDownMenu_SetText(ColorPickerFrame.tipframe:GetParent().colordropdown, VIDEO_QUALITY_LABEL6)
+                end
+            end,
+        }
+        ColorPickerFrame.tipframe = self
+        OpenColorPicker(info)
+    end)
+    return frame
+end
+
+function widgets:dropdown(parent, config, labelText)
+    local frame = CreateFrame("Frame", tostring(config), parent, "UIDropDownMenuTemplate")
+    frame.keystring = config.keystring
+    frame.dropdata = config.dropdata
+    frame.Label = frame:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+	frame.Label:SetPoint("LEFT", _G[frame:GetName().."Button"], "RIGHT", 6, 0)
+	UIDropDownMenu_Initialize(frame, function(self)
+        local keystring = self.keystring
+        local selectedValue = UIDropDownMenu_GetSelectedValue(self)
+        local info
+        for _, v in pairs(self.dropdata) do
+            info = UIDropDownMenu_CreateInfo()
+            info.text  = L["dropdown."..v]
+            info.value = v
+            info.arg1  = self
+            info.checked = selectedValue == v
+            info.func = function(self, dropdown)
+                SetVariable(dropdown.keystring, self.value)
+                UIDropDownMenu_SetSelectedValue(dropdown, self.value)
+            end
+            UIDropDownMenu_AddButton(info)
+        end
+    end, config.displayMode)
+    UIDropDownMenu_SetSelectedValue(frame, GetVariable(config.keystring))
+    frame.Label:SetText(labelText or L[config.keystring])
+    return frame
+end
+
+function widgets:element(parent, config)
+    local frame = CreateFrame("Frame", nil, parent)
+    frame:SetSize(560, 30)
+    frame:SetBackdrop({
+        bgFile   = "Interface\\Tooltips\\UI-Tooltip-Background",
+        insets   = {left = 4, right = 4, top = 4, bottom = 4},
+        edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
+        edgeSize = 16,
+    })
+    frame:SetBackdropColor(0, 0, 0.1, 0.8)
+    frame:SetBackdropBorderColor(0.6, 0.6, 0.6, 0.6)
+    frame.checkbox = self:checkbox(frame, {keystring=config.keystring..".enable"}, L[config.keystring])
+    frame.checkbox:SetPoint("LEFT", 5, 0)
+    if (config.color) then
+        frame.colorpick = self:colorpick(frame, {keystring=config.keystring..".color",colortype="hex",hidetitle=true})
+        frame.colorpick:SetPoint("LEFT", 285, 0)
+        frame.colordropdown = self:dropdown(frame, {keystring=config.keystring..".color",dropdata=self.colorDropdata,displayMode="MENU"}, "")
+        frame.colordropdown:SetScale(0.87)
+        frame.colordropdown:SetPoint("LEFT", 200, -1)
+    end
+    if (config.wildcard) then
+        frame.editbox = self:editbox(frame, {keystring=config.keystring..".wildcard"})
+        frame.editbox:SetPoint("LEFT", 330, 0)
+    end
+    if (config.filter) then
+        frame.filterdropdown = self:dropdown(frame, {keystring=config.keystring..".filter",dropdata=self.filterDropdata}, "")
+        frame.filterdropdown:SetScale(0.87)
+        frame.filterdropdown:SetPoint("LEFT", 490, -1)
+    end
+    return frame
+end
+
+function widgets:anchor(parent, config)
+    local frame = CreateFrame("Frame", nil, parent)
+    frame:SetSize(400, 30)
+    frame.dropdown = self:dropdown(frame, {keystring=config.keystring..".position",dropdata=config.dropdata})
+    frame.dropdown:SetPoint("LEFT", 0, 0)
+    frame.checkbox1 = self:checkbox(frame, {keystring=config.keystring..".returnInCombat"})
+    frame.checkbox1:SetPoint("LEFT", frame.dropdown.Label, "RIGHT", 12, -1)
+    frame.checkbox2 = self:checkbox(frame, {keystring=config.keystring..".returnOnUnitFrame"})
+    frame.checkbox2:SetPoint("LEFT", frame.checkbox1.Text, "RIGHT", 12, 0)
+    return frame
+end
+
+widgets.filterDropdata = {"none","ininstance","incombat","inraid","samerealm","inpvp","inarena","reaction5","reaction6","not ininstance","not incombat","not inraid","not samerealm","not inpvp","not inarena","not reaction5","not reaction6",}
+widgets.colorDropdata = {"default","class","level","reaction","itemQuality","selection","faction",}
 
 local options = {
-    { key = "UseMouseAnchor",       type = "checkbox" },
-    { key = "AnchorCursorRight",    type = "checkbox" },
-    { key = "OnlyMouseoverUnit",    type = "checkbox" },
-    { key = "OriginalInCombat",     type = "checkbox" },
-    { key = "DisplayStyleMask",     type = "checkbox" },
-    { key = "ShowAngularBorder",    type = "checkbox" },
-    { key = "ShowColoredClassBorder", type = "checkbox" },
-    { key = "ShowColoredItemBorder",  type = "checkbox" },
-    { key = "ShowStatusBar",        type = "checkbox" },
-    { key = "StatusBarText",        type = "checkbox" },
-    { key = "DynamicStatusBarColor", type = "checkbox" },
-    { key = "ShowTarget",            type = "checkbox" },
-    { key = "name.PVPIcon",         type = "checkbox" },
-    { key = "name.FactionIcon",     type = "checkbox" },
-    { key = "name.ClassIcon",       type = "checkbox" },
-    { key = "AppendLevelToName",    type = "checkbox" },
-    { key = "name.Title",           type = "colormixin" },
-    { key = "name.Realm",           type = "colormixin" },
-    { key = "name.Race",            type = "colormixin" },
-    { key = "name.Class",           type = "colormixin" },
-    { key = "name.AFK",             type = "colormixin" },
-    { key = "name.DND",             type = "colormixin" },
-    { key = "name.OFFLINE",         type = "colormixin" },
-    { key = "guild.Guild",          type = "colormixin" },
-    { key = "guild.Rank",           type = "colormixin" },
-    { key = "guild.Realm",          type = "colormixin" },
-    { key = "npc.Title",            type = "colormixin" },
-    { key = "npc.Boss",             type = "colormixin" },
-    { key = "npc.Elite",            type = "colormixin" },
-    { key = "npc.Rare",             type = "colormixin" },
-    { key = "npc.Reaction",         type = "colormixin" },
-    { key = "npc.Friendly",         type = "colormixin" },
-    { key = "StaticPosition",       type = "position" },
-    { key = "Scale",                type = "slider", trigger = "TOOLTIP_SCALE", min = 1, max = 2, step = ".1" },
-    { key = "Alpha",                type = "slider", trigger = "TOOLTIP_ALPHA", min = 0, max = 1, step = ".1" },
-    { key = "BorderSize",           type = "slider", trigger = "TOOLTIP_BORDER_SIZE", min = 1, max = 8 },
-    { key = "HPHeight",             type = "slider", trigger = "TOOLTIP_HP_HEIGHT", min = 1, max = 16 },
-}
-
-local function HEX2RGB(color)
-	local r = tonumber(strsub(color,1,2),16) or 255
-	local g = tonumber(strsub(color,3,4),16) or 255
-	local b = tonumber(strsub(color,5,6),16) or 255
-	return r/255, g/255, b/255
-end
-
-local function RGB2HEX(color, g, b)
-    if (g and b) then
-        return ("%02x%02x%02x"):format(color*255, g*255, b*255)
-    elseif color.r then
-        return ("%02x%02x%02x"):format(color.r*255, color.g*255, color.b*255)
-    else
-        local r, g, b = unpack(color)
-        return ("%02x%02x%02x"):format(r*255, g*255, b*255)
-    end
-end
-
-local function CheckboxOnClick(self)
-    local key, subkey = strsplit(".", self.key)
-    if (subkey) then
-        TinyTooltipDB[key][subkey] = self:GetChecked()
-    else
-        TinyTooltipDB[key] = self:GetChecked()
-    end
-end
-
-local currentColorFrame
-
-ColorPickerFrame:HookScript("OnHide", function() currentColorFrame = false end)
-
-local function GetColorAndWildcard(value)
-    local hex, wildcard = string.match(value, "|cff(%x%x%x%x%x%x)(.*)|r")
-    local r, g, b = HEX2RGB(hex)
-    return r, g, b, wildcard
-end
-
-local function ColorMinixDefaultValue(self)
-    local key1, key2 = strsplit(".", self.key)
-    if (key2) then
-        return DefaultDB[key1][key2] or "|cffffffff%s|r"
-    else
-        return DefaultDB[key1] or "|cffffffff%s|r"
-    end
-end
-
-local function ColorminixCheckboxOnClick(self)
-    local parent = self:GetParent()
-    local status = self:GetChecked()
-    local key1, key2 = strsplit(".", parent.key)
-    if (not status) then
-        if (key2) then
-            TinyTooltipDB[key1][key2] = false
-        else
-            TinyTooltipDB[key1] = false
-        end
-    else
-        local value = ColorMinixDefaultValue(parent)
-        if (key2) then
-            TinyTooltipDB[key1][key2] = value
-        else
-            TinyTooltipDB[key1] = value
-        end
-        local r, g, b, wildcard = GetColorAndWildcard(value)
-        parent.colorbox:GetNormalTexture():SetVertexColor(r, g, b)
-        parent.inputbox:SetText(wildcard)
-        LibEvent:trigger("TINYTOOLTIP_EXAMPLE")
-    end
-end
-
-local function ColorPickerOnClick()
-    if (not currentColorFrame) then return end
-    local key1, key2 = strsplit(".", currentColorFrame.key)
-    local wildcard = currentColorFrame.inputbox:GetText()
-    local r, g, b = ColorPickerFrame:GetColorRGB()
-    local value = "|cff" .. RGB2HEX(r,g,b) .. wildcard .. "|r"
-    if (key2) then
-        TinyTooltipDB[key1][key2] = value
-    else
-        TinyTooltipDB[key1] = value
-    end
-    currentColorFrame.colorbox:GetNormalTexture():SetVertexColor(r, g, b)
-    LibEvent:trigger("TINYTOOLTIP_EXAMPLE")
-end
-
-local function ColormixinInputOnEnter(self)
-    self:ClearFocus()
-    local parent = self:GetParent()
-    local key1, key2 = strsplit(".", parent.key)
-    local wildcard = self:GetText()
-    local r, g, b = parent.colorbox:GetNormalTexture():GetVertexColor()
-    local value = "|cff" .. RGB2HEX(r,g,b) .. wildcard .. "|r"
-    if (key2) then
-        TinyTooltipDB[key1][key2] = value
-    else
-        TinyTooltipDB[key1] = value
-    end
-    LibEvent:trigger("TINYTOOLTIP_EXAMPLE")
-end
-
-local function ColormixinOpenColorPicker(self)
-    local parent = self:GetParent()
-    local key1, key2 = strsplit(".", parent.key)
-    local default
-    if (key2) then
-        default = TinyTooltipDB[key1][key2] or DefaultDB[key1][key2]
-    else
-        default = TinyTooltipDB[key1] or DefaultDB[key1]
-    end
-    local r, g, b, wildcard = GetColorAndWildcard(default)
-    local info = {
-        r = r,
-        g = g,
-        b = b,
-        hasOpacity = false,
-        swatchFunc = ColorPickerOnClick,
+    general = {
+        { keystring = "general.mask",               type = "checkbox" },
+        { keystring = "general.statusbarText",      type = "checkbox" },
+        { keystring = "general.background",         type = "colorpick", hasopacity = true },
+        { keystring = "general.borderColor",        type = "colorpick", hasopacity = true },
+        { keystring = "general.scale",              type = "slider", min = 0.5, max = 4, step = 0.1 },
+        { keystring = "general.borderSize",         type = "slider", min = 1, max = 6, step = 1 },
+        { keystring = "general.statusbarHeight",    type = "slider", min = 0, max = 24, step = 1 },
+        { keystring = "general.borderCorner",       type = "dropdown", dropdata = {"default","angular"} },
+        { keystring = "general.statusbarPosition",  type = "dropdown", dropdata = {"default","bottom","top"} },
+        { keystring = "general.statusbarColor",     type = "dropdown", dropdata = {"default","auto","smooth"} },
+        { keystring = "general.anchor",             type = "anchor", dropdata = {"default","cursorRight","cursor","static"} },
+        
+        { keystring = "item.coloredItemBorder",           type = "checkbox" },
+        { keystring = "quest.coloredQuestBorder",         type = "checkbox" },
+    },
+    pc = {
+        { keystring = "unit.player.showTarget",           type = "checkbox" },
+        { keystring = "unit.player.showTargetBy",         type = "checkbox" },
+        { keystring = "unit.player.showModel",            type = "checkbox" },
+        { keystring = "unit.player.coloredBorder",        type = "dropdown", dropdata = widgets.colorDropdata },
+        { keystring = "unit.player.anchor",               type = "anchor", dropdata = {"inherit", "default","cursorRight","cursor","static"} },
+        { keystring = "unit.player.elements.raidIcon",    type = "element", filter = true, },
+        { keystring = "unit.player.elements.pvpIcon",     type = "element", filter = true, },
+        { keystring = "unit.player.elements.factionIcon", type = "element", filter = true, },
+        { keystring = "unit.player.elements.classIcon",   type = "element", filter = true, },
+        { keystring = "unit.player.elements.title",       type = "element", color = true, wildcard = true, filter = true, },
+        { keystring = "unit.player.elements.name",        type = "element", color = true, wildcard = true, filter = true, },
+        { keystring = "unit.player.elements.realm",       type = "element", color = true, wildcard = true, filter = true, },
+        { keystring = "unit.player.elements.statusAFK",   type = "element", color = true, wildcard = true, filter = true, },
+        { keystring = "unit.player.elements.statusDND",   type = "element", color = true, wildcard = true, filter = true, },
+        { keystring = "unit.player.elements.statusDC",    type = "element", color = true, wildcard = true, filter = true, },
+        { keystring = "unit.player.elements.guildName",   type = "element", color = true, wildcard = true, filter = true, },
+        { keystring = "unit.player.elements.guildIndex",  type = "element", color = true, wildcard = true, filter = true, },
+        { keystring = "unit.player.elements.guildRank",   type = "element", color = true, wildcard = true, filter = true, },
+        { keystring = "unit.player.elements.guildRealm",  type = "element", color = true, wildcard = true, filter = true, },
+        { keystring = "unit.player.elements.levelValue",  type = "element", color = true, wildcard = true, filter = true, },
+        { keystring = "unit.player.elements.factionName", type = "element", color = true, wildcard = true, filter = true, },
+        { keystring = "unit.player.elements.gender",      type = "element", color = true, wildcard = true, filter = true, },
+        { keystring = "unit.player.elements.raceName",    type = "element", color = true, wildcard = true, filter = true, },
+        { keystring = "unit.player.elements.className",   type = "element", color = true, wildcard = true, filter = true, },
+        { keystring = "unit.player.elements.isPlayer",    type = "element", color = true, wildcard = true, filter = true, },
+    },
+    npc = {
+        { keystring = "unit.npc.showTarget",            type = "checkbox" },
+        { keystring = "unit.npc.showTargetBy",          type = "checkbox" },
+        { keystring = "unit.npc.coloredBorder",         type = "dropdown", dropdata = widgets.colorDropdata },
+        { keystring = "unit.npc.anchor",                type = "anchor", dropdata = {"inherit","default","cursorRight","cursor","static"} },
+        { keystring = "unit.npc.elements.raidIcon",     type = "element", filter = true, },
+        { keystring = "unit.npc.elements.classIcon",    type = "element", filter = true, },
+        { keystring = "unit.npc.elements.questIcon",    type = "element", filter = true, },
+        { keystring = "unit.npc.elements.npcTitle",     type = "element", color = true, wildcard = true, },
+        { keystring = "unit.npc.elements.name",         type = "element", color = true, wildcard = true, filter = true, },
+        { keystring = "unit.npc.elements.levelValue",   type = "element", color = true, wildcard = true, filter = true, },
+        { keystring = "unit.npc.elements.classifBoss",  type = "element", color = true, wildcard = true, filter = true, },
+        { keystring = "unit.npc.elements.classifElite", type = "element", color = true, wildcard = true, filter = true, },
+        { keystring = "unit.npc.elements.classifRare",  type = "element", color = true, wildcard = true, filter = true, },
+        { keystring = "unit.npc.elements.creature",     type = "element", color = true, wildcard = true, filter = true, },
+        { keystring = "unit.npc.elements.reactionName", type = "element", color = true, wildcard = true, filter = true, },
     }
-    currentColorFrame = parent
-    OpenColorPicker(info)
-end
-
-local function SliderOnValueChanged(self, value)
-    if (self.step) then
-        value = format("%".. self.step .."f", value)
-    else
-        value = floor(value)
-    end
-    if (self.lastValue ~= value) then
-        self.lastValue = value
-        TinyTooltipDB[self.key] = value
-        _G[self:GetName().."High"]:SetText(value)
-        LibEvent:trigger(self.trigger, value)
-    end
-end
-
-local function InitCheckboxValue(self, key)
-    local key1, key2 = strsplit(".", key)
-    local value
-    if (key2) then
-        value = TinyTooltipDB[key1][key2]
-    else
-        value = TinyTooltipDB[key1]
-    end
-    self:SetChecked(value and true or false)
-end
-
-local function InitColorminix(self, key)
-    local key1, key2 = strsplit(".", key)
-    local value, default
-    if (key2) then
-        value = TinyTooltipDB[key1][key2]
-        default = value or DefaultDB[key1][key2]
-    else
-        value = TinyTooltipDB[key1]
-        default = value or DefaultDB[key1]
-    end
-    local r, g, b, wildcard = GetColorAndWildcard(default)
-    self.checkbox:SetChecked(value and true or false)
-    self.colorbox:GetNormalTexture():SetVertexColor(r, g, b)
-    self.inputbox:SetText(wildcard)
-    self.inputbox:SetCursorPosition(0)
-end
+}
 
 local frame = CreateFrame("Frame", nil, UIParent)
 frame.anchor = CreateFrame("Frame", nil, frame)
-frame.anchor:SetPoint("TOPLEFT", 28, -48)
-frame.anchor:SetSize(InterfaceOptionsFramePanelContainer:GetWidth()-60, 1)
+frame.anchor:SetPoint("TOPLEFT", 32, -16)
+frame.anchor:SetSize(InterfaceOptionsFramePanelContainer:GetWidth()-64, 1)
 frame.title = frame:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
 frame.title:SetPoint("TOPLEFT", 18, -16)
-frame.title:SetText(addon)
-frame.name = addon
+frame.title:SetText(addonName)
+frame.name = addonName
 
-LibEvent:attachTrigger("TINYTOOLTIP_INIT", function()
-    local line
-    local anchor = frame.anchor
-    for i, v in ipairs(options) do
-        if (v.type == "checkbox") then
-            line = CreateFrame("CheckButton", nil, frame, "InterfaceOptionsCheckButtonTemplate")
-            line:SetScript("OnClick", CheckboxOnClick)
-            line.key = v.key
-            line.Text:SetText(L[v.key])
-            line:SetPoint("TOPLEFT", anchor, "BOTTOMLEFT", 0, -1)
-            anchor = line
-            InitCheckboxValue(line, v.key)
-        end
-    end
-    for i, v in ipairs(options) do
-        if (v.type == "position") then
-            line = CreateFrame("CheckButton", nil, frame, "InterfaceOptionsCheckButtonTemplate")
-            line.key = v.key
-            line.Text:SetText(L[v.key])
-            line:SetPoint("TOPLEFT", anchor, "BOTTOMLEFT", 0, -1)
-            anchor = line
-            InitCheckboxValue(line, v.key)
-            line:SetScript("OnClick", function(self)
-                local status = self:GetChecked()
-                if (not status) then
-                    TinyTooltipDB[self.key] = status
-                else
-                    TinyTooltipDB[self.key] = format("%s,%s", -CONTAINER_OFFSET_X - 13, CONTAINER_OFFSET_Y)
-                    if (not self.util) then
-                        self.util = CreateFrame("Frame", nil, self, "ThinBorderTemplate")
-                        self.util.point = CreateFrame("Button", nil, self.util)
-                        self.util.point:SetSize(16, 16)
-                        self.util.point:SetPoint("BOTTOMRIGHT", 1, -1)
-                        self.util.point:SetNormalTexture("Interface\\Cursor\\Item")
-                        self.util.point:GetNormalTexture():SetTexCoord(12/32, 0, 12/32, 0)
-                        self.util:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -CONTAINER_OFFSET_X - 13, CONTAINER_OFFSET_Y)
-                        self.util:SetClampedToScreen(true)
-                        self.util:EnableMouse(true)
-                        self.util:SetMovable(true)
-                        self.util:SetSize(113,80)
-                        self.util:RegisterForDrag("LeftButton")
-                        self.util:SetScript("OnDragStart", function(self) self:StartMoving() end)
-                        self.util:SetScript("OnDragStop", function(self)
-                            self:StopMovingOrSizing()
-                            local parent = self:GetParent()
-                            local right, bottom = self:GetRight(), self:GetBottom()
-                            TinyTooltipDB[parent.key] = format("%s,%s", floor(right - GetScreenWidth())+4, floor(bottom)-3)
-                        end)
-                    end
-                    self.util:Show()
-                end
-            end)
-        end
-    end
-    local j = 0
-    for i, v in ipairs(options) do
-        if (v.type == "slider") then
-            line = CreateFrame("Slider", "TinyTooltipSlider"..i, frame, "OptionsSliderTemplate")
-            line:SetWidth(64)
-            if (j == 0) then
-                line:SetPoint("TOPLEFT", anchor, "BOTTOMLEFT", 32, -8)
-            else
-                line:SetPoint("LEFT", anchor, "RIGHT", 84, 0)
-            end
-            line.key = v.key
-            line.step = v.step
-            line.trigger = v.trigger
-            _G[line:GetName().."Text"]:SetText(L[v.key])
-            _G[line:GetName().."Text"]:SetTextColor(1, 0.82, 0)
-            _G[line:GetName().."Text"]:ClearAllPoints()
-            _G[line:GetName().."Text"]:SetPoint("RIGHT", line, "LEFT", -4, 0)
-            _G[line:GetName().."Low"]:SetText("")
-			_G[line:GetName().."High"]:SetText(TinyTooltipDB[v.key] or 1)
-            _G[line:GetName().."High"]:ClearAllPoints()
-            _G[line:GetName().."High"]:SetPoint("LEFT", line, "RIGHT", 2, 0)
-			line:SetMinMaxValues(v.min, v.max)
-			line:SetValueStep(0.1)
-            line:SetValue(TinyTooltipDB[v.key] or 1)
-            LibEvent:trigger(v.trigger, TinyTooltipDB[v.key] or 1)
-            anchor = line
-            j = j + 1
-            line:SetScript("OnValueChanged", SliderOnValueChanged)
-        end
-    end
-    anchor = frame.anchor
-    for i, v in ipairs(options) do
-        if (v.type == "colormixin") then
-            line = CreateFrame("Frame", "TinyTooltipColormixin"..i, frame, "ChatConfigCheckBoxWithSwatchTemplate")
-            line:SetWidth(300)
-            line.key = v.key
-            line.checkbox = _G[line:GetName().."Check"]
-            line.colorbox = _G[line:GetName().."ColorSwatch"]
-            line.inputbox = CreateFrame("EditBox", nil, line, "InputBoxTemplate")
-            line.inputbox:SetAutoFocus(false)
-            line.inputbox:SetSize(88, 14)
-            line.inputbox:SetPoint("LEFT", line.colorbox, "RIGHT", 16, 0)
-            line:SetPoint("TOPRIGHT", anchor, "BOTTOMRIGHT", 0, -1)
-            _G[line:GetName().."CheckText"]:SetText(L[v.key])
-            line.checkbox:SetScript("OnClick", ColorminixCheckboxOnClick)
-            line.colorbox:SetScript("OnClick", ColormixinOpenColorPicker)
-            line.inputbox:SetScript("OnEnterPressed", ColormixinInputOnEnter)
-            anchor = line
-            InitColorminix(line, v.key)
-        end
-    end
+
+local framePC = CreateFrame("Frame", nil, UIParent)
+framePC.anchor = CreateFrame("Frame", nil, framePC)
+framePC.anchor:SetPoint("TOPLEFT", 32, -13)
+framePC.anchor:SetSize(InterfaceOptionsFramePanelContainer:GetWidth()-64, 1)
+framePC.title = framePC:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
+framePC.title:SetPoint("TOPLEFT", 18, -16)
+framePC.title:SetText(format("%s |cff33eeff%s|r", addonName, "Unit Is Player"))
+framePC.name = format("%s - %s", addonName, "Player")
+framePC.parent = addonName
+
+framePC:SetSize(500, #options.pc*29+60)
+local framePCScrollFrame = CreateFrame("ScrollFrame", nil, UIParent, "UIPanelScrollFrameTemplate")
+framePCScrollFrame.ScrollBar:Hide()
+framePCScrollFrame.ScrollBar:ClearAllPoints()
+framePCScrollFrame.ScrollBar:SetPoint("TOPLEFT", framePCScrollFrame, "TOPRIGHT", -20, -20)
+framePCScrollFrame.ScrollBar:SetPoint("BOTTOMLEFT", framePCScrollFrame, "BOTTOMRIGHT", -20, 20)
+framePCScrollFrame:HookScript("OnScrollRangeChanged", function(self, xrange, yrange)
+    self.ScrollBar:SetShown(floor(yrange) ~= 0)
 end)
+framePCScrollFrame:SetScrollChild(framePC)
+framePCScrollFrame.name = format("%s - %s", addonName, "Player")
+framePCScrollFrame.parent = addonName
+
+
+local frameNPC = CreateFrame("Frame", nil, UIParent)
+frameNPC.anchor = CreateFrame("Frame", nil, frameNPC)
+frameNPC.anchor:SetPoint("TOPLEFT", 32, -16)
+frameNPC.anchor:SetSize(InterfaceOptionsFramePanelContainer:GetWidth()-64, 1)
+frameNPC.title = frameNPC:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
+frameNPC.title:SetPoint("TOPLEFT", 18, -16)
+frameNPC.title:SetText(format("%s |cff33eeff%s|r", addonName, "Unit Is NPC"))
+frameNPC.name = format("%s - %s", addonName, "NPC")
+frameNPC.parent = addonName
 
 LibEvent:attachEvent("VARIABLES_LOADED", function()
-    if (not TinyTooltipDB or not TinyTooltipDB.version) then
-        TinyTooltipDB = CopyTable(DefaultDB)
-    elseif (TinyTooltipDB.version < DefaultDB.version) then
-        TinyTooltipDB.version = DefaultDB.version
-        for k, v in pairs(DefaultDB) do
-            if (TinyTooltipDB[k] == nil) then
-                TinyTooltipDB[k] = v
-            end
+    local element, offsetX
+    for i, v in ipairs(options.general) do
+        if (widgets[v.type]) then
+            if (v.type == "colorpick") then offsetX = 5
+            elseif (v.type == "slider") then offsetX = 15
+            elseif (v.type == "dropdown") then offsetX = -15
+            elseif (v.type == "anchor") then offsetX = -15
+            else offsetX = 0 end
+            element = widgets[v.type](widgets, frame, v)
+            element:SetPoint("TOPLEFT", frame.anchor, "BOTTOMLEFT", offsetX, -(i*32))
         end
     end
-    LibEvent:trigger("TINYTOOLTIP_INIT")
+    for i, v in ipairs(options.pc) do
+        if (widgets[v.type]) then
+            if (v.type == "colorpick") then offsetX = 5
+            elseif (v.type == "slider") then offsetX = 15
+            elseif (v.type == "dropdown") then offsetX = -15
+            elseif (v.type == "anchor") then offsetX = -15
+            else offsetX = 0 end
+            element = widgets[v.type](widgets, framePC, v)
+            element:SetPoint("TOPLEFT", framePC.anchor, "BOTTOMLEFT", offsetX, -(i*29))
+        end
+    end
+    for i, v in ipairs(options.npc) do
+        if (widgets[v.type]) then
+            if (v.type == "colorpick") then offsetX = 5
+            elseif (v.type == "slider") then offsetX = 15
+            elseif (v.type == "dropdown") then offsetX = -15
+            elseif (v.type == "anchor") then offsetX = -15
+            else offsetX = 0 end
+            element = widgets[v.type](widgets, frameNPC, v)
+            element:SetPoint("TOPLEFT", frameNPC.anchor, "BOTTOMLEFT", offsetX, -(i*29))
+        end
+    end
 end)
 
 InterfaceOptions_AddCategory(frame)
+InterfaceOptions_AddCategory(framePCScrollFrame)
+InterfaceOptions_AddCategory(frameNPC)
 SLASH_TinyTooltip1 = "/tinytooltip"
+SLASH_TinyTooltip2 = "/tt"
 function SlashCmdList.TinyTooltip(msg, editbox)
     if (msg == "reset") then
-        TinyTooltipDB = DefaultDB
-        return 
+        BigTipDB = {}
+    elseif (msg == "npc") then
+        InterfaceOptionsFrame_OpenToCategory(frameNPC)
+        InterfaceOptionsFrame_OpenToCategory(frameNPC)
+    elseif (msg == "player") then
+        InterfaceOptionsFrame_OpenToCategory(framePCScrollFrame)
+        InterfaceOptionsFrame_OpenToCategory(framePCScrollFrame)
+    else
+        InterfaceOptionsFrame_OpenToCategory(frame)
+        InterfaceOptionsFrame_OpenToCategory(frame)
     end
-    InterfaceOptionsFrame_OpenToCategory(frame)
-    InterfaceOptionsFrame_OpenToCategory(frame)
 end
+
+
+--@todo anchor位置錨點 鼠標錨點
+--@todo 元素拖動
+--@todo 世界任務的全屏問題
