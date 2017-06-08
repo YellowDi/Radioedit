@@ -18,6 +18,7 @@ ns.L = {
     ShowPartySpecialization     = "顯示隊友天賦文字",
     EnableRaidItemLevel         = "團隊成員裝等",
     EnableMouseItemLevel        = "鼠標目標裝等",
+    EnableMouseSpecialization   = "顯示鼠標天賦",
     Bag                         = "背包",
     Bank                        = "銀行",
     Merchant                    = "商人",

@@ -15,7 +15,9 @@ frame.schedules, frame.timer = {}, 0
 frame:SetScript("OnUpdate", function(self, elasped)
     if (self.paused) then return end
     local t = GetTime()
-    for i, item in ipairs(self.schedules) do
+    local item
+    for i = #self.schedules, 1, -1 do
+        item = self.schedules[i]
         if (item.stopped) then
             tremove(self.schedules, i)
         elseif (t >= item.begined) then

@@ -85,6 +85,7 @@ end)
 -- @trigger UNIT_INSPECT_STARTED
 hooksecurefunc("NotifyInspect", function(unit)
     local guid = UnitGUID(unit)
+    if (not guid) then return end
     local data = guids[guid]
     if (data) then
         data.unit = unit

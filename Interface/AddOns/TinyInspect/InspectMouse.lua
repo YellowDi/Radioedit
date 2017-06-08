@@ -20,6 +20,7 @@ end
 local LevelLabel = STAT_AVERAGE_ITEM_LEVEL .. ": "
 local SpecLabel  = TALENT .. SPECIALIZATION .. ": "
 local function AppendToGameTooltip(guid, ilevel, spec)
+    if (TinyInspectDB and not TinyInspectDB.EnableMouseSpecialization) then spec = false end
     local _, unit = GameTooltip:GetUnit()
     if (not unit or UnitGUID(unit) ~= guid) then return end
     local ilvlLine = FindLine(GameTooltip, LevelLabel)

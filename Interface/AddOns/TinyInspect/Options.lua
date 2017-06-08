@@ -40,6 +40,7 @@ local DefaultDB = {
         ShowPartySpecialization = true,   --顯示隊友天賦
     EnableRaidItemLevel = false,          --團隊裝等
     EnableMouseItemLevel = true,          --鼠標裝等
+    EnableMouseSpecialization = true,     --鼠標天賦
     PaperDollItemLevelOutsideString = false, --PaperDoll文字外邊顯示(沒有在配置面板)
 }
 
@@ -77,7 +78,11 @@ local options = {
         checkedFunc = function() TinyInspectRaidFrame:Show() end,
         uncheckedFunc = function() TinyInspectRaidFrame:Hide() end,
     },
-    { key = "EnableMouseItemLevel" },
+    { key = "EnableMouseItemLevel",
+      child = {
+        { key = "EnableMouseSpecialization" }
+      }
+    },
 }
 
 TinyInspectDB = DefaultDB
