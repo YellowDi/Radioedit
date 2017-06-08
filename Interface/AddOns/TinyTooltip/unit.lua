@@ -20,6 +20,19 @@ local function ColorBorder(tip, config, raw)
     end
 end
 
+local function ColorBackground(tip, config, raw)
+    local bg = config.background
+    if not bg then return end
+    if (bg.colorfunc == "default" or bg.colorfunc == "" or bg.colorfunc == "inherit") then
+        return
+    end
+    if (addon.colorfunc[bg.colorfunc]) then
+        local r, g, b = addon.colorfunc[bg.colorfunc](raw)
+        local a = bg.alpha or 0.5
+        LibEvent:trigger("tooltip.style.background", tip, r, g, b, a)
+    end
+end
+
 local function PlayerCharacter(tip, unit, config, raw)
     local data = addon:GetUnitData(unit, config.elements, raw)
     for i, v in ipairs(data) do
@@ -30,31 +43,36 @@ local function PlayerCharacter(tip, unit, config, raw)
     addon:HideLine(tip, "^"..FACTION_HORDE)
     addon:HideLine(tip, "^"..PVP)
     ColorBorder(tip, config, raw)
+    ColorBackground(tip, config, raw)
 end
 
 local function NonPlayerCharacter(tip, unit, config, raw)
-    local data = addon:GetUnitData(unit, config.elements, raw)
-    local titleLine = addon:GetNpcTitle(tip)
-    local increase = 0
-    for i, v in ipairs(data) do
-        if (i == 1) then
-            addon:GetLine(tip,i):SetText(table.concat(v, " "))
-        end
-        if (i == 2) then
-            if (config.elements.npcTitle.enable and titleLine) then
-                titleLine:SetText(addon:FormatData(titleLine:GetText(), config.elements.npcTitle, raw))
-                increase = 1
+    local levelLine = addon:FindLine(tip, "^"..LEVEL)
+    if (levelLine) then
+        local data = addon:GetUnitData(unit, config.elements, raw)
+        local titleLine = addon:GetNpcTitle(tip)
+        local increase = 0
+        for i, v in ipairs(data) do
+            if (i == 1) then
+                addon:GetLine(tip,i):SetText(table.concat(v, " "))
             end
-            i = i + increase
-            addon:GetLine(tip,i):SetText(table.concat(v, " "))
-        elseif ( i > 2) then
-            i = i + increase
-            addon:GetLine(tip,i):SetText(table.concat(v, " "))
+            if (i == 2) then
+                if (config.elements.npcTitle.enable and titleLine) then
+                    titleLine:SetText(addon:FormatData(titleLine:GetText(), config.elements.npcTitle, raw))
+                    increase = 1
+                end
+                i = i + increase
+                addon:GetLine(tip,i):SetText(table.concat(v, " "))
+            elseif ( i > 2) then
+                i = i + increase
+                addon:GetLine(tip,i):SetText(table.concat(v, " "))
+            end
         end
     end
     addon:HideLine(tip, "^"..LEVEL)
     addon:HideLine(tip, "^"..PVP)
     ColorBorder(tip, config, raw)
+    ColorBackground(tip, config, raw)
 end
 
 LibEvent:attachTrigger("tooltip:unit", function(self, tip, unit)

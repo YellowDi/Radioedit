@@ -2,7 +2,7 @@
 ## Title: TinyTooltip
 ## Notes: TinyTooltip
 ## Author: M
-## Version: 7.3.0
+## Version: 7.3.2
 ## SavedVariables: TinyTooltipDB, BigTipDB
 
 libs\lib.xml

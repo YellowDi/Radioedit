@@ -85,6 +85,11 @@ LibEvent:attachEvent("VARIABLES_LOADED", function()
     end
 end)
 
+LibEvent:attachTrigger("tooltip:cleared", function(self, tip)
+    LibEvent:trigger("tooltip.style.border.color", tip, unpack(addon.db.general.borderColor))
+    LibEvent:trigger("tooltip.style.background", tip, unpack(addon.db.general.background))
+end)
+
 LibEvent:attachTrigger("tooltip:show", function(self, tip)
     if (tip ~= GameTooltip) then return end
     LibEvent:trigger("tooltip.statusbar.position", addon.db.general.statusbarPosition)

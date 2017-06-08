@@ -19,6 +19,7 @@ addon.db = {
     unit = {
         player = {
             coloredBorder = "class",                --玩家邊框顔色 default|class|level|reaction|itemQuality|selection|faction|HEX
+            background = { colorfunc = "default", alpha = 0.5, },
             anchor = { position = "inherit", returnInCombat = true, returnOnUnitFrame = false },
             showTarget = true,                      --顯示目標
             showTargetBy = true,                    --顯示被關注
@@ -51,6 +52,7 @@ addon.db = {
         },
         npc = {
             coloredBorder = "reaction",
+            background = { colorfunc = "default", alpha = 0.5, },
             showTarget = true,
             showTargetBy = true,
             anchor = { position = "inherit", returnInCombat = true, returnOnUnitFrame = false },
@@ -58,7 +60,7 @@ addon.db = {
                 raidIcon     = { enable = true,  filter = "none" },
                 classIcon    = { enable = false, filter = "none" },
                 questIcon    = { enable = true,  filter = "none" },
-                name         = { enable = true, color = "",       wildcard = "%s",    filter = "none" },
+                name         = { enable = true, color = "default",wildcard = "%s",    filter = "none" },
                 npcTitle     = { enable = true, color = "99e8e8", wildcard = "<%s>",  filter = "none" },
                 levelValue   = { enable = true, color = "level",  wildcard = "%s",    filter = "none" }, 
                 classifBoss  = { enable = true, color = "ff0000", wildcard = "(%s)",  filter = "none" },
@@ -74,7 +76,10 @@ addon.db = {
     item = {
         coloredItemBorder = true,  --邊框按品質染色
     },
-    spell = {},
+    spell = {
+        borderColor = {0.6, 0.6, 0.6, 0.8},
+        background = {0, 0, 0, 0.8},
+    },
     quest = {
         coloredQuestBorder = true,  --任務按等差染色
     },

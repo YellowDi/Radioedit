@@ -46,15 +46,20 @@ end)
 
 -- Target By
 
-local function GetTargetByString(unit, num)
+local function GetTargetByString(mouseover, num)
     local count, prefix = 0, IsInRaid() and "raid" or "party"
+    local names, unit = ""
     for i = 1, num do
-        if UnitIsUnit(unit, prefix..i.."target") then
+        unit = prefix..i.."target"
+        if UnitIsUnit(mouseover, unit) then
             count = count + 1
+            if (prefix == "party") then
+                names = names .. "|c" .. GetClassColor(select(2,UnitClass(unit))) .. UnitName(unit) .. "|r "
+            end
         end
     end
     if (count > 0) then
-        return format("|cff33ffff%s|r", count)
+        return names == "" and format("|cff33ffff%s|r", count) or names
     end
 end
 
@@ -66,7 +71,7 @@ LibEvent:attachTrigger("tooltip:unit", function(self, tip, unit)
           or (addon.db.unit.npc.showTargetBy and not UnitIsPlayer("mouseover"))) then
             local text = GetTargetByString("mouseover", num)
             if (text) then
-                tip:AddLine(format("%s: %s", addon.L and addon.L.TargetBy or "Target By", text))
+                tip:AddLine(format("%s: %s", addon.L and addon.L.TargetBy or "Target By", text), nil, nil, nil, true)
             end
         end
     end

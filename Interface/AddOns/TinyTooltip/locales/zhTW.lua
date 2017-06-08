@@ -24,6 +24,7 @@ addon.L = {
     ["unit.player.anchor.position"]         = "框架錨點",
     ["unit.player.anchor.returnInCombat"]   = "戰鬥時復位",
     ["unit.player.anchor.returnOnUnitFrame"] = "UnitFrame上時復位",
+    ["unit.player.background"]              = "背景染色",
     ["unit.player.coloredBorder"]           = "邊框染色",
     ["unit.player.showTarget"]              = "顯示目標",
     ["unit.player.showTargetBy"]            = "顯示被關注數",
@@ -52,6 +53,7 @@ addon.L = {
     ["unit.npc.anchor.position"]            = "框架錨點",
     ["unit.npc.anchor.returnInCombat"]      = "戰鬥時復位",
     ["unit.npc.anchor.returnOnUnitFrame"]   = "UnitFrame上時復位",
+    ["unit.npc.background"]                 = "背景染色",
     ["unit.npc.coloredBorder"]              = "邊框染色",
     ["unit.npc.showTarget"]                 = "顯示目標",
     ["unit.npc.showTargetBy"]               = "顯示被關注數",
@@ -67,6 +69,9 @@ addon.L = {
     ["unit.npc.elements.creature"]          = "類型",
     ["unit.npc.elements.reactionName"]      = "聲望",
     
+    ["spell.background"]                    = "背景顔色",
+    ["spell.borderColor"]                   = "邊框顔色",
+    
     ["dropdown.inherit"]        = "|cffffee00繼承全局|r",
     ["dropdown.default"]        = "|cffaaaaaa系統默認|r",
     ["dropdown.angular"]        = "直角邊框",
@@ -75,8 +80,8 @@ addon.L = {
     ["dropdown.auto"]           = "智能匹配",
     ["dropdown.smooth"]         = "百分比動態",
     ["dropdown.cursorRight"]    = "鼠標右側",
-    ["dropdown.cursor"]         = "鼠標",
-    ["dropdown.static"]         = "固定位置",
+    ["dropdown.cursor"]         = "|cff33ccff鼠標|r",
+    ["dropdown.static"]         = "|cff33ccff固定位置|r",
     ["dropdown.class"]          = "職業染色",
     ["dropdown.level"]          = "等差染色",
     ["dropdown.reaction"]       = "聲望染色",
@@ -101,6 +106,8 @@ addon.L = {
     ["dropdown.not inarena"]        = "|cffff3333非|r競技場",
     ["dropdown.not ininstance"]     = "|cffff3333非|r副本時",
     ["dropdown.not samerealm"]      = "|cffff3333非|r同公會服",
+    
+    ["Anchor"]   = "錨點器",
     
     ["TargetBy"] = "被關注數",
 }

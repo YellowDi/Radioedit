@@ -199,6 +199,126 @@ function widgets:dropdown(parent, config, labelText)
     return frame
 end
 
+
+local saframe = CreateFrame("Frame", nil, UIParent, "ThinBorderTemplate")
+saframe:Hide()
+saframe:SetFrameStrata("DIALOG")
+saframe.close = CreateFrame("Button", nil, saframe, "UIPanelCloseButton")
+saframe.close:SetPoint("LEFT", -5, 0)
+saframe.point = CreateFrame("Button", nil, saframe)
+saframe.point:SetSize(14, 14)
+saframe.point:SetPoint("BOTTOMRIGHT", 1, -1)
+saframe.point:SetNormalTexture("Interface\\Cursor\\Item")
+saframe.point:GetNormalTexture():SetTexCoord(12/32, 0, 12/32, 0)
+saframe:SetClampedToScreen(true)
+saframe:EnableMouse(true)
+saframe:SetMovable(true)
+saframe:SetSize(113, 20)
+saframe:RegisterForDrag("LeftButton")
+saframe:SetScript("OnDragStart", function(self) self:StartMoving() end)
+saframe:SetScript("OnDragStop", function(self)
+    self:StopMovingOrSizing()
+    local right, bottom = self:GetRight(), self:GetBottom()
+    SetVariable(self.kx, floor(right - GetScreenWidth())+4)
+    SetVariable(self.ky, floor(bottom)-3)
+end)
+
+local function CreateAnchorButton(frame, anchorPoint)
+    local button = CreateFrame("Button", nil, frame)
+    button.cp = anchorPoint
+    button:SetNormalTexture("Interface\\Buttons\\WHITE8X8")
+    button:SetSize(20, 20)
+    button:SetPoint(anchorPoint)
+    button:SetScript("OnClick", function(self)
+        local parent = self:GetParent()
+        local cp = GetVariable(parent.cp)
+        if (parent[cp]) then
+            parent[cp]:GetNormalTexture():SetVertexColor(1, 1, 1)
+        end
+        SetVariable(parent.cp, self.cp)
+        self:GetNormalTexture():SetVertexColor(1, 0.2, 0.1)
+    end)
+    frame[anchorPoint] = button
+end
+local function CreateAnchorInput(frame, k)
+    local box = CreateFrame("EditBox", nil, frame, "NumericInputSpinnerTemplate")
+    box:SetNumeric(nil)
+    box:SetAutoFocus(false)
+    box:SetSize(40, 20)
+    box:SetScript("OnEnterPressed", function(self)
+        local parent = self:GetParent()
+        SetVariable(parent[k], tonumber(self:GetText()) or 0)
+        self:ClearFocus()
+    end)
+    return box
+end
+local caframe = CreateFrame("Frame", nil, UIParent, "ThinBorderTemplate")
+caframe:Hide()
+caframe:SetFrameStrata("DIALOG")
+caframe:SetBackdrop(GameTooltip:GetBackdrop())
+caframe:SetBackdropColor(GameTooltip:GetBackdropColor())
+caframe:SetSize(200, 200)
+caframe:SetPoint("CENTER")
+caframe:SetClampedToScreen(true)
+caframe:EnableMouse(true)
+caframe:SetMovable(true)
+caframe:RegisterForDrag("LeftButton")
+caframe:SetScript("OnDragStart", function(self) self:StartMoving() end)
+caframe:SetScript("OnDragStop", function(self) self:StopMovingOrSizing() end)
+caframe.inputx = CreateAnchorInput(caframe, "cx")
+caframe.inputx:SetPoint("CENTER", 0, 40)
+caframe.inputy = CreateAnchorInput(caframe, "cy")
+caframe.inputy:SetPoint("CENTER", 0, 10)
+caframe.ok = CreateFrame("Button", nil, caframe, "UIPanelButtonTemplate")
+caframe.ok:SetText(OKAY)
+caframe.ok:SetSize(68, 20)
+caframe.ok:SetPoint("CENTER", 0, -20)
+caframe.ok:SetScript("OnClick", function(self)
+    local parent = self:GetParent()
+    SetVariable(parent.cx, tonumber(parent.inputx:GetText()) or 0)
+    SetVariable(parent.cy, tonumber(parent.inputy:GetText()) or 0)
+end)
+caframe.close = CreateFrame("Button", nil, caframe, "UIPanelCloseButton")
+caframe.close:SetPoint("CENTER", 0, -50)
+CreateAnchorButton(caframe, "TOPLEFT")
+CreateAnchorButton(caframe, "LEFT")
+CreateAnchorButton(caframe, "BOTTOMLEFT")
+CreateAnchorButton(caframe, "TOP")
+CreateAnchorButton(caframe, "BOTTOM")
+CreateAnchorButton(caframe, "TOPRIGHT")
+CreateAnchorButton(caframe, "RIGHT")
+CreateAnchorButton(caframe, "BOTTOMRIGHT")
+
+function widgets:anchorbutton(parent, config)
+    local frame = CreateFrame("Button", nil, parent, "UIPanelButtonTemplate")
+    frame.keystring = config.keystring
+    frame:SetSize(70, 22)
+    frame.Text:SetFontObject("GameFontHighlightSmall")
+    frame:SetText(L.Anchor)
+    frame:SetScript("OnClick", function(self)
+        local parent = self:GetParent()
+        if saframe:IsShown() then return saframe:Hide() end
+        if caframe:IsShown() then return caframe:Hide() end
+        if (not parent.dropdown) then return end
+        local value = UIDropDownMenu_GetSelectedValue(parent.dropdown)
+        if (value == "static") then
+            saframe.kx = self.keystring .. ".x"
+            saframe.ky = self.keystring .. ".y"
+            saframe:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", GetVariable(saframe.kx) or -CONTAINER_OFFSET_X-13, GetVariable(saframe.ky) or CONTAINER_OFFSET_Y)
+            saframe:Show()
+        elseif (value == "cursor") then
+            caframe.cx = self.keystring .. ".cx"
+            caframe.cy = self.keystring .. ".cy"
+            caframe.cp = self.keystring .. ".cp"
+            caframe.inputx:SetText(GetVariable(caframe.cx) or 0)
+            caframe.inputy:SetText(GetVariable(caframe.cy) or 0)
+            caframe[GetVariable(caframe.cp) or "BOTTOM"]:GetNormalTexture():SetVertexColor(1, 0.2, 0.1)
+            caframe:Show()
+        end
+    end)
+    return frame
+end
+
 function widgets:element(parent, config)
     local frame = CreateFrame("Frame", nil, parent)
     frame:SetSize(560, 30)
@@ -236,10 +356,23 @@ function widgets:anchor(parent, config)
     frame:SetSize(400, 30)
     frame.dropdown = self:dropdown(frame, {keystring=config.keystring..".position",dropdata=config.dropdata})
     frame.dropdown:SetPoint("LEFT", 0, 0)
+    frame.anchorbutton = self:anchorbutton(frame, config)
+    frame.anchorbutton:SetPoint("LEFT", frame.dropdown.Label, "RIGHT", 5, 0)
     frame.checkbox1 = self:checkbox(frame, {keystring=config.keystring..".returnInCombat"})
-    frame.checkbox1:SetPoint("LEFT", frame.dropdown.Label, "RIGHT", 12, -1)
+    frame.checkbox1:SetPoint("LEFT", frame.anchorbutton, "RIGHT", 5, -1)
     frame.checkbox2 = self:checkbox(frame, {keystring=config.keystring..".returnOnUnitFrame"})
-    frame.checkbox2:SetPoint("LEFT", frame.checkbox1.Text, "RIGHT", 12, 0)
+    frame.checkbox2:SetPoint("LEFT", frame.checkbox1.Text, "RIGHT", 5, 0)
+    return frame
+end
+
+function widgets:dropdownslider(parent, config)
+    local frame = CreateFrame("Frame", nil, parent)
+    frame:SetSize(500, 30)
+    frame.dropdown = self:dropdown(frame, {keystring=config.keystring..".colorfunc",dropdata=config.dropdata}, L[config.keystring])
+    frame.dropdown:SetPoint("LEFT", 0, 0)
+    frame.slider = self:slider(frame, {keystring=config.keystring..".alpha",min=config.min,max=config.max,step=config.step})
+    frame.slider:SetPoint("LEFT", frame.dropdown.Label, "RIGHT", 30, 0)
+    frame.slider:SetWidth(60)
     return frame
 end
 
@@ -259,15 +392,15 @@ local options = {
         { keystring = "general.statusbarPosition",  type = "dropdown", dropdata = {"default","bottom","top"} },
         { keystring = "general.statusbarColor",     type = "dropdown", dropdata = {"default","auto","smooth"} },
         { keystring = "general.anchor",             type = "anchor", dropdata = {"default","cursorRight","cursor","static"} },
-        
-        { keystring = "item.coloredItemBorder",           type = "checkbox" },
-        { keystring = "quest.coloredQuestBorder",         type = "checkbox" },
+        { keystring = "item.coloredItemBorder",     type = "checkbox" },
+        { keystring = "quest.coloredQuestBorder",   type = "checkbox" },
     },
     pc = {
         { keystring = "unit.player.showTarget",           type = "checkbox" },
         { keystring = "unit.player.showTargetBy",         type = "checkbox" },
         { keystring = "unit.player.showModel",            type = "checkbox" },
         { keystring = "unit.player.coloredBorder",        type = "dropdown", dropdata = widgets.colorDropdata },
+        { keystring = "unit.player.background",           type = "dropdownslider", dropdata = widgets.colorDropdata, min = 0, max = 1, step = 0.1 },
         { keystring = "unit.player.anchor",               type = "anchor", dropdata = {"inherit", "default","cursorRight","cursor","static"} },
         { keystring = "unit.player.elements.raidIcon",    type = "element", filter = true, },
         { keystring = "unit.player.elements.pvpIcon",     type = "element", filter = true, },
@@ -294,6 +427,7 @@ local options = {
         { keystring = "unit.npc.showTarget",            type = "checkbox" },
         { keystring = "unit.npc.showTargetBy",          type = "checkbox" },
         { keystring = "unit.npc.coloredBorder",         type = "dropdown", dropdata = widgets.colorDropdata },
+        { keystring = "unit.npc.background",            type = "dropdownslider", dropdata = widgets.colorDropdata, min = 0, max = 1, step = 0.1 },
         { keystring = "unit.npc.anchor",                type = "anchor", dropdata = {"inherit","default","cursorRight","cursor","static"} },
         { keystring = "unit.npc.elements.raidIcon",     type = "element", filter = true, },
         { keystring = "unit.npc.elements.classIcon",    type = "element", filter = true, },
@@ -306,7 +440,11 @@ local options = {
         { keystring = "unit.npc.elements.classifRare",  type = "element", color = true, wildcard = true, filter = true, },
         { keystring = "unit.npc.elements.creature",     type = "element", color = true, wildcard = true, filter = true, },
         { keystring = "unit.npc.elements.reactionName", type = "element", color = true, wildcard = true, filter = true, },
-    }
+    },
+    spell = {
+        { keystring = "spell.background",               type = "colorpick", hasopacity = true },
+        { keystring = "spell.borderColor",              type = "colorpick", hasopacity = true },
+    },
 }
 
 local frame = CreateFrame("Frame", nil, UIParent)
@@ -353,46 +491,43 @@ frameNPC.title:SetText(format("%s |cff33eeff%s|r", addonName, "Unit Is NPC"))
 frameNPC.name = format("%s - %s", addonName, "NPC")
 frameNPC.parent = addonName
 
-LibEvent:attachEvent("VARIABLES_LOADED", function()
+
+local frameSpell = CreateFrame("Frame", nil, UIParent)
+frameSpell.anchor = CreateFrame("Frame", nil, frameSpell)
+frameSpell.anchor:SetPoint("TOPLEFT", 32, -16)
+frameSpell.anchor:SetSize(InterfaceOptionsFramePanelContainer:GetWidth()-64, 1)
+frameSpell.title = frameSpell:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
+frameSpell.title:SetPoint("TOPLEFT", 18, -16)
+frameSpell.title:SetText(format("%s |cff33eeff%s|r", addonName, "Spell"))
+frameSpell.name = format("%s - %s", addonName, "Spell")
+frameSpell.parent = addonName
+
+local function InitOptions(list, parent, height)
     local element, offsetX
-    for i, v in ipairs(options.general) do
+    for i, v in ipairs(list) do
         if (widgets[v.type]) then
             if (v.type == "colorpick") then offsetX = 5
             elseif (v.type == "slider") then offsetX = 15
-            elseif (v.type == "dropdown") then offsetX = -15
+            elseif (v.type == "dropdown" or v.type == "dropdownslider") then offsetX = -15
             elseif (v.type == "anchor") then offsetX = -15
             else offsetX = 0 end
-            element = widgets[v.type](widgets, frame, v)
-            element:SetPoint("TOPLEFT", frame.anchor, "BOTTOMLEFT", offsetX, -(i*32))
+            element = widgets[v.type](widgets, parent, v)
+            element:SetPoint("TOPLEFT", parent.anchor, "BOTTOMLEFT", offsetX, -(i*height))
         end
     end
-    for i, v in ipairs(options.pc) do
-        if (widgets[v.type]) then
-            if (v.type == "colorpick") then offsetX = 5
-            elseif (v.type == "slider") then offsetX = 15
-            elseif (v.type == "dropdown") then offsetX = -15
-            elseif (v.type == "anchor") then offsetX = -15
-            else offsetX = 0 end
-            element = widgets[v.type](widgets, framePC, v)
-            element:SetPoint("TOPLEFT", framePC.anchor, "BOTTOMLEFT", offsetX, -(i*29))
-        end
-    end
-    for i, v in ipairs(options.npc) do
-        if (widgets[v.type]) then
-            if (v.type == "colorpick") then offsetX = 5
-            elseif (v.type == "slider") then offsetX = 15
-            elseif (v.type == "dropdown") then offsetX = -15
-            elseif (v.type == "anchor") then offsetX = -15
-            else offsetX = 0 end
-            element = widgets[v.type](widgets, frameNPC, v)
-            element:SetPoint("TOPLEFT", frameNPC.anchor, "BOTTOMLEFT", offsetX, -(i*29))
-        end
-    end
+end
+
+LibEvent:attachEvent("VARIABLES_LOADED", function()
+    InitOptions(options.general, frame, 32)
+    InitOptions(options.pc, framePC, 29)
+    InitOptions(options.npc, frameNPC, 29)
+    InitOptions(options.spell, frameSpell, 32)
 end)
 
 InterfaceOptions_AddCategory(frame)
 InterfaceOptions_AddCategory(framePCScrollFrame)
 InterfaceOptions_AddCategory(frameNPC)
+InterfaceOptions_AddCategory(frameSpell)
 SLASH_TinyTooltip1 = "/tinytooltip"
 SLASH_TinyTooltip2 = "/tt"
 function SlashCmdList.TinyTooltip(msg, editbox)
@@ -404,13 +539,11 @@ function SlashCmdList.TinyTooltip(msg, editbox)
     elseif (msg == "player") then
         InterfaceOptionsFrame_OpenToCategory(framePCScrollFrame)
         InterfaceOptionsFrame_OpenToCategory(framePCScrollFrame)
+    elseif (msg == "spell") then
+        InterfaceOptionsFrame_OpenToCategory(frameSpell)
+        InterfaceOptionsFrame_OpenToCategory(frameSpell)
     else
         InterfaceOptionsFrame_OpenToCategory(frame)
         InterfaceOptionsFrame_OpenToCategory(frame)
     end
 end
-
-
---@todo anchor位置錨點 鼠標錨點
---@todo 元素拖動
---@todo 世界任務的全屏問題

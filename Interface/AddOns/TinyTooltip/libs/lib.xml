@@ -2,4 +2,5 @@
 ..\FrameXML\UI.xsd">
     <Script file="LibStub.lua"/>
     <Script file="LibEvent.lua"/>
+    <Script file="LibSchedule.lua"/>
 </Ui>

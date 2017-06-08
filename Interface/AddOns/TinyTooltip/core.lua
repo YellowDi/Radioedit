@@ -19,6 +19,10 @@ local OFFLINE = FRIENDS_LIST_OFFLINE
 
 local addon = select(2, ...)
 
+if (not addon.L) then
+    addon.L = {} setmetatable(addon.L, {__index = function(_, k) return k end})
+end
+
 -- tooltips
 addon.tooltips = {
     GameTooltip,
@@ -94,7 +98,7 @@ function addon:GetLine(tooltip, number)
     local num = tooltip:NumLines()
     if (number > num) then
         tooltip:AddLine(" ")
-        return self:GetLine(tooltip, num+1)
+        return self:GetLine(tooltip, num+1), true
     end
     return _G[tooltip:GetName() .. "TextLeft" .. number]
 end
@@ -337,9 +341,9 @@ addon.colorfunc.faction = function(raw)
     if (raw.factionGroup == "Neutral") then
         return 0.9, 0.7, 0, "e5b200"
     elseif (raw.factionGroup == UnitFactionGroup("player")) then
-        return 0, 0.9, 0.2, "00cc33"
+        return 0, 1, 0.2, "00cc33"
     else
-        return 0.9, 0.2, 0, "dd3300"
+        return 1, 0.2, 0, "dd3300"
     end
 end
 
@@ -390,10 +394,10 @@ end)
 
 LibEvent:attachTrigger("tooltip.anchor.cursor.right", function(self, frame, parent, offsetX, offsetY)
     frame:SetOwner(parent, "ANCHOR_NONE")
-    frame:SetOwner(parent, "ANCHOR_CURSOR_RIGHT", tonumber(offsetX) or 30, tonumber(offsetY) or -16)
+    frame:SetOwner(parent, "ANCHOR_CURSOR_RIGHT", tonumber(offsetX) or 30, tonumber(offsetY) or -12)
 end)
 
-LibEvent:attachTrigger("tooltip.anchor.static", function(self, frame, offsetX, offsetY)
+LibEvent:attachTrigger("tooltip.anchor.static", function(self, frame, parent, offsetX, offsetY)
     local anchor = select(2, frame:GetPoint())
     if (anchor == UIParent) then
         frame:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", tonumber(offsetX) or (-CONTAINER_OFFSET_X-13), tonumber(offsetY) or CONTAINER_OFFSET_Y)
@@ -561,11 +565,11 @@ LibEvent:attachTrigger("tooltip.style.init", function(self, tip)
         tip:HookScript("OnTooltipSetQuest", function(self) LibEvent:trigger("tooltip:quest", self) end)
     end
     LibEvent:trigger("tooltip:init", tip)
-end)
-
-LibEvent:attachTrigger("tooltip:cleared", function(self, tip)
-    LibEvent:trigger("tooltip.style.border.color", tip, 0.6, 0.6, 0.6)
-    LibEvent:trigger("tooltip.style.background", tip, 0, 0, 0)
+    if (tip == GameTooltip) then
+        tip.GetBackdrop = function(self) return self.style:GetBackdrop() end
+        tip.GetBackdropColor = function(self) return self.style:GetBackdropColor() end
+        tip.GetBackdropBorderColor = function(self) return self.style:GetBackdropBorderColor() end
+    end
 end)
 
 hooksecurefunc("GameTooltip_SetDefaultAnchor", function(self, parent)

@@ -1,20 +1,53 @@
 
 local LibEvent = LibStub:GetLibrary("LibEvent.7000")
+local LibSchedule = LibStub:GetLibrary("LibSchedule.7000")
 
 local addon = select(2, ...)
 
+local function AnchorCursor(tip, parent, cp, cx, cy)
+    LibSchedule:AddTask({
+        identity = tostring(tip),
+        elasped  = 0.01,
+        expired  = GetTime() + 300,
+        override = true,
+        tip      = tip,
+        cp       = cp or "BOTTOM",
+        cx       = cx or 0,
+        cy       = cy or 20,
+        scale    = tip:GetEffectiveScale(),
+        onExecute = function(self)
+            if (not self.tip:IsShown()) then return true end
+            if (self.tip:GetAnchorType() == "ANCHOR_NONE") then return true end
+            local x, y = GetCursorPosition()
+            self.tip:ClearAllPoints()
+            self.tip:SetPoint(self.cp, UIParent, "BOTTOMLEFT", floor(x/self.scale+self.cx), floor(y/self.scale+self.cy))
+        end,
+    })
+end
+
+local function AnchorDefaultPosition(tip, parent, anchor, finally)
+    if (finally) then
+        LibEvent:trigger("tooltip.anchor.static", tip, parent, anchor.x, anchor.y)
+    elseif (anchor.position == "inherit") then
+        AnchorDefaultPosition(tip, parent, addon.db.general.anchor, true)
+    else
+        LibEvent:trigger("tooltip.anchor.static", tip, parent, anchor.x, anchor.y)
+    end
+end
+
 local function AnchorFrame(tip, parent, anchor, isUnitFrame, finally)
     if (not anchor) then return end
-    if (anchor.returnInCombat and InCombatLockdown()) then return end
-    if (anchor.returnOnUnitFrame and isUnitFrame) then return end
+    if (anchor.returnInCombat and InCombatLockdown()) then return AnchorDefaultPosition(tip, parent, anchor, finally) end
+    if (anchor.returnOnUnitFrame and isUnitFrame) then return AnchorDefaultPosition(tip, parent, anchor, finally) end
     if (anchor.position == "cursorRight") then
-        LibEvent:trigger("tooltip.anchor.cursor.right", tip, parent, anchor.cx, anchor.cy)
+        LibEvent:trigger("tooltip.anchor.cursor.right", tip, parent)
     elseif (anchor.position == "cursor") then
         LibEvent:trigger("tooltip.anchor.cursor", tip, parent)
-    elseif (anchor.position == "static") then
-        LibEvent:trigger("tooltip.anchor.static", tip, anchor.x, anchor.y)
+        AnchorCursor(tip, parent, anchor.cp, anchor.cx, anchor.cy)
     elseif (anchor.position == "inherit" and not finally) then
         AnchorFrame(tip, parent, addon.db.general.anchor, isUnitFrame, true)
+    elseif (anchor.position == "static") then
+        LibEvent:trigger("tooltip.anchor.static", tip, parent, anchor.x, anchor.y)
     end
 end
 
