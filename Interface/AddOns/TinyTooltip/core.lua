@@ -43,6 +43,9 @@ addon.icons = {
     pvp       = "|TInterface\\TargetingFrame\\UI-PVP-FFA:16:16:0:0:64:64:10:36:0:38|t",
     class     = "|TInterface\\TargetingFrame\\UI-Classes-Circles:16:16:0:0:256:256:%d:%d:%d:%d|t",
     questboss = "|TInterface\\TargetingFrame\\PortraitQuestBadge:0|t",
+    TANK      = "|TInterface\\LFGFrame\\UI-LFG-ICON-PORTRAITROLES:0:0:0:0:64:64:0:19:22:41|t",
+    HEALER    = "|TInterface\\LFGFrame\\UI-LFG-ICON-PORTRAITROLES:0:0:0:0:64:64:20:39:1:20|t",
+    DAMAGER   = "|TInterface\\LFGFrame\\UI-LFG-ICON-PORTRAITROLES:0:0:0:0:64:64:20:39:22:41|t",
     --Alliance  = "|TInterface\\FriendsFrame\\PlusManz-Alliance:16|t",
     --Horde     = "|TInterface\\FriendsFrame\\PlusManz-Horde:16|t",
 }
@@ -117,6 +120,7 @@ end
 
 -- 顔色
 function addon:GetRGBColor(hex)
+    if (not hex) then return 1, 1, 1 end
     if (string.match(hex, "^%x%x%x%x%x%x$")) then
         local r = tonumber(strsub(hex,1,2),16) or 255
         local g = tonumber(strsub(hex,3,4),16) or 255
@@ -136,6 +140,14 @@ end
 function addon:GetPVPIcon(unit)
     if (UnitIsPVPFreeForAll(unit) and UnitPrestige(unit) <= 0) then
         return self.icons.pvp
+    end
+end
+
+-- 角色圖標
+function addon:GetRoleIcon(unit)
+    local role = UnitGroupRolesAssigned(unit)
+    if (role) then
+        return self.icons[strupper(role)]
     end
 end
 
@@ -162,6 +174,7 @@ end
 -- 頭銜 @param2:true為前綴
 function addon:GetTitle(name, pvpName)
     if (not pvpName) then return end
+    if (name == pvpName) then return end
     local pos = string.find(pvpName, name)
     local title = pvpName:gsub(name, "", 1)
     title = title:gsub(",", ""):gsub("，", "")
@@ -197,14 +210,17 @@ function addon:GetUnitInfo(unit)
     local reaction = UnitReaction(unit, "player")
     local guildName, guildRank, guildIndex, guildRealm = GetGuildInfo(unit)
     local classif = UnitClassification(unit)
+    local role = UnitGroupRolesAssigned(unit)
 
     local t = {
         raidIcon     = self:GetRaidIcon(unit),
         pvpIcon      = self:GetPVPIcon(unit),
         factionIcon  = self:GetFactionIcon(factionGroup),
         classIcon    = self:GetClassIcon(class),
+        roleIcon     = self:GetRoleIcon(unit),
         questIcon    = self:GetQuestBossIcon(unit),
         factionName  = factionName,
+        role         = role ~= "NONE" and role,
         name         = name,
         gender       = self:GetGender(gender),
         realm        = realm,
@@ -224,6 +240,7 @@ function addon:GetUnitInfo(unit)
         classifElite = classif == "elite" and ELITE,
         classifRare  = (classif == "rare" or classif == "rareelite") and RARE,
         isPlayer     = UnitIsPlayer(unit) and PLAYER,
+        
 
         unit         = unit,                     --unit
         level        = level,                    --1~113|-1
@@ -233,13 +250,14 @@ function addon:GetUnitInfo(unit)
         reaction     = reaction,                 --nil|1|2|3|4|5|6|7|8
         classif      = classif, --normal|worldboss|elite|rare|rareelite
     }
+    if (t.classifBoss) then t.classifElite = false end
     t.title, t.titleIsPrefix = self:GetTitle(name, pvpName)
     return t
 end
 
 -- Filter
 function addon:CheckFilter(config, raw)
-    if IsAltKeyDown() then return true end
+    if (IsAltKeyDown() or IsControlKeyDown()) then return true end
     if (not config.enable) then return end
     if (config.filter == "" or config.filter == "none") then
         return true
@@ -388,19 +406,18 @@ LibEvent:attachTrigger("tooltip.scale", function(self, frame, scale)
 end)
 
 LibEvent:attachTrigger("tooltip.anchor.cursor", function(self, frame, parent)
-    frame:SetOwner(parent, "ANCHOR_NONE")
     frame:SetOwner(parent, "ANCHOR_CURSOR")
 end)
 
 LibEvent:attachTrigger("tooltip.anchor.cursor.right", function(self, frame, parent, offsetX, offsetY)
-    frame:SetOwner(parent, "ANCHOR_NONE")
     frame:SetOwner(parent, "ANCHOR_CURSOR_RIGHT", tonumber(offsetX) or 30, tonumber(offsetY) or -12)
 end)
 
-LibEvent:attachTrigger("tooltip.anchor.static", function(self, frame, parent, offsetX, offsetY)
+LibEvent:attachTrigger("tooltip.anchor.static", function(self, frame, parent, offsetX, offsetY, anchorPoint)
     local anchor = select(2, frame:GetPoint())
     if (anchor == UIParent) then
-        frame:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", tonumber(offsetX) or (-CONTAINER_OFFSET_X-13), tonumber(offsetY) or CONTAINER_OFFSET_Y)
+        frame:ClearAllPoints()
+        frame:SetPoint(anchorPoint or "BOTTOMRIGHT", UIParent, anchorPoint or "BOTTOMRIGHT", tonumber(offsetX) or (-CONTAINER_OFFSET_X-13), tonumber(offsetY) or CONTAINER_OFFSET_Y)
     end
 end)
 
@@ -479,7 +496,15 @@ LibEvent:attachTrigger("tooltip.statusbar.text", function(self, boolean)
     GameTooltipStatusBar.forceHideText = not boolean
 end)
 
-LibEvent:attachTrigger("tooltip.statusbar.position", function(self, position)
+LibEvent:attachTrigger("tooltip.statusbar.font", function(self, font, size, flag)
+    if (not GameTooltipStatusBar.TextString) then return end
+    local origFont, origSize, origFlag = GameTooltipStatusBar.TextString:GetFont()
+    if (font ~= origFont or size ~= origSize or flag ~= origFlag) then
+        GameTooltipStatusBar.TextString:SetFont(font or origFont, size or origSize, flag or origFlag)
+    end
+end)
+
+LibEvent:attachTrigger("tooltip.statusbar.position", function(self, position, offsetY)
     LibEvent:trigger("tooltip.style.init", GameTooltip)
     GameTooltip.style:ClearAllPoints()
     GameTooltipStatusBar:ClearAllPoints()
@@ -487,15 +512,17 @@ LibEvent:attachTrigger("tooltip.statusbar.position", function(self, position)
     if (not GameTooltipStatusBar:IsShown()) then position = "" end
     if (position == "bottom") then
         local offset = backdrop.edgeFile == "Interface\\Tooltips\\UI-Tooltip-Border" and 5 or backdrop.edgeSize + 1
+        if (not offsetY or offsetY == 0) then offsetY = -offset end
         GameTooltipStatusBar:SetPoint("TOPLEFT", GameTooltip, "BOTTOMLEFT", offset, 2)
         GameTooltipStatusBar:SetPoint("TOPRIGHT", GameTooltip, "BOTTOMRIGHT", -offset, 2)
         GameTooltip.style:SetPoint("TOPLEFT")
-        GameTooltip.style:SetPoint("BOTTOMRIGHT", GameTooltipStatusBar, "BOTTOMRIGHT", offset, -offset)
+        GameTooltip.style:SetPoint("BOTTOMRIGHT", GameTooltipStatusBar, "BOTTOMRIGHT", offset, offsetY)
     elseif (position == "top") then
         local offset = backdrop.edgeFile == "Interface\\Tooltips\\UI-Tooltip-Border" and 4 or backdrop.edgeSize
+        if (not offsetY or offsetY == 0) then offsetY = offset end
         GameTooltipStatusBar:SetPoint("BOTTOMLEFT", GameTooltip, "TOPLEFT", offset, 0)
         GameTooltipStatusBar:SetPoint("BOTTOMRIGHT", GameTooltip, "TOPRIGHT", -offset, 0)
-        GameTooltip.style:SetPoint("TOPLEFT", GameTooltipStatusBar, "TOPLEFT", -offset, offset)
+        GameTooltip.style:SetPoint("TOPLEFT", GameTooltipStatusBar, "TOPLEFT", -offset, offsetY)
         GameTooltip.style:SetPoint("BOTTOMRIGHT")
     else
         local offset = backdrop.edgeFile == "Interface\\Tooltips\\UI-Tooltip-Border" and 2 or 0
@@ -575,6 +602,8 @@ end)
 hooksecurefunc("GameTooltip_SetDefaultAnchor", function(self, parent)
     LibEvent:trigger("tooltip:anchor", self, parent)
 end)
+
+TinyTooltip = addon
 
 -- tooltip:init
 -- tooltip:anchor

@@ -1,6 +1,14 @@
 
 local LibEvent = LibStub:GetLibrary("LibEvent.7000")
 
+local UIDropDownMenu_SetText = Lib_UIDropDownMenu_SetText or UIDropDownMenu_SetText
+local UIDropDownMenu_AddButton = Lib_UIDropDownMenu_AddButton or UIDropDownMenu_AddButton
+local UIDropDownMenu_CreateInfo = Lib_UIDropDownMenu_CreateInfo or UIDropDownMenu_CreateInfo
+local UIDropDownMenu_Initialize = Lib_UIDropDownMenu_Initialize or UIDropDownMenu_Initialize
+local UIDropDownMenu_GetSelectedValue = Lib_UIDropDownMenu_GetSelectedValue or UIDropDownMenu_GetSelectedValue
+local UIDropDownMenu_SetSelectedValue = Lib_UIDropDownMenu_SetSelectedValue or UIDropDownMenu_SetSelectedValue
+local UIDropDownMenuTemplate = "Lib_UIDropDownMenuTemplate"
+
 local addonName, addon = ...
 
 addon.L = addon.L or {}
@@ -24,12 +32,17 @@ local function CallTrigger(keystring, value)
             LibEvent:trigger("tooltip.style.border.size", tip, value)
         elseif (keystring == "general.borderCorner") then
             LibEvent:trigger("tooltip.style.border.corner", tip, value)
+            if (value == "angular") then
+                LibEvent:trigger("tooltip.style.border.size", tip, addon.db.general.borderSize)
+            end
         end
     end
     if (keystring == "general.statusbarText") then
         LibEvent:trigger("tooltip.statusbar.text", value)
     elseif (keystring == "general.statusbarHeight") then
         LibEvent:trigger("tooltip.statusbar.height", value)
+    elseif (keystring == "general.statusbarFontSize") then
+        LibEvent:trigger("tooltip.statusbar.font", nil, value, nil)
     end
 end
 
@@ -58,6 +71,7 @@ local function SetVariable(keystring, value, tbl)
     end
     tab[lastKey] = value
     CallTrigger(keystring, value)
+    LibEvent:trigger("tooltip:variable:changed", keystring, value)
 end
 
 local widgets = {}
@@ -91,7 +105,7 @@ function widgets:slider(parent, config)
         if (step < 1) then
             value = format("%.1f", value)
         else
-            value = floor(value+0.5)
+            value = floor(value+0.2)
         end
         if (self:GetValue() ~= value) then
             SetVariable(self.keystring, value)
@@ -172,7 +186,7 @@ function widgets:colorpick(parent, config)
 end
 
 function widgets:dropdown(parent, config, labelText)
-    local frame = CreateFrame("Frame", tostring(config), parent, "UIDropDownMenuTemplate")
+    local frame = CreateFrame("Frame", tostring(config), parent, UIDropDownMenuTemplate)
     frame.keystring = config.keystring
     frame.dropdata = config.dropdata
     frame.Label = frame:CreateFontString(nil, "ARTWORK", "GameFontNormal")
@@ -388,21 +402,26 @@ local options = {
         { keystring = "general.scale",              type = "slider", min = 0.5, max = 4, step = 0.1 },
         { keystring = "general.borderSize",         type = "slider", min = 1, max = 6, step = 1 },
         { keystring = "general.statusbarHeight",    type = "slider", min = 0, max = 24, step = 1 },
+        { keystring = "general.statusbarOffsetY",   type = "slider", min = -50, max = 50, step = 1 },
+        { keystring = "general.statusbarFontSize",  type = "slider", min = 6, max = 30, step = 1 },
         { keystring = "general.borderCorner",       type = "dropdown", dropdata = {"default","angular"} },
         { keystring = "general.statusbarPosition",  type = "dropdown", dropdata = {"default","bottom","top"} },
         { keystring = "general.statusbarColor",     type = "dropdown", dropdata = {"default","auto","smooth"} },
         { keystring = "general.anchor",             type = "anchor", dropdata = {"default","cursorRight","cursor","static"} },
         { keystring = "item.coloredItemBorder",     type = "checkbox" },
         { keystring = "quest.coloredQuestBorder",   type = "checkbox" },
+        { keystring = "general.alwaysShowIdInfo",   type = "checkbox" },
     },
     pc = {
         { keystring = "unit.player.showTarget",           type = "checkbox" },
         { keystring = "unit.player.showTargetBy",         type = "checkbox" },
         { keystring = "unit.player.showModel",            type = "checkbox" },
+        { keystring = "unit.player.grayForDead",          type = "checkbox" },
         { keystring = "unit.player.coloredBorder",        type = "dropdown", dropdata = widgets.colorDropdata },
         { keystring = "unit.player.background",           type = "dropdownslider", dropdata = widgets.colorDropdata, min = 0, max = 1, step = 0.1 },
         { keystring = "unit.player.anchor",               type = "anchor", dropdata = {"inherit", "default","cursorRight","cursor","static"} },
         { keystring = "unit.player.elements.raidIcon",    type = "element", filter = true, },
+        { keystring = "unit.player.elements.roleIcon",    type = "element", filter = true, },
         { keystring = "unit.player.elements.pvpIcon",     type = "element", filter = true, },
         { keystring = "unit.player.elements.factionIcon", type = "element", filter = true, },
         { keystring = "unit.player.elements.classIcon",   type = "element", filter = true, },
@@ -422,10 +441,12 @@ local options = {
         { keystring = "unit.player.elements.raceName",    type = "element", color = true, wildcard = true, filter = true, },
         { keystring = "unit.player.elements.className",   type = "element", color = true, wildcard = true, filter = true, },
         { keystring = "unit.player.elements.isPlayer",    type = "element", color = true, wildcard = true, filter = true, },
+        { keystring = "unit.player.elements.role",        type = "element", color = true, wildcard = true, filter = true, },
     },
     npc = {
         { keystring = "unit.npc.showTarget",            type = "checkbox" },
         { keystring = "unit.npc.showTargetBy",          type = "checkbox" },
+        { keystring = "unit.npc.grayForDead",           type = "checkbox" },
         { keystring = "unit.npc.coloredBorder",         type = "dropdown", dropdata = widgets.colorDropdata },
         { keystring = "unit.npc.background",            type = "dropdownslider", dropdata = widgets.colorDropdata, min = 0, max = 1, step = 0.1 },
         { keystring = "unit.npc.anchor",                type = "anchor", dropdata = {"inherit","default","cursorRight","cursor","static"} },
@@ -466,6 +487,18 @@ framePC.title:SetPoint("TOPLEFT", 18, -16)
 framePC.title:SetText(format("%s |cff33eeff%s|r", addonName, "Unit Is Player"))
 framePC.name = format("%s - %s", addonName, "Player")
 framePC.parent = addonName
+
+framePC.diy = CreateFrame("Button", nil, framePC)
+framePC.diy:SetSize(168, 32)
+framePC.diy:SetPoint("TOPLEFT", 320, -72)
+framePC.diy:SetNormalTexture("Interface\\Challenges\\challenges-main")
+framePC.diy:GetNormalTexture():SetTexCoord(14/1024, 300/1024, 279/512, 334/512)
+framePC.diy:SetScript("OnClick", function() LibEvent:trigger("tinytooltip:diy:player", "player", true) end)
+framePC.diy.text = framePC.diy:CreateFontString(nil, "OVERLAY")
+framePC.diy.text:SetFont(GameFont_Gigantic:GetFont(), 26, "OUTLINE")
+framePC.diy.text:SetPoint("CENTER", 0, 2)
+framePC.diy.text:SetTextColor(1, 0.82, 0)
+framePC.diy.text:SetText(L.DIY)
 
 framePC:SetSize(500, #options.pc*29+60)
 local framePCScrollFrame = CreateFrame("ScrollFrame", nil, UIParent, "UIPanelScrollFrameTemplate")
@@ -518,7 +551,7 @@ local function InitOptions(list, parent, height)
 end
 
 LibEvent:attachEvent("VARIABLES_LOADED", function()
-    InitOptions(options.general, frame, 32)
+    InitOptions(options.general, frame, 30)
     InitOptions(options.pc, framePC, 29)
     InitOptions(options.npc, frameNPC, 29)
     InitOptions(options.spell, frameSpell, 32)
@@ -530,6 +563,7 @@ InterfaceOptions_AddCategory(frameNPC)
 InterfaceOptions_AddCategory(frameSpell)
 SLASH_TinyTooltip1 = "/tinytooltip"
 SLASH_TinyTooltip2 = "/tt"
+SLASH_TinyTooltip3 = "/tip"
 function SlashCmdList.TinyTooltip(msg, editbox)
     if (msg == "reset") then
         BigTipDB = {}
@@ -547,3 +581,202 @@ function SlashCmdList.TinyTooltip(msg, editbox)
         InterfaceOptionsFrame_OpenToCategory(frame)
     end
 end
+
+
+----------------
+-- DIY Frame 
+----------------
+
+local diytable = {}
+
+local frame = CreateFrame("Frame", nil, UIParent)
+tinsert(addon.tooltips, frame)
+frame:Hide()
+frame:SetFrameStrata("DIALOG")
+frame:SetClampedToScreen(true)
+frame:EnableMouse(true)
+frame:SetMovable(true)
+frame:SetSize(300, 200)
+frame:SetPoint("CENTER", 0, 100)
+frame:RegisterForDrag("LeftButton")
+frame:SetScript("OnDragStart", function(self) self:StartMoving() end)
+frame:SetScript("OnDragStop", function(self) self:StopMovingOrSizing() end)
+frame.lines, frame.elements = {}, {}
+frame.close = CreateFrame("Button", nil, frame, "UIPanelCloseButton")
+frame.close:SetPoint("TOPRIGHT", 3, 3)
+
+local DraggingButton, OverButton, OverLine
+
+local function OnDragStart(self)
+    DraggingButton = self
+    local cursorX, cursorY = GetCursorPosition()
+    local uiScale = UIParent:GetScale()
+    self:StartMoving()
+    self:ClearAllPoints()
+    self:SetPoint("CENTER", UIParent, "BOTTOMLEFT", cursorX/uiScale, cursorY/uiScale)
+end
+
+local function OnDragStop(self)
+    DraggingButton = false
+    self:StopMovingOrSizing()
+    if (OverButton) then
+        OverButton.vbar:Hide()
+        for _, v in ipairs(diytable) do
+            for i = #v, 1, -1 do
+                if (v[i] == self.key) then
+                    tremove(v, i)
+                end
+            end
+            for i = #v, 1, -1 do
+                if (v[i] == OverButton.key) then
+                    tinsert(v, i, self.key)
+                end
+            end
+        end
+        OverButton = false
+    end
+    if (OverLine) then
+        OverLine.border:Hide()
+        for _, v in ipairs(diytable) do
+            for i = #v, 1, -1 do
+                if (v[i] == self.key) then
+                    tremove(v, i)
+                end
+            end
+        end
+        if (not diytable[OverLine.line]) then diytable[OverLine.line] = {} end
+        tinsert(diytable[OverLine.line], self.key)
+        OverLine = false
+    end
+    for i = #diytable, 1, -1 do
+        if (#diytable[i] == 0) then tremove(diytable, i) end
+    end
+    LibEvent:trigger("tinytooltip:diy:player", "player", true)
+end
+
+local function CreateElement(parent, key)
+    if (not parent.elements[key]) then
+        local button = CreateFrame("Button", nil, parent)
+        button.key = key
+        button:SetSize(40, 20)
+        button:SetMovable(true)
+        button.text = button:CreateFontString(nil, "ARTWORK", "GameTooltipText")
+        button.text:SetPoint("LEFT")
+        button.vbar = button:CreateTexture(nil, "OVERLAY")
+        button.vbar:SetPoint("TOPLEFT", 0, 0)
+        button.vbar:SetPoint("BOTTOMLEFT", 2, 0)
+        button.vbar:SetColorTexture(1, 0.8, 0)
+        button.vbar:Hide()
+        button:RegisterForDrag("LeftButton")
+        button:SetScript("OnDragStart", OnDragStart)
+        button:SetScript("OnDragStop", OnDragStop)
+        button.SetText = function(self, text)
+            self.text:SetText(text)
+            self:SetWidth(self.text:GetWidth()+4)
+        end
+        parent.elements[key] = button
+    end
+    return parent.elements[key]
+end
+
+local function CreateLine(parent, lineNumber)
+    if (not parent.lines[lineNumber]) then
+        local line = CreateFrame("Frame", nil, parent)
+        line:SetSize(300, 24)
+        line.line = lineNumber
+        line.border = CreateFrame("Frame", nil, line)
+        line.border:SetAllPoints()
+        line.border:SetBackdrop({edgeFile = "Interface\\Buttons\\WHITE8X8", edgeSize = 1})
+        line.border:SetBackdropBorderColor(1, 0.9, 0.1)
+        line.border:Hide()
+        parent.lines[lineNumber] = line
+    end
+    return parent.lines[lineNumber]
+end
+
+frame:SetScript("OnUpdate", function(self, elasped)
+    if (not DraggingButton) then return end
+    self.timer = (self.timer or 0) + elasped
+    if (self.timer < 0.15) then return end
+    self.timer = 0
+    local hasoverbtn = false
+    for i, v in ipairs(diytable) do
+        for ii, e in ipairs(v) do
+            if (self.elements[e].key ~= DraggingButton.key and self.elements[e]:IsMouseOver()) then
+                OverButton = self.elements[e]
+                OverButton.vbar:Show()
+                hasoverbtn = true
+            else
+                self.elements[e].vbar:Hide()
+            end
+        end
+    end
+    if (not hasoverbtn) then
+        for i, f in ipairs(self.lines) do
+            if (f:IsMouseOver()) then
+                OverLine = f
+                f.border:Show()
+            else
+                f.border:Hide()
+            end
+        end
+    elseif (OverLine) then
+        OverLine.border:Hide()
+        OverLine = false
+    end
+end)
+
+LibEvent:attachTrigger("tinytooltip:diy:player", function(self, unit, skipDisable)
+    local raw = addon:GetUnitInfo(unit)
+    local frameWidth, lineWidth, totalLines = 0, 0, 0
+    local config, value
+    for i, v in ipairs(diytable) do
+        lineWidth = 0
+        CreateLine(frame, i)
+        for ii, e in ipairs(v) do
+            CreateElement(frame, e)
+            config = addon.db.unit.player.elements[e]
+            if (skipDisable and not config.enable) then
+                frame.elements[e]:Hide()
+            else
+                value = raw[e] or e
+                if (config.color and config.wildcard) then
+                    value = addon:FormatData(value, config, raw)
+                end
+                frame.elements[e]:Show()
+                frame.elements[e]:SetText(value)
+                frame.elements[e]:ClearAllPoints()
+                frame.elements[e]:SetPoint("LEFT", frame.lines[i], "LEFT", lineWidth, 0)
+                lineWidth = lineWidth + frame.elements[e]:GetWidth()
+            end
+        end
+        if (lineWidth > frameWidth) then
+            frameWidth = lineWidth + 16
+        end
+        totalLines = i
+    end
+    totalLines = totalLines + 1
+    frame:SetWidth(frameWidth+28)
+    frame:SetHeight(totalLines*24+32)
+    for i = 1, totalLines do
+        f = CreateLine(frame, i)
+        f:Show()
+        f:SetWidth(frameWidth)
+        f:SetPoint("TOPLEFT", frame, "TOPLEFT", 14, -(i*25)+25-20)
+    end
+    while (frame.lines[totalLines+1]) do
+        frame.lines[totalLines+1]:Hide()
+        totalLines = totalLines + 1
+    end
+    frame:Show()
+end)
+
+LibEvent:attachTrigger("tooltip:variable:changed", function()
+    if (frame:IsShown()) then
+        LibEvent:trigger("tinytooltip:diy:player", "player", true)
+    end
+end)
+
+LibEvent:attachEvent("VARIABLES_LOADED", function()
+    diytable = addon.db.unit.player.elements
+end)

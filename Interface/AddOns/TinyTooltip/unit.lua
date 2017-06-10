@@ -33,6 +33,19 @@ local function ColorBackground(tip, config, raw)
     end
 end
 
+local function GrayForDead(tip, config, unit)
+    if (config.grayForDead and UnitIsDeadOrGhost(unit)) then
+        local line, text
+        LibEvent:trigger("tooltip.style.border.color", tip, 0.6, 0.6, 0.6)
+        for i = 1, tip:NumLines() do
+            line = _G[tip:GetName() .. "TextLeft" .. i]
+            text = (line:GetText() or ""):gsub("|cff%x%x%x%x%x%x", "|cffaaaaaa")
+            line:SetTextColor(0.7, 0.7, 0.7)
+            line:SetText(text)
+        end
+    end
+end
+
 local function PlayerCharacter(tip, unit, config, raw)
     local data = addon:GetUnitData(unit, config.elements, raw)
     for i, v in ipairs(data) do
@@ -44,6 +57,7 @@ local function PlayerCharacter(tip, unit, config, raw)
     addon:HideLine(tip, "^"..PVP)
     ColorBorder(tip, config, raw)
     ColorBackground(tip, config, raw)
+    GrayForDead(tip, config, unit)
 end
 
 local function NonPlayerCharacter(tip, unit, config, raw)
@@ -73,6 +87,7 @@ local function NonPlayerCharacter(tip, unit, config, raw)
     addon:HideLine(tip, "^"..PVP)
     ColorBorder(tip, config, raw)
     ColorBackground(tip, config, raw)
+    GrayForDead(tip, config, unit)
 end
 
 LibEvent:attachTrigger("tooltip:unit", function(self, tip, unit)

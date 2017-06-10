@@ -44,22 +44,30 @@ GameTooltip:HookScript("OnUpdate", function(self, elapsed)
 end)
 
 
--- Target By
+-- Targeted By
 
-local function GetTargetByString(mouseover, num)
+local function GetTargetByString(mouseover, num, tip)
     local count, prefix = 0, IsInRaid() and "raid" or "party"
-    local names, unit = ""
+    local roleIcon, colorCode, name
+    local first = true
+    local isPlayer = UnitIsPlayer(mouseover)
     for i = 1, num do
-        unit = prefix..i.."target"
-        if UnitIsUnit(mouseover, unit) then
+        if UnitIsUnit(mouseover, prefix..i.."target") then
             count = count + 1
-            if (prefix == "party") then
-                names = names .. "|c" .. GetClassColor(select(2,UnitClass(unit))) .. UnitName(unit) .. "|r "
+            if (isPlayer or prefix == "party") then
+                if (first) then
+                    tip:AddLine(format("%s:", addon.L and addon.L.TargetBy or "Targeted By"))
+                    first = false
+                end
+                roleIcon  = addon:GetRoleIcon(prefix..i) or ""
+                colorCode = select(4,GetClassColor(select(2,UnitClass(prefix..i))))
+                name      = UnitName(prefix..i)
+                tip:AddLine("     " .. roleIcon .. " |c" .. colorCode .. name .. "|r")
             end
         end
     end
-    if (count > 0) then
-        return names == "" and format("|cff33ffff%s|r", count) or names
+    if (count > 0 and not isPlayer and prefix ~= "party") then
+        return format("|cff33ffff%s|r", count)
     end
 end
 
@@ -69,9 +77,9 @@ LibEvent:attachTrigger("tooltip:unit", function(self, tip, unit)
         if (num >= 1) and
           ((addon.db.unit.player.showTargetBy and UnitIsPlayer("mouseover"))
           or (addon.db.unit.npc.showTargetBy and not UnitIsPlayer("mouseover"))) then
-            local text = GetTargetByString("mouseover", num)
+            local text = GetTargetByString("mouseover", num, tip)
             if (text) then
-                tip:AddLine(format("%s: %s", addon.L and addon.L.TargetBy or "Target By", text), nil, nil, nil, true)
+                tip:AddLine(format("%s: %s", addon.L and addon.L.TargetBy or "Targeted By", text), nil, nil, nil, true)
             end
         end
     end

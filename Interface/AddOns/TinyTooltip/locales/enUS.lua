@@ -2,6 +2,8 @@
 local addon = select(2, ...)
 
 addon.L = {
+    ["general.statusbarOffsetY"] = "Statusbar Offset Y (0:Default)",
+    ["general.alwaysShowIdInfo"] = "Always Show Id Info (Otherwise hold down SHIFT/ALT)",
     ["dropdown.inherit"]        = "|cffffee00inherit|r",
     ["dropdown.default"]        = "|cffaaaaaadefault|r",
     ["dropdown.cursor"]         = "|cff33ccffcursor|r",
@@ -15,4 +17,5 @@ addon.L = {
     ["dropdown.not inarena"]        = "|cffff3333not|r inarena",
     ["dropdown.not ininstance"]     = "|cffff3333not|r ininstance",
     ["dropdown.not samerealm"]      = "|cffff3333not|r samerealm",
+    ["TargetBy"] = "Targeted By",
 }

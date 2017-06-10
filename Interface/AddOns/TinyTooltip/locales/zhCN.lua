@@ -13,10 +13,13 @@ addon.L = {
     ["general.statusbarHeight"]             = "HP高度",
     ["general.borderCorner"]                = "边框样式",
     ["general.statusbarPosition"]           = "HP位置",
+    ["general.statusbarOffsetY"]            = "HP位置Y偏移",
+    ["general.statusbarFontSize"]           = "HP文字大小",
     ["general.statusbarColor"]              = "HP颜色",
     ["general.anchor.position"]             = "框架锚点",
     ["general.anchor.returnInCombat"]       = "战斗时复位",
     ["general.anchor.returnOnUnitFrame"]    = "UnitFrame上时复位",
+    ["general.alwaysShowIdInfo"]            = "始终显示id信息(关闭后按住alt/shift显示)",
     
     ["item.coloredItemBorder"]              = "物品边框染色",
     ["quest.coloredQuestBorder"]            = "任务边框染色",
@@ -27,8 +30,10 @@ addon.L = {
     ["unit.player.background"]              = "背景染色",
     ["unit.player.coloredBorder"]           = "边框染色",
     ["unit.player.showTarget"]              = "显示目标",
-    ["unit.player.showTargetBy"]            = "显示被关注数",
+    ["unit.player.showTargetBy"]            = "显示被关注",
     ["unit.player.showModel"]               = "显示模型",
+    ["unit.player.grayForDead"]             = "死亡目标灰度染色",
+    ["unit.player.elements.roleIcon"]       = "角色图标",
     ["unit.player.elements.raidIcon"]       = "标记图标",
     ["unit.player.elements.pvpIcon"]        = "PVP状态",
     ["unit.player.elements.factionIcon"]    = "阵营图标",
@@ -49,6 +54,7 @@ addon.L = {
     ["unit.player.elements.raceName"]       = "种族",
     ["unit.player.elements.className"]      = "职业",
     ["unit.player.elements.isPlayer"]       = "玩家",
+    ["unit.player.elements.role"]           = "角色",
     
     ["unit.npc.anchor.position"]            = "框架锚点",
     ["unit.npc.anchor.returnInCombat"]      = "战斗时复位",
@@ -57,6 +63,7 @@ addon.L = {
     ["unit.npc.coloredBorder"]              = "边框染色",
     ["unit.npc.showTarget"]                 = "显示目标",
     ["unit.npc.showTargetBy"]               = "显示被关注数",
+    ["unit.npc.grayForDead"]                = "死亡目标灰度染色",
     ["unit.npc.elements.raidIcon"]          = "标记图标",
     ["unit.npc.elements.classIcon"]         = "职业图标",
     ["unit.npc.elements.questIcon"]         = "任务图标",
@@ -109,5 +116,5 @@ addon.L = {
     
     ["Anchor"]   = "锚点器",
     
-    ["TargetBy"] = "被关注数",
+    ["TargetBy"] = "被关注",
 }

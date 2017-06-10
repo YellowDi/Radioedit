@@ -11,7 +11,7 @@ end
 
 local function ShowId(tooltip, name, value, noBlankLine)
     if (not name or not value) then return end
-    if (IsShiftKeyDown() or IsControlKeyDown() or IsAltKeyDown()) then
+    if (IsShiftKeyDown() or IsControlKeyDown() or IsAltKeyDown() or addon.db.general.alwaysShowIdInfo) then
         local line = addon:FindLine(tooltip, name)
         if (not line) then
             if (not noBlankLine) then tooltip:AddLine(" ") end

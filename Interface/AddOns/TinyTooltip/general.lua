@@ -53,7 +53,7 @@ LibEvent:attachEvent("VARIABLES_LOADED", function()
     bar.bg:SetVertexColor(0.2, 0.2, 0.2, 0.8)
     bar.TextString = bar:CreateFontString(nil, "OVERLAY")
     bar.TextString:SetPoint("CENTER")
-    bar.TextString:SetFont(NumberFontNormal:GetFont(), 11, "OUTLINE")
+    bar.TextString:SetFont(NumberFontNormal:GetFont(), 11, "THINOUTLINE")
     bar.capNumericDisplay = true
     bar.lockShow = 1
     bar:HookScript("OnValueChanged", function(self, hp)
@@ -72,8 +72,16 @@ LibEvent:attachEvent("VARIABLES_LOADED", function()
     end)
     --Variable
     addon.db = addon:MergeVariable(addon.db, BigTipDB)
+    if (not addon.db.unit.player.elements.role) then --v2.0.5 added new element: role roleIcon
+        addon.db.unit.player.elements.role = { enable = false, color = "ffffff",  wildcard = "(%s)", filter = "none" }
+        addon.db.unit.player.elements.roleIcon = { enable = true, filter = "none" }
+        tinsert(addon.db.unit.player.elements[1], 1, "role")
+        tinsert(addon.db.unit.player.elements[1], 1, "roleIcon")
+    end
+    --Init
     LibEvent:trigger("tooltip.statusbar.height", addon.db.general.statusbarHeight)
     LibEvent:trigger("tooltip.statusbar.text", addon.db.general.statusbarText)
+    LibEvent:trigger("tooltip.statusbar.font", nil, addon.db.general.statusbarFontSize)
     for _, tip in ipairs(addon.tooltips) do
         LibEvent:trigger("tooltip.style.init", tip)
         LibEvent:trigger("tooltip.scale", tip, addon.db.general.scale)
@@ -92,5 +100,5 @@ end)
 
 LibEvent:attachTrigger("tooltip:show", function(self, tip)
     if (tip ~= GameTooltip) then return end
-    LibEvent:trigger("tooltip.statusbar.position", addon.db.general.statusbarPosition)
+    LibEvent:trigger("tooltip.statusbar.position", addon.db.general.statusbarPosition, addon.db.general.statusbarOffsetY)
 end)

@@ -12,20 +12,25 @@ addon.db = {
         borderColor       = {0.6, 0.6, 0.6, 0.8},   --邊框顔色和透明度
         statusbarHeight   = 12,                     --HP高度
         statusbarPosition = "bottom",               --HP位置 default|bottom|top
-        statusbarText     = true,                   --HP文字
+        statusbarOffsetY  = 0,                      --HP Y偏移 0:自動
+        statusbarFontSize = 4,                      --HP文字大小
+        statusbarText     = false,                  --HP文字
         statusbarColor    = "auto",                 --HP顔色 default|auto|smooth
-        anchor            = { position = "cursorRight", returnInCombat = false, returnOnUnitFrame = false }, --鼠標位置 default|cursor|static|cursorRight
+        anchor            = { position = "cursorRight", returnInCombat = false, returnOnUnitFrame = false, cp = "BOTTOM", p = "BOTTOMRIGHT", }, --鼠標位置 default|cursor|static|cursorRight
+        alwaysShowIdInfo  = false,
     },
     unit = {
         player = {
             coloredBorder = "class",                --玩家邊框顔色 default|class|level|reaction|itemQuality|selection|faction|HEX
             background = { colorfunc = "default", alpha = 0.5, },
-            anchor = { position = "inherit", returnInCombat = true, returnOnUnitFrame = false },
+            anchor = { position = "inherit", returnInCombat = true, returnOnUnitFrame = false, cp = "BOTTOM", p = "BOTTOMRIGHT", },
             showTarget = true,                      --顯示目標
             showTargetBy = true,                    --顯示被關注
             showModel = true,                       --顯示模型
+            grayForDead = false,                    --灰色死亡目標
             elements = {
                 raidIcon    = { enable = true, filter = "none" },
+                roleIcon    = { enable = true, filter = "none" },
                 pvpIcon     = { enable = true, filter = "none" },
                 factionIcon = { enable = true, filter = "none" },
                 classIcon   = { enable = true, filter = "none" },
@@ -45,9 +50,10 @@ addon.db = {
                 raceName    = { enable = true, color = "cccccc",  wildcard = "%s",  filter = "none" }, 
                 className   = { enable = true, color = "ffffff",  wildcard = "%s",  filter = "none" }, 
                 isPlayer    = { enable = false, color = "ffffff",  wildcard = "(%s)", filter = "none" }, 
-                { "raidIcon", "pvpIcon", "factionIcon", "classIcon", "title", "name", "realm", "statusAFK", "statusDND", "statusDC", },
+                role        = { enable = false, color = "ffffff",  wildcard = "(%s)", filter = "none" }, 
+                { "raidIcon", "roleIcon", "pvpIcon", "factionIcon", "classIcon", "title", "name", "realm", "statusAFK", "statusDND", "statusDC", },
                 { "guildName", "guildIndex", "guildRank", "guildRealm", },
-                { "levelValue", "factionName", "gender", "raceName", "className", "isPlayer", },
+                { "levelValue", "factionName", "gender", "raceName", "className", "isPlayer", "role", },
             },
         },
         npc = {
@@ -55,7 +61,8 @@ addon.db = {
             background = { colorfunc = "default", alpha = 0.5, },
             showTarget = true,
             showTargetBy = true,
-            anchor = { position = "inherit", returnInCombat = true, returnOnUnitFrame = false },
+            grayForDead = false,
+            anchor = { position = "inherit", returnInCombat = true, returnOnUnitFrame = false, cp = "BOTTOM", p = "BOTTOMRIGHT", },
             elements = {
                 raidIcon     = { enable = true,  filter = "none" },
                 classIcon    = { enable = false, filter = "none" },

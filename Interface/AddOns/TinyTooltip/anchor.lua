@@ -5,19 +5,24 @@ local LibSchedule = LibStub:GetLibrary("LibSchedule.7000")
 local addon = select(2, ...)
 
 local function AnchorCursor(tip, parent, cp, cx, cy)
+    local x, y = GetCursorPosition()
+    local scale = tip:GetEffectiveScale()
+    cp, cx, cy = cp or "BOTTOM", cx or 0, cy or 20
+    tip:ClearAllPoints()
+    tip:SetPoint(cp, UIParent, "BOTTOMLEFT", floor(x/scale+cx), floor(y/scale+cy))
     LibSchedule:AddTask({
         identity = tostring(tip),
         elasped  = 0.01,
         expired  = GetTime() + 300,
         override = true,
         tip      = tip,
-        cp       = cp or "BOTTOM",
-        cx       = cx or 0,
-        cy       = cy or 20,
-        scale    = tip:GetEffectiveScale(),
+        cp       = cp,
+        cx       = cx,
+        cy       = cy,
+        scale    = scale,
         onExecute = function(self)
             if (not self.tip:IsShown()) then return true end
-            if (self.tip:GetAnchorType() == "ANCHOR_NONE") then return true end
+            if (self.tip:GetAnchorType() ~= "ANCHOR_CURSOR") then return true end
             local x, y = GetCursorPosition()
             self.tip:ClearAllPoints()
             self.tip:SetPoint(self.cp, UIParent, "BOTTOMLEFT", floor(x/self.scale+self.cx), floor(y/self.scale+self.cy))
