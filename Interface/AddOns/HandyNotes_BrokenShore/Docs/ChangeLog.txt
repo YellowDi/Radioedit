@@ -1,7 +1,12 @@
-$Id: ChangeLog.txt 62 2017-05-25 06:46:53Z arith $
+$Id: ChangeLog.txt 64 2017-06-08 14:29:06Z arith $
 
 Revision History:
 =================
+
+* v1.17 (Jun. 08, 2017)
+-----------------------
+- Localization update:
+  - Russian (DogmatX)
 
 * v1.16 (May 25, 2017)
 -----------------------
