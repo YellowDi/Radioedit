@@ -92,8 +92,7 @@ L["Click this button to load Masque's options. You can also use the %s or %s cha
 L["Click to open Masque's options window."] = "Klicken, um Masques Optionensfenster zu öffnen."
 L["Color"] = "Farbe"
 L["Colors"] = "Farben"
---Translation missing 
--- L["Cooldown"] = ""
+L["Cooldown"] = "Abklingzeit"
 L["Debug Mode"] = "Debugmodus"
 L["Disable"] = "Deaktivieren"
 L["Disable the skinning of this group."] = "Deaktiviert die Aussehensveränderung dieser Gruppe."
@@ -122,8 +121,7 @@ L["Reset all skin options to the defaults."] = "Setzt alle Optikoptionen auf Sta
 L["Reset Skin"] = "Optik zurücksetzen"
 L["Set the color of the backdrop texture."] = "Lege die Farbe der Hintergrundtextur fest"
 L["Set the color of the checked texture."] = "Lege die Farbe der Markiert-Textur fest"
---Translation missing 
--- L["Set the color of the cooldown animation."] = ""
+L["Set the color of the cooldown animation."] = "Lege die Farbe der Abklingzeit-Animation fest."
 L["Set the color of the disabled texture."] = "Lege die Farbe der Deaktiviert-Textur fest"
 --Translation missing 
 -- L["Set the color of the equipped item texture."] = ""
