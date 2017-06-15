@@ -1,12 +1,12 @@
-tag 8dc6bfb53add5ad2e752c103b6f80491a54b2a50 v1.7.3
+tag c7f52071ca37d0a82bb3cba7c0cc13f45eafd8f0 v1.7.4
 Author:	Navv <navv1234@gmail.com>
-Date:	Sun Jun 11 23:23:12 2017 +0300
+Date:	Tue Jun 13 20:39:17 2017 +0300
 
-v1.7.3
+v1.7.4
 
-commit d2e39b97c166f2c07ff8da601b2feaa9c786d2df
+commit 15ff35bf265da1ad52e1550c49091ae3e03f53e1
 Author: Navv <navv1234@gmail.com>
-Date:   Sun Jun 11 23:21:41 2017 +0300
+Date:   Tue Jun 13 20:38:13 2017 +0300
 
-    Be extra careful when checking artifact correctness.
+    Fix sanity checks. Update toc.
 
