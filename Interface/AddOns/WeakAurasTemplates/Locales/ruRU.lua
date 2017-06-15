@@ -5,8 +5,8 @@ end
 local L = WeakAuras.L
 
 -- WeakAuras/Templates
-	L[" (Channeling)"] = "(Канальный)"
-	L[" (Healing received increase)"] = "(Исцеление получило прирост)"
+	L[" (Channeling)"] = "(Потоковое)"
+	L[" (Healing received increase)"] = "(Увеличение входящего исцеления)"
 	L["- Any"] = "- Любой"
 	--Translation missing 
 	-- L["- Death Knight 2P Bonus"] = ""
@@ -34,7 +34,7 @@ local L = WeakAuras.L
 	L["(Pet)"] = "(Питомец)"
 	L["(Water Elemental)"] = "(Водный элементаль)"
 	L["Ability Charges"] = "Способность расходуется"
-	L["Add Triggers"] = "Добавить триггер"
+	L["Add Triggers"] = "Добавить триггеры"
 	L["Always Active"] = "Всегда активен"
 	L["Back"] = "Назад"
 	L["Bleed"] = "Кровотечение"

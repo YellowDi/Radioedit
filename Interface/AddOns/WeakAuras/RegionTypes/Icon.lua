@@ -101,8 +101,15 @@ local properties = {
     display = L["Color"],
     setter = "Color",
     type = "color"
+  },
+  inverse = {
+    display = L["Inverse"],
+    setter = "SetInverse",
+    type = "bool"
   }
 };
+
+WeakAuras.regionPrototype.AddProperties(properties);
 
 local function GetTexCoord(region, texWidth)
   local texCoord
@@ -206,6 +213,8 @@ local function create(parent, data)
       button:SetFrameLevel(level);
     end
   end
+
+  WeakAuras.regionPrototype.create(region);
 
   return region;
 end
@@ -320,7 +329,7 @@ local function modify(parent, region, data)
     UpdateText = function()
       if (data.text1Enabled) then
         local textStr = data.text1 or "";
-        textStr = WeakAuras.ReplacePlaceHolders(textStr, region.values, region.state);
+        textStr = WeakAuras.ReplacePlaceHolders(textStr, region);
 
         if(stacks.text ~= textStr) then
           if stacks:GetFont() then
@@ -332,7 +341,7 @@ local function modify(parent, region, data)
 
       if (data.text2Enabled) then
         local textStr = data.text2 or "";
-        textStr = WeakAuras.ReplacePlaceHolders(textStr, region.values, region.state);
+        textStr = WeakAuras.ReplacePlaceHolders(textStr, region);
 
         if(text2.text ~= textStr) then
           if text2:GetFont() then
@@ -486,6 +495,10 @@ local function modify(parent, region, data)
     local fontPath = SharedMedia:Fetch("font", data.text2Font);
     region.text2:SetFont(fontPath, height, data.text2FontFlags == "MONOCHROME" and "OUTLINE, MONOCHROME" or data.text2FontFlags);
     region.text2:SetTextHeight(height);
+  end
+
+  function region:SetInverse(inverse)
+    cooldown:SetReverse(not inverse);
   end
 
   function region:SetGlow(showGlow)

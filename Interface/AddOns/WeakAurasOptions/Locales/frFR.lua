@@ -9,14 +9,10 @@ local L = WeakAuras.L
 	L["% of Progress"] = "% de progression"
 	L["%i Matches"] = "%i Correspondances"
 	L["1 Match"] = "1 Correspondance"
-	--Translation missing 
-	-- L["1. Text"] = ""
-	--Translation missing 
-	-- L["1. Text Settings"] = ""
-	--Translation missing 
-	-- L["2. Text"] = ""
-	--Translation missing 
-	-- L["2. Text Settings"] = ""
+	L["1. Text"] = "1. Texte"
+	L["1. Text Settings"] = "1. Paramétres du Texte"
+	L["2. Text"] = "2. Texte"
+	L["2. Text Settings"] = "2. Paramétres du Texte"
 	L["A 20x20 pixels icon"] = "Une icône de 20x20 pixels."
 	L["A 32x32 pixels icon"] = "Une icône de 32x32 pixels."
 	L["A 40x40 pixels icon"] = "Une icône de 40x40 pixels."
@@ -32,18 +28,15 @@ local L = WeakAuras.L
 	L["Add to new Dynamic Group"] = "Ajouter à un nouveau groupe dynamique"
 	L["Add to new Group"] = "Ajouter à un nouveau groupe"
 	L["Add Trigger"] = "Ajouter un déclencheur"
-	--Translation missing 
-	-- L["Addon"] = ""
+	L["Addon"] = "Addon"
 	L["Addons"] = "Addons"
 	L["Align"] = "Aligner"
 	L["Allow Full Rotation"] = "Permettre une rotation complète"
 	L["Alpha"] = "Alpha"
 	L["Anchor"] = "Ancrage"
 	L["Anchor Point"] = "Point d'ancrage"
-	--Translation missing 
-	-- L["anchored to"] = ""
-	--Translation missing 
-	-- L["Anchored To"] = ""
+	L["anchored to"] = "accrocher à"
+	L["Anchored To"] = "Accrocher à"
 	L["Angle"] = "Angle"
 	L["Animate"] = "Animer"
 	L["Animated Expand and Collapse"] = "Expansion et réduction animés"
@@ -96,7 +89,7 @@ Si la durée de l'animation est définie à |cFF00CC0010%|r, et le déclencheur 
 	L["Border Size"] = "Taille de Bordure"
 	L["Border Style"] = "Style de Bordure"
 	L["Bottom Text"] = "Texte du bas"
-	L["Button Glow"] = "Bouton allumé"
+	L["Button Glow"] = "Bouton en surbrillance"
 	L["Can be a name or a UID (e.g., party1). Only works on friendly players in your group."] = "Peut être un nom ou un UID (par ex. party1). Fonctionne uniquement pour les joueurs amicaux de votre groupe."
 	L["Cancel"] = "Annuler"
 	L["Channel Number"] = "Numéro de canal"
@@ -120,8 +113,7 @@ Souhaitez-vous que ce graphiques soit placé dans un nouveau |cFF22AA22Groupe Dy
 	L["Collapse all non-loaded displays"] = "Réduire tous les graphiques non-chargés"
 	L["Color"] = "Couleur"
 	L["Compress"] = "Compresser"
-	--Translation missing 
-	-- L["Conditions"] = ""
+	L["Conditions"] = "Conditions"
 	L["Constant Factor"] = "Facteur constant"
 	--Translation missing 
 	-- L["Control-click to select multiple displays"] = ""
@@ -242,8 +234,7 @@ UNIT_POWER, UNIT_AURA PLAYER_TARGET_CHANGED
 	-- L["Full Scan"] = ""
 	--Translation missing 
 	-- L["General Text Settings"] = ""
-	--Translation missing 
-	-- L["Glow"] = ""
+	L["Glow"] = "Surbrillance"
 	L["Glow Action"] = "Action de l'éclat"
 	L["Green Rune"] = "Rune verte"
 	L["Group"] = "Groupe"

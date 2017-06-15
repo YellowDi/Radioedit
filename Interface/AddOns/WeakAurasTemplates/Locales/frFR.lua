@@ -8,10 +8,8 @@ local L = WeakAuras.L
 	L[" (Channeling)"] = "(Canalisé)"
 	L[" (Healing received increase)"] = "(Soins reçus augmentés)"
 	L["- Any"] = "- N'importe"
-	--Translation missing 
-	-- L["- Death Knight 2P Bonus"] = ""
-	--Translation missing 
-	-- L["- Death Knight Unholy 4P Bonus"] = ""
+	L["- Death Knight 2P Bonus"] = "- Chevalier de la Mort Bonus 2P"
+	L["- Death Knight Unholy 4P Bonus"] = "Chevalier de la Mort Impie Bonus 4P"
 	L["- Deathknight 2P Bonus"] = "- Chevalier de la Mort Bonus 2P"
 	L["- Deathknight Unholy 4P Bonus"] = "- Chevalier de la Mort Impie Bonus 4P"
 	L["- Holy Word: Chastise"] = "- Mot sacré : Châtier"
@@ -38,9 +36,8 @@ local L = WeakAuras.L
 	L["Always Active"] = "Toujours actif"
 	L["Back"] = "Retour"
 	L["Bleed"] = "Saignement"
-	L["BloodLust/Heroism"] = "Héroïsme/Furie sanguinaire"
-	--Translation missing 
-	-- L["Bloodlust/Heroism"] = ""
+	L["BloodLust/Heroism"] = "Furie sanguinaire/Héroïsme"
+	L["Bloodlust/Heroism"] = "Furie sanguinaire/Héroïsme"
 	L["buff"] = "amélioration"
 	L["Buff"] = "Amélioration"
 	L["Buffs"] = "Améliorations"

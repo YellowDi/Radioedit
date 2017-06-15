@@ -2150,7 +2150,8 @@ function WeakAuras.AddOption(id, data)
             name = L["Custom Code"],
             order = 0.013,
             multiline = true,
-            hidden = function() return not data.actions.init.do_custom end
+            hidden = function() return not data.actions.init.do_custom end,
+            control = "WeakAurasMultiLineEditBox"
           },
           init_expand = {
             type = "execute",
@@ -2250,11 +2251,87 @@ function WeakAuras.AddOption(id, data)
               return ret
             end,
           },
+          start_message_custom = {
+            type = "input",
+            width = "normal",
+            name = L["Custom Code"],
+            order = 5.1,
+            multiline = true,
+            hidden = function()
+              return not (data.actions.start.do_message and WeakAuras.ContainsPlaceHolders(data.actions.start.message, "c"))
+            end,
+            control = "WeakAurasMultiLineEditBox",
+          },
+          start_message_custom_expand = {
+            type = "execute",
+            order = 5.2,
+            name = L["Expand Text Editor"],
+            func = function()
+              WeakAuras.OpenTextEditor(data, {"actions", "start", "message_custom"});
+            end,
+            hidden = function()
+              return not (data.actions.start.do_message and WeakAuras.ContainsPlaceHolders(data.actions.start.message, "c"))
+            end,
+          },
+          start_message_error = {
+            type = "description",
+            name = function()
+              local custom = data.actions.start.message_custom;
+              if not custom then
+                return "";
+              end
+              local _, errorString = loadstring("return  " .. custom);
+              return errorString and "|cFFFF0000"..errorString or "";
+            end,
+            width = "double",
+            order = 5.3,
+            hidden = function()
+              local message = data.actions.start.message;
+              if (not message) then
+                return true;
+              end
+              if (not WeakAuras.ContainsPlaceHolders(message, "c")) then
+                return true;
+              end
+
+              local custom = data.actions.start.message_custom;
+
+              if (not custom) then
+                return true;
+              end
+
+              local loadedFunction, errorString = loadstring("return " .. custom);
+              if(errorString and not loadedFunction) then
+                return false;
+              else
+                return true;
+              end
+            end
+          },
           start_do_sound = {
             type = "toggle",
-            width = "double",
             name = L["Play Sound"],
             order = 7
+          },
+          start_do_loop = {
+            type = "toggle",
+            name = L["Loop"],
+            order = 7.1,
+            disabled = function() return not data.actions.start.do_sound end,
+          },
+          start_sound_repeat = {
+            type = "range",
+            name = L["Repeat After"],
+            order = 7.2,
+            hidden = function() return not data.actions.start.do_loop end,
+            disabled = function() return not data.actions.start.do_sound end,
+          },
+          start_sound_repeat_space = {
+            type = "description",
+            order = 7.3,
+            width = "normal",
+            name = "",
+            hidden = function() return not data.actions.start.do_loop end,
           },
           start_sound = {
             type = "select",
@@ -2332,7 +2409,8 @@ function WeakAuras.AddOption(id, data)
             name = L["Custom Code"],
             order = 13,
             multiline = true,
-            hidden = function() return not data.actions.start.do_custom end
+            hidden = function() return not data.actions.start.do_custom end,
+            control = "WeakAurasMultiLineEditBox"
           },
           start_expand = {
             type = "execute",
@@ -2432,9 +2510,65 @@ function WeakAuras.AddOption(id, data)
               return ret
             end,
           },
+          finish_message_custom = {
+            type = "input",
+            width = "normal",
+            name = L["Custom Code"],
+            order = 25.1,
+            multiline = true,
+            hidden = function()
+              return not (data.actions.finish.do_message and WeakAuras.ContainsPlaceHolders(data.actions.finish.message, "c"))
+            end,
+            control = "WeakAurasMultiLineEditBox",
+          },
+          finish_message_custom_expand = {
+            type = "execute",
+            order = 25.2,
+            name = L["Expand Text Editor"],
+            func = function()
+              WeakAuras.OpenTextEditor(data, {"actions", "finish", "message_custom"});
+            end,
+            hidden = function()
+              return not (data.actions.finish.do_message and WeakAuras.ContainsPlaceHolders(data.actions.finish.message, "c"))
+            end,
+          },
+          finish_message_error = {
+            type = "description",
+            name = function()
+              local custom = data.actions.finish.message_custom;
+              if not custom then
+                return "";
+              end
+              local _, errorString = loadstring("return  " .. custom);
+              return errorString and "|cFFFF0000"..errorString or "";
+            end,
+            width = "double",
+            order = 25.3,
+            hidden = function()
+              local message = data.actions.finish.message;
+              if (not message) then
+                return true;
+              end
+              if (not WeakAuras.ContainsPlaceHolders(message, "c")) then
+                return true;
+              end
+
+              local custom = data.actions.finish.message_custom;
+
+              if (not custom) then
+                return true;
+              end
+
+              local loadedFunction, errorString = loadstring("return " .. custom);
+              if(errorString and not loadedFunction) then
+                return false;
+              else
+                return true;
+              end
+            end
+          },
           finish_do_sound = {
             type = "toggle",
-            width = "double",
             name = L["Play Sound"],
             order = 27
           },
@@ -2469,6 +2603,12 @@ function WeakAuras.AddOption(id, data)
             width = "double",
             hidden = function() return data.actions.finish.sound ~= " KitID" end,
             disabled = function() return not data.actions.finish.do_sound end
+          },
+          finish_stop_sound = {
+            type = "toggle",
+            name = L["Stop Sound"],
+            order = 29.1,
+            width = "double"
           },
           finish_do_glow = {
             type = "toggle",
@@ -2514,7 +2654,8 @@ function WeakAuras.AddOption(id, data)
             order = 33,
             multiline = true,
             width = "normal",
-            hidden = function() return not data.actions.finish.do_custom end
+            hidden = function() return not data.actions.finish.do_custom end,
+            control = "WeakAurasMultiLineEditBox"
           },
           finish_expand = {
             type = "execute",
@@ -2548,8 +2689,8 @@ function WeakAuras.AddOption(id, data)
                 end
               end
             end
-          }
-        }
+          },
+        },
       },
       animation = {
         type = "group",
@@ -2696,15 +2837,16 @@ function WeakAuras.AddOption(id, data)
             name = L["Custom Function"],
             order = 35.3,
             hidden = function() return data.animation.start.type ~= "custom" or data.animation.start.alphaType ~= "custom" or not data.animation.start.use_alpha end,
-            get = function() return data.animation.start.alphaFunc and data.animation.start.alphaFunc:sub(8); end,
-            set = function(info, v) data.animation.start.alphaFunc = "return "..(v or ""); WeakAuras.Add(data); end
+            get = function() return data.animation.start.alphaFunc; end,
+            set = function(info, v) data.animation.start.alphaFunc = v; WeakAuras.Add(data); end,
+            control = "WeakAurasMultiLineEditBox"
           },
           start_alphaFunc_expand = {
             type = "execute",
             order = 35.4,
             name = L["Expand Text Editor"],
             func = function()
-              WeakAuras.OpenTextEditor(data, {"animation", "start", "alphaFunc"}, nil, true)
+              WeakAuras.OpenTextEditor(data, {"animation", "start", "alphaFunc"})
             end,
             hidden = function() return data.animation.start.type ~= "custom" or data.animation.start.alphaType ~= "custom" or not data.animation.start.use_alpha end
           },
@@ -2714,7 +2856,7 @@ function WeakAuras.AddOption(id, data)
               if not(data.animation.start.alphaFunc) then
                 return "";
               end
-              local _, errorString = loadstring(data.animation.start.alphaFunc or "");
+              local _, errorString = loadstring("return " .. data.animation.start.alphaFunc or "");
               return errorString and "|cFFFF0000"..errorString or "";
             end,
             width = "double",
@@ -2723,7 +2865,7 @@ function WeakAuras.AddOption(id, data)
               if(data.animation.start.type ~= "custom" or data.animation.start.alphaType ~= "custom" or not data.animation.start.use_alpha) then
                 return true;
               else
-                local loadedFunction, errorString = loadstring(data.animation.start.alphaFunc or "");
+                local loadedFunction, errorString = loadstring("return " .. data.animation.start.alphaFunc or "");
                 if(errorString and not loadedFunction) then
                   return false;
                 else
@@ -2763,15 +2905,16 @@ function WeakAuras.AddOption(id, data)
             width = "normal",
             order = 39.3,
             hidden = function() return data.animation.start.type ~= "custom" or data.animation.start.translateType ~= "custom" or not data.animation.start.use_translate end,
-            get = function() return data.animation.start.translateFunc and data.animation.start.translateFunc:sub(8); end,
-            set = function(info, v) data.animation.start.translateFunc = "return "..(v or ""); WeakAuras.Add(data); end
+            get = function() return data.animation.start.translateFunc; end,
+            set = function(info, v) data.animation.start.translateFunc = v; WeakAuras.Add(data); end,
+            control = "WeakAurasMultiLineEditBox"
           },
           start_translateFunc_expand = {
             type = "execute",
             order = 39.4,
             name = L["Expand Text Editor"],
             func = function()
-              WeakAuras.OpenTextEditor(data, {"animation", "start", "translateFunc"}, nil, true)
+              WeakAuras.OpenTextEditor(data, {"animation", "start", "translateFunc"})
             end,
             hidden = function() return data.animation.start.type ~= "custom" or data.animation.start.translateType ~= "custom" or not data.animation.start.use_translate end,
           },
@@ -2781,7 +2924,7 @@ function WeakAuras.AddOption(id, data)
               if not(data.animation.start.translateFunc) then
                 return "";
               end
-              local _, errorString = loadstring(data.animation.start.translateFunc or "");
+              local _, errorString = loadstring("return " .. data.animation.start.translateFunc or "");
               return errorString and "|cFFFF0000"..errorString or "";
             end,
             width = "double",
@@ -2790,7 +2933,7 @@ function WeakAuras.AddOption(id, data)
               if(data.animation.start.type ~= "custom" or data.animation.start.translateType ~= "custom" or not data.animation.start.use_translate) then
                 return true;
               else
-                local loadedFunction, errorString = loadstring(data.animation.start.translateFunc or "");
+                local loadedFunction, errorString = loadstring("return " .. data.animation.start.translateFunc or "");
                 if(errorString and not loadedFunction) then
                   return false;
                 else
@@ -2843,15 +2986,16 @@ function WeakAuras.AddOption(id, data)
             width = "normal",
             order = 43.3,
             hidden = function() return data.animation.start.type ~= "custom" or data.animation.start.scaleType ~= "custom" or not (data.animation.start.use_scale and WeakAuras.regions[id].region.Scale) end,
-            get = function() return data.animation.start.scaleFunc and data.animation.start.scaleFunc:sub(8); end,
-            set = function(info, v) data.animation.start.scaleFunc = "return "..(v or ""); WeakAuras.Add(data); end
+            get = function() return data.animation.start.scaleFunc; end,
+            set = function(info, v) data.animation.start.scaleFunc = v; WeakAuras.Add(data); end,
+            control = "WeakAurasMultiLineEditBox"
           },
           start_scaleFunc_expand = {
             type = "execute",
             order = 43.4,
             name = L["Expand Text Editor"],
             func = function()
-              WeakAuras.OpenTextEditor(data, {"animation", "start", "scaleFunc"}, nil, true)
+              WeakAuras.OpenTextEditor(data, {"animation", "start", "scaleFunc"})
             end,
             hidden = function() return data.animation.start.type ~= "custom" or data.animation.start.scaleType ~= "custom" or not (data.animation.start.use_scale and WeakAuras.regions[id].region.Scale) end,
           },
@@ -2861,7 +3005,7 @@ function WeakAuras.AddOption(id, data)
               if not(data.animation.start.scaleFunc) then
                 return "";
               end
-              local _, errorString = loadstring(data.animation.start.scaleFunc or "");
+              local _, errorString = loadstring("return " .. data.animation.start.scaleFunc or "");
               return errorString and "|cFFFF0000"..errorString or "";
             end,
             width = "double",
@@ -2870,7 +3014,7 @@ function WeakAuras.AddOption(id, data)
               if(data.animation.start.type ~= "custom" or data.animation.start.scaleType ~= "custom" or not (data.animation.start.use_scale and WeakAuras.regions[id].region.Scale)) then
                 return true;
               else
-                local loadedFunction, errorString = loadstring(data.animation.start.scaleFunc or "");
+                local loadedFunction, errorString = loadstring("return " .. data.animation.start.scaleFunc or "");
                 if(errorString and not loadedFunction) then
                   return false;
                 else
@@ -2919,15 +3063,16 @@ function WeakAuras.AddOption(id, data)
             width = "normal",
             order = 47.3,
             hidden = function() return data.animation.start.type ~= "custom" or data.animation.start.rotateType ~= "custom" or not (data.animation.start.use_rotate and WeakAuras.regions[id].region.Rotate) end,
-            get = function() return data.animation.start.rotateFunc and data.animation.start.rotateFunc:sub(8); end,
-            set = function(info, v) data.animation.start.rotateFunc = "return "..(v or ""); WeakAuras.Add(data); end
+            get = function() return data.animation.start.rotateFunc; end,
+            set = function(info, v) data.animation.start.rotateFunc = v; WeakAuras.Add(data); end,
+            control = "WeakAurasMultiLineEditBox"
           },
           start_rotateFunc_expand = {
             type = "execute",
             order = 47.4,
             name = L["Expand Text Editor"],
             func = function()
-              WeakAuras.OpenTextEditor(data, {"animation", "start", "rotateFunc"}, nil, true)
+              WeakAuras.OpenTextEditor(data, {"animation", "start", "rotateFunc"})
             end,
             hidden = function() return data.animation.start.type ~= "custom" or data.animation.start.rotateType ~= "custom" or not (data.animation.start.use_rotate and WeakAuras.regions[id].region.Rotate) end,
           },
@@ -2937,7 +3082,7 @@ function WeakAuras.AddOption(id, data)
               if not(data.animation.start.rotateFunc) then
                 return "";
               end
-              local _, errorString = loadstring(data.animation.start.rotateFunc or "");
+              local _, errorString = loadstring("return " .. data.animation.start.rotateFunc or "");
               return errorString and "|cFFFF0000"..errorString or "";
             end,
             width = "double",
@@ -2946,7 +3091,7 @@ function WeakAuras.AddOption(id, data)
               if(data.animation.start.type ~= "custom" or data.animation.start.rotateType ~= "custom" or not (data.animation.start.use_rotate and WeakAuras.regions[id].region.Rotate)) then
                 return true;
               else
-                local loadedFunction, errorString = loadstring(data.animation.start.rotateFunc or "");
+                local loadedFunction, errorString = loadstring("return " .. data.animation.start.rotateFunc or "");
                 if(errorString and not loadedFunction) then
                   return false;
                 else
@@ -2985,15 +3130,16 @@ function WeakAuras.AddOption(id, data)
             width = "normal",
             order = 48.7,
             hidden = function() return data.animation.start.type ~= "custom" or data.animation.start.colorType ~= "custom" or not (data.animation.start.use_color and WeakAuras.regions[id].region.Color) end,
-            get = function() return data.animation.start.colorFunc and data.animation.start.colorFunc:sub(8); end,
-            set = function(info, v) data.animation.start.colorFunc = "return "..(v or ""); WeakAuras.Add(data); end
+            get = function() return data.animation.start.colorFunc; end,
+            set = function(info, v) data.animation.start.colorFunc = v; WeakAuras.Add(data); end,
+            control = "WeakAurasMultiLineEditBox"
           },
           start_colorFunc_expand = {
             type = "execute",
             order = 48.8,
             name = L["Expand Text Editor"],
             func = function()
-              WeakAuras.OpenTextEditor(data, {"animation", "start", "colorFunc"}, nil, true)
+              WeakAuras.OpenTextEditor(data, {"animation", "start", "colorFunc"})
             end,
             hidden = function() return data.animation.start.type ~= "custom" or data.animation.start.colorType ~= "custom" or not (data.animation.start.use_color and WeakAuras.regions[id].region.Color) end,
           },
@@ -3003,7 +3149,7 @@ function WeakAuras.AddOption(id, data)
               if not(data.animation.start.colorFunc) then
                 return "";
               end
-              local _, errorString = loadstring(data.animation.start.colorFunc or "");
+              local _, errorString = loadstring("return " .. data.animation.start.colorFunc or "");
               return errorString and "|cFFFF0000"..errorString or "";
             end,
             width = "double",
@@ -3012,7 +3158,7 @@ function WeakAuras.AddOption(id, data)
               if(data.animation.start.type ~= "custom" or data.animation.start.colorType ~= "custom" or not (data.animation.start.use_color and WeakAuras.regions[id].region.Color)) then
                 return true;
               else
-                local loadedFunction, errorString = loadstring(data.animation.start.colorFunc or "");
+                local loadedFunction, errorString = loadstring("return " .. data.animation.start.colorFunc or "");
                 if(errorString and not loadedFunction) then
                   return false;
                 else
@@ -3120,15 +3266,16 @@ function WeakAuras.AddOption(id, data)
             width = "normal",
             order = 55.3,
             hidden = function() return data.animation.main.type ~= "custom" or data.animation.main.alphaType ~= "custom" or not data.animation.main.use_alpha end,
-            get = function() return data.animation.main.alphaFunc and data.animation.main.alphaFunc:sub(8); end,
-            set = function(info, v) data.animation.main.alphaFunc = "return "..(v or ""); WeakAuras.Add(data); end
+            get = function() return data.animation.main.alphaFunc; end,
+            set = function(info, v) data.animation.main.alphaFunc = v; WeakAuras.Add(data); end,
+            control = "WeakAurasMultiLineEditBox"
           },
           main_alphaFunc_expand = {
             type = "execute",
             order = 55.4,
             name = L["Expand Text Editor"],
             func = function()
-              WeakAuras.OpenTextEditor(data, {"animation", "main", "alphaFunc"}, nil, true)
+              WeakAuras.OpenTextEditor(data, {"animation", "main", "alphaFunc"})
             end,
             hidden = function() return data.animation.main.type ~= "custom" or data.animation.main.alphaType ~= "custom" or not data.animation.main.use_alpha end,
           },
@@ -3138,7 +3285,7 @@ function WeakAuras.AddOption(id, data)
               if not(data.animation.main.alphaFunc) then
                 return "";
               end
-              local _, errorString = loadstring(data.animation.main.alphaFunc or "");
+              local _, errorString = loadstring("return " .. data.animation.main.alphaFunc or "");
               return errorString and "|cFFFF0000"..errorString or "";
             end,
             width = "double",
@@ -3147,7 +3294,7 @@ function WeakAuras.AddOption(id, data)
               if(data.animation.main.type ~= "custom" or data.animation.main.alphaType ~= "custom" or not data.animation.main.use_alpha) then
                 return true;
               else
-                local loadedFunction, errorString = loadstring(data.animation.main.alphaFunc or "");
+                local loadedFunction, errorString = loadstring("return " .. data.animation.main.alphaFunc or "");
                 if(errorString and not loadedFunction) then
                   return false;
                 else
@@ -3187,15 +3334,16 @@ function WeakAuras.AddOption(id, data)
             width = "normal",
             order = 59.3,
             hidden = function() return data.animation.main.type ~= "custom" or data.animation.main.translateType ~= "custom" or not data.animation.main.use_translate end,
-            get = function() return data.animation.main.translateFunc and data.animation.main.translateFunc:sub(8); end,
-            set = function(info, v) data.animation.main.translateFunc = "return "..(v or ""); WeakAuras.Add(data); end
+            get = function() return data.animation.main.translateFunc; end,
+            set = function(info, v) data.animation.main.translateFunc = v; WeakAuras.Add(data); end,
+            control = "WeakAurasMultiLineEditBox"
           },
           main_translateFunc_expand = {
             type = "execute",
             order = 59.4,
             name = L["Expand Text Editor"],
             func = function()
-              WeakAuras.OpenTextEditor(data, {"animation", "main", "translateFunc"}, nil, true)
+              WeakAuras.OpenTextEditor(data, {"animation", "main", "translateFunc"})
             end,
             hidden = function() return data.animation.main.type ~= "custom" or data.animation.main.translateType ~= "custom" or not data.animation.main.use_translate end,
           },
@@ -3205,7 +3353,7 @@ function WeakAuras.AddOption(id, data)
               if not(data.animation.main.translateFunc) then
                 return "";
               end
-              local _, errorString = loadstring(data.animation.main.translateFunc or "");
+              local _, errorString = loadstring("return " .. data.animation.main.translateFunc or "");
               return errorString and "|cFFFF0000"..errorString or "";
             end,
             width = "double",
@@ -3214,7 +3362,7 @@ function WeakAuras.AddOption(id, data)
               if(data.animation.main.type ~= "custom" or data.animation.main.translateType ~= "custom" or not data.animation.main.use_translate) then
                 return true;
               else
-                local loadedFunction, errorString = loadstring(data.animation.main.translateFunc or "");
+                local loadedFunction, errorString = loadstring("return " .. data.animation.main.translateFunc or "");
                 if(errorString and not loadedFunction) then
                   return false;
                 else
@@ -3263,15 +3411,16 @@ function WeakAuras.AddOption(id, data)
             width = "normal",
             order = 63.3,
             hidden = function() return data.animation.main.type ~= "custom" or data.animation.main.scaleType ~= "custom" or not (data.animation.main.use_scale and WeakAuras.regions[id].region.Scale) end,
-            get = function() return data.animation.main.scaleFunc and data.animation.main.scaleFunc:sub(8); end,
-            set = function(info, v) data.animation.main.scaleFunc = "return "..(v or ""); WeakAuras.Add(data); end
+            get = function() return data.animation.main.scaleFunc end,
+            set = function(info, v) data.animation.main.scaleFunc = v; WeakAuras.Add(data); end,
+            control = "WeakAurasMultiLineEditBox"
           },
           main_scaleFunc_expand = {
             type = "execute",
             order = 63.4,
             name = L["Expand Text Editor"],
             func = function()
-              WeakAuras.OpenTextEditor(data, {"animation", "main", "scaleFunc"}, nil, true)
+              WeakAuras.OpenTextEditor(data, {"animation", "main", "scaleFunc"})
             end,
             hidden = function() return data.animation.main.type ~= "custom" or data.animation.main.scaleType ~= "custom" or not (data.animation.main.use_scale and WeakAuras.regions[id].region.Scale) end,
           },
@@ -3281,7 +3430,7 @@ function WeakAuras.AddOption(id, data)
               if not(data.animation.main.scaleFunc) then
                 return "";
               end
-              local _, errorString = loadstring(data.animation.main.scaleFunc or "");
+              local _, errorString = loadstring("return " .. data.animation.main.scaleFunc or "");
               return errorString and "|cFFFF0000"..errorString or "";
             end,
             width = "double",
@@ -3290,7 +3439,7 @@ function WeakAuras.AddOption(id, data)
               if(data.animation.main.type ~= "custom" or data.animation.main.scaleType ~= "custom" or not (data.animation.main.use_scale and WeakAuras.regions[id].region.Scale)) then
                 return true;
               else
-                local loadedFunction, errorString = loadstring(data.animation.main.scaleFunc or "");
+                local loadedFunction, errorString = loadstring("return " .. data.animation.main.scaleFunc or "");
                 if(errorString and not loadedFunction) then
                   return false;
                 else
@@ -3339,15 +3488,16 @@ function WeakAuras.AddOption(id, data)
             width = "normal",
             order = 67.3,
             hidden = function() return data.animation.main.type ~= "custom" or data.animation.main.rotateType ~= "custom" or not (data.animation.main.use_rotate and WeakAuras.regions[id].region.Rotate) end,
-            get = function() return data.animation.main.rotateFunc and data.animation.main.rotateFunc:sub(8); end,
-            set = function(info, v) data.animation.main.rotateFunc = "return "..(v or ""); WeakAuras.Add(data); end
+            get = function() return data.animation.main.rotateFunc end,
+            set = function(info, v) data.animation.main.rotateFunc = v; WeakAuras.Add(data); end,
+            control = "WeakAurasMultiLineEditBox"
           },
           main_rotateFunc_expand = {
             type = "execute",
             order = 67.4,
             name = L["Expand Text Editor"],
             func = function()
-              WeakAuras.OpenTextEditor(data, {"animation", "main", "rotateFunc"}, nil, true)
+              WeakAuras.OpenTextEditor(data, {"animation", "main", "rotateFunc"})
             end,
             hidden = function() return data.animation.main.type ~= "custom" or data.animation.main.rotateType ~= "custom" or not (data.animation.main.use_rotate and WeakAuras.regions[id].region.Rotate) end,
           },
@@ -3357,7 +3507,7 @@ function WeakAuras.AddOption(id, data)
               if not(data.animation.main.rotateFunc) then
                 return "";
               end
-              local _, errorString = loadstring(data.animation.main.rotateFunc or "");
+              local _, errorString = loadstring("return " .. data.animation.main.rotateFunc or "");
               return errorString and "|cFFFF0000"..errorString or "";
             end,
             width = "double",
@@ -3366,7 +3516,7 @@ function WeakAuras.AddOption(id, data)
               if(data.animation.main.type ~= "custom" or data.animation.main.rotateType ~= "custom" or not (data.animation.main.use_rotate and WeakAuras.regions[id].region.Rotate)) then
                 return true;
               else
-                local loadedFunction, errorString = loadstring(data.animation.main.rotateFunc or "");
+                local loadedFunction, errorString = loadstring("return " .. data.animation.main.rotateFunc or "");
                 if(errorString and not loadedFunction) then
                   return false;
                 else
@@ -3405,15 +3555,16 @@ function WeakAuras.AddOption(id, data)
             width = "normal",
             order = 68.7,
             hidden = function() return data.animation.main.type ~= "custom" or data.animation.main.colorType ~= "custom" or not (data.animation.main.use_color and WeakAuras.regions[id].region.Color) end,
-            get = function() return data.animation.main.colorFunc and data.animation.main.colorFunc:sub(8); end,
-            set = function(info, v) data.animation.main.colorFunc = "return "..(v or ""); WeakAuras.Add(data); end
+            get = function() return data.animation.main.colorFunc; end,
+            set = function(info, v) data.animation.main.colorFunc = v; WeakAuras.Add(data); end,
+            control = "WeakAurasMultiLineEditBox"
           },
           main_colorFunc_expand = {
             type = "execute",
             order = 68.8,
             name = L["Expand Text Editor"],
             func = function()
-              WeakAuras.OpenTextEditor(data, {"animation", "main", "colorFunc"}, nil, true)
+              WeakAuras.OpenTextEditor(data, {"animation", "main", "colorFunc"})
             end,
             hidden = function() return data.animation.main.type ~= "custom" or data.animation.main.colorType ~= "custom" or not (data.animation.main.use_color and WeakAuras.regions[id].region.Color) end,
           },
@@ -3423,7 +3574,7 @@ function WeakAuras.AddOption(id, data)
               if not(data.animation.main.colorFunc) then
                 return "";
               end
-              local _, errorString = loadstring(data.animation.main.colorFunc or "");
+              local _, errorString = loadstring("return " .. data.animation.main.colorFunc or "");
               return errorString and "|cFFFF0000"..errorString or "";
             end,
             width = "double",
@@ -3432,7 +3583,7 @@ function WeakAuras.AddOption(id, data)
               if(data.animation.main.type ~= "custom" or data.animation.main.colorType ~= "custom" or not (data.animation.main.use_color and WeakAuras.regions[id].region.Color)) then
                 return true;
               else
-                local loadedFunction, errorString = loadstring(data.animation.main.colorFunc or "");
+                local loadedFunction, errorString = loadstring("return " .. data.animation.main.colorFunc or "");
                 if(errorString and not loadedFunction) then
                   return false;
                 else
@@ -3517,15 +3668,16 @@ function WeakAuras.AddOption(id, data)
             width = "normal",
             order = 75.3,
             hidden = function() return data.animation.finish.type ~= "custom" or data.animation.finish.alphaType ~= "custom" or not data.animation.finish.use_alpha end,
-            get = function() return data.animation.finish.alphaFunc and data.animation.finish.alphaFunc:sub(8); end,
-            set = function(info, v) data.animation.finish.alphaFunc = "return "..(v or ""); WeakAuras.Add(data); end
+            get = function() return data.animation.finish.alphaFunc end,
+            set = function(info, v) data.animation.finish.alphaFunc = v; WeakAuras.Add(data); end,
+            control = "WeakAurasMultiLineEditBox"
           },
           finish_alphaFunc_expand = {
             type = "execute",
             order = 75.4,
             name = L["Expand Text Editor"],
             func = function()
-              WeakAuras.OpenTextEditor(data, {"animation", "finish", "alphaFunc"}, nil, true)
+              WeakAuras.OpenTextEditor(data, {"animation", "finish", "alphaFunc"})
             end,
             hidden = function() return data.animation.finish.type ~= "custom" or data.animation.finish.alphaType ~= "custom" or not data.animation.finish.use_alpha end,
           },
@@ -3535,7 +3687,7 @@ function WeakAuras.AddOption(id, data)
               if not(data.animation.finish.alphaFunc) then
                 return "";
               end
-              local _, errorString = loadstring(data.animation.finish.alphaFunc or "");
+              local _, errorString = loadstring("return " .. data.animation.finish.alphaFunc or "");
               return errorString and "|cFFFF0000"..errorString or "";
             end,
             width = "double",
@@ -3544,7 +3696,7 @@ function WeakAuras.AddOption(id, data)
               if(data.animation.finish.type ~= "custom" or data.animation.finish.alphaType ~= "custom" or not data.animation.finish.use_alpha) then
                 return true;
               else
-                local loadedFunction, errorString = loadstring(data.animation.finish.alphaFunc or "");
+                local loadedFunction, errorString = loadstring("return " .. data.animation.finish.alphaFunc or "");
                 if(errorString and not loadedFunction) then
                   return false;
                 else
@@ -3584,15 +3736,16 @@ function WeakAuras.AddOption(id, data)
             width = "normal",
             order = 79.3,
             hidden = function() return data.animation.finish.type ~= "custom" or data.animation.finish.translateType ~= "custom" or not data.animation.finish.use_translate end,
-            get = function() return data.animation.finish.translateFunc and data.animation.finish.translateFunc:sub(8); end,
-            set = function(info, v) data.animation.finish.translateFunc = "return "..(v or ""); WeakAuras.Add(data); end
+            get = function() return data.animation.finish.translateFunc; end,
+            set = function(info, v) data.animation.finish.translateFunc = v; WeakAuras.Add(data); end,
+            control = "WeakAurasMultiLineEditBox"
           },
           finish_translateFunc_expand = {
             type = "execute",
             order = 79.4,
             name = L["Expand Text Editor"],
             func = function()
-              WeakAuras.OpenTextEditor(data, {"animation", "finish", "translateFunc"}, nil, true)
+              WeakAuras.OpenTextEditor(data, {"animation", "finish", "translateFunc"})
             end,
             hidden = function() return data.animation.finish.type ~= "custom" or data.animation.finish.translateType ~= "custom" or not data.animation.finish.use_translate end,
           },
@@ -3602,7 +3755,7 @@ function WeakAuras.AddOption(id, data)
               if not(data.animation.finish.translateFunc) then
                 return "";
               end
-              local _, errorString = loadstring(data.animation.finish.translateFunc or "");
+              local _, errorString = loadstring("return " .. data.animation.finish.translateFunc or "");
               return errorString and "|cFFFF0000"..errorString or "";
             end,
             width = "double",
@@ -3611,7 +3764,7 @@ function WeakAuras.AddOption(id, data)
               if(data.animation.finish.type ~= "custom" or data.animation.finish.translateType ~= "custom" or not data.animation.finish.use_translate) then
                 return true;
               else
-                local loadedFunction, errorString = loadstring(data.animation.finish.translateFunc or "");
+                local loadedFunction, errorString = loadstring("return " .. data.animation.finish.translateFunc or "");
                 if(errorString and not loadedFunction) then
                   return false;
                 else
@@ -3660,15 +3813,16 @@ function WeakAuras.AddOption(id, data)
             width = "normal",
             order = 83.3,
             hidden = function() return data.animation.finish.type ~= "custom" or data.animation.finish.scaleType ~= "custom" or not (data.animation.finish.use_scale and WeakAuras.regions[id].region.Scale) end,
-            get = function() return data.animation.finish.scaleFunc and data.animation.finish.scaleFunc:sub(8); end,
-            set = function(info, v) data.animation.finish.scaleFunc = "return "..(v or ""); WeakAuras.Add(data); end
+            get = function() return data.animation.finish.scaleFunc; end,
+            set = function(info, v) data.animation.finish.scaleFunc = v; WeakAuras.Add(data); end,
+            control = "WeakAurasMultiLineEditBox"
           },
           finish_scaleFunc_expand = {
             type = "execute",
             order = 83.4,
             name = L["Expand Text Editor"],
             func = function()
-              WeakAuras.OpenTextEditor(data, {"animation", "finish", "scaleFunc"}, nil, true)
+              WeakAuras.OpenTextEditor(data, {"animation", "finish", "scaleFunc"})
             end,
             hidden = function() return data.animation.finish.type ~= "custom" or data.animation.finish.scaleType ~= "custom" or not (data.animation.finish.use_scale and WeakAuras.regions[id].region.Scale) end,
           },
@@ -3678,7 +3832,7 @@ function WeakAuras.AddOption(id, data)
               if not(data.animation.finish.scaleFunc) then
                 return "";
               end
-              local _, errorString = loadstring(data.animation.finish.scaleFunc or "");
+              local _, errorString = loadstring("return " .. data.animation.finish.scaleFunc or "");
               return errorString and "|cFFFF0000"..errorString or "";
             end,
             width = "double",
@@ -3687,7 +3841,7 @@ function WeakAuras.AddOption(id, data)
               if(data.animation.finish.type ~= "custom" or data.animation.finish.scaleType ~= "custom" or not (data.animation.finish.use_scale and WeakAuras.regions[id].region.Scale)) then
                 return true;
               else
-                local loadedFunction, errorString = loadstring(data.animation.finish.scaleFunc or "");
+                local loadedFunction, errorString = loadstring("return " ..  data.animation.finish.scaleFunc or "");
                 if(errorString and not loadedFunction) then
                   return false;
                 else
@@ -3736,15 +3890,16 @@ function WeakAuras.AddOption(id, data)
             width = "normal",
             order = 87.3,
             hidden = function() return data.animation.finish.type ~= "custom" or data.animation.finish.rotateType ~= "custom" or not (data.animation.finish.use_rotate and WeakAuras.regions[id].region.Rotate) end,
-            get = function() return data.animation.finish.rotateFunc and data.animation.finish.rotateFunc:sub(8); end,
-            set = function(info, v) data.animation.finish.rotateFunc = "return "..(v or ""); WeakAuras.Add(data); end
+            get = function() return data.animation.finish.rotateFunc; end,
+            set = function(info, v) data.animation.finish.rotateFunc = v; WeakAuras.Add(data); end,
+            control = "WeakAurasMultiLineEditBox"
           },
           finish_rotateFunc_expand = {
             type = "execute",
             order = 87.4,
             name = L["Expand Text Editor"],
             func = function()
-              WeakAuras.OpenTextEditor(data, {"animation", "finish", "rotateFunc"}, nil, true)
+              WeakAuras.OpenTextEditor(data, {"animation", "finish", "rotateFunc"})
             end,
             hidden = function() return data.animation.finish.type ~= "custom" or data.animation.finish.rotateType ~= "custom" or not (data.animation.finish.use_rotate and WeakAuras.regions[id].region.Rotate) end,
           },
@@ -3754,7 +3909,7 @@ function WeakAuras.AddOption(id, data)
               if not(data.animation.finish.rotateFunc) then
                 return "";
               end
-              local _, errorString = loadstring(data.animation.finish.rotateFunc or "");
+              local _, errorString = loadstring("return " .. data.animation.finish.rotateFunc or "");
               return errorString and "|cFFFF0000"..errorString or "";
             end,
             width = "double",
@@ -3763,7 +3918,7 @@ function WeakAuras.AddOption(id, data)
               if(data.animation.finish.type ~= "custom" or data.animation.finish.rotateType ~= "custom" or not (data.animation.finish.use_rotate and WeakAuras.regions[id].region.Rotate)) then
                 return true;
               else
-                local loadedFunction, errorString = loadstring(data.animation.finish.rotateFunc or "");
+                local loadedFunction, errorString = loadstring("return " .. data.animation.finish.rotateFunc or "");
                 if(errorString and not loadedFunction) then
                   return false;
                 else
@@ -3802,15 +3957,16 @@ function WeakAuras.AddOption(id, data)
             width = "normal",
             order = 88.7,
             hidden = function() return data.animation.finish.type ~= "custom" or data.animation.finish.colorType ~= "custom" or not (data.animation.finish.use_color and WeakAuras.regions[id].region.Color) end,
-            get = function() return data.animation.finish.colorFunc and data.animation.finish.colorFunc:sub(8); end,
-            set = function(info, v) data.animation.finish.colorFunc = "return "..(v or ""); WeakAuras.Add(data); end
+            get = function() return data.animation.finish.colorFunc; end,
+            set = function(info, v) data.animation.finish.colorFunc = v; WeakAuras.Add(data); end,
+            control = "WeakAurasMultiLineEditBox"
           },
           finish_colorFunc_expand = {
             type = "execute",
             order = 88.8,
             name = L["Expand Text Editor"],
             func = function()
-              WeakAuras.OpenTextEditor(data, {"animation", "finish", "colorFunc"}, nil, true)
+              WeakAuras.OpenTextEditor(data, {"animation", "finish", "colorFunc"})
             end,
             hidden = function() return data.animation.finish.type ~= "custom" or data.animation.finish.colorType ~= "custom" or not (data.animation.finish.use_color and WeakAuras.regions[id].region.Color) end,
           },
@@ -3820,7 +3976,7 @@ function WeakAuras.AddOption(id, data)
               if not(data.animation.finish.colorFunc) then
                 return "";
               end
-              local _, errorString = loadstring(data.animation.finish.colorFunc or "");
+              local _, errorString = loadstring("return " .. data.animation.finish.colorFunc or "");
               return errorString and "|cFFFF0000"..errorString or "";
             end,
             width = "double",
@@ -3829,7 +3985,7 @@ function WeakAuras.AddOption(id, data)
               if(data.animation.finish.type ~= "custom" or data.animation.finish.colorType ~= "custom" or not (data.animation.finish.use_color and WeakAuras.regions[id].region.Color)) then
                 return true;
               else
-                local loadedFunction, errorString = loadstring(data.animation.finish.colorFunc or "");
+                local loadedFunction, errorString = loadstring("return " .. data.animation.finish.colorFunc or "");
                 if(errorString and not loadedFunction) then
                   return false;
                 else
@@ -3949,7 +4105,46 @@ function WeakAuras.ReloadTriggerOptions(data)
     end
   end
 
-  if(optionTriggerChoices[id] == 0) then
+  if (data.controlledChildren) then
+    function appendToTriggerPath(...)
+      local baseRet = {...};
+      local result = {};
+
+      for index, childId in pairs(data.controlledChildren) do
+        local ret = {};
+        WeakAuras.DeepCopy(baseRet, ret);
+        local optionTriggerChoice = optionTriggerChoices[childId];
+        if (optionTriggerChoice == 0) then
+          tinsert(ret, 1, "trigger");
+        elseif (optionTriggerChoice > 0) then
+          tinsert(ret, 1, "trigger");
+          tinsert(ret, 1, optionTriggerChoice);
+          tinsert(ret, 1, "additional_triggers");
+        end
+        result[childId] = ret;
+      end
+      return result;
+    end
+    function appendToUntriggerPath(...)
+      local baseRet = {...};
+      local result = {};
+
+      for index, childId in pairs(data.controlledChildren) do
+        local ret = {};
+        WeakAuras.DeepCopy(baseRet, ret);
+        local optionTriggerChoice = optionTriggerChoices[childId];
+        if (optionTriggerChoice == 0) then
+          tinsert(ret, 1, "untrigger");
+        elseif (optionTriggerChoice > 0) then
+          tinsert(ret, 1, "untrigger");
+          tinsert(ret, 1, optionTriggerChoice);
+          tinsert(ret, 1, "additional_triggers");
+        end
+        result[childId] = ret;
+      end
+      return result;
+    end
+  elseif(optionTriggerChoices[id] == 0) then
     function appendToTriggerPath(...)
       local ret = {...};
       tinsert(ret, 1, "trigger");
@@ -3977,9 +4172,6 @@ function WeakAuras.ReloadTriggerOptions(data)
       tinsert(ret, 1, "additional_triggers");
       return ret;
     end
-  else
-    function appendToTriggerPath(...) end
-    function appendToUntriggerPath(...) end
   end
 
   local function getAuraMatchesLabel(name)
@@ -4941,7 +5133,8 @@ function WeakAuras.ReloadTriggerOptions(data)
       set = function(info, v)
         data.customTriggerLogic = v;
         WeakAuras.Add(data);
-      end
+      end,
+      control = "WeakAurasMultiLineEditBox"
     },
     custom_trigger_combination_expand = {
       type = "execute",
@@ -5294,14 +5487,15 @@ function WeakAuras.ReloadTriggerOptions(data)
         WeakAuras.SetThumbnail(data);
         WeakAuras.SetIconNames(data);
         WeakAuras.UpdateDisplayButton(data);
-      end
+      end,
+      control = "WeakAurasMultiLineEditBox"
     },
     custom_trigger_expand = {
       type = "execute",
       order = 10.5,
       name = L["Expand Text Editor"],
       func = function()
-        WeakAuras.OpenTextEditor(data, appendToTriggerPath("custom"))
+        WeakAuras.OpenTextEditor(data, appendToTriggerPath("custom"), nil, true)
       end,
       hidden = function() return not (trigger.type == "custom") end,
     },
@@ -5383,14 +5577,15 @@ function WeakAuras.ReloadTriggerOptions(data)
         WeakAuras.SetThumbnail(data);
         WeakAuras.SetIconNames(data);
         WeakAuras.UpdateDisplayButton(data);
-      end
+      end,
+      control = "WeakAurasMultiLineEditBox"
     },
     custom_untrigger_expand = {
       type = "execute",
       order = 14.5,
       name = L["Expand Text Editor"],
       func = function()
-        WeakAuras.OpenTextEditor(data, appendToUntriggerPath("custom"))
+        WeakAuras.OpenTextEditor(data, appendToUntriggerPath("custom"), nil, true)
       end,
       hidden = function() return not (trigger.type == "custom"
         and (trigger.custom_type == "status" or (trigger.custom_type == "event" and trigger.custom_hide == "custom"))) end,
@@ -5435,14 +5630,15 @@ function WeakAuras.ReloadTriggerOptions(data)
         WeakAuras.SetThumbnail(data);
         WeakAuras.SetIconNames(data);
         WeakAuras.UpdateDisplayButton(data);
-      end
+      end,
+      control = "WeakAurasMultiLineEditBox"
     },
     custom_duration_expand = {
       type = "execute",
       order = 16.5,
       name = L["Expand Text Editor"],
       func = function()
-        WeakAuras.OpenTextEditor(data, appendToTriggerPath("customDuration"))
+        WeakAuras.OpenTextEditor(data, appendToTriggerPath("customDuration"), nil, true)
       end,
       hidden = function() return not (trigger.type == "custom"
         and (trigger.custom_type == "status" or (trigger.custom_type == "event" and trigger.custom_hide ~= "timed")))
@@ -5490,14 +5686,15 @@ function WeakAuras.ReloadTriggerOptions(data)
         WeakAuras.SetThumbnail(data);
         WeakAuras.SetIconNames(data);
         WeakAuras.UpdateDisplayButton(data);
-      end
+      end,
+      control = "WeakAurasMultiLineEditBox"
     },
     custom_name_expand = {
       type = "execute",
       order = 18.5,
       name = L["Expand Text Editor"],
       func = function()
-        WeakAuras.OpenTextEditor(data, appendToTriggerPath("customName"))
+        WeakAuras.OpenTextEditor(data, appendToTriggerPath("customName"), nil, true)
       end,
       hidden = function() return not (trigger.type == "custom" and trigger.custom_type ~= "stateupdate") end,
     },
@@ -5539,14 +5736,15 @@ function WeakAuras.ReloadTriggerOptions(data)
         WeakAuras.SetThumbnail(data);
         WeakAuras.SetIconNames(data);
         WeakAuras.UpdateDisplayButton(data);
-      end
+      end,
+      control = "WeakAurasMultiLineEditBox"
     },
     custom_icon_expand = {
       type = "execute",
       order = 20.5,
       name = L["Expand Text Editor"],
       func = function()
-        WeakAuras.OpenTextEditor(data, appendToTriggerPath("customIcon"))
+        WeakAuras.OpenTextEditor(data, appendToTriggerPath("customIcon"), nil, true)
       end,
       hidden = function() return not (trigger.type == "custom" and trigger.custom_type ~= "stateupdate") end,
     },
@@ -5588,14 +5786,15 @@ function WeakAuras.ReloadTriggerOptions(data)
         WeakAuras.SetThumbnail(data);
         WeakAuras.SetIconNames(data);
         WeakAuras.UpdateDisplayButton(data);
-      end
+      end,
+      control = "WeakAurasMultiLineEditBox"
     },
     custom_texture_expand = {
       type = "execute",
       order = 22,
       name = L["Expand Text Editor"],
       func = function()
-        WeakAuras.OpenTextEditor(data, appendToTriggerPath("customTexture"))
+        WeakAuras.OpenTextEditor(data, appendToTriggerPath("customTexture"), nil, true)
       end,
       hidden = function() return not (trigger.type == "custom" and trigger.custom_type ~= "stateupdate") end,
     },
@@ -5637,14 +5836,15 @@ function WeakAuras.ReloadTriggerOptions(data)
         WeakAuras.SetThumbnail(data);
         WeakAuras.SetIconNames(data);
         WeakAuras.UpdateDisplayButton(data);
-      end
+      end,
+      control = "WeakAurasMultiLineEditBox"
     },
     custom_stacks_expand = {
       type = "execute",
       order = 23.5,
       name = L["Expand Text Editor"],
       func = function()
-        WeakAuras.OpenTextEditor(data, appendToTriggerPath("customStacks"))
+        WeakAuras.OpenTextEditor(data, appendToTriggerPath("customStacks"), nil, true)
       end,
       hidden = function() return not (trigger.type == "custom" and trigger.custom_type ~= "stateupdate") end,
     },
@@ -5890,8 +6090,8 @@ function WeakAuras.ReloadTriggerOptions(data)
     end;
   end
 
-
-  displayOptions[id].args.conditions.args = WeakAuras.GetConditionOptions(data);
+  displayOptions[id].args.conditions.args = {};
+  WeakAuras.GetConditionOptions(data, displayOptions[id].args.conditions.args, "conditions", 0, nil);
 
   if(type(id) ~= "string") then
     displayOptions[id].args.group = nil;

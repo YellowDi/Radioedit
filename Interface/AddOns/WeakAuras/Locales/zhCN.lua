@@ -457,13 +457,10 @@ L["Say"] = "说"
 L["Scenario"] = "场景"
 --Translation missing 
 -- L["Screen/Parent Group"] = ""
---Translation missing 
--- L["Second Text Color"] = ""
---Translation missing 
--- L["Second Text Size"] = ""
+L["Second Text Color"] = "第二文本颜色"
+L["Second Text Size"] = "第二文本大小"
 L["Seconds"] = "秒"
---Translation missing 
--- L["Select Frame"] = ""
+L["Select Frame"] = "选择框体"
 L["Shake"] = "晃动"
 L["Shift-Click to pause"] = "Shift点击暂停"
 L["Shift-Click to resume"] = "Shift点击继续"

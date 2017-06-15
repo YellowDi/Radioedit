@@ -974,12 +974,18 @@ function GenericTrigger.Modernize(data)
 
     if (trigger and trigger.type and trigger.event and trigger.type == "status"
       and (trigger.event == "Cooldown Progress (Spell)"
-      or trigger.event == "Cooldown Progress (Item)")) then
+          or trigger.event == "Cooldown Progress (Item)"
+          or trigger.event == "Death Knight Rune")) then
+
       if (not trigger.showOn) then
         if (trigger.use_inverse) then
           trigger.showOn = "showOnReady"
         else
           trigger.showOn = "showOnCooldown"
+        end
+
+        if (trigger.event == "Death Knight Rune") then
+          trigger.use_showOn = true;
         end
         trigger.use_inverse = nil
       end
@@ -1221,6 +1227,7 @@ do
             local icon = GetSpellTexture(name);
             gcdSpellName = name;
             gcdSpellIcon = icon;
+            WeakAuras.ScanEvents("GCD_UPDATE");
           end
         end
       elseif(event == "UNIT_INVENTORY_CHANGED" or event == "BAG_UPDATE_COOLDOWN" or event == "PLAYER_EQUIPMENT_CHANGED") then
@@ -1290,6 +1297,10 @@ do
 
   function WeakAuras.gcdDuration()
     return gcdDuration or 0;
+  end
+
+  function WeakAuras.GcdSpellName()
+    return gcdSpellName;
   end
 
   function WeakAuras.GetItemSlotCooldown(id)
@@ -1368,6 +1379,7 @@ do
         event = "GCD_END"
       end
       gcdStart, gcdDuration = nil, nil;
+      gcdSpellName, gcdSpellIcon = nil, nil;
       gcdEndCheck = 0;
     end
     if(event) then
@@ -1823,11 +1835,11 @@ function WeakAuras.GetEquipmentSetInfo(itemSetName, partial)
   local bestMatchName = nil;
   local bestMatchIcon = nil;
 
-  for i = 0, C_EquipmentSet.GetNumEquipmentSets() do
+  for i = 0, C_EquipmentSet.GetNumEquipmentSets() - 1 do
     local name, icon, _, _, numItems, numEquipped = C_EquipmentSet.GetEquipmentSetInfo(i);
     if (itemSetName == nil or (name and itemSetName == name)) then
       local match = (not partial and numItems == numEquipped)
-        or (partial and numEquipped > bestMatchNumEquipped);
+        or (partial and (numEquipped or 0) > bestMatchNumEquipped);
       if (match) then
         bestMatchNumEquipped = numEquipped;
         bestMatchNumItems = numItems;

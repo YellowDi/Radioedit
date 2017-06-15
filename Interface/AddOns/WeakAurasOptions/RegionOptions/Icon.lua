@@ -23,14 +23,17 @@ local function createOptions(id, data)
       name = L["Show Cooldown Text"],
       order = 6.5,
       disabled = function() return not WeakAuras.CanHaveDuration(data); end,
-      hidden = function() return not (data.cooldown and not IsAddOnLoaded("OmniCC")) end
+      hidden = function() return not (data.cooldown and not IsAddOnLoaded("OmniCC") and GetCVar("countdownForCooldowns") == "1") end,
+      width = "double"
     },
-    cooldownTextSpace = {
+    cooldownSpace = {
       type = "description",
       name = "",
       order = 6.6,
       width = "normal",
-      hidden = function() return data.cooldown and IsAddOnLoaded("OmniCC") end
+      hidden = function()
+        return data.cooldown and (IsAddOnLoaded("OmniCC") or GetCVar("countdownForCooldowns") ~= "1");
+      end
     },
     color = {
       type = "color",
@@ -240,7 +243,8 @@ local function createOptions(id, data)
       end,
       multiline = true,
       name = L["Custom Function"],
-      order = 43.2
+      order = 43.2,
+      control = "WeakAurasMultiLineEditBox"
     },
     customText_expand = {
       type = "execute",

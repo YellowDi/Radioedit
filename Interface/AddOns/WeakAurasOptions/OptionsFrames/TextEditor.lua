@@ -138,10 +138,10 @@ local function ConstructTextEditor(frame)
     end
   end);
 
-  function group.Open(self, data, path, enclose, addReturn)
+  function group.Open(self, data, path, enclose, multipath)
     self.data = data;
     self.path = path;
-    self.addReturn = addReturn;
+    self.multipath = multipath;
     if(frame.window == "texture") then
       frame.texturePicker:CancelClose();
     elseif(frame.window == "icon") then
@@ -152,11 +152,13 @@ local function ConstructTextEditor(frame)
     self.frame:Show();
     frame.window = "texteditor";
     local title = (type(data.id) == "string" and data.id or L["Temporary Group"]).." -";
-    for index, field in pairs(path) do
-      if(type(field) == "number") then
-        field = "Trigger "..field+1
+    if (not multipath) then
+      for index, field in pairs(path) do
+        if(type(field) == "number") then
+          field = "Trigger "..field+1
+        end
+        title = title.." "..field:sub(1, 1):upper()..field:sub(2);
       end
-      title = title.." "..field:sub(1, 1):upper()..field:sub(2);
     end
     editor:SetLabel(title);
     editor.editBox:SetScript("OnEscapePressed", function() group:CancelClose(); end);
@@ -182,10 +184,7 @@ local function ConstructTextEditor(frame)
       local combinedText = "";
       for index, childId in pairs(data.controlledChildren) do
         local childData = WeakAuras.GetData(childId);
-        local text = valueFromPath(childData, path);
-        if(addReturn and text and #text > 8) then
-          text = text:sub(8);
-        end
+        local text = valueFromPath(childData, multipath and path[childId] or path);
         if not(singleText) then
           singleText = text;
         else
@@ -208,12 +207,7 @@ local function ConstructTextEditor(frame)
         editor.combinedText = true;
       end
     else
-      if(addReturn) then
-        local value = valueFromPath(data, path);
-        editor:SetText(value and #value > 8 and value:sub(8) or "");
-      else
-        editor:SetText(valueFromPath(data, path) or "");
-      end
+      editor:SetText(valueFromPath(data, path) or "");
     end
     editor:SetFocus();
   end
@@ -265,21 +259,14 @@ local function ConstructTextEditor(frame)
       for index, childId in pairs(self.data.controlledChildren) do
         local text = editor.combinedText and (textById[childId] or "") or editor:GetText();
         local childData = WeakAuras.GetData(childId);
-        if(self.addReturn) then
-          valueToPath(childData, self.path, "return "..text);
-        else
-          valueToPath(childData, self.path, text);
-        end
+        valueToPath(childData, self.multipath and self.path[childId] or self.path, text);
         WeakAuras.Add(childData);
       end
     else
-      if(self.addReturn) then
-        valueToPath(self.data, self.path, "return "..editor:GetText());
-      else
-        valueToPath(self.data, self.path, editor:GetText());
-      end
+      valueToPath(self.data, self.path, editor:GetText());
       WeakAuras.Add(self.data);
     end
+    WeakAuras.ReloadTriggerOptions(self.data);
 
     editor.editBox:SetScript("OnTextChanged", self.oldOnTextChanged);
     editor:ClearFocus();

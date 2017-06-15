@@ -101,8 +101,7 @@ local L = WeakAuras.L
 	-- L["Keeps existing triggers intact"] = ""
 	--Translation missing 
 	-- L["Legendaries"] = ""
-	--Translation missing 
-	-- L["Nimble Brew Item Count"] = ""
+	L["Nimble Brew Item Count"] = "Contador de objetos - Brebaje Avezado"
 	--Translation missing 
 	-- L["Pet alive"] = ""
 	--Translation missing 
@@ -141,10 +140,8 @@ local L = WeakAuras.L
 	-- L["T19 Sets"] = ""
 	--Translation missing 
 	-- L["T19 Tank Trinkets"] = ""
-	--Translation missing 
-	-- L["Totem"] = ""
-	--Translation missing 
-	-- L["Totems"] = ""
+	L["Totem"] = "Tótem"
+	L["Totems"] = "Tótems"
 	--Translation missing 
 	-- L["Unknown Item"] = ""
 	--Translation missing 

@@ -76,6 +76,12 @@ WeakAuras.sound_channel_types = {
   Dialog = L["Dialog"]
 };
 
+WeakAuras.sound_condition_types = {
+  Play = L["Play"],
+  Loop = L["Loop"],
+  Stop = L["Stop"]
+}
+
 WeakAuras.trigger_require_types = {
   any = L["Any Triggers"],
   all = L["All Triggers"],
@@ -396,6 +402,11 @@ WeakAuras.environmental_types = {
   Lava = L["Lava"],
   Slime = L["Slime"]
 };
+
+WeakAuras.combatlog_flags_check_type = {
+  InGroup = L["In Group"],
+  NotInGroup = L["Not in Group"]
+}
 
 WeakAuras.orientation_types = {
   HORIZONTAL_INVERSE = L["Left to Right"],

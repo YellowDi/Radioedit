@@ -266,8 +266,7 @@ UNIT_POWER, UNIT_AURA PLAYER_TARGET_CHANGED
 	--Translation missing 
 	-- L["Glow"] = ""
 	L["Glow Action"] = "Acción de Destello"
-	--Translation missing 
-	-- L["Green Rune"] = ""
+	L["Green Rune"] = "Runa verde"
 	--Translation missing 
 	-- L["Group"] = ""
 	--Translation missing 
@@ -368,9 +367,8 @@ Sólo un valor coincidente puede ser escogido.]=]
 	--Translation missing 
 	-- L["Never"] = ""
 	L["New"] = "Nuevo"
-	L["No"] = "no"
-	--Translation missing 
-	-- L["No Children"] = ""
+	L["No"] = "No"
+	L["No Children"] = "Sin dependientes"
 	L["No tooltip text"] = "Sin Texto de Descripción"
 	--Translation missing 
 	-- L["None"] = ""
@@ -519,32 +517,24 @@ Sólo un valor coincidente puede ser escogido.]=]
 	--Translation missing 
 	-- L["This region of type \"%s\" is not supported."] = ""
 	L["Time in"] = "Contar En"
-	--Translation missing 
-	-- L["Tiny Icon"] = ""
-	--Translation missing 
-	-- L["To Frame's"] = ""
-	L["to group's"] = "al groupo"
-	--Translation missing 
-	-- L["To Personal Ressource Display's"] = ""
-	--Translation missing 
-	-- L["to Personal Ressource Display's"] = ""
-	--Translation missing 
-	-- L["To Screen's"] = ""
-	L["to screen's"] = "a pantalla"
+	L["Tiny Icon"] = "Icono miniatura"
+	L["To Frame's"] = "Al macro"
+	L["to group's"] = "Al grupo"
+	L["To Personal Ressource Display's"] = "A los recursos del aura personal"
+	L["to Personal Ressource Display's"] = "a los recursos del aura personal"
+	L["To Screen's"] = "A la pantalla"
+	L["to screen's"] = "a la pantalla"
 	L["Toggle the visibility of all loaded displays"] = "Alterar la visibilidad de todas las auras cargadas"
 	L["Toggle the visibility of all non-loaded displays"] = "Alterar la visibilidad de todas las auras no cargadas"
-	--Translation missing 
-	-- L["Toggle the visibility of this display"] = ""
+	L["Toggle the visibility of this display"] = "Alterar la visibilidad de esta aura"
 	L["Tooltip"] = "Descriptión emergente"
-	L["Tooltip on Mouseover"] = "Descripción Emergente al pasar el ratón"
-	--Translation missing 
-	-- L["Top HUD position"] = ""
+	L["Tooltip on Mouseover"] = "Descripción emergente al pasar el ratón"
+	L["Top HUD position"] = "Posición superior de la visualización (HUD)"
 	L["Top Text"] = "Texto de Arriba"
 	L["Total Time Precision"] = "Precisión del cronómetro"
 	L["Trigger"] = "Disparador"
 	L["Trigger %d"] = "Disparador %d"
-	--Translation missing 
-	-- L["Trigger:"] = ""
+	L["Trigger:"] = "Desencadenador:"
 	L["Type"] = "Tipo"
 	--Translation missing 
 	-- L["Undefined"] = ""

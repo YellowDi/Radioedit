@@ -2,7 +2,7 @@ local tinsert, tconcat, tremove, wipe = table.insert, table.concat, table.remove
 local select, pairs, next, type, unpack = select, pairs, next, type, unpack
 local tostring, error = tostring, error
 
-local Type, Version = "WeakAurasDisplayButton", 27
+local Type, Version = "WeakAurasDisplayButton", 28
 local AceGUI = LibStub and LibStub("AceGUI-3.0", true)
 if not AceGUI or (AceGUI:GetWidgetVersion(Type) or 0) >= Version then return end
 
@@ -648,6 +648,12 @@ local methods = {
       WeakAuras.SetDragging(data, true)
     end
 
+    function self.callbacks.OnKeyDown(self, key)
+      if (key == "ESCAPE") then
+        WeakAuras.SetDragging();
+      end
+    end
+
     self.frame.terribleCodeOrganizationHackTable = {};
 
     function self.frame.terribleCodeOrganizationHackTable.IsGroupingOrCopying()
@@ -771,6 +777,8 @@ local methods = {
     end
     self:SetNormalTooltip();
     self.frame:SetScript("OnClick", self.callbacks.OnClickNormal);
+    self.frame:SetScript("OnKeyDown", self.callbacks.OnKeyDown);
+    self.frame:EnableKeyboard(false);
     self.frame:SetMovable(true);
     self.frame:RegisterForDrag("LeftButton");
     self.frame:SetScript("OnDragStart", self.callbacks.OnDragStart);
@@ -942,9 +950,11 @@ local methods = {
         if drop then
           self:Drop()
           self.frame:SetScript("OnClick", self.callbacks.OnClickNormal)
+          self.frame:EnableKeyboard(false); -- disables self.callbacks.OnKeyDown
         else
           Hide_Tooltip()
           self.frame:SetScript("OnClick", nil)
+          self.frame:EnableKeyboard(true); -- enables self.callbacks.OnKeyDown
           self:Drag()
         end
         -- invalid targets
@@ -966,6 +976,7 @@ local methods = {
     else
       -- restore events and layout
       self.frame:SetScript("OnClick", self.callbacks.OnClickNormal)
+      self.frame:EnableKeyboard(false);
       self:Enable()
       if (self.dragging) then
         self:Drop(true)

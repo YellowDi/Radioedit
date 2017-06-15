@@ -48,7 +48,7 @@ WeakAuras.encounter_table = {
   -- Tomb of Sargeras
   [1862] = 2032, -- Goroth
   [1867] = 2048, -- Demonic Inquisition
-  [1856] = 2048, -- Harjatan
+  [1856] = 2036, -- Harjatan
   [1861] = 2037, -- Mistress Sasszine
   [1903] = 2050, -- Sisters of the Moon
   [1896] = 2054, -- Desolate Host
@@ -116,51 +116,51 @@ WeakAuras.function_strings = {
 
 WeakAuras.anim_function_strings = {
   straight = [[
-    return function(progress, start, delta)
+    function(progress, start, delta)
       return start + (progress * delta)
     end
   ]],
   straightTranslate = [[
-    return function(progress, startX, startY, deltaX, deltaY)
+    function(progress, startX, startY, deltaX, deltaY)
       return startX + (progress * deltaX), startY + (progress * deltaY)
     end
   ]],
   straightScale = [[
-    return function(progress, startX, startY, scaleX, scaleY)
+    function(progress, startX, startY, scaleX, scaleY)
       return startX + (progress * (scaleX - startX)), startY + (progress * (scaleY - startY))
     end
   ]],
   straightColor = [[
-    return function(progress, r1, g1, b1, a1, r2, g2, b2, a2)
+    function(progress, r1, g1, b1, a1, r2, g2, b2, a2)
       return r1 + (progress * (r2 - r1)), g1 + (progress * (g2 - g1)), b1 + (progress * (b2 - b1)), a1 + (progress * (a2 - a1))
     end
   ]],
   circle = [[
-    return function(progress, startX, startY, deltaX, deltaY)
+    function(progress, startX, startY, deltaX, deltaY)
       local angle = progress * 2 * math.pi
       return startX + (deltaX * math.cos(angle)), startY + (deltaY * math.sin(angle))
     end
   ]],
   circle2 = [[
-    return function(progress, startX, startY, deltaX, deltaY)
+    function(progress, startX, startY, deltaX, deltaY)
       local angle = progress * 2 * math.pi
       return startX + (deltaX * math.sin(angle)), startY + (deltaY * math.cos(angle))
     end
   ]],
   spiral = [[
-    return function(progress, startX, startY, deltaX, deltaY)
+    function(progress, startX, startY, deltaX, deltaY)
       local angle = progress * 2 * math.pi
       return startX + (progress * deltaX * math.cos(angle)), startY + (progress * deltaY * math.sin(angle))
     end
   ]],
   spiralandpulse = [[
-    return function(progress, startX, startY, deltaX, deltaY)
+    function(progress, startX, startY, deltaX, deltaY)
       local angle = (progress + 0.25) * 2 * math.pi
       return startX + (math.cos(angle) * deltaX * math.cos(angle*2)), startY + (math.abs(math.cos(angle)) * deltaY * math.sin(angle*2))
     end
   ]],
   shake = [[
-    return function(progress, startX, startY, deltaX, deltaY)
+    function(progress, startX, startY, deltaX, deltaY)
       local prog
       if(progress < 0.25) then
         prog = progress * 4
@@ -173,7 +173,7 @@ WeakAuras.anim_function_strings = {
     end
   ]],
   bounceDecay = [[
-    return function(progress, startX, startY, deltaX, deltaY)
+    function(progress, startX, startY, deltaX, deltaY)
       local prog = (progress * 3.5) % 1
       local bounce = math.ceil(progress * 3.5)
       local bounceDistance = math.sin(prog * math.pi) * (bounce / 4)
@@ -181,13 +181,13 @@ WeakAuras.anim_function_strings = {
   end
   ]],
   bounce = [[
-    return function(progress, startX, startY, deltaX, deltaY)
+    function(progress, startX, startY, deltaX, deltaY)
       local bounceDistance = math.sin(progress * math.pi)
       return startX + (bounceDistance * deltaX), startY + (bounceDistance * deltaY)
     end
   ]],
   flash = [[
-    return function(progress, start, delta)
+    function(progress, start, delta)
       local prog
       if(progress < 0.5) then
         prog = progress * 2
@@ -198,19 +198,19 @@ WeakAuras.anim_function_strings = {
     end
   ]],
   pulse = [[
-    return function(progress, startX, startY, scaleX, scaleY)
+    function(progress, startX, startY, scaleX, scaleY)
       local angle = (progress * 2 * math.pi) - (math.pi / 2)
       return startX + (((math.sin(angle) + 1)/2) * (scaleX - 1)), startY + (((math.sin(angle) + 1)/2) * (scaleY - 1))
     end
   ]],
   alphaPulse = [[
-    return function(progress, start, delta)
+    function(progress, start, delta)
       local angle = (progress * 2 * math.pi) - (math.pi / 2)
       return start + (((math.sin(angle) + 1)/2) * delta)
     end
   ]],
   pulseColor = [[
-    return function(progress, r1, g1, b1, a1, r2, g2, b2, a2)
+    function(progress, r1, g1, b1, a1, r2, g2, b2, a2)
       local angle = (progress * 2 * math.pi) - (math.pi / 2)
       local newProgress = ((math.sin(angle) + 1)/2);
       return r1 + (newProgress * (r2 - r1)),
@@ -220,19 +220,19 @@ WeakAuras.anim_function_strings = {
     end
   ]],
   fauxspin = [[
-    return function(progress, startX, startY, scaleX, scaleY)
+    function(progress, startX, startY, scaleX, scaleY)
       local angle = progress * 2 * math.pi
       return math.cos(angle) * scaleX, startY + (progress * (scaleY - startY))
     end
   ]],
   fauxflip = [[
-    return function(progress, startX, startY, scaleX, scaleY)
+    function(progress, startX, startY, scaleX, scaleY)
       local angle = progress * 2 * math.pi
       return startX + (progress * (scaleX - startX)), math.cos(angle) * scaleY
     end
   ]],
   backandforth = [[
-    return function(progress, start, delta)
+    function(progress, start, delta)
     local prog
     if(progress < 0.25) then
       prog = progress * 4
@@ -245,13 +245,13 @@ WeakAuras.anim_function_strings = {
     end
   ]],
   wobble = [[
-    return function(progress, start, delta)
+    function(progress, start, delta)
     local angle = progress * 2 * math.pi
     return start + math.sin(angle) * delta
     end
   ]],
   hide = [[
-    return function()
+    function()
     return 0
     end
   ]]
@@ -483,6 +483,14 @@ function WeakAuras.CheckChargesDirection(direction, triggerDirection)
   return triggerDirection == "CHANGED"
     or (triggerDirection == "GAINED" and direction > 0)
     or (triggerDirection == "LOST" and direction < 0)
+end
+
+function WeakAuras.CheckCombatLogFlags(flags, flagToCheck)
+  if (flagToCheck == "InGroup") then
+    return bit.band(flags, 7) > 0;
+  elseif (flagToCheck == "NotInGroup") then
+    return bit.band(flags, 7) == 0;
+  end
 end
 
 local function valuesForTalentFunction(trigger)
@@ -1006,6 +1014,7 @@ WeakAuras.event_prototypes = {
         ret = ret .. [[
         local UnitPower = UnitStagger;
         local UnitPowerMax = UnitHealthMax;
+        local UnitPowerDisplayMod = function() return nil end;
       ]]
       end
       return ret
@@ -1044,7 +1053,7 @@ WeakAuras.event_prototypes = {
         name = "power",
         display = L["Power"],
         type = "number",
-        init = "UnitPower(concernedUnit, powerType)",
+        init = "UnitPower(concernedUnit, powerType, true) / (UnitPowerDisplayMod(powerType or powertype) or 1)",
         store = true,
         conditionType = "number"
       },
@@ -1052,7 +1061,7 @@ WeakAuras.event_prototypes = {
         name = "percentpower",
         display = L["Power (%)"],
         type = "number",
-        init = "((UnitPower(concernedUnit, powerType) or 0) / math.max(1, UnitPowerMax(concernedUnit, powerType))) * 100;",
+        init = "((UnitPower(concernedUnit, powerType, true) or 0) / math.max(1, UnitPowerMax(concernedUnit, powerType, true))) * 100;",
         store = true,
         conditionType = "number"
       },
@@ -1183,7 +1192,17 @@ WeakAuras.event_prototypes = {
         store = true,
         conditionType = "string"
       },
-      {}, -- sourceFlags ignored with _ argument
+      {
+        name = "sourceFlags",
+        display = L["Source In Group"],
+        type = "select",
+        values = "combatlog_flags_check_type",
+        init = "arg",
+        store = true,
+        test = "WeakAuras.CheckCombatLogFlags(sourceFlags, '%s')",
+        conditionType = "select",
+        conditionTest = "state and state.show and WeakAuras.CheckCombatLogFlags(sourceFlags, '%s')",
+      },
       {}, -- sourceRaidFlags ignored with _ argument
       {
         name = "destGUID",
@@ -1220,7 +1239,25 @@ WeakAuras.event_prototypes = {
           return (trigger.subeventPrefix == "SPELL" and trigger.subeventSuffix == "_CAST_START");
         end
       },
-      {}, -- destFlags ignored with _ argument
+      {
+        name = "destFlags",
+        display = L["Destination In Group"],
+        type = "select",
+        values = "combatlog_flags_check_type",
+        init = "arg",
+        store = true,
+        test = "WeakAuras.CheckCombatLogFlags(destFlags, '%s')",
+        conditionType = "select",
+        conditionTest = "state and state.show and WeakAuras.CheckCombatLogFlags(destFlags, '%s')",
+        enable = function(trigger)
+          return not (trigger.subeventPrefix == "SPELL" and trigger.subeventSuffix == "_CAST_START");
+        end,
+      },
+      {
+        enable = function(trigger)
+          return (trigger.subeventPrefix == "SPELL" and trigger.subeventSuffix == "_CAST_START");
+        end,
+      },
       {}, -- destRaidFlags ignored with _ argument
       {
         name = "spellId",
@@ -1628,8 +1665,8 @@ WeakAuras.event_prototypes = {
       },
       {
         hidden = true,
-        test = "(showOn == \"showOnReady\" and startTime == 0) " ..
-        "or (showOn == \"showOnCooldown\" and startTime > 0) " ..
+        test = "(showOn == \"showOnReady\" and (startTime == 0 or gcdCooldown)) " ..
+        "or (showOn == \"showOnCooldown\" and startTime > 0 and not gcdCooldown) " ..
         "or (showOn == \"showAlways\")"
       }
     },
@@ -2257,7 +2294,7 @@ WeakAuras.event_prototypes = {
         name = "spellId",
         init = "arg",
         display = L["Spell Id"],
-        type = "number"
+        type = "longstring"
       },
       {
         name = "text",
@@ -2407,7 +2444,7 @@ WeakAuras.event_prototypes = {
       {
         name = "spellId",
         display = L["Spell Id"], -- Correct?
-        type = "number",
+        type = "longstring",
       },
       {
         name = "text",
@@ -2437,7 +2474,8 @@ WeakAuras.event_prototypes = {
     events = {
       "GCD_START",
       "GCD_CHANGE",
-      "GCD_END"
+      "GCD_END",
+      "GCD_UPDATE"
     },
     name = L["Global Cooldown"],
     init = function(trigger)
@@ -2445,6 +2483,7 @@ WeakAuras.event_prototypes = {
       local ret = [[
         local inverse = %s;
         local onGCD = WeakAuras.GetGCDInfo();
+        local hasSpellName = WeakAuras.GcdSpellName();
       ]];
       return ret:format(trigger.use_inverse and "true" or "false");
     end,
@@ -2457,7 +2496,7 @@ WeakAuras.event_prototypes = {
       },
       {
         hidden = true,
-        test = "(inverse and onGCD == 0) or (not inverse and onGCD > 0)"
+        test = "(inverse and onGCD == 0) or (not inverse and onGCD > 0 and hasSpellName)"
       }
     },
     durationFunc = function(trigger)
@@ -3130,7 +3169,7 @@ WeakAuras.event_prototypes = {
       local ret = [[
       local rune = %s;
       local startTime, duration = WeakAuras.GetRuneCooldown(rune);
-      local inverse = %s;
+      local showOn = %s
 
       local numRunes = 0;
       for index = 1, 6 do
@@ -3152,7 +3191,7 @@ WeakAuras.event_prototypes = {
       ]];
         ret = ret..ret2:format(tonumber(trigger.remaining or 0) or 0);
       end
-      return ret:format(trigger.rune, (trigger.use_inverse and "true" or "false"));
+      return ret:format(trigger.rune, "[[" .. (trigger.showOn or "") .. "]]");
     end,
     args = {
       {
@@ -3160,7 +3199,9 @@ WeakAuras.event_prototypes = {
         display = L["Rune"],
         type = "select",
         values = "rune_specific_types",
-        test = "(inverse and startTime == 0) or (not inverse and startTime > 0)",
+        test = "(showOn == \"showOnReady\" and (startTime == 0)) " ..
+               "or (showOn == \"showOnCooldown\" and startTime > 0) "  ..
+               "or (showOn == \"showAlways\")",
         enable = function(trigger) return not trigger.use_runesCount end
       },
       {
@@ -3170,9 +3211,10 @@ WeakAuras.event_prototypes = {
         enable = function(trigger) return trigger.use_rune and not(trigger.use_inverse) end
       },
       {
-        name = "inverse",
-        display = L["Inverse"],
-        type = "toggle",
+        name = "showOn",
+        display =  L["Show"],
+        type = "select",
+        values = "cooldown_progress_behavior_types",
         test = "true",
         enable = function(trigger) return trigger.use_rune end
       },
@@ -3291,7 +3333,7 @@ WeakAuras.event_prototypes = {
       "WA_DELAYED_PLAYER_ENTERING_WORLD"
     },
     force_events = "PLAYER_EQUIPMENT_CHANGED",
-    name = L["Item Set Equipped"],
+    name = L["Equipment Set Equipped"],
     init = function(trigger)
       trigger.itemSetName = trigger.itemSetName or "";
       local itemSetName = type(trigger.itemSetName) == "string" and ("[=[" .. trigger.itemSetName .. "]=]") or "nil";
@@ -3301,6 +3343,7 @@ WeakAuras.event_prototypes = {
         local triggerItemSetName = %s;
         local inverse = %s;
         local partial = %s;
+
       ]];
 
       return ret:format(trigger.use_itemSetName and "true" or "false", itemSetName, trigger.use_inverse and "true" or "false", trigger.use_partial and "true" or "false");

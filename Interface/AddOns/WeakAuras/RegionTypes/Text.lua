@@ -33,6 +33,8 @@ local properties = {
   }
 }
 
+WeakAuras.regionPrototype.AddProperties(properties);
+
 local function create(parent)
   local region = CreateFrame("FRAME", nil, parent);
   region:SetMovable(true);
@@ -44,6 +46,8 @@ local function create(parent)
   region.values = {};
   region.duration = 0;
   region.expirationTime = math.huge;
+
+  WeakAuras.regionPrototype.create(region);
 
   return region;
 end
@@ -107,7 +111,7 @@ local function modify(parent, region, data)
   if (data.displayText:find('%%')) then
     UpdateText = function()
       local textStr = data.displayText;
-      textStr = WeakAuras.ReplacePlaceHolders(textStr, region.values, region.state);
+      textStr = WeakAuras.ReplacePlaceHolders(textStr, region);
       if (textStr == nil or textStr == "") then
         textStr = " ";
       end

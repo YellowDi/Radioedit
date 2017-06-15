@@ -170,6 +170,8 @@ local properties = {
   }
 };
 
+WeakAuras.regionPrototype.AddProperties(properties);
+
 -- Returns tex Coord for 90° rotations + x or y flip
 
 local texCoords = { 0, 0, 1, 1,
@@ -523,6 +525,8 @@ local function create(parent)
     end
   end
 
+  WeakAuras.regionPrototype.create(region);
+
   -- Return new display/region
   return region;
 end
@@ -807,7 +811,7 @@ local function UpdateText(region, data)
   -- Replace %-marks
   textStr = data.displayTextLeft or "";
   if (textStr:find('%%')) then
-    textStr = WeakAuras.ReplacePlaceHolders(textStr, region.values, region.state);
+    textStr = WeakAuras.ReplacePlaceHolders(textStr, region);
   end
 
   -- Update left text
@@ -822,7 +826,7 @@ local function UpdateText(region, data)
   -- Replace %-marks
   textStr = data.displayTextRight or "";
   if (textStr:find('%%')) then
-    textStr = WeakAuras.ReplacePlaceHolders(textStr, region.values, region.state);
+    textStr = WeakAuras.ReplacePlaceHolders(textStr, region);
   end
 
   -- Update right text
