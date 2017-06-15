@@ -2,7 +2,7 @@
 local LibEvent = LibStub:GetLibrary("LibEvent.7000")
 local LibSchedule = LibStub:GetLibrary("LibSchedule.7000")
 
-local addon = select(2, ...)
+local addon = TinyTooltip
 
 local function AnchorCursor(tip, parent, cp, cx, cy)
     local x, y = GetCursorPosition()
@@ -36,7 +36,7 @@ local function AnchorDefaultPosition(tip, parent, anchor, finally)
     elseif (anchor.position == "inherit") then
         AnchorDefaultPosition(tip, parent, addon.db.general.anchor, true)
     else
-        LibEvent:trigger("tooltip.anchor.static", tip, parent, anchor.x, anchor.y)
+        LibEvent:trigger("tooltip.anchor.static", tip, parent, anchor.x, anchor.y, anchor.p)
     end
 end
 
@@ -52,7 +52,7 @@ local function AnchorFrame(tip, parent, anchor, isUnitFrame, finally)
     elseif (anchor.position == "inherit" and not finally) then
         AnchorFrame(tip, parent, addon.db.general.anchor, isUnitFrame, true)
     elseif (anchor.position == "static") then
-        LibEvent:trigger("tooltip.anchor.static", tip, parent, anchor.x, anchor.y)
+        LibEvent:trigger("tooltip.anchor.static", tip, parent, anchor.x, anchor.y, anchor.p)
     end
 end
 

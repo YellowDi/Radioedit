@@ -2,8 +2,8 @@
 ## Title: TinyTooltip
 ## Notes: TinyTooltip
 ## Author: M
-## Version: 7.3.4
-## SavedVariables: TinyTooltipDB, BigTipDB
+## Version: 7.3.5
+## SavedVariables: BigTipDB
 
 libs\lib.xml
 core.lua

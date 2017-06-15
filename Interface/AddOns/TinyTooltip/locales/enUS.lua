@@ -1,5 +1,5 @@
 
-local addon = select(2, ...)
+local addon = TinyTooltip or select(2, ...)
 
 addon.L = {
     ["general.statusbarOffsetY"] = "Statusbar Offset Y (0:Default)",

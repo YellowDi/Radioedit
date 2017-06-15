@@ -1,7 +1,7 @@
 
 local LibEvent = LibStub:GetLibrary("LibEvent.7000")
 
-local addon = select(2, ...)
+local addon = TinyTooltip
 
 LibEvent:attachTrigger("tooltip:init", function(self, tip)
     if (tip ~= GameTooltip) then return end

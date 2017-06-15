@@ -3,7 +3,8 @@ local LibEvent = LibStub:GetLibrary("LibEvent.7000")
 
 local DEAD = DEAD
 
-local addonName, addon = ...
+local addonName = ...
+local addon = TinyTooltip
 
 BigTipDB = {}
 
@@ -72,11 +73,11 @@ LibEvent:attachEvent("VARIABLES_LOADED", function()
     end)
     --Variable
     addon.db = addon:MergeVariable(addon.db, BigTipDB)
-    if (not addon.db.unit.player.elements.role) then --v2.0.5 added new element: role roleIcon
-        addon.db.unit.player.elements.role = { enable = false, color = "ffffff",  wildcard = "(%s)", filter = "none" }
-        addon.db.unit.player.elements.roleIcon = { enable = true, filter = "none" }
-        tinsert(addon.db.unit.player.elements[1], 1, "role")
-        tinsert(addon.db.unit.player.elements[1], 1, "roleIcon")
+    if (not addon.db.unit.player.elements.moveSpeed) then --v2.0.8 added new element: moveSpeed
+        addon.db.unit.player.elements.moveSpeed = { enable = false, color = "ffffff",  wildcard = "%d%%", filter = "none" }
+        addon.db.unit.npc.elements.moveSpeed = { enable = false, color = "ffffff",  wildcard = "%d%%", filter = "none" }
+        tinsert(addon.db.unit.player.elements[1], 1, "moveSpeed")
+        tinsert(addon.db.unit.npc.elements[1], 1, "moveSpeed")
     end
     --Init
     LibEvent:trigger("tooltip.statusbar.height", addon.db.general.statusbarHeight)
@@ -101,4 +102,9 @@ end)
 LibEvent:attachTrigger("tooltip:show", function(self, tip)
     if (tip ~= GameTooltip) then return end
     LibEvent:trigger("tooltip.statusbar.position", addon.db.general.statusbarPosition, addon.db.general.statusbarOffsetY)
+    local w = GameTooltipStatusBar.TextString:GetWidth() + 10
+    if (GameTooltipStatusBar:IsShown() and w > tip:GetWidth()) then
+        tip:SetMinimumWidth(w+2)
+        tip:Show()
+    end
 end)

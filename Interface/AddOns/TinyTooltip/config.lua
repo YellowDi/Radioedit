@@ -1,5 +1,5 @@
 
-local addon = select(2, ...)
+local addon = TinyTooltip
 
 addon.db = {
     version = 2,
@@ -10,10 +10,10 @@ addon.db = {
         borderSize        = 1,                      --邊框大小（直角邊框才生效）
         borderCorner      = "default",              --邊框類型 default|angular:直角邊框
         borderColor       = {0.6, 0.6, 0.6, 0.8},   --邊框顔色和透明度
-        statusbarHeight   = 12,                     --HP高度
+        statusbarHeight   = 4,                      --HP高度
         statusbarPosition = "bottom",               --HP位置 default|bottom|top
         statusbarOffsetY  = 0,                      --HP Y偏移 0:自動
-        statusbarFontSize = 4,                      --HP文字大小
+        statusbarFontSize = 11,                     --HP文字大小
         statusbarText     = false,                  --HP文字
         statusbarColor    = "auto",                 --HP顔色 default|auto|smooth
         anchor            = { position = "cursorRight", returnInCombat = false, returnOnUnitFrame = false, cp = "BOTTOM", p = "BOTTOMRIGHT", }, --鼠標位置 default|cursor|static|cursorRight
@@ -50,10 +50,11 @@ addon.db = {
                 raceName    = { enable = true, color = "cccccc",  wildcard = "%s",  filter = "none" }, 
                 className   = { enable = true, color = "ffffff",  wildcard = "%s",  filter = "none" }, 
                 isPlayer    = { enable = false, color = "ffffff",  wildcard = "(%s)", filter = "none" }, 
-                role        = { enable = false, color = "ffffff",  wildcard = "(%s)", filter = "none" }, 
+                role        = { enable = false, color = "ffffff",  wildcard = "(%s)", filter = "none" },
+                moveSpeed   = { enable = false, color = "e8e7a8",  wildcard = "%d%%", filter = "none" },
                 { "raidIcon", "roleIcon", "pvpIcon", "factionIcon", "classIcon", "title", "name", "realm", "statusAFK", "statusDND", "statusDC", },
                 { "guildName", "guildIndex", "guildRank", "guildRealm", },
-                { "levelValue", "factionName", "gender", "raceName", "className", "isPlayer", "role", },
+                { "levelValue", "factionName", "gender", "raceName", "className", "isPlayer", "role", "moveSpeed", },
             },
         },
         npc = {
@@ -75,8 +76,9 @@ addon.db = {
                 classifRare  = { enable = true, color = "ffaaff", wildcard = "(%s)",  filter = "none" }, 
                 creature     = { enable = true, color = "selection", wildcard = "%s", filter = "none" },
                 reactionName = { enable = true, color = "33ffff", wildcard = "<%s>",  filter = "reaction6" },
+                moveSpeed    = { enable = false, color = "e8e7a8",  wildcard = "%d%%", filter = "none" },
                 { "raidIcon", "classIcon", "questIcon", "name", },
-                { "levelValue", "classifBoss", "classifElite", "classifRare", "creature", "reactionName", },
+                { "levelValue", "classifBoss", "classifElite", "classifRare", "creature", "reactionName", "moveSpeed", },
             },
         },
     },

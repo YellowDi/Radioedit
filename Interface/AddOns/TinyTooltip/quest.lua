@@ -1,7 +1,7 @@
 
 local LibEvent = LibStub:GetLibrary("LibEvent.7000")
 
-local addon = select(2, ...)
+local addon = TinyTooltip
 
 local function ColorBorder(tip, r, g, b)
     if (addon.db.quest.coloredQuestBorder) then

@@ -9,12 +9,13 @@ local UIDropDownMenu_GetSelectedValue = Lib_UIDropDownMenu_GetSelectedValue or U
 local UIDropDownMenu_SetSelectedValue = Lib_UIDropDownMenu_SetSelectedValue or UIDropDownMenu_SetSelectedValue
 local UIDropDownMenuTemplate = "Lib_UIDropDownMenuTemplate"
 
-local addonName, addon = ...
+local addonName = ...
+local addon = TinyTooltip
 
 addon.L = addon.L or {}
-setmetatable(addon.L, { __index = function(_, k)
+setmetatable(addon.L, { __index = function(self, k)
     local s = {strsplit(".", k)}
-    return (s[#s]:gsub("([a-z])([A-Z])", "%1 %2"):gsub("^(%a)", function(c) return strupper(c) end))
+    return rawget(self,s[#s]) or (s[#s]:gsub("([a-z])([A-Z])", "%1 %2"):gsub("^(%a)", function(c) return strupper(c) end))
 end})
 local L = addon.L
 
@@ -213,6 +214,39 @@ function widgets:dropdown(parent, config, labelText)
     return frame
 end
 
+local grid = CreateFrame("Frame", nil, UIParent)
+grid:SetFrameStrata("DIALOG")
+grid:SetAllPoints()
+grid:Hide()
+do
+    local width, height = GetScreenWidth(), GetScreenHeight()
+    local w, h, size = 0, 0, 16
+    local line
+    w = w + floor((width%size)/2)
+    while (w < width) do
+        w = w + size
+        line = grid:CreateTexture(nil, "BACKGROUND")
+        line:SetSize(1, height)
+        line:SetColorTexture(0, 0, 0, 0.32)
+        line:SetPoint("TOPLEFT", w, 0)
+    end
+    h = h + floor((height%size)/2)
+    while (h < height) do
+        h = h + size
+        line = grid:CreateTexture(nil, "BACKGROUND")
+        line:SetSize(width, 1)
+        line:SetColorTexture(0, 0, 0, 0.32)
+        line:SetPoint("TOPLEFT", 0, -h)
+    end
+    line = grid:CreateTexture(nil, "BACKGROUND")
+    line:SetSize(width, 2)
+    line:SetColorTexture(1, 0, 0, 0.6)
+    line:SetPoint("CENTER")
+    line = grid:CreateTexture(nil, "BACKGROUND")
+    line:SetSize(2, height)
+    line:SetColorTexture(1, 0, 0, 0.6)
+    line:SetPoint("CENTER")
+end
 
 local saframe = CreateFrame("Frame", nil, UIParent, "ThinBorderTemplate")
 saframe:Hide()
@@ -236,6 +270,8 @@ saframe:SetScript("OnDragStop", function(self)
     SetVariable(self.kx, floor(right - GetScreenWidth())+4)
     SetVariable(self.ky, floor(bottom)-3)
 end)
+saframe:SetScript("OnShow", function() grid:Show() end)
+saframe:SetScript("OnHide", function() grid:Hide() end)
 
 local function CreateAnchorButton(frame, anchorPoint)
     local button = CreateFrame("Button", nil, frame)
@@ -284,7 +320,7 @@ caframe.inputx:SetPoint("CENTER", 0, 40)
 caframe.inputy = CreateAnchorInput(caframe, "cy")
 caframe.inputy:SetPoint("CENTER", 0, 10)
 caframe.ok = CreateFrame("Button", nil, caframe, "UIPanelButtonTemplate")
-caframe.ok:SetText(OKAY)
+caframe.ok:SetText(SAVE)
 caframe.ok:SetSize(68, 20)
 caframe.ok:SetPoint("CENTER", 0, -20)
 caframe.ok:SetScript("OnClick", function(self)
@@ -442,6 +478,7 @@ local options = {
         { keystring = "unit.player.elements.className",   type = "element", color = true, wildcard = true, filter = true, },
         { keystring = "unit.player.elements.isPlayer",    type = "element", color = true, wildcard = true, filter = true, },
         { keystring = "unit.player.elements.role",        type = "element", color = true, wildcard = true, filter = true, },
+        { keystring = "unit.player.elements.moveSpeed",   type = "element", color = true, wildcard = true, filter = true, },
     },
     npc = {
         { keystring = "unit.npc.showTarget",            type = "checkbox" },
@@ -461,6 +498,7 @@ local options = {
         { keystring = "unit.npc.elements.classifRare",  type = "element", color = true, wildcard = true, filter = true, },
         { keystring = "unit.npc.elements.creature",     type = "element", color = true, wildcard = true, filter = true, },
         { keystring = "unit.npc.elements.reactionName", type = "element", color = true, wildcard = true, filter = true, },
+        { keystring = "unit.npc.elements.moveSpeed",    type = "element", color = true, wildcard = true, filter = true, },
     },
     spell = {
         { keystring = "spell.background",               type = "colorpick", hasopacity = true },

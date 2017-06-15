@@ -7,7 +7,7 @@ local EMPTY = EMPTY
 local TARGET = TARGET
 local TOOLTIP_UPDATE_TIME = TOOLTIP_UPDATE_TIME
 
-local addon = select(2, ...)
+local addon = TinyTooltip
 
 local function GetTargetString(unit)
     if (not UnitExists(unit)) then
@@ -62,7 +62,7 @@ local function GetTargetByString(mouseover, num, tip)
                 roleIcon  = addon:GetRoleIcon(prefix..i) or ""
                 colorCode = select(4,GetClassColor(select(2,UnitClass(prefix..i))))
                 name      = UnitName(prefix..i)
-                tip:AddLine("     " .. roleIcon .. " |c" .. colorCode .. name .. "|r")
+                tip:AddLine("   " .. roleIcon .. " |c" .. colorCode .. name .. "|r")
             end
         end
     end

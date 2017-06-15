@@ -6,7 +6,11 @@ local LEVEL = LEVEL
 local FACTION_HORDE = FACTION_HORDE
 local FACTION_ALLIANCE = FACTION_ALLIANCE
 
-local addon = select(2, ...)
+local addon = TinyTooltip
+
+local function strip(text)
+    return (text:gsub("%s+([|%x%s]+)<trim>", "%1"))
+end
 
 local function ColorBorder(tip, config, raw)
     if (config.coloredBorder and addon.colorfunc[config.coloredBorder]) then
@@ -37,6 +41,7 @@ local function GrayForDead(tip, config, unit)
     if (config.grayForDead and UnitIsDeadOrGhost(unit)) then
         local line, text
         LibEvent:trigger("tooltip.style.border.color", tip, 0.6, 0.6, 0.6)
+        LibEvent:trigger("tooltip.style.background", tip, 0.1, 0.1, 0.1)
         for i = 1, tip:NumLines() do
             line = _G[tip:GetName() .. "TextLeft" .. i]
             text = (line:GetText() or ""):gsub("|cff%x%x%x%x%x%x", "|cffaaaaaa")
@@ -49,7 +54,7 @@ end
 local function PlayerCharacter(tip, unit, config, raw)
     local data = addon:GetUnitData(unit, config.elements, raw)
     for i, v in ipairs(data) do
-        addon:GetLine(tip,i):SetText(table.concat(v, " "))
+        addon:GetLine(tip,i):SetText(strip(table.concat(v, " ")))
     end
     addon:HideLine(tip, "^"..LEVEL)
     addon:HideLine(tip, "^"..FACTION_ALLIANCE)

@@ -3,6 +3,8 @@
 -- Core Author:M
 -------------------------------------
 
+TinyTooltip = {}
+
 local LibEvent = LibStub:GetLibrary("LibEvent.7000")
 
 local AFK = AFK
@@ -17,7 +19,7 @@ local PLAYER = PLAYER
 local RARE = GARRISON_MISSION_RARE
 local OFFLINE = FRIENDS_LIST_OFFLINE
 
-local addon = select(2, ...)
+local addon = TinyTooltip
 
 if (not addon.L) then
     addon.L = {} setmetatable(addon.L, {__index = function(_, k) return k end})
@@ -90,7 +92,6 @@ end
 
 -- 刪行
 function addon:HideAllLine(tooltip, number)
-    local line, text
     for i = number, tooltip:NumLines() do
         _G[tooltip:GetName() .. "TextLeft" .. i]:SetText(nil)
     end
@@ -171,6 +172,22 @@ function addon:GetClassIcon(class)
     return format(self.icons.class, x1*256, x2*256, y1*256, y2*256)
 end
 
+-- 移動速度
+function addon:GetUnitSpeed(unit)
+    local _, speed, flightSpeed, swimSpeed = GetUnitSpeed(unit)
+    if (not speed or speed == 0) then return end
+    speed = speed/BASE_MOVEMENT_SPEED*100
+    swimSpeed = swimSpeed/BASE_MOVEMENT_SPEED*100
+	flightSpeed = flightSpeed/BASE_MOVEMENT_SPEED*100
+	if (UnitIsOtherPlayersPet(unit)) then
+    elseif (IsSwimming(unit)) then
+		speed = swimSpeed
+	elseif (IsFlying(unit)) then
+		speed = flightSpeed
+	end
+    return speed+0.5
+end
+
 -- 頭銜 @param2:true為前綴
 function addon:GetTitle(name, pvpName)
     if (not pvpName) then return end
@@ -199,6 +216,7 @@ function addon:GetNpcTitle(tip)
 end
 
 -- 全信息
+local t = {}
 function addon:GetUnitInfo(unit)
     local name, realm = UnitName(unit)
     local pvpName = UnitPVPName(unit)
@@ -212,46 +230,43 @@ function addon:GetUnitInfo(unit)
     local classif = UnitClassification(unit)
     local role = UnitGroupRolesAssigned(unit)
 
-    local t = {
-        raidIcon     = self:GetRaidIcon(unit),
-        pvpIcon      = self:GetPVPIcon(unit),
-        factionIcon  = self:GetFactionIcon(factionGroup),
-        classIcon    = self:GetClassIcon(class),
-        roleIcon     = self:GetRoleIcon(unit),
-        questIcon    = self:GetQuestBossIcon(unit),
-        factionName  = factionName,
-        role         = role ~= "NONE" and role,
-        name         = name,
-        gender       = self:GetGender(gender),
-        realm        = realm,
-        levelValue   = level >= 0 and level or "??",
-        className    = className,
-        raceName     = raceName,
-        guildName    = guildName,
-        guildRank    = guildRank,
-        guildIndex   = guildName and guildIndex,
-        guildRealm   = guildRealm,
-        statusAFK    = UnitIsAFK(unit) and AFK,
-        statusDND    = UnitIsDND(unit) and DND,
-        statusDC     = not UnitIsConnected(unit) and OFFLINE,
-        reactionName = reaction and _G["FACTION_STANDING_LABEL"..reaction],
-        creature     = UnitCreatureType(unit),
-        classifBoss  = (level==-1 or classif == "worldboss") and BOSS,
-        classifElite = classif == "elite" and ELITE,
-        classifRare  = (classif == "rare" or classif == "rareelite") and RARE,
-        isPlayer     = UnitIsPlayer(unit) and PLAYER,
-        
-
-        unit         = unit,                     --unit
-        level        = level,                    --1~113|-1
-        race         = race,                     --nil|NightElf|Troll...
-        class        = class,                    --DRUID|HUNTER...
-        factionGroup = factionGroup,             --Alliance|Horde|Neutral
-        reaction     = reaction,                 --nil|1|2|3|4|5|6|7|8
-        classif      = classif, --normal|worldboss|elite|rare|rareelite
-    }
-    if (t.classifBoss) then t.classifElite = false end
+    t.raidIcon     = self:GetRaidIcon(unit)
+    t.pvpIcon      = self:GetPVPIcon(unit)
+    t.factionIcon  = self:GetFactionIcon(factionGroup)
+    t.classIcon    = self:GetClassIcon(class)
+    t.roleIcon     = self:GetRoleIcon(unit)
+    t.questIcon    = self:GetQuestBossIcon(unit)
+    t.factionName  = factionName
+    t.role         = role ~= "NONE" and role
+    t.name         = name
+    t.gender       = self:GetGender(gender)
+    t.realm        = realm
+    t.levelValue   = level >= 0 and level or "??"
+    t.className    = className
+    t.raceName     = raceName
+    t.guildName    = guildName
+    t.guildRank    = guildRank
+    t.guildIndex   = guildName and guildIndex
+    t.guildRealm   = guildRealm
+    t.statusAFK    = UnitIsAFK(unit) and AFK
+    t.statusDND    = UnitIsDND(unit) and DND
+    t.statusDC     = not UnitIsConnected(unit) and OFFLINE
+    t.reactionName = reaction and _G["FACTION_STANDING_LABEL"..reaction]
+    t.creature     = UnitCreatureType(unit)
+    t.classifBoss  = (level==-1 or classif == "worldboss") and BOSS
+    t.classifElite = classif == "elite" and ELITE
+    t.classifRare  = (classif == "rare" or classif == "rareelite") and RARE
+    t.isPlayer     = UnitIsPlayer(unit) and PLAYER
+    t.moveSpeed    = self:GetUnitSpeed(unit)
+    t.unit         = unit                     --unit
+    t.level        = level                    --1~113|-1
+    t.race         = race                     --nil|NightElf|Troll...
+    t.class        = class                    --DRUID|HUNTER...
+    t.factionGroup = factionGroup             --Alliance|Horde|Neutral
+    t.reaction     = reaction                 --nil|1|2|3|4|5|6|7|8
+    t.classif      = classif                  --normal|worldboss|elite|rare|rareelite
     t.title, t.titleIsPrefix = self:GetTitle(name, pvpName)
+    if (t.classifBoss) then t.classifElite = false end
     return t
 end
 
@@ -304,7 +319,7 @@ function addon:GetUnitData(unit, elements, raw)
         data[i] = {}
         for ii, e in ipairs(v) do
             config = elements[e]
-            if (raw[e] and self:CheckFilter(config, raw)) then
+            if (self:CheckFilter(config, raw) and raw[e]) then
                 if (e == "name") then name = #data[i]+1 end   --name位置
                 if (e == "title") then title = #data[i]+1 end --title位置
                 if (config.color and config.wildcard) then
@@ -399,6 +414,13 @@ end
 
 addon.filterfunc.ininstance = function(raw)
     return IsInInstance()
+end
+
+addon.filterfunc.sameguild = function(raw)
+    local name, _, _, server = GetGuildInfo("player")
+    if (name and name == raw.guildName and server == raw.guildRealm) then
+        return true
+    end
 end
 
 LibEvent:attachTrigger("tooltip.scale", function(self, frame, scale)
@@ -602,8 +624,6 @@ end)
 hooksecurefunc("GameTooltip_SetDefaultAnchor", function(self, parent)
     LibEvent:trigger("tooltip:anchor", self, parent)
 end)
-
-TinyTooltip = addon
 
 -- tooltip:init
 -- tooltip:anchor

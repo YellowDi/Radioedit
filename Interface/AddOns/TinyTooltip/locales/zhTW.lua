@@ -1,5 +1,5 @@
 
-local addon = select(2, ...)
+local addon = TinyTooltip or select(2, ...)
 
 if (GetLocale() ~= "zhTW") then return end
 
@@ -55,6 +55,7 @@ addon.L = {
     ["unit.player.elements.className"]      = "職業",
     ["unit.player.elements.isPlayer"]       = "玩家",
     ["unit.player.elements.role"]           = "角色",
+    ["unit.player.elements.moveSpeed"]      = "移動速度",
     
     ["unit.npc.anchor.position"]            = "框架錨點",
     ["unit.npc.anchor.returnInCombat"]      = "戰鬥時復位",
@@ -75,6 +76,7 @@ addon.L = {
     ["unit.npc.elements.classifRare"]       = "稀有",
     ["unit.npc.elements.creature"]          = "類型",
     ["unit.npc.elements.reactionName"]      = "聲望",
+    ["unit.npc.elements.moveSpeed"]         = "移動速度",
     
     ["spell.background"]                    = "背景顔色",
     ["spell.borderColor"]                   = "邊框顔色",

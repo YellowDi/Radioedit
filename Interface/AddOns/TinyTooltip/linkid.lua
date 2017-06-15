@@ -1,11 +1,10 @@
 
-local addon = select(2, ...)
+local addon = TinyTooltip
 
 local function ParseHyperLink(link)
-    if (not link) then return end
-    local name, value = string.match(link, "|?H?(%a+):(%d+):")
+    local name, value = string.match(link or "", "|?H?(%a+):(%d+):")
     if (name and value) then
-        return name:gsub("^([a-z])", function(s) return strupper(s) end) .. ":", value
+        return name:gsub("^([a-z])", function(s) return strupper(s) end), value
     end
 end
 
@@ -15,39 +14,56 @@ local function ShowId(tooltip, name, value, noBlankLine)
         local line = addon:FindLine(tooltip, name)
         if (not line) then
             if (not noBlankLine) then tooltip:AddLine(" ") end
-            tooltip:AddLine(format("%s %s", name, value), 0, 1, 0.8)
+            tooltip:AddLine(format("%s: %s", name, value), 0, 1, 0.8)
             tooltip:Show()
         end
     end
 end
 
 local function ShowLinkIdInfo(tooltip, link)
-    ShowId(tooltip, ParseHyperLink(link))
+    ShowId(tooltip, ParseHyperLink(link or select(2,tooltip:GetItem())))
 end
-
-local function ShowItemIdInfo(tooltip)
-    ShowLinkIdInfo(tooltip, select(2,tooltip:GetItem()))
-end
-
--- Link
-hooksecurefunc(ItemRefTooltip, "SetHyperlink", ShowLinkIdInfo)
-hooksecurefunc(GameTooltip, "SetHyperlink", ShowLinkIdInfo)
-hooksecurefunc("SetItemRef", function(link) ShowLinkIdInfo(ItemRefTooltip, link) end)
 
 -- Item
-GameTooltip:HookScript("OnTooltipSetItem", ShowItemIdInfo)
-ItemRefTooltip:HookScript("OnTooltipSetItem", ShowItemIdInfo)
-ItemRefShoppingTooltip1:HookScript("OnTooltipSetItem", ShowItemIdInfo)
-ItemRefShoppingTooltip2:HookScript("OnTooltipSetItem", ShowItemIdInfo)
-ShoppingTooltip1:HookScript("OnTooltipSetItem", ShowItemIdInfo)
-ShoppingTooltip2:HookScript("OnTooltipSetItem", ShowItemIdInfo)
+hooksecurefunc(GameTooltip, "SetHyperlink", ShowLinkIdInfo)
+hooksecurefunc(ItemRefTooltip, "SetHyperlink", ShowLinkIdInfo)
+hooksecurefunc("SetItemRef", function(link) ShowLinkIdInfo(ItemRefTooltip, link) end)
+GameTooltip:HookScript("OnTooltipSetItem", ShowLinkIdInfo)
+ItemRefTooltip:HookScript("OnTooltipSetItem", ShowLinkIdInfo)
+ShoppingTooltip1:HookScript("OnTooltipSetItem", ShowLinkIdInfo)
+ShoppingTooltip2:HookScript("OnTooltipSetItem", ShowLinkIdInfo)
+ItemRefShoppingTooltip1:HookScript("OnTooltipSetItem", ShowLinkIdInfo)
+ItemRefShoppingTooltip2:HookScript("OnTooltipSetItem", ShowLinkIdInfo)
 
 -- Spell
-GameTooltip:HookScript("OnTooltipSetSpell", function(self) ShowId(self, "Spell:", (select(3,self:GetSpell()))) end)
-hooksecurefunc(GameTooltip, "SetUnitAura", function(self, ...) ShowId(self, "Spell:", (select(11,UnitAura(...)))) end)
-hooksecurefunc(GameTooltip, "SetUnitBuff", function(self, ...) ShowId(self, "Spell:", (select(11,UnitBuff(...)))) end)
-hooksecurefunc(GameTooltip, "SetUnitDebuff", function(self, ...) ShowId(self, "Spell:", (select(11,UnitDebuff(...)))) end)
+GameTooltip:HookScript("OnTooltipSetSpell", function(self) ShowId(self, "Spell", (select(3,self:GetSpell()))) end)
+hooksecurefunc(GameTooltip, "SetUnitAura", function(self, ...) ShowId(self, "Spell", (select(11,UnitAura(...)))) end)
+hooksecurefunc(GameTooltip, "SetUnitBuff", function(self, ...) ShowId(self, "Spell", (select(11,UnitBuff(...)))) end)
+hooksecurefunc(GameTooltip, "SetUnitDebuff", function(self, ...) ShowId(self, "Spell", (select(11,UnitDebuff(...)))) end)
 hooksecurefunc(GameTooltip, "SetArtifactPowerByID", function(self, powerID)
-    ShowId(self, "Power:", powerID)
-    ShowId(self, "Spell:", C_ArtifactUI.GetPowerInfo(powerID).spellID, 1)
+    ShowId(self, "Power", powerID)
+    ShowId(self, "Spell", C_ArtifactUI.GetPowerInfo(powerID).spellID, 1)
 end)
+
+-- keystone
+local function KeystoneAffixDescription(self, link)
+    link = link or select(2, self:GetItem())
+    local data, name, description, AffixID
+    if (link and strfind(link, "keystone:")) then
+        link = link:gsub("|H(keystone:.-)|.+", "%1")
+        data = {strsplit(":", link)}
+        self:AddLine(" ")
+        for i = 5, 7 do
+            AffixID = tonumber(data[i])
+            if (AffixID and AffixID > 0) then
+                name, description = C_ChallengeMode.GetAffixInfo(AffixID)
+                if (name and description) then
+                    self:AddLine(format("|cffffcc33%s:|r%s", name, description), 0.1, 0.9, 0.1, true)
+                end
+            end
+        end
+        self:Show()
+    end
+end
+GameTooltip:HookScript("OnTooltipSetItem", KeystoneAffixDescription)
+hooksecurefunc(ItemRefTooltip, "SetHyperlink", KeystoneAffixDescription)
