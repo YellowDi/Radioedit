@@ -1,0 +1,11 @@
+
+RelicInspectorDB = {
+	["profileKeys"] = {
+		["Zeoi - 主宰之剑"] = "Default",
+		["Radioedit - 主宰之剑"] = "Default",
+	},
+	["profiles"] = {
+		["Default"] = {
+		},
+	},
+}
