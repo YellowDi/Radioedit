@@ -669,9 +669,9 @@ function S:AddCallbackForAddon(addonName, eventName, loadFunc, forceLoad, bypass
 		self.addonCallbacks[addonName] = {["CallPriority"] = {}}
 	end
 	
-	if self.addonCallbacks[addonName][eventName] then
+	if self.addonCallbacks[addonName][eventName] or E.ModuleCallbacks[eventName] or E.InitialModuleCallbacks[eventName] then
 		--Don't allow a registered callback to be overwritten
-		E:Print("Invalid argument #2 to S:AddCallbackForAddon (event name is already registered, please use a unique event name)")
+		E:Print("Invalid argument #2 to S:AddCallbackForAddon (event name:", eventName, "is already registered, please use a unique event name)")
 		return
 	end
 
@@ -698,9 +698,9 @@ function S:AddCallback(eventName, loadFunc)
 		return
 	end
 
-	if self.nonAddonCallbacks[eventName] then
+	if self.nonAddonCallbacks[eventName] or E.ModuleCallbacks[eventName] or E.InitialModuleCallbacks[eventName] then
 		--Don't allow a registered callback to be overwritten
-		E:Print("Invalid argument #1 to S:AddCallback (event name is already registered, please use a unique event name)")
+		E:Print("Invalid argument #1 to S:AddCallback (event name:", eventName, "is already registered, please use a unique event name)")
 		return
 	end
 
@@ -738,7 +738,10 @@ function S:Initialize()
 			self.addonsToLoad[addon] = nil;
 			local _, catch = pcall(loadFunc)
 			if(catch and GetCVarBool('scriptErrors') == true) then
-				ScriptErrorsFrame_OnError(catch, false)
+				--We need to fix the DebugTools code before it can be used on 7.2.5
+				if E.wowbuild == 24015 then --7.2
+					ScriptErrorsFrame_OnError(catch, false)
+				end
 			end
 		end
 	end
@@ -746,7 +749,10 @@ function S:Initialize()
 	for _, loadFunc in pairs(self.nonAddonsToLoad) do
 		local _, catch = pcall(loadFunc)
 		if(catch and GetCVarBool('scriptErrors') == true) then
-			ScriptErrorsFrame_OnError(catch, false)
+			--We need to fix the DebugTools code before it can be used on 7.2.5
+			if E.wowbuild == 24015 then --7.2
+				ScriptErrorsFrame_OnError(catch, false)
+			end
 		end
 	end
 	wipe(self.nonAddonsToLoad)
@@ -754,4 +760,8 @@ end
 
 S:RegisterEvent('ADDON_LOADED')
 
-E:RegisterModule(S:GetName())
+local function InitializeCallback()
+	S:Initialize()
+end
+
+E:RegisterModule(S:GetName(), InitializeCallback)
