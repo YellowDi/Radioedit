@@ -24,12 +24,12 @@
 # ## Notes-zhTW: 顯示破碎海岸的 POI 位置
 #@end-debug@
 ## Author: arith
-## Version: v1.17
+## Version: v1.18
 ## RequiredDeps: HandyNotes
 ## OptionalDeps: LibBabble-SubZone-3.0, LibUIDropDownMenu
 ## DefaultState: enabled
 ## SavedVariables: HandyNotes_BrokenShoreDB
-## X-Date: 2017-06-08T14:29:06Z
+## X-Date: 2017-06-13T10:18:01Z
 ## X-License: GPLv2
 ## X-Category: Map
 
