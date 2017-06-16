@@ -176,15 +176,17 @@ local function DecorateNomi()
 		local now = time()
 		local name, texture, shipmentCapacity, shipmentsReady, shipmentsTotal, creationTime, duration, timeleftString, _, _, _, _, followerID = C_Garrison.GetLandingPageShipmentInfoByContainerID(122) -- can return nil if no active shipments
 		local startIndex = not shipmentsTotal and 1 or (#WorkOrders - shipmentsTotal + shipmentsReady + 1)
-		for i = startIndex, #WorkOrders do
-			local workOrder = WorkOrders[i]
-			local ingredientItemID = workOrder[1]
-			local endTime = workOrder[3]
-			if endTime > now then -- still active
-				if not activeWorkOrders[ingredientItemID] then
-					activeWorkOrders[ingredientItemID] = 1
-				else
-					activeWorkOrders[ingredientItemID] = activeWorkOrders[ingredientItemID] + 1
+		if startIndex >= 1 then -- this can be called before WorkOrders has been populated, so account for that
+			for i = startIndex, #WorkOrders do
+				local workOrder = WorkOrders[i]
+				local ingredientItemID = workOrder[1]
+				local endTime = workOrder[3]
+				if endTime > now then -- still active
+					if not activeWorkOrders[ingredientItemID] then
+						activeWorkOrders[ingredientItemID] = 1
+					else
+						activeWorkOrders[ingredientItemID] = activeWorkOrders[ingredientItemID] + 1
+					end
 				end
 			end
 		end
@@ -477,7 +479,8 @@ do -- Experimental work order stuff
 						local orderPlaced = now - startDelta -- time the work order was placed, not when the work order will start
 						local endTime = now + timeRemaining
 						-- local startTime = endTime - 14400 -- start time is end time of previous recipe, or endTime - 14400, which makes recording it kind of pointless
-						WorkOrders[i] = {ingredientItemID, orderPlaced, endTime}
+						-- WorkOrders[i] = {ingredientItemID, orderPlaced, endTime}
+						tinsert(WorkOrders, {ingredientItemID, orderPlaced, endTime})
 					else
 						-- we're missing information for whatever this is supposed to be?
 					end
@@ -493,7 +496,8 @@ do -- Experimental work order stuff
 					local orderPlaced = time()
 					local startTime = numWorkOrders > 0 and WorkOrders[numWorkOrders][3] or orderPlaced
 					local endTime = startTime + duration
-					WorkOrders[ #WorkOrders + 1 ] = {ingredientItemID, orderPlaced, endTime}
+					--WorkOrders[ #WorkOrders + 1 ] = {ingredientItemID, orderPlaced, endTime}
+					tinsert(WorkOrders, {ingredientItemID, orderPlaced, endTime})
 					WorkOrderType = ingredientItemID
 					NumWorkOrdersOrdered = NumWorkOrdersOrdered + 1
 					-- print(GetTime(), 'SHIPMENT_UPDATE', name, itemID, duration, 'started')
@@ -538,8 +542,6 @@ do -- Experimental work order stuff
 		if IgnoreShow then return end
 		local owner = self:GetOwner()
 		if owner and owner.containerID == 122 and WorkOrders then -- probably should add a better check for the tooltip owner than this
-			-- 1497570892
-			
 			local name, texture, shipmentCapacity, shipmentsReady, shipmentsTotal, creationTime, duration, timeleftString, _, _, _, _, followerID = C_Garrison.GetLandingPageShipmentInfoByContainerID(122)
 			if not shipmentsTotal then return end
 			local numWorkOrders = #WorkOrders
@@ -554,6 +556,9 @@ do -- Experimental work order stuff
 			-- I don't know if creationTime is updated when someone uses something to instantly complete work orders, so this may all fail miserably
 			local currentIndex = startIndex + shipmentsReady
 			local timeOffset = creationTime + duration - WorkOrders[currentIndex][3] - (GetServerTime() - time())
+			if numWorkOrders - startIndex > 0 then
+				self:AddLine(' ')
+			end
 			for i = startIndex, numWorkOrders do
 				local workOrder = WorkOrders[i]
 				local itemID, orderPlaced, endTime = workOrder[1], workOrder[2], workOrder[3]
