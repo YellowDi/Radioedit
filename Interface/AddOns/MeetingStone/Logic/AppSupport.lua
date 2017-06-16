@@ -147,20 +147,23 @@ function AppSupport:DataInit()
         end
     end
 
-    local function GetLegendaryItem(_, msg)
-        local item = tonumber(msg:match('item:(%d+)'))
+    local function GetLegendaryItem(_, msg, _, _, _, unit)
+        if not UnitIsUnit('player', unit) then
+            return
+        end
+        local item = msg:match('(|cff%x%x%x%x%x%x|Hitem:.+|r)')
         if not item then
             return
         end
-        local name, _, quality, _, reqLevel = GetItemInfo(item)
+        local name, _, quality, itemLevel, reqLevel = GetItemInfo(item)
         if not name then
             return
         end
-        return quality == LE_ITEM_QUALITY_LEGENDARY and reqLevel >= 110 and IsEquippableItem(item) and item
+        return quality == LE_ITEM_QUALITY_LEGENDARY and itemLevel >= 940 and IsEquippableItem(item) and item
     end
 
     RegisterData('Zone', {'ZONE_CHANGED_NEW_AREA', 'ZONE_CHANGED_INDOORS', 'ZONE_CHANGED'}, GetZoneText, COMMIT_INTERVAL)
-    RegisterData('ItemPush', 'CHAT_MSG_LOOT', GetLegendaryItem, 0, true)
+    RegisterData('ItemPush2', 'CHAT_MSG_LOOT', GetLegendaryItem, 0, true)
 end
 
 ---- Group Member
@@ -302,12 +305,17 @@ local UnitRole do
 end
 
 function AppSupport:CHALLENGE_MODE_COMPLETED()
-    local mapID, level, time = C_ChallengeMode.GetCompletionInfo()
+    local _, level, time = C_ChallengeMode.GetCompletionInfo()
+    local mapId = C_ChallengeMode.GetActiveChallengeMapID() or self.lastMapId
 
     local class = select(3, UnitClass('player'))
     local itemLevel = math.floor( select(2, GetAverageItemLevel()) )
 
-    App:SendServer('APP_CHALLENGE', mapID, level, time, class, itemLevel, UnitRole('player'), unpack(self:GetChallengeMembers()))
+    App:SendServer('APP_CHALLENGE', mapId, level, time, class, itemLevel, UnitRole('player'), unpack(self:GetChallengeMembers()))
+end
+
+function AppSupport:CHALLENGE_MODE_START()
+    self.lastMapId = C_ChallengeMode.GetActiveChallengeMapID() or self.lastMapId
 end
 
 function AppSupport:GetChallengeMembers()
@@ -330,4 +338,6 @@ end
 
 function AppSupport:ChallengeInit()
     self:RegisterEvent('CHALLENGE_MODE_COMPLETED')
+    self:RegisterEvent('CHALLENGE_MODE_START')
+    self:CHALLENGE_MODE_START()
 end
