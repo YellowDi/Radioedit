@@ -8,7 +8,8 @@ local select, unpack, type, pairs = select, unpack, type, pairs
 local strlower, find, format = strlower, string.find, string.format
 --WoW API / Variables
 local CreateFrame = CreateFrame
-local C_ChatBubbles_GetAllChatBubbles = C_ChatBubbles and C_ChatBubbles.GetAllChatBubbles
+local C_ChatBubbles_GetAllChatBubbles = C_ChatBubbles.GetAllChatBubbles
+local IsInInstance, SetCVar, GetCVar = IsInInstance, SetCVar, GetCVar
 local CUSTOM_CLASS_COLORS = CUSTOM_CLASS_COLORS
 local RAID_CLASS_COLORS = RAID_CLASS_COLORS
 
@@ -173,56 +174,49 @@ function M:SkinBubble(frame)
 	frame.isSkinnedElvUI = true
 end
 
-function M:IsChatBubble(frame)
-	if not frame:IsForbidden() then
-		for i = 1, frame:GetNumRegions() do
-			local region = select(i, frame:GetRegions())
+local function ChatBubble_OnUpdate(self, elapsed)
+	if not M.BubbleFrame then return end
+	if not M.BubbleFrame.lastupdate then
+		M.BubbleFrame.lastupdate = -2 -- wait 2 seconds before hooking frames
+	end
 
-			if region.GetTexture and region:GetTexture() and type(region:GetTexture() == "string") then
-				if find(strlower(region:GetTexture()), "chatbubble%-background") then
-					return true
-				end
+	M.BubbleFrame.lastupdate = M.BubbleFrame.lastupdate + elapsed
+	if (M.BubbleFrame.lastupdate < .1) then return end
+	M.BubbleFrame.lastupdate = 0
+
+	for _, chatBubble in pairs(C_ChatBubbles_GetAllChatBubbles()) do
+		if not chatBubble.isSkinnedElvUI then
+			M:SkinBubble(chatBubble)
+		end
+	end
+end
+
+function M:UpdateChatBubbleInstanceToggle(value)
+	if E.private.general.chatBubbles == 'disabled' then
+		M.BubbleFrame:SetScript('OnUpdate', nil)
+	else
+		if E.private.general.chatBubbleHideInInstance then
+			local _, instanceType = IsInInstance()
+			if instanceType == "none" then
+				M.BubbleFrame:SetScript('OnUpdate', ChatBubble_OnUpdate)
+				SetCVar('chatBubbles', 1)
+			else
+				M.BubbleFrame:SetScript('OnUpdate', nil)
+				SetCVar('chatBubbles', 0)
+			end
+		else
+			if value == false then
+				SetCVar('chatBubbles', 1)
+			end
+			if GetCVar('chatBubbles') == '0' then
+				M.BubbleFrame:SetScript('OnUpdate', nil)
+			else
+				M.BubbleFrame:SetScript('OnUpdate', ChatBubble_OnUpdate)
 			end
 		end
 	end
-	return false
 end
 
-local numChildren = 0
 function M:LoadChatBubbles()
-	if E.private.general.bubbles == false then
-		E.private.general.chatBubbles = 'disabled'
-		E.private.general.bubbles = nil
-	end
-
-	if E.private.general.chatBubbles == 'disabled' then return end
-
-	local frame = CreateFrame('Frame')
-	frame.lastupdate = -2 -- wait 2 seconds before hooking frames
-
-	frame:SetScript('OnUpdate', function(self, elapsed)
-		self.lastupdate = self.lastupdate + elapsed
-		if (self.lastupdate < .1) then return end
-		self.lastupdate = 0
-
-		if E.wowbuild >= 24287 then --7.2.5
-			for _, chatBubble in pairs(C_ChatBubbles_GetAllChatBubbles()) do
-				if not chatBubble.isSkinnedElvUI then
-					M:SkinBubble(chatBubble)
-				end
-			end
-		else
-			local count = WorldFrame:GetNumChildren()
-			if(count ~= numChildren) then
-				for i = numChildren + 1, count do
-					local frame = select(i, WorldFrame:GetChildren())
-					
-					if M:IsChatBubble(frame) then
-						M:SkinBubble(frame)
-					end
-				end
-				numChildren = count
-			end
-		end		
-	end)
+	self.BubbleFrame = CreateFrame('Frame')
 end
