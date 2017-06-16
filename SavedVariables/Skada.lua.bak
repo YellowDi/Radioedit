@@ -21,6 +21,13 @@ SkadaDB = {
 	["profiles"] = {
 		["Default"] = {
 			["showself"] = true,
+			["modeclicks"] = {
+				["治疗"] = 9,
+				["敌方的治疗"] = 1,
+				["减益效果"] = 1,
+				["伤害"] = 10,
+				["能量获取"] = 1,
+			},
 			["windows"] = {
 				{
 					["barslocked"] = true,
@@ -29,23 +36,22 @@ SkadaDB = {
 					["point"] = "TOPRIGHT",
 					["mode"] = "伤害",
 					["spark"] = false,
-					["barwidth"] = 398.000061035156,
+					["barwidth"] = 402.999938964844,
 					["background"] = {
 						["strata"] = "MEDIUM",
 						["height"] = 128,
 						["bordertexture"] = "None",
 					},
-					["x"] = 1637.99993896484,
+					["x"] = 1633.00006103516,
 				}, -- [1]
+			},
+			["icon"] = {
+				["hide"] = true,
 			},
 			["versions"] = {
 				["1.6.7"] = true,
 				["1.6.4"] = true,
 				["1.6.3"] = true,
-			},
-			["modeclicks"] = {
-				["治疗"] = 1,
-				["伤害"] = 2,
 			},
 		},
 	},

@@ -1,50 +1,4 @@
 
-TinyTooltipDB = {
-	["AppendLevelToName"] = false,
-	["guild"] = {
-		["Rank"] = "|cffCC88FF(%s:%s)|r",
-		["Guild"] = "|cffFF00FF<%.36s>|r",
-		["Realm"] = "|cff00CCCC%s|r",
-	},
-	["DynamicStatusBarColor"] = false,
-	["Scale"] = 1,
-	["npc"] = {
-		["Elite"] = "|cffffff33(%s)|r",
-		["Boss"] = "|cffff0000(%s)|r",
-		["Reaction"] = "|cff33ffff<%s>|r",
-		["Title"] = "|cff99E8E8<%s>|r",
-		["Friendly"] = "|cff99ff66%1|r",
-		["Rare"] = "|cffffaaff(%s)|r",
-	},
-	["BorderSize"] = 1,
-	["UseMouseAnchor"] = false,
-	["ShowTarget"] = true,
-	["OriginalInCombat"] = true,
-	["StaticPosition"] = false,
-	["ShowAngularBorder"] = true,
-	["AnchorCursorRight"] = true,
-	["Alpha"] = 0.9,
-	["OnlyMouseoverUnit"] = true,
-	["HPHeight"] = 12,
-	["StatusBarText"] = true,
-	["version"] = 1.3,
-	["name"] = {
-		["DND"] = "|cffFFD200(%s)|r",
-		["OFFLINE"] = "|cff999999(%s)|r",
-		["PVPIcon"] = true,
-		["Race"] = "|cffcccccc%s|r",
-		["Title"] = "|cffCCFFFF%s|r",
-		["ClassIcon"] = true,
-		["Realm"] = "|cff00EEEE%s|r",
-		["FactionIcon"] = true,
-		["Class"] = "|cffffffff%s|r",
-		["AFK"] = "|cffFFD200(%s)|r",
-	},
-	["ShowColoredItemBorder"] = false,
-	["ShowStatusBar"] = true,
-	["DisplayStyleMask"] = true,
-	["ShowColoredClassBorder"] = true,
-}
 BigTipDB = {
 	["spell"] = {
 		["background"] = {
@@ -103,18 +57,19 @@ BigTipDB = {
 		["player"] = {
 			["elements"] = {
 				{
-					"roleIcon", -- [1]
-					"role", -- [2]
-					"raidIcon", -- [3]
-					"pvpIcon", -- [4]
-					"factionIcon", -- [5]
-					"classIcon", -- [6]
-					"title", -- [7]
-					"name", -- [8]
-					"realm", -- [9]
-					"statusAFK", -- [10]
-					"statusDND", -- [11]
-					"statusDC", -- [12]
+					"moveSpeed", -- [1]
+					"roleIcon", -- [2]
+					"role", -- [3]
+					"raidIcon", -- [4]
+					"pvpIcon", -- [5]
+					"factionIcon", -- [6]
+					"classIcon", -- [7]
+					"title", -- [8]
+					"name", -- [9]
+					"realm", -- [10]
+					"statusAFK", -- [11]
+					"statusDND", -- [12]
+					"statusDC", -- [13]
 				}, -- [1]
 				{
 					"guildName", -- [1]
@@ -196,6 +151,12 @@ BigTipDB = {
 					["enable"] = true,
 					["filter"] = "none",
 				},
+				["moveSpeed"] = {
+					["enable"] = false,
+					["color"] = "ffffff",
+					["wildcard"] = "%d%%",
+					["filter"] = "none",
+				},
 				["gender"] = {
 					["enable"] = false,
 					["color"] = "999999",
@@ -273,10 +234,11 @@ BigTipDB = {
 		["npc"] = {
 			["elements"] = {
 				{
-					"raidIcon", -- [1]
-					"classIcon", -- [2]
-					"questIcon", -- [3]
-					"name", -- [4]
+					"moveSpeed", -- [1]
+					"raidIcon", -- [2]
+					"classIcon", -- [3]
+					"questIcon", -- [4]
+					"name", -- [5]
 				}, -- [1]
 				{
 					"levelValue", -- [1]
@@ -312,6 +274,12 @@ BigTipDB = {
 					["enable"] = true,
 					["color"] = "ff0000",
 					["wildcard"] = "(%s)",
+					["filter"] = "none",
+				},
+				["moveSpeed"] = {
+					["enable"] = false,
+					["color"] = "ffffff",
+					["wildcard"] = "%d%%",
 					["filter"] = "none",
 				},
 				["name"] = {

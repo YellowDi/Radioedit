@@ -4,15 +4,15 @@ MEETINGSTONE_UI_DB = {
 		["Radioedit - 格瑞姆巴托"] = "Default",
 		["Zeoi - 主宰之剑"] = "Default",
 		["Mirvish - 主宰之剑"] = "Default",
-		["Geronimo - 奥蕾莉亚"] = "Default",
+		["Lumilol - 白银之手"] = "Default",
 		["Mirvish - 奥蕾莉亚"] = "Default",
-		["长大不会游泳 - 主宰之剑"] = "Default",
+		["Geronimo - 奥蕾莉亚"] = "Default",
 		["可憎少女呜呼 - 主宰之剑"] = "Default",
 		["Ravenkwok - 主宰之剑"] = "Default",
 		["Lullatone - 主宰之剑"] = "Default",
 		["Radioedit - 主宰之剑"] = "Default",
 		["Syllenaris - 奥蕾莉亚"] = "Default",
-		["Lumilol - 白银之手"] = "Default",
+		["长大不会游泳 - 主宰之剑"] = "Default",
 	},
 	["global"] = {
 		["serverDatas"] = {
@@ -25,10 +25,9 @@ MEETINGSTONE_UI_DB = {
 			},
 			["ActivitiesData"] = {
 				["data"] = "$1$Z$S121`你搞活动我买单`7.2.5生存指南`6月17日（周六）20点，7.2.5生存指南*J什么是时空漫游团队地下城？破碎群岛上空漂浮的要塞又来自哪里？如何更快地升级小号？萨格拉斯之墓中又有怎样的冒险等待着我们？让我们与活动主持人：熊猫TV-闹小闹闹（房间号：309685）一起一探究竟！*J集合石活动QQ报名群：108885849*J集合石活动专题页面：{URL}`http://w.163.com/special/convene-stone/`1`3$$",
-				["new"] = false,
 			},
 		},
-		["version"] = "70200.01",
+		["version"] = "70200.03",
 		["ActivityProfiles"] = {
 			["魔法回廊（史诗）"] = {
 				["ItemLevel"] = 830,

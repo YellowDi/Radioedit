@@ -678,6 +678,10 @@ MasqueDB = {
 				["WeakAuras_fire_blast_1_available_lge"] = {
 					["SkinID"] = "Masque: Shadow 3",
 				},
+				["ElvUI_Consolidated Buffs"] = {
+					["Inherit"] = false,
+					["SkinID"] = "Masque: Shadow 1",
+				},
 				["WeakAuras_cauterize_notify_fire_lge"] = {
 					["SkinID"] = "Masque: Shadow 3",
 				},
@@ -813,20 +817,20 @@ MasqueDB = {
 					["Disabled"] = true,
 					["SkinID"] = "Zoomed",
 				},
-				["WeakAuras_nether_tempest"] = {
-					["Disabled"] = true,
-					["SkinID"] = "Zoomed",
-				},
 				["WeakAuras_碎冰"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "Masque: Shadow 3",
 				},
-				["WeakAuras_incanter's_flow_3_cane"] = {
+				["WeakAuras_nether_tempest"] = {
 					["Disabled"] = true,
 					["SkinID"] = "Zoomed",
 				},
 				["WeakAuras_incanter's_flow_base"] = {
+					["Disabled"] = true,
+					["SkinID"] = "Zoomed",
+				},
+				["WeakAuras_incanter's_flow_3_cane"] = {
 					["Disabled"] = true,
 					["SkinID"] = "Zoomed",
 				},
@@ -846,22 +850,22 @@ MasqueDB = {
 					["Disabled"] = true,
 					["SkinID"] = "Zoomed",
 				},
-				["WeakAuras_rop_overlay_sweep_frost"] = {
-					["Disabled"] = true,
-					["SkinID"] = "Zoomed",
-				},
 				["WeakAuras_dragon's_breath_available_lge"] = {
 					["SkinID"] = "Masque: Shadow 3",
-				},
-				["WeakAuras_rop_cd_2"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
 				},
 				["WeakAuras_flame_on_available_2"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 				},
+				["WeakAuras_rop_cd_2"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+				},
 				["WeakAuras_resonance"] = {
+					["Disabled"] = true,
+					["SkinID"] = "Zoomed",
+				},
+				["WeakAuras_rop_overlay_sweep_frost"] = {
 					["Disabled"] = true,
 					["SkinID"] = "Zoomed",
 				},
@@ -873,18 +877,18 @@ MasqueDB = {
 				["WeakAuras_fire_blast_lge"] = {
 					["SkinID"] = "Masque: Shadow 3",
 				},
-				["WeakAuras_controlled_burn_2"] = {
+				["WeakAuras_气定神闲冷却"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
+					["SkinID"] = "Masque: Shadow 3",
 				},
 				["WeakAuras_combustion_cd_2_3"] = {
 					["Inherit"] = false,
 					["SkinID"] = "Masque: Shadow 3",
 				},
-				["WeakAuras_气定神闲冷却"] = {
+				["WeakAuras_controlled_burn_2"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
-					["SkinID"] = "Masque: Shadow 3",
 				},
 				["WeakAuras_unstable_magic_cane"] = {
 					["Disabled"] = true,
@@ -915,12 +919,12 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "Masque: Shadow 3",
 				},
-				["WeakAuras_living_bomb_cd_available_lge"] = {
-					["SkinID"] = "Masque: Shadow 3",
-				},
 				["WeakAuras_rop_active_2"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
+				},
+				["WeakAuras_living_bomb_cd_available_lge"] = {
+					["SkinID"] = "Masque: Shadow 3",
 				},
 				["WeakAuras_thermal_void"] = {
 					["Disabled"] = true,
@@ -934,11 +938,11 @@ MasqueDB = {
 					["Disabled"] = true,
 					["SkinID"] = "Zoomed",
 				},
-				["WeakAuras_rop_cd_frost_1_available"] = {
+				["WeakAuras_pet_defensive"] = {
 					["Disabled"] = true,
 					["SkinID"] = "Zoomed",
 				},
-				["WeakAuras_pet_defensive"] = {
+				["WeakAuras_rop_cd_frost_1_available"] = {
 					["Disabled"] = true,
 					["SkinID"] = "Zoomed",
 				},
@@ -1080,22 +1084,22 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "Masque: Shadow 3",
 				},
-				["WeakAuras_水流cd"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "Masque: Shadow 3",
-				},
 				["WeakAuras_节拍器"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "Masque: Shadow 3",
 				},
-				["WeakAuras_咒术洪流两层"] = {
+				["WeakAuras_水流cd"] = {
+					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "Masque: Shadow 3",
 				},
 				["WeakAuras_奥强持续时间"] = {
 					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Masque: Shadow 3",
+				},
+				["WeakAuras_咒术洪流两层"] = {
 					["Inherit"] = false,
 					["SkinID"] = "Masque: Shadow 3",
 				},
@@ -1122,11 +1126,11 @@ MasqueDB = {
 				["WeakAuras_rop_underlay_lge"] = {
 					["SkinID"] = "Masque: Shadow 3",
 				},
-				["WeakAuras_living_bomb_cd"] = {
+				["WeakAuras_glacial_spike_stacks"] = {
 					["Disabled"] = true,
 					["SkinID"] = "Zoomed",
 				},
-				["WeakAuras_glacial_spike_stacks"] = {
+				["WeakAuras_living_bomb_cd"] = {
 					["Disabled"] = true,
 					["SkinID"] = "Zoomed",
 				},

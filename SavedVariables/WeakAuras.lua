@@ -36,6 +36,7 @@ WeakAurasSaved = {
 		},
 		["时间扭曲"] = {
 			[80353] = 458224,
+			[244645] = 458224,
 		},
 		["闪回信标"] = {
 			[212799] = 132171,
@@ -130,10 +131,7 @@ WeakAurasSaved = {
 						[13] = true,
 					},
 				},
-				["difficulty"] = {
-					["multi"] = {
-					},
-				},
+				["use_class"] = true,
 				["spec"] = {
 					["single"] = 2,
 					["multi"] = {
@@ -146,23 +144,26 @@ WeakAurasSaved = {
 					["multi"] = {
 					},
 				},
-				["faction"] = {
+				["use_spec"] = false,
+				["difficulty"] = {
 					["multi"] = {
 					},
 				},
-				["use_name"] = false,
 				["role"] = {
 					["multi"] = {
 					},
 				},
 				["name"] = "叫我法神啦",
+				["faction"] = {
+					["multi"] = {
+					},
+				},
 				["pvptalent"] = {
 					["multi"] = {
 					},
 				},
-				["use_spec"] = false,
 				["use_combat"] = true,
-				["use_class"] = true,
+				["use_name"] = false,
 				["size"] = {
 					["multi"] = {
 					},
@@ -225,7 +226,7 @@ WeakAurasSaved = {
 				["unit"] = "player",
 				["type"] = "status",
 				["use_powertype"] = true,
-				["debuffType"] = "HELPFUL",
+				["spellName"] = 108839,
 				["charges_operator"] = "==",
 				["charges"] = "0",
 				["subeventSuffix"] = "_CAST_START",
@@ -240,8 +241,8 @@ WeakAurasSaved = {
 				},
 				["powertype"] = 0,
 				["showOn"] = "showAlways",
-				["spellName"] = 108839,
 				["custom_hide"] = "timed",
+				["debuffType"] = "HELPFUL",
 				["subeventPrefix"] = "SPELL",
 			},
 			["text"] = false,
@@ -390,13 +391,13 @@ WeakAurasSaved = {
 			["cooldownTextEnabled"] = true,
 			["text2Containment"] = "INSIDE",
 			["desaturate"] = false,
-			["text1Color"] = {
-				0.0392156862745098, -- [1]
-				0.666666666666667, -- [2]
+			["text1Font"] = "Friz Quadrata TT",
+			["color"] = {
+				1, -- [1]
+				1, -- [2]
 				1, -- [3]
 				1, -- [4]
 			},
-			["text1Font"] = "Friz Quadrata TT",
 			["animation"] = {
 				["start"] = {
 					["type"] = "none",
@@ -433,18 +434,17 @@ WeakAurasSaved = {
 			["id"] = "冰脉触发",
 			["text2Enabled"] = false,
 			["width"] = 48,
-			["parent"] = "Mage",
 			["text2Point"] = "CENTER",
+			["text1Color"] = {
+				0.0392156862745098, -- [1]
+				0.666666666666667, -- [2]
+				1, -- [3]
+				1, -- [4]
+			},
 			["inverse"] = false,
 			["text2Font"] = "Friz Quadrata TT",
 			["stickyDuration"] = false,
 			["conditions"] = {
-			},
-			["color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
 			},
 			["actions"] = {
 				["start"] = {
@@ -454,6 +454,7 @@ WeakAurasSaved = {
 				["init"] = {
 				},
 			},
+			["parent"] = "Mage",
 		},
 		["嗜血 2"] = {
 			["glow"] = false,
@@ -535,12 +536,10 @@ WeakAurasSaved = {
 					},
 				},
 			},
-			["anchorFrameType"] = "SCREEN",
 			["text2Font"] = "Friz Quadrata TT",
 			["cooldownTextEnabled"] = true,
-			["text2Containment"] = "INSIDE",
 			["parent"] = "Mage",
-			["text1Font"] = "默认",
+			["text2Containment"] = "INSIDE",
 			["animation"] = {
 				["start"] = {
 					["type"] = "none",
@@ -555,12 +554,14 @@ WeakAurasSaved = {
 					["duration_type"] = "seconds",
 				},
 			},
+			["text1Font"] = "默认",
 			["text1Color"] = {
 				1, -- [1]
 				1, -- [2]
 				1, -- [3]
 				1, -- [4]
 			},
+			["numTriggers"] = 1,
 			["text2Color"] = {
 				1, -- [1]
 				1, -- [2]
@@ -568,10 +569,11 @@ WeakAurasSaved = {
 				1, -- [4]
 			},
 			["regionType"] = "icon",
-			["numTriggers"] = 1,
 			["text1Containment"] = "INSIDE",
-			["text2FontSize"] = 24,
 			["xOffset"] = 66,
+			["text2FontSize"] = 24,
+			["anchorFrameType"] = "SCREEN",
+			["init_completed"] = 1,
 			["text1"] = "%s",
 			["frameStrata"] = 5,
 			["text1FontFlags"] = "OUTLINE",
@@ -722,20 +724,26 @@ WeakAurasSaved = {
 					},
 				},
 			},
+			["text1Containment"] = "INSIDE",
 			["stickyDuration"] = false,
-			["untrigger"] = {
-				["showOn"] = "showOnCooldown",
-				["direction"] = "CHANGED",
-				["unit"] = "pet",
-				["spellName"] = 135029,
-			},
 			["text2Containment"] = "INSIDE",
-			["text2Font"] = "Friz Quadrata TT",
+			["color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+			},
 			["text1Color"] = {
 				1, -- [1]
 				1, -- [2]
 				1, -- [3]
 				1, -- [4]
+			},
+			["untrigger"] = {
+				["showOn"] = "showOnCooldown",
+				["direction"] = "CHANGED",
+				["unit"] = "pet",
+				["spellName"] = 135029,
 			},
 			["animation"] = {
 				["start"] = {
@@ -751,6 +759,11 @@ WeakAurasSaved = {
 					["duration_type"] = "seconds",
 				},
 			},
+			["text1FontFlags"] = "OUTLINE",
+			["regionType"] = "icon",
+			["text1Font"] = "默认",
+			["numTriggers"] = 1,
+			["text2FontSize"] = 24,
 			["actions"] = {
 				["start"] = {
 					["do_glow"] = false,
@@ -762,17 +775,6 @@ WeakAurasSaved = {
 				["init"] = {
 				},
 			},
-			["text2Color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
-			},
-			["regionType"] = "icon",
-			["cooldownTextEnabled"] = true,
-			["numTriggers"] = 1,
-			["text2FontSize"] = 24,
-			["text1Font"] = "默认",
 			["text1"] = "%s",
 			["width"] = 32,
 			["frameStrata"] = 4,
@@ -784,16 +786,16 @@ WeakAurasSaved = {
 			["text2"] = "%p",
 			["text2Enabled"] = false,
 			["anchorFrameType"] = "SCREEN",
-			["text1FontFlags"] = "OUTLINE",
-			["text1Containment"] = "INSIDE",
-			["inverse"] = true,
-			["parent"] = "Mage",
-			["color"] = {
+			["cooldownTextEnabled"] = true,
+			["text2Color"] = {
 				1, -- [1]
 				1, -- [2]
 				1, -- [3]
 				1, -- [4]
 			},
+			["inverse"] = true,
+			["parent"] = "Mage",
+			["text2Font"] = "Friz Quadrata TT",
 			["conditions"] = {
 			},
 			["cooldown"] = true,
@@ -816,18 +818,18 @@ WeakAurasSaved = {
 				["spellName"] = 205032,
 				["unevent"] = "auto",
 				["use_showOn"] = true,
+				["subeventPrefix"] = "SPELL",
+				["event"] = "Cooldown Progress (Spell)",
 				["names"] = {
 					"Combustion", -- [1]
 				},
-				["event"] = "Cooldown Progress (Spell)",
-				["use_unit"] = true,
 				["realSpellName"] = "精力充沛",
 				["use_spellName"] = true,
 				["spellIds"] = {
 				},
 				["unit"] = "player",
 				["showOn"] = "showOnCooldown",
-				["subeventPrefix"] = "SPELL",
+				["use_unit"] = true,
 				["subeventSuffix"] = "_CAST_START",
 				["debuffType"] = "HELPFUL",
 			},
@@ -890,7 +892,29 @@ WeakAurasSaved = {
 					},
 				},
 			},
+			["text1Containment"] = "INSIDE",
+			["untrigger"] = {
+				["showOn"] = "showOnCooldown",
+				["spellName"] = 205032,
+			},
+			["text2Containment"] = "INSIDE",
+			["stickyDuration"] = false,
+			["text1Color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+			},
+			["text1Font"] = "默认",
 			["xOffset"] = 0,
+			["text2Color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+			},
+			["regionType"] = "icon",
+			["inverse"] = true,
 			["animation"] = {
 				["start"] = {
 					["type"] = "none",
@@ -905,7 +929,7 @@ WeakAurasSaved = {
 					["duration_type"] = "seconds",
 				},
 			},
-			["text2Containment"] = "INSIDE",
+			["text2FontSize"] = 24,
 			["actions"] = {
 				["start"] = {
 				},
@@ -914,28 +938,6 @@ WeakAurasSaved = {
 				["init"] = {
 				},
 			},
-			["text1Font"] = "默认",
-			["text1Containment"] = "INSIDE",
-			["text1Color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
-			},
-			["text2Color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
-			},
-			["regionType"] = "icon",
-			["untrigger"] = {
-				["showOn"] = "showOnCooldown",
-				["spellName"] = 205032,
-			},
-			["inverse"] = true,
-			["text2FontSize"] = 24,
-			["stickyDuration"] = false,
 			["init_completed"] = 1,
 			["text1"] = "%s",
 			["anchorFrameType"] = "SCREEN",
@@ -1042,49 +1044,17 @@ WeakAurasSaved = {
 					},
 				},
 			},
-			["color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
-			},
-			["yOffset"] = 0,
-			["text2Containment"] = "INSIDE",
-			["parent"] = "Mage",
 			["text1Font"] = "Friz Quadrata TT",
+			["text2Point"] = "CENTER",
+			["text2Containment"] = "INSIDE",
 			["desaturate"] = false,
-			["text2Font"] = "Friz Quadrata TT",
-			["text1FontFlags"] = "OUTLINE",
-			["regionType"] = "icon",
-			["xOffset"] = 66,
-			["numTriggers"] = 1,
-			["text2FontSize"] = 24,
-			["text2Color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
-			},
-			["text1"] = "%p",
-			["anchorFrameType"] = "SCREEN",
-			["frameStrata"] = 4,
-			["zoom"] = 0,
-			["auto"] = true,
-			["additional_triggers"] = {
-			},
-			["id"] = "强化隐身ing",
-			["text2"] = "%p",
-			["text2Enabled"] = false,
-			["width"] = 32,
-			["stickyDuration"] = false,
-			["cooldownTextEnabled"] = true,
-			["inverse"] = false,
 			["text1Color"] = {
 				0.12156862745098, -- [1]
 				0.858823529411765, -- [2]
 				0, -- [3]
 				1, -- [4]
 			},
+			["parent"] = "Mage",
 			["animation"] = {
 				["start"] = {
 					["type"] = "none",
@@ -1099,6 +1069,39 @@ WeakAurasSaved = {
 					["duration_type"] = "seconds",
 				},
 			},
+			["text2Color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+			},
+			["regionType"] = "icon",
+			["text1FontFlags"] = "OUTLINE",
+			["numTriggers"] = 1,
+			["text2FontSize"] = 24,
+			["cooldownTextEnabled"] = true,
+			["init_completed"] = 1,
+			["text1"] = "%p",
+			["anchorFrameType"] = "SCREEN",
+			["frameStrata"] = 4,
+			["zoom"] = 0,
+			["auto"] = true,
+			["additional_triggers"] = {
+			},
+			["id"] = "强化隐身ing",
+			["text2"] = "%p",
+			["text2Enabled"] = false,
+			["width"] = 32,
+			["color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+			},
+			["stickyDuration"] = false,
+			["inverse"] = false,
+			["xOffset"] = 66,
+			["text2Font"] = "Friz Quadrata TT",
 			["conditions"] = {
 			},
 			["actions"] = {
@@ -1109,7 +1112,7 @@ WeakAurasSaved = {
 				["init"] = {
 				},
 			},
-			["text2Point"] = "CENTER",
+			["yOffset"] = 0,
 		},
 		["冰川不可用"] = {
 			["glow"] = false,
@@ -1210,7 +1213,7 @@ WeakAurasSaved = {
 				1, -- [3]
 				1, -- [4]
 			},
-			["text2Font"] = "Friz Quadrata TT",
+			["stickyDuration"] = false,
 			["text1Containment"] = "INSIDE",
 			["text1FontFlags"] = "OUTLINE",
 			["regionType"] = "icon",
@@ -1234,7 +1237,6 @@ WeakAurasSaved = {
 			["text1Font"] = "Friz Quadrata TT",
 			["frameStrata"] = 1,
 			["width"] = 32,
-			["xOffset"] = 0,
 			["actions"] = {
 				["start"] = {
 				},
@@ -1243,7 +1245,6 @@ WeakAurasSaved = {
 				["init"] = {
 				},
 			},
-			["inverse"] = false,
 			["animation"] = {
 				["start"] = {
 					["type"] = "none",
@@ -1258,11 +1259,13 @@ WeakAurasSaved = {
 					["duration_type"] = "seconds",
 				},
 			},
+			["inverse"] = false,
 			["parent"] = "Mage",
+			["text2Font"] = "Friz Quadrata TT",
 			["conditions"] = {
 			},
-			["stickyDuration"] = false,
 			["text2Point"] = "CENTER",
+			["xOffset"] = 0,
 		},
 		["奥法背景"] = {
 			["textFlags"] = "None",
@@ -1319,10 +1322,7 @@ WeakAurasSaved = {
 						[13] = true,
 					},
 				},
-				["difficulty"] = {
-					["multi"] = {
-					},
-				},
+				["use_class"] = true,
 				["class"] = {
 					["single"] = "MAGE",
 					["multi"] = {
@@ -1332,23 +1332,26 @@ WeakAurasSaved = {
 					["multi"] = {
 					},
 				},
-				["pvptalent"] = {
+				["use_spec"] = true,
+				["difficulty"] = {
 					["multi"] = {
 					},
 				},
-				["use_name"] = false,
 				["role"] = {
 					["multi"] = {
 					},
 				},
 				["name"] = "叫我法神啦",
+				["pvptalent"] = {
+					["multi"] = {
+					},
+				},
 				["faction"] = {
 					["multi"] = {
 					},
 				},
-				["use_spec"] = true,
 				["use_combat"] = true,
-				["use_class"] = true,
+				["use_name"] = false,
 				["size"] = {
 					["multi"] = {
 					},
@@ -1403,10 +1406,10 @@ WeakAurasSaved = {
 				["use_unit"] = true,
 				["powertype"] = 0,
 				["useCount"] = true,
-				["spellName"] = 108839,
+				["debuffType"] = "HELPFUL",
 				["type"] = "status",
 				["use_powertype"] = true,
-				["custom_hide"] = "timed",
+				["spellName"] = 108839,
 				["charges_operator"] = "==",
 				["charges"] = "0",
 				["subeventSuffix"] = "_CAST_START",
@@ -1423,7 +1426,7 @@ WeakAurasSaved = {
 					"Incanter's Flow", -- [1]
 				},
 				["showOn"] = "showAlways",
-				["debuffType"] = "HELPFUL",
+				["custom_hide"] = "timed",
 				["unit"] = "player",
 				["subeventPrefix"] = "SPELL",
 			},
@@ -1599,22 +1602,9 @@ WeakAurasSaved = {
 				1, -- [4]
 			},
 			["text2Containment"] = "INSIDE",
-			["parent"] = "Mage",
+			["stickyDuration"] = false,
 			["text1Font"] = "Ubuntu Condensed",
-			["animation"] = {
-				["start"] = {
-					["type"] = "none",
-					["duration_type"] = "seconds",
-				},
-				["main"] = {
-					["type"] = "none",
-					["duration_type"] = "seconds",
-				},
-				["finish"] = {
-					["type"] = "none",
-					["duration_type"] = "seconds",
-				},
-			},
+			["parent"] = "Mage",
 			["text1Color"] = {
 				1, -- [1]
 				1, -- [2]
@@ -1643,10 +1633,9 @@ WeakAurasSaved = {
 			["text1FontFlags"] = "OUTLINE",
 			["text2Enabled"] = false,
 			["anchorFrameType"] = "SCREEN",
-			["text2Font"] = "Friz Quadrata TT",
 			["text2Point"] = "CENTER",
-			["inverse"] = true,
 			["cooldownTextEnabled"] = true,
+			["inverse"] = true,
 			["actions"] = {
 				["start"] = {
 				},
@@ -1655,10 +1644,24 @@ WeakAurasSaved = {
 				["init"] = {
 				},
 			},
+			["animation"] = {
+				["start"] = {
+					["type"] = "none",
+					["duration_type"] = "seconds",
+				},
+				["main"] = {
+					["type"] = "none",
+					["duration_type"] = "seconds",
+				},
+				["finish"] = {
+					["type"] = "none",
+					["duration_type"] = "seconds",
+				},
+			},
 			["conditions"] = {
 			},
 			["cooldown"] = true,
-			["stickyDuration"] = false,
+			["text2Font"] = "Friz Quadrata TT",
 		},
 		["唤醒可用"] = {
 			["glow"] = false,
@@ -1680,18 +1683,18 @@ WeakAurasSaved = {
 				["custom_hide"] = "timed",
 				["unevent"] = "auto",
 				["use_showOn"] = true,
+				["subeventPrefix"] = "SPELL",
+				["event"] = "Cooldown Progress (Spell)",
 				["names"] = {
 					"Combustion", -- [1]
 				},
-				["event"] = "Cooldown Progress (Spell)",
-				["use_unit"] = true,
 				["realSpellName"] = "唤醒",
 				["use_spellName"] = true,
 				["spellIds"] = {
 				},
 				["unit"] = "player",
 				["showOn"] = "showOnReady",
-				["subeventPrefix"] = "SPELL",
+				["use_unit"] = true,
 				["subeventSuffix"] = "_CAST_START",
 				["debuffType"] = "HELPFUL",
 			},
@@ -1754,16 +1757,48 @@ WeakAurasSaved = {
 					},
 				},
 			},
-			["text2"] = "%p",
 			["parent"] = "Mage",
+			["actions"] = {
+				["start"] = {
+				},
+				["finish"] = {
+				},
+				["init"] = {
+				},
+			},
 			["text2Containment"] = "INSIDE",
-			["text2Point"] = "CENTER",
+			["xOffset"] = -66,
 			["text1Color"] = {
 				1, -- [1]
 				1, -- [2]
 				1, -- [3]
 				1, -- [4]
 			},
+			["yOffset"] = 0,
+			["text2Color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+			},
+			["text1FontFlags"] = "OUTLINE",
+			["regionType"] = "icon",
+			["inverse"] = true,
+			["text1Font"] = "Ubuntu Condensed",
+			["text2FontSize"] = 24,
+			["text2"] = "%p",
+			["init_completed"] = 1,
+			["text1"] = "%c",
+			["anchorFrameType"] = "SCREEN",
+			["text2Enabled"] = false,
+			["zoom"] = 0,
+			["auto"] = true,
+			["id"] = "唤醒可用",
+			["additional_triggers"] = {
+			},
+			["text2Font"] = "Friz Quadrata TT",
+			["frameStrata"] = 1,
+			["width"] = 32,
 			["animation"] = {
 				["start"] = {
 					["type"] = "none",
@@ -1778,51 +1813,19 @@ WeakAurasSaved = {
 					["duration_type"] = "seconds",
 				},
 			},
-			["yOffset"] = 0,
-			["text2Color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
-			},
-			["regionType"] = "icon",
-			["text1FontFlags"] = "OUTLINE",
-			["inverse"] = true,
-			["text2FontSize"] = 24,
-			["text1Font"] = "Ubuntu Condensed",
-			["init_completed"] = 1,
-			["text1"] = "%c",
-			["anchorFrameType"] = "SCREEN",
-			["text2Enabled"] = false,
-			["zoom"] = 0,
-			["auto"] = true,
-			["id"] = "唤醒可用",
-			["additional_triggers"] = {
-			},
-			["text2Font"] = "Friz Quadrata TT",
-			["frameStrata"] = 1,
-			["width"] = 32,
+			["text2Point"] = "CENTER",
+			["numTriggers"] = 1,
+			["stickyDuration"] = false,
 			["color"] = {
 				1, -- [1]
 				1, -- [2]
 				1, -- [3]
 				1, -- [4]
 			},
-			["xOffset"] = -66,
-			["numTriggers"] = 1,
-			["actions"] = {
-				["start"] = {
-				},
-				["finish"] = {
-				},
-				["init"] = {
-				},
-			},
-			["text1Containment"] = "INSIDE",
 			["conditions"] = {
 			},
 			["cooldown"] = true,
-			["stickyDuration"] = false,
+			["text1Containment"] = "INSIDE",
 		},
 		["Phoenix's Flames 3 Recharge 2"] = {
 			["textFlags"] = "None",
@@ -1964,9 +1967,9 @@ WeakAurasSaved = {
 				["use_charges"] = true,
 				["use_unit"] = true,
 				["useCount"] = true,
-				["custom_hide"] = "timed",
+				["debuffType"] = "HELPFUL",
 				["type"] = "status",
-				["spellName"] = 194466,
+				["custom_hide"] = "timed",
 				["charges_operator"] = "==",
 				["charges"] = "2",
 				["unit"] = "player",
@@ -1984,7 +1987,7 @@ WeakAurasSaved = {
 				["count"] = "3",
 				["showOn"] = "showAlways",
 				["unevent"] = "auto",
-				["debuffType"] = "HELPFUL",
+				["spellName"] = 194466,
 				["subeventPrefix"] = "SPELL",
 			},
 			["text"] = false,
@@ -2079,18 +2082,18 @@ WeakAurasSaved = {
 				["custom_hide"] = "timed",
 				["unevent"] = "auto",
 				["use_showOn"] = true,
+				["subeventPrefix"] = "SPELL",
+				["event"] = "Cooldown Progress (Spell)",
 				["names"] = {
 					"Combustion", -- [1]
 				},
-				["event"] = "Cooldown Progress (Spell)",
-				["use_unit"] = true,
 				["realSpellName"] = "碎冰",
 				["use_spellName"] = true,
 				["spellIds"] = {
 				},
 				["unit"] = "player",
 				["showOn"] = "showAlways",
-				["subeventPrefix"] = "SPELL",
+				["use_unit"] = true,
 				["subeventSuffix"] = "_CAST_START",
 				["debuffType"] = "HELPFUL",
 			},
@@ -2161,42 +2164,22 @@ WeakAurasSaved = {
 				["init"] = {
 				},
 			},
-			["text2Point"] = "CENTER",
-			["text2Containment"] = "INSIDE",
-			["yOffset"] = 6.1035156250e-005,
-			["text1Font"] = "Ubuntu Condensed",
 			["xOffset"] = -33,
+			["text2Containment"] = "INSIDE",
+			["text2Font"] = "Friz Quadrata TT",
+			["text1Font"] = "Ubuntu Condensed",
+			["text2Point"] = "CENTER",
 			["cooldownTextEnabled"] = true,
+			["text1FontFlags"] = "OUTLINE",
+			["regionType"] = "icon",
 			["text2Color"] = {
 				1, -- [1]
 				1, -- [2]
 				1, -- [3]
 				1, -- [4]
 			},
-			["regionType"] = "icon",
-			["parent"] = "Mage",
 			["numTriggers"] = 1,
 			["text2FontSize"] = 24,
-			["text1FontFlags"] = "OUTLINE",
-			["text1"] = "%s",
-			["width"] = 32,
-			["text2Enabled"] = false,
-			["zoom"] = 0,
-			["auto"] = true,
-			["additional_triggers"] = {
-			},
-			["id"] = "碎冰",
-			["text2"] = "%p",
-			["frameStrata"] = 1,
-			["anchorFrameType"] = "SCREEN",
-			["stickyDuration"] = false,
-			["text1Color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
-			},
-			["inverse"] = false,
 			["animation"] = {
 				["start"] = {
 					["type"] = "none",
@@ -2211,11 +2194,31 @@ WeakAurasSaved = {
 					["duration_type"] = "seconds",
 				},
 			},
+			["text1"] = "%s",
+			["width"] = 32,
+			["text2Enabled"] = false,
+			["zoom"] = 0,
+			["auto"] = true,
+			["additional_triggers"] = {
+			},
+			["id"] = "碎冰",
+			["text2"] = "%p",
+			["frameStrata"] = 1,
+			["anchorFrameType"] = "SCREEN",
+			["parent"] = "Mage",
 			["text1Containment"] = "INSIDE",
+			["inverse"] = false,
+			["text1Color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+			},
+			["yOffset"] = 6.1035156250e-005,
 			["conditions"] = {
 			},
 			["cooldown"] = false,
-			["text2Font"] = "Friz Quadrata TT",
+			["stickyDuration"] = false,
 		},
 		["彗星风暴可用"] = {
 			["glow"] = false,
@@ -2301,8 +2304,60 @@ WeakAurasSaved = {
 					},
 				},
 			},
-			["text2Point"] = "CENTER",
+			["color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+			},
 			["text2Containment"] = "INSIDE",
+			["text1Containment"] = "INSIDE",
+			["text1Color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+			},
+			["parent"] = "Mage",
+			["text1Font"] = "Friz Quadrata TT",
+			["text1FontFlags"] = "OUTLINE",
+			["regionType"] = "icon",
+			["text2Color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+			},
+			["untrigger"] = {
+				["showOn"] = "showOnReady",
+				["spellName"] = 153595,
+			},
+			["text2FontSize"] = 24,
+			["numTriggers"] = 1,
+			["text1"] = "%c",
+			["stickyDuration"] = false,
+			["anchorFrameType"] = "SCREEN",
+			["zoom"] = 0,
+			["auto"] = true,
+			["text2Enabled"] = false,
+			["id"] = "彗星风暴可用",
+			["text2Font"] = "Friz Quadrata TT",
+			["frameStrata"] = 1,
+			["width"] = 32,
+			["text2"] = "%p",
+			["text2Point"] = "CENTER",
+			["inverse"] = false,
+			["actions"] = {
+				["start"] = {
+				},
+				["finish"] = {
+				},
+				["init"] = {
+				},
+			},
+			["disjunctive"] = "all",
+			["conditions"] = {
+			},
 			["animation"] = {
 				["start"] = {
 					["type"] = "none",
@@ -2317,59 +2372,7 @@ WeakAurasSaved = {
 					["duration_type"] = "seconds",
 				},
 			},
-			["text1Color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
-			},
-			["untrigger"] = {
-				["showOn"] = "showOnReady",
-				["spellName"] = 153595,
-			},
-			["actions"] = {
-				["start"] = {
-				},
-				["finish"] = {
-				},
-				["init"] = {
-				},
-			},
-			["text2Color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
-			},
-			["regionType"] = "icon",
-			["text1Font"] = "Friz Quadrata TT",
-			["text1FontFlags"] = "OUTLINE",
-			["text2FontSize"] = 24,
-			["numTriggers"] = 1,
-			["text1"] = "%c",
-			["stickyDuration"] = false,
-			["anchorFrameType"] = "SCREEN",
-			["zoom"] = 0,
-			["auto"] = true,
-			["text2Enabled"] = false,
-			["id"] = "彗星风暴可用",
-			["text2Font"] = "Friz Quadrata TT",
-			["frameStrata"] = 1,
-			["width"] = 32,
-			["text2"] = "%p",
-			["text1Containment"] = "INSIDE",
-			["inverse"] = false,
 			["cooldownTextEnabled"] = true,
-			["color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
-			},
-			["conditions"] = {
-			},
-			["disjunctive"] = "all",
-			["parent"] = "Mage",
 		},
 		["节拍器"] = {
 			["glow"] = false,
@@ -2403,12 +2406,12 @@ WeakAurasSaved = {
 				["type"] = "aura",
 				["spellId"] = "225719",
 				["unevent"] = "auto",
+				["subeventPrefix"] = "SPELL",
+				["ownOnly"] = true,
+				["event"] = "Health",
 				["names"] = {
 					"玛瑟里顿之力", -- [1]
 				},
-				["ownOnly"] = true,
-				["event"] = "Health",
-				["use_unit"] = true,
 				["name"] = "急速乐章",
 				["use_spellId"] = true,
 				["spellIds"] = {
@@ -2417,7 +2420,7 @@ WeakAurasSaved = {
 				["custom_hide"] = "timed",
 				["unit"] = "player",
 				["subeventSuffix"] = "_CAST_START",
-				["subeventPrefix"] = "SPELL",
+				["use_unit"] = true,
 				["debuffType"] = "HELPFUL",
 			},
 			["text1Containment"] = "OUTSIDE",
@@ -2575,9 +2578,9 @@ WeakAurasSaved = {
 				["names"] = {
 					"玛瑟里顿之力", -- [1]
 				},
-				["custom_hide"] = "timed",
 				["debuffType"] = "HELPFUL",
 				["spellName"] = 2948,
+				["custom_hide"] = "timed",
 				["unevent"] = "auto",
 				["type"] = "status",
 				["name"] = "玛瑟里顿之力",
@@ -2749,13 +2752,13 @@ WeakAurasSaved = {
 			["untrigger"] = {
 			},
 			["regionType"] = "text",
-			["xOffset"] = 0,
 			["color"] = {
 				1, -- [1]
 				0.992156862745098, -- [2]
 				0, -- [3]
 				1, -- [4]
 			},
+			["parent"] = "Mage",
 			["activeTriggerMode"] = -10,
 			["customTextUpdate"] = "update",
 			["actions"] = {
@@ -2770,8 +2773,7 @@ WeakAurasSaved = {
 			},
 			["anchorPoint"] = "CENTER",
 			["selfPoint"] = "CENTER",
-			["additional_triggers"] = {
-			},
+			["id"] = "连锁时间",
 			["justify"] = "CENTER",
 			["animation"] = {
 				["start"] = {
@@ -2787,6 +2789,14 @@ WeakAurasSaved = {
 					["duration_type"] = "seconds",
 				},
 			},
+			["additional_triggers"] = {
+			},
+			["width"] = 8.99992656707764,
+			["frameStrata"] = 4,
+			["anchorFrameType"] = "SCREEN",
+			["yOffset"] = 58,
+			["font"] = "Calibri Bold",
+			["numTriggers"] = 1,
 			["trigger"] = {
 				["spellId"] = "208147",
 				["ownOnly"] = true,
@@ -2811,13 +2821,6 @@ WeakAurasSaved = {
 				["debuffType"] = "HELPFUL",
 				["fullscan"] = true,
 			},
-			["width"] = 8.99992656707764,
-			["frameStrata"] = 4,
-			["anchorFrameType"] = "SCREEN",
-			["yOffset"] = 58,
-			["font"] = "Calibri Bold",
-			["numTriggers"] = 1,
-			["id"] = "连锁时间",
 			["height"] = 17.9999942779541,
 			["conditions"] = {
 			},
@@ -2842,13 +2845,20 @@ WeakAurasSaved = {
 						[2] = true,
 					},
 				},
-				["use_class"] = true,
+				["difficulty"] = {
+					["multi"] = {
+					},
+				},
 				["role"] = {
 					["multi"] = {
 					},
 				},
-				["use_name"] = false,
+				["use_class"] = true,
 				["race"] = {
+					["multi"] = {
+					},
+				},
+				["faction"] = {
 					["multi"] = {
 					},
 				},
@@ -2857,21 +2867,14 @@ WeakAurasSaved = {
 					["multi"] = {
 					},
 				},
-				["faction"] = {
-					["multi"] = {
-					},
-				},
 				["use_combat"] = true,
-				["difficulty"] = {
-					["multi"] = {
-					},
-				},
+				["use_name"] = false,
 				["size"] = {
 					["multi"] = {
 					},
 				},
 			},
-			["parent"] = "Mage",
+			["xOffset"] = 0,
 		},
 		["燃烬风暴可用"] = {
 			["glow"] = false,
@@ -2893,18 +2896,18 @@ WeakAurasSaved = {
 				["custom_hide"] = "timed",
 				["unevent"] = "auto",
 				["use_showOn"] = true,
+				["subeventPrefix"] = "SPELL",
+				["event"] = "Cooldown Progress (Spell)",
 				["names"] = {
 					"Combustion", -- [1]
 				},
-				["event"] = "Cooldown Progress (Spell)",
-				["use_unit"] = true,
 				["realSpellName"] = "燃烬风暴",
 				["use_spellName"] = true,
 				["spellIds"] = {
 				},
 				["unit"] = "player",
 				["showOn"] = "showOnReady",
-				["subeventPrefix"] = "SPELL",
+				["use_unit"] = true,
 				["subeventSuffix"] = "_CAST_START",
 				["debuffType"] = "HELPFUL",
 			},
@@ -2967,6 +2970,7 @@ WeakAurasSaved = {
 				["spellknown"] = 31661,
 				["use_name"] = false,
 			},
+			["cooldownTextEnabled"] = true,
 			["animation"] = {
 				["start"] = {
 					["type"] = "none",
@@ -2981,6 +2985,7 @@ WeakAurasSaved = {
 					["duration_type"] = "seconds",
 				},
 			},
+			["text2Containment"] = "INSIDE",
 			["actions"] = {
 				["start"] = {
 				},
@@ -2989,15 +2994,8 @@ WeakAurasSaved = {
 				["init"] = {
 				},
 			},
-			["text2Containment"] = "INSIDE",
-			["yOffset"] = 0,
-			["text1Color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
-			},
 			["text1Font"] = "Ubuntu Condensed",
+			["yOffset"] = 0,
 			["stickyDuration"] = false,
 			["text2Color"] = {
 				1, -- [1]
@@ -3009,7 +3007,12 @@ WeakAurasSaved = {
 			["text1Containment"] = "INSIDE",
 			["inverse"] = true,
 			["text2FontSize"] = 24,
-			["cooldownTextEnabled"] = true,
+			["text1Color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+			},
 			["text1"] = "%s",
 			["width"] = 32,
 			["text2Enabled"] = false,
@@ -3056,18 +3059,18 @@ WeakAurasSaved = {
 				["custom_hide"] = "timed",
 				["unevent"] = "auto",
 				["use_showOn"] = true,
+				["subeventPrefix"] = "SPELL",
+				["event"] = "Cooldown Progress (Spell)",
 				["names"] = {
 					"Combustion", -- [1]
 				},
-				["event"] = "Cooldown Progress (Spell)",
-				["use_unit"] = true,
 				["realSpellName"] = "烈焰飞舞",
 				["use_spellName"] = true,
 				["spellIds"] = {
 				},
 				["unit"] = "player",
 				["showOn"] = "showAlways",
-				["subeventPrefix"] = "SPELL",
+				["use_unit"] = true,
 				["subeventSuffix"] = "_CAST_START",
 				["debuffType"] = "HELPFUL",
 			},
@@ -3136,6 +3139,41 @@ WeakAurasSaved = {
 			},
 			["stickyDuration"] = false,
 			["text2Containment"] = "INSIDE",
+			["text2Font"] = "Friz Quadrata TT",
+			["text1Color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+			},
+			["parent"] = "Mage",
+			["text1Font"] = "Ubuntu Condensed",
+			["text2Color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+			},
+			["regionType"] = "icon",
+			["text2Point"] = "CENTER",
+			["numTriggers"] = 1,
+			["text2FontSize"] = 24,
+			["text1FontFlags"] = "OUTLINE",
+			["text1"] = "%s",
+			["width"] = 32,
+			["text2Enabled"] = false,
+			["zoom"] = 0,
+			["auto"] = true,
+			["id"] = "烈焰飞舞",
+			["additional_triggers"] = {
+			},
+			["text2"] = "%p",
+			["frameStrata"] = 1,
+			["anchorFrameType"] = "SCREEN",
+			["cooldownTextEnabled"] = true,
+			["text1Containment"] = "INSIDE",
+			["inverse"] = true,
+			["yOffset"] = 0,
 			["animation"] = {
 				["start"] = {
 					["type"] = "none",
@@ -3150,36 +3188,9 @@ WeakAurasSaved = {
 					["duration_type"] = "seconds",
 				},
 			},
-			["text1Color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
+			["conditions"] = {
 			},
-			["parent"] = "Mage",
-			["text1Containment"] = "INSIDE",
-			["text1FontFlags"] = "OUTLINE",
-			["regionType"] = "icon",
-			["text2Color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
-			},
-			["numTriggers"] = 1,
-			["text2FontSize"] = 24,
-			["text2Point"] = "CENTER",
-			["text1"] = "%s",
-			["width"] = 32,
-			["text2Enabled"] = false,
-			["zoom"] = 0,
-			["auto"] = true,
-			["id"] = "烈焰飞舞",
-			["additional_triggers"] = {
-			},
-			["text2"] = "%p",
-			["frameStrata"] = 1,
-			["anchorFrameType"] = "SCREEN",
+			["cooldown"] = false,
 			["actions"] = {
 				["start"] = {
 				},
@@ -3188,14 +3199,6 @@ WeakAurasSaved = {
 				["init"] = {
 				},
 			},
-			["text1Font"] = "Ubuntu Condensed",
-			["inverse"] = true,
-			["cooldownTextEnabled"] = true,
-			["yOffset"] = 0,
-			["conditions"] = {
-			},
-			["cooldown"] = false,
-			["text2Font"] = "Friz Quadrata TT",
 		},
 		["溜溜球"] = {
 			["outline"] = "None",
@@ -3290,13 +3293,6 @@ WeakAurasSaved = {
 			["fontSize"] = 12,
 			["displayStacks"] = "%s",
 			["regionType"] = "text",
-			["color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
-			},
-			["parent"] = "Mage",
 			["animation"] = {
 				["start"] = {
 					["type"] = "none",
@@ -3311,6 +3307,13 @@ WeakAurasSaved = {
 					["duration_type"] = "seconds",
 				},
 			},
+			["color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+			},
+			["parent"] = "Mage",
 			["stickyDuration"] = false,
 			["auto"] = true,
 			["stacksContainment"] = "INSIDE",
@@ -3361,18 +3364,18 @@ WeakAurasSaved = {
 				["custom_hide"] = "timed",
 				["unevent"] = "auto",
 				["use_showOn"] = true,
-				["use_unit"] = true,
+				["subeventPrefix"] = "SPELL",
 				["event"] = "Cooldown Progress (Spell)",
-				["names"] = {
-					"Combustion", -- [1]
-				},
+				["use_unit"] = true,
 				["realSpellName"] = "寒冰新星",
 				["use_spellName"] = true,
 				["spellIds"] = {
 				},
 				["unit"] = "player",
 				["showOn"] = "showOnReady",
-				["subeventPrefix"] = "SPELL",
+				["names"] = {
+					"Combustion", -- [1]
+				},
 				["subeventSuffix"] = "_CAST_START",
 				["debuffType"] = "HELPFUL",
 			},
@@ -3435,11 +3438,19 @@ WeakAurasSaved = {
 					},
 				},
 			},
-			["text1Color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
+			["animation"] = {
+				["start"] = {
+					["type"] = "none",
+					["duration_type"] = "seconds",
+				},
+				["main"] = {
+					["type"] = "none",
+					["duration_type"] = "seconds",
+				},
+				["finish"] = {
+					["type"] = "none",
+					["duration_type"] = "seconds",
+				},
 			},
 			["actions"] = {
 				["start"] = {
@@ -3464,23 +3475,15 @@ WeakAurasSaved = {
 				1, -- [4]
 			},
 			["regionType"] = "icon",
-			["text1Containment"] = "INSIDE",
+			["text1Color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+			},
 			["numTriggers"] = 1,
 			["text2FontSize"] = 24,
-			["animation"] = {
-				["start"] = {
-					["type"] = "none",
-					["duration_type"] = "seconds",
-				},
-				["main"] = {
-					["type"] = "none",
-					["duration_type"] = "seconds",
-				},
-				["finish"] = {
-					["type"] = "none",
-					["duration_type"] = "seconds",
-				},
-			},
+			["text1Containment"] = "INSIDE",
 			["text1"] = "%s",
 			["width"] = 32,
 			["text2Enabled"] = false,
@@ -3603,56 +3606,7 @@ WeakAurasSaved = {
 					},
 				},
 			},
-			["text1Containment"] = "INSIDE",
-			["color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
-			},
-			["text2Containment"] = "INSIDE",
-			["yOffset"] = 0,
-			["text1Color"] = {
-				1, -- [1]
-				0.92156862745098, -- [2]
-				0, -- [3]
-				1, -- [4]
-			},
-			["xOffset"] = 66,
 			["text2Point"] = "CENTER",
-			["text2Color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
-			},
-			["regionType"] = "icon",
-			["stickyDuration"] = false,
-			["inverse"] = true,
-			["text2FontSize"] = 24,
-			["text1FontFlags"] = "OUTLINE",
-			["init_completed"] = 1,
-			["text1"] = "%s",
-			["anchorFrameType"] = "SCREEN",
-			["frameStrata"] = 3,
-			["zoom"] = 0,
-			["auto"] = true,
-			["id"] = "时间扭曲准备完毕 2",
-			["additional_triggers"] = {
-			},
-			["text2"] = "%p",
-			["text2Enabled"] = false,
-			["width"] = 32,
-			["actions"] = {
-				["start"] = {
-				},
-				["finish"] = {
-				},
-				["init"] = {
-				},
-			},
-			["text1Font"] = "Ubuntu Condensed",
-			["numTriggers"] = 1,
 			["animation"] = {
 				["start"] = {
 					["type"] = "none",
@@ -3667,11 +3621,60 @@ WeakAurasSaved = {
 					["duration_type"] = "seconds",
 				},
 			},
-			["text2Font"] = "Friz Quadrata TT",
+			["text2Containment"] = "INSIDE",
+			["actions"] = {
+				["start"] = {
+				},
+				["finish"] = {
+				},
+				["init"] = {
+				},
+			},
+			["text1Font"] = "Ubuntu Condensed",
+			["text1Color"] = {
+				1, -- [1]
+				0.92156862745098, -- [2]
+				0, -- [3]
+				1, -- [4]
+			},
+			["text2Color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+			},
+			["text1FontFlags"] = "OUTLINE",
+			["regionType"] = "icon",
+			["inverse"] = true,
+			["color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+			},
+			["text2FontSize"] = 24,
+			["xOffset"] = 66,
+			["init_completed"] = 1,
+			["text1"] = "%s",
+			["anchorFrameType"] = "SCREEN",
+			["frameStrata"] = 3,
+			["zoom"] = 0,
+			["auto"] = true,
+			["id"] = "时间扭曲准备完毕 2",
+			["additional_triggers"] = {
+			},
+			["text2"] = "%p",
+			["text2Enabled"] = false,
+			["width"] = 32,
+			["yOffset"] = 0,
+			["parent"] = "Mage",
+			["numTriggers"] = 1,
+			["text1Containment"] = "INSIDE",
+			["stickyDuration"] = false,
 			["conditions"] = {
 			},
 			["cooldown"] = false,
-			["parent"] = "Mage",
+			["text2Font"] = "Friz Quadrata TT",
 		},
 		["火冲冲能2"] = {
 			["textFlags"] = "None",
@@ -4044,9 +4047,9 @@ WeakAurasSaved = {
 				["use_charges"] = true,
 				["use_unit"] = true,
 				["useCount"] = true,
-				["custom_hide"] = "timed",
+				["debuffType"] = "HELPFUL",
 				["charges"] = "0",
-				["spellName"] = 108839,
+				["custom_hide"] = "timed",
 				["charges_operator"] = "==",
 				["type"] = "status",
 				["unit"] = "player",
@@ -4064,7 +4067,7 @@ WeakAurasSaved = {
 				["count"] = "3",
 				["showOn"] = "showOnCooldown",
 				["unevent"] = "auto",
-				["debuffType"] = "HELPFUL",
+				["spellName"] = 108839,
 				["subeventPrefix"] = "SPELL",
 			},
 			["text"] = false,
@@ -4154,18 +4157,18 @@ WeakAurasSaved = {
 				["spellName"] = 153561,
 				["unevent"] = "auto",
 				["use_showOn"] = true,
+				["subeventPrefix"] = "SPELL",
+				["event"] = "Cooldown Progress (Spell)",
 				["names"] = {
 					"Combustion", -- [1]
 				},
-				["event"] = "Cooldown Progress (Spell)",
-				["use_unit"] = true,
 				["realSpellName"] = "流星",
 				["use_spellName"] = true,
 				["spellIds"] = {
 				},
 				["unit"] = "player",
 				["showOn"] = "showOnReady",
-				["subeventPrefix"] = "SPELL",
+				["use_unit"] = true,
 				["subeventSuffix"] = "_CAST_START",
 				["debuffType"] = "HELPFUL",
 			},
@@ -4228,6 +4231,7 @@ WeakAurasSaved = {
 					},
 				},
 			},
+			["yOffset"] = 0,
 			["actions"] = {
 				["start"] = {
 					["sound"] = "Interface\\AddOns\\WeakAuras\\Media\\Sounds\\BoxingArenaSound.ogg",
@@ -4238,8 +4242,9 @@ WeakAurasSaved = {
 				["init"] = {
 				},
 			},
-			["text2Font"] = "Friz Quadrata TT",
 			["text2Containment"] = "INSIDE",
+			["text2Font"] = "Friz Quadrata TT",
+			["text1Font"] = "Ubuntu Condensed",
 			["animation"] = {
 				["start"] = {
 					["type"] = "none",
@@ -4254,30 +4259,18 @@ WeakAurasSaved = {
 					["duration_type"] = "seconds",
 				},
 			},
+			["parent"] = "Mage",
+			["text1FontFlags"] = "OUTLINE",
+			["regionType"] = "icon",
 			["text1Color"] = {
 				1, -- [1]
 				1, -- [2]
 				1, -- [3]
 				1, -- [4]
 			},
-			["parent"] = "Mage",
-			["color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
-			},
-			["text2Color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
-			},
-			["regionType"] = "icon",
-			["text1Containment"] = "INSIDE",
 			["inverse"] = true,
 			["text2FontSize"] = 24,
-			["yOffset"] = 0,
+			["cooldownTextEnabled"] = true,
 			["text1"] = "%s",
 			["width"] = 32,
 			["frameStrata"] = 4,
@@ -4289,11 +4282,21 @@ WeakAurasSaved = {
 			["text2"] = "%p",
 			["text2Enabled"] = false,
 			["anchorFrameType"] = "SCREEN",
-			["text1FontFlags"] = "OUTLINE",
-			["cooldownTextEnabled"] = true,
+			["text1Containment"] = "INSIDE",
+			["text2Color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+			},
 			["numTriggers"] = 1,
+			["color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+			},
 			["text2Point"] = "CENTER",
-			["text1Font"] = "Ubuntu Condensed",
 			["conditions"] = {
 			},
 			["cooldown"] = true,
@@ -4442,9 +4445,9 @@ WeakAurasSaved = {
 					"Incanter's Flow", -- [1]
 				},
 				["useCount"] = true,
-				["spellName"] = 108853,
+				["debuffType"] = "HELPFUL",
 				["charges"] = "3",
-				["custom_hide"] = "timed",
+				["spellName"] = 108853,
 				["charges_operator"] = ">=",
 				["type"] = "status",
 				["unit"] = "player",
@@ -4460,7 +4463,7 @@ WeakAurasSaved = {
 				["count"] = "3",
 				["showOn"] = "showAlways",
 				["unevent"] = "auto",
-				["debuffType"] = "HELPFUL",
+				["custom_hide"] = "timed",
 				["subeventPrefix"] = "SPELL",
 			},
 			["text"] = false,
@@ -4779,18 +4782,18 @@ WeakAurasSaved = {
 				["spellName"] = 205032,
 				["unevent"] = "auto",
 				["use_showOn"] = true,
+				["subeventPrefix"] = "SPELL",
+				["event"] = "Cooldown Progress (Spell)",
 				["names"] = {
 					"Combustion", -- [1]
 				},
-				["event"] = "Cooldown Progress (Spell)",
-				["use_unit"] = true,
 				["realSpellName"] = "精力充沛",
 				["use_spellName"] = true,
 				["spellIds"] = {
 				},
 				["unit"] = "player",
 				["showOn"] = "showOnReady",
-				["subeventPrefix"] = "SPELL",
+				["use_unit"] = true,
 				["subeventSuffix"] = "_CAST_START",
 				["debuffType"] = "HELPFUL",
 			},
@@ -4853,7 +4856,29 @@ WeakAurasSaved = {
 					},
 				},
 			},
+			["text1Containment"] = "INSIDE",
+			["untrigger"] = {
+				["showOn"] = "showOnReady",
+				["spellName"] = 205032,
+			},
+			["text2Containment"] = "INSIDE",
+			["stickyDuration"] = false,
+			["text1Color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+			},
+			["text1Font"] = "Ubuntu Condensed",
 			["xOffset"] = 0,
+			["text2Color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+			},
+			["regionType"] = "icon",
+			["inverse"] = true,
 			["animation"] = {
 				["start"] = {
 					["type"] = "none",
@@ -4868,7 +4893,7 @@ WeakAurasSaved = {
 					["duration_type"] = "seconds",
 				},
 			},
-			["text2Containment"] = "INSIDE",
+			["text2FontSize"] = 24,
 			["actions"] = {
 				["start"] = {
 				},
@@ -4877,28 +4902,6 @@ WeakAurasSaved = {
 				["init"] = {
 				},
 			},
-			["text1Font"] = "Ubuntu Condensed",
-			["text1Containment"] = "INSIDE",
-			["text1Color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
-			},
-			["text2Color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
-			},
-			["regionType"] = "icon",
-			["untrigger"] = {
-				["showOn"] = "showOnReady",
-				["spellName"] = 205032,
-			},
-			["inverse"] = true,
-			["text2FontSize"] = 24,
-			["stickyDuration"] = false,
 			["init_completed"] = 1,
 			["text1"] = "%s",
 			["anchorFrameType"] = "SCREEN",
@@ -5064,9 +5067,9 @@ WeakAurasSaved = {
 					"Incanter's Flow", -- [1]
 				},
 				["useCount"] = true,
-				["custom_hide"] = "timed",
+				["debuffType"] = "HELPFUL",
 				["charges"] = "2",
-				["spellName"] = 108853,
+				["custom_hide"] = "timed",
 				["charges_operator"] = ">=",
 				["type"] = "status",
 				["unit"] = "player",
@@ -5082,7 +5085,7 @@ WeakAurasSaved = {
 				["count"] = "3",
 				["showOn"] = "showAlways",
 				["unevent"] = "auto",
-				["debuffType"] = "HELPFUL",
+				["spellName"] = 108853,
 				["subeventPrefix"] = "SPELL",
 			},
 			["text"] = false,
@@ -5203,15 +5206,15 @@ WeakAurasSaved = {
 				["type"] = "aura",
 				["spellId"] = "194329",
 				["subeventSuffix"] = "_CAST_START",
-				["spellIds"] = {
-					194329, -- [1]
-				},
+				["name"] = "炽烈之咒",
 				["use_spellId"] = true,
 				["event"] = "Health",
 				["subeventPrefix"] = "SPELL",
-				["count"] = "5",
+				["spellIds"] = {
+					194329, -- [1]
+				},
 				["useCount"] = true,
-				["name"] = "炽烈之咒",
+				["count"] = "5",
 				["custom_hide"] = "timed",
 				["unit"] = "player",
 				["names"] = {
@@ -5241,10 +5244,7 @@ WeakAurasSaved = {
 					["multi"] = {
 					},
 				},
-				["difficulty"] = {
-					["multi"] = {
-					},
-				},
+				["use_name"] = false,
 				["class"] = {
 					["single"] = "MAGE",
 					["multi"] = {
@@ -5254,23 +5254,26 @@ WeakAurasSaved = {
 					["multi"] = {
 					},
 				},
-				["pvptalent"] = {
+				["use_spec"] = false,
+				["difficulty"] = {
 					["multi"] = {
 					},
 				},
-				["use_class"] = true,
 				["race"] = {
 					["multi"] = {
 					},
 				},
 				["name"] = "叫我法神啦",
+				["pvptalent"] = {
+					["multi"] = {
+					},
+				},
 				["faction"] = {
 					["multi"] = {
 					},
 				},
-				["use_spec"] = false,
 				["use_combat"] = true,
-				["use_name"] = false,
+				["use_class"] = true,
 				["size"] = {
 					["multi"] = {
 					},
@@ -5614,18 +5617,18 @@ WeakAurasSaved = {
 					},
 				},
 			},
-			["text2"] = "%p",
 			["cooldownTextEnabled"] = true,
-			["text2Containment"] = "INSIDE",
 			["desaturate"] = false,
+			["text2Containment"] = "INSIDE",
+			["parent"] = "Mage",
 			["text1Color"] = {
 				0.329411764705882, -- [1]
 				0.541176470588235, -- [2]
 				0.807843137254902, -- [3]
 				1, -- [4]
 			},
-			["text2Point"] = "CENTER",
 			["yOffset"] = 8,
+			["disjunctive"] = "all",
 			["text2Color"] = {
 				1, -- [1]
 				1, -- [2]
@@ -5633,10 +5636,11 @@ WeakAurasSaved = {
 				1, -- [4]
 			},
 			["regionType"] = "icon",
-			["disjunctive"] = "all",
 			["numTriggers"] = 1,
-			["text2FontSize"] = 24,
 			["text1Font"] = "Friz Quadrata TT",
+			["text2FontSize"] = 24,
+			["text2"] = "%p",
+			["init_completed"] = 1,
 			["text1"] = "%p",
 			["anchorFrameType"] = "SCREEN",
 			["frameStrata"] = 4,
@@ -5648,12 +5652,14 @@ WeakAurasSaved = {
 			["id"] = "奥强持续时间",
 			["text2Enabled"] = false,
 			["width"] = 48,
+			["stickyDuration"] = false,
 			["color"] = {
 				1, -- [1]
 				1, -- [2]
 				1, -- [3]
 				1, -- [4]
 			},
+			["inverse"] = false,
 			["actions"] = {
 				["start"] = {
 				},
@@ -5662,7 +5668,6 @@ WeakAurasSaved = {
 				["init"] = {
 				},
 			},
-			["inverse"] = false,
 			["animation"] = {
 				["start"] = {
 					["type"] = "none",
@@ -5677,11 +5682,10 @@ WeakAurasSaved = {
 					["duration_type"] = "seconds",
 				},
 			},
-			["parent"] = "Mage",
 			["conditions"] = {
 			},
+			["text2Point"] = "CENTER",
 			["text2Font"] = "Friz Quadrata TT",
-			["stickyDuration"] = false,
 		},
 		["冲能1"] = {
 			["textFlags"] = "None",
@@ -5739,15 +5743,15 @@ WeakAurasSaved = {
 					["multi"] = {
 					},
 				},
-				["difficulty"] = {
-					["multi"] = {
-					},
-				},
+				["use_name"] = false,
 				["race"] = {
 					["multi"] = {
 					},
 				},
-				["use_class"] = true,
+				["difficulty"] = {
+					["multi"] = {
+					},
+				},
 				["role"] = {
 					["multi"] = {
 					},
@@ -5762,7 +5766,7 @@ WeakAurasSaved = {
 					},
 				},
 				["use_spec"] = false,
-				["use_name"] = false,
+				["use_class"] = true,
 				["size"] = {
 					["multi"] = {
 					},
@@ -5936,18 +5940,18 @@ WeakAurasSaved = {
 				["custom_hide"] = "timed",
 				["unevent"] = "auto",
 				["use_showOn"] = true,
+				["subeventPrefix"] = "SPELL",
+				["event"] = "Cooldown Progress (Spell)",
 				["names"] = {
 					"Combustion", -- [1]
 				},
-				["event"] = "Cooldown Progress (Spell)",
-				["use_unit"] = true,
 				["realSpellName"] = "燃烬风暴",
 				["use_spellName"] = true,
 				["spellIds"] = {
 				},
 				["unit"] = "player",
 				["showOn"] = "showOnCooldown",
-				["subeventPrefix"] = "SPELL",
+				["use_unit"] = true,
 				["subeventSuffix"] = "_CAST_START",
 				["debuffType"] = "HELPFUL",
 			},
@@ -6010,11 +6014,19 @@ WeakAurasSaved = {
 				["spellknown"] = 31661,
 				["use_name"] = false,
 			},
-			["text1Color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
+			["animation"] = {
+				["start"] = {
+					["type"] = "none",
+					["duration_type"] = "seconds",
+				},
+				["main"] = {
+					["type"] = "none",
+					["duration_type"] = "seconds",
+				},
+				["finish"] = {
+					["type"] = "none",
+					["duration_type"] = "seconds",
+				},
 			},
 			["actions"] = {
 				["start"] = {
@@ -6036,23 +6048,15 @@ WeakAurasSaved = {
 				1, -- [4]
 			},
 			["regionType"] = "icon",
-			["text1Containment"] = "INSIDE",
+			["text1Color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+			},
 			["inverse"] = true,
 			["text2FontSize"] = 24,
-			["animation"] = {
-				["start"] = {
-					["type"] = "none",
-					["duration_type"] = "seconds",
-				},
-				["main"] = {
-					["type"] = "none",
-					["duration_type"] = "seconds",
-				},
-				["finish"] = {
-					["type"] = "none",
-					["duration_type"] = "seconds",
-				},
-			},
+			["text1Containment"] = "INSIDE",
 			["text1"] = "%s",
 			["width"] = 32,
 			["text2Enabled"] = false,
@@ -6176,13 +6180,36 @@ WeakAurasSaved = {
 				},
 				["use_name"] = false,
 			},
-			["text2"] = "%p",
 			["text2Point"] = "CENTER",
+			["parent"] = "Mage",
 			["text2Containment"] = "INSIDE",
-			["yOffset"] = 8,
-			["text1Font"] = "默认",
-			["stickyDuration"] = false,
+			["animation"] = {
+				["start"] = {
+					["type"] = "none",
+					["duration_type"] = "seconds",
+				},
+				["main"] = {
+					["type"] = "none",
+					["duration_type"] = "seconds",
+				},
+				["finish"] = {
+					["type"] = "none",
+					["duration_type"] = "seconds",
+				},
+			},
+			["text1Color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+			},
 			["text1Containment"] = "INSIDE",
+			["color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+			},
 			["text2Color"] = {
 				1, -- [1]
 				1, -- [2]
@@ -6190,15 +6217,10 @@ WeakAurasSaved = {
 				1, -- [4]
 			},
 			["regionType"] = "icon",
-			["color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
-			},
 			["inverse"] = true,
-			["text2FontSize"] = 24,
 			["xOffset"] = 107,
+			["text2FontSize"] = 24,
+			["text2"] = "%p",
 			["init_completed"] = 1,
 			["text1"] = "%c",
 			["anchorFrameType"] = "SCREEN",
@@ -6229,32 +6251,10 @@ WeakAurasSaved = {
 			["id"] = "RoP Available 2",
 			["text2Enabled"] = false,
 			["width"] = 48,
-			["text1Color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
-			},
-			["animation"] = {
-				["start"] = {
-					["type"] = "none",
-					["duration_type"] = "seconds",
-				},
-				["main"] = {
-					["type"] = "none",
-					["duration_type"] = "seconds",
-				},
-				["finish"] = {
-					["type"] = "none",
-					["duration_type"] = "seconds",
-				},
-			},
+			["stickyDuration"] = false,
+			["text1Font"] = "默认",
 			["numTriggers"] = 2,
-			["parent"] = "Mage",
-			["text2Font"] = "Friz Quadrata TT",
-			["conditions"] = {
-			},
-			["cooldown"] = true,
+			["yOffset"] = 8,
 			["actions"] = {
 				["start"] = {
 				},
@@ -6263,6 +6263,10 @@ WeakAurasSaved = {
 				["init"] = {
 				},
 			},
+			["conditions"] = {
+			},
+			["cooldown"] = true,
+			["text2Font"] = "Friz Quadrata TT",
 		},
 		["Phoenix's Flames 1 2"] = {
 			["textFlags"] = "None",
@@ -6583,51 +6587,8 @@ WeakAurasSaved = {
 					},
 				},
 			},
-			["text1Containment"] = "INSIDE",
+			["parent"] = "Mage",
 			["text2Containment"] = "INSIDE",
-			["stickyDuration"] = false,
-			["text1Font"] = "Friz Quadrata TT",
-			["text2Point"] = "CENTER",
-			["cooldownTextEnabled"] = true,
-			["text2Color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
-			},
-			["regionType"] = "icon",
-			["text1Color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
-			},
-			["actions"] = {
-				["start"] = {
-				},
-				["finish"] = {
-				},
-				["init"] = {
-				},
-			},
-			["text2FontSize"] = 24,
-			["numTriggers"] = 1,
-			["text1"] = "%s",
-			["text2Font"] = "Friz Quadrata TT",
-			["anchorFrameType"] = "SCREEN",
-			["zoom"] = 0,
-			["auto"] = true,
-			["text2Enabled"] = false,
-			["id"] = "热能真空",
-			["text1FontFlags"] = "OUTLINE",
-			["frameStrata"] = 1,
-			["width"] = 53,
-			["text2"] = "%p",
-			["untrigger"] = {
-				["showOn"] = "showAlways",
-				["spellName"] = 155149,
-			},
-			["inverse"] = false,
 			["animation"] = {
 				["start"] = {
 					["type"] = "none",
@@ -6642,11 +6603,54 @@ WeakAurasSaved = {
 					["duration_type"] = "seconds",
 				},
 			},
-			["parent"] = "Mage",
-			["conditions"] = {
+			["text1Font"] = "Friz Quadrata TT",
+			["untrigger"] = {
+				["showOn"] = "showAlways",
+				["spellName"] = 155149,
 			},
+			["text1Color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+			},
+			["text2Color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+			},
+			["regionType"] = "icon",
+			["stickyDuration"] = false,
+			["text2Point"] = "CENTER",
+			["text2FontSize"] = 24,
+			["numTriggers"] = 1,
+			["text1"] = "%s",
+			["text2Font"] = "Friz Quadrata TT",
+			["anchorFrameType"] = "SCREEN",
+			["zoom"] = 0,
+			["auto"] = true,
+			["text2Enabled"] = false,
+			["id"] = "热能真空",
+			["text1FontFlags"] = "OUTLINE",
+			["frameStrata"] = 1,
+			["width"] = 53,
+			["text2"] = "%p",
+			["cooldownTextEnabled"] = true,
+			["inverse"] = false,
 			["disjunctive"] = "all",
 			["xOffset"] = 107,
+			["conditions"] = {
+			},
+			["text1Containment"] = "INSIDE",
+			["actions"] = {
+				["start"] = {
+				},
+				["finish"] = {
+				},
+				["init"] = {
+				},
+			},
 		},
 		["Phoenix's Flames 1 Recharge 2"] = {
 			["textFlags"] = "None",
@@ -6785,9 +6789,9 @@ WeakAurasSaved = {
 					"Incanter's Flow", -- [1]
 				},
 				["useCount"] = true,
-				["custom_hide"] = "timed",
+				["debuffType"] = "HELPFUL",
 				["charges"] = "0",
-				["spellName"] = 194466,
+				["custom_hide"] = "timed",
 				["charges_operator"] = "==",
 				["type"] = "status",
 				["unit"] = "player",
@@ -6803,7 +6807,7 @@ WeakAurasSaved = {
 				["count"] = "3",
 				["showOn"] = "showAlways",
 				["unevent"] = "auto",
-				["debuffType"] = "HELPFUL",
+				["spellName"] = 194466,
 				["subeventPrefix"] = "SPELL",
 			},
 			["text"] = false,
@@ -7016,9 +7020,9 @@ WeakAurasSaved = {
 				["use_charges"] = false,
 				["use_unit"] = true,
 				["useCount"] = true,
-				["custom_hide"] = "timed",
+				["debuffType"] = "HELPFUL",
 				["type"] = "status",
-				["spellName"] = 1953,
+				["custom_hide"] = "timed",
 				["charges_operator"] = "==",
 				["charges"] = "0",
 				["unit"] = "player",
@@ -7036,7 +7040,7 @@ WeakAurasSaved = {
 				["count"] = "3",
 				["showOn"] = "showOnCooldown",
 				["unevent"] = "auto",
-				["debuffType"] = "HELPFUL",
+				["spellName"] = 1953,
 				["subeventPrefix"] = "SPELL",
 			},
 			["text"] = false,
@@ -7216,22 +7220,9 @@ WeakAurasSaved = {
 				1, -- [4]
 			},
 			["text2Containment"] = "INSIDE",
-			["parent"] = "Mage",
+			["stickyDuration"] = false,
 			["text1Font"] = "Ubuntu Condensed",
-			["animation"] = {
-				["start"] = {
-					["type"] = "none",
-					["duration_type"] = "seconds",
-				},
-				["main"] = {
-					["type"] = "none",
-					["duration_type"] = "seconds",
-				},
-				["finish"] = {
-					["type"] = "none",
-					["duration_type"] = "seconds",
-				},
-			},
+			["parent"] = "Mage",
 			["text1Color"] = {
 				1, -- [1]
 				1, -- [2]
@@ -7260,10 +7251,9 @@ WeakAurasSaved = {
 			["text1FontFlags"] = "OUTLINE",
 			["text2Enabled"] = false,
 			["anchorFrameType"] = "SCREEN",
-			["text2Font"] = "Friz Quadrata TT",
 			["text2Point"] = "CENTER",
-			["numTriggers"] = 1,
 			["cooldownTextEnabled"] = true,
+			["numTriggers"] = 1,
 			["actions"] = {
 				["start"] = {
 				},
@@ -7272,10 +7262,24 @@ WeakAurasSaved = {
 				["init"] = {
 				},
 			},
+			["animation"] = {
+				["start"] = {
+					["type"] = "none",
+					["duration_type"] = "seconds",
+				},
+				["main"] = {
+					["type"] = "none",
+					["duration_type"] = "seconds",
+				},
+				["finish"] = {
+					["type"] = "none",
+					["duration_type"] = "seconds",
+				},
+			},
 			["conditions"] = {
 			},
 			["cooldown"] = true,
-			["stickyDuration"] = false,
+			["text2Font"] = "Friz Quadrata TT",
 		},
 		["瓦斯琪之握"] = {
 			["sparkWidth"] = 10,
@@ -7583,18 +7587,18 @@ WeakAurasSaved = {
 				["custom_hide"] = "timed",
 				["unevent"] = "auto",
 				["use_showOn"] = true,
+				["subeventPrefix"] = "SPELL",
+				["event"] = "Cooldown Progress (Spell)",
 				["names"] = {
 					"Combustion", -- [1]
 				},
-				["event"] = "Cooldown Progress (Spell)",
-				["use_unit"] = true,
 				["realSpellName"] = "镜像",
 				["use_spellName"] = true,
 				["spellIds"] = {
 				},
 				["unit"] = "player",
 				["showOn"] = "showOnReady",
-				["subeventPrefix"] = "SPELL",
+				["use_unit"] = true,
 				["subeventSuffix"] = "_CAST_START",
 				["debuffType"] = "HELPFUL",
 			},
@@ -7666,12 +7670,6 @@ WeakAurasSaved = {
 			["text2Font"] = "Friz Quadrata TT",
 			["text2Containment"] = "INSIDE",
 			["parent"] = "Mage",
-			["text1Color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
-			},
 			["text1Font"] = "Ubuntu Condensed",
 			["animation"] = {
 				["start"] = {
@@ -7687,6 +7685,7 @@ WeakAurasSaved = {
 					["duration_type"] = "seconds",
 				},
 			},
+			["cooldownTextEnabled"] = true,
 			["text2Color"] = {
 				1, -- [1]
 				1, -- [2]
@@ -7694,7 +7693,12 @@ WeakAurasSaved = {
 				1, -- [4]
 			},
 			["regionType"] = "icon",
-			["cooldownTextEnabled"] = true,
+			["text1Color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+			},
 			["inverse"] = true,
 			["text2FontSize"] = 24,
 			["text1Containment"] = "INSIDE",
@@ -7786,12 +7790,15 @@ WeakAurasSaved = {
 					["multi"] = {
 					},
 				},
-				["use_class"] = true,
+				["difficulty"] = {
+					["multi"] = {
+					},
+				},
 				["race"] = {
 					["multi"] = {
 					},
 				},
-				["use_name"] = false,
+				["use_class"] = true,
 				["role"] = {
 					["multi"] = {
 					},
@@ -7806,10 +7813,7 @@ WeakAurasSaved = {
 					},
 				},
 				["use_combat"] = true,
-				["difficulty"] = {
-					["multi"] = {
-					},
-				},
+				["use_name"] = false,
 				["size"] = {
 					["multi"] = {
 					},
@@ -8009,15 +8013,15 @@ WeakAurasSaved = {
 					["multi"] = {
 					},
 				},
-				["difficulty"] = {
-					["multi"] = {
-					},
-				},
+				["use_name"] = false,
 				["role"] = {
 					["multi"] = {
 					},
 				},
-				["use_class"] = true,
+				["difficulty"] = {
+					["multi"] = {
+					},
+				},
 				["race"] = {
 					["multi"] = {
 					},
@@ -8032,7 +8036,7 @@ WeakAurasSaved = {
 					["multi"] = {
 					},
 				},
-				["use_name"] = false,
+				["use_class"] = true,
 				["size"] = {
 					["multi"] = {
 					},
@@ -8206,18 +8210,18 @@ WeakAurasSaved = {
 				["spellName"] = 214634,
 				["unevent"] = "auto",
 				["use_showOn"] = true,
+				["subeventPrefix"] = "SPELL",
+				["event"] = "Cooldown Progress (Spell)",
 				["names"] = {
 					"Combustion", -- [1]
 				},
-				["event"] = "Cooldown Progress (Spell)",
-				["use_unit"] = true,
 				["realSpellName"] = "黑冰箭",
 				["use_spellName"] = true,
 				["spellIds"] = {
 				},
 				["unit"] = "player",
 				["showOn"] = "showOnCooldown",
-				["subeventPrefix"] = "SPELL",
+				["use_unit"] = true,
 				["subeventSuffix"] = "_CAST_START",
 				["debuffType"] = "HELPFUL",
 			},
@@ -8278,16 +8282,17 @@ WeakAurasSaved = {
 					},
 				},
 			},
-			["yOffset"] = 6.1035156250e-005,
-			["stickyDuration"] = false,
-			["text2Containment"] = "INSIDE",
-			["text1Containment"] = "INSIDE",
 			["text1Color"] = {
 				1, -- [1]
 				1, -- [2]
 				1, -- [3]
 				1, -- [4]
 			},
+			["yOffset"] = 6.1035156250e-005,
+			["text2Containment"] = "INSIDE",
+			["stickyDuration"] = false,
+			["text1Font"] = "默认",
+			["text1Containment"] = "INSIDE",
 			["animation"] = {
 				["start"] = {
 					["type"] = "none",
@@ -8302,7 +8307,6 @@ WeakAurasSaved = {
 					["duration_type"] = "seconds",
 				},
 			},
-			["text1Font"] = "默认",
 			["text2Color"] = {
 				1, -- [1]
 				1, -- [2]
@@ -8425,7 +8429,10 @@ WeakAurasSaved = {
 					["multi"] = {
 					},
 				},
-				["use_class"] = true,
+				["difficulty"] = {
+					["multi"] = {
+					},
+				},
 				["spec"] = {
 					["single"] = 2,
 					["multi"] = {
@@ -8436,26 +8443,23 @@ WeakAurasSaved = {
 					["multi"] = {
 					},
 				},
-				["use_spec"] = false,
-				["use_name"] = false,
+				["faction"] = {
+					["multi"] = {
+					},
+				},
+				["use_class"] = true,
 				["race"] = {
 					["multi"] = {
 					},
 				},
 				["name"] = "叫我法神啦",
+				["use_spec"] = false,
 				["pvptalent"] = {
 					["multi"] = {
 					},
 				},
-				["faction"] = {
-					["multi"] = {
-					},
-				},
 				["use_combat"] = true,
-				["difficulty"] = {
-					["multi"] = {
-					},
-				},
+				["use_name"] = false,
 				["size"] = {
 					["multi"] = {
 					},
@@ -8471,9 +8475,9 @@ WeakAurasSaved = {
 			["animation"] = {
 				["start"] = {
 					["type"] = "custom",
-					["duration"] = "0.2",
 					["duration_type"] = "seconds",
 					["preset"] = "fade",
+					["duration"] = "0.2",
 					["use_alpha"] = false,
 				},
 				["main"] = {
@@ -8567,10 +8571,7 @@ WeakAurasSaved = {
 						[13] = true,
 					},
 				},
-				["difficulty"] = {
-					["multi"] = {
-					},
-				},
+				["use_name"] = false,
 				["class"] = {
 					["single"] = "MAGE",
 					["multi"] = {
@@ -8580,23 +8581,26 @@ WeakAurasSaved = {
 					["multi"] = {
 					},
 				},
-				["faction"] = {
+				["pvptalent"] = {
 					["multi"] = {
 					},
 				},
-				["use_class"] = true,
+				["difficulty"] = {
+					["multi"] = {
+					},
+				},
 				["race"] = {
 					["multi"] = {
 					},
 				},
 				["name"] = "叫我法神啦",
-				["use_spec"] = true,
-				["pvptalent"] = {
+				["faction"] = {
 					["multi"] = {
 					},
 				},
+				["use_spec"] = true,
 				["use_combat"] = true,
-				["use_name"] = false,
+				["use_class"] = true,
 				["size"] = {
 					["multi"] = {
 					},
@@ -8659,7 +8663,7 @@ WeakAurasSaved = {
 				["unit"] = "player",
 				["type"] = "status",
 				["use_powertype"] = true,
-				["debuffType"] = "HELPFUL",
+				["spellName"] = 108839,
 				["charges_operator"] = "==",
 				["charges"] = "0",
 				["subeventSuffix"] = "_CAST_START",
@@ -8674,8 +8678,8 @@ WeakAurasSaved = {
 				},
 				["useCount"] = true,
 				["showOn"] = "showAlways",
-				["spellName"] = 108839,
 				["custom_hide"] = "timed",
+				["debuffType"] = "HELPFUL",
 				["subeventPrefix"] = "SPELL",
 			},
 			["text"] = false,
@@ -8844,13 +8848,36 @@ WeakAurasSaved = {
 				},
 				["use_name"] = false,
 			},
-			["text2"] = "%p",
 			["parent"] = "Mage",
+			["text2Point"] = "CENTER",
 			["text2Containment"] = "INSIDE",
-			["yOffset"] = 8,
-			["text1Font"] = "默认",
-			["stickyDuration"] = false,
+			["animation"] = {
+				["start"] = {
+					["type"] = "none",
+					["duration_type"] = "seconds",
+				},
+				["main"] = {
+					["type"] = "none",
+					["duration_type"] = "seconds",
+				},
+				["finish"] = {
+					["type"] = "none",
+					["duration_type"] = "seconds",
+				},
+			},
+			["text1Color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+			},
 			["text1Containment"] = "INSIDE",
+			["color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+			},
 			["text2Color"] = {
 				1, -- [1]
 				1, -- [2]
@@ -8858,15 +8885,10 @@ WeakAurasSaved = {
 				1, -- [4]
 			},
 			["regionType"] = "icon",
-			["color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
-			},
 			["numTriggers"] = 2,
-			["text2FontSize"] = 24,
 			["xOffset"] = 107,
+			["text2FontSize"] = 24,
+			["text2"] = "%p",
 			["init_completed"] = 1,
 			["text1"] = "%c",
 			["anchorFrameType"] = "SCREEN",
@@ -8897,32 +8919,10 @@ WeakAurasSaved = {
 			["id"] = "RoP CD 2",
 			["text2Enabled"] = false,
 			["width"] = 48,
-			["text1Color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
-			},
-			["animation"] = {
-				["start"] = {
-					["type"] = "none",
-					["duration_type"] = "seconds",
-				},
-				["main"] = {
-					["type"] = "none",
-					["duration_type"] = "seconds",
-				},
-				["finish"] = {
-					["type"] = "none",
-					["duration_type"] = "seconds",
-				},
-			},
+			["stickyDuration"] = false,
+			["text1Font"] = "默认",
 			["inverse"] = true,
-			["text2Point"] = "CENTER",
-			["text2Font"] = "Friz Quadrata TT",
-			["conditions"] = {
-			},
-			["cooldown"] = true,
+			["yOffset"] = 8,
 			["actions"] = {
 				["start"] = {
 				},
@@ -8931,6 +8931,10 @@ WeakAurasSaved = {
 				["init"] = {
 				},
 			},
+			["conditions"] = {
+			},
+			["cooldown"] = true,
+			["text2Font"] = "Friz Quadrata TT",
 		},
 		["Blast Wave 2"] = {
 			["glow"] = false,
@@ -8952,18 +8956,18 @@ WeakAurasSaved = {
 				["spellName"] = 235870,
 				["unevent"] = "auto",
 				["use_showOn"] = true,
+				["subeventPrefix"] = "SPELL",
+				["event"] = "Cooldown Progress (Spell)",
 				["names"] = {
 					"Combustion", -- [1]
 				},
-				["event"] = "Cooldown Progress (Spell)",
-				["use_unit"] = true,
 				["realSpellName"] = "阿莱克斯塔萨之怒",
 				["use_spellName"] = true,
 				["spellIds"] = {
 				},
 				["unit"] = "player",
 				["showOn"] = "showAlways",
-				["subeventPrefix"] = "SPELL",
+				["use_unit"] = true,
 				["subeventSuffix"] = "_CAST_START",
 				["debuffType"] = "HELPFUL",
 			},
@@ -9024,26 +9028,34 @@ WeakAurasSaved = {
 					},
 				},
 			},
-			["parent"] = "Mage",
-			["text1Containment"] = "INSIDE",
-			["text2Containment"] = "INSIDE",
-			["color"] = {
-				0.349019607843137, -- [1]
-				0.349019607843137, -- [2]
-				0.349019607843137, -- [3]
-				1, -- [4]
-			},
-			["text1Font"] = "Ubuntu Condensed",
-			["yOffset"] = 0,
-			["cooldownTextEnabled"] = true,
-			["text1FontFlags"] = "OUTLINE",
-			["regionType"] = "icon",
 			["text2Color"] = {
 				1, -- [1]
 				1, -- [2]
 				1, -- [3]
 				1, -- [4]
 			},
+			["text1Containment"] = "INSIDE",
+			["text2Containment"] = "INSIDE",
+			["parent"] = "Mage",
+			["text1Font"] = "Ubuntu Condensed",
+			["animation"] = {
+				["start"] = {
+					["type"] = "none",
+					["duration_type"] = "seconds",
+				},
+				["main"] = {
+					["type"] = "none",
+					["duration_type"] = "seconds",
+				},
+				["finish"] = {
+					["type"] = "none",
+					["duration_type"] = "seconds",
+				},
+			},
+			["yOffset"] = 0,
+			["text1FontFlags"] = "OUTLINE",
+			["regionType"] = "icon",
+			["stickyDuration"] = false,
 			["numTriggers"] = 1,
 			["text2FontSize"] = 24,
 			["text2Point"] = "CENTER",
@@ -9058,38 +9070,30 @@ WeakAurasSaved = {
 			["text2"] = "%p",
 			["frameStrata"] = 1,
 			["anchorFrameType"] = "SCREEN",
-			["actions"] = {
-				["start"] = {
-				},
-				["finish"] = {
-				},
-				["init"] = {
-				},
-			},
 			["text2Font"] = "Friz Quadrata TT",
+			["cooldownTextEnabled"] = true,
 			["inverse"] = true,
+			["color"] = {
+				0.349019607843137, -- [1]
+				0.349019607843137, -- [2]
+				0.349019607843137, -- [3]
+				1, -- [4]
+			},
 			["text1Color"] = {
 				1, -- [1]
 				1, -- [2]
 				1, -- [3]
 				1, -- [4]
 			},
-			["stickyDuration"] = false,
 			["conditions"] = {
 			},
 			["cooldown"] = true,
-			["animation"] = {
+			["actions"] = {
 				["start"] = {
-					["type"] = "none",
-					["duration_type"] = "seconds",
-				},
-				["main"] = {
-					["type"] = "none",
-					["duration_type"] = "seconds",
 				},
 				["finish"] = {
-					["type"] = "none",
-					["duration_type"] = "seconds",
+				},
+				["init"] = {
 				},
 			},
 		},
@@ -9227,9 +9231,9 @@ WeakAurasSaved = {
 				["use_charges"] = true,
 				["use_unit"] = true,
 				["useCount"] = true,
-				["spellName"] = 194466,
+				["debuffType"] = "HELPFUL",
 				["charges"] = "2",
-				["custom_hide"] = "timed",
+				["spellName"] = 194466,
 				["charges_operator"] = ">=",
 				["type"] = "status",
 				["unit"] = "player",
@@ -9247,7 +9251,7 @@ WeakAurasSaved = {
 				["count"] = "3",
 				["showOn"] = "showAlways",
 				["unevent"] = "auto",
-				["debuffType"] = "HELPFUL",
+				["custom_hide"] = "timed",
 				["subeventPrefix"] = "SPELL",
 			},
 			["text"] = false,
@@ -9688,9 +9692,9 @@ WeakAurasSaved = {
 				["use_charges"] = true,
 				["use_unit"] = true,
 				["useCount"] = true,
-				["spellName"] = 108853,
+				["debuffType"] = "HELPFUL",
 				["charges"] = "1",
-				["custom_hide"] = "timed",
+				["spellName"] = 108853,
 				["charges_operator"] = ">=",
 				["type"] = "status",
 				["unit"] = "player",
@@ -9708,7 +9712,7 @@ WeakAurasSaved = {
 				["count"] = "3",
 				["showOn"] = "showAlways",
 				["unevent"] = "auto",
-				["debuffType"] = "HELPFUL",
+				["custom_hide"] = "timed",
 				["subeventPrefix"] = "SPELL",
 			},
 			["text"] = false,
@@ -9867,12 +9871,7 @@ WeakAurasSaved = {
 					},
 				},
 			},
-			["text1Color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
-			},
+			["cooldownTextEnabled"] = true,
 			["actions"] = {
 				["start"] = {
 				},
@@ -9898,10 +9897,15 @@ WeakAurasSaved = {
 				1, -- [4]
 			},
 			["regionType"] = "icon",
-			["disjunctive"] = "all",
+			["text1Color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+			},
 			["numTriggers"] = 1,
 			["text2FontSize"] = 24,
-			["cooldownTextEnabled"] = true,
+			["disjunctive"] = "all",
 			["text1"] = "0",
 			["anchorFrameType"] = "SCREEN",
 			["text2Enabled"] = false,
@@ -9953,18 +9957,18 @@ WeakAurasSaved = {
 				["custom_hide"] = "timed",
 				["unevent"] = "auto",
 				["use_showOn"] = true,
+				["subeventPrefix"] = "SPELL",
+				["event"] = "Cooldown Progress (Spell)",
 				["names"] = {
 					"Combustion", -- [1]
 				},
-				["event"] = "Cooldown Progress (Spell)",
-				["use_unit"] = true,
 				["realSpellName"] = "燃烧",
 				["use_spellName"] = true,
 				["spellIds"] = {
 				},
 				["unit"] = "player",
 				["showOn"] = "showOnCooldown",
-				["subeventPrefix"] = "SPELL",
+				["use_unit"] = true,
 				["subeventSuffix"] = "_CAST_START",
 				["debuffType"] = "HELPFUL",
 			},
@@ -10028,14 +10032,16 @@ WeakAurasSaved = {
 			["zoom"] = 0,
 			["parent"] = "Mage",
 			["text2Containment"] = "INSIDE",
-			["xOffset"] = -107,
-			["text1Color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
+			["actions"] = {
+				["start"] = {
+				},
+				["finish"] = {
+				},
+				["init"] = {
+				},
 			},
-			["text2Point"] = "CENTER",
+			["text1Font"] = "默认",
+			["xOffset"] = -107,
 			["untrigger"] = {
 				["showOn"] = "showOnCooldown",
 				["spellName"] = 190319,
@@ -10087,6 +10093,19 @@ WeakAurasSaved = {
 			["text1FontFlags"] = "OUTLINE",
 			["text2Enabled"] = false,
 			["anchorFrameType"] = "SCREEN",
+			["text1Color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+			},
+			["stickyDuration"] = false,
+			["inverse"] = true,
+			["text2Font"] = "Friz Quadrata TT",
+			["text2Point"] = "CENTER",
+			["conditions"] = {
+			},
+			["cooldown"] = true,
 			["animation"] = {
 				["start"] = {
 					["type"] = "none",
@@ -10099,21 +10118,6 @@ WeakAurasSaved = {
 				["finish"] = {
 					["type"] = "none",
 					["duration_type"] = "seconds",
-				},
-			},
-			["stickyDuration"] = false,
-			["inverse"] = true,
-			["text2Font"] = "Friz Quadrata TT",
-			["text1Font"] = "默认",
-			["conditions"] = {
-			},
-			["cooldown"] = true,
-			["actions"] = {
-				["start"] = {
-				},
-				["finish"] = {
-				},
-				["init"] = {
 				},
 			},
 		},
@@ -10211,7 +10215,12 @@ WeakAurasSaved = {
 				1, -- [3]
 				1, -- [4]
 			},
-			["stickyDuration"] = false,
+			["color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+			},
 			["untrigger"] = {
 				["showOn"] = "showAlways",
 				["spellName"] = 199786,
@@ -10260,14 +10269,6 @@ WeakAurasSaved = {
 			["text2Font"] = "Friz Quadrata TT",
 			["frameStrata"] = 1,
 			["width"] = 32,
-			["actions"] = {
-				["start"] = {
-				},
-				["finish"] = {
-				},
-				["init"] = {
-				},
-			},
 			["animation"] = {
 				["start"] = {
 					["type"] = "none",
@@ -10282,18 +10283,21 @@ WeakAurasSaved = {
 					["duration_type"] = "seconds",
 				},
 			},
-			["inverse"] = false,
 			["parent"] = "Mage",
+			["inverse"] = false,
 			["text2Point"] = "CENTER",
+			["stickyDuration"] = false,
 			["conditions"] = {
 			},
-			["color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
-			},
 			["text1Containment"] = "INSIDE",
+			["actions"] = {
+				["start"] = {
+				},
+				["finish"] = {
+				},
+				["init"] = {
+				},
+			},
 		},
 		["浮冰第二层冷却"] = {
 			["textFlags"] = "None",
@@ -10431,9 +10435,9 @@ WeakAurasSaved = {
 					"Incanter's Flow", -- [1]
 				},
 				["useCount"] = true,
-				["custom_hide"] = "timed",
+				["debuffType"] = "HELPFUL",
 				["type"] = "status",
-				["spellName"] = 108839,
+				["custom_hide"] = "timed",
 				["charges_operator"] = "==",
 				["charges"] = "1",
 				["unit"] = "player",
@@ -10449,7 +10453,7 @@ WeakAurasSaved = {
 				["count"] = "3",
 				["showOn"] = "showOnCooldown",
 				["unevent"] = "auto",
-				["debuffType"] = "HELPFUL",
+				["spellName"] = 108839,
 				["subeventPrefix"] = "SPELL",
 			},
 			["text"] = false,
@@ -10545,8 +10549,8 @@ WeakAurasSaved = {
 				},
 				["useCount"] = true,
 				["unit"] = "player",
+				["debuffType"] = "HELPFUL",
 				["custom_hide"] = "timed",
-				["spellName"] = 55342,
 				["use_unit"] = true,
 				["type"] = "aura",
 				["countOperator"] = "==",
@@ -10562,7 +10566,7 @@ WeakAurasSaved = {
 				["count"] = "1",
 				["showOn"] = "showAlways",
 				["unevent"] = "auto",
-				["debuffType"] = "HELPFUL",
+				["spellName"] = 55342,
 				["subeventPrefix"] = "SPELL",
 			},
 			["desaturate"] = false,
@@ -10632,22 +10636,9 @@ WeakAurasSaved = {
 				1, -- [4]
 			},
 			["text2Containment"] = "INSIDE",
-			["parent"] = "Mage",
+			["stickyDuration"] = false,
 			["text1Font"] = "Ubuntu Condensed",
-			["animation"] = {
-				["start"] = {
-					["type"] = "none",
-					["duration_type"] = "seconds",
-				},
-				["main"] = {
-					["type"] = "none",
-					["duration_type"] = "seconds",
-				},
-				["finish"] = {
-					["type"] = "none",
-					["duration_type"] = "seconds",
-				},
-			},
+			["parent"] = "Mage",
 			["text1Color"] = {
 				1, -- [1]
 				1, -- [2]
@@ -10676,10 +10667,9 @@ WeakAurasSaved = {
 			["text1FontFlags"] = "OUTLINE",
 			["text2Enabled"] = false,
 			["anchorFrameType"] = "SCREEN",
-			["text2Font"] = "Friz Quadrata TT",
 			["text2Point"] = "CENTER",
-			["inverse"] = true,
 			["cooldownTextEnabled"] = true,
+			["inverse"] = true,
 			["actions"] = {
 				["start"] = {
 				},
@@ -10688,10 +10678,24 @@ WeakAurasSaved = {
 				["init"] = {
 				},
 			},
+			["animation"] = {
+				["start"] = {
+					["type"] = "none",
+					["duration_type"] = "seconds",
+				},
+				["main"] = {
+					["type"] = "none",
+					["duration_type"] = "seconds",
+				},
+				["finish"] = {
+					["type"] = "none",
+					["duration_type"] = "seconds",
+				},
+			},
 			["conditions"] = {
 			},
 			["cooldown"] = true,
-			["stickyDuration"] = false,
+			["text2Font"] = "Friz Quadrata TT",
 		},
 		["溜溜球冲能"] = {
 			["textFlags"] = "None",
@@ -11026,7 +11030,6 @@ WeakAurasSaved = {
 					},
 				},
 			},
-			["anchorFrameType"] = "SCREEN",
 			["parent"] = "Mage",
 			["animation"] = {
 				["start"] = {
@@ -11042,16 +11045,17 @@ WeakAurasSaved = {
 					["duration_type"] = "seconds",
 				},
 			},
-			["text2Containment"] = "INSIDE",
 			["yOffset"] = 0,
+			["text2Containment"] = "INSIDE",
+			["text1Containment"] = "INSIDE",
 			["text1Color"] = {
 				1, -- [1]
 				1, -- [2]
 				1, -- [3]
 				1, -- [4]
 			},
-			["text1Containment"] = "INSIDE",
 			["disjunctive"] = "all",
+			["numTriggers"] = 1,
 			["text2Color"] = {
 				1, -- [1]
 				1, -- [2]
@@ -11059,10 +11063,10 @@ WeakAurasSaved = {
 				1, -- [4]
 			},
 			["regionType"] = "icon",
-			["numTriggers"] = 1,
 			["text2Font"] = "Friz Quadrata TT",
-			["text2FontSize"] = 24,
 			["text1Font"] = "Friz Quadrata TT",
+			["text2FontSize"] = 24,
+			["anchorFrameType"] = "SCREEN",
 			["init_completed"] = 1,
 			["text1"] = "%s",
 			["frameStrata"] = 3,
@@ -11117,18 +11121,18 @@ WeakAurasSaved = {
 				["custom_hide"] = "timed",
 				["unevent"] = "auto",
 				["use_showOn"] = true,
+				["subeventPrefix"] = "SPELL",
+				["event"] = "Cooldown Progress (Spell)",
 				["names"] = {
 					"Combustion", -- [1]
 				},
-				["event"] = "Cooldown Progress (Spell)",
-				["use_unit"] = true,
 				["realSpellName"] = "龙息术",
 				["use_spellName"] = true,
 				["spellIds"] = {
 				},
 				["unit"] = "player",
 				["showOn"] = "showOnCooldown",
-				["subeventPrefix"] = "SPELL",
+				["use_unit"] = true,
 				["subeventSuffix"] = "_CAST_START",
 				["debuffType"] = "HELPFUL",
 			},
@@ -11189,16 +11193,9 @@ WeakAurasSaved = {
 				["spellknown"] = 31661,
 				["use_name"] = false,
 			},
-			["text1Color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
-			},
 			["text2Font"] = "Friz Quadrata TT",
-			["text2Containment"] = "INSIDE",
 			["parent"] = "Mage",
-			["text1Font"] = "默认",
+			["text2Containment"] = "INSIDE",
 			["animation"] = {
 				["start"] = {
 					["type"] = "none",
@@ -11213,7 +11210,14 @@ WeakAurasSaved = {
 					["duration_type"] = "seconds",
 				},
 			},
+			["text1Color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+			},
 			["text1Containment"] = "INSIDE",
+			["text1Font"] = "默认",
 			["text2Color"] = {
 				1, -- [1]
 				1, -- [2]
@@ -11354,18 +11358,25 @@ WeakAurasSaved = {
 					},
 				},
 			},
-			["text2"] = "%p",
 			["parent"] = "Mage",
+			["actions"] = {
+				["start"] = {
+				},
+				["finish"] = {
+				},
+				["init"] = {
+				},
+			},
 			["text2Containment"] = "INSIDE",
-			["text2Font"] = "Friz Quadrata TT",
-			["text1Color"] = {
+			["yOffset"] = 0,
+			["text1Font"] = "默认",
+			["text1Containment"] = "INSIDE",
+			["color"] = {
 				1, -- [1]
 				1, -- [2]
 				1, -- [3]
 				1, -- [4]
 			},
-			["text2Point"] = "CENTER",
-			["text1Containment"] = "INSIDE",
 			["text2Color"] = {
 				1, -- [1]
 				1, -- [2]
@@ -11373,15 +11384,10 @@ WeakAurasSaved = {
 				1, -- [4]
 			},
 			["regionType"] = "icon",
-			["color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
-			},
 			["numTriggers"] = 1,
-			["text2FontSize"] = 24,
 			["xOffset"] = 66,
+			["text2FontSize"] = 24,
+			["text2"] = "%p",
 			["init_completed"] = 1,
 			["text1"] = "%s",
 			["anchorFrameType"] = "SCREEN",
@@ -11394,17 +11400,19 @@ WeakAurasSaved = {
 			},
 			["text2Enabled"] = false,
 			["width"] = 32,
-			["yOffset"] = 0,
-			["actions"] = {
-				["start"] = {
-				},
-				["finish"] = {
-				},
-				["init"] = {
-				},
-			},
+			["text2Point"] = "CENTER",
+			["text2Font"] = "Friz Quadrata TT",
 			["inverse"] = true,
-			["text1Font"] = "默认",
+			["stickyDuration"] = false,
+			["text1Color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+			},
+			["conditions"] = {
+			},
+			["cooldown"] = true,
 			["animation"] = {
 				["start"] = {
 					["type"] = "none",
@@ -11419,10 +11427,6 @@ WeakAurasSaved = {
 					["duration_type"] = "seconds",
 				},
 			},
-			["conditions"] = {
-			},
-			["cooldown"] = true,
-			["stickyDuration"] = false,
 		},
 		["火焰冲击2充能 2"] = {
 			["textFlags"] = "None",
@@ -11567,9 +11571,9 @@ WeakAurasSaved = {
 					"Incanter's Flow", -- [1]
 				},
 				["useCount"] = true,
-				["custom_hide"] = "timed",
+				["debuffType"] = "HELPFUL",
 				["type"] = "status",
-				["spellName"] = 108853,
+				["custom_hide"] = "timed",
 				["charges_operator"] = "==",
 				["charges"] = "1",
 				["unit"] = "player",
@@ -11585,7 +11589,7 @@ WeakAurasSaved = {
 				["count"] = "3",
 				["showOn"] = "showAlways",
 				["unevent"] = "auto",
-				["debuffType"] = "HELPFUL",
+				["spellName"] = 108853,
 				["subeventPrefix"] = "SPELL",
 			},
 			["text"] = false,
@@ -11687,12 +11691,12 @@ WeakAurasSaved = {
 				["use_showOn"] = true,
 				["countOperator"] = "==",
 				["event"] = "Cooldown Progress (Spell)",
-				["inverse"] = true,
-				["realSpellName"] = "Mirror Image",
-				["use_spellName"] = true,
-				["count"] = "5",
 				["spellIds"] = {
 				},
+				["realSpellName"] = "Mirror Image",
+				["use_spellName"] = true,
+				["inverse"] = true,
+				["count"] = "5",
 				["showOn"] = "showAlways",
 				["unevent"] = "auto",
 				["debuffType"] = "HELPFUL",
@@ -11958,9 +11962,9 @@ WeakAurasSaved = {
 				["use_charges"] = true,
 				["use_unit"] = true,
 				["useCount"] = true,
-				["spellName"] = 108853,
+				["debuffType"] = "HELPFUL",
 				["type"] = "status",
-				["custom_hide"] = "timed",
+				["spellName"] = 108853,
 				["charges_operator"] = "==",
 				["charges"] = "0",
 				["unit"] = "player",
@@ -11978,7 +11982,7 @@ WeakAurasSaved = {
 				["count"] = "3",
 				["showOn"] = "showAlways",
 				["unevent"] = "auto",
-				["debuffType"] = "HELPFUL",
+				["custom_hide"] = "timed",
 				["subeventPrefix"] = "SPELL",
 			},
 			["text"] = false,
@@ -12556,9 +12560,9 @@ WeakAurasSaved = {
 					"Incanter's Flow", -- [1]
 				},
 				["useCount"] = true,
-				["spellName"] = 108853,
+				["debuffType"] = "HELPFUL",
 				["type"] = "status",
-				["custom_hide"] = "timed",
+				["spellName"] = 108853,
 				["charges_operator"] = "==",
 				["charges"] = "2",
 				["unit"] = "player",
@@ -12574,7 +12578,7 @@ WeakAurasSaved = {
 				["count"] = "3",
 				["showOn"] = "showAlways",
 				["unevent"] = "auto",
-				["debuffType"] = "HELPFUL",
+				["custom_hide"] = "timed",
 				["subeventPrefix"] = "SPELL",
 			},
 			["text"] = false,
@@ -12711,15 +12715,12 @@ WeakAurasSaved = {
 					["multi"] = {
 					},
 				},
-				["use_name"] = false,
+				["use_class"] = true,
 				["race"] = {
 					["multi"] = {
 					},
 				},
-				["difficulty"] = {
-					["multi"] = {
-					},
-				},
+				["use_name"] = false,
 				["role"] = {
 					["multi"] = {
 					},
@@ -12734,7 +12735,10 @@ WeakAurasSaved = {
 					},
 				},
 				["use_combat"] = true,
-				["use_class"] = true,
+				["difficulty"] = {
+					["multi"] = {
+					},
+				},
 				["size"] = {
 					["multi"] = {
 					},
@@ -12790,9 +12794,9 @@ WeakAurasSaved = {
 					"Incanter's Flow", -- [1]
 				},
 				["useCount"] = true,
-				["spellName"] = 212653,
+				["debuffType"] = "HELPFUL",
 				["charges"] = "0",
-				["custom_hide"] = "timed",
+				["spellName"] = 212653,
 				["charges_operator"] = "==",
 				["type"] = "status",
 				["unit"] = "player",
@@ -12808,7 +12812,7 @@ WeakAurasSaved = {
 				["count"] = "3",
 				["showOn"] = "showOnCooldown",
 				["unevent"] = "auto",
-				["debuffType"] = "HELPFUL",
+				["custom_hide"] = "timed",
 				["subeventPrefix"] = "SPELL",
 			},
 			["text"] = false,
@@ -12898,18 +12902,18 @@ WeakAurasSaved = {
 				["custom_hide"] = "timed",
 				["unevent"] = "auto",
 				["use_showOn"] = true,
+				["subeventPrefix"] = "SPELL",
+				["event"] = "Cooldown Progress (Spell)",
 				["names"] = {
 					"Combustion", -- [1]
 				},
-				["event"] = "Cooldown Progress (Spell)",
-				["use_unit"] = true,
 				["realSpellName"] = "动荡魔法",
 				["use_spellName"] = true,
 				["spellIds"] = {
 				},
 				["unit"] = "player",
 				["showOn"] = "showAlways",
-				["subeventPrefix"] = "SPELL",
+				["use_unit"] = true,
 				["subeventSuffix"] = "_CAST_START",
 				["debuffType"] = "HELPFUL",
 			},
@@ -13097,15 +13101,15 @@ WeakAurasSaved = {
 					["multi"] = {
 					},
 				},
-				["difficulty"] = {
-					["multi"] = {
-					},
-				},
+				["use_class"] = true,
 				["role"] = {
 					["multi"] = {
 					},
 				},
-				["use_name"] = false,
+				["difficulty"] = {
+					["multi"] = {
+					},
+				},
 				["race"] = {
 					["multi"] = {
 					},
@@ -13120,7 +13124,7 @@ WeakAurasSaved = {
 					},
 				},
 				["use_combat"] = true,
-				["use_class"] = true,
+				["use_name"] = false,
 				["size"] = {
 					["multi"] = {
 					},
@@ -13174,9 +13178,9 @@ WeakAurasSaved = {
 				["use_charges"] = true,
 				["use_unit"] = true,
 				["useCount"] = true,
-				["custom_hide"] = "timed",
+				["debuffType"] = "HELPFUL",
 				["type"] = "status",
-				["spellName"] = 212653,
+				["custom_hide"] = "timed",
 				["charges_operator"] = "==",
 				["charges"] = "1",
 				["unit"] = "player",
@@ -13194,7 +13198,7 @@ WeakAurasSaved = {
 				["count"] = "3",
 				["showOn"] = "showOnCooldown",
 				["unevent"] = "auto",
-				["debuffType"] = "HELPFUL",
+				["spellName"] = 212653,
 				["subeventPrefix"] = "SPELL",
 			},
 			["text"] = false,
@@ -13289,18 +13293,18 @@ WeakAurasSaved = {
 				["spellName"] = 214634,
 				["unevent"] = "auto",
 				["use_showOn"] = true,
+				["subeventPrefix"] = "SPELL",
+				["event"] = "Cooldown Progress (Spell)",
 				["names"] = {
 					"Combustion", -- [1]
 				},
-				["event"] = "Cooldown Progress (Spell)",
-				["use_unit"] = true,
 				["realSpellName"] = "黑冰箭",
 				["use_spellName"] = true,
 				["spellIds"] = {
 				},
 				["unit"] = "player",
 				["showOn"] = "showOnReady",
-				["subeventPrefix"] = "SPELL",
+				["use_unit"] = true,
 				["subeventSuffix"] = "_CAST_START",
 				["debuffType"] = "HELPFUL",
 			},
@@ -13366,7 +13370,20 @@ WeakAurasSaved = {
 			["text2Containment"] = "INSIDE",
 			["text1Containment"] = "INSIDE",
 			["text1Font"] = "Ubuntu Condensed",
+			["text1Color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+			},
 			["cooldownTextEnabled"] = true,
+			["text2Color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+			},
+			["regionType"] = "icon",
 			["animation"] = {
 				["start"] = {
 					["type"] = "none",
@@ -13380,19 +13397,6 @@ WeakAurasSaved = {
 					["type"] = "none",
 					["duration_type"] = "seconds",
 				},
-			},
-			["text2Color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
-			},
-			["regionType"] = "icon",
-			["text1Color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
 			},
 			["inverse"] = true,
 			["text2FontSize"] = 24,
@@ -13608,18 +13612,7 @@ WeakAurasSaved = {
 			},
 			["anchorPoint"] = "CENTER",
 			["borderOffset"] = 5,
-			["trigger"] = {
-				["unit"] = "player",
-				["type"] = "aura",
-				["spellIds"] = {
-				},
-				["subeventSuffix"] = "_CAST_START",
-				["debuffType"] = "HELPFUL",
-				["names"] = {
-				},
-				["event"] = "Health",
-				["subeventPrefix"] = "SPELL",
-			},
+			["id"] = "Mage",
 			["animation"] = {
 				["start"] = {
 					["type"] = "none",
@@ -13634,7 +13627,17 @@ WeakAurasSaved = {
 					["duration_type"] = "seconds",
 				},
 			},
-			["additional_triggers"] = {
+			["trigger"] = {
+				["unit"] = "player",
+				["type"] = "aura",
+				["spellIds"] = {
+				},
+				["subeventSuffix"] = "_CAST_START",
+				["debuffType"] = "HELPFUL",
+				["names"] = {
+				},
+				["event"] = "Health",
+				["subeventPrefix"] = "SPELL",
 			},
 			["desc"] = "Version 1.18",
 			["frameStrata"] = 1,
@@ -13649,7 +13652,8 @@ WeakAurasSaved = {
 			},
 			["borderInset"] = 11,
 			["numTriggers"] = 1,
-			["id"] = "Mage",
+			["additional_triggers"] = {
+			},
 			["selfPoint"] = "BOTTOMLEFT",
 			["conditions"] = {
 			},
@@ -13744,15 +13748,15 @@ WeakAurasSaved = {
 				["type"] = "aura",
 				["spellId"] = "195418",
 				["subeventSuffix"] = "_CAST_START",
-				["name"] = "连锁反应",
-				["use_spellId"] = true,
-				["event"] = "Health",
-				["subeventPrefix"] = "SPELL",
-				["count"] = "2",
-				["useCount"] = true,
 				["spellIds"] = {
 					194329, -- [1]
 				},
+				["use_spellId"] = true,
+				["event"] = "Health",
+				["subeventPrefix"] = "SPELL",
+				["name"] = "连锁反应",
+				["useCount"] = true,
+				["count"] = "2",
 				["fullscan"] = true,
 				["unit"] = "player",
 				["names"] = {
@@ -13782,7 +13786,10 @@ WeakAurasSaved = {
 					["multi"] = {
 					},
 				},
-				["use_class"] = true,
+				["difficulty"] = {
+					["multi"] = {
+					},
+				},
 				["class"] = {
 					["single"] = "MAGE",
 					["multi"] = {
@@ -13792,26 +13799,23 @@ WeakAurasSaved = {
 					["multi"] = {
 					},
 				},
-				["use_spec"] = false,
-				["use_name"] = false,
+				["faction"] = {
+					["multi"] = {
+					},
+				},
+				["use_class"] = true,
 				["role"] = {
 					["multi"] = {
 					},
 				},
 				["name"] = "叫我法神啦",
+				["use_spec"] = false,
 				["pvptalent"] = {
 					["multi"] = {
 					},
 				},
-				["faction"] = {
-					["multi"] = {
-					},
-				},
 				["use_combat"] = true,
-				["difficulty"] = {
-					["multi"] = {
-					},
-				},
+				["use_name"] = false,
 				["size"] = {
 					["multi"] = {
 					},
@@ -13962,22 +13966,9 @@ WeakAurasSaved = {
 				1, -- [4]
 			},
 			["text2Containment"] = "INSIDE",
-			["parent"] = "Mage",
+			["stickyDuration"] = false,
 			["text1Font"] = "Ubuntu Condensed",
-			["animation"] = {
-				["start"] = {
-					["type"] = "none",
-					["duration_type"] = "seconds",
-				},
-				["main"] = {
-					["type"] = "none",
-					["duration_type"] = "seconds",
-				},
-				["finish"] = {
-					["type"] = "none",
-					["duration_type"] = "seconds",
-				},
-			},
+			["parent"] = "Mage",
 			["text1Color"] = {
 				1, -- [1]
 				1, -- [2]
@@ -14006,10 +13997,9 @@ WeakAurasSaved = {
 			["text1FontFlags"] = "OUTLINE",
 			["text2Enabled"] = false,
 			["anchorFrameType"] = "SCREEN",
-			["text2Font"] = "Friz Quadrata TT",
 			["text2Point"] = "CENTER",
-			["numTriggers"] = 1,
 			["cooldownTextEnabled"] = true,
+			["numTriggers"] = 1,
 			["actions"] = {
 				["start"] = {
 				},
@@ -14018,10 +14008,24 @@ WeakAurasSaved = {
 				["init"] = {
 				},
 			},
+			["animation"] = {
+				["start"] = {
+					["type"] = "none",
+					["duration_type"] = "seconds",
+				},
+				["main"] = {
+					["type"] = "none",
+					["duration_type"] = "seconds",
+				},
+				["finish"] = {
+					["type"] = "none",
+					["duration_type"] = "seconds",
+				},
+			},
 			["conditions"] = {
 			},
 			["cooldown"] = true,
-			["stickyDuration"] = false,
+			["text2Font"] = "Friz Quadrata TT",
 		},
 		["燃烧"] = {
 			["textFlags"] = "None",
@@ -14292,15 +14296,15 @@ WeakAurasSaved = {
 				["type"] = "aura",
 				["spellId"] = "194329",
 				["subeventSuffix"] = "_CAST_START",
-				["spellIds"] = {
-					194329, -- [1]
-				},
+				["name"] = "炽烈之咒",
 				["use_spellId"] = true,
 				["event"] = "Health",
 				["subeventPrefix"] = "SPELL",
-				["count"] = "2",
+				["spellIds"] = {
+					194329, -- [1]
+				},
 				["useCount"] = true,
-				["name"] = "炽烈之咒",
+				["count"] = "2",
 				["custom_hide"] = "timed",
 				["unit"] = "player",
 				["names"] = {
@@ -14330,7 +14334,7 @@ WeakAurasSaved = {
 					["multi"] = {
 					},
 				},
-				["use_class"] = true,
+				["use_name"] = false,
 				["class"] = {
 					["single"] = "MAGE",
 					["multi"] = {
@@ -14340,26 +14344,26 @@ WeakAurasSaved = {
 					["multi"] = {
 					},
 				},
-				["pvptalent"] = {
-					["multi"] = {
-					},
-				},
-				["difficulty"] = {
-					["multi"] = {
-					},
-				},
+				["use_spec"] = false,
+				["use_class"] = true,
 				["race"] = {
 					["multi"] = {
 					},
 				},
 				["name"] = "叫我法神啦",
+				["pvptalent"] = {
+					["multi"] = {
+					},
+				},
 				["faction"] = {
 					["multi"] = {
 					},
 				},
-				["use_spec"] = false,
 				["use_combat"] = true,
-				["use_name"] = false,
+				["difficulty"] = {
+					["multi"] = {
+					},
+				},
 				["size"] = {
 					["multi"] = {
 					},
@@ -14527,39 +14531,29 @@ WeakAurasSaved = {
 					},
 				},
 			},
-			["xOffset"] = -33,
-			["yOffset"] = 0,
+			["text2Point"] = "CENTER",
+			["text1Containment"] = "INSIDE",
 			["text2Containment"] = "INSIDE",
-			["text2Font"] = "Friz Quadrata TT",
+			["yOffset"] = 0,
 			["text1Font"] = "默认",
+			["text2Font"] = "Friz Quadrata TT",
+			["text1Color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+			},
+			["text1FontFlags"] = "OUTLINE",
+			["regionType"] = "icon",
 			["color"] = {
 				1, -- [1]
 				1, -- [2]
 				1, -- [3]
 				1, -- [4]
 			},
-			["stickyDuration"] = false,
-			["text2Color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
-			},
-			["regionType"] = "icon",
-			["actions"] = {
-				["start"] = {
-					["do_glow"] = false,
-					["glow_action"] = "show",
-					["glow_frame"] = "WeakAuras:水流喷射",
-				},
-				["finish"] = {
-				},
-				["init"] = {
-				},
-			},
 			["inverse"] = true,
 			["text2FontSize"] = 24,
-			["text1Containment"] = "INSIDE",
+			["stickyDuration"] = false,
 			["text1"] = "%s",
 			["width"] = 32,
 			["frameStrata"] = 3,
@@ -14571,8 +14565,18 @@ WeakAurasSaved = {
 			["text2"] = "%p",
 			["text2Enabled"] = false,
 			["anchorFrameType"] = "SCREEN",
-			["text1FontFlags"] = "OUTLINE",
-			["text1Color"] = {
+			["actions"] = {
+				["start"] = {
+					["do_glow"] = false,
+					["glow_action"] = "show",
+					["glow_frame"] = "WeakAuras:水流喷射",
+				},
+				["finish"] = {
+				},
+				["init"] = {
+				},
+			},
+			["text2Color"] = {
 				1, -- [1]
 				1, -- [2]
 				1, -- [3]
@@ -14584,7 +14588,7 @@ WeakAurasSaved = {
 			["conditions"] = {
 			},
 			["cooldown"] = true,
-			["text2Point"] = "CENTER",
+			["xOffset"] = -33,
 		},
 		["冰环左"] = {
 			["disjunctive"] = "all",
@@ -14621,14 +14625,14 @@ WeakAurasSaved = {
 					["alphaType"] = "alphaPulse",
 					["colorB"] = 1,
 					["colorG"] = 1,
-					["alphaFunc"] = "    return function(progress, start, delta)\n      local angle = (progress * 2 * math.pi) - (math.pi / 2)\n      return start + (((math.sin(angle) + 1)/2) * delta)\n    end\n  ",
+					["alphaFunc"] = "function(progress, start, delta)\n      local angle = (progress * 2 * math.pi) - (math.pi / 2)\n      return start + (((math.sin(angle) + 1)/2) * delta)\n    end\n  ",
 					["use_alpha"] = true,
 					["type"] = "none",
+					["colorA"] = 1,
 					["preset"] = "alphaPulse",
 					["alpha"] = 0,
 					["y"] = 0,
 					["x"] = 0,
-					["colorA"] = 1,
 					["scaley"] = 1,
 					["rotate"] = 0,
 					["scalex"] = 1,
@@ -14643,6 +14647,14 @@ WeakAurasSaved = {
 			["desaturate"] = false,
 			["rotation"] = 0,
 			["selfPoint"] = "CENTER",
+			["id"] = "冰环左",
+			["width"] = 150,
+			["frameStrata"] = 2,
+			["anchorFrameType"] = "SCREEN",
+			["discrete_rotation"] = 0,
+			["additional_triggers"] = {
+			},
+			["numTriggers"] = 1,
 			["trigger"] = {
 				["type"] = "aura",
 				["subeventSuffix"] = "_CAST_START",
@@ -14658,14 +14670,6 @@ WeakAurasSaved = {
 				["unit"] = "player",
 				["subeventPrefix"] = "SPELL",
 				["debuffType"] = "HELPFUL",
-			},
-			["width"] = 150,
-			["frameStrata"] = 2,
-			["anchorFrameType"] = "SCREEN",
-			["discrete_rotation"] = 0,
-			["id"] = "冰环左",
-			["numTriggers"] = 1,
-			["additional_triggers"] = {
 			},
 			["height"] = 200,
 			["conditions"] = {
@@ -14693,9 +14697,12 @@ WeakAurasSaved = {
 					["multi"] = {
 					},
 				},
-				["use_name"] = false,
+				["difficulty"] = {
+					["multi"] = {
+					},
+				},
 				["use_spec"] = false,
-				["use_class"] = true,
+				["use_name"] = false,
 				["race"] = {
 					["multi"] = {
 					},
@@ -14713,10 +14720,7 @@ WeakAurasSaved = {
 					["multi"] = {
 					},
 				},
-				["difficulty"] = {
-					["multi"] = {
-					},
-				},
+				["use_class"] = true,
 				["size"] = {
 					["multi"] = {
 					},
@@ -14795,7 +14799,7 @@ WeakAurasSaved = {
 						[8] = true,
 					},
 				},
-				["use_class"] = true,
+				["use_name"] = false,
 				["spec"] = {
 					["single"] = 2,
 					["multi"] = {
@@ -14806,26 +14810,26 @@ WeakAurasSaved = {
 					["multi"] = {
 					},
 				},
-				["pvptalent"] = {
+				["faction"] = {
 					["multi"] = {
 					},
 				},
-				["difficulty"] = {
-					["multi"] = {
-					},
-				},
+				["use_class"] = true,
 				["race"] = {
 					["multi"] = {
 					},
 				},
 				["name"] = "叫我法神啦",
-				["use_spec"] = false,
-				["faction"] = {
+				["pvptalent"] = {
 					["multi"] = {
 					},
 				},
+				["use_spec"] = false,
 				["use_combat"] = true,
-				["use_name"] = false,
+				["difficulty"] = {
+					["multi"] = {
+					},
+				},
 				["size"] = {
 					["multi"] = {
 					},
@@ -14841,9 +14845,9 @@ WeakAurasSaved = {
 			["animation"] = {
 				["start"] = {
 					["type"] = "preset",
-					["duration_type"] = "seconds",
 					["preset"] = "fade",
 					["duration"] = "0.2",
+					["duration_type"] = "seconds",
 					["use_alpha"] = true,
 				},
 				["main"] = {
@@ -14978,7 +14982,6 @@ WeakAurasSaved = {
 					},
 				},
 			},
-			["anchorFrameType"] = "SCREEN",
 			["parent"] = "Mage",
 			["animation"] = {
 				["start"] = {
@@ -14994,16 +14997,17 @@ WeakAurasSaved = {
 					["duration_type"] = "seconds",
 				},
 			},
-			["text2Containment"] = "INSIDE",
 			["yOffset"] = 0,
+			["text2Containment"] = "INSIDE",
+			["text1Containment"] = "INSIDE",
 			["text1Color"] = {
 				1, -- [1]
 				1, -- [2]
 				1, -- [3]
 				1, -- [4]
 			},
-			["text1Containment"] = "INSIDE",
 			["disjunctive"] = "all",
+			["numTriggers"] = 1,
 			["text2Color"] = {
 				1, -- [1]
 				1, -- [2]
@@ -15011,10 +15015,10 @@ WeakAurasSaved = {
 				1, -- [4]
 			},
 			["regionType"] = "icon",
-			["numTriggers"] = 1,
 			["text2Font"] = "Friz Quadrata TT",
-			["text2FontSize"] = 24,
 			["text1Font"] = "Friz Quadrata TT",
+			["text2FontSize"] = 24,
+			["anchorFrameType"] = "SCREEN",
 			["init_completed"] = 1,
 			["text1"] = "%s",
 			["frameStrata"] = 3,
@@ -15183,9 +15187,9 @@ WeakAurasSaved = {
 				["use_charges"] = true,
 				["use_unit"] = true,
 				["useCount"] = true,
-				["spellName"] = 108839,
+				["debuffType"] = "HELPFUL",
 				["charges"] = "1",
-				["custom_hide"] = "timed",
+				["spellName"] = 108839,
 				["charges_operator"] = ">=",
 				["type"] = "status",
 				["unit"] = "player",
@@ -15203,7 +15207,7 @@ WeakAurasSaved = {
 				["count"] = "3",
 				["showOn"] = "showAlways",
 				["unevent"] = "auto",
-				["debuffType"] = "HELPFUL",
+				["custom_hide"] = "timed",
 				["subeventPrefix"] = "SPELL",
 			},
 			["text"] = false,
@@ -15375,25 +15379,23 @@ WeakAurasSaved = {
 					},
 				},
 			},
-			["text2"] = "%p",
 			["parent"] = "Mage",
+			["stickyDuration"] = false,
 			["text2Containment"] = "INSIDE",
-			["xOffset"] = 107,
+			["text2Font"] = "Friz Quadrata TT",
 			["text1Color"] = {
 				1, -- [1]
 				0.92156862745098, -- [2]
 				0, -- [3]
 				1, -- [4]
 			},
-			["actions"] = {
-				["start"] = {
-				},
-				["finish"] = {
-				},
-				["init"] = {
-				},
-			},
 			["text1Containment"] = "INSIDE",
+			["color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+			},
 			["text2Color"] = {
 				1, -- [1]
 				1, -- [2]
@@ -15401,15 +15403,10 @@ WeakAurasSaved = {
 				1, -- [4]
 			},
 			["regionType"] = "icon",
-			["color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
-			},
 			["numTriggers"] = 2,
-			["text2FontSize"] = 24,
 			["text1Font"] = "默认",
+			["text2FontSize"] = 24,
+			["text2"] = "%p",
 			["init_completed"] = 1,
 			["text1"] = "%s",
 			["anchorFrameType"] = "SCREEN",
@@ -15440,14 +15437,16 @@ WeakAurasSaved = {
 			},
 			["text2Enabled"] = false,
 			["width"] = 48,
-			["text2Point"] = "CENTER",
-			["text2Font"] = "Friz Quadrata TT",
-			["inverse"] = true,
-			["stickyDuration"] = false,
-			["yOffset"] = 8,
-			["conditions"] = {
+			["actions"] = {
+				["start"] = {
+				},
+				["finish"] = {
+				},
+				["init"] = {
+				},
 			},
-			["cooldown"] = false,
+			["xOffset"] = 107,
+			["inverse"] = true,
 			["animation"] = {
 				["start"] = {
 					["type"] = "none",
@@ -15462,6 +15461,11 @@ WeakAurasSaved = {
 					["duration_type"] = "seconds",
 				},
 			},
+			["text2Point"] = "CENTER",
+			["conditions"] = {
+			},
+			["cooldown"] = false,
+			["yOffset"] = 8,
 		},
 		["飞弹3"] = {
 			["user_y"] = 0,
@@ -15508,15 +15512,15 @@ WeakAurasSaved = {
 				["type"] = "aura",
 				["spellId"] = "79683",
 				["subeventSuffix"] = "_CAST_START",
-				["name"] = "奥术飞弹！",
+				["count"] = "3",
 				["use_spellId"] = true,
 				["event"] = "Health",
 				["subeventPrefix"] = "SPELL",
+				["name"] = "奥术飞弹！",
+				["useCount"] = true,
 				["spellIds"] = {
 					194329, -- [1]
 				},
-				["useCount"] = true,
-				["count"] = "3",
 				["custom_hide"] = "timed",
 				["unit"] = "player",
 				["names"] = {
@@ -15546,10 +15550,7 @@ WeakAurasSaved = {
 					["multi"] = {
 					},
 				},
-				["difficulty"] = {
-					["multi"] = {
-					},
-				},
+				["use_class"] = true,
 				["class"] = {
 					["single"] = "MAGE",
 					["multi"] = {
@@ -15559,23 +15560,26 @@ WeakAurasSaved = {
 					["multi"] = {
 					},
 				},
-				["use_spec"] = true,
-				["use_name"] = false,
+				["faction"] = {
+					["multi"] = {
+					},
+				},
+				["difficulty"] = {
+					["multi"] = {
+					},
+				},
 				["race"] = {
 					["multi"] = {
 					},
 				},
 				["name"] = "叫我法神啦",
+				["use_spec"] = true,
 				["pvptalent"] = {
 					["multi"] = {
 					},
 				},
-				["faction"] = {
-					["multi"] = {
-					},
-				},
 				["use_combat"] = true,
-				["use_class"] = true,
+				["use_name"] = false,
 				["size"] = {
 					["multi"] = {
 					},
@@ -15924,7 +15928,6 @@ WeakAurasSaved = {
 					},
 				},
 			},
-			["anchorFrameType"] = "SCREEN",
 			["parent"] = "Mage",
 			["animation"] = {
 				["start"] = {
@@ -15940,19 +15943,20 @@ WeakAurasSaved = {
 					["duration_type"] = "seconds",
 				},
 			},
-			["text2Containment"] = "INSIDE",
 			["untrigger"] = {
 				["showOn"] = "showOnReady",
 				["spellName"] = 12042,
 			},
+			["text2Containment"] = "INSIDE",
+			["text1Containment"] = "INSIDE",
 			["text1Color"] = {
 				1, -- [1]
 				1, -- [2]
 				1, -- [3]
 				1, -- [4]
 			},
-			["text1Containment"] = "INSIDE",
 			["disjunctive"] = "all",
+			["numTriggers"] = 1,
 			["text2Color"] = {
 				1, -- [1]
 				1, -- [2]
@@ -15960,10 +15964,10 @@ WeakAurasSaved = {
 				1, -- [4]
 			},
 			["regionType"] = "icon",
-			["numTriggers"] = 1,
 			["text2Font"] = "Friz Quadrata TT",
-			["text2FontSize"] = 24,
 			["text1Font"] = "Friz Quadrata TT",
+			["text2FontSize"] = 24,
+			["anchorFrameType"] = "SCREEN",
 			["init_completed"] = 1,
 			["text1"] = "%s",
 			["frameStrata"] = 3,
@@ -16044,15 +16048,15 @@ WeakAurasSaved = {
 				["type"] = "aura",
 				["spellId"] = "194329",
 				["subeventSuffix"] = "_CAST_START",
-				["spellIds"] = {
-					194329, -- [1]
-				},
+				["count"] = "1",
 				["use_spellId"] = true,
 				["event"] = "Health",
 				["subeventPrefix"] = "SPELL",
-				["name"] = "炽烈之咒",
+				["spellIds"] = {
+					194329, -- [1]
+				},
 				["useCount"] = true,
-				["count"] = "1",
+				["name"] = "炽烈之咒",
 				["custom_hide"] = "timed",
 				["unit"] = "player",
 				["names"] = {
@@ -16082,7 +16086,10 @@ WeakAurasSaved = {
 					["multi"] = {
 					},
 				},
-				["use_class"] = true,
+				["difficulty"] = {
+					["multi"] = {
+					},
+				},
 				["class"] = {
 					["single"] = "MAGE",
 					["multi"] = {
@@ -16092,26 +16099,23 @@ WeakAurasSaved = {
 					["multi"] = {
 					},
 				},
-				["pvptalent"] = {
-					["multi"] = {
-					},
-				},
-				["use_name"] = false,
+				["use_spec"] = false,
+				["use_class"] = true,
 				["race"] = {
 					["multi"] = {
 					},
 				},
 				["name"] = "叫我法神啦",
+				["pvptalent"] = {
+					["multi"] = {
+					},
+				},
 				["faction"] = {
 					["multi"] = {
 					},
 				},
-				["use_spec"] = false,
 				["use_combat"] = true,
-				["difficulty"] = {
-					["multi"] = {
-					},
-				},
+				["use_name"] = false,
 				["size"] = {
 					["multi"] = {
 					},
@@ -16201,15 +16205,15 @@ WeakAurasSaved = {
 				["type"] = "aura",
 				["spellId"] = "195418",
 				["subeventSuffix"] = "_CAST_START",
-				["count"] = "3",
+				["name"] = "连锁反应",
 				["useCount"] = true,
 				["event"] = "Health",
 				["subeventPrefix"] = "SPELL",
+				["count"] = "3",
+				["use_spellId"] = true,
 				["spellIds"] = {
 					194329, -- [1]
 				},
-				["use_spellId"] = true,
-				["name"] = "连锁反应",
 				["fullscan"] = true,
 				["unit"] = "player",
 				["names"] = {
@@ -16238,7 +16242,10 @@ WeakAurasSaved = {
 					["multi"] = {
 					},
 				},
-				["use_class"] = true,
+				["difficulty"] = {
+					["multi"] = {
+					},
+				},
 				["spec"] = {
 					["single"] = 2,
 					["multi"] = {
@@ -16249,26 +16256,23 @@ WeakAurasSaved = {
 					["multi"] = {
 					},
 				},
-				["use_spec"] = false,
-				["use_name"] = false,
+				["faction"] = {
+					["multi"] = {
+					},
+				},
+				["use_class"] = true,
 				["race"] = {
 					["multi"] = {
 					},
 				},
 				["name"] = "叫我法神啦",
+				["use_spec"] = false,
 				["pvptalent"] = {
 					["multi"] = {
 					},
 				},
-				["faction"] = {
-					["multi"] = {
-					},
-				},
 				["use_combat"] = true,
-				["difficulty"] = {
-					["multi"] = {
-					},
-				},
+				["use_name"] = false,
 				["size"] = {
 					["multi"] = {
 					},
@@ -16580,9 +16584,19 @@ WeakAurasSaved = {
 				1, -- [3]
 				1, -- [4]
 			},
-			["text2Point"] = "CENTER",
+			["color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+			},
 			["xOffset"] = 33,
-			["text1FontFlags"] = "OUTLINE",
+			["text2Color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+			},
 			["regionType"] = "icon",
 			["text1Font"] = "Friz Quadrata TT",
 			["numTriggers"] = 1,
@@ -16599,12 +16613,9 @@ WeakAurasSaved = {
 			["text2Font"] = "Friz Quadrata TT",
 			["text2Enabled"] = false,
 			["width"] = 32,
-			["text2Color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
-			},
+			["text1Containment"] = "INSIDE",
+			["text1FontFlags"] = "OUTLINE",
+			["inverse"] = false,
 			["actions"] = {
 				["start"] = {
 				},
@@ -16613,18 +16624,11 @@ WeakAurasSaved = {
 				["init"] = {
 				},
 			},
-			["inverse"] = false,
 			["parent"] = "Mage",
-			["color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
-			},
 			["conditions"] = {
 			},
+			["text2Point"] = "CENTER",
 			["yOffset"] = 0,
-			["text1Containment"] = "INSIDE",
 		},
 		["冰风暴时间"] = {
 			["outline"] = "OUTLINE",
@@ -16710,6 +16714,7 @@ WeakAurasSaved = {
 			["fontSize"] = 24,
 			["displayStacks"] = "%s",
 			["regionType"] = "text",
+			["parent"] = "Mage",
 			["animation"] = {
 				["start"] = {
 					["type"] = "none",
@@ -16732,7 +16737,6 @@ WeakAurasSaved = {
 				["init"] = {
 				},
 			},
-			["parent"] = "Mage",
 			["stickyDuration"] = false,
 			["xOffset"] = 0.00042724609375,
 			["stacksContainment"] = "INSIDE",
@@ -16811,6 +16815,14 @@ WeakAurasSaved = {
 			["desaturate"] = false,
 			["rotation"] = 0,
 			["selfPoint"] = "CENTER",
+			["id"] = "冰环右",
+			["width"] = 150,
+			["frameStrata"] = 2,
+			["anchorFrameType"] = "SCREEN",
+			["discrete_rotation"] = 0,
+			["additional_triggers"] = {
+			},
+			["numTriggers"] = 1,
 			["trigger"] = {
 				["type"] = "aura",
 				["subeventSuffix"] = "_CAST_START",
@@ -16828,14 +16840,6 @@ WeakAurasSaved = {
 				["subeventPrefix"] = "SPELL",
 				["event"] = "Health",
 				["debuffType"] = "HELPFUL",
-			},
-			["width"] = 150,
-			["frameStrata"] = 2,
-			["anchorFrameType"] = "SCREEN",
-			["discrete_rotation"] = 0,
-			["id"] = "冰环右",
-			["numTriggers"] = 1,
-			["additional_triggers"] = {
 			},
 			["height"] = 200,
 			["conditions"] = {
@@ -16863,12 +16867,15 @@ WeakAurasSaved = {
 						[3] = true,
 					},
 				},
-				["use_name"] = false,
+				["difficulty"] = {
+					["multi"] = {
+					},
+				},
 				["pvptalent"] = {
 					["multi"] = {
 					},
 				},
-				["use_class"] = true,
+				["use_name"] = false,
 				["role"] = {
 					["multi"] = {
 					},
@@ -16883,10 +16890,7 @@ WeakAurasSaved = {
 					["multi"] = {
 					},
 				},
-				["difficulty"] = {
-					["multi"] = {
-					},
-				},
+				["use_class"] = true,
 				["size"] = {
 					["multi"] = {
 					},
@@ -16939,15 +16943,15 @@ WeakAurasSaved = {
 				["type"] = "aura",
 				["spellId"] = "79683",
 				["subeventSuffix"] = "_CAST_START",
-				["spellIds"] = {
-					194329, -- [1]
-				},
+				["count"] = "2",
 				["useCount"] = true,
 				["event"] = "Health",
 				["subeventPrefix"] = "SPELL",
-				["name"] = "奥术飞弹！",
+				["spellIds"] = {
+					194329, -- [1]
+				},
 				["use_spellId"] = true,
-				["count"] = "2",
+				["name"] = "奥术飞弹！",
 				["fullscan"] = true,
 				["unit"] = "player",
 				["names"] = {
@@ -16977,7 +16981,10 @@ WeakAurasSaved = {
 					["multi"] = {
 					},
 				},
-				["use_class"] = true,
+				["difficulty"] = {
+					["multi"] = {
+					},
+				},
 				["class"] = {
 					["single"] = "MAGE",
 					["multi"] = {
@@ -16987,26 +16994,23 @@ WeakAurasSaved = {
 					["multi"] = {
 					},
 				},
-				["pvptalent"] = {
-					["multi"] = {
-					},
-				},
-				["use_name"] = false,
+				["use_spec"] = true,
+				["use_class"] = true,
 				["role"] = {
 					["multi"] = {
 					},
 				},
 				["name"] = "叫我法神啦",
+				["pvptalent"] = {
+					["multi"] = {
+					},
+				},
 				["faction"] = {
 					["multi"] = {
 					},
 				},
-				["use_spec"] = true,
 				["use_combat"] = true,
-				["difficulty"] = {
-					["multi"] = {
-					},
-				},
+				["use_name"] = false,
 				["size"] = {
 					["multi"] = {
 					},
@@ -17134,7 +17138,6 @@ WeakAurasSaved = {
 					},
 				},
 			},
-			["anchorFrameType"] = "SCREEN",
 			["parent"] = "Mage",
 			["animation"] = {
 				["start"] = {
@@ -17150,18 +17153,19 @@ WeakAurasSaved = {
 					["duration_type"] = "seconds",
 				},
 			},
-			["text2Containment"] = "INSIDE",
 			["untrigger"] = {
 				["spellName"] = 12042,
 			},
+			["text2Containment"] = "INSIDE",
+			["text1Containment"] = "INSIDE",
 			["text1Color"] = {
 				1, -- [1]
 				1, -- [2]
 				1, -- [3]
 				1, -- [4]
 			},
-			["text1Containment"] = "INSIDE",
 			["disjunctive"] = "all",
+			["numTriggers"] = 1,
 			["text2Color"] = {
 				1, -- [1]
 				1, -- [2]
@@ -17169,10 +17173,10 @@ WeakAurasSaved = {
 				1, -- [4]
 			},
 			["regionType"] = "icon",
-			["numTriggers"] = 1,
 			["text2Font"] = "Friz Quadrata TT",
-			["text2FontSize"] = 24,
 			["text1Font"] = "Friz Quadrata TT",
+			["text2FontSize"] = 24,
+			["anchorFrameType"] = "SCREEN",
 			["init_completed"] = 1,
 			["text1"] = "%s",
 			["frameStrata"] = 3,
@@ -17262,10 +17266,7 @@ WeakAurasSaved = {
 						[13] = true,
 					},
 				},
-				["difficulty"] = {
-					["multi"] = {
-					},
-				},
+				["use_class"] = true,
 				["class"] = {
 					["single"] = "MAGE",
 					["multi"] = {
@@ -17275,23 +17276,26 @@ WeakAurasSaved = {
 					["multi"] = {
 					},
 				},
-				["use_spec"] = false,
-				["use_name"] = false,
+				["pvptalent"] = {
+					["multi"] = {
+					},
+				},
+				["difficulty"] = {
+					["multi"] = {
+					},
+				},
 				["race"] = {
 					["multi"] = {
 					},
 				},
 				["name"] = "叫我法神啦",
+				["use_spec"] = false,
 				["faction"] = {
 					["multi"] = {
 					},
 				},
-				["pvptalent"] = {
-					["multi"] = {
-					},
-				},
 				["use_combat"] = true,
-				["use_class"] = true,
+				["use_name"] = false,
 				["size"] = {
 					["multi"] = {
 					},
@@ -17570,9 +17574,9 @@ WeakAurasSaved = {
 				["use_charges"] = true,
 				["use_unit"] = true,
 				["useCount"] = true,
-				["custom_hide"] = "timed",
+				["debuffType"] = "HELPFUL",
 				["charges"] = "2",
-				["spellName"] = 108839,
+				["custom_hide"] = "timed",
 				["charges_operator"] = ">=",
 				["type"] = "status",
 				["unit"] = "player",
@@ -17590,7 +17594,7 @@ WeakAurasSaved = {
 				["count"] = "3",
 				["showOn"] = "showAlways",
 				["unevent"] = "auto",
-				["debuffType"] = "HELPFUL",
+				["spellName"] = 108839,
 				["subeventPrefix"] = "SPELL",
 			},
 			["text"] = false,
@@ -17719,7 +17723,10 @@ WeakAurasSaved = {
 						[16] = true,
 					},
 				},
-				["use_name"] = false,
+				["difficulty"] = {
+					["multi"] = {
+					},
+				},
 				["spec"] = {
 					["single"] = 2,
 					["multi"] = {
@@ -17730,26 +17737,23 @@ WeakAurasSaved = {
 					["multi"] = {
 					},
 				},
-				["use_spec"] = false,
-				["use_class"] = true,
+				["pvptalent"] = {
+					["multi"] = {
+					},
+				},
+				["use_name"] = false,
 				["role"] = {
 					["multi"] = {
 					},
 				},
 				["name"] = "叫我法神啦",
+				["use_spec"] = false,
 				["faction"] = {
 					["multi"] = {
 					},
 				},
-				["pvptalent"] = {
-					["multi"] = {
-					},
-				},
 				["use_combat"] = true,
-				["difficulty"] = {
-					["multi"] = {
-					},
-				},
+				["use_class"] = true,
 				["size"] = {
 					["multi"] = {
 					},
@@ -17772,12 +17776,6 @@ WeakAurasSaved = {
 					["duration_type"] = "seconds",
 				},
 			},
-			["text1Color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
-			},
 			["text1Font"] = "Ubuntu Condensed",
 			["actions"] = {
 				["start"] = {
@@ -17787,6 +17785,10 @@ WeakAurasSaved = {
 				["init"] = {
 				},
 			},
+			["untrigger"] = {
+				["showOn"] = "showOnReady",
+				["spellName"] = 190319,
+			},
 			["text2Color"] = {
 				1, -- [1]
 				1, -- [2]
@@ -17794,9 +17796,11 @@ WeakAurasSaved = {
 				1, -- [4]
 			},
 			["regionType"] = "icon",
-			["untrigger"] = {
-				["showOn"] = "showOnReady",
-				["spellName"] = 190319,
+			["text1Color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
 			},
 			["inverse"] = true,
 			["text2FontSize"] = 24,
@@ -17847,18 +17851,18 @@ WeakAurasSaved = {
 				["custom_hide"] = "timed",
 				["unevent"] = "auto",
 				["use_showOn"] = true,
-				["use_unit"] = true,
+				["subeventPrefix"] = "SPELL",
 				["event"] = "Cooldown Progress (Spell)",
-				["names"] = {
-					"Combustion", -- [1]
-				},
+				["use_unit"] = true,
 				["realSpellName"] = "艾露尼斯的印记",
 				["use_spellName"] = true,
 				["spellIds"] = {
 				},
 				["unit"] = "player",
 				["showOn"] = "showOnCooldown",
-				["subeventPrefix"] = "SPELL",
+				["names"] = {
+					"Combustion", -- [1]
+				},
 				["subeventSuffix"] = "_CAST_START",
 				["debuffType"] = "HELPFUL",
 			},
@@ -17919,11 +17923,6 @@ WeakAurasSaved = {
 					},
 				},
 			},
-			["yOffset"] = 6.1035156250e-005,
-			["stickyDuration"] = false,
-			["text2Containment"] = "INSIDE",
-			["text1Containment"] = "INSIDE",
-			["text1Font"] = "默认",
 			["animation"] = {
 				["start"] = {
 					["type"] = "none",
@@ -17946,6 +17945,16 @@ WeakAurasSaved = {
 				["init"] = {
 				},
 			},
+			["text2Containment"] = "INSIDE",
+			["cooldownTextEnabled"] = true,
+			["text1Color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+			},
+			["yOffset"] = 6.1035156250e-005,
+			["text1Font"] = "默认",
 			["text2Color"] = {
 				1, -- [1]
 				1, -- [2]
@@ -17953,15 +17962,10 @@ WeakAurasSaved = {
 				1, -- [4]
 			},
 			["regionType"] = "icon",
-			["text1Color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
-			},
 			["inverse"] = true,
+			["stickyDuration"] = false,
 			["text2FontSize"] = 24,
-			["cooldownTextEnabled"] = true,
+			["text1Containment"] = "INSIDE",
 			["init_completed"] = 1,
 			["text1"] = "%s",
 			["width"] = 32,
@@ -18009,18 +18013,18 @@ WeakAurasSaved = {
 				["spellName"] = 205037,
 				["unevent"] = "auto",
 				["use_showOn"] = true,
+				["subeventPrefix"] = "SPELL",
+				["event"] = "Cooldown Progress (Spell)",
 				["names"] = {
 					"Combustion", -- [1]
 				},
-				["event"] = "Cooldown Progress (Spell)",
-				["use_unit"] = true,
 				["realSpellName"] = "烈焰之地",
 				["use_spellName"] = true,
 				["spellIds"] = {
 				},
 				["unit"] = "player",
 				["showOn"] = "showAlways",
-				["subeventPrefix"] = "SPELL",
+				["use_unit"] = true,
 				["subeventSuffix"] = "_CAST_START",
 				["debuffType"] = "HELPFUL",
 			},
@@ -18207,12 +18211,15 @@ WeakAurasSaved = {
 					["multi"] = {
 					},
 				},
-				["use_name"] = false,
+				["difficulty"] = {
+					["multi"] = {
+					},
+				},
 				["role"] = {
 					["multi"] = {
 					},
 				},
-				["use_class"] = true,
+				["use_name"] = false,
 				["race"] = {
 					["multi"] = {
 					},
@@ -18227,10 +18234,7 @@ WeakAurasSaved = {
 					},
 				},
 				["use_spec"] = false,
-				["difficulty"] = {
-					["multi"] = {
-					},
-				},
+				["use_class"] = true,
 				["size"] = {
 					["multi"] = {
 					},
@@ -18404,18 +18408,18 @@ WeakAurasSaved = {
 				["spellName"] = 12051,
 				["unevent"] = "auto",
 				["use_showOn"] = true,
+				["subeventPrefix"] = "SPELL",
+				["event"] = "Cooldown Progress (Spell)",
 				["names"] = {
 					"Combustion", -- [1]
 				},
-				["event"] = "Cooldown Progress (Spell)",
-				["use_unit"] = true,
 				["realSpellName"] = "唤醒",
 				["use_spellName"] = true,
 				["spellIds"] = {
 				},
 				["unit"] = "player",
 				["showOn"] = "showOnCooldown",
-				["subeventPrefix"] = "SPELL",
+				["use_unit"] = true,
 				["subeventSuffix"] = "_CAST_START",
 				["debuffType"] = "HELPFUL",
 			},
@@ -18476,17 +18480,23 @@ WeakAurasSaved = {
 				["spellknown"] = 31661,
 				["use_name"] = false,
 			},
-			["text2"] = "%p",
 			["cooldownTextEnabled"] = true,
+			["actions"] = {
+				["start"] = {
+				},
+				["finish"] = {
+				},
+				["init"] = {
+				},
+			},
 			["text2Containment"] = "INSIDE",
-			["text2Point"] = "CENTER",
+			["yOffset"] = 0,
 			["text1Color"] = {
 				1, -- [1]
 				1, -- [2]
 				1, -- [3]
 				1, -- [4]
 			},
-			["parent"] = "Mage",
 			["text1Containment"] = "INSIDE",
 			["text2Color"] = {
 				1, -- [1]
@@ -18494,11 +18504,12 @@ WeakAurasSaved = {
 				1, -- [3]
 				1, -- [4]
 			},
-			["regionType"] = "icon",
 			["text1FontFlags"] = "OUTLINE",
+			["regionType"] = "icon",
 			["numTriggers"] = 1,
-			["text2FontSize"] = 24,
 			["text1Font"] = "默认",
+			["text2FontSize"] = 24,
+			["text2"] = "%p",
 			["init_completed"] = 1,
 			["text1"] = "%c",
 			["anchorFrameType"] = "SCREEN",
@@ -18511,22 +18522,19 @@ WeakAurasSaved = {
 			["text2Font"] = "Friz Quadrata TT",
 			["frameStrata"] = 1,
 			["width"] = 32,
+			["parent"] = "Mage",
+			["text2Point"] = "CENTER",
+			["inverse"] = true,
+			["stickyDuration"] = false,
 			["color"] = {
 				1, -- [1]
 				1, -- [2]
 				1, -- [3]
 				1, -- [4]
 			},
-			["yOffset"] = 0,
-			["inverse"] = true,
-			["actions"] = {
-				["start"] = {
-				},
-				["finish"] = {
-				},
-				["init"] = {
-				},
+			["conditions"] = {
 			},
+			["cooldown"] = true,
 			["animation"] = {
 				["start"] = {
 					["type"] = "none",
@@ -18541,10 +18549,6 @@ WeakAurasSaved = {
 					["duration_type"] = "seconds",
 				},
 			},
-			["conditions"] = {
-			},
-			["cooldown"] = true,
-			["stickyDuration"] = false,
 		},
 		["寒冰炸弹监控"] = {
 			["glow"] = false,
@@ -18664,7 +18668,7 @@ WeakAurasSaved = {
 				0, -- [3]
 				1, -- [4]
 			},
-			["text2Point"] = "CENTER",
+			["yOffset"] = 0,
 			["text1FontFlags"] = "OUTLINE",
 			["text2Color"] = {
 				1, -- [1]
@@ -18688,6 +18692,19 @@ WeakAurasSaved = {
 			["text2Font"] = "Friz Quadrata TT",
 			["text2Enabled"] = false,
 			["width"] = 32,
+			["disjunctive"] = "all",
+			["parent"] = "Mage",
+			["inverse"] = false,
+			["color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+			},
+			["text2Point"] = "CENTER",
+			["conditions"] = {
+			},
+			["text1Containment"] = "INSIDE",
 			["actions"] = {
 				["start"] = {
 				},
@@ -18696,19 +18713,6 @@ WeakAurasSaved = {
 				["init"] = {
 				},
 			},
-			["disjunctive"] = "all",
-			["inverse"] = false,
-			["parent"] = "Mage",
-			["color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
-			},
-			["conditions"] = {
-			},
-			["yOffset"] = 0,
-			["text1Containment"] = "INSIDE",
 		},
 		["火冲1 BG 2"] = {
 			["textFlags"] = "None",
@@ -18765,10 +18769,7 @@ WeakAurasSaved = {
 						[13] = true,
 					},
 				},
-				["difficulty"] = {
-					["multi"] = {
-					},
-				},
+				["use_class"] = true,
 				["class"] = {
 					["single"] = "MAGE",
 					["multi"] = {
@@ -18778,23 +18779,26 @@ WeakAurasSaved = {
 					["multi"] = {
 					},
 				},
-				["use_spec"] = true,
-				["use_name"] = false,
+				["pvptalent"] = {
+					["multi"] = {
+					},
+				},
+				["difficulty"] = {
+					["multi"] = {
+					},
+				},
 				["race"] = {
 					["multi"] = {
 					},
 				},
 				["name"] = "叫我法神啦",
+				["use_spec"] = true,
 				["faction"] = {
 					["multi"] = {
 					},
 				},
-				["pvptalent"] = {
-					["multi"] = {
-					},
-				},
 				["use_combat"] = true,
-				["use_class"] = true,
+				["use_name"] = false,
 				["size"] = {
 					["multi"] = {
 					},
@@ -18960,18 +18964,18 @@ WeakAurasSaved = {
 				["custom_hide"] = "timed",
 				["unevent"] = "auto",
 				["use_showOn"] = true,
+				["subeventPrefix"] = "SPELL",
+				["event"] = "Cooldown Progress (Spell)",
 				["names"] = {
 					"Combustion", -- [1]
 				},
-				["event"] = "Cooldown Progress (Spell)",
-				["use_unit"] = true,
 				["realSpellName"] = "活动炸弹",
 				["use_spellName"] = true,
 				["spellIds"] = {
 				},
 				["unit"] = "player",
 				["showOn"] = "showOnCooldown",
-				["subeventPrefix"] = "SPELL",
+				["use_unit"] = true,
 				["subeventSuffix"] = "_CAST_START",
 				["debuffType"] = "HELPFUL",
 			},
@@ -19032,16 +19036,9 @@ WeakAurasSaved = {
 					},
 				},
 			},
-			["text1Color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
-			},
 			["text2Font"] = "Friz Quadrata TT",
-			["text2Containment"] = "INSIDE",
 			["parent"] = "Mage",
-			["text1Font"] = "Ubuntu Condensed",
+			["text2Containment"] = "INSIDE",
 			["animation"] = {
 				["start"] = {
 					["type"] = "none",
@@ -19056,7 +19053,14 @@ WeakAurasSaved = {
 					["duration_type"] = "seconds",
 				},
 			},
+			["text1Color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+			},
 			["xOffset"] = 0,
+			["text1Font"] = "Ubuntu Condensed",
 			["text2Color"] = {
 				1, -- [1]
 				1, -- [2]
@@ -19121,18 +19125,18 @@ WeakAurasSaved = {
 				["spellName"] = 153561,
 				["unevent"] = "auto",
 				["use_showOn"] = true,
+				["subeventPrefix"] = "SPELL",
+				["event"] = "Cooldown Progress (Spell)",
 				["names"] = {
 					"Combustion", -- [1]
 				},
-				["event"] = "Cooldown Progress (Spell)",
-				["use_unit"] = true,
 				["realSpellName"] = "流星",
 				["use_spellName"] = true,
 				["spellIds"] = {
 				},
 				["unit"] = "player",
 				["showOn"] = "showOnCooldown",
-				["subeventPrefix"] = "SPELL",
+				["use_unit"] = true,
 				["subeventSuffix"] = "_CAST_START",
 				["debuffType"] = "HELPFUL",
 			},
@@ -19195,9 +19199,11 @@ WeakAurasSaved = {
 					},
 				},
 			},
+			["yOffset"] = 0,
 			["xOffset"] = -33,
-			["text2Font"] = "Friz Quadrata TT",
 			["text2Containment"] = "INSIDE",
+			["text2Font"] = "Friz Quadrata TT",
+			["text1Font"] = "默认",
 			["animation"] = {
 				["start"] = {
 					["type"] = "none",
@@ -19212,42 +19218,17 @@ WeakAurasSaved = {
 					["duration_type"] = "seconds",
 				},
 			},
+			["parent"] = "Mage",
+			["text1FontFlags"] = "OUTLINE",
+			["regionType"] = "icon",
 			["text1Color"] = {
 				1, -- [1]
 				1, -- [2]
 				1, -- [3]
 				1, -- [4]
 			},
-			["parent"] = "Mage",
-			["color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
-			},
-			["text2Color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
-			},
-			["regionType"] = "icon",
-			["text1Containment"] = "INSIDE",
 			["inverse"] = true,
 			["text2FontSize"] = 24,
-			["yOffset"] = 0,
-			["text1"] = "%s",
-			["width"] = 32,
-			["frameStrata"] = 4,
-			["zoom"] = 0,
-			["auto"] = true,
-			["id"] = "流星冷却",
-			["additional_triggers"] = {
-			},
-			["text2"] = "%p",
-			["text2Enabled"] = false,
-			["anchorFrameType"] = "SCREEN",
-			["text1FontFlags"] = "OUTLINE",
 			["actions"] = {
 				["start"] = {
 				},
@@ -19259,9 +19240,32 @@ WeakAurasSaved = {
 					["do_custom"] = true,
 				},
 			},
+			["text1"] = "%s",
+			["width"] = 32,
+			["frameStrata"] = 4,
+			["zoom"] = 0,
+			["auto"] = true,
+			["id"] = "流星冷却",
+			["additional_triggers"] = {
+			},
+			["text2"] = "%p",
+			["text2Enabled"] = false,
+			["anchorFrameType"] = "SCREEN",
+			["text1Containment"] = "INSIDE",
+			["text2Color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+			},
 			["numTriggers"] = 1,
+			["color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+			},
 			["text2Point"] = "CENTER",
-			["text1Font"] = "默认",
 			["conditions"] = {
 			},
 			["cooldown"] = true,
@@ -19526,22 +19530,9 @@ WeakAurasSaved = {
 				1, -- [4]
 			},
 			["text2Containment"] = "INSIDE",
-			["parent"] = "Mage",
+			["stickyDuration"] = false,
 			["text1Font"] = "Ubuntu Condensed",
-			["animation"] = {
-				["start"] = {
-					["type"] = "none",
-					["duration_type"] = "seconds",
-				},
-				["main"] = {
-					["type"] = "none",
-					["duration_type"] = "seconds",
-				},
-				["finish"] = {
-					["type"] = "none",
-					["duration_type"] = "seconds",
-				},
-			},
+			["parent"] = "Mage",
 			["text1Color"] = {
 				1, -- [1]
 				1, -- [2]
@@ -19570,10 +19561,9 @@ WeakAurasSaved = {
 			["text1FontFlags"] = "OUTLINE",
 			["text2Enabled"] = false,
 			["anchorFrameType"] = "SCREEN",
-			["text2Font"] = "Friz Quadrata TT",
 			["text2Point"] = "CENTER",
-			["inverse"] = true,
 			["cooldownTextEnabled"] = true,
+			["inverse"] = true,
 			["actions"] = {
 				["start"] = {
 				},
@@ -19582,10 +19572,24 @@ WeakAurasSaved = {
 				["init"] = {
 				},
 			},
+			["animation"] = {
+				["start"] = {
+					["type"] = "none",
+					["duration_type"] = "seconds",
+				},
+				["main"] = {
+					["type"] = "none",
+					["duration_type"] = "seconds",
+				},
+				["finish"] = {
+					["type"] = "none",
+					["duration_type"] = "seconds",
+				},
+			},
 			["conditions"] = {
 			},
 			["cooldown"] = true,
-			["stickyDuration"] = false,
+			["text2Font"] = "Friz Quadrata TT",
 		},
 		["浮冰第三层冷却"] = {
 			["textFlags"] = "None",
@@ -19723,9 +19727,9 @@ WeakAurasSaved = {
 					"Incanter's Flow", -- [1]
 				},
 				["useCount"] = true,
-				["custom_hide"] = "timed",
+				["debuffType"] = "HELPFUL",
 				["type"] = "status",
-				["spellName"] = 108839,
+				["custom_hide"] = "timed",
 				["charges_operator"] = "==",
 				["charges"] = "2",
 				["unit"] = "player",
@@ -19741,7 +19745,7 @@ WeakAurasSaved = {
 				["count"] = "3",
 				["showOn"] = "showOnCooldown",
 				["unevent"] = "auto",
-				["debuffType"] = "HELPFUL",
+				["spellName"] = 108839,
 				["subeventPrefix"] = "SPELL",
 			},
 			["text"] = false,
@@ -20060,12 +20064,12 @@ WeakAurasSaved = {
 				["unit"] = "player",
 				["use_unit"] = true,
 				["use_destName"] = false,
+				["custom_hide"] = "timed",
 				["spellName"] = "55342",
-				["debuffType"] = "HELPFUL",
-				["subeventSuffix"] = "_CAST_SUCCESS",
-				["type"] = "event",
 				["custom_type"] = "event",
+				["type"] = "event",
 				["unevent"] = "timed",
+				["subeventSuffix"] = "_CAST_SUCCESS",
 				["use_showOn"] = true,
 				["name"] = "镜像",
 				["event"] = "Combat Log",
@@ -20076,7 +20080,7 @@ WeakAurasSaved = {
 				},
 				["use_sourceUnit"] = true,
 				["showOn"] = "showOnCooldown",
-				["custom_hide"] = "timed",
+				["debuffType"] = "HELPFUL",
 				["sourceUnit"] = "player",
 				["subeventPrefix"] = "SPELL",
 			},
@@ -20143,14 +20147,7 @@ WeakAurasSaved = {
 			["xOffset"] = 107,
 			["text2Point"] = "CENTER",
 			["text2Containment"] = "INSIDE",
-			["actions"] = {
-				["start"] = {
-				},
-				["finish"] = {
-				},
-				["init"] = {
-				},
-			},
+			["yOffset"] = 8,
 			["text1Color"] = {
 				1, -- [1]
 				0.0274509803921569, -- [2]
@@ -20158,18 +20155,18 @@ WeakAurasSaved = {
 				1, -- [4]
 			},
 			["text1Containment"] = "INSIDE",
-			["parent"] = "Mage",
-			["text1FontFlags"] = "OUTLINE",
-			["regionType"] = "icon",
+			["text1Font"] = "Ubuntu Condensed",
 			["text2Color"] = {
 				1, -- [1]
 				1, -- [2]
 				1, -- [3]
 				1, -- [4]
 			},
+			["regionType"] = "icon",
+			["stickyDuration"] = false,
 			["inverse"] = true,
 			["text2FontSize"] = 24,
-			["stickyDuration"] = false,
+			["text1FontFlags"] = "OUTLINE",
 			["text1"] = "%p",
 			["anchorFrameType"] = "SCREEN",
 			["frameStrata"] = 4,
@@ -20181,6 +20178,26 @@ WeakAurasSaved = {
 			["text2"] = "%p",
 			["text2Enabled"] = false,
 			["width"] = 48,
+			["color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+			},
+			["parent"] = "Mage",
+			["numTriggers"] = 1,
+			["text2Font"] = "Friz Quadrata TT",
+			["actions"] = {
+				["start"] = {
+				},
+				["finish"] = {
+				},
+				["init"] = {
+				},
+			},
+			["conditions"] = {
+			},
+			["cooldown"] = false,
 			["animation"] = {
 				["start"] = {
 					["type"] = "none",
@@ -20195,19 +20212,6 @@ WeakAurasSaved = {
 					["duration_type"] = "seconds",
 				},
 			},
-			["text1Font"] = "Ubuntu Condensed",
-			["numTriggers"] = 1,
-			["color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
-			},
-			["text2Font"] = "Friz Quadrata TT",
-			["conditions"] = {
-			},
-			["cooldown"] = false,
-			["yOffset"] = 8,
 		},
 		["Combustion"] = {
 			["glow"] = false,
@@ -20263,7 +20267,7 @@ WeakAurasSaved = {
 					["multi"] = {
 					},
 				},
-				["use_class"] = true,
+				["use_name"] = false,
 				["class"] = {
 					["single"] = "MAGE",
 					["multi"] = {
@@ -20273,26 +20277,26 @@ WeakAurasSaved = {
 					["multi"] = {
 					},
 				},
-				["pvptalent"] = {
-					["multi"] = {
-					},
-				},
-				["difficulty"] = {
-					["multi"] = {
-					},
-				},
+				["use_spec"] = true,
+				["use_class"] = true,
 				["race"] = {
 					["multi"] = {
 					},
 				},
 				["name"] = "叫我法神啦",
+				["pvptalent"] = {
+					["multi"] = {
+					},
+				},
 				["faction"] = {
 					["multi"] = {
 					},
 				},
-				["use_spec"] = true,
 				["use_combat"] = true,
-				["use_name"] = false,
+				["difficulty"] = {
+					["multi"] = {
+					},
+				},
 				["size"] = {
 					["multi"] = {
 					},
@@ -20811,9 +20815,9 @@ WeakAurasSaved = {
 			["animation"] = {
 				["start"] = {
 					["type"] = "custom",
-					["duration"] = "0.2",
 					["duration_type"] = "seconds",
 					["preset"] = "fade",
+					["duration"] = "0.2",
 					["use_alpha"] = false,
 				},
 				["main"] = {
@@ -20863,7 +20867,7 @@ WeakAurasSaved = {
 					["multi"] = {
 					},
 				},
-				["use_class"] = true,
+				["use_name"] = false,
 				["spec"] = {
 					["single"] = 2,
 					["multi"] = {
@@ -20874,26 +20878,26 @@ WeakAurasSaved = {
 					["multi"] = {
 					},
 				},
-				["pvptalent"] = {
-					["multi"] = {
-					},
-				},
-				["difficulty"] = {
-					["multi"] = {
-					},
-				},
+				["use_spec"] = false,
+				["use_class"] = true,
 				["role"] = {
 					["multi"] = {
 					},
 				},
 				["name"] = "叫我法神啦",
+				["pvptalent"] = {
+					["multi"] = {
+					},
+				},
 				["faction"] = {
 					["multi"] = {
 					},
 				},
-				["use_spec"] = false,
 				["use_combat"] = true,
-				["use_name"] = false,
+				["difficulty"] = {
+					["multi"] = {
+					},
+				},
 				["size"] = {
 					["multi"] = {
 					},
@@ -20958,18 +20962,18 @@ WeakAurasSaved = {
 				["spellName"] = 205030,
 				["unevent"] = "auto",
 				["use_showOn"] = true,
-				["use_unit"] = true,
+				["subeventPrefix"] = "SPELL",
 				["event"] = "Cooldown Progress (Spell)",
-				["names"] = {
-					"Combustion", -- [1]
-				},
+				["use_unit"] = true,
 				["realSpellName"] = "冰冻之触",
 				["use_spellName"] = true,
 				["spellIds"] = {
 				},
 				["unit"] = "player",
 				["showOn"] = "showAlways",
-				["subeventPrefix"] = "SPELL",
+				["names"] = {
+					"Combustion", -- [1]
+				},
 				["subeventSuffix"] = "_CAST_START",
 				["debuffType"] = "HELPFUL",
 			},
@@ -21032,6 +21036,7 @@ WeakAurasSaved = {
 					},
 				},
 			},
+			["cooldownTextEnabled"] = true,
 			["animation"] = {
 				["start"] = {
 					["type"] = "none",
@@ -21046,6 +21051,7 @@ WeakAurasSaved = {
 					["duration_type"] = "seconds",
 				},
 			},
+			["text2Containment"] = "INSIDE",
 			["actions"] = {
 				["start"] = {
 				},
@@ -21054,20 +21060,13 @@ WeakAurasSaved = {
 				["init"] = {
 				},
 			},
-			["text2Containment"] = "INSIDE",
+			["text1Font"] = "Ubuntu Condensed",
 			["color"] = {
 				0.349019607843137, -- [1]
 				0.349019607843137, -- [2]
 				0.349019607843137, -- [3]
 				1, -- [4]
 			},
-			["text1Color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
-			},
-			["text1Font"] = "Ubuntu Condensed",
 			["yOffset"] = 6.1035156250e-005,
 			["text2Color"] = {
 				1, -- [1]
@@ -21079,7 +21078,12 @@ WeakAurasSaved = {
 			["text1Containment"] = "INSIDE",
 			["numTriggers"] = 1,
 			["text2FontSize"] = 24,
-			["cooldownTextEnabled"] = true,
+			["text1Color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+			},
 			["text1"] = "%s",
 			["width"] = 32,
 			["text2Enabled"] = false,
@@ -21243,9 +21247,9 @@ WeakAurasSaved = {
 					"Incanter's Flow", -- [1]
 				},
 				["useCount"] = true,
-				["custom_hide"] = "timed",
+				["debuffType"] = "HELPFUL",
 				["type"] = "status",
-				["spellName"] = 194466,
+				["custom_hide"] = "timed",
 				["charges_operator"] = ">=",
 				["charges"] = "3",
 				["unit"] = "player",
@@ -21261,7 +21265,7 @@ WeakAurasSaved = {
 				["count"] = "3",
 				["showOn"] = "showAlways",
 				["unevent"] = "auto",
-				["debuffType"] = "HELPFUL",
+				["spellName"] = 194466,
 				["subeventPrefix"] = "SPELL",
 			},
 			["text"] = false,
@@ -21388,10 +21392,7 @@ WeakAurasSaved = {
 						[13] = true,
 					},
 				},
-				["difficulty"] = {
-					["multi"] = {
-					},
-				},
+				["use_class"] = true,
 				["class"] = {
 					["single"] = "MAGE",
 					["multi"] = {
@@ -21401,23 +21402,26 @@ WeakAurasSaved = {
 					["multi"] = {
 					},
 				},
-				["use_spec"] = false,
-				["use_name"] = false,
+				["pvptalent"] = {
+					["multi"] = {
+					},
+				},
+				["difficulty"] = {
+					["multi"] = {
+					},
+				},
 				["race"] = {
 					["multi"] = {
 					},
 				},
 				["name"] = "叫我法神啦",
+				["use_spec"] = false,
 				["faction"] = {
 					["multi"] = {
 					},
 				},
-				["pvptalent"] = {
-					["multi"] = {
-					},
-				},
 				["use_combat"] = true,
-				["use_class"] = true,
+				["use_name"] = false,
 				["size"] = {
 					["multi"] = {
 					},
@@ -21583,18 +21587,18 @@ WeakAurasSaved = {
 				["custom_hide"] = "timed",
 				["unevent"] = "auto",
 				["use_showOn"] = true,
-				["use_unit"] = true,
+				["subeventPrefix"] = "SPELL",
 				["event"] = "Cooldown Progress (Spell)",
-				["names"] = {
-					"Combustion", -- [1]
-				},
+				["use_unit"] = true,
 				["realSpellName"] = "可控燃烧",
 				["use_spellName"] = true,
 				["spellIds"] = {
 				},
 				["unit"] = "player",
 				["showOn"] = "showAlways",
-				["subeventPrefix"] = "SPELL",
+				["names"] = {
+					"Combustion", -- [1]
+				},
 				["subeventSuffix"] = "_CAST_START",
 				["debuffType"] = "HELPFUL",
 			},
@@ -21655,21 +21659,16 @@ WeakAurasSaved = {
 					},
 				},
 			},
-			["text2Font"] = "Friz Quadrata TT",
-			["text2Point"] = "CENTER",
+			["xOffset"] = -66,
+			["yOffset"] = 0,
 			["text2Containment"] = "INSIDE",
-			["stickyDuration"] = false,
+			["text2Point"] = "CENTER",
 			["text1Font"] = "Ubuntu Condensed",
 			["parent"] = "Mage",
 			["text1Containment"] = "INSIDE",
-			["text2Color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
-			},
+			["text1FontFlags"] = "OUTLINE",
 			["regionType"] = "icon",
-			["text1Color"] = {
+			["text2Color"] = {
 				1, -- [1]
 				1, -- [2]
 				1, -- [3]
@@ -21677,7 +21676,14 @@ WeakAurasSaved = {
 			},
 			["numTriggers"] = 1,
 			["text2FontSize"] = 24,
-			["text1FontFlags"] = "OUTLINE",
+			["actions"] = {
+				["start"] = {
+				},
+				["finish"] = {
+				},
+				["init"] = {
+				},
+			},
 			["text1"] = "%s",
 			["width"] = 32,
 			["text2Enabled"] = false,
@@ -21689,22 +21695,7 @@ WeakAurasSaved = {
 			["text2"] = "%p",
 			["frameStrata"] = 1,
 			["anchorFrameType"] = "SCREEN",
-			["xOffset"] = -66,
-			["color"] = {
-				0.349019607843137, -- [1]
-				0.349019607843137, -- [2]
-				0.349019607843137, -- [3]
-				1, -- [4]
-			},
-			["inverse"] = true,
-			["actions"] = {
-				["start"] = {
-				},
-				["finish"] = {
-				},
-				["init"] = {
-				},
-			},
+			["text2Font"] = "Friz Quadrata TT",
 			["animation"] = {
 				["start"] = {
 					["type"] = "none",
@@ -21719,10 +21710,23 @@ WeakAurasSaved = {
 					["duration_type"] = "seconds",
 				},
 			},
+			["inverse"] = true,
+			["stickyDuration"] = false,
+			["text1Color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+			},
 			["conditions"] = {
 			},
 			["cooldown"] = true,
-			["yOffset"] = 0,
+			["color"] = {
+				0.349019607843137, -- [1]
+				0.349019607843137, -- [2]
+				0.349019607843137, -- [3]
+				1, -- [4]
+			},
 		},
 		["寒冰宝珠"] = {
 			["glow"] = false,
@@ -21755,18 +21759,18 @@ WeakAurasSaved = {
 				["spellName"] = 84714,
 				["unevent"] = "auto",
 				["use_showOn"] = true,
+				["subeventPrefix"] = "SPELL",
+				["event"] = "Cooldown Progress (Spell)",
 				["names"] = {
 					"Combustion", -- [1]
 				},
-				["event"] = "Cooldown Progress (Spell)",
-				["use_unit"] = true,
 				["realSpellName"] = "寒冰宝珠",
 				["use_spellName"] = true,
 				["spellIds"] = {
 				},
 				["unit"] = "player",
 				["showOn"] = "showOnReady",
-				["subeventPrefix"] = "SPELL",
+				["use_unit"] = true,
 				["subeventSuffix"] = "_CAST_START",
 				["debuffType"] = "HELPFUL",
 			},
@@ -21829,6 +21833,10 @@ WeakAurasSaved = {
 				["spellknown"] = 31661,
 				["use_name"] = false,
 			},
+			["untrigger"] = {
+				["showOn"] = "showOnReady",
+				["spellName"] = 84714,
+			},
 			["actions"] = {
 				["start"] = {
 					["do_glow"] = false,
@@ -21840,23 +21848,27 @@ WeakAurasSaved = {
 				["init"] = {
 				},
 			},
-			["parent"] = "Mage",
 			["text2Containment"] = "INSIDE",
-			["stickyDuration"] = false,
+			["selfPoint"] = "CENTER",
 			["text1Font"] = "Ubuntu Condensed",
+			["parent"] = "Mage",
 			["xOffset"] = 33,
-			["text2Point"] = "CENTER",
-			["text1FontFlags"] = "OUTLINE",
+			["text2Color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+			},
 			["regionType"] = "icon",
-			["text2Font"] = "Friz Quadrata TT",
-			["numTriggers"] = 1,
-			["text2FontSize"] = 24,
 			["text1Color"] = {
 				1, -- [1]
 				1, -- [2]
 				1, -- [3]
 				1, -- [4]
 			},
+			["numTriggers"] = 1,
+			["text2FontSize"] = 24,
+			["text2Point"] = "CENTER",
 			["text1"] = "%s",
 			["width"] = 32,
 			["frameStrata"] = 5,
@@ -21868,19 +21880,11 @@ WeakAurasSaved = {
 			["text2"] = "%p",
 			["text2Enabled"] = false,
 			["anchorFrameType"] = "SCREEN",
-			["text2Color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
-			},
-			["untrigger"] = {
-				["showOn"] = "showOnReady",
-				["spellName"] = 84714,
-			},
+			["text2Font"] = "Friz Quadrata TT",
+			["text1FontFlags"] = "OUTLINE",
 			["inverse"] = true,
 			["text1Containment"] = "INSIDE",
-			["selfPoint"] = "CENTER",
+			["stickyDuration"] = false,
 			["conditions"] = {
 			},
 			["cooldown"] = true,
@@ -21911,18 +21915,18 @@ WeakAurasSaved = {
 				["custom_hide"] = "timed",
 				["unevent"] = "auto",
 				["use_showOn"] = true,
+				["subeventPrefix"] = "SPELL",
+				["event"] = "Cooldown Progress (Spell)",
 				["names"] = {
 					"Combustion", -- [1]
 				},
-				["event"] = "Cooldown Progress (Spell)",
-				["use_unit"] = true,
 				["realSpellName"] = "镜像",
 				["use_spellName"] = true,
 				["spellIds"] = {
 				},
 				["unit"] = "player",
 				["showOn"] = "showOnCooldown",
-				["subeventPrefix"] = "SPELL",
+				["use_unit"] = true,
 				["subeventSuffix"] = "_CAST_START",
 				["debuffType"] = "HELPFUL",
 			},
@@ -21985,29 +21989,29 @@ WeakAurasSaved = {
 					},
 				},
 			},
-			["stickyDuration"] = false,
-			["text2Point"] = "CENTER",
-			["text2Containment"] = "INSIDE",
-			["cooldownTextEnabled"] = true,
 			["text1Color"] = {
 				1, -- [1]
 				1, -- [2]
 				1, -- [3]
 				1, -- [4]
 			},
+			["text2Point"] = "CENTER",
+			["text2Containment"] = "INSIDE",
+			["stickyDuration"] = false,
+			["text1Font"] = "Ubuntu Condensed",
 			["text1Containment"] = "INSIDE",
-			["parent"] = "Mage",
-			["text1FontFlags"] = "OUTLINE",
-			["regionType"] = "icon",
+			["cooldownTextEnabled"] = true,
 			["text2Color"] = {
 				1, -- [1]
 				1, -- [2]
 				1, -- [3]
 				1, -- [4]
 			},
+			["regionType"] = "icon",
+			["text2Font"] = "Friz Quadrata TT",
 			["numTriggers"] = 1,
 			["text2FontSize"] = 24,
-			["text2Font"] = "Friz Quadrata TT",
+			["text1FontFlags"] = "OUTLINE",
 			["text1"] = "%s",
 			["anchorFrameType"] = "SCREEN",
 			["frameStrata"] = 3,
@@ -22019,7 +22023,6 @@ WeakAurasSaved = {
 			["text2"] = "%p",
 			["text2Enabled"] = false,
 			["width"] = 48,
-			["yOffset"] = 8,
 			["actions"] = {
 				["start"] = {
 				},
@@ -22028,17 +22031,14 @@ WeakAurasSaved = {
 				["init"] = {
 				},
 			},
+			["parent"] = "Mage",
 			["inverse"] = true,
-			["text1Font"] = "Ubuntu Condensed",
 			["color"] = {
 				1, -- [1]
 				1, -- [2]
 				1, -- [3]
 				1, -- [4]
 			},
-			["conditions"] = {
-			},
-			["cooldown"] = true,
 			["animation"] = {
 				["start"] = {
 					["type"] = "none",
@@ -22053,6 +22053,10 @@ WeakAurasSaved = {
 					["duration_type"] = "seconds",
 				},
 			},
+			["conditions"] = {
+			},
+			["cooldown"] = true,
+			["yOffset"] = 8,
 		},
 		["RoP Overlay 2"] = {
 			["modelIsUnit"] = false,
@@ -22082,9 +22086,9 @@ WeakAurasSaved = {
 			["animation"] = {
 				["start"] = {
 					["type"] = "preset",
-					["preset"] = "fade",
 					["duration_type"] = "seconds",
 					["duration"] = "0.2",
+					["preset"] = "fade",
 					["use_alpha"] = true,
 				},
 				["main"] = {
@@ -22143,10 +22147,7 @@ WeakAurasSaved = {
 						[8] = true,
 					},
 				},
-				["difficulty"] = {
-					["multi"] = {
-					},
-				},
+				["use_class"] = true,
 				["spec"] = {
 					["single"] = 2,
 					["multi"] = {
@@ -22157,23 +22158,26 @@ WeakAurasSaved = {
 					["multi"] = {
 					},
 				},
-				["use_spec"] = false,
-				["use_name"] = false,
+				["pvptalent"] = {
+					["multi"] = {
+					},
+				},
+				["difficulty"] = {
+					["multi"] = {
+					},
+				},
 				["role"] = {
 					["multi"] = {
 					},
 				},
 				["name"] = "叫我法神啦",
+				["use_spec"] = false,
 				["faction"] = {
 					["multi"] = {
 					},
 				},
-				["pvptalent"] = {
-					["multi"] = {
-					},
-				},
 				["use_combat"] = true,
-				["use_class"] = true,
+				["use_name"] = false,
 				["size"] = {
 					["multi"] = {
 					},
@@ -22311,16 +22315,9 @@ WeakAurasSaved = {
 					},
 				},
 			},
-			["text1Color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
-			},
 			["text2Font"] = "Friz Quadrata TT",
-			["text2Containment"] = "INSIDE",
 			["parent"] = "Mage",
-			["text1Font"] = "Ubuntu Condensed",
+			["text2Containment"] = "INSIDE",
 			["animation"] = {
 				["start"] = {
 					["type"] = "none",
@@ -22335,7 +22332,14 @@ WeakAurasSaved = {
 					["duration_type"] = "seconds",
 				},
 			},
+			["text1Color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+			},
 			["xOffset"] = 0,
+			["text1Font"] = "Ubuntu Condensed",
 			["text2Color"] = {
 				1, -- [1]
 				1, -- [2]
@@ -22426,15 +22430,15 @@ WeakAurasSaved = {
 				["type"] = "aura",
 				["spellId"] = "195418",
 				["subeventSuffix"] = "_CAST_START",
-				["name"] = "连锁反应",
-				["use_spellId"] = true,
-				["event"] = "Health",
-				["subeventPrefix"] = "SPELL",
-				["count"] = "1",
-				["useCount"] = true,
 				["spellIds"] = {
 					194329, -- [1]
 				},
+				["use_spellId"] = true,
+				["event"] = "Health",
+				["subeventPrefix"] = "SPELL",
+				["name"] = "连锁反应",
+				["useCount"] = true,
+				["count"] = "1",
 				["fullscan"] = true,
 				["unit"] = "player",
 				["names"] = {
@@ -22464,7 +22468,10 @@ WeakAurasSaved = {
 					["multi"] = {
 					},
 				},
-				["use_class"] = true,
+				["difficulty"] = {
+					["multi"] = {
+					},
+				},
 				["class"] = {
 					["single"] = "MAGE",
 					["multi"] = {
@@ -22474,26 +22481,23 @@ WeakAurasSaved = {
 					["multi"] = {
 					},
 				},
-				["use_spec"] = false,
-				["use_name"] = false,
+				["faction"] = {
+					["multi"] = {
+					},
+				},
+				["use_class"] = true,
 				["role"] = {
 					["multi"] = {
 					},
 				},
 				["name"] = "叫我法神啦",
+				["use_spec"] = false,
 				["pvptalent"] = {
 					["multi"] = {
 					},
 				},
-				["faction"] = {
-					["multi"] = {
-					},
-				},
 				["use_combat"] = true,
-				["difficulty"] = {
-					["multi"] = {
-					},
-				},
+				["use_name"] = false,
 				["size"] = {
 					["multi"] = {
 					},
@@ -22657,20 +22661,14 @@ WeakAurasSaved = {
 				},
 			},
 			["fontSize"] = 12,
-			["backgroundColor"] = {
-				0.5, -- [1]
-				0.5, -- [2]
-				0.5, -- [3]
-				0.5, -- [4]
-			},
+			["anchorPoint"] = "CENTER",
 			["startAngle"] = 0,
 			["parent"] = "Mage",
 			["selfPoint"] = "CENTER",
 			["mirror"] = false,
 			["crop_x"] = 0.41,
 			["regionType"] = "progresstexture",
-			["color"] = {
-			},
+			["backgroundTexture"] = "Textures\\SpellActivationOverlays\\Eclipse_Sun",
 			["blendMode"] = "BLEND",
 			["xOffset"] = 0.00030517578125,
 			["numTriggers"] = 1,
@@ -22686,13 +22684,19 @@ WeakAurasSaved = {
 			["alpha"] = 1,
 			["anchorFrameType"] = "SCREEN",
 			["desaturateForeground"] = false,
-			["foregroundTexture"] = "Textures\\SpellActivationOverlays\\Backlash",
+			["backgroundColor"] = {
+				0.5, -- [1]
+				0.5, -- [2]
+				0.5, -- [3]
+				0.5, -- [4]
+			},
 			["inverse"] = false,
-			["backgroundTexture"] = "Textures\\SpellActivationOverlays\\Eclipse_Sun",
+			["foregroundTexture"] = "Textures\\SpellActivationOverlays\\Backlash",
 			["orientation"] = "HORIZONTAL",
 			["conditions"] = {
 			},
-			["anchorPoint"] = "CENTER",
+			["color"] = {
+			},
 			["backgroundOffset"] = 2,
 		},
 		["Phoenix's Flames 2 Recharge 2"] = {
@@ -22837,9 +22841,9 @@ WeakAurasSaved = {
 					"Incanter's Flow", -- [1]
 				},
 				["useCount"] = true,
-				["spellName"] = 194466,
+				["debuffType"] = "HELPFUL",
 				["charges"] = "1",
-				["custom_hide"] = "timed",
+				["spellName"] = 194466,
 				["charges_operator"] = "==",
 				["type"] = "status",
 				["unit"] = "player",
@@ -22855,7 +22859,7 @@ WeakAurasSaved = {
 				["count"] = "3",
 				["showOn"] = "showAlways",
 				["unevent"] = "auto",
-				["debuffType"] = "HELPFUL",
+				["custom_hide"] = "timed",
 				["subeventPrefix"] = "SPELL",
 			},
 			["text"] = false,
@@ -22925,297 +22929,6 @@ WeakAurasSaved = {
 			["sparkTexture"] = "Interface\\CastingBar\\UI-CastingBar-Spark",
 			["zoom"] = 0,
 		},
-		["孤寂寒冬"] = {
-			["glow"] = false,
-			["text1FontSize"] = 12,
-			["color"] = {
-				0.349019607843137, -- [1]
-				0.349019607843137, -- [2]
-				0.349019607843137, -- [3]
-				1, -- [4]
-			},
-			["yOffset"] = 6.1035156250e-005,
-			["anchorPoint"] = "CENTER",
-			["activeTriggerMode"] = 0,
-			["customTextUpdate"] = "update",
-			["icon"] = true,
-			["text1Enabled"] = true,
-			["selfPoint"] = "CENTER",
-			["trigger"] = {
-				["spellName"] = 205024,
-				["type"] = "status",
-				["custom_hide"] = "timed",
-				["unevent"] = "auto",
-				["use_showOn"] = true,
-				["names"] = {
-					"Combustion", -- [1]
-				},
-				["event"] = "Cooldown Progress (Spell)",
-				["use_unit"] = true,
-				["realSpellName"] = "孤寂寒冬",
-				["use_spellName"] = true,
-				["spellIds"] = {
-				},
-				["unit"] = "player",
-				["showOn"] = "showAlways",
-				["subeventPrefix"] = "SPELL",
-				["subeventSuffix"] = "_CAST_START",
-				["debuffType"] = "HELPFUL",
-			},
-			["desaturate"] = false,
-			["text1Point"] = "BOTTOMRIGHT",
-			["text2FontFlags"] = "OUTLINE",
-			["height"] = 32,
-			["load"] = {
-				["use_never"] = false,
-				["class"] = {
-					["single"] = "MAGE",
-					["multi"] = {
-					},
-				},
-				["use_talent"] = true,
-				["use_class"] = true,
-				["race"] = {
-					["multi"] = {
-					},
-				},
-				["use_spec"] = false,
-				["size"] = {
-					["multi"] = {
-					},
-				},
-				["talent2"] = {
-					["multi"] = {
-					},
-				},
-				["talent"] = {
-					["single"] = 2,
-					["multi"] = {
-					},
-				},
-				["spec"] = {
-					["single"] = 2,
-					["multi"] = {
-						[3] = true,
-					},
-				},
-				["pvptalent"] = {
-					["multi"] = {
-					},
-				},
-				["use_name"] = false,
-				["use_spellknown"] = false,
-				["name"] = "叫我法神啦",
-				["faction"] = {
-					["multi"] = {
-					},
-				},
-				["difficulty"] = {
-					["multi"] = {
-					},
-				},
-				["use_combat"] = true,
-				["spellknown"] = 31661,
-				["role"] = {
-					["multi"] = {
-					},
-				},
-			},
-			["xOffset"] = -33,
-			["untrigger"] = {
-				["showOn"] = "showAlways",
-				["spellName"] = 205024,
-			},
-			["text2Containment"] = "INSIDE",
-			["text1Containment"] = "INSIDE",
-			["text1Font"] = "Ubuntu Condensed",
-			["cooldownTextEnabled"] = true,
-			["animation"] = {
-				["start"] = {
-					["type"] = "none",
-					["duration_type"] = "seconds",
-				},
-				["main"] = {
-					["type"] = "none",
-					["duration_type"] = "seconds",
-				},
-				["finish"] = {
-					["type"] = "none",
-					["duration_type"] = "seconds",
-				},
-			},
-			["text2Color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
-			},
-			["regionType"] = "icon",
-			["text1Color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
-			},
-			["numTriggers"] = 1,
-			["text2FontSize"] = 24,
-			["actions"] = {
-				["start"] = {
-				},
-				["finish"] = {
-				},
-				["init"] = {
-				},
-			},
-			["text1"] = "%s",
-			["width"] = 32,
-			["text2Enabled"] = false,
-			["zoom"] = 0,
-			["auto"] = true,
-			["text1FontFlags"] = "OUTLINE",
-			["id"] = "孤寂寒冬",
-			["additional_triggers"] = {
-			},
-			["frameStrata"] = 1,
-			["anchorFrameType"] = "SCREEN",
-			["text2"] = "%p",
-			["text2Font"] = "Friz Quadrata TT",
-			["inverse"] = false,
-			["stickyDuration"] = false,
-			["text2Point"] = "CENTER",
-			["conditions"] = {
-			},
-			["cooldown"] = false,
-			["parent"] = "Mage",
-		},
-		["火球爆击率"] = {
-			["outline"] = "OUTLINE",
-			["fontSize"] = 18,
-			["disjunctive"] = "all",
-			["displayText"] = "%c",
-			["customText"] = "function()\n    if aura_env.K_crit == 100 and aura_env.combustion then\n        return \"燃烧\".. string.format([[%.0f]], aura_env.K_crit) .. \"%%\"\n    elseif aura_env.K_crit == 100 and aura_env.firestarter then\n        return string.format([[%.0f]], aura_env.K_crit) .. \"%%\".. \"纵火者\"\n    else\n        return string.format([[%.0f]], aura_env.K_crit) .. \"%%\"\n    end\nend",
-			["yOffset"] = 58,
-			["regionType"] = "text",
-			["parent"] = "Mage",
-			["untrigger"] = {
-				["custom"] = "",
-			},
-			["activeTriggerMode"] = -10,
-			["customTextUpdate"] = "update",
-			["actions"] = {
-				["start"] = {
-				},
-				["init"] = {
-					["do_custom"] = true,
-					["custom"] = "aura_env.K_crit = 0\naura_env.firestarter = false\naura_env.combustion = false",
-				},
-				["finish"] = {
-				},
-			},
-			["anchorPoint"] = "CENTER",
-			["selfPoint"] = "CENTER",
-			["trigger"] = {
-				["type"] = "custom",
-				["custom_type"] = "status",
-				["custom_hide"] = "timed",
-				["unevent"] = "auto",
-				["event"] = "Health",
-				["subeventPrefix"] = "SPELL",
-				["unit"] = "player",
-				["subeventSuffix"] = "_CAST_START",
-				["custom"] = "function () \n    local now = GetTime() \n    local WA_STATS_LAST_UP = WA_STATS_LAST_UP or now - 1 \n    local enh_pyro_stacks = select(4, UnitBuff(\"player\", GetSpellInfo (157644))) or 0 \n    local combustion_active = UnitBuff(\"player\", GetSpellInfo(190319)) \n    local firestarter = select(4, GetTalentInfo(1,3,1)) \n    local target_hp_perc = (UnitHealth(\"target\") /UnitHealthMax(\"target\"))*100 \n    local exists = UnitExists(\"target\") \n    aura_env.combustion = false \n    aura_env.firestarter = false \n    \n    if now >= WA_STATS_LAST_UP + 0.1 then \n        WA_STATS_LAST_UP = now \n        local crit = GetSpellCritChance(6) or 0 \n        aura_env.K_crit = (crit + enh_pyro_stacks * 30) \n    end \n    if aura_env.K_crit > 100 then \n        aura_env.K_crit = 100 \n    end \n    local reg = WeakAuras.regions[ aura_env.id ].region \n    \n    if combustion_active ~= nil then \n        aura_env.K_crit = 100 \n        aura_env.combustion = true \n        reg.text:SetTextColor(1, 235/255, 0, 1) \n        return true \n    elseif firestarter and target_hp_perc >= 90 and exists \n    then \n        aura_env.K_crit = 100 \n        aura_env.firestarter = true \n        reg.text:SetTextColor(1, 235/255, 0, 1) \n        return true \n    elseif aura_env.K_crit >= 66 then \n        reg.text:SetTextColor(.8, .6, 0, 1) \n        return true \n    elseif aura_env.K_crit < 66 then \n        reg.text:SetTextColor(1, 1, 1, 1) \n        return true \n    end \nend",
-				["spellIds"] = {
-				},
-				["check"] = "update",
-				["names"] = {
-				},
-				["use_unit"] = true,
-				["debuffType"] = "HELPFUL",
-			},
-			["justify"] = "CENTER",
-			["animation"] = {
-				["start"] = {
-					["type"] = "none",
-					["duration_type"] = "seconds",
-				},
-				["main"] = {
-					["type"] = "none",
-					["duration_type"] = "seconds",
-				},
-				["finish"] = {
-					["type"] = "none",
-					["duration_type"] = "seconds",
-				},
-			},
-			["id"] = "火球爆击率",
-			["width"] = 8.99992656707764,
-			["frameStrata"] = 4,
-			["anchorFrameType"] = "SCREEN",
-			["color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
-			},
-			["font"] = "Calibri Bold",
-			["numTriggers"] = 1,
-			["additional_triggers"] = {
-			},
-			["height"] = 17.9999942779541,
-			["conditions"] = {
-			},
-			["load"] = {
-				["talent2"] = {
-					["multi"] = {
-					},
-				},
-				["use_never"] = false,
-				["talent"] = {
-					["multi"] = {
-					},
-				},
-				["class"] = {
-					["single"] = "MAGE",
-					["multi"] = {
-					},
-				},
-				["spec"] = {
-					["single"] = 2,
-					["multi"] = {
-						[2] = true,
-					},
-				},
-				["use_name"] = false,
-				["race"] = {
-					["multi"] = {
-					},
-				},
-				["difficulty"] = {
-					["multi"] = {
-					},
-				},
-				["role"] = {
-					["multi"] = {
-					},
-				},
-				["pvptalent"] = {
-					["multi"] = {
-					},
-				},
-				["faction"] = {
-					["multi"] = {
-					},
-				},
-				["use_spec"] = true,
-				["use_combat"] = true,
-				["use_class"] = true,
-				["size"] = {
-					["multi"] = {
-					},
-				},
-			},
-			["xOffset"] = 0,
-		},
 		["宝珠CD"] = {
 			["glow"] = false,
 			["text1FontSize"] = 12,
@@ -23233,18 +22946,18 @@ WeakAurasSaved = {
 				["spellName"] = 84714,
 				["unevent"] = "auto",
 				["use_showOn"] = true,
+				["subeventPrefix"] = "SPELL",
+				["event"] = "Cooldown Progress (Spell)",
 				["names"] = {
 					"Combustion", -- [1]
 				},
-				["event"] = "Cooldown Progress (Spell)",
-				["use_unit"] = true,
 				["realSpellName"] = "寒冰宝珠",
 				["use_spellName"] = true,
 				["spellIds"] = {
 				},
 				["unit"] = "player",
 				["showOn"] = "showOnCooldown",
-				["subeventPrefix"] = "SPELL",
+				["use_unit"] = true,
 				["subeventSuffix"] = "_CAST_START",
 				["debuffType"] = "HELPFUL",
 			},
@@ -23325,7 +23038,12 @@ WeakAurasSaved = {
 			["text2Containment"] = "INSIDE",
 			["stickyDuration"] = false,
 			["text1Font"] = "默认",
-			["text2Font"] = "Friz Quadrata TT",
+			["text1Color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+			},
 			["text1Containment"] = "INSIDE",
 			["text2Color"] = {
 				1, -- [1]
@@ -23367,17 +23085,303 @@ WeakAurasSaved = {
 				},
 			},
 			["inverse"] = true,
+			["parent"] = "Mage",
+			["text2Font"] = "Friz Quadrata TT",
+			["conditions"] = {
+			},
+			["cooldown"] = true,
+			["text2Point"] = "CENTER",
+		},
+		["孤寂寒冬"] = {
+			["glow"] = false,
+			["text1FontSize"] = 12,
+			["color"] = {
+				0.349019607843137, -- [1]
+				0.349019607843137, -- [2]
+				0.349019607843137, -- [3]
+				1, -- [4]
+			},
+			["yOffset"] = 6.1035156250e-005,
+			["anchorPoint"] = "CENTER",
+			["activeTriggerMode"] = 0,
+			["customTextUpdate"] = "update",
+			["icon"] = true,
+			["text1Enabled"] = true,
+			["selfPoint"] = "CENTER",
+			["trigger"] = {
+				["spellName"] = 205024,
+				["type"] = "status",
+				["custom_hide"] = "timed",
+				["unevent"] = "auto",
+				["use_showOn"] = true,
+				["subeventPrefix"] = "SPELL",
+				["event"] = "Cooldown Progress (Spell)",
+				["names"] = {
+					"Combustion", -- [1]
+				},
+				["realSpellName"] = "孤寂寒冬",
+				["use_spellName"] = true,
+				["spellIds"] = {
+				},
+				["unit"] = "player",
+				["showOn"] = "showAlways",
+				["use_unit"] = true,
+				["subeventSuffix"] = "_CAST_START",
+				["debuffType"] = "HELPFUL",
+			},
+			["desaturate"] = false,
+			["text1Point"] = "BOTTOMRIGHT",
+			["text2FontFlags"] = "OUTLINE",
+			["height"] = 32,
+			["load"] = {
+				["use_never"] = false,
+				["class"] = {
+					["single"] = "MAGE",
+					["multi"] = {
+					},
+				},
+				["use_talent"] = true,
+				["use_class"] = true,
+				["race"] = {
+					["multi"] = {
+					},
+				},
+				["use_spec"] = false,
+				["size"] = {
+					["multi"] = {
+					},
+				},
+				["talent2"] = {
+					["multi"] = {
+					},
+				},
+				["talent"] = {
+					["single"] = 2,
+					["multi"] = {
+					},
+				},
+				["spec"] = {
+					["single"] = 2,
+					["multi"] = {
+						[3] = true,
+					},
+				},
+				["pvptalent"] = {
+					["multi"] = {
+					},
+				},
+				["use_name"] = false,
+				["use_spellknown"] = false,
+				["name"] = "叫我法神啦",
+				["faction"] = {
+					["multi"] = {
+					},
+				},
+				["difficulty"] = {
+					["multi"] = {
+					},
+				},
+				["use_combat"] = true,
+				["spellknown"] = 31661,
+				["role"] = {
+					["multi"] = {
+					},
+				},
+			},
+			["xOffset"] = -33,
+			["untrigger"] = {
+				["showOn"] = "showAlways",
+				["spellName"] = 205024,
+			},
+			["text2Containment"] = "INSIDE",
+			["text1Containment"] = "INSIDE",
+			["text1Font"] = "Ubuntu Condensed",
 			["text1Color"] = {
 				1, -- [1]
 				1, -- [2]
 				1, -- [3]
 				1, -- [4]
 			},
-			["parent"] = "Mage",
+			["cooldownTextEnabled"] = true,
+			["text2Color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+			},
+			["regionType"] = "icon",
+			["animation"] = {
+				["start"] = {
+					["type"] = "none",
+					["duration_type"] = "seconds",
+				},
+				["main"] = {
+					["type"] = "none",
+					["duration_type"] = "seconds",
+				},
+				["finish"] = {
+					["type"] = "none",
+					["duration_type"] = "seconds",
+				},
+			},
+			["numTriggers"] = 1,
+			["text2FontSize"] = 24,
+			["actions"] = {
+				["start"] = {
+				},
+				["finish"] = {
+				},
+				["init"] = {
+				},
+			},
+			["text1"] = "%s",
+			["width"] = 32,
+			["text2Enabled"] = false,
+			["zoom"] = 0,
+			["auto"] = true,
+			["text1FontFlags"] = "OUTLINE",
+			["id"] = "孤寂寒冬",
+			["additional_triggers"] = {
+			},
+			["frameStrata"] = 1,
+			["anchorFrameType"] = "SCREEN",
+			["text2"] = "%p",
+			["text2Font"] = "Friz Quadrata TT",
+			["inverse"] = false,
+			["stickyDuration"] = false,
+			["text2Point"] = "CENTER",
 			["conditions"] = {
 			},
-			["cooldown"] = true,
-			["text2Point"] = "CENTER",
+			["cooldown"] = false,
+			["parent"] = "Mage",
+		},
+		["火球爆击率"] = {
+			["outline"] = "OUTLINE",
+			["fontSize"] = 18,
+			["disjunctive"] = "all",
+			["displayText"] = "%c",
+			["customText"] = "function()\n    if aura_env.K_crit == 100 and aura_env.combustion then\n        return \"燃烧\".. string.format([[%.0f]], aura_env.K_crit) .. \"%%\"\n    elseif aura_env.K_crit == 100 and aura_env.firestarter then\n        return string.format([[%.0f]], aura_env.K_crit) .. \"%%\".. \"纵火者\"\n    else\n        return string.format([[%.0f]], aura_env.K_crit) .. \"%%\"\n    end\nend",
+			["yOffset"] = 58,
+			["regionType"] = "text",
+			["parent"] = "Mage",
+			["xOffset"] = 0,
+			["activeTriggerMode"] = -10,
+			["customTextUpdate"] = "update",
+			["actions"] = {
+				["start"] = {
+				},
+				["init"] = {
+					["do_custom"] = true,
+					["custom"] = "aura_env.K_crit = 0\naura_env.firestarter = false\naura_env.combustion = false",
+				},
+				["finish"] = {
+				},
+			},
+			["anchorPoint"] = "CENTER",
+			["selfPoint"] = "CENTER",
+			["additional_triggers"] = {
+			},
+			["justify"] = "CENTER",
+			["animation"] = {
+				["start"] = {
+					["type"] = "none",
+					["duration_type"] = "seconds",
+				},
+				["main"] = {
+					["type"] = "none",
+					["duration_type"] = "seconds",
+				},
+				["finish"] = {
+					["type"] = "none",
+					["duration_type"] = "seconds",
+				},
+			},
+			["trigger"] = {
+				["type"] = "custom",
+				["custom_type"] = "status",
+				["custom_hide"] = "timed",
+				["unevent"] = "auto",
+				["event"] = "Health",
+				["subeventPrefix"] = "SPELL",
+				["unit"] = "player",
+				["subeventSuffix"] = "_CAST_START",
+				["custom"] = "function () \n    local now = GetTime() \n    local WA_STATS_LAST_UP = WA_STATS_LAST_UP or now - 1 \n    local enh_pyro_stacks = select(4, UnitBuff(\"player\", GetSpellInfo (157644))) or 0 \n    local combustion_active = UnitBuff(\"player\", GetSpellInfo(190319)) \n    local firestarter = select(4, GetTalentInfo(1,3,1)) \n    local target_hp_perc = (UnitHealth(\"target\") /UnitHealthMax(\"target\"))*100 \n    local exists = UnitExists(\"target\") \n    aura_env.combustion = false \n    aura_env.firestarter = false \n    \n    if now >= WA_STATS_LAST_UP + 0.1 then \n        WA_STATS_LAST_UP = now \n        local crit = GetSpellCritChance(6) or 0 \n        aura_env.K_crit = (crit + enh_pyro_stacks * 30) \n    end \n    if aura_env.K_crit > 100 then \n        aura_env.K_crit = 100 \n    end \n    local reg = WeakAuras.regions[ aura_env.id ].region \n    \n    if combustion_active ~= nil then \n        aura_env.K_crit = 100 \n        aura_env.combustion = true \n        reg.text:SetTextColor(1, 235/255, 0, 1) \n        return true \n    elseif firestarter and target_hp_perc >= 90 and exists \n    then \n        aura_env.K_crit = 100 \n        aura_env.firestarter = true \n        reg.text:SetTextColor(1, 235/255, 0, 1) \n        return true \n    elseif aura_env.K_crit >= 66 then \n        reg.text:SetTextColor(.8, .6, 0, 1) \n        return true \n    elseif aura_env.K_crit < 66 then \n        reg.text:SetTextColor(1, 1, 1, 1) \n        return true \n    end \nend",
+				["spellIds"] = {
+				},
+				["check"] = "update",
+				["names"] = {
+				},
+				["use_unit"] = true,
+				["debuffType"] = "HELPFUL",
+			},
+			["width"] = 8.99992656707764,
+			["frameStrata"] = 4,
+			["anchorFrameType"] = "SCREEN",
+			["color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+			},
+			["font"] = "Calibri Bold",
+			["numTriggers"] = 1,
+			["id"] = "火球爆击率",
+			["height"] = 17.9999942779541,
+			["conditions"] = {
+			},
+			["load"] = {
+				["talent2"] = {
+					["multi"] = {
+					},
+				},
+				["use_never"] = false,
+				["talent"] = {
+					["multi"] = {
+					},
+				},
+				["class"] = {
+					["single"] = "MAGE",
+					["multi"] = {
+					},
+				},
+				["spec"] = {
+					["single"] = 2,
+					["multi"] = {
+						[2] = true,
+					},
+				},
+				["use_class"] = true,
+				["race"] = {
+					["multi"] = {
+					},
+				},
+				["use_name"] = false,
+				["role"] = {
+					["multi"] = {
+					},
+				},
+				["use_spec"] = true,
+				["pvptalent"] = {
+					["multi"] = {
+					},
+				},
+				["faction"] = {
+					["multi"] = {
+					},
+				},
+				["use_combat"] = true,
+				["difficulty"] = {
+					["multi"] = {
+					},
+				},
+				["size"] = {
+					["multi"] = {
+					},
+				},
+			},
+			["untrigger"] = {
+				["custom"] = "",
+			},
 		},
 		["溜溜球冷却文字"] = {
 			["outline"] = "None",
@@ -23470,8 +23474,6 @@ WeakAurasSaved = {
 			["displayStacks"] = "%s",
 			["customTriggerLogic"] = "function (values)\n    local c=0\n    if (values[1] and values[2]) then\n        c=0\n    elseif values[1] then\n        c=2\n    else\n        c=0\n    end\n    if c>1 then\n        return true\n    else\n        return false\n    end\nend",
 			["regionType"] = "text",
-			["stickyDuration"] = false,
-			["parent"] = "Mage",
 			["animation"] = {
 				["start"] = {
 					["type"] = "none",
@@ -23486,6 +23488,8 @@ WeakAurasSaved = {
 					["duration_type"] = "seconds",
 				},
 			},
+			["stickyDuration"] = false,
+			["parent"] = "Mage",
 			["color"] = {
 				1, -- [1]
 				1, -- [2]
@@ -23802,10 +23806,12 @@ WeakAurasSaved = {
 				["type"] = "aura",
 				["spellId"] = "214404",
 				["unevent"] = "auto",
-				["use_unit"] = true,
+				["names"] = {
+					"玛瑟里顿之力", -- [1]
+				},
 				["ownOnly"] = true,
 				["event"] = "Health",
-				["subeventPrefix"] = "SPELL",
+				["use_unit"] = true,
 				["spellIds"] = {
 					214404, -- [1]
 				},
@@ -23814,9 +23820,7 @@ WeakAurasSaved = {
 				["custom_hide"] = "timed",
 				["unit"] = "player",
 				["subeventSuffix"] = "_CAST_START",
-				["names"] = {
-					"玛瑟里顿之力", -- [1]
-				},
+				["subeventPrefix"] = "SPELL",
 				["debuffType"] = "HELPFUL",
 			},
 			["text1Containment"] = "OUTSIDE",
@@ -23976,10 +23980,7 @@ WeakAurasSaved = {
 						[13] = true,
 					},
 				},
-				["difficulty"] = {
-					["multi"] = {
-					},
-				},
+				["use_class"] = true,
 				["class"] = {
 					["single"] = "MAGE",
 					["multi"] = {
@@ -23989,23 +23990,26 @@ WeakAurasSaved = {
 					["multi"] = {
 					},
 				},
-				["faction"] = {
+				["pvptalent"] = {
 					["multi"] = {
 					},
 				},
-				["use_name"] = false,
+				["difficulty"] = {
+					["multi"] = {
+					},
+				},
 				["role"] = {
 					["multi"] = {
 					},
 				},
 				["name"] = "叫我法神啦",
-				["use_spec"] = true,
-				["pvptalent"] = {
+				["faction"] = {
 					["multi"] = {
 					},
 				},
+				["use_spec"] = true,
 				["use_combat"] = true,
-				["use_class"] = true,
+				["use_name"] = false,
 				["size"] = {
 					["multi"] = {
 					},
@@ -24176,18 +24180,18 @@ WeakAurasSaved = {
 				["custom_hide"] = "timed",
 				["unevent"] = "auto",
 				["use_showOn"] = true,
-				["use_unit"] = true,
+				["subeventPrefix"] = "SPELL",
 				["event"] = "Cooldown Progress (Spell)",
-				["names"] = {
-					"Combustion", -- [1]
-				},
+				["use_unit"] = true,
 				["realSpellName"] = "艾露尼斯的印记",
 				["use_spellName"] = true,
 				["spellIds"] = {
 				},
 				["unit"] = "player",
 				["showOn"] = "showOnReady",
-				["subeventPrefix"] = "SPELL",
+				["names"] = {
+					"Combustion", -- [1]
+				},
 				["subeventSuffix"] = "_CAST_START",
 				["debuffType"] = "HELPFUL",
 			},
@@ -24248,11 +24252,6 @@ WeakAurasSaved = {
 					},
 				},
 			},
-			["yOffset"] = 6.1035156250e-005,
-			["stickyDuration"] = false,
-			["text2Containment"] = "INSIDE",
-			["text1Containment"] = "INSIDE",
-			["text1Font"] = "Ubuntu Condensed",
 			["cooldownTextEnabled"] = true,
 			["animation"] = {
 				["start"] = {
@@ -24268,21 +24267,7 @@ WeakAurasSaved = {
 					["duration_type"] = "seconds",
 				},
 			},
-			["text2Color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
-			},
-			["regionType"] = "icon",
-			["text1Color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
-			},
-			["inverse"] = true,
-			["text2FontSize"] = 24,
+			["text2Containment"] = "INSIDE",
 			["actions"] = {
 				["start"] = {
 				},
@@ -24291,6 +24276,25 @@ WeakAurasSaved = {
 				["init"] = {
 				},
 			},
+			["text1Color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+			},
+			["yOffset"] = 6.1035156250e-005,
+			["text1Font"] = "Ubuntu Condensed",
+			["text2Color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+			},
+			["regionType"] = "icon",
+			["inverse"] = true,
+			["stickyDuration"] = false,
+			["text2FontSize"] = 24,
+			["text1Containment"] = "INSIDE",
 			["init_completed"] = 1,
 			["text1"] = "%s",
 			["width"] = 32,
@@ -24374,15 +24378,15 @@ WeakAurasSaved = {
 					["multi"] = {
 					},
 				},
-				["difficulty"] = {
-					["multi"] = {
-					},
-				},
+				["use_name"] = false,
 				["role"] = {
 					["multi"] = {
 					},
 				},
-				["use_class"] = true,
+				["difficulty"] = {
+					["multi"] = {
+					},
+				},
 				["race"] = {
 					["multi"] = {
 					},
@@ -24397,7 +24401,7 @@ WeakAurasSaved = {
 					["multi"] = {
 					},
 				},
-				["use_name"] = false,
+				["use_class"] = true,
 				["size"] = {
 					["multi"] = {
 					},
@@ -24638,6 +24642,8 @@ WeakAurasSaved = {
 			["text2"] = "%p",
 			["cooldownTextEnabled"] = true,
 			["text2Containment"] = "INSIDE",
+			["parent"] = "Mage",
+			["text1Font"] = "Friz Quadrata TT",
 			["actions"] = {
 				["start"] = {
 				},
@@ -24646,13 +24652,6 @@ WeakAurasSaved = {
 				["init"] = {
 				},
 			},
-			["text1Color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
-			},
-			["text1Containment"] = "INSIDE",
 			["animation"] = {
 				["start"] = {
 					["type"] = "none",
@@ -24691,7 +24690,12 @@ WeakAurasSaved = {
 			["text2Font"] = "Friz Quadrata TT",
 			["frameStrata"] = 1,
 			["width"] = 32,
-			["text2Point"] = "CENTER",
+			["text1Color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+			},
 			["stickyDuration"] = false,
 			["inverse"] = false,
 			["color"] = {
@@ -24700,11 +24704,11 @@ WeakAurasSaved = {
 				1, -- [3]
 				1, -- [4]
 			},
-			["text1Font"] = "Friz Quadrata TT",
+			["text1Containment"] = "INSIDE",
 			["conditions"] = {
 			},
 			["cooldown"] = true,
-			["parent"] = "Mage",
+			["text2Point"] = "CENTER",
 		},
 		["极地寒风"] = {
 			["glow"] = false,
@@ -24726,18 +24730,18 @@ WeakAurasSaved = {
 				["spellName"] = 205038,
 				["unevent"] = "auto",
 				["use_showOn"] = true,
+				["subeventPrefix"] = "SPELL",
+				["event"] = "Cooldown Progress (Spell)",
 				["names"] = {
 					"Combustion", -- [1]
 				},
-				["event"] = "Cooldown Progress (Spell)",
-				["use_unit"] = true,
 				["realSpellName"] = "极地寒风",
 				["use_spellName"] = true,
 				["spellIds"] = {
 				},
 				["unit"] = "player",
 				["showOn"] = "showAlways",
-				["subeventPrefix"] = "SPELL",
+				["use_unit"] = true,
 				["subeventSuffix"] = "_CAST_START",
 				["debuffType"] = "HELPFUL",
 			},
@@ -24923,7 +24927,10 @@ WeakAurasSaved = {
 					["multi"] = {
 					},
 				},
-				["use_name"] = false,
+				["difficulty"] = {
+					["multi"] = {
+					},
+				},
 				["talent"] = {
 					["single"] = 8,
 					["multi"] = {
@@ -24940,35 +24947,30 @@ WeakAurasSaved = {
 						true, -- [3]
 					},
 				},
-				["faction"] = {
-					["multi"] = {
-					},
-				},
+				["use_spec"] = false,
 				["use_talent"] = true,
-				["use_class"] = true,
+				["use_name"] = false,
 				["race"] = {
 					["multi"] = {
 					},
 				},
 				["name"] = "叫我法神啦",
+				["faction"] = {
+					["multi"] = {
+					},
+				},
 				["pvptalent"] = {
 					["multi"] = {
 					},
 				},
-				["use_spec"] = false,
 				["use_combat"] = true,
-				["difficulty"] = {
-					["multi"] = {
-					},
-				},
+				["use_class"] = true,
 				["size"] = {
 					["multi"] = {
 					},
 				},
 			},
-			["zoom"] = 0,
 			["cooldownTextEnabled"] = true,
-			["text2Containment"] = "INSIDE",
 			["animation"] = {
 				["start"] = {
 					["type"] = "none",
@@ -24983,32 +24985,27 @@ WeakAurasSaved = {
 					["duration_type"] = "seconds",
 				},
 			},
+			["text2Containment"] = "INSIDE",
+			["text2Point"] = "CENTER",
 			["text1Color"] = {
 				0, -- [1]
 				1, -- [2]
 				0, -- [3]
 				1, -- [4]
 			},
-			["actions"] = {
-				["start"] = {
-				},
-				["finish"] = {
-				},
-				["init"] = {
-				},
-			},
 			["text1Font"] = "Friz Quadrata TT",
 			["text1FontFlags"] = "OUTLINE",
-			["regionType"] = "icon",
 			["text2Color"] = {
 				1, -- [1]
 				1, -- [2]
 				1, -- [3]
 				1, -- [4]
 			},
+			["regionType"] = "icon",
 			["numTriggers"] = 2,
-			["text2FontSize"] = 24,
 			["stickyDuration"] = false,
+			["text2FontSize"] = 24,
+			["zoom"] = 0,
 			["init_completed"] = 1,
 			["text1"] = "%p",
 			["anchorFrameType"] = "SCREEN",
@@ -25044,30 +25041,37 @@ WeakAurasSaved = {
 			["text2Font"] = "Friz Quadrata TT",
 			["text2Enabled"] = false,
 			["width"] = 48,
+			["actions"] = {
+				["start"] = {
+				},
+				["finish"] = {
+				},
+				["init"] = {
+				},
+			},
+			["disjunctive"] = "all",
+			["inverse"] = false,
+			["parent"] = "Mage",
 			["color"] = {
 				1, -- [1]
 				1, -- [2]
 				1, -- [3]
 				1, -- [4]
 			},
-			["text2Point"] = "CENTER",
-			["inverse"] = false,
-			["yOffset"] = 8,
-			["text1Containment"] = "INSIDE",
 			["conditions"] = {
 			},
-			["disjunctive"] = "all",
-			["parent"] = "Mage",
+			["yOffset"] = 8,
+			["text1Containment"] = "INSIDE",
 		},
 		["冰枪术3"] = {
 			["anchorPoint"] = "CENTER",
+			["parent"] = "Mage",
 			["color"] = {
 				1, -- [1]
 				1, -- [2]
 				1, -- [3]
 				0.75, -- [4]
 			},
-			["xOffset"] = 0.0003662109375,
 			["disjunctive"] = "all",
 			["mirror"] = false,
 			["untrigger"] = {
@@ -25104,6 +25108,14 @@ WeakAurasSaved = {
 			["desaturate"] = false,
 			["rotation"] = 90,
 			["selfPoint"] = "CENTER",
+			["additional_triggers"] = {
+			},
+			["width"] = 321,
+			["frameStrata"] = 1,
+			["anchorFrameType"] = "SCREEN",
+			["discrete_rotation"] = 0,
+			["id"] = "冰枪术3",
+			["numTriggers"] = 1,
 			["trigger"] = {
 				["type"] = "aura",
 				["subeventSuffix"] = "_CAST_START",
@@ -25122,14 +25134,6 @@ WeakAurasSaved = {
 				["event"] = "Health",
 				["debuffType"] = "HELPFUL",
 			},
-			["width"] = 321,
-			["frameStrata"] = 1,
-			["anchorFrameType"] = "SCREEN",
-			["discrete_rotation"] = 0,
-			["additional_triggers"] = {
-			},
-			["numTriggers"] = 1,
-			["id"] = "冰枪术3",
 			["height"] = 152,
 			["conditions"] = {
 			},
@@ -25180,7 +25184,7 @@ WeakAurasSaved = {
 					},
 				},
 			},
-			["parent"] = "Mage",
+			["xOffset"] = 0.0003662109375,
 		},
 		["凤凰3 BG 2"] = {
 			["textFlags"] = "None",
@@ -25236,10 +25240,7 @@ WeakAurasSaved = {
 						[13] = true,
 					},
 				},
-				["difficulty"] = {
-					["multi"] = {
-					},
-				},
+				["use_class"] = true,
 				["spec"] = {
 					["single"] = 2,
 					["multi"] = {
@@ -25250,23 +25251,26 @@ WeakAurasSaved = {
 					["multi"] = {
 					},
 				},
-				["pvptalent"] = {
+				["faction"] = {
 					["multi"] = {
 					},
 				},
-				["use_name"] = false,
+				["difficulty"] = {
+					["multi"] = {
+					},
+				},
 				["role"] = {
 					["multi"] = {
 					},
 				},
 				["name"] = "叫我法神啦",
-				["use_spec"] = false,
-				["faction"] = {
+				["pvptalent"] = {
 					["multi"] = {
 					},
 				},
+				["use_spec"] = false,
 				["use_combat"] = true,
-				["use_class"] = true,
+				["use_name"] = false,
 				["size"] = {
 					["multi"] = {
 					},
@@ -25329,7 +25333,7 @@ WeakAurasSaved = {
 				["unit"] = "player",
 				["type"] = "status",
 				["use_powertype"] = true,
-				["debuffType"] = "HELPFUL",
+				["spellName"] = 108839,
 				["charges_operator"] = "==",
 				["charges"] = "0",
 				["subeventSuffix"] = "_CAST_START",
@@ -25344,8 +25348,8 @@ WeakAurasSaved = {
 				},
 				["powertype"] = 0,
 				["showOn"] = "showAlways",
-				["spellName"] = 108839,
 				["custom_hide"] = "timed",
+				["debuffType"] = "HELPFUL",
 				["subeventPrefix"] = "SPELL",
 			},
 			["text"] = false,
@@ -25458,15 +25462,15 @@ WeakAurasSaved = {
 				["type"] = "aura",
 				["spellId"] = "194329",
 				["subeventSuffix"] = "_CAST_START",
-				["name"] = "炽烈之咒",
+				["count"] = "4",
 				["useCount"] = true,
 				["event"] = "Health",
 				["subeventPrefix"] = "SPELL",
+				["name"] = "炽烈之咒",
+				["use_spellId"] = true,
 				["spellIds"] = {
 					194329, -- [1]
 				},
-				["use_spellId"] = true,
-				["count"] = "4",
 				["custom_hide"] = "timed",
 				["unit"] = "player",
 				["names"] = {
@@ -25495,7 +25499,7 @@ WeakAurasSaved = {
 					["multi"] = {
 					},
 				},
-				["use_class"] = true,
+				["use_name"] = false,
 				["spec"] = {
 					["single"] = 2,
 					["multi"] = {
@@ -25506,26 +25510,26 @@ WeakAurasSaved = {
 					["multi"] = {
 					},
 				},
-				["pvptalent"] = {
-					["multi"] = {
-					},
-				},
-				["difficulty"] = {
-					["multi"] = {
-					},
-				},
+				["use_spec"] = false,
+				["use_class"] = true,
 				["role"] = {
 					["multi"] = {
 					},
 				},
 				["name"] = "叫我法神啦",
+				["pvptalent"] = {
+					["multi"] = {
+					},
+				},
 				["faction"] = {
 					["multi"] = {
 					},
 				},
-				["use_spec"] = false,
 				["use_combat"] = true,
-				["use_name"] = false,
+				["difficulty"] = {
+					["multi"] = {
+					},
+				},
 				["size"] = {
 					["multi"] = {
 					},
@@ -25917,7 +25921,6 @@ WeakAurasSaved = {
 					},
 				},
 			},
-			["width"] = 32,
 			["icon"] = true,
 			["color"] = {
 				1, -- [1]
@@ -25925,27 +25928,28 @@ WeakAurasSaved = {
 				1, -- [3]
 				1, -- [4]
 			},
-			["text2Containment"] = "INSIDE",
 			["yOffset"] = 0,
+			["text2Containment"] = "INSIDE",
+			["xOffset"] = 33,
 			["text1Color"] = {
 				0.12156862745098, -- [1]
 				0.858823529411765, -- [2]
 				0, -- [3]
 				1, -- [4]
 			},
-			["xOffset"] = 33,
 			["selfPoint"] = "CENTER",
+			["numTriggers"] = 2,
 			["text1FontFlags"] = "None",
 			["regionType"] = "icon",
-			["numTriggers"] = 2,
 			["disjunctive"] = "all",
-			["text2FontSize"] = 24,
 			["text2Color"] = {
 				1, -- [1]
 				1, -- [2]
 				1, -- [3]
 				1, -- [4]
 			},
+			["text2FontSize"] = 24,
+			["width"] = 32,
 			["init_completed"] = 1,
 			["text1"] = "%c",
 			["text2Enabled"] = false,
@@ -26010,18 +26014,18 @@ WeakAurasSaved = {
 				["spellName"] = 155148,
 				["unevent"] = "auto",
 				["use_showOn"] = true,
-				["use_unit"] = true,
+				["subeventPrefix"] = "SPELL",
 				["event"] = "Cooldown Progress (Spell)",
-				["names"] = {
-					"Combustion", -- [1]
-				},
+				["use_unit"] = true,
 				["realSpellName"] = "薪火",
 				["use_spellName"] = true,
 				["spellIds"] = {
 				},
 				["unit"] = "player",
 				["showOn"] = "showAlways",
-				["subeventPrefix"] = "SPELL",
+				["names"] = {
+					"Combustion", -- [1]
+				},
 				["subeventSuffix"] = "_CAST_START",
 				["debuffType"] = "HELPFUL",
 			},
@@ -26082,21 +26086,21 @@ WeakAurasSaved = {
 					},
 				},
 			},
+			["cooldownTextEnabled"] = true,
 			["xOffset"] = -33,
-			["text2Font"] = "Friz Quadrata TT",
 			["text2Containment"] = "INSIDE",
-			["untrigger"] = {
-				["showOn"] = "showAlways",
-				["spellName"] = 155148,
-			},
+			["text2Font"] = "Friz Quadrata TT",
 			["text1Color"] = {
 				1, -- [1]
 				1, -- [2]
 				1, -- [3]
 				1, -- [4]
 			},
+			["untrigger"] = {
+				["showOn"] = "showAlways",
+				["spellName"] = 155148,
+			},
 			["text1Containment"] = "INSIDE",
-			["parent"] = "Mage",
 			["text2Color"] = {
 				1, -- [1]
 				1, -- [2]
@@ -26104,6 +26108,9 @@ WeakAurasSaved = {
 				1, -- [4]
 			},
 			["regionType"] = "icon",
+			["parent"] = "Mage",
+			["inverse"] = true,
+			["text2FontSize"] = 24,
 			["animation"] = {
 				["start"] = {
 					["type"] = "none",
@@ -26118,9 +26125,6 @@ WeakAurasSaved = {
 					["duration_type"] = "seconds",
 				},
 			},
-			["inverse"] = true,
-			["text2FontSize"] = 24,
-			["cooldownTextEnabled"] = true,
 			["text1"] = "%s",
 			["width"] = 32,
 			["text2Enabled"] = false,
@@ -26194,15 +26198,15 @@ WeakAurasSaved = {
 				["type"] = "aura",
 				["spellId"] = "194329",
 				["subeventSuffix"] = "_CAST_START",
-				["spellIds"] = {
-					194329, -- [1]
-				},
+				["name"] = "炽烈之咒",
 				["use_spellId"] = true,
 				["event"] = "Health",
 				["subeventPrefix"] = "SPELL",
-				["count"] = "3",
+				["spellIds"] = {
+					194329, -- [1]
+				},
 				["useCount"] = true,
-				["name"] = "炽烈之咒",
+				["count"] = "3",
 				["custom_hide"] = "timed",
 				["unit"] = "player",
 				["names"] = {
@@ -26232,7 +26236,7 @@ WeakAurasSaved = {
 					["multi"] = {
 					},
 				},
-				["use_class"] = true,
+				["use_name"] = false,
 				["class"] = {
 					["single"] = "MAGE",
 					["multi"] = {
@@ -26242,26 +26246,26 @@ WeakAurasSaved = {
 					["multi"] = {
 					},
 				},
-				["pvptalent"] = {
-					["multi"] = {
-					},
-				},
-				["difficulty"] = {
-					["multi"] = {
-					},
-				},
+				["use_spec"] = false,
+				["use_class"] = true,
 				["race"] = {
 					["multi"] = {
 					},
 				},
 				["name"] = "叫我法神啦",
+				["pvptalent"] = {
+					["multi"] = {
+					},
+				},
 				["faction"] = {
 					["multi"] = {
 					},
 				},
-				["use_spec"] = false,
 				["use_combat"] = true,
-				["use_name"] = false,
+				["difficulty"] = {
+					["multi"] = {
+					},
+				},
 				["size"] = {
 					["multi"] = {
 					},
@@ -26441,9 +26445,9 @@ WeakAurasSaved = {
 				["use_charges"] = true,
 				["use_unit"] = true,
 				["useCount"] = true,
-				["spellName"] = 108839,
+				["debuffType"] = "HELPFUL",
 				["charges"] = "3",
-				["custom_hide"] = "timed",
+				["spellName"] = 108839,
 				["charges_operator"] = ">=",
 				["type"] = "status",
 				["unit"] = "player",
@@ -26461,7 +26465,7 @@ WeakAurasSaved = {
 				["count"] = "3",
 				["showOn"] = "showAlways",
 				["unevent"] = "auto",
-				["debuffType"] = "HELPFUL",
+				["custom_hide"] = "timed",
 				["subeventPrefix"] = "SPELL",
 			},
 			["text"] = false,
@@ -26620,6 +26624,7 @@ WeakAurasSaved = {
 			["fontSize"] = 24,
 			["displayStacks"] = "%s",
 			["regionType"] = "text",
+			["parent"] = "Mage",
 			["animation"] = {
 				["start"] = {
 					["type"] = "none",
@@ -26642,7 +26647,6 @@ WeakAurasSaved = {
 				["init"] = {
 				},
 			},
-			["parent"] = "Mage",
 			["stickyDuration"] = false,
 			["disjunctive"] = "all",
 			["stacksContainment"] = "INSIDE",
@@ -26694,18 +26698,18 @@ WeakAurasSaved = {
 				["custom_hide"] = "timed",
 				["unevent"] = "auto",
 				["use_showOn"] = true,
+				["subeventPrefix"] = "SPELL",
+				["event"] = "Cooldown Progress (Spell)",
 				["names"] = {
 					"Combustion", -- [1]
 				},
-				["event"] = "Cooldown Progress (Spell)",
-				["use_unit"] = true,
 				["realSpellName"] = "龙息术",
 				["use_spellName"] = true,
 				["spellIds"] = {
 				},
 				["unit"] = "player",
 				["showOn"] = "showOnReady",
-				["subeventPrefix"] = "SPELL",
+				["use_unit"] = true,
 				["subeventSuffix"] = "_CAST_START",
 				["debuffType"] = "HELPFUL",
 			},
@@ -26766,16 +26770,9 @@ WeakAurasSaved = {
 				["spellknown"] = 31661,
 				["use_name"] = false,
 			},
-			["text1Color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
-			},
 			["text2Font"] = "Friz Quadrata TT",
-			["text2Containment"] = "INSIDE",
 			["parent"] = "Mage",
-			["text1Font"] = "Ubuntu Condensed",
+			["text2Containment"] = "INSIDE",
 			["animation"] = {
 				["start"] = {
 					["type"] = "none",
@@ -26790,7 +26787,14 @@ WeakAurasSaved = {
 					["duration_type"] = "seconds",
 				},
 			},
+			["text1Color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+			},
 			["text1Containment"] = "INSIDE",
+			["text1Font"] = "Ubuntu Condensed",
 			["text2Color"] = {
 				1, -- [1]
 				1, -- [2]
@@ -26852,18 +26856,18 @@ WeakAurasSaved = {
 				["custom_hide"] = "timed",
 				["unevent"] = "auto",
 				["use_showOn"] = true,
-				["use_unit"] = true,
+				["subeventPrefix"] = "SPELL",
 				["event"] = "Cooldown Progress (Spell)",
-				["names"] = {
-					"Combustion", -- [1]
-				},
+				["use_unit"] = true,
 				["realSpellName"] = "寒冰新星",
 				["use_spellName"] = true,
 				["spellIds"] = {
 				},
 				["unit"] = "player",
 				["showOn"] = "showOnCooldown",
-				["subeventPrefix"] = "SPELL",
+				["names"] = {
+					"Combustion", -- [1]
+				},
 				["subeventSuffix"] = "_CAST_START",
 				["debuffType"] = "HELPFUL",
 			},
@@ -26926,26 +26930,21 @@ WeakAurasSaved = {
 					},
 				},
 			},
-			["text2Font"] = "Friz Quadrata TT",
+			["text2Point"] = "CENTER",
+			["cooldownTextEnabled"] = true,
+			["text2Containment"] = "INSIDE",
 			["color"] = {
 				1, -- [1]
 				1, -- [2]
 				1, -- [3]
 				1, -- [4]
 			},
-			["text2Containment"] = "INSIDE",
-			["stickyDuration"] = false,
 			["text1Font"] = "默认",
 			["parent"] = "Mage",
 			["text1Containment"] = "INSIDE",
-			["text2Color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
-			},
+			["text1FontFlags"] = "OUTLINE",
 			["regionType"] = "icon",
-			["text1Color"] = {
+			["text2Color"] = {
 				1, -- [1]
 				1, -- [2]
 				1, -- [3]
@@ -26953,7 +26952,14 @@ WeakAurasSaved = {
 			},
 			["inverse"] = true,
 			["text2FontSize"] = 24,
-			["text1FontFlags"] = "OUTLINE",
+			["actions"] = {
+				["start"] = {
+				},
+				["finish"] = {
+				},
+				["init"] = {
+				},
+			},
 			["text1"] = "%s",
 			["width"] = 32,
 			["text2Enabled"] = false,
@@ -26965,20 +26971,7 @@ WeakAurasSaved = {
 			["text2"] = "%p",
 			["frameStrata"] = 1,
 			["anchorFrameType"] = "SCREEN",
-			["text2Point"] = "CENTER",
-			["untrigger"] = {
-				["showOn"] = "showOnCooldown",
-				["spellName"] = 157997,
-			},
-			["numTriggers"] = 1,
-			["actions"] = {
-				["start"] = {
-				},
-				["finish"] = {
-				},
-				["init"] = {
-				},
-			},
+			["text2Font"] = "Friz Quadrata TT",
 			["animation"] = {
 				["start"] = {
 					["type"] = "none",
@@ -26993,10 +26986,21 @@ WeakAurasSaved = {
 					["duration_type"] = "seconds",
 				},
 			},
+			["numTriggers"] = 1,
+			["stickyDuration"] = false,
+			["text1Color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+			},
 			["conditions"] = {
 			},
 			["cooldown"] = true,
-			["cooldownTextEnabled"] = true,
+			["untrigger"] = {
+				["showOn"] = "showOnCooldown",
+				["spellName"] = 157997,
+			},
 		},
 		["飞弹1"] = {
 			["user_y"] = 0,
@@ -27043,15 +27047,15 @@ WeakAurasSaved = {
 				["type"] = "aura",
 				["spellId"] = "79683",
 				["subeventSuffix"] = "_CAST_START",
-				["count"] = "1",
-				["useCount"] = true,
-				["event"] = "Health",
-				["subeventPrefix"] = "SPELL",
-				["name"] = "奥术飞弹！",
-				["use_spellId"] = true,
 				["spellIds"] = {
 					194329, -- [1]
 				},
+				["useCount"] = true,
+				["event"] = "Health",
+				["subeventPrefix"] = "SPELL",
+				["count"] = "1",
+				["use_spellId"] = true,
+				["name"] = "奥术飞弹！",
 				["custom_hide"] = "timed",
 				["unit"] = "player",
 				["names"] = {
@@ -27081,10 +27085,7 @@ WeakAurasSaved = {
 					["multi"] = {
 					},
 				},
-				["difficulty"] = {
-					["multi"] = {
-					},
-				},
+				["use_class"] = true,
 				["class"] = {
 					["single"] = "MAGE",
 					["multi"] = {
@@ -27094,23 +27095,26 @@ WeakAurasSaved = {
 					["multi"] = {
 					},
 				},
-				["faction"] = {
+				["pvptalent"] = {
 					["multi"] = {
 					},
 				},
-				["use_name"] = false,
+				["difficulty"] = {
+					["multi"] = {
+					},
+				},
 				["race"] = {
 					["multi"] = {
 					},
 				},
 				["name"] = "叫我法神啦",
-				["use_spec"] = true,
-				["pvptalent"] = {
+				["faction"] = {
 					["multi"] = {
 					},
 				},
+				["use_spec"] = true,
 				["use_combat"] = true,
-				["use_class"] = true,
+				["use_name"] = false,
 				["size"] = {
 					["multi"] = {
 					},
@@ -27332,12 +27336,12 @@ WeakAurasSaved = {
 				["type"] = "aura",
 				["spellId"] = "205025",
 				["unevent"] = "auto",
+				["subeventPrefix"] = "SPELL",
+				["ownOnly"] = true,
+				["event"] = "Health",
 				["names"] = {
 					"玛瑟里顿之力", -- [1]
 				},
-				["ownOnly"] = true,
-				["event"] = "Health",
-				["use_unit"] = true,
 				["name"] = "气定神闲",
 				["use_spellId"] = true,
 				["spellIds"] = {
@@ -27346,7 +27350,7 @@ WeakAurasSaved = {
 				["custom_hide"] = "timed",
 				["unit"] = "player",
 				["subeventSuffix"] = "_CAST_START",
-				["subeventPrefix"] = "SPELL",
+				["use_unit"] = true,
 				["debuffType"] = "HELPFUL",
 			},
 			["text1Containment"] = "OUTSIDE",
@@ -27399,59 +27403,7 @@ WeakAurasSaved = {
 					},
 				},
 			},
-			["text2Color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
-			},
-			["text2Point"] = "CENTER",
-			["text2Containment"] = "INSIDE",
-			["cooldownTextEnabled"] = true,
-			["text1Color"] = {
-				0.12156862745098, -- [1]
-				0.858823529411765, -- [2]
-				0, -- [3]
-				1, -- [4]
-			},
 			["yOffset"] = 0,
-			["disjunctive"] = "all",
-			["text1FontFlags"] = "None",
-			["regionType"] = "icon",
-			["parent"] = "Mage",
-			["numTriggers"] = 1,
-			["text2FontSize"] = 24,
-			["desaturate"] = false,
-			["init_completed"] = 1,
-			["text1"] = "%s",
-			["width"] = 32,
-			["text2Enabled"] = false,
-			["zoom"] = 0,
-			["auto"] = true,
-			["text1Font"] = "Friz Quadrata TT",
-			["id"] = "气定神闲层数",
-			["text2"] = "%p",
-			["frameStrata"] = 1,
-			["anchorFrameType"] = "SCREEN",
-			["color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
-			},
-			["stickyDuration"] = false,
-			["inverse"] = false,
-			["actions"] = {
-				["start"] = {
-					["do_glow"] = true,
-					["glow_frame"] = "WeakAuras:气定神闲层数",
-					["glow_action"] = "show",
-				},
-				["finish"] = {
-				},
-				["init"] = {
-				},
-			},
 			["animation"] = {
 				["start"] = {
 					["type"] = "none",
@@ -27466,10 +27418,62 @@ WeakAurasSaved = {
 					["duration_type"] = "seconds",
 				},
 			},
+			["text2Containment"] = "INSIDE",
+			["disjunctive"] = "all",
+			["text1Color"] = {
+				0.12156862745098, -- [1]
+				0.858823529411765, -- [2]
+				0, -- [3]
+				1, -- [4]
+			},
+			["parent"] = "Mage",
+			["color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+			},
+			["text1FontFlags"] = "None",
+			["regionType"] = "icon",
+			["numTriggers"] = 1,
+			["text2Point"] = "CENTER",
+			["text2FontSize"] = 24,
+			["text2Color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+			},
+			["init_completed"] = 1,
+			["text1"] = "%s",
+			["width"] = 32,
+			["text2Enabled"] = false,
+			["zoom"] = 0,
+			["auto"] = true,
+			["text1Font"] = "Friz Quadrata TT",
+			["id"] = "气定神闲层数",
+			["text2"] = "%p",
+			["frameStrata"] = 1,
+			["anchorFrameType"] = "SCREEN",
+			["text2Font"] = "Friz Quadrata TT",
+			["desaturate"] = false,
+			["inverse"] = false,
+			["stickyDuration"] = false,
+			["actions"] = {
+				["start"] = {
+					["do_glow"] = true,
+					["glow_frame"] = "WeakAuras:气定神闲层数",
+					["glow_action"] = "show",
+				},
+				["finish"] = {
+				},
+				["init"] = {
+				},
+			},
 			["conditions"] = {
 			},
 			["cooldown"] = true,
-			["text2Font"] = "Friz Quadrata TT",
+			["cooldownTextEnabled"] = true,
 		},
 		["闪光术左"] = {
 			["textFlags"] = "None",
@@ -27533,15 +27537,12 @@ WeakAurasSaved = {
 					["multi"] = {
 					},
 				},
-				["use_name"] = false,
+				["use_class"] = true,
 				["race"] = {
 					["multi"] = {
 					},
 				},
-				["difficulty"] = {
-					["multi"] = {
-					},
-				},
+				["use_name"] = false,
 				["role"] = {
 					["multi"] = {
 					},
@@ -27556,7 +27557,10 @@ WeakAurasSaved = {
 					},
 				},
 				["use_combat"] = true,
-				["use_class"] = true,
+				["difficulty"] = {
+					["multi"] = {
+					},
+				},
 				["size"] = {
 					["multi"] = {
 					},
@@ -27612,9 +27616,9 @@ WeakAurasSaved = {
 					"Incanter's Flow", -- [1]
 				},
 				["useCount"] = true,
-				["custom_hide"] = "timed",
+				["debuffType"] = "HELPFUL",
 				["type"] = "status",
-				["spellName"] = 212653,
+				["custom_hide"] = "timed",
 				["charges_operator"] = ">=",
 				["charges"] = "1",
 				["unit"] = "player",
@@ -27630,7 +27634,7 @@ WeakAurasSaved = {
 				["count"] = "3",
 				["showOn"] = "showAlways",
 				["unevent"] = "auto",
-				["debuffType"] = "HELPFUL",
+				["spellName"] = 212653,
 				["subeventPrefix"] = "SPELL",
 			},
 			["text"] = false,
@@ -27762,15 +27766,15 @@ WeakAurasSaved = {
 					["multi"] = {
 					},
 				},
-				["difficulty"] = {
-					["multi"] = {
-					},
-				},
+				["use_class"] = true,
 				["role"] = {
 					["multi"] = {
 					},
 				},
-				["use_name"] = false,
+				["difficulty"] = {
+					["multi"] = {
+					},
+				},
 				["race"] = {
 					["multi"] = {
 					},
@@ -27785,7 +27789,7 @@ WeakAurasSaved = {
 					},
 				},
 				["use_combat"] = true,
-				["use_class"] = true,
+				["use_name"] = false,
 				["size"] = {
 					["multi"] = {
 					},
@@ -27839,9 +27843,9 @@ WeakAurasSaved = {
 				["use_charges"] = true,
 				["use_unit"] = true,
 				["useCount"] = true,
-				["custom_hide"] = "timed",
+				["debuffType"] = "HELPFUL",
 				["type"] = "status",
-				["spellName"] = 212653,
+				["custom_hide"] = "timed",
 				["charges_operator"] = ">=",
 				["charges"] = "2",
 				["unit"] = "player",
@@ -27859,7 +27863,7 @@ WeakAurasSaved = {
 				["count"] = "3",
 				["showOn"] = "showAlways",
 				["unevent"] = "auto",
-				["debuffType"] = "HELPFUL",
+				["spellName"] = 212653,
 				["subeventPrefix"] = "SPELL",
 			},
 			["text"] = false,
