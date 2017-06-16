@@ -174,7 +174,9 @@ local function DecorateNomi()
 	local activeWorkOrders = {}
 	if WorkOrders then -- count number of pending work orders to display on their buttons
 		local now = time()
-		for i = 1, #WorkOrders do
+		local name, texture, shipmentCapacity, shipmentsReady, shipmentsTotal, creationTime, duration, timeleftString, _, _, _, _, followerID = C_Garrison.GetLandingPageShipmentInfoByContainerID(122) -- can return nil if no active shipments
+		local startIndex = not shipmentsTotal and 1 or (#WorkOrders - shipmentsTotal + shipmentsReady + 1)
+		for i = startIndex, #WorkOrders do
 			local workOrder = WorkOrders[i]
 			local ingredientItemID = workOrder[1]
 			local endTime = workOrder[3]
@@ -536,32 +538,22 @@ do -- Experimental work order stuff
 		if IgnoreShow then return end
 		local owner = self:GetOwner()
 		if owner and owner.containerID == 122 and WorkOrders then -- probably should add a better check for the tooltip owner than this
-			local numWorkOrders = #WorkOrders
+			-- 1497570892
 			
 			local name, texture, shipmentCapacity, shipmentsReady, shipmentsTotal, creationTime, duration, timeleftString, _, _, _, _, followerID = C_Garrison.GetLandingPageShipmentInfoByContainerID(122)
-			
-			-- to ignore completed work orders that we've already picked up,
-			-- iterate backwards over our work orders until we get to the first one that is completed,
-			-- subtract the number of "ready" shipments from our index, add 1, and start from that point
-			local startIndex = 1
-			for i = numWorkOrders, 1, -1 do
-				local endTime = WorkOrders[i][3]
-				local timeLeft = endTime - time()
-				if timeLeft <= 0 then -- shipment ready
-					startIndex = i - shipmentsReady + 1
-					break
-				end
-			end
-			
-			if numWorkOrders > 0 then
-				--local endTime = WorkOrders[numWorkOrders][3]
-				--local timeLeft = endTime - time()
-				self:AddLine(' ')
-				--if timeLeft > 0 then
-					--self:AddLine(format(CAPACITANCE_ALL_COMPLETE, SecondsToTime(timeLeft)))
-				--end
-			end
-			
+			if not shipmentsTotal then return end
+			local numWorkOrders = #WorkOrders
+			local startIndex = numWorkOrders - shipmentsTotal + 1
+			if startIndex <= 0 then return end
+			if numWorkOrders == 0 then return end
+			-- Try and account for data being desynchronized from the cache
+			-- (eg. if work orders are completed from Nomi Snacks or something)
+			-- Get the time difference between what the api reports for the active work order
+			-- and the cache and add it to every order's end time
+			-- I think "creationTime" is based on server time, so subtract the difference between GetServerTime() and time()
+			-- I don't know if creationTime is updated when someone uses something to instantly complete work orders, so this may all fail miserably
+			local currentIndex = startIndex + shipmentsReady
+			local timeOffset = creationTime + duration - WorkOrders[currentIndex][3] - (GetServerTime() - time())
 			for i = startIndex, numWorkOrders do
 				local workOrder = WorkOrders[i]
 				local itemID, orderPlaced, endTime = workOrder[1], workOrder[2], workOrder[3]
@@ -570,8 +562,8 @@ do -- Experimental work order stuff
 				if ingredientIcon then
 					name = format('|T%d:16|t %s', ingredientIcon, name)
 				end
-				local timeLeft = endTime - time()
-				if timeLeft > 0 then
+				local timeLeft = endTime - time() + timeOffset
+				if timeLeft > 0 and i >= currentIndex then
 					self:AddDoubleLine(name, SecondsToTime(timeLeft), 1, 1, 0.4, 1, 1, 0.4)
 				elseif shipmentsReady > 0 then
 					self:AddDoubleLine(name, READY_FOR_PICKUP, 0.4, 1, 0.4, 0.4, 1, 0.4)
