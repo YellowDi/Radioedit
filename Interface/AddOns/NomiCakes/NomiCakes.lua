@@ -175,17 +175,23 @@ local function DecorateNomi()
 	if WorkOrders then -- count number of pending work orders to display on their buttons
 		local now = time()
 		local name, texture, shipmentCapacity, shipmentsReady, shipmentsTotal, creationTime, duration, timeleftString, _, _, _, _, followerID = C_Garrison.GetLandingPageShipmentInfoByContainerID(122) -- can return nil if no active shipments
-		local startIndex = not shipmentsTotal and 1 or (#WorkOrders - shipmentsTotal + shipmentsReady + 1)
-		if startIndex >= 1 then -- this can be called before WorkOrders has been populated, so account for that
-			for i = startIndex, #WorkOrders do
-				local workOrder = WorkOrders[i]
-				local ingredientItemID = workOrder[1]
-				local endTime = workOrder[3]
-				if endTime > now then -- still active
-					if not activeWorkOrders[ingredientItemID] then
-						activeWorkOrders[ingredientItemID] = 1
-					else
-						activeWorkOrders[ingredientItemID] = activeWorkOrders[ingredientItemID] + 1
+		local startIndex = shipmentsTotal and (#WorkOrders - shipmentsTotal + 1) or 1
+		--local startIndex = not shipmentsTotal and 1 or (#WorkOrders - shipmentsTotal + shipmentsReady + 1)
+		if startIndex >= 1 and shipmentsTotal then -- this can be called before WorkOrders has been populated, so account for that
+			local currentIndex = startIndex + shipmentsReady
+			if WorkOrders[currentIndex] then
+				local timeOffset = creationTime + duration - WorkOrders[currentIndex][3] - (GetServerTime() - time())
+				for i = startIndex, #WorkOrders do
+					local workOrder = WorkOrders[i]
+					local ingredientItemID = workOrder[1]
+					local endTime = workOrder[3]
+					local timeLeft = endTime - now + timeOffset
+					if timeLeft > 0 and i >= currentIndex then -- still active
+						if not activeWorkOrders[ingredientItemID] then
+							activeWorkOrders[ingredientItemID] = 1
+						else
+							activeWorkOrders[ingredientItemID] = activeWorkOrders[ingredientItemID] + 1
+						end
 					end
 				end
 			end
@@ -323,6 +329,7 @@ f:SetScript('OnEvent', function(self, event, ...)
 			LocalizedIngredientList[itemID] = {itemName, itemLink}
 		end
 	elseif event == 'PLAYER_LOGIN' then
+		C_Garrison.RequestLandingPageShipmentInfo()
 		for itemID, recipes in pairs(IngredientList) do
 			local itemName, itemLink = GetItemInfo(itemID)
 			if itemName and itemLink then
@@ -501,6 +508,7 @@ do -- Experimental work order stuff
 					WorkOrderType = ingredientItemID
 					NumWorkOrdersOrdered = NumWorkOrdersOrdered + 1
 					-- print(GetTime(), 'SHIPMENT_UPDATE', name, itemID, duration, 'started')
+					C_Garrison.RequestLandingPageShipmentInfo() -- request update for shipment info
 				else
 					-- missing ingredient item information for this shipment somehow
 					--print('NomiCakes missing ingredient information for itemID', itemID)
@@ -554,8 +562,8 @@ do -- Experimental work order stuff
 			-- and the cache and add it to every order's end time
 			-- I think "creationTime" is based on server time, so subtract the difference between GetServerTime() and time()
 			-- I don't know if creationTime is updated when someone uses something to instantly complete work orders, so this may all fail miserably
-			local currentIndex = startIndex + shipmentsReady
-			local timeOffset = creationTime + duration - WorkOrders[currentIndex][3] - (GetServerTime() - time())
+			local currentIndex = startIndex + shipmentsReady -- currentIndex will be greater than numWorkOrders if all of our shipments are ready
+			local timeOffset = WorkOrders[currentIndex] and (creationTime + duration - WorkOrders[currentIndex][3] - (GetServerTime() - time())) or 0
 			if numWorkOrders - startIndex > 0 then
 				self:AddLine(' ')
 			end
