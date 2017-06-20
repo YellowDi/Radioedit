@@ -49,14 +49,22 @@ addon.tooltips = {
 addon.icons = {
     Alliance  = "|TInterface\\TargetingFrame\\UI-PVP-ALLIANCE:14:14:0:0:64:64:10:36:2:38|t",
     Horde     = "|TInterface\\TargetingFrame\\UI-PVP-HORDE:14:14:0:0:64:64:4:38:2:36|t",
+    Neutral   = "|TInterface\\Timer\\Panda-Logo:14|t",
     pvp       = "|TInterface\\TargetingFrame\\UI-PVP-FFA:14:14:0:0:64:64:10:36:0:38|t",
     class     = "|TInterface\\TargetingFrame\\UI-Classes-Circles:14:14:0:0:256:256:%d:%d:%d:%d|t",
     questboss = "|TInterface\\TargetingFrame\\PortraitQuestBadge:0|t",
     TANK      = "|TInterface\\LFGFrame\\UI-LFG-ICON-PORTRAITROLES:0:0:0:0:64:64:0:19:22:41|t",
     HEALER    = "|TInterface\\LFGFrame\\UI-LFG-ICON-PORTRAITROLES:0:0:0:0:64:64:20:39:1:20|t",
     DAMAGER   = "|TInterface\\LFGFrame\\UI-LFG-ICON-PORTRAITROLES:0:0:0:0:64:64:20:39:22:41|t",
-    --Alliance  = "|TInterface\\FriendsFrame\\PlusManz-Alliance:16|t",
-    --Horde     = "|TInterface\\FriendsFrame\\PlusManz-Horde:16|t",
+}
+
+-- 背景
+addon.bgs = {
+    gradual = "Interface\\Buttons\\GreyscaleRamp64",
+    dark    = "Interface\\DialogFrame\\UI-DialogBox-Background-Dark",
+    alpha   = "Interface\\Tooltips\\UI-Tooltip-Background",
+    rock    = "Interface\\FrameGeneral\\UI-Background-Rock",
+    marble  = "Interface\\FrameGeneral\\UI-Background-Marble",
 }
 
 -- 配置 (elements鍵不合併)
@@ -79,7 +87,7 @@ function addon:FindLine(tooltip, keyword)
         line = _G[tooltip:GetName() .. "TextLeft" .. i]
         text = line:GetText() or ""
         if (strfind(text, keyword)) then
-            return line, i
+            return line, i, _G[tooltip:GetName() .. "TextRight" .. i]
         end
     end
 end
@@ -111,7 +119,7 @@ function addon:GetLine(tooltip, number)
         tooltip:AddLine(" ")
         return self:GetLine(tooltip, num+1), true
     end
-    return _G[tooltip:GetName() .. "TextLeft" .. number]
+    return _G[tooltip:GetName() .. "TextLeft" .. number], _G[tooltip:GetName() .. "TextRight" .. number]
 end
 
 -- 顔色
@@ -463,6 +471,21 @@ LibEvent:attachTrigger("tooltip.style.background", function(self, frame, r, g, b
     end
 end)
 
+LibEvent:attachTrigger("tooltip.style.bgfile", function(self, frame, bgvalue)
+    LibEvent:trigger("tooltip.style.init", frame)
+    local bgfile = addon.bgs[bgvalue]
+    if (not bgfile) then return end
+    local backdrop = frame.style:GetBackdrop()
+    local r, g, b, a = frame.style:GetBackdropColor()
+    local rr, gg, bb, aa = frame.style:GetBackdropBorderColor()
+    if (bgfile and backdrop.bgFile ~= bgfile) then
+        backdrop.bgFile = bgfile
+        frame.style:SetBackdrop(backdrop)
+        frame.style:SetBackdropColor(r, g, b, a)
+        frame.style:SetBackdropBorderColor(rr, gg, bb, aa)
+    end
+end)
+
 LibEvent:attachTrigger("tooltip.style.border.size", function(self, frame, size)
     LibEvent:trigger("tooltip.style.init", frame)
     local backdrop = frame.style:GetBackdrop()
@@ -495,7 +518,7 @@ LibEvent:attachTrigger("tooltip.style.border.corner", function(self, frame, corn
         frame.style.inside:SetPoint("BOTTOMRIGHT", frame.style, "BOTTOMRIGHT", -backdrop.edgeSize, backdrop.edgeSize)
     else
         backdrop.edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border"
-        backdrop.edgeSize = 16
+        backdrop.edgeSize = 14
         backdrop.insets.top = 3
         backdrop.insets.left = 3
         backdrop.insets.right = 3
@@ -533,7 +556,7 @@ LibEvent:attachTrigger("tooltip.statusbar.font", function(self, font, size, flag
     end
 end)
 
-LibEvent:attachTrigger("tooltip.statusbar.position", function(self, position, offsetY)
+LibEvent:attachTrigger("tooltip.statusbar.position", function(self, position, offsetX, offsetY)
     LibEvent:trigger("tooltip.style.init", GameTooltip)
     GameTooltip.style:ClearAllPoints()
     GameTooltipStatusBar:ClearAllPoints()
@@ -541,17 +564,19 @@ LibEvent:attachTrigger("tooltip.statusbar.position", function(self, position, of
     if (not GameTooltipStatusBar:IsShown()) then position = "" end
     if (position == "bottom") then
         local offset = backdrop.edgeFile == "Interface\\Tooltips\\UI-Tooltip-Border" and 5 or backdrop.edgeSize + 1
+        if (not offsetX or offsetX == 0) then offsetX = offset end
         if (not offsetY or offsetY == 0) then offsetY = -offset end
-        GameTooltipStatusBar:SetPoint("TOPLEFT", GameTooltip, "BOTTOMLEFT", offset, 2)
-        GameTooltipStatusBar:SetPoint("TOPRIGHT", GameTooltip, "BOTTOMRIGHT", -offset, 2)
+        GameTooltipStatusBar:SetPoint("TOPLEFT", GameTooltip, "BOTTOMLEFT", offsetX, 2)
+        GameTooltipStatusBar:SetPoint("TOPRIGHT", GameTooltip, "BOTTOMRIGHT", -offsetX, 2)
         GameTooltip.style:SetPoint("TOPLEFT")
-        GameTooltip.style:SetPoint("BOTTOMRIGHT", GameTooltipStatusBar, "BOTTOMRIGHT", offset, offsetY)
+        GameTooltip.style:SetPoint("BOTTOMRIGHT", GameTooltipStatusBar, "BOTTOMRIGHT", offsetX, offsetY)
     elseif (position == "top") then
         local offset = backdrop.edgeFile == "Interface\\Tooltips\\UI-Tooltip-Border" and 4 or backdrop.edgeSize
+        if (not offsetX or offsetX == 0) then offsetX = offset end
         if (not offsetY or offsetY == 0) then offsetY = offset end
-        GameTooltipStatusBar:SetPoint("BOTTOMLEFT", GameTooltip, "TOPLEFT", offset, 0)
-        GameTooltipStatusBar:SetPoint("BOTTOMRIGHT", GameTooltip, "TOPRIGHT", -offset, 0)
-        GameTooltip.style:SetPoint("TOPLEFT", GameTooltipStatusBar, "TOPLEFT", -offset, offsetY)
+        GameTooltipStatusBar:SetPoint("BOTTOMLEFT", GameTooltip, "TOPLEFT", offsetX, 0)
+        GameTooltipStatusBar:SetPoint("BOTTOMRIGHT", GameTooltip, "TOPRIGHT", -offsetX, 0)
+        GameTooltip.style:SetPoint("TOPLEFT", GameTooltipStatusBar, "TOPLEFT", -offsetX, offsetY)
         GameTooltip.style:SetPoint("BOTTOMRIGHT")
     else
         local offset = backdrop.edgeFile == "Interface\\Tooltips\\UI-Tooltip-Border" and 2 or 0
@@ -564,10 +589,10 @@ end)
 LibEvent:attachTrigger("tooltip.style.init", function(self, tip)
     if (tip.style) then return end
     local backdrop = {
-        bgFile   = "Interface\\Tooltips\\UI-Tooltip-Background",
+        bgFile   = "Interface\\RaidFrame\\UI-RaidFrame-GroupBg",
         insets   = {left = 3, right = 3, top = 3, bottom = 3},
         edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
-        edgeSize = 16,
+        edgeSize = 14,
     }
     tip:SetBackdrop({})
     tip.style = CreateFrame("Frame", nil, tip)

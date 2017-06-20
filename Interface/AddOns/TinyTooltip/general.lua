@@ -87,6 +87,7 @@ LibEvent:attachEvent("VARIABLES_LOADED", function()
         LibEvent:trigger("tooltip.style.init", tip)
         LibEvent:trigger("tooltip.scale", tip, addon.db.general.scale)
         LibEvent:trigger("tooltip.style.mask", tip, addon.db.general.mask)
+        LibEvent:trigger("tooltip.style.bgfile", tip, addon.db.general.bgfile)
         LibEvent:trigger("tooltip.style.border.corner", tip, addon.db.general.borderCorner)
         LibEvent:trigger("tooltip.style.border.size", tip, addon.db.general.borderSize)
         LibEvent:trigger("tooltip.style.border.color", tip, unpack(addon.db.general.borderColor))
@@ -101,7 +102,7 @@ end)
 
 LibEvent:attachTrigger("tooltip:show", function(self, tip)
     if (tip ~= GameTooltip) then return end
-    LibEvent:trigger("tooltip.statusbar.position", addon.db.general.statusbarPosition, addon.db.general.statusbarOffsetY)
+    LibEvent:trigger("tooltip.statusbar.position", addon.db.general.statusbarPosition, addon.db.general.statusbarOffsetX, addon.db.general.statusbarOffsetY)
     local w = GameTooltipStatusBar.TextString:GetWidth() + 10
     if (GameTooltipStatusBar:IsShown() and w > tip:GetWidth()) then
         tip:SetMinimumWidth(w+2)

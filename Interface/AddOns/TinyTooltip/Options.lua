@@ -36,6 +36,8 @@ local function CallTrigger(keystring, value)
             if (value == "angular") then
                 LibEvent:trigger("tooltip.style.border.size", tip, addon.db.general.borderSize)
             end
+        elseif (keystring == "general.bgfile") then
+            LibEvent:trigger("tooltip.style.bgfile", tip, value)
         end
     end
     if (keystring == "general.statusbarText") then
@@ -422,7 +424,7 @@ function widgets:dropdownslider(parent, config)
     frame.dropdown:SetPoint("LEFT", 0, 0)
     frame.slider = self:slider(frame, {keystring=config.keystring..".alpha",min=config.min,max=config.max,step=config.step})
     frame.slider:SetPoint("LEFT", frame.dropdown.Label, "RIGHT", 30, 0)
-    frame.slider:SetWidth(60)
+    frame.slider:SetWidth(80)
     return frame
 end
 
@@ -432,17 +434,12 @@ widgets.colorDropdata = {"default","class","level","reaction","itemQuality","sel
 local options = {
     general = {
         { keystring = "general.mask",               type = "checkbox" },
-        { keystring = "general.statusbarText",      type = "checkbox" },
         { keystring = "general.background",         type = "colorpick", hasopacity = true },
         { keystring = "general.borderColor",        type = "colorpick", hasopacity = true },
         { keystring = "general.scale",              type = "slider", min = 0.5, max = 4, step = 0.1 },
         { keystring = "general.borderSize",         type = "slider", min = 1, max = 6, step = 1 },
-        { keystring = "general.statusbarHeight",    type = "slider", min = 0, max = 24, step = 1 },
-        { keystring = "general.statusbarOffsetY",   type = "slider", min = -50, max = 50, step = 1 },
-        { keystring = "general.statusbarFontSize",  type = "slider", min = 6, max = 30, step = 1 },
         { keystring = "general.borderCorner",       type = "dropdown", dropdata = {"default","angular"} },
-        { keystring = "general.statusbarPosition",  type = "dropdown", dropdata = {"default","bottom","top"} },
-        { keystring = "general.statusbarColor",     type = "dropdown", dropdata = {"default","auto","smooth"} },
+        { keystring = "general.bgfile",             type = "dropdown", dropdata = {"gradual","dark","alpha","rock","marble"} },
         { keystring = "general.anchor",             type = "anchor", dropdata = {"default","cursorRight","cursor","static"} },
         { keystring = "item.coloredItemBorder",     type = "checkbox" },
         { keystring = "quest.coloredQuestBorder",   type = "checkbox" },
@@ -500,6 +497,15 @@ local options = {
         { keystring = "unit.npc.elements.reactionName", type = "element", color = true, wildcard = true, filter = true, },
         { keystring = "unit.npc.elements.moveSpeed",    type = "element", color = true, wildcard = true, filter = true, },
     },
+    statusbar = {
+        { keystring = "general.statusbarText",      type = "checkbox" },
+        { keystring = "general.statusbarHeight",    type = "slider", min = 0, max = 24, step = 1 },
+        { keystring = "general.statusbarOffsetX",   type = "slider", min = -50, max = 50, step = 1 },
+        { keystring = "general.statusbarOffsetY",   type = "slider", min = -50, max = 50, step = 1 },
+        { keystring = "general.statusbarFontSize",  type = "slider", min = 6, max = 30, step = 1 },
+        { keystring = "general.statusbarPosition",  type = "dropdown", dropdata = {"default","bottom","top"} },
+        { keystring = "general.statusbarColor",     type = "dropdown", dropdata = {"default","auto","smooth"} },
+    },
     spell = {
         { keystring = "spell.background",               type = "colorpick", hasopacity = true },
         { keystring = "spell.borderColor",              type = "colorpick", hasopacity = true },
@@ -512,7 +518,7 @@ frame.anchor:SetPoint("TOPLEFT", 32, -16)
 frame.anchor:SetSize(InterfaceOptionsFramePanelContainer:GetWidth()-64, 1)
 frame.title = frame:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
 frame.title:SetPoint("TOPLEFT", 18, -16)
-frame.title:SetText(addonName)
+frame.title:SetText(format("%s |cff33eeff%s|r", addonName, "General"))
 frame.name = addonName
 
 
@@ -523,19 +529,19 @@ framePC.anchor:SetSize(InterfaceOptionsFramePanelContainer:GetWidth()-64, 1)
 framePC.title = framePC:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
 framePC.title:SetPoint("TOPLEFT", 18, -16)
 framePC.title:SetText(format("%s |cff33eeff%s|r", addonName, "Unit Is Player"))
-framePC.name = format("%s - %s", addonName, "Player")
 framePC.parent = addonName
+framePC.name = " - Player"
 
 framePC.diy = CreateFrame("Button", nil, framePC)
-framePC.diy:SetSize(168, 32)
-framePC.diy:SetPoint("TOPLEFT", 320, -72)
-framePC.diy:SetNormalTexture("Interface\\Challenges\\challenges-main")
-framePC.diy:GetNormalTexture():SetTexCoord(14/1024, 300/1024, 279/512, 334/512)
+framePC.diy:SetSize(400, 67)
+framePC.diy:SetScale(0.75)
+framePC.diy:SetPoint("TOPLEFT", 360, -100)
+framePC.diy:SetNormalTexture("Interface\\LevelUp\\MinorTalents")
+framePC.diy:GetNormalTexture():SetTexCoord(0, 400/512, 341/512, 407/512)
+framePC.diy:GetNormalTexture():SetVertexColor(1, 1, 1, 0.6)
 framePC.diy:SetScript("OnClick", function() LibEvent:trigger("tinytooltip:diy:player", "player", true) end)
-framePC.diy.text = framePC.diy:CreateFontString(nil, "OVERLAY")
-framePC.diy.text:SetFont(GameFont_Gigantic:GetFont(), 26, "OUTLINE")
+framePC.diy.text = framePC.diy:CreateFontString(nil, "OVERLAY", "GameFont_Gigantic")
 framePC.diy.text:SetPoint("CENTER", 0, 2)
-framePC.diy.text:SetTextColor(1, 0.82, 0)
 framePC.diy.text:SetText(L.DIY)
 
 framePC:SetSize(500, #options.pc*29+60)
@@ -548,8 +554,8 @@ framePCScrollFrame:HookScript("OnScrollRangeChanged", function(self, xrange, yra
     self.ScrollBar:SetShown(floor(yrange) ~= 0)
 end)
 framePCScrollFrame:SetScrollChild(framePC)
-framePCScrollFrame.name = format("%s - %s", addonName, "Player")
 framePCScrollFrame.parent = addonName
+framePCScrollFrame.name = " - Player"
 
 
 local frameNPC = CreateFrame("Frame", nil, UIParent)
@@ -559,9 +565,18 @@ frameNPC.anchor:SetSize(InterfaceOptionsFramePanelContainer:GetWidth()-64, 1)
 frameNPC.title = frameNPC:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
 frameNPC.title:SetPoint("TOPLEFT", 18, -16)
 frameNPC.title:SetText(format("%s |cff33eeff%s|r", addonName, "Unit Is NPC"))
-frameNPC.name = format("%s - %s", addonName, "NPC")
 frameNPC.parent = addonName
+frameNPC.name = " - NPC"
 
+local frameStatusbar = CreateFrame("Frame", nil, UIParent)
+frameStatusbar.anchor = CreateFrame("Frame", nil, frameStatusbar)
+frameStatusbar.anchor:SetPoint("TOPLEFT", 32, -16)
+frameStatusbar.anchor:SetSize(InterfaceOptionsFramePanelContainer:GetWidth()-64, 1)
+frameStatusbar.title = frameStatusbar:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
+frameStatusbar.title:SetPoint("TOPLEFT", 18, -16)
+frameStatusbar.title:SetText(format("%s |cff33eeff%s|r", addonName, "StatusBar"))
+frameStatusbar.parent = addonName
+frameStatusbar.name = " - StatusBar"
 
 local frameSpell = CreateFrame("Frame", nil, UIParent)
 frameSpell.anchor = CreateFrame("Frame", nil, frameSpell)
@@ -570,8 +585,8 @@ frameSpell.anchor:SetSize(InterfaceOptionsFramePanelContainer:GetWidth()-64, 1)
 frameSpell.title = frameSpell:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
 frameSpell.title:SetPoint("TOPLEFT", 18, -16)
 frameSpell.title:SetText(format("%s |cff33eeff%s|r", addonName, "Spell"))
-frameSpell.name = format("%s - %s", addonName, "Spell")
 frameSpell.parent = addonName
+frameSpell.name = " - Spell"
 
 local function InitOptions(list, parent, height)
     local element, offsetX
@@ -589,15 +604,17 @@ local function InitOptions(list, parent, height)
 end
 
 LibEvent:attachEvent("VARIABLES_LOADED", function()
-    InitOptions(options.general, frame, 30)
+    InitOptions(options.general, frame, 32)
     InitOptions(options.pc, framePC, 29)
     InitOptions(options.npc, frameNPC, 29)
+    InitOptions(options.statusbar, frameStatusbar, 36)
     InitOptions(options.spell, frameSpell, 32)
 end)
 
 InterfaceOptions_AddCategory(frame)
 InterfaceOptions_AddCategory(framePCScrollFrame)
 InterfaceOptions_AddCategory(frameNPC)
+InterfaceOptions_AddCategory(frameStatusbar)
 InterfaceOptions_AddCategory(frameSpell)
 SLASH_TinyTooltip1 = "/tinytooltip"
 SLASH_TinyTooltip2 = "/tt"
@@ -614,6 +631,9 @@ function SlashCmdList.TinyTooltip(msg, editbox)
     elseif (msg == "spell") then
         InterfaceOptionsFrame_OpenToCategory(frameSpell)
         InterfaceOptionsFrame_OpenToCategory(frameSpell)
+    elseif (msg == "statusbar") then
+        InterfaceOptionsFrame_OpenToCategory(frameStatusbar)
+        InterfaceOptionsFrame_OpenToCategory(frameStatusbar)
     else
         InterfaceOptionsFrame_OpenToCategory(frame)
         InterfaceOptionsFrame_OpenToCategory(frame)

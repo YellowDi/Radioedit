@@ -10,9 +10,7 @@ local TOOLTIP_UPDATE_TIME = TOOLTIP_UPDATE_TIME
 local addon = TinyTooltip
 
 local function GetTargetString(unit)
-    if (not UnitExists(unit)) then
-        return format("|cff999999(%s)|r", EMPTY)
-    end
+    if (not UnitExists(unit)) then return end
     local name = UnitName(unit)
     local icon = addon:GetRaidIcon(unit) or ""
     if UnitIsUnit(unit, "player") then
@@ -34,11 +32,15 @@ GameTooltip:HookScript("OnUpdate", function(self, elapsed)
     if (addon.db.unit.player.showTarget and UnitIsPlayer("mouseover"))
         or (addon.db.unit.npc.showTarget and not UnitIsPlayer("mouseover")) then
         local line = addon:FindLine(self, "^"..TARGET..":")
-        if (line) then
-            line:SetFormattedText("%s: %s", TARGET, GetTargetString("mouseovertarget"))
-        elseif (not line and UnitExists("mouseovertarget")) then
-            self:AddLine(format("%s: %s", TARGET, GetTargetString("mouseovertarget")))
+        local text = GetTargetString("mouseovertarget")
+        if (line and not text) then
+            addon:HideLine(self, "^"..TARGET..":")
             self:Show()
+        elseif (not line and text) then
+            self:AddLine(format("%s: %s", TARGET, text))
+            self:Show()
+        elseif (line) then
+            line:SetFormattedText("%s: %s", TARGET, text)
         end
     end
 end)

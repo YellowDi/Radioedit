@@ -2,6 +2,7 @@
 local addon = TinyTooltip or select(2, ...)
 
 addon.L = {
+    ["general.statusbarOffsetX"] = "Statusbar Margin-X (0:Default)",
     ["general.statusbarOffsetY"] = "Statusbar Offset Y (0:Default)",
     ["general.alwaysShowIdInfo"] = "Always Show Id Info (Otherwise hold down SHIFT/ALT)",
     ["dropdown.inherit"]        = "|cffffee00inherit|r",
