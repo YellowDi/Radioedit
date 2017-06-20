@@ -9,10 +9,10 @@ function NOP:ItemIsBlacklisted(itemID) -- is item blacklisted?
     self:Verbose("itemID",itemID,"is temporary blacklisted")
     return true
   elseif NOP.DB["T_BLACKLIST"] and NOP.DB.T_BLACKLIST[itemID] then -- Permanent blacklist
-    Self:Verbose("itemID",itemID,"is permanently blacklisted")
+    self:Verbose("itemID",itemID,"is permanently blacklisted")
     return true
   elseif private.BLACKLIST[itemID] then
-    Self:Verbose("itemID",itemID,"build-in blacklisted")
+    self:Verbose("itemID",itemID,"build-in blacklisted")
     return true
   end
 end

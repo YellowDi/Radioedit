@@ -1,4 +1,9 @@
 -- Revisions:
+--[[<p>07.34 20.06.2017</p>
+<ul>
+<li>Fix LUA errors.</li>
+</ul>
+]]
 --[[<p>07.32 19.06.2017</p>
 <ul>
 <li>Added Artifact Research Compendium up to volume nine.</li>
