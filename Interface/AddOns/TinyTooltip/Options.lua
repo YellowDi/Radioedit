@@ -764,6 +764,14 @@ frame:SetScript("OnUpdate", function(self, elasped)
     end
 end)
 
+
+local placeholder = {
+    statusAFK = "AFK",
+    statusDND = "DND",
+    statusDC  = "DC",
+}
+setmetatable(placeholder, {__index = function(_, k) return k end})
+
 LibEvent:attachTrigger("tinytooltip:diy:player", function(self, unit, skipDisable)
     local raw = addon:GetUnitInfo(unit)
     local frameWidth, lineWidth, totalLines = 0, 0, 0
@@ -777,7 +785,7 @@ LibEvent:attachTrigger("tinytooltip:diy:player", function(self, unit, skipDisabl
             if (skipDisable and not config.enable) then
                 frame.elements[e]:Hide()
             else
-                value = raw[e] or e
+                value = raw[e] or placeholder[e]
                 if (config.color and config.wildcard) then
                     value = addon:FormatData(value, config, raw)
                 end

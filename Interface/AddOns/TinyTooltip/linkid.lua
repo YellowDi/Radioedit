@@ -53,7 +53,7 @@ local function KeystoneAffixDescription(self, link)
         link = link:gsub("|H(keystone:.-)|.+", "%1")
         data = {strsplit(":", link)}
         self:AddLine(" ")
-        for i = 5, 7 do
+        for i = 4, 6 do
             AffixID = tonumber(data[i])
             if (AffixID and AffixID > 0) then
                 name, description = C_ChallengeMode.GetAffixInfo(AffixID)

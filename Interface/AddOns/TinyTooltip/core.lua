@@ -18,11 +18,18 @@ local TARGET = TARGET
 local PLAYER = PLAYER
 local RARE = GARRISON_MISSION_RARE
 local OFFLINE = FRIENDS_LIST_OFFLINE
+local BASE_MOVEMENT_SPEED = BASE_MOVEMENT_SPEED or 7
 
 local addon = TinyTooltip
 
+-- language
 if (not addon.L) then
     addon.L = {} setmetatable(addon.L, {__index = function(_, k) return k end})
+end
+
+-- global vars
+if (not addon.G) then
+    addon.G = {} setmetatable(addon.G, {__index = function(_, k) return _G[k] end})
 end
 
 -- tooltips
@@ -40,10 +47,10 @@ addon.tooltips = {
 
 -- 圖標集
 addon.icons = {
-    Alliance  = "|TInterface\\TargetingFrame\\UI-PVP-ALLIANCE:16:16:0:0:64:64:10:36:2:38|t",
-    Horde     = "|TInterface\\TargetingFrame\\UI-PVP-HORDE:16:16:0:0:64:64:4:38:2:36|t",
-    pvp       = "|TInterface\\TargetingFrame\\UI-PVP-FFA:16:16:0:0:64:64:10:36:0:38|t",
-    class     = "|TInterface\\TargetingFrame\\UI-Classes-Circles:16:16:0:0:256:256:%d:%d:%d:%d|t",
+    Alliance  = "|TInterface\\TargetingFrame\\UI-PVP-ALLIANCE:14:14:0:0:64:64:10:36:2:38|t",
+    Horde     = "|TInterface\\TargetingFrame\\UI-PVP-HORDE:14:14:0:0:64:64:4:38:2:36|t",
+    pvp       = "|TInterface\\TargetingFrame\\UI-PVP-FFA:14:14:0:0:64:64:10:36:0:38|t",
+    class     = "|TInterface\\TargetingFrame\\UI-Classes-Circles:14:14:0:0:256:256:%d:%d:%d:%d|t",
     questboss = "|TInterface\\TargetingFrame\\PortraitQuestBadge:0|t",
     TANK      = "|TInterface\\LFGFrame\\UI-LFG-ICON-PORTRAITROLES:0:0:0:0:64:64:0:19:22:41|t",
     HEALER    = "|TInterface\\LFGFrame\\UI-LFG-ICON-PORTRAITROLES:0:0:0:0:64:64:20:39:1:20|t",

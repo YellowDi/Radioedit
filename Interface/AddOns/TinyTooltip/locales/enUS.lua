@@ -17,5 +17,6 @@ addon.L = {
     ["dropdown.not inarena"]        = "|cffff3333not|r inarena",
     ["dropdown.not ininstance"]     = "|cffff3333not|r ininstance",
     ["dropdown.not samerealm"]      = "|cffff3333not|r samerealm",
-    ["TargetBy"] = "Targeted By",
+    ["TargetBy"]                    = "Targeted By",
+    ["showTargetBy"]                = "Show Targeted By",
 }
