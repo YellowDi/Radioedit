@@ -1,4 +1,10 @@
 -- Revisions:
+--[[<p>07.32 19.06.2017</p>
+<ul>
+<li>Added Artifact Research Compendium up to volume nine.</li>
+<li>Added Mark of Prey.</li>
+</ul>
+]]
 --[[<p>07.30 02.06.2017</p>
 <ul>
 <li>Added Legionfall Insignia for exalted.</li>

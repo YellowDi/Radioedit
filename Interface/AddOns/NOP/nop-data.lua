@@ -76,11 +76,20 @@ NOP.T_RECIPES = { -- [ItemId] = {count_to_use, "gsub regex" | tooltip-line-numbe
   [147727] = {1,1,nil}, -- Greater Legionfall Insignia
 }
 NOP.T_ITEMS = { -- [itemID] = {count_to_use,{"sub-Zone",...},{[mapID]=true,...},auraID}, table for opening/use item by itemID, is no possible to check any common text
+  [142363] = {1,nil,nil}, -- Mark of Prey
   [139591] = {1,nil,nil}, -- Stolen Tome of Artifact Lore
   [139428] = {1,nil,nil}, -- A Master Plan
   [140749] = {1,nil,nil}, -- Horn of Winter
   [140767] = {5,nil,nil}, -- Pile of Bits and Bones
+  [144433] = {1,nil,nil}, -- Artifact Research Compendium: Volumes I
+  [144434] = {1,nil,nil}, -- Artifact Research Compendium: Volumes I-II
+  [144431] = {1,nil,nil}, -- Artifact Research Compendium: Volumes I-III
   [144435] = {1,nil,nil}, -- Artifact Research Compendium: Volumes I-IV
+  [147852] = {1,nil,nil}, -- Artifact Research Compendium: Volumes I-V
+  [147853] = {1,nil,nil}, -- Artifact Research Compendium: Volumes I-VI
+  [147854] = {1,nil,nil}, -- Artifact Research Compendium: Volumes I-VII
+  [147855] = {1,nil,nil}, -- Artifact Research Compendium: Volumes I-VIII
+  [147856] = {1,nil,nil}, -- Artifact Research Compendium: Volumes I-IX
   [128373] = {1,{private.SHIPYARD_HORDE,private.SHIPYARD_ALLIANCE},{[private.FROSTFIRE_RIDGE]=true,[private.SHADOWMOON_VALLEY]=true}}, -- Rush Order: Shipyard, special handling for sub-zone
   [136806] = {1,nil,nil}, -- Glass of Arcwine
   [147729] = {1,nil,nil}, -- Netherchunk

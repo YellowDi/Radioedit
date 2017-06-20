@@ -51,3 +51,4 @@ private.TIMER_IDLE = 2.0 -- recheck delay for calling protected function in comb
 private.TIMER_RECHECK = 10.0 -- delay for slow non-event driven item lookup in bags
 private.LOAD_RETRY = 10 -- update cache cycles for items and spell
 private.PRINT_HEAD = "|cff7f7f7f%s|r [|cff00ffff%s|r]"
+private.BLACKLIST = {[90043] = true,} -- special blacklist

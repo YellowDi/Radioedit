@@ -8,11 +8,12 @@ function NOP:ItemIsBlacklisted(itemID) -- is item blacklisted?
   if NOP.T_BLACKLIST and NOP.T_BLACKLIST[itemID] then -- temporary blacklist
     self:Verbose("itemID",itemID,"is temporary blacklisted")
     return true
-  else
-    if NOP.DB["T_BLACKLIST"] and NOP.DB.T_BLACKLIST[itemID] then -- Permanent blacklist
-      self:Verbose("itemID",itemID,"is permanently blacklisted")
-      return true
-    end
+  elseif NOP.DB["T_BLACKLIST"] and NOP.DB.T_BLACKLIST[itemID] then -- Permanent blacklist
+    Self:Verbose("itemID",itemID,"is permanently blacklisted")
+    return true
+  elseif private.BLACKLIST[itemID] then
+    Self:Verbose("itemID",itemID,"build-in blacklisted")
+    return true
   end
 end
 function NOP:ItemGetSpell(itemID) -- looking for usable item by spell attached to item returns (count, 2) or nil
