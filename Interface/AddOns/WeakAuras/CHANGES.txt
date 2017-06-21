@@ -1,272 +1,116 @@
-tag c33fc4ac945081872c0259fb42c1a86afddf9e80 2.4.3
+tag 81a13452682bfa542c1cb0fa50a272c7a3b20886 2.4.4
 Author:	Benjamin Staneck <staneck@gmail.com>
-Date:	Wed Jun 14 00:55:51 2017 +0200
+Date:	Tue Jun 20 20:30:41 2017 +0200
 
-commit febf0a5a77d5da0c52e35b65132c10c52c60e86c
+commit 3c457ff6956baf65f4abd7ac66966a4af268ff63
 Author: Infus <infus@squorn.de>
-Date:   Tue Jun 13 23:50:53 2017 +0200
+Date:   Sun Jun 18 23:27:46 2017 +0200
 
-    Fix Power Trigger for Destruction Warlocks
+    Tweak Text Replacements again
+    
+    Make the code try one character replacements after failing to
+    find a variable in state. This is what the old code essentially did.
+    
+    Ticket-Nr: 980
 
-commit 6045607812eaa2c67f15113b836c178fb772481a
-Author: Benjamin Staneck <staneck@gmail.com>
-Date:   Sun Jun 11 05:30:42 2017 +0200
-
-    remove debug print
-
-commit 225b58543983f0ff69131595f3c8c6e25589b5ce
+commit 28faeaca45d586bd98db3e5bcec26049e3249a7a
 Author: Infus <infus@squorn.de>
-Date:   Sat Jun 10 22:21:58 2017 +0200
+Date:   Sun Jun 18 02:07:50 2017 +0200
 
-    Add "In Group" / "Not In Group" checking to the Combat Log Event trigger
-    
-    Easy to add. Other potentially useful flags to check would be:
-    - Hostility.
-    - Object Type: Guardian, Pet, NPc, Player
-    - Control: NPC vs Player
-    
-    Adding any of those would probably best done with a dedicated
-    combobox per flag type.
-    
-    Ticket-Nr: 969
-
-commit a067de7cea44865487437b6699d1cbfd0bfe7cc6
-Author: Infus <infus@squorn.de>
-Date:   Sat Jun 10 21:28:11 2017 +0200
-
-    Death Knight Rune: Replace "inverse" with Show On
-    
-    Ticket-Nr: 965
-
-commit c933230e958bd8949afa5c07b64a69528221f0f5
-Author: Infus <infus@squorn.de>
-Date:   Sat Jun 10 21:13:53 2017 +0200
-
-    Add inverse option for Conditons/Icon
-    
-    Ticket-Nr: 965
-
-commit 5a8d11e52b5351ff44d43773576d2b53a598d2c8
-Author: Infus <infus@squorn.de>
-Date:   Sat Jun 10 21:08:00 2017 +0200
-
-    Change BigWigs spellid from number to string
-    
-    As apparently it isn't always a number.
+    Fix BigWigs triggers with spell id strings
     
     Ticket-Nr: 971
 
-commit 0700edde130292e5fbca46039a82ab7bc1d91fbc
+commit 1043ac708f450ba151512dbec1ab26dc398db0ae
 Author: Infus <infus@squorn.de>
-Date:   Sat Jun 10 17:21:36 2017 +0200
+Date:   Sat Jun 17 22:23:36 2017 +0200
 
-    Update to 7.2.5 class changes
+    Fix Power trigger after Destro fix
+    
+    UnitPowerDisplayMod is rather strange and returns 10 for lots of
+    powertypes. Thus, introuduce two helper methhods:
+    
+    WA.UnitPowerDisplayMod which returns 10 for just Soul Shards.
+    And WA.UseUnitPowerThirdArg which returns true for just Sould Shards.
 
-commit 6bc18c124767e6fb29e022ee0bb54e32f41b1284
+commit aaeae1d3115ecbfa5861b48d1eb22d09db9b31aa
 Author: Infus <infus@squorn.de>
-Date:   Sat Jun 10 12:01:56 2017 +0200
+Date:   Sat Jun 17 21:56:47 2017 +0200
 
-    Add description and Tooltip to Conditions/Chat/Message
+    Change how text replacements work
+    
+    Instead of trying all dynamic texts and all members of state,
+    iterate the string once. And on finding a %, use all alphabetical
+    characters after it. If that string is only one character look it
+    up via dynamic texts. Otherwise look it up via the state.
+    
+    Since we are only iterating once, instead of many times this should
+    also be faster than before.
+    
+    Note: This is not 100% backwards compatible, e.g. %pRage would
+    previously replace the %p, this now requires a space.
+    
+    Ticket-Nr: 957
 
-commit ef3e6d0218bc26551c43fce5ae3f3a7cf1a2907b
-Author: Benjamin Staneck <staneck@gmail.com>
-Date:   Wed Jun 7 01:04:13 2017 +0200
-
-    Update minor version
-
-commit 454e63afc381cce026bd3872601ce507e1f1ae92
+commit 873300b0404c3e71a47559a82c59e222c6d81912
 Author: Infus <infus@squorn.de>
-Date:   Tue Jun 6 16:53:06 2017 +0200
+Date:   Sat Jun 17 20:34:01 2017 +0200
 
-    Region Prototype: Remove unused member
+    Fix invalid usage of "_operator" value in trigger
+    
+    If a user switches a trigger from a trigger type that has arg with
+    a number/longstring tpye thus using a _operator to a trigger
+    type that has a arg with the same name but of a different type
+    that is not using the "_operator" the setting for the operator
+    is still in the trigger data.
+    
+    Fix this by only using the stored _operator setting if the type is
+    actually a number or a longstring.
+    
+    Ticket-Nr: 979
 
-commit 9d39c8def622ed50cfe5df36b4c2d94c11e3b757
+commit 80cdde889414a6f4180afa3c6eae2f9a0c88f707
 Author: Infus <infus@squorn.de>
-Date:   Tue Jun 6 12:23:44 2017 +0200
+Date:   Sat Jun 17 16:02:23 2017 +0200
 
-    Implement %c support for "Actions/Chat" and "Conditions/Chat"
+    Improve performance on opening options with gigantic dynamic groups
     
-    Also add a "Run Custom Code" to Conditions, since essentially %c allows
-    that.
+    Pause/Resume dynamic groups around the showing of all loaded auras.
     
-    Also wrap SendChatMessage into a pcall, since it throws a error if certain
-    escape sequences are passed into it.
-    
-    Github Ticket: 203
+    Ticket-Nr: 978
 
-commit 282e53eb0ed3012f85b9a9f6ff88203daf305cf8
+commit c128b0bb92150d71a5967e77f101db1ff53f7ad6
 Author: Infus <infus@squorn.de>
-Date:   Tue Jun 6 12:23:10 2017 +0200
+Date:   Fri Jun 16 18:16:28 2017 +0200
 
-    By default buttons should not accept keyboard input
+    Conditions: Run Custom Code: Fix error on "Expand Text Edtitor"
     
-    Broke most text fields in WA.
+    Also remove some todos in that area that are already done.
+    
+    Ticket-Nr: 974
 
-commit e073ee4f02a17f3a0cd742652eb3fb0778e5cb10
+commit 01712f63e4fddc1cdb0cc260f2f5e8182fc562d3
 Author: Infus <infus@squorn.de>
-Date:   Mon Jun 5 18:15:38 2017 +0200
+Date:   Fri Jun 16 16:47:57 2017 +0200
 
-    Drag and Drop: Let "Esc" abort the drag and drop
+    Change IsSpellKnown/Talent Selected for new Legendaries
     
-    Ticket-Nr: 967
+    Use IsPlayerSpell in addition to IsSpellKnown. And use the 11th return
+    from GetTalentInfo() in addition to the 4th.
+    
+    Ticket-Nr: 970
 
-commit dadbbce4e46a8b65cdffe87b5df45c77afa365a8
+commit c4d0e26ca7a3e729f172b31b771adfb585bcd194
 Author: Infus <infus@squorn.de>
-Date:   Mon Jun 5 17:50:48 2017 +0200
+Date:   Fri Jun 16 16:43:48 2017 +0200
 
-    Fix GCD trigger to show the name/icon of the spell that triggered the gcd
-    
-    There are two parts to this fix:
-    - Trigger the gcd trigger on UNITSPELL_CAST_SENT
-    - Check that we have a spell name/icon in the gcd trigger
-    
-    The second part is necessary as the gcd triggers a good 20ms before
-    UNIT_SPELLCAST_SENT.
-    
-    This also means that the gcd trigger won't show anything if somehow
-    the gcd starts without a UNIT_SPELLCAST_SENT. I can't think of a
-    situation in which that could happen.
-    
-    Ticket-Nr: 966
+    Templates: Landslide talent was wrong
 
-commit b2dd659ceb17f4059236e1abe85c90a83823a606
+commit 29b502581341afdab2b1f7482b2e53365164cfc1
 Author: Infus <infus@squorn.de>
-Date:   Mon Jun 5 17:37:34 2017 +0200
+Date:   Fri Jun 16 16:43:19 2017 +0200
 
-    Icon Options. Readd space that I thought was unnecessary
+    Fix Destruction Warlocks
     
-    It was necessary.
-
-commit 9833fef5c2fe0587cc403f7e9a3aae58604e546a
-Author: Infus <infus@squorn.de>
-Date:   Mon Jun 5 15:34:46 2017 +0200
-
-    Model: Move setCameraCall to earlier
-    
-    I still have no clue what I'm doing with the model's camara.
-    
-    A fix for ticket 964 introduced a call to SetCamera, this apparently broke
-    the example in ticket 968.
-    
-    This now works for both the Arthas example in ticket 964 and the glaive
-    example in ticket 968.
-    
-    Ticket-Nr: 968
-
-commit 2630ed131c2088c3f535f28fbc066914281fcb11
-Author: Infus <infus@squorn.de>
-Date:   Tue May 30 20:15:32 2017 +0200
-
-    Tweak handling of chat and sound actions for Conditions
-    
-    Instead of treating them as properties that are set and unset,
-    treat them as explicitly as actions. The actions are only called
-    on activating the conditions.
-
-commit c227ab85ec756d8c419663f1b4343fc0c20aa127
-Author: Infus <infus@squorn.de>
-Date:   Sat May 27 22:23:42 2017 +0200
-
-    Move Action Conditions to the main Conditions tab
-    
-    But leave most of the code that allows for splitting up
-    the conditions ui intact.
-
-commit 35ffb2c7168d536ce3bc12fcbd7443204f56d452
-Author: Infus <infus@squorn.de>
-Date:   Sat May 27 19:56:26 2017 +0200
-
-    Adjust Dynamic Groups Animation functions too
-
-commit 7a202216707d618dd959ce85fc466c8804df8a40
-Author: Infus <infus@squorn.de>
-Date:   Fri May 26 23:00:58 2017 +0200
-
-    Hide "Show Cooldown Text" if the "countdownForCooldowns" cvar is 0
-    
-    As in that case the toggle does nothing.
-    
-    Ticket-Nr: 950
-
-commit 8f841975b997de847df6da381e643f4e7b0b3b1e
-Author: Infus <infus@squorn.de>
-Date:   Fri May 26 21:20:17 2017 +0200
-
-    Fix TextEditor for group editing if paths differ
-    
-    The TextEditor gets a "path" to the setting it is modifying, e.g.
-    data.additional_triggers.3.trigger. For group auras, the function
-    appendToTriggerPath tried to figure out the common path.
-    
-    This fails in the linked bug report, because the custom function
-    is in trigger 2 in one aura and in trigger 3 in a different aura.
-    
-    Instead, build a "multipath" structure in appendToTriggerPath, that
-    is a data structure which notes for each id what the path is, and
-    teach the TextEditor how to handle that.
-    
-    Ticket-Nr: 959
-
-commit ce204c30a499beff9ad451d6e6c37dab29878257
-Author: Infus <infus@squorn.de>
-Date:   Fri May 26 20:48:58 2017 +0200
-
-    Rename "Item Set Equipped" to "Equipment Set Equipped"
-    
-    As that is what the trigger actually checks.
-    
-    Ticket-Nr: 956
-
-commit 48afe98c656e5bbe2151cee3555fc82fcbc616d8
-Author: Infus <infus@squorn.de>
-Date:   Fri May 26 18:16:54 2017 +0200
-
-    Fix escaping of Color codes in inline code editor
-    
-    By copying AceGui-MultiLineWidget into our sources and adding
-    IndentationLib.decode/IndentationLib.encode in the right places
-    
-    Ticket-Nr: 961
-
-commit ed79836d0dd3407f3c45dda2980a1ad19769960c
-Author: Infus <infus@squorn.de>
-Date:   Fri May 26 17:27:12 2017 +0200
-
-    Model: Set the Camera index for SetTransform
-    
-    So, somehow loging in does set a different camera from /reloadui.
-    Setting it to 1, makes the model always use the right camera.
-    
-    Ticket-Nr: 964
-
-commit 6b2891d56d0220be2df86e6d354f9394da271864
-Author: Benjamin Staneck <staneck@gmail.com>
-Date:   Tue May 23 22:57:41 2017 +0200
-
-    fix Harjatan encounter id
-
-commit ff11c03b8523bb883b45efc2a92b0bd79456973f
-Author: Infus <infus@squorn.de>
-Date:   Tue May 23 19:43:38 2017 +0200
-
-    Make custom animation functions similar to all other functions
-    
-    For some reason animation functions were saved with a "return "
-    prepended. For other functions we add that "return " directly before
-    loadstring. This meant that in various places the string needed
-    to be cut by 8 characters and "return " appended in others.
-    
-    Somehow that code didn't work though. Instead of figuring out where
-    it doesn't, just remove the special casing of animation functions.
-    
-    Store just the function in the variable and add "return " only
-    before loadstring.
-
-commit 29953a3a17eda3e1fdbc615ab47d6a9c6b09a0c0
-Author: Infus <infus@squorn.de>
-Date:   Sat May 20 01:13:29 2017 +0200
-
-    Fix a bug in Equipment Set Equipped matching all sets
-    
-    Ticket-Nr: 961
+    The previous fix was incomplete.
 

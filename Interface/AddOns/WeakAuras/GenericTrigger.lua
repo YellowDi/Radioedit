@@ -193,10 +193,13 @@ function ConstructTest(trigger, arg)
       test = "("..arg.test:format(trigger[name])..")";
     elseif(arg.type == "longstring" and trigger[name.."_operator"]) then
       test = TestForLongString(trigger, arg);
+    elseif (arg.type == "string" or type == "select" or type == "spell" or type == "item") then
+      test = "(".. name .." and "..name.."==" ..(number or "\""..(trigger[name] or "").."\"")..")";
     else
       if(type(trigger[name]) == "table") then
         trigger[name] = "error";
       end
+      -- number
       test = "(".. name .." and "..name..(trigger[name.."_operator"] or "==")..(number or "\""..(trigger[name] or "").."\"")..")";
     end
   end
@@ -2048,7 +2051,7 @@ do
       bars[text] = bars[text] or {};
       local bar = bars[text];
       bar.addon = addon;
-      bar.spellId = spellId;
+      bar.spellId = tostring(spellId);
       bar.text = text;
       bar.duration = duration;
       bar.expirationTime = expirationTime;
@@ -2124,7 +2127,7 @@ do
     if (addon and addon ~= v.addon) then
       return false;
     end
-    if (spellId and spellId ~= v.spellId) then
+    if (spellId and tostring(spellId) ~= v.spellId) then
       return false;
     end
     if (text) then
