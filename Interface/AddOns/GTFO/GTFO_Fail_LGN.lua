@@ -439,6 +439,42 @@ GTFO.SpellID["197599"] = {
   sound = 3;
 };
 
+GTFO.SpellID["247673"] = {
+  --desc = "Molten Crash (Charredbone Goliath)";
+  sound = 3;
+};
+
+GTFO.SpellID["246942"] = {
+  --desc = "Carrion Swarm (Zorathides)";
+  applicationOnly = true;
+  sound = 3;
+};
+
+GTFO.SpellID["248642"] = {
+  --desc = "Dark Eruption (Thalas Vylethorn)";
+  sound = 3;
+};
+
+GTFO.SpellID["247378"] = {
+  --desc = "Static Blast (Roobi Skizzelvolt)";
+  sound = 3;
+};
+
+GTFO.SpellID["52080"] = {
+  --desc = "Bone Crack (Bonesunder)";
+  sound = 3;
+};
+
+GTFO.SpellID["248716"] = {
+  --desc = "Infernal Strike (Zorathides)";
+  sound = 3;
+};
+
+GTFO.SpellID["247186"] = {
+  --desc = "Brutish Charge (Bloodfeast)";
+  sound = 3;
+};
+
 
 -- ********************
 -- * The Broken Shore *
@@ -1740,7 +1776,15 @@ GTFO.SpellID["234264"] = {
   --desc = "Melted Armor (Goroth)";
   applicationOnly = true;
   sound = 3;
-  negatingDebuffSpellID = 231363; -- Burning Armor
+  ignoreEvent = "BurningArmor";
+};
+
+GTFO.SpellID["231363"] = {
+  --desc = "Burning Armor (Goroth)";
+  soundFunction = function() 
+		GTFO_AddEvent("BurningArmor", 8);
+		return 0;
+	end;
 };
 
 GTFO.SpellID["233283"] = {

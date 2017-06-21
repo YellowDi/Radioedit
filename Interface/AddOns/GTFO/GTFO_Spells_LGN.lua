@@ -378,6 +378,21 @@ GTFO.SpellID["246941"] = {
   sound = 1;
 };
 
+GTFO.SpellID["248591"] = {
+  --desc = "Tangled Web (Nezar'Azret)";
+  sound = 1;
+};
+
+GTFO.SpellID["248599"] = {
+  --desc = "Lava (Fiery Behemoth)";
+  sound = 1;
+};
+
+GTFO.SpellID["52117"] = {
+  --desc = "Pulsing Shards (Iceshatter)";
+  applicationOnly = true;
+  sound = 1;
+};
 
 -- **********
 -- * Mardum *
@@ -1528,11 +1543,6 @@ GTFO.SpellID["236011"] = {
 };
 
 GTFO.SpellID["234550"] = {
-  --desc = "Bone Saw (Atrigan)";
-  sound = 1;
-};
-
-GTFO.SpellID["233444"] = {
   --desc = "Bone Saw (Atrigan)";
   sound = 1;
 };
