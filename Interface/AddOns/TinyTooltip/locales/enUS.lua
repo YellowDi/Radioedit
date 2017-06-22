@@ -5,6 +5,7 @@ addon.L = {
     ["general.statusbarOffsetX"] = "Statusbar Margin-X (0:Default)",
     ["general.statusbarOffsetY"] = "Statusbar Offset Y (0:Default)",
     ["general.alwaysShowIdInfo"] = "Always Show Id Info (Otherwise hold down SHIFT/ALT)",
+    ["general.skinMoreFrames"]   = "Skin More Frames |cffcccc33(need to /reload)|r",
     ["dropdown.inherit"]        = "|cffffee00inherit|r",
     ["dropdown.default"]        = "|cffaaaaaadefault|r",
     ["dropdown.cursor"]         = "|cff33ccffcursor|r",

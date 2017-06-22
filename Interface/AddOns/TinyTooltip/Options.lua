@@ -434,6 +434,7 @@ widgets.colorDropdata = {"default","class","level","reaction","itemQuality","sel
 local options = {
     general = {
         { keystring = "general.mask",               type = "checkbox" },
+        { keystring = "general.skinMoreFrames",     type = "checkbox" },
         { keystring = "general.background",         type = "colorpick", hasopacity = true },
         { keystring = "general.borderColor",        type = "colorpick", hasopacity = true },
         { keystring = "general.scale",              type = "slider", min = 0.5, max = 4, step = 0.1 },
@@ -534,11 +535,11 @@ framePC.name = " - Player"
 
 framePC.diy = CreateFrame("Button", nil, framePC)
 framePC.diy:SetSize(400, 67)
-framePC.diy:SetScale(0.75)
+framePC.diy:SetScale(0.68)
 framePC.diy:SetPoint("TOPLEFT", 360, -100)
 framePC.diy:SetNormalTexture("Interface\\LevelUp\\MinorTalents")
 framePC.diy:GetNormalTexture():SetTexCoord(0, 400/512, 341/512, 407/512)
-framePC.diy:GetNormalTexture():SetVertexColor(1, 1, 1, 0.6)
+framePC.diy:GetNormalTexture():SetVertexColor(1, 1, 1, 0.8)
 framePC.diy:SetScript("OnClick", function() LibEvent:trigger("tinytooltip:diy:player", "player", true) end)
 framePC.diy.text = framePC.diy:CreateFontString(nil, "OVERLAY", "GameFont_Gigantic")
 framePC.diy.text:SetPoint("CENTER", 0, 2)

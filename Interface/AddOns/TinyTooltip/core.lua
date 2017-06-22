@@ -117,7 +117,7 @@ function addon:GetLine(tooltip, number)
     local num = tooltip:NumLines()
     if (number > num) then
         tooltip:AddLine(" ")
-        return self:GetLine(tooltip, num+1), true
+        return self:GetLine(tooltip, num+1)
     end
     return _G[tooltip:GetName() .. "TextLeft" .. number], _G[tooltip:GetName() .. "TextRight" .. number]
 end
@@ -587,7 +587,7 @@ LibEvent:attachTrigger("tooltip.statusbar.position", function(self, position, of
 end)
 
 LibEvent:attachTrigger("tooltip.style.init", function(self, tip)
-    if (tip.style) then return end
+    if (not tip or tip.style) then return end
     local backdrop = {
         bgFile   = "Interface\\RaidFrame\\UI-RaidFrame-GroupBg",
         insets   = {left = 3, right = 3, top = 3, bottom = 3},
@@ -596,7 +596,7 @@ LibEvent:attachTrigger("tooltip.style.init", function(self, tip)
     }
     tip:SetBackdrop({})
     tip.style = CreateFrame("Frame", nil, tip)
-    tip.style:SetFrameLevel(max(0,tip:GetFrameLevel()-1))
+    tip.style:SetFrameLevel(tip:GetFrameLevel())
     tip.style:SetAllPoints()
     tip.style:SetBackdrop(backdrop)
     tip.style:SetBackdropColor(0, 0, 0, 0.9)
@@ -645,12 +645,19 @@ LibEvent:attachTrigger("tooltip.style.init", function(self, tip)
     if (tip:HasScript("OnTooltipSetQuest")) then
         tip:HookScript("OnTooltipSetQuest", function(self) LibEvent:trigger("tooltip:quest", self) end)
     end
-    LibEvent:trigger("tooltip:init", tip)
     if (tip == GameTooltip) then
         tip.GetBackdrop = function(self) return self.style:GetBackdrop() end
         tip.GetBackdropColor = function(self) return self.style:GetBackdropColor() end
         tip.GetBackdropBorderColor = function(self) return self.style:GetBackdropBorderColor() end
     end
+    if (tip.DisableDrawLayer) then
+        tip:DisableDrawLayer("BACKGROUND")
+    end
+    LibEvent:trigger("tooltip:init", tip)
+    for _, v in pairs(addon.tooltips) do
+        if (tip == v) then return end
+    end
+    addon.tooltips[#addon.tooltips+1] = tip
 end)
 
 hooksecurefunc("GameTooltip_SetDefaultAnchor", function(self, parent)

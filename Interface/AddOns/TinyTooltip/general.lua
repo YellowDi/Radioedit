@@ -79,6 +79,7 @@ LibEvent:attachEvent("VARIABLES_LOADED", function()
         tinsert(addon.db.unit.player.elements[1], 1, "moveSpeed")
         tinsert(addon.db.unit.npc.elements[1], 1, "moveSpeed")
     end
+    LibEvent:trigger("tooltip:variables:loaded")
     --Init
     LibEvent:trigger("tooltip.statusbar.height", addon.db.general.statusbarHeight)
     LibEvent:trigger("tooltip.statusbar.text", addon.db.general.statusbarText)
@@ -95,7 +96,7 @@ LibEvent:attachEvent("VARIABLES_LOADED", function()
     end
 end)
 
-LibEvent:attachTrigger("tooltip:cleared", function(self, tip)
+LibEvent:attachTrigger("tooltip:cleared, tooltip:hide", function(self, tip)
     LibEvent:trigger("tooltip.style.border.color", tip, unpack(addon.db.general.borderColor))
     LibEvent:trigger("tooltip.style.background", tip, unpack(addon.db.general.background))
 end)

@@ -22,6 +22,7 @@ addon.L = {
     ["general.anchor.returnInCombat"]       = "战斗时复位",
     ["general.anchor.returnOnUnitFrame"]    = "UnitFrame上时复位",
     ["general.alwaysShowIdInfo"]            = "始终显示id信息(关闭后按住alt/shift显示)",
+    ["general.skinMoreFrames"]              = "样式应用于更多框架 |cffcccc33(重载生效)|r",
     
     ["item.coloredItemBorder"]              = "物品边框染色",
     ["quest.coloredQuestBorder"]            = "任务边框染色",

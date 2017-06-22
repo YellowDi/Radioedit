@@ -6,7 +6,7 @@ addon.db = {
     general = {
         scale             = 1,                      --縮放
         mask              = true,                   --頂部遮罩層
-        bgfile            = "gradual",              --背景
+        bgfile            = "rock",                 --背景
         background        = {0, 0, 0, 0.6},         --背景顔色和透明度
         borderSize        = 1,                      --邊框大小（直角邊框才生效）
         borderCorner      = "default",              --邊框類型 default|angular:直角邊框
@@ -20,6 +20,7 @@ addon.db = {
         statusbarColor    = "auto",                 --HP顔色 default|auto|smooth
         anchor            = { position = "cursorRight", returnInCombat = false, returnOnUnitFrame = false, cp = "BOTTOM", p = "BOTTOMRIGHT", }, --鼠標位置 default|cursor|static|cursorRight
         alwaysShowIdInfo  = false,
+        skinMoreFrames    = true,
     },
     unit = {
         player = {
