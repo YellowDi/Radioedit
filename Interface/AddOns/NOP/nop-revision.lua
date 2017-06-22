@@ -1,4 +1,10 @@
 -- Revisions:
+--[[<p>07.36 21.06.2017</p>
+<ul>
+<li>Fix for colorblind mode when lines past 2nd line are used in pattern matching.</li>
+<li>To detect colorblind mode CVARS is used.</li>
+</ul>
+]]
 --[[<p>07.34 20.06.2017</p>
 <ul>
 <li>Fix LUA errors.</li>

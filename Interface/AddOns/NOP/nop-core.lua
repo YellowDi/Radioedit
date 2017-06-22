@@ -33,6 +33,7 @@ function NOP:ItemLoad() -- load template item tooltips
   self.itemLoadRetry = self.itemLoadRetry - 1 -- only limited retries
   if self.itemLoadRetry < 0 then self.itemLoad = true; return; end -- no more retry
   local retry = false
+  local isCB = tonumber(GetCVar(private.CB_CVAR)) or 0 -- if colorblind mode activated then on 2nd line there is extra info
   for itemID, data in pairs(NOP.T_RECIPES) do
     if not NOP.T_RECIPES_FIND[itemID] then -- need fill pattern
       local name = GetItemInfo(itemID)
@@ -47,20 +48,18 @@ function NOP:ItemLoad() -- load template item tooltips
           local c,pattern = unpack(data,1,2)
           if type(pattern) == "number" then
             if count >= pattern then
-              local tooltipText = private.TOOLTIP_ITEM .. "TextLeft" .. pattern
-              local text = tooltipText and _G[tooltipText].GetText and _G[tooltipText]:GetText() or "none"
-              if text == ITEM_QUALITY1_DESC or text == ITEM_QUALITY2_DESC or text == ITEM_QUALITY3_DESC or text == ITEM_QUALITY4_DESC then -- colorblind mode shift it down!
-                tooltipText = private.TOOLTIP_ITEM .. "TextLeft" .. (pattern + 1)
-                text = tooltipText and _G[tooltipText].GetText and _G[tooltipText]:GetText() or "none"
-              end
-              if text and text ~= "none" then NOP.T_RECIPES_FIND[itemID] = {c,text,data[3],data[4]} end
+              local i = pattern
+              if (isCB > 0) and (pattern > 1) then i = pattern + 1 end
+              local tooltipText = private.TOOLTIP_ITEM .. "TextLeft" .. i
+              local text = _G[tooltipText].GetText and _G[tooltipText]:GetText() or "none"
+              if text and (text ~= "none") then NOP.T_RECIPES_FIND[itemID] = {c,text,data[3],data[4]} end
             end
           elseif type(pattern) == "string" then
             local tooltipText = private.TOOLTIP_ITEM .. "TextLeft" .. 1
             local heading = _G[tooltipText]:GetText()
             if heading then -- look in 1st line
               local compare = gsub(heading,pattern,"%1")
-              if compare ~= heading then
+              if (compare ~= heading) then
                 NOP.T_RECIPES_FIND[itemID] = {c,compare,data[3],data[4]}
               end
             end

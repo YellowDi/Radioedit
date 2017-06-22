@@ -42,6 +42,7 @@ private.TOOLTIP_SCAN = ADDON.."_TOOLTIP_SCAN"
 private.SPELL_PICKLOCK = 1804
 private.AURA_MINERS_COFFEE = 176049 -- applied by Miner's cofee item could have 5 stacks past 6.1 wow version
 private.RO_SHIPYARD = 128373 -- Rush Orders: Shipyards in Garrison always get lower priority
+private.CB_CVAR = "colorblindMode"
 private.ITEM_TYPE_BATTLE_PET = "battlepet"
 private.ITEM_TYPE_ITEM = "item"
 private.RGB_YELLOW = "|cFFFFFF00"
