@@ -28,4 +28,5 @@ ns.L = {
     GuildBank                   = "公會銀行",
     GuildNews                   = "公會新聞",
     PaperDoll                   = "人物面板",
+    Chat                        = "聊天",
 }

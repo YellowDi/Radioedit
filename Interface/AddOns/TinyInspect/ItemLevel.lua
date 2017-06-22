@@ -306,9 +306,62 @@ LibEvent:attachTrigger("UNIT_INSPECT_READY", function(self, data)
     end
 end)
 
+
+----------------------
+--  Chat ItemLevel  --
+----------------------
+
+local function ChatItemLevel(Hyperlink)
+    local link = string.match(Hyperlink, "|H(.-)|h")
+    local unknown, level, name = LibItemInfo:GetItemInfo(link)
+    if (unknown == 0 and level > 0) then
+        Hyperlink = Hyperlink:gsub("|h%[(.-)%]|h", "|h["..level..":"..name.."]|h")
+    end
+    return Hyperlink
+end
+
+local function KeystoneLevel(Hyperlink)
+    local map, level, name = string.match(Hyperlink, "|Hkeystone:(%d+):(%d+):.-|h(.-)|h")
+    if (map and level and name and not string.find(name, level)) then
+        name = C_ChallengeMode.GetMapInfo(map)
+        Hyperlink = Hyperlink:gsub("|h%[(.-)%]|h", "|h["..level..":"..name.."]|h")
+    end
+    return Hyperlink
+end
+
+local function filter(self, event, msg, ...)
+    if (TinyInspectDB and TinyInspectDB.EnableItemLevelChat) then
+        msg = msg:gsub("(|Hitem:%d+:.-|h.-|h)", ChatItemLevel)
+        msg = msg:gsub("(|Hkeystone:%d+:%d+:.-|h.-|h)", KeystoneLevel)
+    end
+    return false, msg, ...
+end
+
+ChatFrame_AddMessageEventFilter("CHAT_MSG_CHANNEL", filter)
+ChatFrame_AddMessageEventFilter("CHAT_MSG_SAY", filter)
+ChatFrame_AddMessageEventFilter("CHAT_MSG_YELL", filter)
+ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER", filter)
+ChatFrame_AddMessageEventFilter("CHAT_MSG_BN_WHISPER", filter)
+ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER_INFORM", filter)
+ChatFrame_AddMessageEventFilter("CHAT_MSG_RAID", filter)
+ChatFrame_AddMessageEventFilter("CHAT_MSG_RAID_LEADER", filter)
+ChatFrame_AddMessageEventFilter("CHAT_MSG_PARTY", filter)
+ChatFrame_AddMessageEventFilter("CHAT_MSG_PARTY_LEADER", filter)
+ChatFrame_AddMessageEventFilter("CHAT_MSG_GUILD", filter)
+ChatFrame_AddMessageEventFilter("CHAT_MSG_BATTLEGROUND", filter)
+ChatFrame_AddMessageEventFilter("CHAT_MSG_LOOT", filter)
+
+
+-- 位置設置
 LibEvent:attachTrigger("ITEMLEVEL_FRAME_SHOWN", function(self, frame, parent, category)
     if (TinyInspectDB and not TinyInspectDB["EnableItemLevel"..category]) then
-        frame:Hide()
+        return frame:Hide()
+    end
+    local anchorPoint = TinyInspectDB and TinyInspectDB.ItemLevelAnchorPoint
+    if (frame.anchorPoint ~= anchorPoint) then
+        frame.anchorPoint = anchorPoint
+        frame.levelString:ClearAllPoints()
+        frame.levelString:SetPoint(anchorPoint or "TOP")
     end
 end)
 
@@ -320,13 +373,13 @@ LibEvent:attachTrigger("ITEMLEVEL_FRAME_CREATED", function(self, frame, parent)
             local id = parent:GetID()
             frame:ClearAllPoints()
             if (id <= 5 or id == 9 or id == 15 or id == 19) then
-                frame:SetPoint("LEFT", parent, "RIGHT", 1, -2)
+                frame:SetPoint("LEFT", parent, "RIGHT", 3, -1)
             elseif (id == 16) then
-                frame:SetPoint("RIGHT", parent, "LEFT", -1, 4)
+                frame:SetPoint("RIGHT", parent, "LEFT", -3, 1)
             elseif (id == 17) then
-                frame:SetPoint("LEFT", parent, "RIGHT", 1, 4)
+                frame:SetPoint("LEFT", parent, "RIGHT", 3, 1)
             else
-                frame:SetPoint("RIGHT", parent, "LEFT", -1, -2)
+                frame:SetPoint("RIGHT", parent, "LEFT", -3, -1)
             end
         end
     end

@@ -96,7 +96,7 @@ LibEvent:attachEvent("GROUP_ROSTER_UPDATE", function(self)
             timer     = 1,
             elasped   = 1,
             begined   = GetTime() + 2,
-            expired   = GetTime() + 20,
+            expired   = GetTime() + 30,
             onTimeout = function(self)
                 if (GetNumSubgroupMembers()==0) then return end
                 LibEvent:trigger("PARTY_INSPECT_TIMEOUT", members)

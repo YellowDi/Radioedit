@@ -11,38 +11,26 @@ local function FindLine(tooltip, keyword)
         line = _G[tooltip:GetName() .. "TextLeft" .. i]
         text = line:GetText() or ""
         if (string.find(text, keyword)) then
-            return line, i
+            return line, i, _G[tooltip:GetName() .. "TextRight" .. i]
         end
     end
 end
 
---GameTooltip顯示
 local LevelLabel = STAT_AVERAGE_ITEM_LEVEL .. ": "
-local SpecLabel  = TALENT .. SPECIALIZATION .. ": "
+
 local function AppendToGameTooltip(guid, ilevel, spec)
-    if (TinyInspectDB and not TinyInspectDB.EnableMouseSpecialization) then spec = false end
+    spec = spec or ""
+    if (TinyInspectDB and not TinyInspectDB.EnableMouseSpecialization) then spec = "" end
     local _, unit = GameTooltip:GetUnit()
     if (not unit or UnitGUID(unit) ~= guid) then return end
-    local ilvlLine = FindLine(GameTooltip, LevelLabel)
-    local specLine = FindLine(GameTooltip, SpecLabel)
-    local text
-    if (ilevel) then
-        text = format("%s|cffffffff%s|r", LevelLabel, ilevel)
-        if (ilvlLine) then
-            ilvlLine:SetText(text)
-        else
-            GameTooltip:AddLine(text)
-        end
-    end
-    if (spec) then
-        text = format("%s|cffffffff%s|r", SpecLabel, spec)
-        if (specLine) then
-            specLine:SetText(text)
-        else
-            GameTooltip:AddLine(text)
-        end
-    elseif (specLine) then
-        specLine:SetText(nil)
+    local ilvlLine, _, lineRight = FindLine(GameTooltip, LevelLabel)
+    local ilvlText = format("%s|cffffffff%s|r", LevelLabel, ilevel)
+    local specText = format("|cffb8b8b8%s|r", spec)
+    if (ilvlLine) then
+        ilvlLine:SetText(ilvlText)
+        lineRight:SetText(specText)
+    else
+        GameTooltip:AddDoubleLine(ilvlText, specText)
     end
     GameTooltip:Show()
 end
@@ -63,14 +51,14 @@ GameTooltip:HookScript("OnTooltipSetUnit", function(self)
     local inspecting = GetInspecting()
     if (inspecting) then
         if (inspecting.guid ~= guid) then
-            return AppendToGameTooltip(guid, "n/a", "n/a")
+            return AppendToGameTooltip(guid, "n/a")
         else
-            return AppendToGameTooltip(guid, "....", "....")
+            return AppendToGameTooltip(guid, "....")
         end
     end
     ClearInspectPlayer()
     NotifyInspect(unit)
-    AppendToGameTooltip(guid, "...", "...")
+    AppendToGameTooltip(guid, "...")
 end)
 
 --@see InspectCore.lua
