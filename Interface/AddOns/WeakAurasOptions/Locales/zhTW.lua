@@ -9,14 +9,10 @@ local L = WeakAuras.L
 	L["% of Progress"] = "進度%"
 	L["%i Matches"] = "%i符合"
 	L["1 Match"] = "1符合"
-	--Translation missing 
-	-- L["1. Text"] = ""
-	--Translation missing 
-	-- L["1. Text Settings"] = ""
-	--Translation missing 
-	-- L["2. Text"] = ""
-	--Translation missing 
-	-- L["2. Text Settings"] = ""
+	L["1. Text"] = "1. 文字"
+	L["1. Text Settings"] = "1. 文字設定"
+	L["2. Text"] = "2. 文字"
+	L["2. Text Settings"] = "2. 文字設定"
 	L["A 20x20 pixels icon"] = "20x20 大小的圖示"
 	L["A 32x32 pixels icon"] = "32x32 大小的圖示"
 	L["A 40x40 pixels icon"] = "40x40 大小的圖示"
@@ -24,9 +20,8 @@ local L = WeakAuras.L
 	L["A 64x64 pixels icon"] = "64x64 大小的圖示"
 	L["A group that dynamically controls the positioning of its children"] = "可動態控制子元素位置的群組"
 	L["Actions"] = "動作"
-	L["Activate when the given aura(s) |cFFFF0000can't|r be found"] = "指定的光環|cFFFF0000無法找到時|r激活"
-	--Translation missing 
-	-- L["Add a new display"] = ""
+	L["Activate when the given aura(s) |cFFFF0000can't|r be found"] = "指定的光環|cFFFF0000無法找到時|r啟動"
+	L["Add a new display"] = "新增特效"
 	--Translation missing 
 	-- L["Add to group %s"] = ""
 	L["Add to new Dynamic Group"] = "新增動態群組"

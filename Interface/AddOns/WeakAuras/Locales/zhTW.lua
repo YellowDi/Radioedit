@@ -34,15 +34,11 @@ L["<="] = "<="
 L["="] = "="
 L[">"] = ">"
 L[">="] = ">="
---Translation missing 
--- L["1. Text Color"] = ""
---Translation missing 
--- L["1. Text Size"] = ""
+L["1. Text Color"] = "1. 文字顏色"
+L["1. Text Size"] = "1. 文字大小"
 L["10 Man Raid"] = "10人團隊"
---Translation missing 
--- L["2. Text Color"] = ""
---Translation missing 
--- L["2. Text Size"] = ""
+L["2. Text Color"] = "2. 文字顏色"
+L["2. Text Size"] = "2. 文字大小"
 L["20 Man Raid"] = "20人團隊"
 L["25 Man Raid"] = "25人團隊"
 L["40 Man Raid"] = "40人團隊"

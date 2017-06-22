@@ -8,10 +8,8 @@ local L = WeakAuras.L
 	L[" (Channeling)"] = " (引導)"
 	L[" (Healing received increase)"] = "獲得治療量增加"
 	L["- Any"] = "- 任何"
-	--Translation missing 
-	-- L["- Death Knight 2P Bonus"] = ""
-	--Translation missing 
-	-- L["- Death Knight Unholy 4P Bonus"] = ""
+	L["- Death Knight 2P Bonus"] = "- 死亡騎士 2件套裝特效"
+	L["- Death Knight Unholy 4P Bonus"] = "- 穢邪死亡騎士 4件套裝特效"
 	L["- Deathknight 2P Bonus"] = "- 死亡騎士 2件套裝特效"
 	L["- Deathknight Unholy 4P Bonus"] = "- 穢邪死亡騎士 4件套裝特效"
 	L["- Holy Word: Chastise"] = "- 聖言術: 懲"
@@ -39,8 +37,7 @@ local L = WeakAuras.L
 	L["Back"] = "上一步"
 	L["Bleed"] = "流血"
 	L["BloodLust/Heroism"] = "嗜血/英勇"
-	--Translation missing 
-	-- L["Bloodlust/Heroism"] = ""
+	L["Bloodlust/Heroism"] = "嗜血/英勇"
 	L["buff"] = "種族特長"
 	L["Buff"] = "增益"
 	L["Buffs"] = "增益 BUFF"
