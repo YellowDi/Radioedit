@@ -1,5 +1,8 @@
 
 OmniCC4Config = {
+	["groups"] = {
+	},
+	["version"] = "7.2.1",
 	["groupSettings"] = {
 		["base"] = {
 			["styles"] = {
@@ -36,7 +39,4 @@ OmniCC4Config = {
 			["fontFace"] = "Fonts\\ARKai_C.TTF",
 		},
 	},
-	["groups"] = {
-	},
-	["version"] = "7.2.0",
 }

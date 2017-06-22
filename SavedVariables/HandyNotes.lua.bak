@@ -13,6 +13,7 @@ HandyNotesDB = {
 		["Radioedit - 格瑞姆巴托"] = {
 		},
 		["Radioedit - 主宰之剑"] = {
+			["enabled"] = false,
 		},
 		["Zeoi - 主宰之剑"] = {
 		},

@@ -113,6 +113,9 @@ PawnCommon = {
 		["\"MrRobot\":MAGE2"] = {
 			["IconTexturePath"] = 135810,
 			["PerCharacterOptions"] = {
+				["Radioedit-主宰之剑"] = {
+					["Visible"] = true,
+				},
 			},
 			["Color"] = "3fc7eb",
 			["ClassID"] = 8,
@@ -497,9 +500,6 @@ PawnCommon = {
 		["\"MrRobot\":MAGE1"] = {
 			["IconTexturePath"] = 135932,
 			["PerCharacterOptions"] = {
-				["Radioedit-主宰之剑"] = {
-					["Visible"] = true,
-				},
 			},
 			["Color"] = "3fc7eb",
 			["ClassID"] = 8,

@@ -7,7 +7,7 @@ PawnCommon = {
 	["ShowRelicUpgrades"] = true,
 	["ShowValuesForUpgradesOnly"] = true,
 	["Digits"] = 1,
-	["LastVersion"] = 2.0206,
+	["LastVersion"] = 2.0208,
 	["Debug"] = false,
 	["ColorTooltipBorder"] = true,
 	["ShowTooltipIcons"] = true,
@@ -111,6 +111,9 @@ PawnCommon = {
 		["\"MrRobot\":MAGE2"] = {
 			["IconTexturePath"] = 135810,
 			["PerCharacterOptions"] = {
+				["Radioedit-主宰之剑"] = {
+					["Visible"] = true,
+				},
 			},
 			["Color"] = "3fc7eb",
 			["LocalizedName"] = "法师: 火焰",
@@ -369,9 +372,6 @@ PawnCommon = {
 		["\"MrRobot\":MAGE1"] = {
 			["IconTexturePath"] = 135932,
 			["PerCharacterOptions"] = {
-				["Radioedit-主宰之剑"] = {
-					["Visible"] = true,
-				},
 			},
 			["Color"] = "3fc7eb",
 			["LocalizedName"] = "法师: 奥术",

@@ -3,14 +3,14 @@ DBM_AllSavedOptions = {
 	["Default"] = {
 		["HUDTextureOverride"] = false,
 		["DontShowFarWarnings"] = true,
-		["ChosenVoicePack"] = "Jingjing",
+		["ChosenVoicePack"] = "Yike",
 		["DontShowHudMap2"] = false,
 		["AlwaysPlayVoice"] = false,
 		["ShowSWarningsInChat"] = true,
 		["RangeFrameRadarY"] = 3.64731968147680e-005,
 		["HUDAlpha1"] = 0.5,
 		["StatusEnabled"] = true,
-		["InfoFrameX"] = -479.714294433594,
+		["InfoFrameX"] = 430.345703125,
 		["DontShowNameplateIcons"] = false,
 		["RangeFrameX"] = 241.666351318359,
 		["AlwaysShowSpeedKillTimer"] = true,
@@ -21,7 +21,7 @@ DBM_AllSavedOptions = {
 		["ArrowPoint"] = "TOP",
 		["SWarnNameInNote"] = true,
 		["FakeBWVersion"] = false,
-		["InfoFramePoint"] = "RIGHT",
+		["InfoFramePoint"] = "CENTER",
 		["CRT_Enabled"] = false,
 		["SpecialWarningFlashCol2"] = {
 			1, -- [1]
@@ -60,7 +60,7 @@ DBM_AllSavedOptions = {
 			0, -- [3]
 		},
 		["WarningFontStyle"] = "None",
-		["InfoFrameY"] = 110.666526794434,
+		["InfoFrameY"] = -62.3334465026856,
 		["ChatFrame"] = "DEFAULT_CHAT_FRAME",
 		["WarningIconRight"] = true,
 		["UseSoundChannel"] = "Master",
@@ -111,7 +111,7 @@ DBM_AllSavedOptions = {
 		["SpecialWarningSound2"] = "Sound\\Creature\\AlgalonTheObserver\\UR_Algalon_BHole01.ogg",
 		["HUDSizeOverride"] = false,
 		["DontRestoreIcons"] = false,
-		["CountdownVoice2"] = "VP:Jingjing",
+		["CountdownVoice2"] = "VP:Yike",
 		["AutoAcceptGuildInvite"] = false,
 		["SpecialWarningFlashDura5"] = 1,
 		["ArrowPosX"] = 0,
@@ -136,23 +136,23 @@ DBM_AllSavedOptions = {
 		["HUDSize4"] = 5,
 		["WarningColors"] = {
 			{
-				["b"] = 0.94,
+				["b"] = 0.941176470588235,
 				["g"] = 0.8,
-				["r"] = 0.41,
+				["r"] = 0.411764705882353,
 			}, -- [1]
 			{
 				["b"] = 0,
-				["g"] = 0.95,
-				["r"] = 0.95,
+				["g"] = 0.949019607843137,
+				["r"] = 0.949019607843137,
 			}, -- [2]
 			{
 				["b"] = 0,
-				["g"] = 0.5,
+				["g"] = 0.501960784313726,
 				["r"] = 1,
 			}, -- [3]
 			{
-				["b"] = 0.1,
-				["g"] = 0.1,
+				["b"] = 0.101960784313725,
+				["g"] = 0.101960784313725,
 				["r"] = 1,
 			}, -- [4]
 		},
@@ -229,7 +229,7 @@ DBM_AllSavedOptions = {
 		["ShowDefeatMessage"] = true,
 		["HUDAlphaOverride"] = false,
 		["DontShowRangeFrame"] = false,
-		["CountdownVoice"] = "VP:Jingjing",
+		["CountdownVoice"] = "VP:Yike",
 		["InfoFrameShowSelf"] = false,
 		["SpecialWarningFont"] = "Fonts\\ARKai_T.ttf",
 		["HUDColor2"] = {
@@ -253,7 +253,7 @@ DBM_AllSavedOptions = {
 		["SpecialWarningFlashRepeatAmount"] = 2,
 		["AutoAcceptFriendInvite"] = false,
 		["WarningIconChat"] = true,
-		["CountdownVoice3v2"] = "VP:Jingjing",
+		["CountdownVoice3v2"] = "VP:Yike",
 		["HideGuildChallengeUpdates"] = true,
 		["DontShowCTCount"] = false,
 		["DontSendYells"] = false,

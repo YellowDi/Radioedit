@@ -15,19 +15,10 @@ BigTipDB = {
 		},
 	},
 	["general"] = {
-		["alwaysShowIdInfo"] = false,
-		["background"] = {
-			0, -- [1]
-			0, -- [2]
-			0, -- [3]
-			0.8, -- [4]
-		},
 		["statusbarFontSize"] = 4,
 		["scale"] = 1,
-		["statusbarOffsetY"] = 0,
 		["mask"] = true,
 		["statusbarText"] = true,
-		["statusbarHeight"] = 12,
 		["borderSize"] = 1,
 		["borderColor"] = {
 			0.6, -- [1]
@@ -42,9 +33,21 @@ BigTipDB = {
 			["p"] = "BOTTOMRIGHT",
 			["returnInCombat"] = false,
 		},
-		["statusbarColor"] = "auto",
-		["borderCorner"] = "default",
+		["background"] = {
+			0, -- [1]
+			0, -- [2]
+			0, -- [3]
+			0.8, -- [4]
+		},
 		["statusbarPosition"] = "bottom",
+		["alwaysShowIdInfo"] = false,
+		["statusbarOffsetY"] = 0,
+		["statusbarHeight"] = 12,
+		["bgfile"] = "gradual",
+		["borderCorner"] = "default",
+		["statusbarColor"] = "auto",
+		["statusbarOffsetX"] = 0,
+		["skinMoreFrames"] = true,
 	},
 	["version"] = 2,
 	["item"] = {

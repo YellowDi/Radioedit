@@ -4,6 +4,9 @@ NewOpenablesProfile = {
 		["Radioedit - 格瑞姆巴托"] = {
 			["itemID"] = 147581,
 		},
+		["Radioedit - 主宰之剑"] = {
+			["itemID"] = 138883,
+		},
 		["Zeoi - 主宰之剑"] = {
 			["itemID"] = 146125,
 		},
@@ -32,7 +35,7 @@ NewOpenablesProfile = {
 				"UIParent", -- [2]
 				"TOPLEFT", -- [3]
 			},
-			["version"] = "|cFFFFFFFF07.30 02.06.2017 使用 |cFFFF00FF/nop|cFFFFFFFF",
+			["version"] = "|cFFFFFFFF07.36 21.06.2017 使用 |cFFFF00FF/nop|cFFFFFFFF",
 		},
 	},
 }
