@@ -73,12 +73,6 @@ LibEvent:attachEvent("VARIABLES_LOADED", function()
     end)
     --Variable
     addon.db = addon:MergeVariable(addon.db, BigTipDB)
-    if (not addon.db.unit.player.elements.moveSpeed) then --v2.0.8 added new element: moveSpeed
-        addon.db.unit.player.elements.moveSpeed = { enable = false, color = "ffffff",  wildcard = "%d%%", filter = "none" }
-        addon.db.unit.npc.elements.moveSpeed = { enable = false, color = "ffffff",  wildcard = "%d%%", filter = "none" }
-        tinsert(addon.db.unit.player.elements[1], 1, "moveSpeed")
-        tinsert(addon.db.unit.npc.elements[1], 1, "moveSpeed")
-    end
     LibEvent:trigger("tooltip:variables:loaded")
     --Init
     LibEvent:trigger("tooltip.statusbar.height", addon.db.general.statusbarHeight)

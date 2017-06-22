@@ -52,6 +52,8 @@ addon.icons = {
     Neutral   = "|TInterface\\Timer\\Panda-Logo:14|t",
     pvp       = "|TInterface\\TargetingFrame\\UI-PVP-FFA:14:14:0:0:64:64:10:36:0:38|t",
     class     = "|TInterface\\TargetingFrame\\UI-Classes-Circles:14:14:0:0:256:256:%d:%d:%d:%d|t",
+    battlepet = "|TInterface\\Timer\\Panda-Logo:15|t",
+    pettype   = "|TInterface\\TargetingFrame\\PetBadge-%s:14|t",
     questboss = "|TInterface\\TargetingFrame\\PortraitQuestBadge:0|t",
     TANK      = "|TInterface\\LFGFrame\\UI-LFG-ICON-PORTRAITROLES:0:0:0:0:64:64:0:19:22:41|t",
     HEALER    = "|TInterface\\LFGFrame\\UI-LFG-ICON-PORTRAITROLES:0:0:0:0:64:64:20:39:1:20|t",
@@ -187,6 +189,14 @@ function addon:GetClassIcon(class)
     return format(self.icons.class, x1*256, x2*256, y1*256, y2*256)
 end
 
+-- 戰寵
+function addon:GetBattlePet(unit)
+    if (UnitIsWildBattlePet(unit) or UnitIsBattlePetCompanion(unit)) then
+        local petType = UnitBattlePetType(unit)
+        return self.icons.battlepet, format(self.icons.pettype, PET_TYPE_SUFFIX[petType] or "")
+    end
+end
+
 -- 移動速度
 function addon:GetUnitSpeed(unit)
     local _, speed, flightSpeed, swimSpeed = GetUnitSpeed(unit)
@@ -251,6 +261,7 @@ function addon:GetUnitInfo(unit)
     t.classIcon    = self:GetClassIcon(class)
     t.roleIcon     = self:GetRoleIcon(unit)
     t.questIcon    = self:GetQuestBossIcon(unit)
+    --t.battlepetIcon = self:GetBattlePet(unit)
     t.factionName  = factionName
     t.role         = role ~= "NONE" and role
     t.name         = name

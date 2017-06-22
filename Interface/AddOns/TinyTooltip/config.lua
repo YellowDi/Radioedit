@@ -7,7 +7,7 @@ addon.db = {
         scale             = 1,                      --縮放
         mask              = true,                   --頂部遮罩層
         bgfile            = "rock",                 --背景
-        background        = {0, 0, 0, 0.6},         --背景顔色和透明度
+        background        = {0, 0, 0, 0.7},         --背景顔色和透明度
         borderSize        = 1,                      --邊框大小（直角邊框才生效）
         borderCorner      = "default",              --邊框類型 default|angular:直角邊框
         borderColor       = {0.6, 0.6, 0.6, 0.8},   --邊框顔色和透明度
@@ -15,17 +15,17 @@ addon.db = {
         statusbarPosition = "bottom",               --HP位置 default|bottom|top
         statusbarOffsetX  = 0,                      --HP X偏移 0:自動
         statusbarOffsetY  = 0,                      --HP Y偏移 0:自動
-        statusbarFontSize = 11,                     --HP文字大小
+        statusbarFontSize = 10,                     --HP文字大小
         statusbarText     = false,                  --HP文字
         statusbarColor    = "auto",                 --HP顔色 default|auto|smooth
         anchor            = { position = "cursorRight", returnInCombat = false, returnOnUnitFrame = false, cp = "BOTTOM", p = "BOTTOMRIGHT", }, --鼠標位置 default|cursor|static|cursorRight
-        alwaysShowIdInfo  = false,
+        alwaysShowIdInfo  = true,
         skinMoreFrames    = true,
     },
     unit = {
         player = {
             coloredBorder = "class",                --玩家邊框顔色 default|class|level|reaction|itemQuality|selection|faction|HEX
-            background = { colorfunc = "default", alpha = 0.5, },
+            background = { colorfunc = "default", alpha = 0.9, },
             anchor = { position = "inherit", returnInCombat = true, returnOnUnitFrame = false, cp = "BOTTOM", p = "BOTTOMRIGHT", },
             showTarget = true,                      --顯示目標
             showTargetBy = true,                    --顯示被關注
@@ -44,8 +44,8 @@ addon.db = {
                 statusDND   = { enable = true, color = "ffd200", wildcard = "(%s)", filter = "none" },
                 statusDC    = { enable = true, color = "999999", wildcard = "(%s)", filter = "none" },
                 guildName   = { enable = true, color = "ff00ff", wildcard = "<%s>", filter = "none" },
-                guildIndex  = { enable = true, color = "cc88ff", wildcard = "-%s-", filter = "none" },
-                guildRank   = { enable = true, color = "cc88ff", wildcard = "%s",   filter = "none" },
+                guildIndex  = { enable = true, color = "cc88ff", wildcard = "(%s", filter = "none" },
+                guildRank   = { enable = true, color = "cc88ff", wildcard = "%s)",   filter = "none" },
                 guildRealm  = { enable = true, color = "00cccc", wildcard = "%s",   filter = "none" },
                 levelValue  = { enable = true, color = "level",   wildcard = "%s",  filter = "none" }, 
                 factionName = { enable = true, color = "faction", wildcard = "%s",  filter = "none" }, 
@@ -62,7 +62,7 @@ addon.db = {
         },
         npc = {
             coloredBorder = "reaction",
-            background = { colorfunc = "default", alpha = 0.5, },
+            background = { colorfunc = "default", alpha = 0.9, },
             showTarget = true,
             showTargetBy = true,
             grayForDead = false,
@@ -91,6 +91,7 @@ addon.db = {
     spell = {
         borderColor = {0.6, 0.6, 0.6, 0.8},
         background = {0, 0, 0, 0.8},
+        showIcon = true,
     },
     quest = {
         coloredQuestBorder = true,  --任務按等差染色

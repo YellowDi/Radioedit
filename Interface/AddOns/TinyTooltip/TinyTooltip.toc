@@ -10,15 +10,12 @@ core.lua
 config.lua
 general.lua
 anchor.lua
-
 unit.lua
 target.lua
 model.lua
-
 item.lua
 spell.lua
 quest.lua
-
 linkid.lua
 skinframes.lua
 

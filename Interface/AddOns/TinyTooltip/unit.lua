@@ -67,7 +67,7 @@ end
 
 local function NonPlayerCharacter(tip, unit, config, raw)
     local levelLine = addon:FindLine(tip, "^"..LEVEL)
-    if (levelLine) then
+    if (levelLine or tip:NumLines() > 1) then
         local data = addon:GetUnitData(unit, config.elements, raw)
         local titleLine = addon:GetNpcTitle(tip)
         local increase = 0

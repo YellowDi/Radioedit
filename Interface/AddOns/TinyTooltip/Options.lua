@@ -105,7 +105,9 @@ function widgets:slider(parent, config)
     frame:SetValue(GetVariable(config.keystring))
     frame:SetScript("OnValueChanged", function(self, value)
         local step = self:GetValueStep() or 1
-        if (step < 1) then
+        if (step < 0.1) then
+            value = format("%.2f", value)
+        elseif (step < 1) then
             value = format("%.1f", value)
         else
             value = floor(value+0.2)
@@ -157,10 +159,10 @@ function widgets:colorpick(parent, config)
     frame:SetScript("OnClick", function(self)
         local r, g, b, a = self:GetNormalTexture():GetVertexColor()
         local info = {
-            r = r, g = g, b = b, opacity = a, hasOpacity = self.hasopacity,
+            r = r, g = g, b = b, opacity = 1-a, hasOpacity = self.hasopacity,
             opacityFunc = self.hasopacity and function()
                 local r, g, b = ColorPickerFrame:GetColorRGB()
-                local a = format("%.2f", OpacitySliderFrame:GetValue())
+                local a = 1-format("%.2f", OpacitySliderFrame:GetValue())
                 local aa = select(4, ColorPickerFrame.tipframe:GetNormalTexture():GetVertexColor())
                 if (a ~= aa) then
                     ColorPickerFrame.tipframe:GetNormalTexture():SetVertexColor(r,g,b,a)
@@ -169,7 +171,7 @@ function widgets:colorpick(parent, config)
             end,
             swatchFunc = function()
                 local r, g, b = ColorPickerFrame:GetColorRGB()
-                local a = format("%.2f", OpacitySliderFrame:GetValue())
+                local a = 1-format("%.2f", OpacitySliderFrame:GetValue())
                 ColorPickerFrame.tipframe:GetNormalTexture():SetVertexColor(r,g,b,a)
                 if (ColorPickerFrame.tipframe.colortype == "hex") then
                     SetVariable(ColorPickerFrame.tipframe.keystring, addon:GetHexColor(r,g,b))
@@ -183,6 +185,7 @@ function widgets:colorpick(parent, config)
             end,
         }
         ColorPickerFrame.tipframe = self
+        if (not self.hasopacity) then OpacitySliderFrame:SetValue(info.opacity) end
         OpenColorPicker(info)
     end)
     return frame
@@ -452,7 +455,7 @@ local options = {
         { keystring = "unit.player.showModel",            type = "checkbox" },
         { keystring = "unit.player.grayForDead",          type = "checkbox" },
         { keystring = "unit.player.coloredBorder",        type = "dropdown", dropdata = widgets.colorDropdata },
-        { keystring = "unit.player.background",           type = "dropdownslider", dropdata = widgets.colorDropdata, min = 0, max = 1, step = 0.1 },
+        { keystring = "unit.player.background",           type = "dropdownslider", dropdata = widgets.colorDropdata, min = 0, max = 1, step = 0.01 },
         { keystring = "unit.player.anchor",               type = "anchor", dropdata = {"inherit", "default","cursorRight","cursor","static"} },
         { keystring = "unit.player.elements.raidIcon",    type = "element", filter = true, },
         { keystring = "unit.player.elements.roleIcon",    type = "element", filter = true, },
@@ -483,7 +486,7 @@ local options = {
         { keystring = "unit.npc.showTargetBy",          type = "checkbox" },
         { keystring = "unit.npc.grayForDead",           type = "checkbox" },
         { keystring = "unit.npc.coloredBorder",         type = "dropdown", dropdata = widgets.colorDropdata },
-        { keystring = "unit.npc.background",            type = "dropdownslider", dropdata = widgets.colorDropdata, min = 0, max = 1, step = 0.1 },
+        { keystring = "unit.npc.background",            type = "dropdownslider", dropdata = widgets.colorDropdata, min = 0, max = 1, step = 0.01 },
         { keystring = "unit.npc.anchor",                type = "anchor", dropdata = {"inherit","default","cursorRight","cursor","static"} },
         { keystring = "unit.npc.elements.raidIcon",     type = "element", filter = true, },
         { keystring = "unit.npc.elements.classIcon",    type = "element", filter = true, },
@@ -508,8 +511,9 @@ local options = {
         { keystring = "general.statusbarColor",     type = "dropdown", dropdata = {"default","auto","smooth"} },
     },
     spell = {
-        { keystring = "spell.background",               type = "colorpick", hasopacity = true },
-        { keystring = "spell.borderColor",              type = "colorpick", hasopacity = true },
+        { keystring = "spell.showIcon",             type = "checkbox" },
+        { keystring = "spell.background",           type = "colorpick", hasopacity = true },
+        { keystring = "spell.borderColor",          type = "colorpick", hasopacity = true },
     },
 }
 

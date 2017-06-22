@@ -83,6 +83,7 @@ addon.L = {
     
     ["spell.background"]                    = "背景顔色",
     ["spell.borderColor"]                   = "边框颜色",
+    ["spell.showIcon"]                      = "法术图标",
     
     ["dropdown.inherit"]        = "|cffffee00继承全局|r",
     ["dropdown.default"]        = "|cffaaaaaa系统默认|r",
