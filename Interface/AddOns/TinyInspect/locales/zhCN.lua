@@ -19,6 +19,7 @@ ns.L = {
     EnableRaidItemLevel         = "开启团队装等",
     EnableMouseItemLevel        = "开启鼠标装等",
     EnableMouseSpecialization   = "显示鼠标天赋",
+    EnableMouseWeaponLevel      = "显示武器等级",
     Bag                         = "背包",
     Bank                        = "银行",
     Merchant                    = "商人",

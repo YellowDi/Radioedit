@@ -19,6 +19,7 @@ ns.L = {
     EnableRaidItemLevel         = "團隊成員裝等",
     EnableMouseItemLevel        = "鼠標目標裝等",
     EnableMouseSpecialization   = "顯示鼠標天賦",
+    EnableMouseWeaponLevel      = "顯示武器等級",
     Bag                         = "背包",
     Bank                        = "銀行",
     Merchant                    = "商人",

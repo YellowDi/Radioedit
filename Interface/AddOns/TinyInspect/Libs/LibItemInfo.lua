@@ -118,6 +118,13 @@ function lib:GetItemInfo(link, stats)
     return 0, tonumber(level) or 0, GetItemInfo(link)
 end
 
+--獲取UNIT裝備等級(Bizzard API 傳家寶等物品不准)
+function lib:GetDetailedUnitItemLevel(unit, index)
+    if (not UnitExists(unit)) then return 0 end
+    local link = GetInventoryItemLink(unit, index)
+    return GetDetailedItemLevelInfo(link or ""), link
+end
+
 --獲取UNIT物品實際等級信息
 function lib:GetUnitItemInfo(unit, index, stats)
     if (not UnitExists(unit)) then return 1, -1 end
@@ -169,5 +176,5 @@ function lib:GetUnitItemLevel(unit, stats)
     else
         total = total + mlevel + olevel
     end
-    return counts, total/max(16-counts,1), total
+    return counts, total/max(16-counts,1), total, max(mlevel,olevel), (mquality == 6 or oquality == 6)
 end

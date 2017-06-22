@@ -42,6 +42,7 @@ local DefaultDB = {
     EnableRaidItemLevel = false,          --團隊裝等
     EnableMouseItemLevel = true,          --鼠標裝等
     EnableMouseSpecialization = true,     --鼠標天賦
+    EnableMouseWeaponLevel = true,        --鼠標物品等級
     PaperDollItemLevelOutsideString = false, --PaperDoll文字外邊顯示(沒有在配置面板)
     ItemLevelAnchorPoint = "TOP",         --裝等位置
 }
@@ -84,7 +85,8 @@ local options = {
     },
     { key = "EnableMouseItemLevel",
       child = {
-        { key = "EnableMouseSpecialization" }
+        { key = "EnableMouseSpecialization" },
+        { key = "EnableMouseWeaponLevel" },
       }
     },
 }
@@ -199,7 +201,7 @@ end
 
 local function CreateCheckbox(list, parent, anchor, offsetx, offsety)
     local checkbox, subbox
-    local stepx, stepy = 20, 32
+    local stepx, stepy = 20, 31
     if (not list) then return offsety end
     for i, v in ipairs(list) do
         checkbox = CreateFrame("CheckButton", nil, parent, "InterfaceOptionsCheckButtonTemplate")

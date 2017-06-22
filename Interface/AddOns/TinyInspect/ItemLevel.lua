@@ -4,6 +4,7 @@
 -------------------------------------
 
 local LibEvent = LibStub:GetLibrary("LibEvent.7000")
+local LibItemGem = LibStub:GetLibrary("LibItemGem.7000")
 local LibSchedule = LibStub:GetLibrary("LibSchedule.7000")
 local LibItemInfo = LibStub:GetLibrary("LibItemInfo.7000")
 
@@ -315,7 +316,13 @@ local function ChatItemLevel(Hyperlink)
     local link = string.match(Hyperlink, "|H(.-)|h")
     local unknown, level, name = LibItemInfo:GetItemInfo(link)
     if (unknown == 0 and level > 0) then
-        Hyperlink = Hyperlink:gsub("|h%[(.-)%]|h", "|h["..level..":"..name.."]|h")
+        local num, info = LibItemGem:GetItemGemInfo(link)
+        local gem = ""
+        for i = 1, num do
+            gem = gem .. "|TInterface\\ItemSocketingFrame\\UI-EmptySocket-Prismatic:0|t"
+        end
+        if (gem ~= "") then gem = gem.." " end
+        Hyperlink = Hyperlink:gsub("|h%[(.-)%]|h", "|h["..level..":"..name.."]|h"..gem)
     end
     return Hyperlink
 end
