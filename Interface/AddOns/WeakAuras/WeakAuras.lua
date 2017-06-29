@@ -372,7 +372,7 @@ function WeakAuras.ActivateAuraEnvironment(id, cloneId, state)
     current_aura_env = aura_env_stack[#aura_env_stack] or nil;
   else
     local data = db.displays[id];
-    if data.init_completed then
+    if data.init_started then
       -- Point the current environment to the correct table
       aura_environments[id] = aura_environments[id] or {};
       current_aura_env = aura_environments[id];
@@ -390,6 +390,7 @@ function WeakAuras.ActivateAuraEnvironment(id, cloneId, state)
       tinsert(aura_env_stack, current_aura_env);
       -- Run the init function if supplied
       local actions = data.actions.init;
+      data.init_started = 1;
       if(actions and actions.do_custom and actions.custom) then
         local func = WeakAuras.customActionsFunctions[id]["init"];
         if func then
@@ -397,7 +398,6 @@ function WeakAuras.ActivateAuraEnvironment(id, cloneId, state)
           func();
         end
       end
-      data.init_completed = 1;
     end
     current_aura_env.id = id;
   end
@@ -782,8 +782,10 @@ local function CreateActivateCondition(ret, id, condition, conditionNumber, prop
                 and WeakAuras.customConditionsFunctions[id][conditionNumber].changes[changeNum]) then
               pathToCustomFunction = string.format("WeakAuras.customConditionsFunctions[%q][%s].changes[%s]", id, conditionNumber, changeNum);
             end
-            ret = ret .. "     region:" .. propertyData.action .. "(" .. formatValueForAssignment(propertyData.type, change.value, pathToCustomFunction) .. ")" .. "\n";
-            if (debug) then ret = ret .. "     print('# " .. propertyData.action .. "(" .. formatValueForAssignment(propertyData.type, change.value, pathToCustomFunction) .. "')\n"; end
+            ret = ret .. "     if (not skipActions) then\n";
+            ret = ret .. "       region:" .. propertyData.action .. "(" .. formatValueForAssignment(propertyData.type, change.value, pathToCustomFunction) .. ")" .. "\n";
+            if (debug) then ret = ret .. "       print('# " .. propertyData.action .. "(" .. formatValueForAssignment(propertyData.type, change.value, pathToCustomFunction) .. "')\n"; end
+            ret = ret .. "     end\n"
           end
         end
       end
@@ -889,7 +891,7 @@ function WeakAuras.ConstructConditionFunction(data)
   local ret = "";
   ret = ret .. "local newActiveConditions = {};\n"
   ret = ret .. "local propertyChanges = {}\n;"
-  ret = ret .. "return function(region)\n";
+  ret = ret .. "return function(region, skipActions)\n";
   if (debug) then ret = ret .. "  print('check conditions for:', region.id, region.cloneId)\n"; end
   ret = ret .. "  local id = region.id\n";
   ret = ret .. "  local cloneId = region.cloneId or ''\n";
@@ -1196,13 +1198,13 @@ function WeakAuras.LoadEncounterInitScripts(id)
   end
   if (id) then
     local data = db.displays[id]
-    if (data and data.load.use_encounterid and not data.init_completed and data.actions.init and data.actions.init.do_custom) then
+    if (data and data.load.use_encounterid and not data.init_started and data.actions.init and data.actions.init.do_custom) then
       WeakAuras.ActivateAuraEnvironment(id)
       WeakAuras.ActivateAuraEnvironment(nil)
     end
   else
     for id, data in pairs(db.displays) do
-      if (data.load.use_encounterid and not data.init_completed and data.actions.init and data.actions.init.do_custom) then
+      if (data.load.use_encounterid and not data.init_started and data.actions.init and data.actions.init.do_custom) then
         WeakAuras.ActivateAuraEnvironment(id)
         WeakAuras.ActivateAuraEnvironment(nil)
       end
@@ -2285,7 +2287,7 @@ function WeakAuras.pAdd(data)
       end
     end
 
-    data.init_completed = nil;
+    data.init_started = nil;
     data.load = data.load or {};
     data.actions = data.actions or {};
     data.actions.init = data.actions.init or {};
@@ -3717,15 +3719,15 @@ local function ApplyStatesToRegions(id, triggernum, states)
   -- Show new clones
   local visibleRegion = false;
   for cloneId, state in pairs(states) do
+    local region = WeakAuras.GetRegion(id, cloneId);
     if (state.show) then
       visibleRegion = true;
-      local region = WeakAuras.GetRegion(id, cloneId);
       if (not region.toShow or state.changed or region.state ~= state) then
         ApplyStateToRegion(id, region, state);
       end
-      if (checkConditions[id]) then -- Even if this state has not changed
-        checkConditions[id](region);
-      end
+    end
+    if (checkConditions[id]) then -- Even if this state has not changed
+      checkConditions[id](region);
     end
   end
 
@@ -3814,9 +3816,16 @@ function WeakAuras.UpdatedTriggerState(id)
       if (not activeTriggerState[cloneId] or not activeTriggerState[cloneId].show) then
         clone:Collapse();
       end
+    end
+    -- Show new states
+    ApplyStatesToRegions(id, newActiveTrigger, activeTriggerState);
   end
-  -- Show new states
-  ApplyStatesToRegions(id, newActiveTrigger, activeTriggerState);
+
+  for cloneId, state in pairs(activeTriggerState) do
+    local region = WeakAuras.GetRegion(id, cloneId);
+    if (checkConditions[id]) then
+      checkConditions[id](region, not state.show);
+    end
   end
 
 
