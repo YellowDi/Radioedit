@@ -914,10 +914,10 @@ end
 -- castbar #####################################################################
 do
     local function SpellIconSetWidth(f)
-        -- set spell icon width (based on height)
-        -- this seems to convince it to calculate the actual height
-        f.SpellIcon.bg:SetHeight(1)
-        f.SpellIcon.bg:SetWidth(floor(f.SpellIcon.bg:GetHeight()*1.25))
+        -- set spell icon width (as it's based on height)
+        if f.SpellIcon.bg:IsShown() then
+            f.SpellIcon.bg:SetWidth(ceil(((f.CastBar.bg:GetHeight() + f.bg:GetHeight() + 1)*1.25)+.1))
+        end
     end
     local function ShowCastBar(f)
         if not f.elements.CastBar then
@@ -1496,8 +1496,8 @@ do
             f:UpdateTargetArrows()
         end
 
-        if f.NameOnlyGlow and addon.ClassPowersFrame then
-            -- force-update classpowers position
+        if f.NameOnlyGlow and addon.ClassPowersFrame and plugin_classpowers.enabled then
+            -- force-update classpowers position (to run our post)
             plugin_classpowers:TargetUpdate()
         end
     end
