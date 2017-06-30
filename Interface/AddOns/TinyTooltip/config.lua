@@ -21,6 +21,12 @@ addon.db = {
         anchor            = { position = "cursorRight", returnInCombat = false, returnOnUnitFrame = false, cp = "BOTTOM", p = "BOTTOMRIGHT", }, --鼠標位置 default|cursor|static|cursorRight
         alwaysShowIdInfo  = true,
         skinMoreFrames    = true,
+        headerFont        = "default",
+        headerFontSize    = "default",
+        headerFontFlag    = "default",
+        bodyFont          = "default",
+        bodyFontSize      = "default",
+        bodyFontFlag      = "default",
     },
     unit = {
         player = {
@@ -87,6 +93,7 @@ addon.db = {
     },
     item = {
         coloredItemBorder = true,  --邊框按品質染色
+        showItemIcon = false,      --物品圖標
     },
     spell = {
         borderColor = {0.6, 0.6, 0.6, 0.8},

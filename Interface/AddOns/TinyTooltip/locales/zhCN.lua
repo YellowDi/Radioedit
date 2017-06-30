@@ -25,6 +25,7 @@ addon.L = {
     ["general.skinMoreFrames"]              = "样式应用于更多框架 |cffcccc33(重载生效)|r",
     
     ["item.coloredItemBorder"]              = "物品边框染色",
+    ["item.showItemIcon"]                   = "显示物品图标",
     ["quest.coloredQuestBorder"]            = "任务边框染色",
     
     ["unit.player.anchor.position"]         = "框架锚点",
@@ -124,6 +125,13 @@ addon.L = {
     ["dropdown.not inarena"]        = "|cffff3333非|r竞技场",
     ["dropdown.not ininstance"]     = "|cffff3333非|r副本时",
     ["dropdown.not samerealm"]      = "|cffff3333非|r同公会服",
+    
+    ["headerFont"]        = "标头字体",
+    ["headerFontSize"]    = "标头字体大小",
+    ["headerFontFlag"]    = "标头字体描边",
+    ["bodyFont"]          = "内容字体",
+    ["bodyFontSize"]      = "内容字体大小",
+    ["bodyFontFlag"]      = "内容字体描边",
     
     ["Anchor"]   = "锚点器",
     

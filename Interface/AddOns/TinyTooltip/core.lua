@@ -22,15 +22,10 @@ local BASE_MOVEMENT_SPEED = BASE_MOVEMENT_SPEED or 7
 
 local addon = TinyTooltip
 
--- language
-if (not addon.L) then
-    addon.L = {} setmetatable(addon.L, {__index = function(_, k) return k end})
-end
-
--- global vars
-if (not addon.G) then
-    addon.G = {} setmetatable(addon.G, {__index = function(_, k) return _G[k] end})
-end
+-- language & global vars
+addon.L, addon.G = {}, {}
+setmetatable(addon.L, {__index = function(_, k) return k end})
+setmetatable(addon.G, {__index = function(_, k) return _G[k] end})
 
 -- tooltips
 addon.tooltips = {
@@ -227,9 +222,9 @@ end
 -- 性別
 function addon:GetGender(gender)
     if (gender == 2) then
-        return MALE
+        return MALE, "male"
     elseif (gender == 3) then
-        return FEMALE
+        return FEMALE, "female"
     end
 end
 
@@ -549,6 +544,48 @@ LibEvent:attachTrigger("tooltip.style.border.color", function(self, frame, r, g,
     if (rr ~= r or gg ~= g or bb ~= b or aa ~= a) then
         frame.style:SetBackdropBorderColor(r or rr, g or gg, b or bb, a or aa)
     end
+end)
+
+local defaultHeaderFont, defaultHeaderSize, defaultHeaderFlag = GameTooltipHeaderText:GetFont()
+LibEvent:attachTrigger("tooltip.style.font.header", function(self, frame, fontObject, fontSize, fontFlag)
+    local font, size, flag = GameTooltipHeaderText:GetFont()
+    if (fontObject == "default") then
+        font = defaultHeaderFont
+    elseif (fontObject and _G[fontObject]) then
+        font = _G[fontObject]:GetFont()
+    end
+    if (fontSize == "default") then
+        size = defaultHeaderSize
+    elseif (type(fontSize) == "number") then
+        size = fontSize
+    end
+    if (fontFlag == "default") then
+        flag = defaultHeaderFlag
+    else
+        flag = fontFlag or flag
+    end
+    GameTooltipHeaderText:SetFont(font, size, flag)
+end)
+
+local defaultBodyFont, defaultBodySize, defaultBodyFlag = GameTooltipText:GetFont()
+LibEvent:attachTrigger("tooltip.style.font.body", function(self, frame, fontObject, fontSize, fontFlag)
+    local font, size, flag = GameTooltipHeaderText:GetFont()
+    if (fontObject == "default") then
+        font = defaultBodyFont
+    elseif (fontObject and _G[fontObject]) then
+        font = _G[fontObject]:GetFont()
+    end
+    if (fontSize == "default") then
+        size = defaultBodySize
+    elseif (type(fontSize) == "number") then
+        size = fontSize
+    end
+    if (fontFlag == "default") then
+        flag = defaultBodyFlag
+    else
+        flag = fontFlag or flag
+    end
+    GameTooltipText:SetFont(font, size, flag)
 end)
 
 LibEvent:attachTrigger("tooltip.statusbar.height", function(self, height)

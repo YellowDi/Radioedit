@@ -24,27 +24,6 @@ local function ShowLinkIdInfo(tooltip, link)
     ShowId(tooltip, ParseHyperLink(link or select(2,tooltip:GetItem())))
 end
 
--- Item
-hooksecurefunc(GameTooltip, "SetHyperlink", ShowLinkIdInfo)
-hooksecurefunc(ItemRefTooltip, "SetHyperlink", ShowLinkIdInfo)
-hooksecurefunc("SetItemRef", function(link) ShowLinkIdInfo(ItemRefTooltip, link) end)
-GameTooltip:HookScript("OnTooltipSetItem", ShowLinkIdInfo)
-ItemRefTooltip:HookScript("OnTooltipSetItem", ShowLinkIdInfo)
-ShoppingTooltip1:HookScript("OnTooltipSetItem", ShowLinkIdInfo)
-ShoppingTooltip2:HookScript("OnTooltipSetItem", ShowLinkIdInfo)
-ItemRefShoppingTooltip1:HookScript("OnTooltipSetItem", ShowLinkIdInfo)
-ItemRefShoppingTooltip2:HookScript("OnTooltipSetItem", ShowLinkIdInfo)
-
--- Spell
-GameTooltip:HookScript("OnTooltipSetSpell", function(self) ShowId(self, "Spell", (select(3,self:GetSpell()))) end)
-hooksecurefunc(GameTooltip, "SetUnitAura", function(self, ...) ShowId(self, "Spell", (select(11,UnitAura(...)))) end)
-hooksecurefunc(GameTooltip, "SetUnitBuff", function(self, ...) ShowId(self, "Spell", (select(11,UnitBuff(...)))) end)
-hooksecurefunc(GameTooltip, "SetUnitDebuff", function(self, ...) ShowId(self, "Spell", (select(11,UnitDebuff(...)))) end)
-hooksecurefunc(GameTooltip, "SetArtifactPowerByID", function(self, powerID)
-    ShowId(self, "Power", powerID)
-    ShowId(self, "Spell", C_ArtifactUI.GetPowerInfo(powerID).spellID, 1)
-end)
-
 -- keystone
 local function KeystoneAffixDescription(self, link)
     link = link or select(2, self:GetItem())
@@ -67,3 +46,24 @@ local function KeystoneAffixDescription(self, link)
 end
 GameTooltip:HookScript("OnTooltipSetItem", KeystoneAffixDescription)
 hooksecurefunc(ItemRefTooltip, "SetHyperlink", KeystoneAffixDescription)
+
+-- Item
+hooksecurefunc(GameTooltip, "SetHyperlink", ShowLinkIdInfo)
+hooksecurefunc(ItemRefTooltip, "SetHyperlink", ShowLinkIdInfo)
+hooksecurefunc("SetItemRef", function(link) ShowLinkIdInfo(ItemRefTooltip, link) end)
+GameTooltip:HookScript("OnTooltipSetItem", ShowLinkIdInfo)
+ItemRefTooltip:HookScript("OnTooltipSetItem", ShowLinkIdInfo)
+ShoppingTooltip1:HookScript("OnTooltipSetItem", ShowLinkIdInfo)
+ShoppingTooltip2:HookScript("OnTooltipSetItem", ShowLinkIdInfo)
+ItemRefShoppingTooltip1:HookScript("OnTooltipSetItem", ShowLinkIdInfo)
+ItemRefShoppingTooltip2:HookScript("OnTooltipSetItem", ShowLinkIdInfo)
+
+-- Spell
+GameTooltip:HookScript("OnTooltipSetSpell", function(self) ShowId(self, "Spell", (select(3,self:GetSpell()))) end)
+hooksecurefunc(GameTooltip, "SetUnitAura", function(self, ...) ShowId(self, "Spell", (select(11,UnitAura(...)))) end)
+hooksecurefunc(GameTooltip, "SetUnitBuff", function(self, ...) ShowId(self, "Spell", (select(11,UnitBuff(...)))) end)
+hooksecurefunc(GameTooltip, "SetUnitDebuff", function(self, ...) ShowId(self, "Spell", (select(11,UnitDebuff(...)))) end)
+hooksecurefunc(GameTooltip, "SetArtifactPowerByID", function(self, powerID)
+    ShowId(self, "Power", powerID)
+    ShowId(self, "Spell", C_ArtifactUI.GetPowerInfo(powerID).spellID, 1)
+end)

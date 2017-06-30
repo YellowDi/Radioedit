@@ -30,13 +30,6 @@ local function ColorStatusBar(self, value)
 end
 
 LibEvent:attachEvent("VARIABLES_LOADED", function()
-    --ShadowText
-    GameTooltipHeaderText:SetShadowOffset(1, -1)
-    GameTooltipHeaderText:SetShadowColor(0, 0, 0, 0.9)
-    GameTooltipText:SetShadowOffset(1, -1)
-    GameTooltipText:SetShadowColor(0, 0, 0, 0.9)
-    Tooltip_Small:SetShadowOffset(1, -1)
-    Tooltip_Small:SetShadowColor(0, 0, 0, 0.9)
     --CloseButton
     if (ItemRefCloseButton) then
         ItemRefCloseButton:SetSize(14, 14)
@@ -75,6 +68,8 @@ LibEvent:attachEvent("VARIABLES_LOADED", function()
     addon.db = addon:MergeVariable(addon.db, BigTipDB)
     LibEvent:trigger("tooltip:variables:loaded")
     --Init
+    LibEvent:trigger("tooltip.style.font.header", addon.db.general.headerFont, addon.db.general.headerFontSize, addon.db.general.headerFontFlag)
+    LibEvent:trigger("tooltip.style.font.body", addon.db.general.bodyFont, addon.db.general.bodyFontSize, addon.db.general.bodyFontFlag)
     LibEvent:trigger("tooltip.statusbar.height", addon.db.general.statusbarHeight)
     LibEvent:trigger("tooltip.statusbar.text", addon.db.general.statusbarText)
     LibEvent:trigger("tooltip.statusbar.font", nil, addon.db.general.statusbarFontSize)
@@ -88,6 +83,13 @@ LibEvent:attachEvent("VARIABLES_LOADED", function()
         LibEvent:trigger("tooltip.style.border.color", tip, unpack(addon.db.general.borderColor))
         LibEvent:trigger("tooltip.style.background", tip, unpack(addon.db.general.background))
     end
+    --ShadowText
+    GameTooltipHeaderText:SetShadowOffset(1, -1)
+    GameTooltipHeaderText:SetShadowColor(0, 0, 0, 0.9)
+    GameTooltipText:SetShadowOffset(1, -1)
+    GameTooltipText:SetShadowColor(0, 0, 0, 0.9)
+    Tooltip_Small:SetShadowOffset(1, -1)
+    Tooltip_Small:SetShadowColor(0, 0, 0, 0.9)
 end)
 
 LibEvent:attachTrigger("tooltip:cleared, tooltip:hide", function(self, tip)

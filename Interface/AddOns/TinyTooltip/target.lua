@@ -54,7 +54,7 @@ local function GetTargetByString(mouseover, num, tip)
     local first = true
     local isPlayer = UnitIsPlayer(mouseover)
     for i = 1, num do
-        if UnitIsUnit(mouseover, prefix..i.."target") and not UnitIsUnit(mouseover, "target") then
+        if UnitIsUnit(mouseover, prefix..i.."target") and not UnitIsUnit(prefix..i, "player") then
             count = count + 1
             if (isPlayer or prefix == "party") then
                 if (first) then

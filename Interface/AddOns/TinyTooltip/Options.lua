@@ -46,6 +46,10 @@ local function CallTrigger(keystring, value)
         LibEvent:trigger("tooltip.statusbar.height", value)
     elseif (keystring == "general.statusbarFontSize") then
         LibEvent:trigger("tooltip.statusbar.font", nil, value, nil)
+    elseif (strfind(keystring, "general.headerFont")) then
+        LibEvent:trigger("tooltip.style.font.header", tip, addon.db.general.headerFont, addon.db.general.headerFontSize, addon.db.general.headerFontFlag)
+    elseif (strfind(keystring, "general.bodyFont")) then
+        LibEvent:trigger("tooltip.style.font.body", tip, addon.db.general.bodyFont, addon.db.general.bodyFontSize, addon.db.general.bodyFontFlag)
     end
 end
 
@@ -195,6 +199,7 @@ function widgets:dropdown(parent, config, labelText)
     local frame = CreateFrame("Frame", tostring(config), parent, UIDropDownMenuTemplate)
     frame.keystring = config.keystring
     frame.dropdata = config.dropdata
+    frame.Text:SetWidth(90)
     frame.Label = frame:CreateFontString(nil, "ARTWORK", "GameFontNormal")
 	frame.Label:SetPoint("LEFT", _G[frame:GetName().."Button"], "RIGHT", 6, 0)
 	UIDropDownMenu_Initialize(frame, function(self)
@@ -446,6 +451,7 @@ local options = {
         { keystring = "general.bgfile",             type = "dropdown", dropdata = {"gradual","dark","alpha","rock","marble"} },
         { keystring = "general.anchor",             type = "anchor", dropdata = {"default","cursorRight","cursor","static"} },
         { keystring = "item.coloredItemBorder",     type = "checkbox" },
+        { keystring = "item.showItemIcon",          type = "checkbox" },
         { keystring = "quest.coloredQuestBorder",   type = "checkbox" },
         { keystring = "general.alwaysShowIdInfo",   type = "checkbox" },
     },
@@ -515,6 +521,14 @@ local options = {
         { keystring = "spell.background",           type = "colorpick", hasopacity = true },
         { keystring = "spell.borderColor",          type = "colorpick", hasopacity = true },
     },
+    font = {
+        { keystring = "general.headerFont",         type = "dropdown", dropdata = {"default", "ChatFontNormal", "GameFontNormal", "QuestFont", "CombatLogFont"} },
+        { keystring = "general.headerFontSize",     type = "dropdown", dropdata = {"default", 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24 } },
+        { keystring = "general.headerFontFlag",     type = "dropdown", dropdata = {"default", "NORMAL", "OUTLINE", "THINOUTLINE"} },
+        { keystring = "general.bodyFont",           type = "dropdown", dropdata = {"default", "ChatFontNormal", "GameFontNormal", "QuestFont", "CombatLogFont"} },
+        { keystring = "general.bodyFontSize",       type = "dropdown", dropdata = {"default", 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24 } },
+        { keystring = "general.bodyFontFlag",       type = "dropdown", dropdata = {"default", "NORMAL", "OUTLINE", "THINOUTLINE"} },
+    },
 }
 
 local frame = CreateFrame("Frame", nil, UIParent)
@@ -525,7 +539,6 @@ frame.title = frame:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
 frame.title:SetPoint("TOPLEFT", 18, -16)
 frame.title:SetText(format("%s |cff33eeff%s|r", addonName, "General"))
 frame.name = addonName
-
 
 local framePC = CreateFrame("Frame", nil, UIParent)
 framePC.anchor = CreateFrame("Frame", nil, framePC)
@@ -593,6 +606,16 @@ frameSpell.title:SetText(format("%s |cff33eeff%s|r", addonName, "Spell"))
 frameSpell.parent = addonName
 frameSpell.name = " - Spell"
 
+local frameFont = CreateFrame("Frame", nil, UIParent)
+frameFont.anchor = CreateFrame("Frame", nil, frameFont)
+frameFont.anchor:SetPoint("TOPLEFT", 32, -16)
+frameFont.anchor:SetSize(InterfaceOptionsFramePanelContainer:GetWidth()-64, 1)
+frameFont.title = frameFont:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
+frameFont.title:SetPoint("TOPLEFT", 18, -16)
+frameFont.title:SetText(format("%s |cff33eeff%s|r", addonName, "Font"))
+frameFont.parent = addonName
+frameFont.name = " - Font"
+
 local function InitOptions(list, parent, height)
     local element, offsetX
     for i, v in ipairs(list) do
@@ -611,9 +634,10 @@ end
 LibEvent:attachEvent("VARIABLES_LOADED", function()
     InitOptions(options.general, frame, 32)
     InitOptions(options.pc, framePC, 29)
-    InitOptions(options.npc, frameNPC, 29)
+    InitOptions(options.npc, frameNPC, 28)
     InitOptions(options.statusbar, frameStatusbar, 36)
     InitOptions(options.spell, frameSpell, 32)
+    InitOptions(options.font, frameFont, 32)
 end)
 
 InterfaceOptions_AddCategory(frame)
@@ -621,6 +645,7 @@ InterfaceOptions_AddCategory(framePCScrollFrame)
 InterfaceOptions_AddCategory(frameNPC)
 InterfaceOptions_AddCategory(frameStatusbar)
 InterfaceOptions_AddCategory(frameSpell)
+InterfaceOptions_AddCategory(frameFont)
 SLASH_TinyTooltip1 = "/tinytooltip"
 SLASH_TinyTooltip2 = "/tt"
 SLASH_TinyTooltip3 = "/tip"

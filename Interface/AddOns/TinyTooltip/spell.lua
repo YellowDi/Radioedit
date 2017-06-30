@@ -18,9 +18,10 @@ end
 local function SpellIcon(tip)
     if (addon.db.spell.showIcon) then
         local id = select(3, tip:GetSpell())
-        local texture = select(3, GetSpellInfo(tonumber(id) or 0))
-        if (texture) then
-            addon:GetLine(tip,1):SetFormattedText("|T%s:16|t %s", texture, addon:GetLine(tip,1):GetText())
+        local texture = GetSpellTexture(id or 0)
+        local text = addon:GetLine(tip,1):GetText()
+        if (texture and not strfind(text, "^|T")) then
+            addon:GetLine(tip,1):SetFormattedText("|T%s:16|t %s", texture, text)
         end
     end
 end
