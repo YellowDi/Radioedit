@@ -1,0 +1,17 @@
+tag a1446d722361fe387a985f7d479f4db85b6b0691 1.3.0
+Author:	Alar of Runetotem <alar@aspide.it>
+Date:	Thu Jun 15 09:10:37 2017 +0200
+
+Feature: updates time duration with the actual time duration with the
+selected party and colors it (green if better, red if worse)
+Fix: if mission is maxed, no longer fills it (mission can be sent with
+less than 3 followers)
+Feature: tries to use cheaper troops when available
+Fix: Elite mission chance is now computed the right way
+
+commit 2c14c226f00b806e0325054d69c9f786d950e134
+Author: Alar of Runetotem <alar@aspide.it>
+Date:   Thu Jun 15 09:09:35 2017 +0200
+
+    Fixed typo in release notes
+
