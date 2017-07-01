@@ -1,7 +1,0 @@
-
-KuiNameplatesCoreSaved = {
-	["profiles"] = {
-		["default"] = {
-		},
-	},
-}

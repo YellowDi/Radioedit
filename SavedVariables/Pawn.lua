@@ -6,13 +6,9 @@ PawnCommon = {
 	["ShowItemID"] = false,
 	["ShowRelicUpgrades"] = true,
 	["ShowValuesForUpgradesOnly"] = true,
-	["ShowEnchanted"] = true,
-	["ShownGettingStarted"] = true,
 	["Debug"] = false,
 	["ColorTooltipBorder"] = true,
 	["ShowTooltipIcons"] = true,
-	["ShowSpecIcons"] = true,
-	["ShowSocketingAdvisor"] = true,
 	["Scales"] = {
 		["\"MrRobot\":HUNTER3"] = {
 			["IconTexturePath"] = 461113,
@@ -32,9 +28,6 @@ PawnCommon = {
 		["\"MrRobot\":WARLOCK1"] = {
 			["IconTexturePath"] = 136145,
 			["PerCharacterOptions"] = {
-				["Lumilol-白银之手"] = {
-					["Visible"] = true,
-				},
 			},
 			["Color"] = "8788ee",
 			["ClassID"] = 9,
@@ -95,9 +88,6 @@ PawnCommon = {
 		["\"MrRobot\":MAGE3"] = {
 			["IconTexturePath"] = 135846,
 			["PerCharacterOptions"] = {
-				["可憎少女呜呼-主宰之剑"] = {
-					["Visible"] = true,
-				},
 			},
 			["Color"] = "3fc7eb",
 			["ClassID"] = 8,
@@ -113,9 +103,6 @@ PawnCommon = {
 		["\"MrRobot\":MAGE2"] = {
 			["IconTexturePath"] = 135810,
 			["PerCharacterOptions"] = {
-				["Radioedit-主宰之剑"] = {
-					["Visible"] = true,
-				},
 			},
 			["Color"] = "3fc7eb",
 			["ClassID"] = 8,
@@ -161,6 +148,9 @@ PawnCommon = {
 		["\"MrRobot\":MONK1"] = {
 			["IconTexturePath"] = 608951,
 			["PerCharacterOptions"] = {
+				["相思子-主宰之剑"] = {
+					["Visible"] = true,
+				},
 			},
 			["Color"] = "00ff96",
 			["ClassID"] = 10,
@@ -176,12 +166,6 @@ PawnCommon = {
 		["\"MrRobot\":DEMONHUNTER1"] = {
 			["IconTexturePath"] = 1247264,
 			["PerCharacterOptions"] = {
-				["Mirvish-奥蕾莉亚"] = {
-					["Visible"] = true,
-				},
-				["Mirvish-主宰之剑"] = {
-					["Visible"] = true,
-				},
 			},
 			["Color"] = "a330c9",
 			["ClassID"] = 12,
@@ -227,12 +211,6 @@ PawnCommon = {
 		["\"MrRobot\":WARRIOR3"] = {
 			["IconTexturePath"] = 132341,
 			["PerCharacterOptions"] = {
-				["Lullatone-主宰之剑"] = {
-					["Visible"] = true,
-				},
-				["Ravenkwok-主宰之剑"] = {
-					["Visible"] = true,
-				},
 			},
 			["Color"] = "c79c6e",
 			["ClassID"] = 1,
@@ -248,9 +226,6 @@ PawnCommon = {
 		["\"MrRobot\":DRUID1"] = {
 			["IconTexturePath"] = 136096,
 			["PerCharacterOptions"] = {
-				["Geronimo-奥蕾莉亚"] = {
-					["Visible"] = true,
-				},
 			},
 			["Color"] = "ff7d0a",
 			["ClassID"] = 11,
@@ -266,9 +241,6 @@ PawnCommon = {
 		["\"MrRobot\":PRIEST2"] = {
 			["IconTexturePath"] = 237542,
 			["PerCharacterOptions"] = {
-				["Radioedit-格瑞姆巴托"] = {
-					["Visible"] = true,
-				},
 			},
 			["Color"] = "ffffff",
 			["ClassID"] = 5,
@@ -299,9 +271,6 @@ PawnCommon = {
 		["\"MrRobot\":PALADIN3"] = {
 			["IconTexturePath"] = 135873,
 			["PerCharacterOptions"] = {
-				["Syllenaris-奥蕾莉亚"] = {
-					["Visible"] = true,
-				},
 			},
 			["Color"] = "f58cba",
 			["ClassID"] = 2,
@@ -392,9 +361,6 @@ PawnCommon = {
 		["\"MrRobot\":HUNTER1"] = {
 			["IconTexturePath"] = 461112,
 			["PerCharacterOptions"] = {
-				["长大不会游泳-主宰之剑"] = {
-					["Visible"] = true,
-				},
 			},
 			["Color"] = "abd473",
 			["ClassID"] = 3,
@@ -530,9 +496,6 @@ PawnCommon = {
 		["\"MrRobot\":DRUID3"] = {
 			["IconTexturePath"] = 132276,
 			["PerCharacterOptions"] = {
-				["Zeoi-主宰之剑"] = {
-					["Visible"] = true,
-				},
 			},
 			["Color"] = "ff7d0a",
 			["ClassID"] = 11,
@@ -591,10 +554,12 @@ PawnCommon = {
 			["UnenchantedColor"] = "00bf70",
 		},
 	},
+	["ShowSocketingAdvisor"] = true,
+	["ShowSpecIcons"] = true,
 	["IgnoreGemsWhileLeveling"] = true,
-	["ButtonPosition"] = 1,
+	["ButtonPosition"] = 2,
 	["ShowLootUpgradeAdvisor"] = true,
 	["ShowQuestUpgradeAdvisor"] = true,
-	["LastVersion"] = 2.0208,
+	["LastVersion"] = 2.0205,
 	["Digits"] = 1,
 }

@@ -1,5 +1,0 @@
-
-SLE_ArmoryDB = {
-	["EnchantString"] = {
-	},
-}
