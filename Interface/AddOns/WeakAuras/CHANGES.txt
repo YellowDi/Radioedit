@@ -1,108 +1,19 @@
-tag 9c35eb5a217ea1a92fb1e9253d4d538350cc1ccd 2.4.6
+tag ef44d5d85e178d03e765bf458781e1dec8e29582 2.4.7
 Author:	Benjamin Staneck <staneck@gmail.com>
-Date:	Wed Jun 28 17:51:44 2017 +0200
+Date:	Mon Jul 3 22:59:49 2017 +0200
 
-commit 27e38a268a893ea6b7b619b2e1ac2cde12859c94
-Author: Benjamin Staneck <staneck@gmail.com>
-Date:   Sat Jun 24 23:57:42 2017 +0200
-
-    only replace version in debug builds
-
-commit 86cee26b383c41663d2120a5e7710b4c600f736c
+commit b21b8624108d78ace929983d980d74e05f6dd56c
 Author: Infus <infus@squorn.de>
-Date:   Sat Jun 24 22:14:28 2017 +0200
+Date:   Thu Jun 29 19:16:02 2017 +0200
 
-    Model Aura: Work around Blizzard bug with cameras
+    Fix ReplacePlaceHolders for e.g. %sx %p
     
-    SetTransform is supposed to overwrite the camera that is set on
-    the model. But instead it apparently uses a random camera.
-    TheDanW promised a fix in 7.3, which unfortunately will change
-    the behaviour of models.
-    
-    Thus, warn against using SetTransform in the option text, and
-    change the default for models to not use the SetTransform option.
-    
-    Also reset the model transformation and others 2s after login, as
-    apparently the camera is different while still loading.
-    
-    This fixes the aura attached to Ticket 968, and also works with
-    the aura in ticket 964.
-    
-    Ticket-Nr: 968
+    After determining that %sx is not state.sx, we looked for %s, but
+    still replaced the whole %sx.
 
-commit d4872e1d327cfca65e54ce6af76cd3ff9ea81a76
-Author: Benjamin Staneck <staneck@gmail.com>
-Date:   Sat Jun 24 05:01:09 2017 +0200
-
-    Set versionString to "Development" if we are running a non-curse processed version
-
-commit b5e25c2518eb723f31f2bc8d6a4c457ba17700ea
+commit 5fe840f33f7d33ae41c02593631ef72a9dd77c4c
 Author: Infus <infus@squorn.de>
-Date:   Sat Jun 24 03:44:29 2017 +0200
+Date:   Thu Jun 29 19:15:08 2017 +0200
 
-    Conditions: Fix actions not triggering twice for some conditions
-    
-    For example, a condition for "Trigger 1 active" with only one trigger
-    only triggered once, because actions are only done when the check
-    changes from inactive to active.
-    
-    So far, on hiding we stopped checking conditions and thus that check
-    was always true, and thus could only once transition from inactive
-    to active.
-    
-    This patch adds runs another condition check on hiding, which will
-    deactivate all conditons and their properties.
-
-commit 6a4f051d97c78584f052d727e2633a25548c8ca2
-Author: emptyrivers <emptyrivers@users.noreply.github.com>
-Date:   Fri Jun 23 11:10:40 2017 -0500
-
-    Fix potential Stack overflow (#217)
-    
-    As it happens, there actually is a use for calling WeakAuras.ScanEvents inside of the init script of an aura: doing so triggers ActivateAuraEnvironment, which then runs the appropriate init script if it hasn't completed yet; handy if you want to ensure that one aura (a library of sorts) which defines several functions you use elsewhere is loaded first.
-    
-    However, the code has no notion of whether or not an init script has begun execution or not, which leads to the possibility of a ScanEvents chain leading back to your original init script. This leads to infinite recursion, and very quickly a stack overflow.
-
-commit 105aa3d831f5c3bf07adb406ed3ff60261c94bbe
-Author: Benjamin Staneck <staneck@gmail.com>
-Date:   Fri Jun 23 18:03:04 2017 +0200
-
-    Revert "Conditions Action: Fix activating conditions"
-    
-    This reverts commit c096b8081deb0e1f50a77d8560dc691d45cc95ee.
-
-commit f5eae5b8401c365eb440d6f99cdc28d626ea6caf
-Author: Infus <infus@squorn.de>
-Date:   Thu Jun 22 22:20:13 2017 +0200
-
-    Conditions: Fix error on opening options for some groups
-    
-    Ticket-Nr: 986
-
-commit fab39a38970b95a045534445bd332c9ddb301f7f
-Author: Infus <infus@squorn.de>
-Date:   Thu Jun 22 21:34:31 2017 +0200
-
-    Fix BigWigs Trigger
-    
-    Ticket-Nr: 990, 991
-
-commit aa4bda86f4e8c9e352520d08e73025d016777dc4
-Author: Infus <infus@squorn.de>
-Date:   Thu Jun 22 00:42:55 2017 +0200
-
-    Fix Looping sounds not being stopped by Stop Sound
-    
-    We need to set the soundHandle also in the function that's called
-    for each Loop.
-    
-    Github Ticket: 213
-
-commit c096b8081deb0e1f50a77d8560dc691d45cc95ee
-Author: Infus <infus@squorn.de>
-Date:   Thu Jun 22 00:19:15 2017 +0200
-
-    Conditions Action: Fix activating conditions
-    
-    Clear active conditions on hide
+    Templates: Add Monk's Chi Wave and Essence Font
 
