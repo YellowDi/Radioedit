@@ -25,7 +25,7 @@ local addon = TinyTooltip
 -- language & global vars
 addon.L, addon.G = {}, {}
 setmetatable(addon.L, {__index = function(_, k) return k end})
-setmetatable(addon.G, {__index = function(_, k) return _G[k] end})
+setmetatable(addon.G, {__index = function(_, k) return _G[k] or k end})
 
 -- tooltips
 addon.tooltips = {

@@ -199,7 +199,7 @@ function widgets:dropdown(parent, config, labelText)
     local frame = CreateFrame("Frame", tostring(config), parent, UIDropDownMenuTemplate)
     frame.keystring = config.keystring
     frame.dropdata = config.dropdata
-    frame.Text:SetWidth(90)
+    if (frame.Text) then frame.Text:SetWidth(90) end
     frame.Label = frame:CreateFontString(nil, "ARTWORK", "GameFontNormal")
 	frame.Label:SetPoint("LEFT", _G[frame:GetName().."Button"], "RIGHT", 6, 0)
 	UIDropDownMenu_Initialize(frame, function(self)
@@ -258,31 +258,6 @@ do
     line:SetPoint("CENTER")
 end
 
-local saframe = CreateFrame("Frame", nil, UIParent, "ThinBorderTemplate")
-saframe:Hide()
-saframe:SetFrameStrata("DIALOG")
-saframe.close = CreateFrame("Button", nil, saframe, "UIPanelCloseButton")
-saframe.close:SetPoint("LEFT", -5, 0)
-saframe.point = CreateFrame("Button", nil, saframe)
-saframe.point:SetSize(14, 14)
-saframe.point:SetPoint("BOTTOMRIGHT", 1, -1)
-saframe.point:SetNormalTexture("Interface\\Cursor\\Item")
-saframe.point:GetNormalTexture():SetTexCoord(12/32, 0, 12/32, 0)
-saframe:SetClampedToScreen(true)
-saframe:EnableMouse(true)
-saframe:SetMovable(true)
-saframe:SetSize(113, 20)
-saframe:RegisterForDrag("LeftButton")
-saframe:SetScript("OnDragStart", function(self) self:StartMoving() end)
-saframe:SetScript("OnDragStop", function(self)
-    self:StopMovingOrSizing()
-    local right, bottom = self:GetRight(), self:GetBottom()
-    SetVariable(self.kx, floor(right - GetScreenWidth())+4)
-    SetVariable(self.ky, floor(bottom)-3)
-end)
-saframe:SetScript("OnShow", function() grid:Show() end)
-saframe:SetScript("OnHide", function() grid:Hide() end)
-
 local function CreateAnchorButton(frame, anchorPoint)
     local button = CreateFrame("Button", nil, frame)
     button.cp = anchorPoint
@@ -312,6 +287,43 @@ local function CreateAnchorInput(frame, k)
     end)
     return box
 end
+
+local saframe = CreateFrame("Frame", nil, UIParent, "ThinBorderTemplate")
+saframe:Hide()
+saframe:SetFrameStrata("DIALOG")
+saframe.close = CreateFrame("Button", nil, saframe, "UIPanelCloseButton")
+saframe.close:SetPoint("CENTER")
+saframe:SetClampedToScreen(true)
+saframe:EnableMouse(true)
+saframe:SetMovable(true)
+saframe:SetSize(200, 80)
+saframe:RegisterForDrag("LeftButton")
+saframe:SetScript("OnDragStart", function(self) self:StartMoving() end)
+saframe:SetScript("OnDragStop", function(self)
+    self:StopMovingOrSizing()
+    local p = GetVariable(self.cp) or "BOTTOMRIGHT"
+    local left, right, top, bottom = self:GetLeft(), self:GetRight(), self:GetTop(), self:GetBottom()
+    if (p == "BOTTOMRIGHT") then
+        SetVariable(self.kx, floor(right - GetScreenWidth())+4)
+        SetVariable(self.ky, floor(bottom)-3)
+    elseif (p == "BOTTOMLEFT") then
+        SetVariable(self.kx, floor(left)-2)
+        SetVariable(self.ky, floor(bottom)-3)
+    elseif (p == "TOPLEFT") then
+        SetVariable(self.kx, floor(left)-2)
+        SetVariable(self.ky, floor(top-GetScreenHeight()))
+    elseif (p == "TOPRIGHT") then
+        SetVariable(self.kx, floor(right - GetScreenWidth())+4)
+        SetVariable(self.ky, floor(top-GetScreenHeight()))
+    end
+end)
+CreateAnchorButton(saframe, "TOPLEFT")
+CreateAnchorButton(saframe, "BOTTOMLEFT")
+CreateAnchorButton(saframe, "TOPRIGHT")
+CreateAnchorButton(saframe, "BOTTOMRIGHT")
+saframe:SetScript("OnShow", function() grid:Show() end)
+saframe:SetScript("OnHide", function() grid:Hide() end)
+
 local caframe = CreateFrame("Frame", nil, UIParent, "ThinBorderTemplate")
 caframe:Hide()
 caframe:SetFrameStrata("DIALOG")
@@ -364,7 +376,9 @@ function widgets:anchorbutton(parent, config)
         if (value == "static") then
             saframe.kx = self.keystring .. ".x"
             saframe.ky = self.keystring .. ".y"
-            saframe:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", GetVariable(saframe.kx) or -CONTAINER_OFFSET_X-13, GetVariable(saframe.ky) or CONTAINER_OFFSET_Y)
+            saframe.cp = self.keystring .. ".p"
+            saframe[GetVariable(saframe.cp) or "BOTTOMRIGHT"]:GetNormalTexture():SetVertexColor(1, 0.2, 0.1)
+            saframe:SetPoint(GetVariable(saframe.cp) or "BOTTOMRIGHT", UIParent, GetVariable(saframe.cp) or "BOTTOMRIGHT", GetVariable(saframe.kx) or -CONTAINER_OFFSET_X-13, GetVariable(saframe.ky) or CONTAINER_OFFSET_Y)
             saframe:Show()
         elseif (value == "cursor") then
             caframe.cx = self.keystring .. ".cx"
