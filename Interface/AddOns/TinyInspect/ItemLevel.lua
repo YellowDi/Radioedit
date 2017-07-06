@@ -11,6 +11,7 @@ local LibItemInfo = LibStub:GetLibrary("LibItemInfo.7000")
 local ARMOR = ARMOR or "Armor"
 local RELICSLOT = RELICSLOT or "Relic"
 local ARTIFACT_POWER = ARTIFACT_POWER or "Artifact"
+if (GetLocale():sub(1,2) == "zh") then ARTIFACT_POWER = "能量" end
 
 --框架 #category Bag|Bank|Merchant|Trade|GuildBank|Auction|AltEquipment|PaperDoll
 local function GetItemLevelFrame(self, category)
@@ -29,7 +30,7 @@ local function GetItemLevelFrame(self, category)
         self.ItemLevelFrame.slotString:SetPoint("BOTTOMRIGHT", 1, 2)
         self.ItemLevelFrame.slotString:SetTextColor(1, 1, 1)
         self.ItemLevelFrame.slotString:SetJustifyH("RIGHT")
-        self.ItemLevelFrame.slotString:SetWidth(34)
+        self.ItemLevelFrame.slotString:SetWidth(30)
         self.ItemLevelFrame.slotString:SetHeight(0)
         LibEvent:trigger("ITEMLEVEL_FRAME_CREATED", self.ItemLevelFrame, self)
     end
