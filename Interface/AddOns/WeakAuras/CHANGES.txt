@@ -1,19 +1,42 @@
-tag ef44d5d85e178d03e765bf458781e1dec8e29582 2.4.7
+tag 4adb8b495801776ceafc233040fa6d37928a346f 2.4.8
 Author:	Benjamin Staneck <staneck@gmail.com>
-Date:	Mon Jul 3 22:59:49 2017 +0200
+Date:	Fri Jul 7 03:23:04 2017 +0200
 
-commit b21b8624108d78ace929983d980d74e05f6dd56c
-Author: Infus <infus@squorn.de>
-Date:   Thu Jun 29 19:16:02 2017 +0200
+commit 5791c2619930b5c82c3d0e925cc98e254fd03135
+Author: Benjamin Staneck <staneck@gmail.com>
+Date:   Fri Jul 7 03:15:38 2017 +0200
 
-    Fix ReplacePlaceHolders for e.g. %sx %p
+    AuraBar: Whitespace cleanup
     
-    After determining that %sx is not state.sx, we looked for %s, but
-    still replaced the whole %sx.
+    No idea when I did that but it looks better.
 
-commit 5fe840f33f7d33ae41c02593631ef72a9dd77c4c
-Author: Infus <infus@squorn.de>
-Date:   Thu Jun 29 19:15:08 2017 +0200
+commit 77a3b399da92722affe56bc8516b049a3ac5936c
+Author: Benjamin Staneck <staneck@gmail.com>
+Date:   Fri Jul 7 03:14:49 2017 +0200
 
-    Templates: Add Monk's Chi Wave and Essence Font
+    also this.
+    
+    Block GuildUninvite(), too.
+
+commit a31ee65b08ea0582797142fc59ed10097a66c837
+Author: Benjamin Staneck <staneck@gmail.com>
+Date:   Fri Jul 7 02:56:37 2017 +0200
+
+    This is why we can't have nice things.
+    
+    Disable GuildDisband().
+
+commit 627b9c2ead781fc1707d15f7758ff4199567bf35
+Author: emptyrivers <emptyrivers@users.noreply.github.com>
+Date:   Thu Jul 6 12:02:04 2017 -0500
+
+    Add raid flag checks (#229)
+    
+    New Feature: Allows a combat log event trigger to specify that the source or dest unit have a specific raid mark, any raid mark, or none.
+
+commit f57149154cba1f0dc1f1659f78aff1b619b83df7
+Author: Benjamin Staneck <Stanzilla@users.noreply.github.com>
+Date:   Wed Jul 5 06:44:27 2017 +0200
+
+    Update ISSUE_TEMPLATE.md
 
