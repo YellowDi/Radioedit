@@ -1,12 +1,18 @@
-tag c7f52071ca37d0a82bb3cba7c0cc13f45eafd8f0 v1.7.4
+tag 259ac9e32ac552be8fb54a6f13f6578e04a8227e v1.7.5
 Author:	Navv <navv1234@gmail.com>
-Date:	Tue Jun 13 20:39:17 2017 +0300
+Date:	Thu Jul 6 20:25:35 2017 +0300
 
-v1.7.4
+v1.7.5
 
-commit 15ff35bf265da1ad52e1550c49091ae3e03f53e1
+commit 450d3c6926f51eb0b253fd8899832fa8fae359ed
 Author: Navv <navv1234@gmail.com>
-Date:   Tue Jun 13 20:38:13 2017 +0300
+Date:   Thu Jul 6 20:07:20 2017 +0300
 
-    Fix sanity checks. Update toc.
+    Add debug/nobags options to /simc
+
+commit 03cb25906a733da324155216e8f43a68ea56805e
+Author: Navv <navv1234@gmail.com>
+Date:   Thu Jul 6 19:48:26 2017 +0300
+
+    Rewrite gem handling
 
