@@ -1,42 +1,10 @@
-tag 4adb8b495801776ceafc233040fa6d37928a346f 2.4.8
+tag 645bdc9150b3dcc04cbfc760b90439d441569f1f 2.4.9.1
 Author:	Benjamin Staneck <staneck@gmail.com>
-Date:	Fri Jul 7 03:23:04 2017 +0200
+Date:	Sat Jul 8 02:37:30 2017 +0200
 
-commit 5791c2619930b5c82c3d0e925cc98e254fd03135
-Author: Benjamin Staneck <staneck@gmail.com>
-Date:   Fri Jul 7 03:15:38 2017 +0200
+commit 16c4a40bd22f153f9a35831ca38ddc14d6c8530a
+Author: Infus <infus@squorn.de>
+Date:   Fri Jul 7 21:39:16 2017 +0200
 
-    AuraBar: Whitespace cleanup
-    
-    No idea when I did that but it looks better.
-
-commit 77a3b399da92722affe56bc8516b049a3ac5936c
-Author: Benjamin Staneck <staneck@gmail.com>
-Date:   Fri Jul 7 03:14:49 2017 +0200
-
-    also this.
-    
-    Block GuildUninvite(), too.
-
-commit a31ee65b08ea0582797142fc59ed10097a66c837
-Author: Benjamin Staneck <staneck@gmail.com>
-Date:   Fri Jul 7 02:56:37 2017 +0200
-
-    This is why we can't have nice things.
-    
-    Disable GuildDisband().
-
-commit 627b9c2ead781fc1707d15f7758ff4199567bf35
-Author: emptyrivers <emptyrivers@users.noreply.github.com>
-Date:   Thu Jul 6 12:02:04 2017 -0500
-
-    Add raid flag checks (#229)
-    
-    New Feature: Allows a combat log event trigger to specify that the source or dest unit have a specific raid mark, any raid mark, or none.
-
-commit f57149154cba1f0dc1f1659f78aff1b619b83df7
-Author: Benjamin Staneck <Stanzilla@users.noreply.github.com>
-Date:   Wed Jul 5 06:44:27 2017 +0200
-
-    Update ISSUE_TEMPLATE.md
+    Improve Combat Log fix
 
