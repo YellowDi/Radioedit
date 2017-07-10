@@ -102,6 +102,10 @@ local default_config = {
     colour_enemy_player = {.7,.2,.1},
     colour_enemy_pet = {.7,.2,.1},
 
+    absorb_enable = true,
+    absorb_striped = true,
+    colour_absorb = {.3,.7,1,.5},
+
     execute_enabled = true,
     execute_auto = true,
     execute_percent = 20,
@@ -385,6 +389,19 @@ configChanged.colour_enemy_class = configChangedReactionColour
 configChanged.colour_enemy_player = configChangedReactionColour
 configChanged.colour_enemy_pet = configChangedReactionColour
 
+local function configChangedAbsorb()
+    if core.profile.absorb_enable then
+        addon:GetPlugin('AbsorbBar'):Enable()
+    else
+        addon:GetPlugin('AbsorbBar'):Disable()
+    end
+
+    core:configChangedAbsorb()
+end
+configChanged.absorb_enable = configChangedAbsorb
+configChanged.absorb_striped = configChangedAbsorb
+configChanged.colour_absorb = configChangedAbsorb
+
 local function configChangedTankColour()
     local ele = addon:GetPlugin('TankMode')
     ele.colours = {
@@ -591,6 +608,8 @@ configLoaded.fade_speed = configChanged.fade_speed
 configLoaded.nameonly = configChanged.nameonly
 
 configLoaded.colour_hated = configChangedReactionColour
+
+configLoaded.absorb_enable = configChanged.absorb_enable
 
 configLoaded.tank_mode = configChanged.tank_mode
 configLoaded.tankmode_force_enable = configChanged.tankmode_force_enable

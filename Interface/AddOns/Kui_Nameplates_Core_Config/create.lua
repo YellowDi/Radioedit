@@ -7,7 +7,7 @@ version:SetAlpha(.5)
 version:SetPoint('TOPRIGHT',-12,-10)
 version:SetText(string.format(
     opt.titles.version,
-    'KuiNameplates','Kesava','2.14.13'
+    'KuiNameplates','Kesava','2.14.14'
 ))
 
 opt:Initialise()
@@ -106,6 +106,8 @@ target_glow_colour.enabled = function(p) return p.target_glow end
 -- healthbars ##################################################################
 local bar_texture = healthbars:CreateDropDown('bar_texture')
 local bar_animation = healthbars:CreateDropDown('bar_animation')
+local absorb_enable = healthbars:CreateCheckBox('absorb_enable')
+local absorb_striped = healthbars:CreateCheckBox('absorb_striped')
 
 local execute_sep = healthbars:CreateSeperator('execute_sep')
 local execute_enabled = healthbars:CreateCheckBox('execute_enabled')
@@ -119,6 +121,7 @@ local colour_neutral = healthbars:CreateColourPicker('colour_neutral')
 local colour_friendly = healthbars:CreateColourPicker('colour_friendly')
 local colour_friendly_pet = healthbars:CreateColourPicker('colour_friendly_pet')
 local colour_tapped = healthbars:CreateColourPicker('colour_tapped')
+local colour_absorb = healthbars:CreateColourPicker('colour_absorb')
 local colour_player_class = healthbars:CreateCheckBox('colour_player_class')
 local colour_player = healthbars:CreateColourPicker('colour_player')
 local colour_self_class = healthbars:CreateCheckBox('colour_self_class')
@@ -131,18 +134,21 @@ bar_animation.SelectTable = {'None','Smooth','Cutaway'}
 
 bar_texture:SetPoint('TOPLEFT',10,-10)
 bar_animation:SetPoint('LEFT',bar_texture,'RIGHT',10,0)
+absorb_enable:SetPoint('TOPLEFT',bar_texture,'BOTTOMLEFT',0,-5)
+absorb_striped:SetPoint('LEFT',absorb_enable,'RIGHT',190,0)
 
-execute_sep:SetPoint('TOP',0,-75)
-execute_enabled:SetPoint('TOPLEFT',15,-90)
+execute_sep:SetPoint('TOP',0,-105)
+execute_enabled:SetPoint('TOPLEFT',15,-120)
 execute_colour:SetPoint('LEFT',execute_enabled,'RIGHT',190,0)
-execute_auto:SetPoint('TOPLEFT',execute_enabled,'BOTTOMLEFT')
+execute_auto:SetPoint('TOPLEFT',execute_enabled,'BOTTOMLEFT',0,-5)
 execute_percent:SetPoint('LEFT',execute_auto,'RIGHT',180,-5)
 
-colour_sep:SetPoint('TOP',0,-175)
-colour_hated:SetPoint('TOPLEFT',15,-190)
+colour_sep:SetPoint('TOP',0,-215)
+colour_hated:SetPoint('TOPLEFT',15,-230)
 colour_neutral:SetPoint('LEFT',colour_hated,'RIGHT')
 colour_friendly:SetPoint('LEFT',colour_neutral,'RIGHT')
 colour_tapped:SetPoint('TOPLEFT',colour_hated,'BOTTOMLEFT')
+colour_absorb:SetPoint('LEFT',colour_tapped,'RIGHT')
 
 colour_player_class:SetPoint('TOPLEFT',colour_tapped,'BOTTOMLEFT',-4,-15)
 colour_player:SetPoint('TOPLEFT',colour_player_class,'BOTTOMLEFT',4,0)
@@ -154,6 +160,9 @@ colour_enemy_pet:SetPoint('LEFT',colour_enemy_player,'RIGHT',0,0)
 
 colour_self_class:SetPoint('TOPLEFT',colour_enemy_player,'BOTTOMLEFT',-4,-15)
 colour_self:SetPoint('TOPLEFT',colour_self_class,'BOTTOMLEFT',4,0)
+
+absorb_striped.enabled = function(p) return p.absorb_enable end
+colour_absorb.enabled = function(p) return p.absorb_enable end
 
 colour_self.enabled = function(p) return not p.colour_self_class end
 colour_player.enabled = function(p) return not p.colour_player_class end
@@ -498,7 +507,7 @@ bossmod_x_offset:SetPoint('TOPLEFT',10,-(125+60))
 bossmod_y_offset:SetPoint('LEFT',bossmod_x_offset,'RIGHT',20,0)
 
 -- LSM dropdowns ###############################################################
-function bar_texture:initialize()
+local function bar_texture_initialise(self)
     local list = {}
     for k,f in ipairs(LSM:List(LSM.MediaType.STATUSBAR)) do
         tinsert(list,{
@@ -511,11 +520,15 @@ function bar_texture:initialize()
     self:SetList(list)
     self:SetValue(opt.profile[self.env])
 end
-function bar_texture:OnListButtonChanged(button,item)
+local function bar_texture_OnListButtonChanged(self,button,item)
     local texture = LSM:Fetch(LSM.MediaType.STATUSBAR,item.value)
     button:SetBackdrop({bgFile=texture})
     button.label:SetFont('fonts/frizqt__.ttf',10,'OUTLINE')
 end
+
+bar_texture.initialize = bar_texture_initialise
+bar_texture.OnListButtonChanged = bar_texture_OnListButtonChanged
+
 function font_face:initialize()
     local list = {}
     for k,f in ipairs(LSM:List(LSM.MediaType.FONT)) do
