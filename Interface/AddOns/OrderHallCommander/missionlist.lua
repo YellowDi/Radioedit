@@ -70,6 +70,7 @@ local ENCOUNTER_JOURNAL_SECTION_FLAG4=ENCOUNTER_JOURNAL_SECTION_FLAG4
 local RESURRECT=RESURRECT
 local LOOT=LOOT
 local IGNORED=IGNORED
+local GARRISON_FOLLOWER_COMBAT_ALLY=GARRISON_FOLLOWER_COMBAT_ALLY
 local nobonusloot=G.GetFollowerAbilityDescription(471)
 local increasedcost=G.GetFollowerAbilityDescription(472)
 local increasedduration=G.GetFollowerAbilityDescription(428)
@@ -156,7 +157,8 @@ function module:OnInitialized()
 	}
 	addon:AddSelect("SORTMISSION","Garrison_SortMissions_Original",sorters,	L["Sort missions by:"],L["Changes the sort order of missions in Mission panel"])
 	addon:AddBoolean("IGNORELOW",false,L["Empty missions sorted as last"],L["Empty or 0% success mission are sorted as last. Does not apply to \"original\" method"])
-	addon:RegisterForMenu("mission","SORTMISSION","IGNORELOW")
+	addon:AddBoolean("NOWARN",false,L["Remove no champions warning"],L["Disables warning: "] .. GARRISON_PARTY_NOT_ENOUGH_CHAMPIONS)
+	addon:RegisterForMenu("mission","SORTMISSION","IGNORELOW","NOWARN")
 	self:LoadButtons()
 	Current_Sorter=addon:GetString("SORTMISSION")
 	self:SecureHookScript(OHF--[[MissionTab--]],"OnShow","InitialSetup")
@@ -193,6 +195,11 @@ function module:OnInitialized()
 end
 function addon:Apply(flag,value)
 	self:RefreshMissions()
+	print("Flag ", flag,"applied")
+	if OHF.MissionTab.MissionPage:IsVisible() then
+		print("mission refresh")
+		module:RawMissionClick(OHF.MissionTab.MissionPage,"missionpage")
+	end
 end
 function module:Print(...)
 	print(...)
@@ -254,7 +261,7 @@ function module:OnUpdateMissions()
 	return self:CheckShadow()
 end
 function module:CheckShadow()
-	if not OHFMissions.showInProgress and not OHFCompleteDialog:IsVisible() and missionNonFilled then
+	if not addon:GetBoolean("NOWARN") and not OHFMissions.showInProgress and not OHFCompleteDialog:IsVisible() and missionNonFilled then
 		local totChamps,totTroops,maxChamps=addon:GetTotFollowers('CHAMP_' .. AVAILABLE),addon:GetTotFollowers('TROOP_' .. AVAILABLE),addon:GetNumber("MAXCHAMP")
 		--[===[@debug@
 		print("Checking shadows for ",maxChamps,totChamps,totTroops)
@@ -322,9 +329,6 @@ end
 function addon:RefreshMissions()
 	wipe(missionIDS)
 	OHFMissions:UpdateMissions()
-	if OHF.MissionTab.MissionPage:IsVisible() then
-		module:RawMissionClick(OHF.MissionTab.MissionPage)
-	end
 end
 local function ToggleSet(this,value)
 	return addon:ToggleSet(this.flag,this.tipo,value)
@@ -470,6 +474,7 @@ function module:MainOnHide()
 			m:UnregisterAllEvents()
 		end
 	end
+	addon:GetAutocompleteModule():AutoClose()
 	self:Unhook(OHFMissions,"UpdateMissions")
 	--self:Unhook(OHFMissions,"Update")
 	self:Unhook("GarrisonMissionButton_SetRewards")
@@ -765,6 +770,7 @@ function module:AdjustMissionTooltip(this,...)
 	local key=parties[missionID]
 --[===[@debug@
 	tip:AddDoubleLine("MissionID",missionID)
+	tip:AddDoubleLine("Max Chance",addon:GetMissionData(missionID,'maxChance'))
 --@end-debug@]===]
 	if this.info.inProgress or this.info.completed then return end
 	if not this.info.isRare then
@@ -826,8 +832,20 @@ function module:AdjustMissionTooltip(this,...)
 			local candidate=party:GetSelectedParty(otherkey)
 			local duration=addon:BusyFor(candidate)
 			if duration > 0 then
-				if not bestTimes[duration] or not bestTimes[duration].perc or bestTimes[duration].perc < candidate.perc then
-					bestTimes[duration]=candidate
+				local busy=false
+				if addon:GetBoolean("USEALLY") then
+					for _,c in candidate:IterateFollowers() do
+						local rc,status = pcall(G.GetFollowerStatus,c)
+						if rc and status and status==GARRISON_FOLLOWER_COMBAT_ALLY then
+							busy=true
+							break
+						end
+					end
+				end
+				if not busy then
+					if not bestTimes[duration] or not bestTimes[duration].perc or bestTimes[duration].perc < candidate.perc then
+						bestTimes[duration]=candidate
+					end
 				end
 			end
 		end
@@ -856,8 +874,8 @@ function module:AdjustMissionTooltip(this,...)
 end
 function module:RawMissionClick(this,button)
 	local mission=this.info or this.missionInfo -- callable also from mission page
-	if button=="LeftButton" then
-		self.hooks[this].OnClick(this,button)
+	if button=="LeftButton" or button=="missionpage" then
+		if button ~= "missionpage" then self.hooks[this].OnClick(this,button) end
 		if( IsControlKeyDown()) then
 			self:Print("Ctrl key, ignoring mission prefill")
 		else
