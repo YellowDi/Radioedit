@@ -452,6 +452,22 @@ end
 
 widgets.filterDropdata = {"none","ininstance","incombat","inraid","samerealm","inpvp","inarena","reaction5","reaction6","not ininstance","not incombat","not inraid","not samerealm","not inpvp","not inarena","not reaction5","not reaction6",}
 widgets.colorDropdata = {"default","class","level","reaction","itemQuality","selection","faction",}
+widgets.bgfileDropdata = {"gradual","dark","alpha","rock","marble",}
+widgets.borderDropdata = {"default","angular",}
+widgets.fontDropdata = {"default", "ChatFontNormal", "GameFontNormal", "QuestFont", "CombatLogFont",}
+
+LibEvent:attachEvent("VARIABLES_LOADED", function()
+    local LibMedia = LibStub:GetLibrary("LibSharedMedia-3.0", true)
+    local MergeTable = function(a,b)
+        for _, v in pairs(b) do tinsert(a, v) end
+        return a
+    end
+    if (LibMedia) then
+        widgets.bgfileDropdata = MergeTable(widgets.bgfileDropdata, LibMedia:List("background"))
+        widgets.borderDropdata = MergeTable(widgets.borderDropdata, LibMedia:List("border"))
+        widgets.fontDropdata = MergeTable(widgets.fontDropdata, LibMedia:List("font"))
+    end
+end)
 
 local options = {
     general = {
@@ -461,8 +477,8 @@ local options = {
         { keystring = "general.borderColor",        type = "colorpick", hasopacity = true },
         { keystring = "general.scale",              type = "slider", min = 0.5, max = 4, step = 0.1 },
         { keystring = "general.borderSize",         type = "slider", min = 1, max = 6, step = 1 },
-        { keystring = "general.borderCorner",       type = "dropdown", dropdata = {"default","angular"} },
-        { keystring = "general.bgfile",             type = "dropdown", dropdata = {"gradual","dark","alpha","rock","marble"} },
+        { keystring = "general.borderCorner",       type = "dropdown", dropdata = widgets.borderDropdata },
+        { keystring = "general.bgfile",             type = "dropdown", dropdata = widgets.bgfileDropdata },
         { keystring = "general.anchor",             type = "anchor", dropdata = {"default","cursorRight","cursor","static"} },
         { keystring = "item.coloredItemBorder",     type = "checkbox" },
         { keystring = "item.showItemIcon",          type = "checkbox" },
@@ -536,10 +552,10 @@ local options = {
         { keystring = "spell.borderColor",          type = "colorpick", hasopacity = true },
     },
     font = {
-        { keystring = "general.headerFont",         type = "dropdown", dropdata = {"default", "ChatFontNormal", "GameFontNormal", "QuestFont", "CombatLogFont"} },
+        { keystring = "general.headerFont",         type = "dropdown", dropdata = widgets.fontDropdata },
         { keystring = "general.headerFontSize",     type = "dropdown", dropdata = {"default", 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24 } },
         { keystring = "general.headerFontFlag",     type = "dropdown", dropdata = {"default", "NORMAL", "OUTLINE", "THINOUTLINE"} },
-        { keystring = "general.bodyFont",           type = "dropdown", dropdata = {"default", "ChatFontNormal", "GameFontNormal", "QuestFont", "CombatLogFont"} },
+        { keystring = "general.bodyFont",           type = "dropdown", dropdata = widgets.fontDropdata },
         { keystring = "general.bodyFontSize",       type = "dropdown", dropdata = {"default", 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24 } },
         { keystring = "general.bodyFontFlag",       type = "dropdown", dropdata = {"default", "NORMAL", "OUTLINE", "THINOUTLINE"} },
     },

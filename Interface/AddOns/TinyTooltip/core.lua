@@ -6,6 +6,7 @@
 TinyTooltip = {}
 
 local LibEvent = LibStub:GetLibrary("LibEvent.7000")
+local LibMedia = LibStub:GetLibrary("LibSharedMedia-3.0", true)
 
 local AFK = AFK
 local DND = DND
@@ -480,6 +481,7 @@ end)
 LibEvent:attachTrigger("tooltip.style.bgfile", function(self, frame, bgvalue)
     LibEvent:trigger("tooltip.style.init", frame)
     local bgfile = addon.bgs[bgvalue]
+    if (not bgfile and LibMedia) then bgfile = LibMedia:Fetch("background", bgvalue) end
     if (not bgfile) then return end
     local backdrop = frame.style:GetBackdrop()
     local r, g, b, a = frame.style:GetBackdropColor()
@@ -522,6 +524,17 @@ LibEvent:attachTrigger("tooltip.style.border.corner", function(self, frame, corn
         frame.style.inside:Show()
         frame.style.inside:SetPoint("TOPLEFT", frame.style, "TOPLEFT", backdrop.edgeSize, -backdrop.edgeSize)
         frame.style.inside:SetPoint("BOTTOMRIGHT", frame.style, "BOTTOMRIGHT", -backdrop.edgeSize, backdrop.edgeSize)
+    elseif (LibMedia and LibMedia:IsValid("border", corner)) then
+        backdrop.edgeFile = LibMedia:Fetch("border", corner)
+        backdrop.edgeSize = 14
+        backdrop.insets.top = 3
+        backdrop.insets.left = 3
+        backdrop.insets.right = 3
+        backdrop.insets.bottom = 3
+        frame.style.mask:SetPoint("TOPLEFT", 3, -3)
+        frame.style.mask:SetPoint("BOTTOMRIGHT", frame.style, "TOPRIGHT", -3, -32)
+        frame.style.inside:Hide()
+        frame.style.outside:Hide()
     else
         backdrop.edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border"
         backdrop.edgeSize = 14
@@ -553,6 +566,8 @@ LibEvent:attachTrigger("tooltip.style.font.header", function(self, frame, fontOb
         font = defaultHeaderFont
     elseif (fontObject and _G[fontObject]) then
         font = _G[fontObject]:GetFont()
+    elseif(fontObject and LibMedia and LibMedia:IsValid("font", fontObject)) then
+        font = LibMedia:Fetch("font", fontObject)
     end
     if (fontSize == "default") then
         size = defaultHeaderSize
@@ -574,6 +589,8 @@ LibEvent:attachTrigger("tooltip.style.font.body", function(self, frame, fontObje
         font = defaultBodyFont
     elseif (fontObject and _G[fontObject]) then
         font = _G[fontObject]:GetFont()
+    elseif(fontObject and LibMedia and LibMedia:IsValid("font", fontObject)) then
+        font = LibMedia:Fetch("font", fontObject)
     end
     if (fontSize == "default") then
         size = defaultBodySize
