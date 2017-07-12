@@ -1787,12 +1787,6 @@ GTFO.SpellID["231363"] = {
 	end;
 };
 
-GTFO.SpellID["233283"] = {
-  --desc = "Shattering Nova (Goroth)";
-  sound = 3;
-  test = true;
-};
-
 GTFO.SpellID["233062"] = {
   --desc = "Infernal Burning (Goroth)";
   applicationOnly = true;
@@ -1899,12 +1893,46 @@ GTFO.SpellID["240209"] = {
   sound = 3;
 };
 
+GTFO.SpellID["235138"] = {
+  --desc = "Unstable Soul";
+  applicationOnly = true;
+  sound = 3;
+  test = true;
+};
+
 GTFO.SpellID["235125"] = {
   --desc = "Unstable Soul (Maiden of Vigiliance)";
   sound = 4;
+  test = true;
 };
 
 GTFO.SpellID["239486"] = {
   --desc = "Chaotic Eruption (Volatile Corruption)";
+  sound = 3;
+};
+
+GTFO.SpellID["235956"] = {
+  --desc = "Rupturing Slam (Reanimated Templar)";
+  sound = 3;
+};
+
+GTFO.SpellID["240706"] = {
+  --desc = "Arcane Ward";
+  applicationOnly = true;
+  sound = 3;
+};
+
+GTFO.SpellID["239144"] = {
+  --desc = "Tormented Eruption (Tormented Soul)";
+  sound = 3;
+};
+
+GTFO.SpellID["239852"] = {
+  --desc = "Demonic Obelisk (Demonic Obelisk)";
+  sound = 3;
+};
+
+GTFO.SpellID["242924"] = {
+  --desc = "Impact";
   sound = 3;
 };
