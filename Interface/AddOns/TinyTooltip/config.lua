@@ -16,6 +16,7 @@ addon.db = {
         statusbarOffsetX  = 0,                      --HP X偏移 0:自動
         statusbarOffsetY  = 0,                      --HP Y偏移 0:自動
         statusbarFontSize = 10,                     --HP文字大小
+        statusbarFontFlag = "THINOUTLINE",          --HP文字樣式
         statusbarText     = false,                  --HP文字
         statusbarColor    = "auto",                 --HP顔色 default|auto|smooth
         anchor            = { position = "cursorRight", returnInCombat = false, returnOnUnitFrame = false, cp = "BOTTOM", p = "BOTTOMRIGHT", }, --鼠標位置 default|cursor|static|cursorRight

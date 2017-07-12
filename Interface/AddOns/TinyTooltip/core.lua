@@ -143,6 +143,28 @@ function addon:GetRGBColor(hex)
     end
 end
 
+--字體
+function addon:GetFont(font, default)
+    if (font == "default") then
+        font = default
+    elseif (font and _G[font]) then
+        font = _G[font]:GetFont()
+    elseif(font and LibMedia and LibMedia:IsValid("font", font)) then
+        font = LibMedia:Fetch("font", font)
+    end
+    return font or default
+end
+
+--背景
+function addon:GetBgFile(bgvalue)
+    if (self.bgs[bgvalue]) then
+        return self.bgs[bgvalue]
+    end
+    if (LibMedia) then
+        return LibMedia:Fetch("background", bgvalue)
+    end
+end
+
 -- 任務怪
 function addon:GetQuestBossIcon(unit)
     if UnitIsQuestBoss(unit) then
@@ -262,7 +284,7 @@ function addon:GetUnitInfo(unit)
     t.role         = role ~= "NONE" and role
     t.name         = name
     t.gender       = self:GetGender(gender)
-    t.realm        = realm
+    t.realm        = realm or GetRealmName()
     t.levelValue   = level >= 0 and level or "??"
     t.className    = className
     t.raceName     = raceName
@@ -423,7 +445,7 @@ addon.filterfunc.incombat = function(raw)
 end
 
 addon.filterfunc.samerealm = function(raw)
-    return raw.realm == raw.guildRealm
+    return raw.realm == GetRealmName()
 end
 
 addon.filterfunc.inpvp = function(raw)
@@ -480,13 +502,11 @@ end)
 
 LibEvent:attachTrigger("tooltip.style.bgfile", function(self, frame, bgvalue)
     LibEvent:trigger("tooltip.style.init", frame)
-    local bgfile = addon.bgs[bgvalue]
-    if (not bgfile and LibMedia) then bgfile = LibMedia:Fetch("background", bgvalue) end
-    if (not bgfile) then return end
+    local bgfile = addon:GetBgFile(bgvalue)
     local backdrop = frame.style:GetBackdrop()
     local r, g, b, a = frame.style:GetBackdropColor()
     local rr, gg, bb, aa = frame.style:GetBackdropBorderColor()
-    if (bgfile and backdrop.bgFile ~= bgfile) then
+    if (backdrop.bgFile ~= bgfile) then
         backdrop.bgFile = bgfile
         frame.style:SetBackdrop(backdrop)
         frame.style:SetBackdropColor(r, g, b, a)
@@ -562,13 +582,7 @@ end)
 local defaultHeaderFont, defaultHeaderSize, defaultHeaderFlag = GameTooltipHeaderText:GetFont()
 LibEvent:attachTrigger("tooltip.style.font.header", function(self, frame, fontObject, fontSize, fontFlag)
     local font, size, flag = GameTooltipHeaderText:GetFont()
-    if (fontObject == "default") then
-        font = defaultHeaderFont
-    elseif (fontObject and _G[fontObject]) then
-        font = _G[fontObject]:GetFont()
-    elseif(fontObject and LibMedia and LibMedia:IsValid("font", fontObject)) then
-        font = LibMedia:Fetch("font", fontObject)
-    end
+    font = addon:GetFont(fontObject, defaultHeaderFont)
     if (fontSize == "default") then
         size = defaultHeaderSize
     elseif (type(fontSize) == "number") then
@@ -585,13 +599,7 @@ end)
 local defaultBodyFont, defaultBodySize, defaultBodyFlag = GameTooltipText:GetFont()
 LibEvent:attachTrigger("tooltip.style.font.body", function(self, frame, fontObject, fontSize, fontFlag)
     local font, size, flag = GameTooltipHeaderText:GetFont()
-    if (fontObject == "default") then
-        font = defaultBodyFont
-    elseif (fontObject and _G[fontObject]) then
-        font = _G[fontObject]:GetFont()
-    elseif(fontObject and LibMedia and LibMedia:IsValid("font", fontObject)) then
-        font = LibMedia:Fetch("font", fontObject)
-    end
+    font = addon:GetFont(fontObject, defaultBodyFont)
     if (fontSize == "default") then
         size = defaultBodySize
     elseif (type(fontSize) == "number") then
@@ -616,8 +624,18 @@ end)
 LibEvent:attachTrigger("tooltip.statusbar.font", function(self, font, size, flag)
     if (not GameTooltipStatusBar.TextString) then return end
     local origFont, origSize, origFlag = GameTooltipStatusBar.TextString:GetFont()
+    font = addon:GetFont(font, NumberFontNormal:GetFont())
+    if (flag == "default") then flag = "THINOUTLINE" end
     if (font ~= origFont or size ~= origSize or flag ~= origFlag) then
         GameTooltipStatusBar.TextString:SetFont(font or origFont, size or origSize, flag or origFlag)
+    end
+end)
+
+LibEvent:attachTrigger("tooltip.statusbar.texture", function(self, bgvalue)
+    if (bgvalue and LibMedia and LibMedia:IsValid("statusbar", bgvalue)) then
+        GameTooltipStatusBar:SetStatusBarTexture(LibMedia:Fetch("statusbar", bgvalue))
+    elseif (bgvalue) then
+        GameTooltipStatusBar:SetStatusBarTexture(bgvalue)
     end
 end)
 

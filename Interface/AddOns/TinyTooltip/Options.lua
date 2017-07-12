@@ -44,8 +44,10 @@ local function CallTrigger(keystring, value)
         LibEvent:trigger("tooltip.statusbar.text", value)
     elseif (keystring == "general.statusbarHeight") then
         LibEvent:trigger("tooltip.statusbar.height", value)
-    elseif (keystring == "general.statusbarFontSize") then
-        LibEvent:trigger("tooltip.statusbar.font", nil, value, nil)
+    elseif (keystring == "general.statusbarTexture") then
+        LibEvent:trigger("tooltip.statusbar.texture", value)
+    elseif (strfind(keystring, "general.statusbarFont")) then
+        LibEvent:trigger("tooltip.statusbar.font", addon.db.general.statusbarFont, addon.db.general.statusbarFontSize, addon.db.general.statusbarFontFlag)
     elseif (strfind(keystring, "general.headerFont")) then
         LibEvent:trigger("tooltip.style.font.header", tip, addon.db.general.headerFont, addon.db.general.headerFontSize, addon.db.general.headerFontFlag)
     elseif (strfind(keystring, "general.bodyFont")) then
@@ -455,6 +457,7 @@ widgets.colorDropdata = {"default","class","level","reaction","itemQuality","sel
 widgets.bgfileDropdata = {"gradual","dark","alpha","rock","marble",}
 widgets.borderDropdata = {"default","angular",}
 widgets.fontDropdata = {"default", "ChatFontNormal", "GameFontNormal", "QuestFont", "CombatLogFont",}
+widgets.barDropdata = {"Interface\\AddOns\\"..addonName.."\\texture\\StatusBar",}
 
 LibEvent:attachEvent("VARIABLES_LOADED", function()
     local LibMedia = LibStub:GetLibrary("LibSharedMedia-3.0", true)
@@ -466,6 +469,7 @@ LibEvent:attachEvent("VARIABLES_LOADED", function()
         widgets.bgfileDropdata = MergeTable(widgets.bgfileDropdata, LibMedia:List("background"))
         widgets.borderDropdata = MergeTable(widgets.borderDropdata, LibMedia:List("border"))
         widgets.fontDropdata = MergeTable(widgets.fontDropdata, LibMedia:List("font"))
+        widgets.barDropdata = MergeTable(widgets.barDropdata, LibMedia:List("statusbar"))
     end
 end)
 
@@ -543,6 +547,9 @@ local options = {
         { keystring = "general.statusbarOffsetX",   type = "slider", min = -50, max = 50, step = 1 },
         { keystring = "general.statusbarOffsetY",   type = "slider", min = -50, max = 50, step = 1 },
         { keystring = "general.statusbarFontSize",  type = "slider", min = 6, max = 30, step = 1 },
+        { keystring = "general.statusbarFont",      type = "dropdown", dropdata = widgets.fontDropdata },
+        { keystring = "general.statusbarFontFlag",  type = "dropdown", dropdata = {"default", "NORMAL", "OUTLINE", "THINOUTLINE"} },
+        { keystring = "general.statusbarTexture",   type = "dropdown", dropdata = widgets.barDropdata },
         { keystring = "general.statusbarPosition",  type = "dropdown", dropdata = {"default","bottom","top"} },
         { keystring = "general.statusbarColor",     type = "dropdown", dropdata = {"default","auto","smooth"} },
     },
