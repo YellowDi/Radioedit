@@ -1499,15 +1499,8 @@ GTFO.SpellID["241265"] = {
   sound = 1;
 };
 
-GTFO.SpellID["231770"] = {
-  --desc = "Drenched (Harjatan)";
-  applicationOnly = true;
-  sound = 1;
-};
-
 GTFO.SpellID["231768"] = {
   --desc = "Drenching Waters (Harjatan)";
-  applicationOnly = true;
   sound = 1;
 };
 

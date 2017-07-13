@@ -1,16 +1,13 @@
 ------------------------------------------------------------------------
-r337 | Zensunim | 2017-07-11 11:12:10 -0500 (Tue, 11 Jul 2017) | 4 lines
+r341 | Zensunim | 2017-07-12 22:11:33 -0500 (Wed, 12 Jul 2017) | 2 lines
 Changed paths:
    M /trunk/GTFO.lua
    M /trunk/GTFO.toc
-   M /trunk/GTFO_Fail_LGN.lua
-   M /trunk/GTFO_Spells_LGN.lua
-   M /trunk/GTFO_Spells_Special.lua
+   M /trunk/GTFO_Fail_BC.lua
+   M /trunk/GTFO_Spells_BC.lua
    M /trunk/ReadMe.txt
 
-4.42.16
-* Added Legion spells for The Broken Isles (world)
-* Added Legion spells for Tomb of Sargeras
-
+4.42.18
+* Removed trivial flags for Black Temple (Timewalking)
 ------------------------------------------------------------------------
 

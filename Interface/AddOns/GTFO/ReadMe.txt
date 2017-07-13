@@ -1241,3 +1241,9 @@ Change Log:
 4.42.16
 * Added Legion spells for The Broken Isles (world)
 * Added Legion spells for Tomb of Sargeras
+
+4.42.17
+* Fixed Legion spells for Tomb of Sargeras
+
+4.42.18
+* Removed trivial flags for Black Temple (Timewalking)
