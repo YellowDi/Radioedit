@@ -242,7 +242,7 @@ function NOP:SecondsToString(s) -- return delta, time-string
   local nM = math.floor(s/60 - nH*60)
   local nS = math.floor(s - nH*3600 - nM*60)
   if nH > 0  then return 30,string.format("%d",nH) .. ":" .. string.format("%02d",nM); end
-  if nM > 0  then return  1,string.format("%d",nM) .. ":" .. string.format("%02d",nS); end
+  if nM > 0  then return  5,string.format("%d",nM) .. ":" .. string.format("%02d",nS); end
   if s > 9.9 then return  1,string.format("%.0f",s); end
   return 0.1, string.format("%.1f",s)
 end

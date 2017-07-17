@@ -1,4 +1,11 @@
 -- Revisions:
+--[[<p>07.38 17.07.2017</p>
+<ul>
+<li>Hook to new event SPELLS_CHANGED.</li>
+<li>Added Abundant Order Resources Cache, Stabilized Titan Essence</li>
+<li>Cooldown on button and quest bar, fix. Swaping Count and Timer, fix. Now need to find out if cooldown will not show on button twice.</li>
+</ul>
+]]
 --[[<p>07.36 21.06.2017</p>
 <ul>
 <li>Fix for colorblind mode when lines past 2nd line are used in pattern matching.</li>
@@ -865,7 +872,7 @@ Tooltip can be anchored to WorldFrame and anchor place can be configured.[/list]
 --[[Known issues:
 <ul>
 <strong>Known issues:</strong>
-<li>None known.</li>
+<li>Lockpick on item sometime won't work on 1st click, new method of use item doesn't always update and apply proper spell on proper item.</li>
 </ul>
 ]]
 --[[To-Do:

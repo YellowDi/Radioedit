@@ -56,8 +56,6 @@ function NOP:ButtonSkin(button,skin) -- skin or restore button look
     button.normal:SetTexture(nil) -- kill texture
     button.normal:Hide() -- hide overlay
     button.normal:SetAlpha(0) -- kill transparency
-    button.count:ClearAllPoints()
-    button.count:SetPoint("BOTTOMRIGHT", 1, -1)
     button.hotkey:ClearAllPoints()
     button.hotkey:SetPoint("TOPRIGHT", 1, -2)
     button.isSkinned = true -- skin only once
@@ -210,8 +208,6 @@ function NOP:ButtonLoad() -- create button, restore his position
   self.timerButtonLoad = nil
   if not self.BF then -- new button
     self.BF = CreateFrame("Button", private.BUTTON_FRAME, self.frameHider, "SecureActionButtonTemplate, ActionButtonTemplate")
-    self:ButtonSize() -- set or restore size
-    self:ButtonMove() -- set or restore position
     local bt = self.BF
     if bt:IsVisible() or bt:IsShown() then bt:Hide() end
     self:ButtonBackdrop(bt) -- create backdrop around button if enabled
@@ -224,26 +220,40 @@ function NOP:ButtonLoad() -- create button, restore his position
     bt:SetScript("OnDragStop",  function(self) NOP:ButtonOnDragStop(self) end)
     bt.icon:SetTexture(private.DEFAULT_ICON)
     self:ButtonStore(bt)
+    bt.timer = bt:CreateFontString(nil,"OVERLAY","GameFontWhite")
+    local timer = bt.timer
+    local font, size = bt.count:GetFont()
+    timer:SetFont(font, size,"OUTLINE")
     bt:EnableMouse(true)
     bt:SetMovable(true)
-  else
-    self:ButtonSize() -- set or restore size
-    self:ButtonMove() -- set or restore position
   end
-  self:ButtonSwap(NOP.DB.swap)
+  self:ButtonSize() -- set or restore size
+  self:ButtonMove() -- set or restore position
   self:ButtonSkin(self.BF, NOP.DB.skinButton)
+  self:ButtonSwap(self.BF, NOP.DB.swap)
 end
-function NOP:ButtonSwap(swap) -- swap count and timer text sides on button
-  local bt = self.BF
+function NOP:ButtonSwap(bt,swap) -- swap count and timer text sides on button
   if not bt then return end
   if not bt.timer then return end
   if not bt.count then return end
   if swap then
     bt.count:ClearAllPoints()
     bt.count:SetPoint('BOTTOMLEFT',bt,'BOTTOMLEFT', 1, -1)
+    bt.count:SetJustifyH("LEFT")
+    bt.count:SetJustifyV("MIDDLE")
+    bt.timer:ClearAllPoints()
+    bt.timer:SetPoint("BOTTOMRIGHT",bt,"BOTTOMRIGHT", 1, -1)
+    bt.timer:SetJustifyH("RIGHT")
+    bt.timer:SetJustifyV("MIDDLE")
   else
     bt.count:ClearAllPoints()
     bt.count:SetPoint("BOTTOMRIGHT",bt,"BOTTOMRIGHT", 1, -1)
+    bt.count:SetJustifyH("RIGHT")
+    bt.count:SetJustifyV("MIDDLE")
+    bt.timer:ClearAllPoints()
+    bt.timer:SetPoint('BOTTOMLEFT',bt,'BOTTOMLEFT', 1, -1)
+    bt.timer:SetJustifyH("LEFT")
+    bt.timer:SetJustifyV("MIDDLE")
   end
 end
 function NOP:ButtonCount(count) -- update counter on button
@@ -309,18 +319,28 @@ function NOP:ButtonHotKey(key) -- abbreviation for hotkey string
   end
   return key
 end
-function NOP:ButtonOnUpdate(elapsed) -- timer on button
-  if not self.timer then self:SetScript("OnUpdate", nil); return; end -- timer text is not defined
-  self.expiration = self.expiration - elapsed
-  if (self.nextupdate > 0) then self.nextupdate = self.nextupdate - elapsed; return; end
-  if (self.expiration <= 0) then -- CD expired
-    self.timer:SetText(nil)
-    self:SetScript("OnUpdate", nil)
-    return
+function NOP:ButtonOnUpdate(bt,start,duration) -- setup timer on button
+  if not bt.timer then return; end -- timer text is not defined
+  if start > 0 and duration > 0 then
+    local expire = start + duration
+    if bt.expire == nil or bt.expire < expire then
+      bt.expire = expire
+      bt:SetScript("OnUpdate",nil)
+      bt:SetScript("OnUpdate", function(self,elapsed)
+        if not self.update then self.update = 0 end
+        self.update = self.update - elapsed
+        if self.update < 0 then
+          local cd = bt.expire-GetTime()
+          local update,txt = NOP:SecondsToString(cd)
+          self.update = update
+          bt.timer:SetText((cd > 0) and txt or nil)
+        end
+      end)
+    end
+  else  
+    bt:SetScript("OnUpdate",nil)
+    bt.timer:SetText(nil)
   end
-  local timer
-  self.nextupdate, timer = NOP:SecondsToString(self.expiration) -- throttle text update
-  self.timer:SetText(timer)
 end
 -- Snip code from blizzard .XML source to prevent taint
 local unusedOverlayGlows = {}

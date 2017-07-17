@@ -5,6 +5,7 @@ local NOP = LibStub("AceAddon-3.0"):GetAddon(ADDON)
 function NOP:InitEvents()
   self:RegisterEvent("PLAYER_LOGIN")
   self:RegisterEvent("PLAYER_LEVEL_UP")
+  self:RegisterEvent("SPELLS_CHANGED","PLAYER_LEVEL_UP")
   self:RegisterEvent("BAG_UPDATE_DELAYED","BAG_UPDATE")
   self:RegisterEvent("UNIT_INVENTORY_CHANGED","BAG_UPDATE")
   self:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED","LOOT_SPEC")
@@ -86,16 +87,16 @@ end
 function NOP:ACTIONBAR_UPDATE_COOLDOWN() -- update cooldowns on quest bar and item button
   if self.QB and NOP.DB.quest and not self.qbHidden then -- quest bar is not disabled or none and hidden nothing to do
     for _, bt in ipairs(self.QB.buttons) do -- quest bar buttons text cooldowns
-      if bt:IsShown() and bt.cooldown and bt.itemID then 
+      if bt:IsShown() and bt.itemID then 
         local start, duration, enable = GetItemCooldown(bt.itemID)
-        CooldownFrame_Set(bt.cooldown, start, duration, enable)
+        self:ButtonOnUpdate(bt,start,duration)
       end
     end
   end
   local bt = self.BF -- item button
-  if bt and bt.cooldown and bt.itemID and bt:IsShown() then
+  if bt and bt.itemID and bt:IsShown() then
     local start, duration, enable = GetContainerItemCooldown(bt.bagID, bt.slotID) -- GetItemCooldown(bt.itemID)
-    CooldownFrame_Set(bt.cooldown, start, duration, enable)
+    self:ButtonOnUpdate(bt,start,duration)
   end
 end
 function NOP:SPELLCAST(event,unitID) -- if click on item produce cast then is time to update it after end of cast
