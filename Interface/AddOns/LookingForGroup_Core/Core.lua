@@ -16,15 +16,6 @@ local wipe = wipe
 local GetGroupMemberCounts = GetGroupMemberCounts
 local RAID_CLASS_COLORS = RAID_CLASS_COLORS
 
-local function is_ms(comment)
-	if comment then
-		local summary = string_match(comment,'^(.*)%(^1^.+^^%)$')
-		if summary then
-			return summary
-		end
-	end
-end
-
 local member_roles_tb = {}
 local concat_tb = {}
 local tank_tb = {}
@@ -71,10 +62,13 @@ function LookingForGroup_Core.GetSearchResultName(resultID)
 			isDelisted, leaderName, numMembers = C_LFGList_GetSearchResultInfo(resultID)
 	local activityName, shortName, categoryID, groupID, itemLevel, filters, minLevel, maxPlayers, displayType = 
 			C_LFGList_GetActivityInfo(activityID)
-	local summary = is_ms(comment)
+			
+	local summary,data = string_match(comment,'^(.*)%((^1^.+^^)%)$')
 	if summary then
-		name = '|cff8080cc'..activityName
 		comment = summary
+	end
+	if data and not string_find(data,"LookingForGroup") then
+		name = '|cff8080cc'..activityName
 	else
 		name = name..'\n|cff8080cc'..activityName
 	end
@@ -87,7 +81,8 @@ end
 
 function LookingForGroup_Core.GetSearchResultCancelName(resultID)
 	local id, activityID, name, comment = C_LFGList_GetSearchResultInfo(resultID)
-	if is_ms(comment) then
+	local summary,data = string_match(comment,'^(.*)%((^1^.+^^)%)$')
+	if data and not string_find(data,"LookingForGroup") then
 		name = C_LFGList_GetActivityInfo(activityID)
 	end
 	return name
@@ -98,7 +93,8 @@ function LookingForGroup_Core.GetSearchResultInviteDialog(resultID)
 			_, _, _, _,
 			_, leaderName, numMembers = C_LFGList_GetSearchResultInfo(resultID)
 	local activityName, shortName, categoryID = C_LFGList_GetActivityInfo(activityID)
-	if is_ms(comment) then
+	local summary,data = string_match(comment,'^(.*)%((^1^.+^^)%)$')
+	if data and not string_find(data,"LookingForGroup") then
 		return activityName,add_role_num(nil,id,numMembers)
 	end
 	return name,add_role_num(activityName..'\n',id,numMembers)
@@ -160,11 +156,11 @@ function LookingForGroup_Core.GetSearchResultInfo(resultID)
 	table_insert(name_ct,"|cff8080cc")
 	table_insert(name_ct,activityName)
 	table_insert(name_ct,"|r")
-	local summary = is_ms(comment)
+	local summary,data = string_match(comment,'^(.*)%((^1^.+^^)%)$')
 	if summary then
 		comment = summary
-		name = nil
-	elseif string_find(name,"集合石") then
+	end
+	if string_find(name,"集合石") or (data and not string_find(data,"LookingForGroup")) then
 		name = nil
 	else
 		name = "|cffffff00"..name.."|r"
@@ -233,9 +229,13 @@ function LookingForGroup_Core.GetSearchResultInfo(resultID)
 	table_insert(name_ct,#damager_tb)
 	concat_tb[#concat_tb+1] = ")"
 	table_insert(name_ct,")")
-	if name ~=nil then
+	if name then
 		table_insert(name_ct," ")
 		table_insert(name_ct,name)
+	else
+		table_insert(name_ct," |c00ff6100")
+		table_insert(name_ct,comment)
+		table_insert(name_ct,"|r")
 	end
 	concat_role(tank_tb,tank_icon)
 	concat_role(healer_tb,healer_icon)
@@ -247,7 +247,7 @@ function LookingForGroup_Core.GetSearchResultInfo(resultID)
 	local rse = C_LFGList_GetSearchResultEncounterInfo(id)
 	if rse ~= nil then
 		concat_tb[#concat_tb+1] = "\n"
-		local _,v
+		local v
 		for _,v in pairs(rse) do
 			concat_tb[#concat_tb+1] = "\n"
 			concat_tb[#concat_tb+1] = v
@@ -278,8 +278,11 @@ function LookingForGroup_Core.GetQuestSearchResultInfo(resultID)
 	table_insert(name_ct,"|cff8080cc")
 	table_insert(name_ct,activityName)
 	table_insert(name_ct,"|r")
-	local summary = is_ms(comment)
+	local summary,data = string_match(comment,'^(.*)%((^1^.+^^)%)$')
 	if summary then
+		comment = summary
+	end
+	if data and not string_find(data,"LookingForGroup") then
 		name = nil
 	else
 		name = "|cffffff00"..name.."|r"
@@ -373,9 +376,11 @@ function LookingForGroup_Core.GetActiveEntryInfo()
 	local activityName, shortName, categoryID, groupID, itemLevel, filters, minLevel, maxPlayers, displayType = 
 			C_LFGList_GetActivityInfo(activityID)
 	wipe(concat_tb)
-	local summary = is_ms(comment)
+	local summary,data = string_match(comment,'^(.*)%((^1^.+^^)%)$')
 	if summary then
 		comment = summary
+	end
+	if data and not string_find(data,"LookingForGroup") then
 		name = activityName
 	else
 		table_insert(concat_tb,"|cff8080cc")

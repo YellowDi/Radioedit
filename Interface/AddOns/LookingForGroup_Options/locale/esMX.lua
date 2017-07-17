@@ -6,4 +6,6 @@ if not L then return end
 -- L["Cross Realm"] = ""
 --Translation missing 
 -- L["Maximum length"] = ""
+--Translation missing 
+-- L["Pretend we are using other LFG addons"] = ""
 

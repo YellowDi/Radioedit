@@ -2,6 +2,7 @@ local LibStub = LibStub
 local AceAddon = LibStub("AceAddon-3.0")
 local LookingForGroup = AceAddon:GetAddon("LookingForGroup")
 local LookingForGroup_Options = AceAddon:GetAddon("LookingForGroup_Options")
+local L = LibStub("AceLocale-3.0"):GetLocale("LookingForGroup_Options")
 
 LookingForGroup_Options:push("options",{
 	name = OPTIONS,
@@ -124,5 +125,27 @@ LookingForGroup_Options:push("options",{
 				end
 			end,
 		},
+		addons =
+		{
+			name = ADDONS,
+			desc = L["Pretend we are using other LFG addons"],
+			type = "group",
+			args =
+			{
+				meeting_stone =
+				{
+					name = "Meeting Stone",
+					type = "toggle",
+					set = function(_,val)
+						if val then 
+							LookingForGroup_Options.db.profile.addon_meeting_stone = true
+						else
+							LookingForGroup_Options.db.profile.addon_meeting_stone = nil
+						end
+					end,
+					get = function() return LookingForGroup_Options.db.profile.addon_meeting_stone end,
+				}
+			}
+		}
 	}
 })

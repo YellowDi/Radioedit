@@ -2,7 +2,7 @@
 ## Author: cqwrteur
 ## Title: LookingForGroup Alterac Valley
 ## Dependencies: LookingForGroup
-## Version: 213
+## Version: 229
 ## SavedVariablesPerCharacter: LookingForGroup_AVCharacterDB
 ## LoadOnDemand: 1
 

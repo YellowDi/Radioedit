@@ -67,8 +67,11 @@ function LookingForGroup_Options.FilterSearchResult(groupid)
 	local id, activityID, name, comment, voiceChat, iLvl, honorLevel,
 		age, numBNetFriends, numCharFriends, numGuildMates,
 		isDelisted, leaderName, numMembers, autoaccept = C_LFGList_GetSearchResultInfo(groupid)
-	local summary = string_match(comment,'^(.*)%(^1^.+^^%)$')
+	local summary,data = string_match(comment,'^(.*)%((^1^.+^^)%)$')
 	if summary then
+		comment = summary
+	end
+	if data and not data:find("LookingForGroup") then
 		name = ""
 		comment = summary
 	end

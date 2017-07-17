@@ -1,7 +1,7 @@
 ## Interface: 70200
 ## Author: cqwrteur
 ## Title: LookingForGroup Spam Filter
-## Version: 213
+## Version: 229
 ## Dependencies: LookingForGroup
 ## LoadOnDemand: 1
 

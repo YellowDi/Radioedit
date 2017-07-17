@@ -122,7 +122,14 @@ local function GetSearchEntryMenu(resultID)
 						text = LFG_LIST_TITLE,
 						func = function(_, id)
 							local title,comment = select(3,C_LFGList.GetSearchResultInfo(id))
-							if comment == nil or not comment:find('^(.*)%(^1^.+^^%)$') then
+							if comment then
+								local summary,data = comment:match('^(.*)%((^1^.+^^)%)$')
+								if title:find("集合石") or (data and not data:find("LookingForGroup")) then
+									paste(summary)
+								else
+									paste(title)
+								end
+							else
 								paste(title)
 							end
 						end,

@@ -45,8 +45,19 @@ local C_LFGList_CreateListing = C_LFGList.CreateListing
 local C_LFGList_UpdateListing = C_LFGList.UpdateListing
 local C_LFGList_ClearSearchResults = C_LFGList.ClearSearchResults
 
-local function lfg_get_available_activities(...)
-	local res = C_LFGList_GetAvailableActivities(...)
+local function get_filters()
+	local expn = LookingForGroup_Options.db.profile.a_group_expansion
+	if expn then
+		return LE_LFG_LIST_FILTER_NOT_RECOMMENDED
+	elseif expn == false then
+		return
+	else
+		return LE_LFG_LIST_FILTER_RECOMMENDED
+	end
+end
+
+local function lfg_get_available_activities(categoryID, groupID)
+	local res = C_LFGList_GetAvailableActivities(categoryID, groupID,get_filters())
 	local ret = {}
 	local i
 	for i=1,#res do
@@ -56,79 +67,37 @@ local function lfg_get_available_activities(...)
 	return ret
 end
 
-local activities_tb0 
-local activities_tb1 = {}
-local activities_tb2 = {}
-
-local function get_activities(category,group)
-	if category == nil then
-		category = 0
-	end
-	if group == nil then
-		group = 0
-	end
-	if category == 0 then
-		if activities_tb0 == nil then
-			activities_tb0 = lfg_get_available_activities()
-		end
-		return activities_tb0
-	end
-	if group == 0 then
-		if activities_tb1[category] == nil then
-			activities_tb1[category] = lfg_get_available_activities(category)	
-		end
-		return activities_tb1[category]
-	end
-	if activities_tb2[category] == nil then
-		activities_tb2[category] = {}
-	end
-	if activities_tb2[category][group] == nil then
-		activities_tb2[category][group]  = lfg_get_available_activities(category,group)
-	end
-	return activities_tb2[category][group]
-end
-
 local nulltb = {}
 
-local categorys_tb
-
 local function categorys_values()
-	if categorys_tb == nil then
-		local categorys = C_LFGList_GetAvailableCategories()
-		categorys_tb = {}
-		local i
-		for i=1,#categorys do
-			categorys_tb[categorys[i]]=C_LFGList_GetCategoryInfo(categorys[i])
-		end
+	local categorys = C_LFGList_GetAvailableCategories()
+	local categorys_tb = {}
+	local i
+	for i=1,#categorys do
+		categorys_tb[categorys[i]]=C_LFGList_GetCategoryInfo(categorys[i])
 	end
 	return categorys_tb
 end
 
 LookingForGroup_Options.categorys_values = categorys_values
 
-local groups_tb = {}
-
 local function groups_values()
 	local a_group_category = LookingForGroup_Options.db.profile.a_group_category
-	if a_group_category == 0 then
-		return nulltb
-	end
-	if groups_tb[a_group_category] == nil then
-		local groups = C_LFGList_GetAvailableActivityGroups(a_group_category)
-		groups_tb[a_group_category] = {}
-		local gtbs = groups_tb[a_group_category]
-		local i
-		for i = 1,#groups do
-			local groups_i = groups[i]
-			gtbs[groups_i] = C_LFGList_GetActivityGroupInfo(groups_i)
-		end
+	local groups_tb = {}
+	local groups = C_LFGList_GetAvailableActivityGroups(a_group_category,get_filters())
+	groups_tb[a_group_category] = {}
+	local gtbs = groups_tb[a_group_category]
+	local i
+	for i = 1,#groups do
+		local groups_i = groups[i]
+		gtbs[groups_i] = C_LFGList_GetActivityGroupInfo(groups_i)
 	end
 	return groups_tb[a_group_category]
 end
 
 local function activities_values()
 	local profile = LookingForGroup_Options.db.profile
-	return get_activities(profile.a_group_category,profile.a_group_group)
+	return lfg_get_available_activities(profile.a_group_category,profile.a_group_group)
 end
 
 local encounters_tb = {}
@@ -191,9 +160,18 @@ function LookingForGroup_Options.UpdateEditing()
 		iLevel, honorLevel, name, comment, voiceChat, oldAutoAccept, privateGroup, questID
 		local fullName, shortName, categoryID, groupID, itemLevel, filters, minLevel, maxPlayers, displayType, activityOrder = C_LFGList_GetActivityInfo(activityID)
 		local summary,data = string_match(comment,'^(.*)%((^1^.+^^)%)$')
-		if data ~= nil then
+		if summary then
 			profile.start_a_group_details = summary
-			profile.start_a_group_title = fullName
+		end
+		if data and not string_find(data,"LookingForGroup") then
+			profile.start_a_group_title = ""
+		end
+		if bit.band(filters,LE_LFG_LIST_FILTER_RECOMMENDED) == 1 then
+			profile.a_group_expansion = nil
+		elseif bit.band(filters,LE_LFG_LIST_FILTER_NOT_RECOMMENDED) == 1 then
+			profile.a_group_expansion = false
+		else
+			profile.a_group_expansion = true
 		end
 		profile.a_group_category,profile.a_group_group,profile.a_group_activity = categoryID,groupID,activityID
 		wipe(encounters_tb)
@@ -313,7 +291,7 @@ local function do_search()
 		matches[1] = C_LFGList_GetActivityInfo(act)
 		table_insert(terms,searchTerm)
 	end
-	LookingForGroup_Options.Search(rc_args,get_search_result,ctg,terms,0,0)
+	LookingForGroup_Options.Search(rc_args,get_search_result,ctg,terms,get_filters(),0)
 end
 rc_args.search_again.func = do_search				
 						
@@ -349,7 +327,6 @@ LookingForGroup_Options:push("find",{
 			end,
 			get = function(info) return LookingForGroup_Options.db.profile.a_group_group end,
 			width = "full",
-			control = "LookingForGroup_Options_groups_dropdown"
 		},
 		Activity =
 		{
@@ -366,7 +343,32 @@ LookingForGroup_Options:push("find",{
 			end,
 			get = function(info) return LookingForGroup_Options.db.profile.a_group_activity end,
 			width = "full",
-			control = "LookingForGroup_Options_activities_dropdown"
+		},
+		expansion =
+		{
+			order = get_order(),
+			name = function() return _G["EXPANSION_NAME"..LFGListUtil_GetCurrentExpansion()] end,
+			type = "toggle",
+			get = function(info)
+				local expn = LookingForGroup_Options.db.profile.a_group_expansion
+				if expn then
+					return
+				elseif expn == false then
+					return false
+				else
+					return true
+				end
+			end,
+			set = function(info,val)
+				if val then
+					LookingForGroup_Options.db.profile.a_group_expansion = nil
+				elseif val == false then
+					LookingForGroup_Options.db.profile.a_group_expansion = false
+				else
+					LookingForGroup_Options.db.profile.a_group_expansion = true
+				end
+			end,
+			tristate = true
 		},
 		cancel = 
 		{
@@ -376,6 +378,7 @@ LookingForGroup_Options:push("find",{
 				LookingForGroup_Options:RestoreDBVariable("a_group_category")
 				LookingForGroup_Options:RestoreDBVariable("a_group_activity")
 				LookingForGroup_Options:RestoreDBVariable("a_group_group")
+				LookingForGroup_Options.db.profile.a_group_expansion = nil
 				wipe(encounters_tb)
 				wipe(LookingForGroup_Options.db.profile.find_a_group_encounters)
 			end
@@ -668,14 +671,26 @@ LookingForGroup_Options:push("find",{
 							end
 							local quest_id = profile.start_a_group_quest_id
 							if quest_id == nil then
-								funcListing(profile.a_group_activity,
-										profile.start_a_group_title,
-										profile.start_a_group_minimum_item_level,
-										profile.start_a_group_minimum_honor_level,
-										profile.start_a_group_voice_chat,
-										profile.start_a_group_details,
-										profile.start_a_group_auto_accept,
-										profile.start_a_group_private)
+								if profile.addon_meeting_stone then
+									local player,realm = UnitFullName("player")
+									funcListing(profile.a_group_activity,
+											profile.start_a_group_title,
+											profile.start_a_group_minimum_item_level,
+											profile.start_a_group_minimum_honor_level,
+											profile.start_a_group_voice_chat,
+											table.concat({profile.start_a_group_details,"(^1^Z^SLookingForGroup^N1^N1^N2147483647^N2147483647^N2147483647^N2147483647^N2147483647^N2147483647^N2147483647^N2147483647^S",player,'-',realm,"^Z^SLFG-LFG-LFG^N2147483647^^)"}),
+											profile.start_a_group_auto_accept,
+											profile.start_a_group_private)
+								else
+									funcListing(profile.a_group_activity,
+											profile.start_a_group_title,
+											profile.start_a_group_minimum_item_level,
+											profile.start_a_group_minimum_honor_level,
+											profile.start_a_group_voice_chat,
+											profile.start_a_group_details,
+											profile.start_a_group_auto_accept,
+											profile.start_a_group_private)
+								end
 							else
 								local activityID = LFGListUtil_GetQuestCategoryData(quest_id)
 								funcListing(activityID,
@@ -784,41 +799,4 @@ AceGUI:RegisterWidgetType("LookingForGroup_Options_Search_Result_Multiselect", f
 		self:AddChild(check)
 	end
 	return AceGUI:RegisterAsContainer(control)
-end , 1)
-
-local order_tb = {}
-
-AceGUI:RegisterWidgetType("LookingForGroup_Options_activities_dropdown",function()
-	local widget = AceGUI:Create("Dropdown")
-	local SetList = widget.SetList
-	widget.SetList = function(self, list, order, itemType)
-		wipe(order_tb)
-		local k
-		for k,_ in pairs(list) do
-			table_insert(order_tb,k)
-		end
-		LFGListUtil_SortActivitiesByRelevancy(order_tb)
-		SetList(self, list, order_tb, itemType)
-	end
-	return widget
-end , 1)
-
-AceGUI:RegisterWidgetType("LookingForGroup_Options_groups_dropdown",function()
-	local widget = AceGUI:Create("Dropdown")
-	local SetList = widget.SetList
-	widget.SetList = function(self, list, order, itemType)
-		wipe(order_tb)
-		local k
-		for k,_ in pairs(list) do
-			table_insert(order_tb,k)
-		end
-		table.sort(order_tb,function(g1,g2)
-			local category = LookingForGroup_Options.db.profile.a_group_category
-			local c1 = C_LFGList_GetAvailableActivities(category,g1)
-			local c2 = C_LFGList_GetAvailableActivities(category,g2)
-			return LFGListUtil_SortActivitiesByRelevancyCB(c1[#c1],c2[#c2])
-		end)
-		SetList(self, list, order_tb, itemType)
-	end
-	return widget
 end , 1)
