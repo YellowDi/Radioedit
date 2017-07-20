@@ -41,6 +41,7 @@ local function do_start()
 					true,
 					false,
 					quest_id)
+			LookingForGroup_Options.set_requests()
 			AceConfigDialog:SelectGroup("LookingForGroup","requests")
 		end
 	end

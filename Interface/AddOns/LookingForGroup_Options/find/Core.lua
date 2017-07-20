@@ -190,15 +190,18 @@ end
 
 local filter_role = LookingForGroup_Options.FilterRole
 
-local function filter_search_results(resultID,activity,encounters,mbnm,role,class)
+local function filter_search_results(resultID,activity,encounters,mbnm,role,class,complete)
 	local id, activityID, name, comment, voiceChat, iLvl, honorLevel,
 			age, numBNetFriends, numCharFriends, numGuildMates,
 			isDelisted, leaderName, numMembers = C_LFGList_GetSearchResultInfo(resultID)
 	if activity ~= nil and activity ~= activityID then
 		return false
 	end
-	if role and filter_role(id,numMembers,select(3,C_LFGList_GetActivityInfo(activityID))) then
-		return false
+	if role or complete then
+		local fullName, shortName, categoryID, groupID, itemLevel, filters, minLevel, maxPlayers, displayType, activityOrder = C_LFGList_GetActivityInfo(activityID)
+		if (role and filter_role(id,numMembers,categoryID)) or (complete and numMembers < bit.rshift(maxPlayers,1) ) then
+			return false
+		end
 	end
 	if class then
 		local class_tb = C_LFGList.GetSearchResultMemberCounts(resultID)
@@ -228,9 +231,16 @@ local function filter_search_results(resultID,activity,encounters,mbnm,role,clas
 end
 
 local results_table = {}
+local applications_count
 
+local rc_args,select_sup=LookingForGroup_Options.CreateReceivedArgs(
+						"LookingForGroup_Options_Search_Result_Multiselect",results_table,"find")
+
+local do_search
+						
 local function get_search_result()
 	wipe(results_table)
+	applications_count = nil
 	local profile = LookingForGroup_Options.db.profile
 	local encounters = profile.find_a_group_encounters
 	local activity = profile.a_group_activity
@@ -258,43 +268,140 @@ local function get_search_result()
 			table_insert(results_table,number)
 		end
 	end
+	local complete = profile.find_a_group_complete
+	applications_count = #results_table
 	local groupsIDs = GetSearchResults()
 	for i=1,#groupsIDs do
 		local number = groupsIDs[i]
-		if filter_search_results(number,activity,encounters,mbnm,find_a_group_role,class) then
+		if filter_search_results(number,activity,encounters,mbnm,find_a_group_role,class,complete) then
 			table_insert(results_table,number)
 		end
 	end
+	return #results_table - applications_count
 end
-
-local rc_args,select_sup=LookingForGroup_Options.CreateReceivedArgs(
-						"LookingForGroup_Options_Search_Result_Multiselect",results_table,"find")
-						
+				
 local matches = {}
 local searchTerm = {matches = matches}
+local filtermatches = {}
+local filterTerm = {matches = filtermatches}
+local terms = {searchTerm,filterTerm}
 
-local function do_search()
+do_search=function()
 	local profile = LookingForGroup_Options.db.profile
 	local ctg = profile.a_group_category	
 	if ctg == 0 then
 		return
 	end
-	local terms = LFGListSearchPanel_ParseSearchTerms(profile.find_a_group_filter)
+	
+	wipe(filtermatches)
+	local gmatch = string.gmatch
+	for k,_ in gmatch(profile.find_a_group_filter, "([^\n]+)") do
+		table_insert(filtermatches,k)
+	end
 	local act = profile.a_group_activity
 	if act == 0 then
 		local grp = profile.a_group_group
 		if grp ~= 0 then
 			matches[1] = C_LFGList_GetActivityGroupInfo(grp)
-			table_insert(terms,searchTerm)
+		else
+			matches[1] = nil
 		end
 	else
 		matches[1] = C_LFGList_GetActivityInfo(act)
-		table_insert(terms,searchTerm)
 	end
 	LookingForGroup_Options.Search(rc_args,get_search_result,ctg,terms,get_filters(),0)
 end
 rc_args.search_again.func = do_search				
-						
+
+local select_tb = {}
+
+local activity_options_args =
+{
+	Category =
+	{
+		order = get_order(),
+		name = CATEGORY,
+		type = "select",
+		values = categorys_values,
+		set = LookingForGroup_Options.SetCategory,
+		get = function(info) return LookingForGroup_Options.db.profile.a_group_category end,
+		width = "full",
+	},
+	Group =
+	{
+		order = get_order(),
+		name = GROUP,
+		type = "select",
+		values = groups_values,
+		set = function(info,val)
+			local profile = LookingForGroup_Options.db.profile
+			profile.a_group_group = val
+			LookingForGroup_Options:RestoreDBVariable("a_group_activity")
+			wipe(encounters_tb)
+			wipe(profile.find_a_group_encounters)
+		end,
+		get = function(info) return LookingForGroup_Options.db.profile.a_group_group end,
+		width = "full",
+	},
+	Activity =
+	{
+		order = get_order(),
+		name = LFG_LIST_ACTIVITY,
+		type = "select",
+		values = activities_values,
+		set = function(info,val)
+			local profile = LookingForGroup_Options.db.profile
+			profile.a_group_activity = val
+			_,_,profile.a_group_category,profile.a_group_group = C_LFGList_GetActivityInfo(val)
+			wipe(encounters_tb)
+			wipe(profile.find_a_group_encounters)
+			encounters_values()
+		end,
+		get = function(info) return LookingForGroup_Options.db.profile.a_group_activity end,
+		width = "full",
+	},
+	expansion =
+	{
+		order = get_order(),
+		name = function() return _G["EXPANSION_NAME"..LFGListUtil_GetCurrentExpansion()] end,
+		type = "toggle",
+		get = function(info)
+			local expn = LookingForGroup_Options.db.profile.a_group_expansion
+			if expn then
+				return
+			elseif expn == false then
+				return false
+			else
+				return true
+			end
+		end,
+		set = function(info,val)
+			if val then
+				LookingForGroup_Options.db.profile.a_group_expansion = nil
+			elseif val == false then
+				LookingForGroup_Options.db.profile.a_group_expansion = false
+			else
+				LookingForGroup_Options.db.profile.a_group_expansion = true
+			end
+		end,
+		tristate = true,
+		width = "full",
+	},
+	cancel = 
+	{
+		name = CANCEL,
+		type = "execute",
+		func = function()
+			LookingForGroup_Options:RestoreDBVariable("a_group_category")
+			LookingForGroup_Options:RestoreDBVariable("a_group_activity")
+			LookingForGroup_Options:RestoreDBVariable("a_group_group")
+			LookingForGroup_Options.db.profile.a_group_expansion = nil
+			wipe(encounters_tb)
+			wipe(LookingForGroup_Options.db.profile.find_a_group_encounters)
+		end
+	},
+}
+
 LookingForGroup_Options:push("find",{
 	name = FIND_A_GROUP,
 	desc = LFG_LIST_SELECT_A_CATEGORY,
@@ -302,174 +409,172 @@ LookingForGroup_Options:push("find",{
 	childGroups = "tab",
 	args =
 	{
-		Category =
-		{
-			order = get_order(),
-			name = CATEGORY,
-			type = "select",
-			values = categorys_values,
-			set = LookingForGroup_Options.SetCategory,
-			get = function(info) return LookingForGroup_Options.db.profile.a_group_category end,
-			width = "full",
-		},
-		Group =
-		{
-			order = get_order(),
-			name = GROUP,
-			type = "select",
-			values = groups_values,
-			set = function(info,val)
-				local profile = LookingForGroup_Options.db.profile
-				profile.a_group_group = val
-				LookingForGroup_Options:RestoreDBVariable("a_group_activity")
-				wipe(encounters_tb)
-				wipe(profile.find_a_group_encounters)
-			end,
-			get = function(info) return LookingForGroup_Options.db.profile.a_group_group end,
-			width = "full",
-		},
-		Activity =
-		{
-			order = get_order(),
-			name = LFG_LIST_ACTIVITY,
-			type = "select",
-			values = activities_values,
-			set = function(info,val)
-				local profile = LookingForGroup_Options.db.profile
-				profile.a_group_activity = val
-				_,_,profile.a_group_category,profile.a_group_group = C_LFGList_GetActivityInfo(val)
-				wipe(encounters_tb)
-				wipe(profile.find_a_group_encounters)
-			end,
-			get = function(info) return LookingForGroup_Options.db.profile.a_group_activity end,
-			width = "full",
-		},
-		expansion =
-		{
-			order = get_order(),
-			name = function() return _G["EXPANSION_NAME"..LFGListUtil_GetCurrentExpansion()] end,
-			type = "toggle",
-			get = function(info)
-				local expn = LookingForGroup_Options.db.profile.a_group_expansion
-				if expn then
-					return
-				elseif expn == false then
-					return false
-				else
-					return true
-				end
-			end,
-			set = function(info,val)
-				if val then
-					LookingForGroup_Options.db.profile.a_group_expansion = nil
-				elseif val == false then
-					LookingForGroup_Options.db.profile.a_group_expansion = false
-				else
-					LookingForGroup_Options.db.profile.a_group_expansion = true
-				end
-			end,
-			tristate = true
-		},
-		cancel = 
-		{
-			name = CANCEL,
-			type = "execute",
-			func = function()
-				LookingForGroup_Options:RestoreDBVariable("a_group_category")
-				LookingForGroup_Options:RestoreDBVariable("a_group_activity")
-				LookingForGroup_Options:RestoreDBVariable("a_group_group")
-				LookingForGroup_Options.db.profile.a_group_expansion = nil
-				wipe(encounters_tb)
-				wipe(LookingForGroup_Options.db.profile.find_a_group_encounters)
-			end
-		},
 		f =
 		{
 			name = LFG_LIST_FIND_A_GROUP,
 			order = get_order(),
 			type = "group",
+			childGroups = "tab",
 			args =
 			{
-				filter =
+				activity =
 				{
 					order = get_order(),
-					name = FILTER,
-					type = "input",
-					get = function(info) return LookingForGroup_Options.db.profile.find_a_group_filter end,
-					set = function(info,val) LookingForGroup_Options.db.profile.find_a_group_filter = val end,
-					width = "full"
+					name = LFG_LIST_ACTIVITY,
+					type = "group",
+					args = activity_options_args
 				},
-				role =
+				filters =
 				{
+					name = FILTERS,
 					order = get_order(),
-					name = ROLE,
-					type = "toggle",
-					get = function(info)
-						return LookingForGroup_Options.db.profile.find_a_group_role
-					end,
-					set = function(info,val)
-						LookingForGroup_Options.db.profile.find_a_group_role = val
-					end
-				},
-				class =
-				{
-					order = get_order(),
-					name = UnitClass("player"),
-					type = "toggle",
-					get = function(info)
-						return LookingForGroup_Options.db.profile.find_a_group_class
-					end,
-					set = function(info,val)
-						LookingForGroup_Options.db.profile.find_a_group_class = val
-					end
+					type = "group",
+					args =
+					{
+						filters =
+						{
+							order = get_order(),
+							name = FILTERS,
+							type = "input",
+							get = function(info) return LookingForGroup_Options.db.profile.find_a_group_filter end,
+							set = function(info,val) LookingForGroup_Options.db.profile.find_a_group_filter = val end,
+							width = "full",
+							multiline = true,
+						},
+						cancel = 
+						{
+							order = get_order(),
+							name = CANCEL,
+							type = "execute",
+							func = function()
+								LookingForGroup_Options:RestoreDBVariable("find_a_group_filter")
+							end
+						},
+					}
 				},
 				encounters =
 				{
-					order = get_order(),
 					name = RAID_ENCOUNTERS,
-					type = "multiselect",
-					width = "full",
-					values = encounters_values,
-					tristate = true,
-					get = function(info,val)
-						local v = LookingForGroup_Options.db.profile.find_a_group_encounters[encounters_tb[val]]
-						if v then
-							return true
-						elseif v == false then
-							return nil
-						end
-						return false
-					end,
-					set = function(info,key,val)
-						local k = false
-						if val then
-							k = true
-						elseif val == false then
-							k = nil
-						end
-						LookingForGroup_Options.db.profile.find_a_group_encounters[encounters_tb[key]] = k
-					end
-				},
-				gold =
-				{
 					order = get_order(),
-					name ="|TInterface\\MoneyFrame\\UI-GoldIcon:%d:%d:2:0|t",
-					type = "toggle",
-					get = function(info)
-						return LookingForGroup_Options.db.profile.find_a_group_gold
-					end,
-					set = function(info,val)
-						LookingForGroup_Options.db.profile.find_a_group_gold = val
-					end
+					type = "group",
+					args =
+					{
+						encounters =
+						{
+							order = get_order(),
+							name = RAID_ENCOUNTERS,
+							type = "multiselect",
+							width = "full",
+							values = encounters_values,
+							tristate = true,
+							get = function(info,val)
+								local v = LookingForGroup_Options.db.profile.find_a_group_encounters[encounters_tb[val]]
+								if v then
+									return true
+								elseif v == false then
+									return nil
+								end
+								return false
+							end,
+							set = function(info,key,val)
+								local k = false
+								if val then
+									k = true
+								elseif val == false then
+									k = nil
+								end
+								LookingForGroup_Options.db.profile.find_a_group_encounters[encounters_tb[key]] = k
+							end
+						},
+						cancel =
+						{
+							order = get_order(),
+							name = CANCEL,
+							type = "execute",
+							func = function()
+								wipe(encounters_tb)
+								wipe(LookingForGroup_Options.db.profile.find_a_group_encounters)
+							end
+						},
+						clearall = 
+						{
+							order = get_order(),
+							name = REMOVE_WORLD_MARKERS,
+							type = "execute",
+							func = function()
+								wipe(LookingForGroup_Options.db.profile.find_a_group_encounters)
+							end,
+						},
+					}
 				},
-				clearall = 
+				advanced =
 				{
+					name = ADVANCED_LABEL,
 					order = get_order(),
-					name = REMOVE_WORLD_MARKERS,
-					type = "execute",
-					func = function()
-						wipe(LookingForGroup_Options.db.profile.find_a_group_encounters)
-					end
+					type = "group",
+					args =
+					{
+						role =
+						{
+							order = get_order(),
+							name = ROLE,
+							type = "toggle",
+							get = function(info)
+								return LookingForGroup_Options.db.profile.find_a_group_role
+							end,
+							set = function(info,val)
+								LookingForGroup_Options.db.profile.find_a_group_role = val
+							end
+						},
+						class =
+						{
+							order = get_order(),
+							name = UnitClass("player"),
+							type = "toggle",
+							get = function(info)
+								return LookingForGroup_Options.db.profile.find_a_group_class
+							end,
+							set = function(info,val)
+								LookingForGroup_Options.db.profile.find_a_group_class = val
+							end
+						},
+						complete =
+						{
+							order = get_order(),
+							name = COMPLETE,
+							type = "toggle",
+							get = function(info)
+								return LookingForGroup_Options.db.profile.find_a_group_complete
+							end,
+							set = function(info,val)
+								LookingForGroup_Options.db.profile.find_a_group_complete = val
+							end
+						},
+						gold =
+						{
+							order = get_order(),
+							name ="|TInterface\\MoneyFrame\\UI-GoldIcon:%d:%d:2:0|t",
+							type = "toggle",
+							get = function(info)
+								return LookingForGroup_Options.db.profile.find_a_group_gold
+							end,
+							set = function(info,val)
+								LookingForGroup_Options.db.profile.find_a_group_gold = val
+							end
+						},
+						cancel =
+						{
+							order = get_order(),
+							name = CANCEL,
+							type = "execute",
+							func = function()
+								LookingForGroup_Options:RestoreDBVariable("find_a_group_role")
+								LookingForGroup_Options.db.profile.find_a_group_class = nil
+								LookingForGroup_Options.db.profile.find_a_group_gold = nil
+								LookingForGroup_Options.db.profile.find_a_group_complete = nil
+							end
+						},
+					},
 				},
 				search =
 				{
@@ -488,8 +593,8 @@ LookingForGroup_Options:push("find",{
 						LookingForGroup_Options:RestoreDBVariable("find_a_group_role")
 						LookingForGroup_Options.db.profile.find_a_group_class = nil
 						LookingForGroup_Options.db.profile.find_a_group_gold = nil
-						wipe(encounters_tb)
-						wipe(LookingForGroup_Options.db.profile.find_a_group_encounters)
+						LookingForGroup_Options.db.profile.find_a_group_complete = nil
+						activity_options_args.cancel.func()
 					end
 				},
 			}
@@ -501,6 +606,10 @@ LookingForGroup_Options:push("find",{
 			type = "group",
 			args =
 			{
+				Category = activity_options_args.Category,
+				Group =	activity_options_args.Group,
+				Activity = activity_options_args.Activity,
+				expansion = activity_options_args.expansion,
 				title =
 				{
 					order = get_order(),
@@ -703,6 +812,7 @@ LookingForGroup_Options:push("find",{
 										profile.start_a_group_private,
 										quest_id)
 							end
+							LookingForGroup_Options.set_requests()
 							AceConfigDialog:SelectGroup("LookingForGroup","requests")
 						end
 					end
@@ -712,7 +822,10 @@ LookingForGroup_Options:push("find",{
 					order = get_order(),
 					name = CANCEL,
 					type = "execute",
-					func = LookingForGroup_Options.UpdateEditing
+					func = function()
+						activity_options_args.cancel.func()
+						LookingForGroup_Options.UpdateEditing()
+					end
 				},
 			}
 		},
@@ -771,17 +884,23 @@ AceGUI:RegisterWidgetType("LookingForGroup_Options_Search_Result_Multiselect", f
 		check:SetUserData("key", key)
 		check:SetLabel(name)
 		check:SetUserData("val", val)
-		check:SetValue(select_sup[val])
-		check:SetCallback("OnValueChanged",function(self,...)
-			local user = self:GetUserDataTable()
-			local v = user.val
-			if select_sup[v] then
-				select_sup[v] = nil
-			else
-				select_sup[v] = true
-			end
-			check:SetValue(select_sup[v])
-		end)
+		if key <= applications_count then
+			check:SetTriState(true)
+			check:SetValue(nil)
+			check:SetCallback("OnValueChanged",function()end)
+		else
+			check:SetValue(select_sup[val])
+			check:SetCallback("OnValueChanged",function(self,...)
+				local user = self:GetUserDataTable()
+				local v = user.val
+				if select_sup[v] then
+					select_sup[v] = nil
+				else
+					select_sup[v] = true
+				end
+				check:SetValue(select_sup[v])
+			end)
+		end
 		check:SetCallback("OnLeave", function(self,...)
 			if LookingForGroup_Options.SearchResult_Tooltip_Feedback_timer ~= nil then
 				LookingForGroup_Options:CancelTimer(LookingForGroup_Options.SearchResult_Tooltip_Feedback_timer)

@@ -143,6 +143,8 @@ function LookingForGroup_Options.CreateReceivedArgs(dialogControl,values,group,c
 			name = BACK,
 			type = "execute",
 			func = function()
+				LookingForGroup_Options.Background_Timer_Stop()
+				LookingForGroup_Options.Background_NoSearchResult_StartMusic()
 				C_LFGList.ClearSearchResults()
 				wipe(select_sup)
 				LookingForGroup_Options.reset_search_result()
@@ -186,19 +188,51 @@ function LookingForGroup_Options.CreateReceivedArgs(dialogControl,values,group,c
 	return args,select_sup
 end
 
-function LookingForGroup_Options.Search(rargs,callback,...)
+local function lfeedback(callback,category,terms,filters,preferredfilters,delay)
+	local results = callback()
+	if results then
+		if 0 < results then
+			LookingForGroup_Options.Background_Notifing_Music()
+		else
+			LookingForGroup_Options.Background_NoSearchResult_StartMusic()
+		end
+		local elaspe = math.ceil((results+1)/10)*10
+		local function feedback()
+			lfeedback(callback,category,terms,filters,preferredfilters,delay)
+			LookingForGroup_Options.NotifyChangeIfSelected("search_result")
+		end
+		if LookingForGroup.db.profile.hardware then
+			LookingForGroup_Options.Background_Sceduled_Timer_Start(
+			function()
+				if next(select_sup) == nil then
+					feedback()
+				end
+			end,elaspe)
+		else
+			LookingForGroup_Options.Background_Sceduled_Timer_Start(function()
+				if next(select_sup) == nil then
+					LookingForGroup.Search(feedback,category,terms,filters,preferredfilters,delay)
+				end
+			end,elaspe)
+		end
+	end
+end
+
+function LookingForGroup_Options.Search(rargs,callback,category,terms,filters,preferredfilters,delay)
 	LookingForGroup.Search(function()
 		wipe(select_sup)
-		callback()
+		lfeedback(callback,category,terms,filters,preferredfilters,delay)
 		search_config_tb.args = rargs
 		LookingForGroup_Options.option_table.args.search_result = search_config_tb
 		AceConfigDialog:SelectGroup("LookingForGroup","search_result")
-	end,...)
+	end,category,terms,filters,preferredfilters,delay)
 	LookingForGroup_Options:RegisterEvent("LFG_LIST_SEARCH_FAILED",function()
+		LookingForGroup_Options:UnregisterEvent("LFG_LIST_SEARCH_FAILED")
 		failed_args.back.func = rargs.back.func
 		failed_args.search_again.func = rargs.search_again.func
 		search_config_tb.args = failed_args
 		LookingForGroup_Options.option_table.args.search_result = search_config_tb
+		LookingForGroup_Options.Background_Timer_Start(failed_args.search_again.func,5)
 		AceConfigDialog:SelectGroup("LookingForGroup","search_result")
 	end)
 end

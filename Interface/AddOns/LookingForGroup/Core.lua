@@ -23,13 +23,17 @@ function LookingForGroup:OnEnable()
 	end
 end
 
-function LookingForGroup.Search(callback,category,terms,filters,preferredfilters)
+function LookingForGroup.Search(callback,category,terms,filters,preferredfilters,delay)
 	C_LFGList.Search(category,terms,filters,preferredfilters,C_LFGList.GetLanguageSearchFilter())
 	LookingForGroup:RegisterEvent("LFG_LIST_SEARCH_RESULTS_RECEIVED",function()
-		if LookingForGroup.db.profile.mode_rf == nil then
+		if LookingForGroup.db.profile.mode_rf == nil and delay == nil then
 			callback()
 		else
-			C_Timer.After(0.2,callback)
+			if delay then
+				C_Timer.After(delay,callback)
+			else
+				C_Timer.After(0.3,callback)
+			end
 		end
 	end)
 end

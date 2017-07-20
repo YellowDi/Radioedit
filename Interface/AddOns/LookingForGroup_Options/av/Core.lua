@@ -36,6 +36,7 @@ local function do_start()
 					profile.start_a_group_details,
 					profile.start_a_group_auto_accept,
 					profile.start_a_group_private)
+		LookingForGroup_Options.set_requests()
 		AceConfigDialog:SelectGroup("LookingForGroup","requests")
 	end
 end

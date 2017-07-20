@@ -1,7 +1,7 @@
 ## Interface: 70200
 ## Author: cqwrteur
 ## Title: LookingForGroup Hook
-## Version: 229
+## Version: 267
 ## Dependencies: LookingForGroup
 ## LoadOnDemand: 1
 

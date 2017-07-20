@@ -62,6 +62,9 @@ end
 
 function LookingForGroup_Hook:LFGListUtil_OpenBestWindow()
 	local option = LookingForGroup.GetAddon("LookingForGroup_Options")
+	if option.option_table.args.requests == nil then
+		option.set_requests()
+	end
 	AceConfigDialog:SelectGroup("LookingForGroup","requests")
 	AceConfigDialog:Open("LookingForGroup")
 end

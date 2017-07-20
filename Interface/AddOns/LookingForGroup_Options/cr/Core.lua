@@ -28,6 +28,23 @@ local cr_sr =
 	type = "group",
 }
 
+local function cancel_signups()
+	local applications =  C_LFGList.GetApplications()
+	local C_LFGList_CancelApplication = C_LFGList.CancelApplication
+	local i
+	for i = 1,#applications do
+		C_LFGList_CancelApplication(applications[i])
+	end
+end
+
+local sign_up
+
+local rc_args,select_sup=LookingForGroup_Options.CreateReceivedArgs(
+						"LookingForGroup_Options_Cross_Realm_Multiselect",party_tb,"cr",function()
+	cancel_signups()
+	sign_up()
+end)
+
 local function callback()
 	wipe(party_tb)
 	local counts,results = C_LFGList.GetSearchResults()
@@ -54,24 +71,8 @@ local function callback()
 		end
 	end
 	AceConfigRegistry:NotifyChange("LookingForGroup")
+	return #party_tb
 end
-
-local function cancel_signups()
-	local applications =  C_LFGList.GetApplications()
-	local C_LFGList_CancelApplication = C_LFGList.CancelApplication
-	local i
-	for i = 1,#applications do
-		C_LFGList_CancelApplication(applications[i])
-	end
-end
-
-local sign_up
-
-local rc_args,select_sup=LookingForGroup_Options.CreateReceivedArgs(
-						"LookingForGroup_Options_Cross_Realm_Multiselect",party_tb,"cr",function()
-	cancel_signups()
-	sign_up()
-end)
 
 sign_up=function()
 	local k,v
@@ -89,12 +90,9 @@ sign_up=function()
 	end
 end
 
-local function callback_ctm()
-	C_Timer.After(0.2,callback)
-end
-
 local matches = {}
-local terms = {{matches = matches}}
+local realm_matches = {}
+local terms = {{matches = matches},{matches = realm_matches}}
 
 function LookingForGroup_Options.DoCRSearch()
 	if LookingForGroup_Options.db.profile.cr_map then
@@ -102,8 +100,13 @@ function LookingForGroup_Options.DoCRSearch()
 	else
 		matches[1] = nil
 	end
-	LookingForGroup_Options.Search(rc_args,callback_ctm,LookingForGroup_Options.db.profile.cr_category,
-									terms,0,0)
+	if LookingForGroup_Options.db.profile.cr_realm then
+		realm_matches[1] = LookingForGroup_Options.db.profile.cr_realm
+	else
+		realm_matches[1] = nil
+	end
+	LookingForGroup_Options.Search(rc_args,callback,LookingForGroup_Options.db.profile.cr_category,
+									terms,0,0,0.3)
 end
 
 rc_args.search_again.func = LookingForGroup_Options.DoCRSearch
@@ -138,16 +141,8 @@ LookingForGroup_Options:push("cr",{
 			func = function()
 				LookingForGroup_Options:RestoreDBVariable("cr_category")
 				LookingForGroup_Options.db.profile.cr_map = nil
+				LookingForGroup_Options.db.profile.cr_realm = nil
 			end
-		},
-		category =
-		{
-			order = get_order(),
-			name = CATEGORY,
-			type = "select",
-			values = LookingForGroup_Options.categorys_values,
-			get = function(info) return LookingForGroup_Options.db.profile.cr_category end,
-			set = function(info,key) LookingForGroup_Options.db.profile.cr_category = key end,
 		},
 		map =
 		{
@@ -160,6 +155,31 @@ LookingForGroup_Options:push("cr",{
 			set = function(info,val)
 				LookingForGroup_Options.db.profile.cr_map = val
 			end
+		},
+		realm =
+		{
+			order = get_order(),
+			name = FRIENDS_LIST_REALM:match("^(.*)%:") or FRIENDS_LIST_REALM:match("^(.*)%：") or FRIENDS_LIST_REALM,
+			type = "input",
+			get = function(info)
+				return LookingForGroup_Options.db.profile.cr_realm
+			end,
+			set = function(info,val)
+				if val == "" then
+					LookingForGroup_Options.db.profile.cr_realm = nil
+				else
+					LookingForGroup_Options.db.profile.cr_realm = val
+				end
+			end
+		},
+		category =
+		{
+			order = get_order(),
+			name = CATEGORY,
+			type = "select",
+			values = LookingForGroup_Options.categorys_values,
+			get = function(info) return LookingForGroup_Options.db.profile.cr_category end,
+			set = function(info,key) LookingForGroup_Options.db.profile.cr_category = key end,
 		},
 	}
 })
@@ -195,6 +215,17 @@ local function tooltip_feedback()
 	local tm = "|cff8080cc("..#q..")|r"
 	obj:SetLabel(key.." "..tm)
 	GameTooltip:AddDoubleLine(key,#q)
+	for i=1,#q do
+		local id, activityID, name, comment, voiceChat, iLvl, honorLevel,
+		age, numBNetFriends, numCharFriends, numGuildMates,
+		isDelisted, leaderName, numMembers = C_LFGList.GetSearchResultInfo(q[i])
+		local activity = C_LFGList.GetActivityInfo(activityID)
+		if leaderName then
+			GameTooltip:AddDoubleLine("|cff8080cc"..activity.."|r",leaderName)
+		else
+			GameTooltip:AddLine("|cff8080cc"..activity.."|r")
+		end
+	end
 	GameTooltip:Show()
 end
 

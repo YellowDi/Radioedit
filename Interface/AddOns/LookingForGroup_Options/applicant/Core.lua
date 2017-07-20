@@ -23,8 +23,6 @@ local C_LFGList_DeclineApplicant = C_LFGList.DeclineApplicant
 local C_LFGList_RemoveListing = C_LFGList.RemoveListing
 local _G = _G
 
-local QueueStatusMinimapButton_SetGlowLock = QueueStatusMinimapButton_SetGlowLock
-local QueueStatusMinimapButton = QueueStatusMinimapButton
 local LFGListUtil_IsEntryEmpowered = LFGListUtil_IsEntryEmpowered
 
 local string_find = string.find
@@ -191,21 +189,26 @@ end
 local AceConfigRegistry = LibStub("AceConfigRegistry-3.0")
 
 function LookingForGroup_Options:LFG_LIST_APPLICANT_UPDATED()
-	QueueStatusMinimapButton_SetGlowLock(QueueStatusMinimapButton,"lfglist-applicant",false)
 	if LookingForGroup_Options.Tooltip_Feedback_timer ~= nil then
 		LookingForGroup_Options:CancelTimer(LookingForGroup_Options.Tooltip_Feedback_timer)
 		LookingForGroup_Options.Tooltip_Feedback_timer = nil
 	end
-	GameTooltip:Hide()
-	AceConfigRegistry:NotifyChange("LookingForGroup")
+	LookingForGroup_Options.set_requests()
+	self.NotifyChangeIfSelected("requests")
 end
 
 local app_tb = {}
 
-function LookingForGroup_Options:LFG_LIST_ACTIVE_ENTRY_UPDATE(info,status)
+function LookingForGroup_Options.clear_requests()
+	if LookingForGroup_Options.option_table.args.requests then
+		LookingForGroup_Options.option_table.args.requests = nil
+		wipe(app_tb)
+		AceConfigRegistry:NotifyChange("LookingForGroup")
+	end
 end
 
-LookingForGroup_Options:push("requests",{
+local requests =
+{
 	name = LFGUILD_TAB_REQUESTS_NONE,
 	type = "group",
 	args =
@@ -241,10 +244,9 @@ LookingForGroup_Options:push("requests",{
 			name = UNLIST_MY_GROUP,
 			type = "execute",
 			func = function()
-				wipe(app_tb)
 				local active, activityID, iLevel, honorLevel, name, comment = C_LFGList_GetActiveEntryInfo()
 				if active and LFGListUtil_IsEntryEmpowered() then
-					C_LFGList_RemoveListing()
+					LookingForGroup_Options.option_table.args.requests = nil
 					local quest_id = LookingForGroup_Options.db.profile.start_a_group_quest_id
 					if quest_id == nil then
 						if activityID == 44 and string_find(name,"#AV#") then
@@ -255,6 +257,7 @@ LookingForGroup_Options:push("requests",{
 					else
 						AceConfigDialog:SelectGroup("LookingForGroup","wq")
 					end
+					C_LFGList_RemoveListing()
 				end
 			end
 		},
@@ -269,8 +272,11 @@ LookingForGroup_Options:push("requests",{
 			dialogControl = "LookingForGroup_Options_Applicant_Multiselect"
 		}
 	}
-})
+}
 
+function LookingForGroup_Options.set_requests()
+	LookingForGroup_Options.option_table.args.requests = requests
+end
 
 local function tooltip_feedback()
 	GameTooltip:ClearLines()

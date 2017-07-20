@@ -149,7 +149,7 @@ function LookingForGroup_Options.ApplyToGroup(lfgid,cmt,...)
 			if cmt == nil then
 				cmt = ""
 			end
-			cmt = cmt.."^(^1^N2147483647^^)"
+			cmt = cmt.."(^1^N2147483647^^)"
 		end
 	end
 	C_LFGList_ApplyToGroup(lfgid, cmt, ...)

@@ -29,7 +29,8 @@ function LookingForGroup_Options:OnInitialize()
 			start_a_group_private = false,
 			find_a_group_role = true,
 			find_a_group_filter = "",
-			find_a_group_encounters = {}
+			find_a_group_encounters = {},
+			background_music = "sound\\music\\gluescreenmusic\\wow_main_theme.mp3",
 		}
 	},true)
 	options.args.profile = AceDBOptions:GetOptionsTable(LookingForGroup.db)
@@ -38,6 +39,10 @@ function LookingForGroup_Options:OnInitialize()
 	LookingForGroup.db.RegisterCallback(LookingForGroup, "OnProfileCopied", "OnEnable")
 	LookingForGroup.db.RegisterCallback(LookingForGroup, "OnProfileReset", "OnEnable")
 	self:RegisterEvent("LFG_LIST_APPLICANT_UPDATED")
+	self:RegisterEvent("LFG_LIST_ACTIVE_ENTRY_UPDATE")
+	if C_LFGList.GetActiveEntryInfo() then
+		LookingForGroup_Options.set_requests()
+	end
 end
 
 function LookingForGroup_Options:OnEnable()
@@ -45,8 +50,32 @@ function LookingForGroup_Options:OnEnable()
 	self:EnableQuickJoin()
 end
 
+function LookingForGroup_Options.IsSelected(groupname)
+	local status_table = AceConfigDialog:GetStatusTable("LookingForGroup")
+	if status_table.groups and status_table.groups.selected == groupname then
+		return true
+	end
+end
+
+function LookingForGroup_Options.NotifyChangeIfSelected(groupname)
+	if LookingForGroup_Options.IsSelected(groupname) then
+		AceConfigRegistry:NotifyChange("LookingForGroup")	
+	end
+end
+
 function LookingForGroup_Options:SOCIAL_QUEUE_UPDATE()
-	AceConfigRegistry:NotifyChange("LookingForGroup")
+	self.NotifyChangeIfSelected("quick_join")
+end
+
+function LookingForGroup_Options:LFG_LIST_ACTIVE_ENTRY_UPDATE()
+	if C_LFGList.GetActiveEntryInfo() then
+		if LookingForGroup_Options.option_table.args.requests == nil then
+			LookingForGroup_Options.set_requests()
+			AceConfigRegistry:NotifyChange("LookingForGroup")
+		end
+	else
+		LookingForGroup_Options.clear_requests()
+	end
 end
 
 function LookingForGroup_Options:RestoreDBVariable(key)

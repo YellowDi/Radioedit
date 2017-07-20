@@ -125,6 +125,71 @@ LookingForGroup_Options:push("options",{
 				end
 			end,
 		},
+		music =
+		{
+			name = ENABLE_MUSIC,
+			type = "group",
+			args =
+			{
+				enable_music =
+				{
+					name = ENABLE_MUSIC,
+					type = "toggle",
+					order = 1,
+					get = function(info)
+						return LookingForGroup_Options.db.profile.background_enable_music
+					end,
+					set = function(info,val)
+						if val then
+							LookingForGroup_Options.db.profile.background_enable_music = true
+						else
+							LookingForGroup_Options.db.profile.background_enable_music = nil
+						end
+					end,
+				},
+				chat =
+				{
+					name = SYSTEM_MESSAGES,
+					desc = KBASE_SEARCH_RESULTS,
+					order = 2,
+					type = "toggle",
+					get = function(info)
+						return LookingForGroup_Options.db.profile.background_message
+					end,
+					set = function(info,val)
+						if val then
+							LookingForGroup_Options.db.profile.background_message = true
+						else
+							LookingForGroup_Options.db.profile.background_message = nil
+						end
+					end,
+				},
+				sr =
+				{
+					name = KBASE_SEARCH_RESULTS,
+					order = 3,
+					type = "input",
+					get = function(info)
+						return LookingForGroup_Options.db.profile.background_music
+					end,
+					set = function(info,val)
+						LookingForGroup_Options.db.profile.background_music = val
+					end,
+					width = "full",
+				},
+				cancel = 
+				{
+					name = CANCEL,
+					order = 4,
+					type = "execute",
+					func = function()
+						LookingForGroup_Options:RestoreDBVariable("background_music")
+						LookingForGroup.db.profile.background_enable_music = nil
+						LookingForGroup.db.profile.background_message = nil
+					end
+				},
+			}
+		},
 		addons =
 		{
 			name = ADDONS,
