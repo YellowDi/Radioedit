@@ -52,7 +52,6 @@ function RCLootCouncil:OnInitialize()
 
 	self.playerClass = select(2, UnitClass("player"))
 	self.guildRank = L["Unguilded"]
-	self.target = nil
 	self.isMasterLooter = false -- Are we the ML?
 	self.masterLooter = ""  -- Name of the ML
 	self.isCouncil = false -- Are we in the Council?
@@ -60,6 +59,7 @@ function RCLootCouncil:OnInitialize()
 	self.inCombat = false -- Are we in combat?
 	self.recentReconnectRequest = false
 	self.currentInstanceName = ""
+	self.bossName = nil -- Updates after each encounter
 
 	self.verCheckDisplayed = false -- Have we shown a "out-of-date"?
 
@@ -335,6 +335,7 @@ function RCLootCouncil:OnEnable()
 	self:RegisterEvent("PLAYER_ENTERING_WORLD", "OnEvent")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "EnterCombat")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "LeaveCombat")
+	self:RegisterEvent("ENCOUNTER_END", 	"OnEvent")
 	--self:RegisterEvent("GROUP_ROSTER_UPDATE", "Debug", "event")
 
 	if IsInGuild() then
@@ -886,9 +887,6 @@ function RCLootCouncil:EnterCombat()
 	 InterfaceOptionsFrameOkay:Click()
 	end)
 	self.inCombat = true
-	if self.isMasterLooter then -- Grab the target after 10 seconds and hope it's the boss. We might grab the correct one when looting if not.
-		self:ScheduleTimer(function() self.target = GetUnitName("target") end, 10)
-	end
 	if not db.minimizeInCombat then return end
 	for _,frame in ipairs(frames) do
 		if frame:IsVisible() and not frame.combatMinimized then -- only minimize for combat if it isn't already minimized
@@ -1222,6 +1220,9 @@ function RCLootCouncil:OnEvent(event, ...)
 			self:UnregisterEvent("GUILD_ROSTER_UPDATE"); -- we don't need it any more
 			self:GetGuildOptions() -- get the guild data to the options table now that it's ready
 		end
+	elseif event == "ENCOUNTER_END" then
+		self:DebugLog("Event:", event, ...)
+		self.bossName = select(2, ...) -- Extract encounter name
 	end
 end
 
@@ -1454,15 +1455,15 @@ function RCLootCouncil:GetAnnounceChannel(channel)
 end
 
 function RCLootCouncil:GetItemIDFromLink(link)
-	return tonumber(strmatch(link, "item:(%d+):"))
+	return tonumber(strmatch(link or "", "item:(%d+):"))
 end
 
 function RCLootCouncil:GetItemStringFromLink(link)
-	return strmatch(link, "item:([%d:]+)")
+	return strmatch(link or "", "item:([%d:]+)")
 end
 
 function RCLootCouncil:GetItemNameFromLink(link)
-	return strmatch(link, "%[(.+)%]")
+	return strmatch(link or "", "%[(.+)%]")
 end
 
 function RCLootCouncil.round(num, decimals)
