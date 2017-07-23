@@ -1,8 +1,8 @@
 ------------------------------------------------------------------------
-r266 | euloanty@live.com | 2017-07-18 23:18:43 -0500 (Tue, 18 Jul 2017) | 1 line
+r268 | euloanty@live.com | 2017-07-19 12:02:08 -0500 (Wed, 19 Jul 2017) | 1 line
 Changed paths:
-   M /trunk/Options/Init.lua
+   M /trunk/Options/ui/search_result_checkbox.lua
 
-lfg init
+alpha
 ------------------------------------------------------------------------
 

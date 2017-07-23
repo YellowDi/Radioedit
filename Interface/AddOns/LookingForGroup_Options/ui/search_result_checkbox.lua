@@ -201,6 +201,37 @@ local function GetSearchEntryMenu(resultID)
 					end
 				end
 			}),
+			LFGListSearchReporter:new({
+				text = REMOVE,
+				func = function(_,groupid)
+					local id, activityID, name, comment, voiceChat, iLvl, honorLevel,
+						age, numBNetFriends, numCharFriends, numGuildMates,
+						isDelisted, leaderName, numMembers, autoaccept = C_LFGList.GetSearchResultInfo(groupid)
+					local summary,data = comment:match('^(.*)%((^1^.+^^)%)$')
+					if summary then
+						comment = summary
+					end
+					if data and not data:find("LookingForGroup") then
+						name = ""
+						comment = summary
+					end
+					name = name:gsub(" ",""):lower()
+					comment = comment:gsub(" ",""):lower()
+					local string_find = string.find
+					local table_insert = table.insert
+					local LookingForGroup = LibStub("AceAddon-3.0"):GetAddon("LookingForGroup")
+					local profile = LookingForGroup.db.profile
+					local filters = profile.spam_filter_keywords
+					local tb = {}
+					for i=1,#filters do
+						local ele = filters[i]
+						if not string_find(name,ele) and not string_find(comment,ele) then
+							table_insert(tb,ele)
+						end
+					end
+					profile.spam_filter_keywords = tb
+				end
+			}),
 			{
 				text = LFG_LIST_REPORT_GROUP_FOR,
 				hasArrow = true,
