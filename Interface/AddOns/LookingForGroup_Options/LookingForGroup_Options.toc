@@ -1,7 +1,7 @@
 ## Interface: 70200
 ## Author: cqwrteur
 ## Title: LookingForGroup Options
-## Version: 269
+## Version: 271
 ## Dependencies: LookingForGroup
 ## SavedVariablesPerCharacter: LookingForGroup_OptionsCharacterDB
 ## LoadOnDemand: 1

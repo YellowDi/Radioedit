@@ -177,6 +177,11 @@ function LookingForGroup_WQ:QUEST_ACCEPTED(info,index,wq_id)
 				matches[1] = questName
 				LookingForGroup.Search(callback,categoryID,searchTerms,0,filters)
 			end
+			local status,LookingForGroup_Options = pcall(AceAddon.GetAddon,AceAddon,"LookingForGroup_Options")
+			if status then
+				LookingForGroup_Options.Background_Timer_Stop()
+				LookingForGroup_Options.Background_NoSearchResult_StartMusic()
+			end
 			if info == LookingForGroup then
 				search_func()
 			else

@@ -1,8 +1,8 @@
 ------------------------------------------------------------------------
-r268 | euloanty@live.com | 2017-07-19 12:02:08 -0500 (Wed, 19 Jul 2017) | 1 line
+r270 | euloanty@live.com | 2017-07-24 10:07:12 -0500 (Mon, 24 Jul 2017) | 1 line
 Changed paths:
-   M /trunk/Options/ui/search_result_checkbox.lua
+   M /trunk/WQ/Core.lua
 
-alpha
+fix a bug which potential causes background search conflict with WQ
 ------------------------------------------------------------------------
 

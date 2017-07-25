@@ -1,7 +1,7 @@
 ## Interface: 70200
 ## Author: cqwrteur
 ## Title: LookingForGroup
-## Version: 269
+## Version: 271
 ## SavedVariables: LookingForGroupDB
 
 #@no-lib-strip@
