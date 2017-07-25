@@ -452,7 +452,7 @@ function widgets:dropdownslider(parent, config)
     return frame
 end
 
-widgets.filterDropdata = {"none","ininstance","incombat","inraid","samerealm","inpvp","inarena","reaction5","reaction6","not ininstance","not incombat","not inraid","not samerealm","not inpvp","not inarena","not reaction5","not reaction6",}
+widgets.filterDropdata = {"none","ininstance","incombat","inraid","samerealm","samecrossrealm","inpvp","inarena","reaction5","reaction6","not ininstance","not incombat","not inraid","not samerealm","not samecrossrealm","not inpvp","not inarena","not reaction5","not reaction6",}
 widgets.colorDropdata = {"default","class","level","reaction","itemQuality","selection","faction",}
 widgets.bgfileDropdata = {"gradual","dark","alpha","rock","marble",}
 widgets.borderDropdata = {"default","angular",}

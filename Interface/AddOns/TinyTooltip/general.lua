@@ -3,7 +3,6 @@ local LibEvent = LibStub:GetLibrary("LibEvent.7000")
 
 local DEAD = DEAD
 
-local addonName = ...
 local addon = TinyTooltip
 
 BigTipDB = {}
@@ -40,7 +39,6 @@ LibEvent:attachEvent("VARIABLES_LOADED", function()
     end
     --StatusBar
     local bar = GameTooltipStatusBar
-    bar:SetStatusBarTexture("Interface\\AddOns\\"..addonName.."\\texture\\StatusBar")
     bar.bg = bar:CreateTexture(nil, "BACKGROUND")
     bar.bg:SetAllPoints()
     bar.bg:SetColorTexture(1, 1, 1)

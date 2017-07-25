@@ -195,7 +195,7 @@ end
 -- 標記圖標
 function addon:GetRaidIcon(unit)
     local index = GetRaidTargetIndex(unit)
-    if (index) then
+    if (index and ICON_LIST[index]) then
         return ICON_LIST[index] .. "0|t"
     end
 end
@@ -446,6 +446,10 @@ end
 
 addon.filterfunc.samerealm = function(raw)
     return raw.realm == GetRealmName()
+end
+
+addon.filterfunc.samecrossrealm = function(raw)
+    return UnitRealmRelationship(raw.unit) == LE_REALM_RELATION_SAME
 end
 
 addon.filterfunc.inpvp = function(raw)

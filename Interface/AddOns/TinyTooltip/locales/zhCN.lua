@@ -120,6 +120,7 @@ addon.L = {
     ["dropdown.inarena"]        = "竞技场",
     ["dropdown.ininstance"]     = "副本时",
     ["dropdown.samerealm"]      = "同服务器",
+    ["dropdown.samecrossrealm"]     = "同跨服务器",
     ["dropdown.not reaction5"]      = "|cffff3333非|r声望友好以上",
     ["dropdown.not reaction6"]      = "|cffff3333非|r声望尊敬以上",
     ["dropdown.not inraid"]         = "|cffff3333非|r团队时",
@@ -128,6 +129,7 @@ addon.L = {
     ["dropdown.not inarena"]        = "|cffff3333非|r竞技场",
     ["dropdown.not ininstance"]     = "|cffff3333非|r副本时",
     ["dropdown.not samerealm"]      = "|cffff3333非|r同服务器",
+    ["dropdown.not samecrossrealm"]  = "|cffff3333非|r同跨服务器",
     
     ["headerFont"]        = "标头字体",
     ["headerFontSize"]    = "标头字体大小",
