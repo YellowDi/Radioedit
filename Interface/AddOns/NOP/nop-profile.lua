@@ -54,6 +54,7 @@ function NOP:ProfileLoad() -- LUA stored variables load and init
     self.AceDB.profile.char = nil -- remove it from saved variables
   end
   self.DB = self.AceDB.profile -- profile
+  self.profileOn = self.DB.profiling
 end
 function NOP:OptionsLoad() -- load options for UI config
   local NewOpenablesOptions = {

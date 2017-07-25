@@ -72,7 +72,7 @@ function NOP:QBButton(i, p) -- create new quest bar button
   bt.timer = bt:CreateFontString(nil,"OVERLAY","GameFontWhite")
   local timer = bt.timer
   local font, size = bt.count:GetFont()
-  timer:SetFont(font, size,"OUTLINE")
+  timer:SetFont(font, size-2,"OUTLINE")
   self:ButtonSwap(bt,NOP.DB.swap)
   self:ButtonSkin(bt,NOP.DB.skinButton)
   p.buttons[i] = bt -- store button ref to anchor frame

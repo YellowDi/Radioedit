@@ -1,4 +1,10 @@
 -- Revisions:
+--[[<p>07.40 24.07.2017</p>
+<ul>
+<li>Cooldown on button and quest bar, fix.</li>
+<li>Exposed profiling function use <b>/nop profile</b> to start profiling, use slash command for 2nd time to get timings and turn it off.</li>
+</ul>
+]]
 --[[<p>07.38 17.07.2017</p>
 <ul>
 <li>Hook to new event SPELLS_CHANGED.</li>
@@ -879,4 +885,15 @@ Tooltip can be anchored to WorldFrame and anchor place can be configured.[/list]
 
 <li>Separate size and position for Usable Item and Quest Button bar is done, now need separate movers.</li>
 
+http://www.wowhead.com/item=130899/striding-with-the-sunwalkers a http://www.wowhead.com/item=130898/light-in-the-darkness
+1007 	Broken Isles
+1015 	Aszuna
+1021 	Broken Shore
+1014 	Dalaran
+1098 	Eye of Azshara
+1024 	Highmountain
+1017 	Stormheim
+1033 	Suramar
+1018 	Val'sharah
+Sanctum of Light
 ]]

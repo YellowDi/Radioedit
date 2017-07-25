@@ -223,7 +223,7 @@ function NOP:ButtonLoad() -- create button, restore his position
     bt.timer = bt:CreateFontString(nil,"OVERLAY","GameFontWhite")
     local timer = bt.timer
     local font, size = bt.count:GetFont()
-    timer:SetFont(font, size,"OUTLINE")
+    timer:SetFont(font,size-2,"OUTLINE")
     bt:EnableMouse(true)
     bt:SetMovable(true)
   end
@@ -324,22 +324,26 @@ function NOP:ButtonOnUpdate(bt,start,duration) -- setup timer on button
   if start > 0 and duration > 0 then
     local expire = start + duration
     if bt.expire == nil or bt.expire < expire then
+      if bt.expire == nil and WoWBox then WoWBox:ItemCD(duration) end
       bt.expire = expire
       bt:SetScript("OnUpdate",nil)
       bt:SetScript("OnUpdate", function(self,elapsed)
         if not self.update then self.update = 0 end
         self.update = self.update - elapsed
         if self.update < 0 then
-          local cd = bt.expire-GetTime()
-          local update,txt = NOP:SecondsToString(cd)
-          self.update = update
-          bt.timer:SetText((cd > 0) and txt or nil)
+          local cd = self.expire-GetTime()
+          if (cd > 0) then
+            local update,txt = NOP:SecondsToString(cd)
+            self.update = update
+            self.timer:SetText(txt)
+          else
+            self:SetScript("OnUpdate",nil)
+            self.timer:SetText(nil)
+            self.expire = nil
+          end
         end
       end)
     end
-  else  
-    bt:SetScript("OnUpdate",nil)
-    bt.timer:SetText(nil)
   end
 end
 -- Snip code from blizzard .XML source to prevent taint

@@ -32,6 +32,7 @@ end
 function NOP:ItemLoad() -- load template item tooltips
   self.itemLoadRetry = self.itemLoadRetry - 1 -- only limited retries
   if self.itemLoadRetry < 0 then self.itemLoad = true; return; end -- no more retry
+  self:Profile(true)
   local retry = false
   local isCB = tonumber(GetCVar(private.CB_CVAR)) or 0 -- if colorblind mode activated then on 2nd line there is extra info
   for itemID, data in pairs(NOP.T_RECIPES) do
@@ -73,6 +74,7 @@ function NOP:ItemLoad() -- load template item tooltips
       end
     end
   end
+  self:Profile(false)
   if retry then 
     self.timerItemLoad = self:ScheduleTimer("ItemLoad", private.TIMER_IDLE)
     return
@@ -84,6 +86,7 @@ end
 function NOP:SpellLoad() -- load spell patterns
   self.spellLoadRetry = self.spellLoadRetry - 1
   if self.spellLoadRetry < 0 then self.spellLoad = true; return end
+  self:Profile(true)
   local retry = false
   for spellid, data in pairs(NOP.T_SPELL_BY_USE_TEXT) do -- [spellID] = {min-count,itemID,{"sub-Zone"},{[mapID]=true,[mapID]=true}}
     if data and data[2] then
@@ -96,6 +99,7 @@ function NOP:SpellLoad() -- load spell patterns
   end
   if retry then
     self.timerSpellLoad = self:ScheduleTimer("SpellLoad", private.TIMER_IDLE)
+    self:Profile(false)
     return
   end
   retry = false
@@ -124,6 +128,7 @@ function NOP:SpellLoad() -- load spell patterns
   end
   if retry then
     self.timerSpellLoad = self:ScheduleTimer("SpellLoad", private.TIMER_IDLE)
+    self:Profile(false)
     return
   end
   retry = false
@@ -136,6 +141,7 @@ function NOP:SpellLoad() -- load spell patterns
       retry = true
     end
   end
+  self:Profile(false)
   if retry then
     self.timerSpellLoad = self:ScheduleTimer("SpellLoad", private.TIMER_IDLE)
     return
@@ -225,14 +231,16 @@ function NOP:BlacklistItem(isPermanent,itemID) -- right click will add item into
   end
 end
 function NOP:Profile(onStart) -- time profiling
-  if true then return end -- release has profilling disabled
+  if not self.profileOn then return end
   if not self.profileSession then self.profileSession = GetTime() end -- start of session
   if onStart then
     self.profileCount = (self.profileCount or 0) + 1
     self.profileTP = debugprofilestop()
     return
   end
-  self.profileTotal = (self.profileTotal or 0) + (debugprofilestop() - self.profileTP)
+  local elapsed = (debugprofilestop() - self.profileTP)
+  if self.profileMaxRun == nil or self.profileMaxRun < elapsed then self.profileMaxRun = elapsed end
+  self.profileTotal = (self.profileTotal or 0) + elapsed
 end
 function NOP:inCombat() -- combat lockdown
   return InCombatLockdown()
@@ -248,6 +256,7 @@ function NOP:SecondsToString(s) -- return delta, time-string
 end
 function NOP:ZoneChanged()
   self.timerZoneChanged = nil
+  self:Profile(true)
   local saveArea = GetCurrentMapAreaID()
   local saveDungeonLevel = GetCurrentMapDungeonLevel()
   local saveContinent = GetCurrentMapContinent()
@@ -261,6 +270,7 @@ function NOP:ZoneChanged()
     wipe(NOP.T_CHECK) -- empty list, recheck all on new map
   end
   local minimapZone = GetMinimapZoneText()
+  self:Profile(false)
   if minimapZone and minimapZone ~= self.Zone then -- new zone need update Button
     self.Zone = minimapZone
     self:ItemShowNew()

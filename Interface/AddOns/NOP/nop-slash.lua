@@ -64,10 +64,10 @@ NOP.slash_handler = function(msg, editbox) -- /nop handler
     return
   end
   if cmd == "profile" then
-    if NOP.profileSession and NOP.profileCount and NOP.profileTotal and NOP.profileCount > 0 then
+    if NOP.profileSession and NOP.profileCount and NOP.profileTotal and NOP.profileMaxRun and NOP.profileCount > 0 then
       local Elapsed = GetTime() - NOP.profileSession
       local textTime = (" %dh %02dm %02ds "):format(Elapsed / 3600, math.fmod(Elapsed / 60, 60), math.fmod(Elapsed, 60))
-      NOP.printt(format("%s session time %d [calls] spend %.2f [milliseconds per call]", textTime, NOP.profileCount, NOP.profileTotal / NOP.profileCount))
+      NOP.printt(format("%s session time %d [calls] spend %.2f [ms/call] max run %.2f [ms]", textTime, NOP.profileCount, NOP.profileTotal / NOP.profileCount, NOP.profileMaxRun))
     end
     UpdateAddOnMemoryUsage()
     NOP.printt(format("Memory usage %.2f kB",GetAddOnMemoryUsage(ADDON)))
@@ -79,6 +79,20 @@ NOP.slash_handler = function(msg, editbox) -- /nop handler
       secure,addon = issecurevariable(NOP.BF,"SetAttribute")
       if not secure then NOP.printt("Tainted button SetAttribute() by:",addon) end
     end
+    if NOP.profileOn then -- toggle profiling
+      NOP.profileOn = nil
+      NOP.profileSession = nil
+      NOP.profileCount = nil 
+      NOP.profileTotal = nil
+      NOP.printt("Profiling OFF")
+    else
+      NOP.profileOn = true
+      NOP.profileSession = nil
+      NOP.profileCount = nil 
+      NOP.profileTotal = nil
+      NOP.printt("Profiling ON")
+    end
+    NOP.DB["profiling"] = NOP.profileOn
     return
   end
   if cmd == "reset" then

@@ -362,6 +362,6 @@ function NOP:ItemShowNew() -- check bags for usable item and place it on button
 end
 function NOP:ItemTimer() -- slow backpack recheck
   if self:inCombat() or not (self.spellLoad and self.itemLoad) then return end -- still loading or in combat
-  wipe(NOP.T_CHECK) -- invalidate cache
+  -- wipe(NOP.T_CHECK) -- invalidate cache
   self:ItemShowNew() -- find item to place on button
 end
