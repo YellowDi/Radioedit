@@ -9,6 +9,7 @@ local LibSchedule = LibStub:GetLibrary("LibSchedule.7000")
 local LibItemInfo = LibStub:GetLibrary("LibItemInfo.7000")
 
 local ARMOR = ARMOR or "Armor"
+local WEAPON = WEAPON or "Weapon"
 local RELICSLOT = RELICSLOT or "Relic"
 local ARTIFACT_POWER = ARTIFACT_POWER or "Artifact"
 if (GetLocale():sub(1,2) == "zh") then ARTIFACT_POWER = "能量" end
@@ -69,6 +70,30 @@ local function SetItemSlotString(self, class, equipSlot, link)
     self:SetText(slotText)
 end
 
+--部分裝備無法一次讀取
+local function SetItemLevelScheduled(button, ItemLevelFrame, link)
+    if (not string.match(link, "item:(%d+):")) then return end
+    LibSchedule:AddTask({
+        identity  = link,
+        elasped   = 0.5,
+        expired   = GetTime() + 3,
+        frame     = ItemLevelFrame,
+        button    = button,
+        onExecute = function(self)
+            local count, level, _, _, quality, _, _, class, _, _, equipSlot = LibItemInfo:GetItemInfo(self.identity)
+            if (count == 0) then
+                SetItemLevelString(self.frame.levelString, level > 0 and level or "", quality)
+                SetItemSlotString(self.frame.slotString, class, equipSlot, link)
+                self.button.OrigItemLevel = (level and level > 0) and level or ""
+                self.button.OrigItemQuality = quality
+                self.button.OrigItemClass = class
+                self.button.OrigItemEquipSlot = equipSlot
+                return true
+            end
+        end,
+    })
+end
+
 --設置物品等級
 local function SetItemLevel(self, link, category)
     if (not self) then return end
@@ -80,8 +105,13 @@ local function SetItemLevel(self, link, category)
         local _, count, level, quality, class, equipSlot
         if (link) then
             count, level, _, _, quality, _, _, class, _, _, equipSlot = LibItemInfo:GetItemInfo(link)
-            SetItemLevelString(frame.levelString, level > 0 and level or "", quality)
-            SetItemSlotString(frame.slotString, class, equipSlot, link)
+            if (count > 0) then
+                SetItemLevelString(frame.levelString, "...")
+                return SetItemLevelScheduled(self, frame, link)
+            else
+                SetItemLevelString(frame.levelString, level > 0 and level or "", quality)
+                SetItemSlotString(frame.slotString, class, equipSlot, link)
+            end
         else
             SetItemLevelString(frame.levelString, "")
             SetItemSlotString(frame.slotString)
@@ -217,6 +247,12 @@ LibEvent:attachEvent("PLAYER_LOGIN", function()
             origFunc(self)
             SetItemLevel(self, self:GetItem(), "Bag")
         end
+    elseif (Combuctor and Combuctor.Item) then
+        local origFunc = Combuctor.Item.Update
+        function Combuctor.Item:Update()
+            origFunc(self)
+            SetItemLevel(self, self.hasItem, "Bag")
+        end
     end
     -- For LiteBag
     if (LiteBagItemButton_UpdateItem) then
@@ -315,7 +351,7 @@ end)
 
 local function ChatItemLevel(Hyperlink)
     local link = string.match(Hyperlink, "|H(.-)|h")
-    local unknown, level, name = LibItemInfo:GetItemInfo(link)
+    local unknown, level, name, _, _, _, _, class, subclass, _, equipSlot = LibItemInfo:GetItemInfo(link)
     if (unknown == 0 and level > 0) then
         local num, info = LibItemGem:GetItemGemInfo(link)
         local gem = ""
@@ -323,6 +359,13 @@ local function ChatItemLevel(Hyperlink)
             gem = gem .. "|TInterface\\ItemSocketingFrame\\UI-EmptySocket-Prismatic:0|t"
         end
         if (gem ~= "") then gem = gem.." " end
+        if (equipSlot and string.find(equipSlot, "INVTYPE_")) then
+            level = format("%s(%s)", level, _G[equipSlot] or equipSlot)
+        elseif (class == ARMOR) then
+            level = format("%s(%s)", level, class)
+        elseif (subclass and string.find(subclass, RELICSLOT)) then
+            level = format("%s(%s)", level, RELICSLOT)
+        end
         Hyperlink = Hyperlink:gsub("|h%[(.-)%]|h", "|h["..level..":"..name.."]|h"..gem)
     end
     return Hyperlink
@@ -365,6 +408,9 @@ LibEvent:attachTrigger("ITEMLEVEL_FRAME_SHOWN", function(self, frame, parent, ca
     if (TinyInspectDB and not TinyInspectDB["EnableItemLevel"..category]) then
         return frame:Hide()
     end
+    if (TinyInspectDB and TinyInspectDB.PaperDollItemLevelOutsideString) then
+        return
+    end
     local anchorPoint = TinyInspectDB and TinyInspectDB.ItemLevelAnchorPoint
     if (frame.anchorPoint ~= anchorPoint) then
         frame.anchorPoint = anchorPoint
@@ -380,14 +426,23 @@ LibEvent:attachTrigger("ITEMLEVEL_FRAME_CREATED", function(self, frame, parent)
         if (name and string.match(name, "^[IC].+Slot$")) then
             local id = parent:GetID()
             frame:ClearAllPoints()
+            frame.levelString:ClearAllPoints()
             if (id <= 5 or id == 9 or id == 15 or id == 19) then
-                frame:SetPoint("LEFT", parent, "RIGHT", 3, -1)
-            elseif (id == 16) then
-                frame:SetPoint("RIGHT", parent, "LEFT", -3, 1)
+                frame:SetPoint("LEFT", parent, "RIGHT", 7, -1)
+                frame.levelString:SetPoint("TOPLEFT")
+                frame.levelString:SetJustifyH("LEFT")
             elseif (id == 17) then
-                frame:SetPoint("LEFT", parent, "RIGHT", 3, 1)
+                frame:SetPoint("LEFT", parent, "RIGHT", 5, 1)
+                frame.levelString:SetPoint("TOPLEFT")
+                frame.levelString:SetJustifyH("LEFT")
+            elseif (id == 16) then
+                frame:SetPoint("RIGHT", parent, "LEFT", -5, 1)
+                frame.levelString:SetPoint("TOPRIGHT")
+                frame.levelString:SetJustifyH("RIGHT")
             else
-                frame:SetPoint("RIGHT", parent, "LEFT", -3, -1)
+                frame:SetPoint("RIGHT", parent, "LEFT", -7, -1)
+                frame.levelString:SetPoint("TOPRIGHT")
+                frame.levelString:SetJustifyH("RIGHT")
             end
         end
     end
