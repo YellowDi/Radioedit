@@ -125,11 +125,11 @@ function LookingForGroup_WQ:QUEST_ACCEPTED(info,index,wq_id)
 								_, leaderName, _, autoaccept = C_LFGList.GetSearchResultInfo(v)
 							if LookingForGroup.FilterRealm(leaderName) then
 								if autoaccept then
-									C_LFGList.ApplyToGroup(v, "", tank,healer,dps)
+									C_LFGList.ApplyToGroup(v, "", tank,healer,true)
 									b = b + 1
 								else
 									if comment:find("#WQ:"..wq_id.."#") then
-										C_LFGList.ApplyToGroup(v, "WorldQuestGroupFinderUser-"..wq_id, tank,healer,dps)
+										C_LFGList.ApplyToGroup(v, "WorldQuestGroupFinderUser-"..wq_id, tank,healer,true)
 										b = b + 1
 									end
 								end
@@ -225,6 +225,10 @@ function LookingForGroup_WQ:QUEST_TURNED_IN(info,id)
 		LookingForGroup_WQ.db.profile.doing_wq = nil
 		if lfg_active() then
 			StaticPopup_Hide("LookingForGroup_WQ_HardwareAPIDialog")
+			return
+		end
+		if LookingForGroup.db.profile.wq_leave_party then
+			LeaveParty()
 			return
 		end
 		if GetNumGroupMembers() < 2 then

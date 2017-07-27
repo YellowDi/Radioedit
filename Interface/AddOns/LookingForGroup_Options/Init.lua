@@ -83,14 +83,15 @@ function LookingForGroup_Options.FilterSearchResult(groupid)
 		local profile = LookingForGroup.db.profile
 		local filters = profile.spam_filter_keywords
 		local maxlength = profile.spam_filter_maxlength
-		if maxlength and ( maxlength < name:len() or maxlength < comment:len() ) then
+		if maxlength and ( maxlength < name:len() or maxlength < comment:len() or maxlength < voiceChat:len() ) then
 			return true
 		end
 		name = name:gsub(" ",""):lower()
 		comment = comment:gsub(" ",""):lower()
+		voiceChat = voiceChat:gsub(" ",""):lower()
 		for i=1,#filters do
 			local ele = filters[i]
-			if string_find(name,ele) or string_find(comment,ele) then
+			if string_find(name,ele) or string_find(comment,ele) or string_find(voiceChat,ele) then
 				return true
 			end
 		end
@@ -99,14 +100,15 @@ function LookingForGroup_Options.FilterSearchResult(groupid)
 		local profile = LookingForGroup.db.profile
 		local filters = profile.spam_filter_keywords
 		local maxlength = profile.spam_filter_maxlength
-		if maxlength and ( maxlength < name:len() or maxlength < comment:len() ) then
+		if maxlength and ( maxlength < name:len() or maxlength < comment:len() or maxlength < voiceChat:len() ) then
 			return
 		end
 		name = name:gsub(" ",""):lower()
 		comment = comment:gsub(" ",""):lower()
+		voiceChat = voiceChat:gsub(" ",""):lower()
 		for i=1,#filters do
 			local ele = filters[i]
-			if string_find(name,ele) or string_find(comment,ele) then
+			if string_find(name,ele) or string_find(comment,ele) or string_find(voiceChat,ele) then
 				return
 			end
 		end

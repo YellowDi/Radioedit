@@ -1,7 +1,7 @@
 ## Interface: 70200
 ## Author: cqwrteur
 ## Title: LookingForGroup Icon
-## Version: 271
+## Version: 278
 ## Dependencies: LookingForGroup
 ## LoadOnDemand: 1
 ## SavedVariablesPerCharacter: LookingForGroup_IconCharacterDB

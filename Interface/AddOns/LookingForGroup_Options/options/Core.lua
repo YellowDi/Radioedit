@@ -211,6 +211,29 @@ LookingForGroup_Options:push("options",{
 					get = function() return LookingForGroup_Options.db.profile.addon_meeting_stone end,
 				}
 			}
-		}
+		},
+		wq_config = 
+		{
+			name = TRACKER_HEADER_WORLD_QUESTS,
+			type = "group",
+			args =
+			{
+				leave_party =
+				{
+					name = PARTY_LEAVE,
+					type = "toggle",
+					get = function(info)
+						return LookingForGroup.db.profile.wq_leave_party
+					end,
+					set = function(info,val)
+						if val then
+							LookingForGroup.db.profile.wq_leave_party = true
+						else
+							LookingForGroup.db.profile.wq_leave_party = nil
+						end
+					end,
+				}
+			}
+		},
 	}
 })

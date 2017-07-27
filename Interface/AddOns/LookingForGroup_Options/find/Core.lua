@@ -523,7 +523,11 @@ LookingForGroup_Options:push("find",{
 								return LookingForGroup_Options.db.profile.find_a_group_role
 							end,
 							set = function(info,val)
-								LookingForGroup_Options.db.profile.find_a_group_role = val
+								if val then
+									LookingForGroup_Options.db.profile.find_a_group_role = true
+								else
+									LookingForGroup_Options.db.profile.find_a_group_role = nil
+								end
 							end
 						},
 						class =
@@ -535,7 +539,11 @@ LookingForGroup_Options:push("find",{
 								return LookingForGroup_Options.db.profile.find_a_group_class
 							end,
 							set = function(info,val)
-								LookingForGroup_Options.db.profile.find_a_group_class = val
+								if val then
+									LookingForGroup_Options.db.profile.find_a_group_class = true
+								else
+									LookingForGroup_Options.db.profile.find_a_group_class = nil
+								end
 							end
 						},
 						complete =
@@ -547,7 +555,11 @@ LookingForGroup_Options:push("find",{
 								return LookingForGroup_Options.db.profile.find_a_group_complete
 							end,
 							set = function(info,val)
-								LookingForGroup_Options.db.profile.find_a_group_complete = val
+								if val then
+									LookingForGroup_Options.db.profile.find_a_group_complete = true
+								else
+									LookingForGroup_Options.db.profile.find_a_group_complete = nil
+								end
 							end
 						},
 						gold =
@@ -559,7 +571,11 @@ LookingForGroup_Options:push("find",{
 								return LookingForGroup_Options.db.profile.find_a_group_gold
 							end,
 							set = function(info,val)
-								LookingForGroup_Options.db.profile.find_a_group_gold = val
+								if val then
+									LookingForGroup_Options.db.profile.find_a_group_gold = true
+								else
+									LookingForGroup_Options.db.profile.find_a_group_gold = nil
+								end
 							end
 						},
 						cancel =
@@ -568,7 +584,7 @@ LookingForGroup_Options:push("find",{
 							name = CANCEL,
 							type = "execute",
 							func = function()
-								LookingForGroup_Options:RestoreDBVariable("find_a_group_role")
+								LookingForGroup_Options.db.profile.find_a_group_role = nil
 								LookingForGroup_Options.db.profile.find_a_group_class = nil
 								LookingForGroup_Options.db.profile.find_a_group_gold = nil
 								LookingForGroup_Options.db.profile.find_a_group_complete = nil
@@ -590,7 +606,7 @@ LookingForGroup_Options:push("find",{
 					type = "execute",
 					func = function()
 						LookingForGroup_Options:RestoreDBVariable("find_a_group_filter")
-						LookingForGroup_Options:RestoreDBVariable("find_a_group_role")
+						LookingForGroup_Options.db.profile.find_a_group_role = nil
 						LookingForGroup_Options.db.profile.find_a_group_class = nil
 						LookingForGroup_Options.db.profile.find_a_group_gold = nil
 						LookingForGroup_Options.db.profile.find_a_group_complete = nil

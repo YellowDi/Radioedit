@@ -225,7 +225,7 @@ local function GetSearchEntryMenu(resultID)
 					local tb = {}
 					for i=1,#filters do
 						local ele = filters[i]
-						if not string_find(name,ele) and not string_find(comment,ele) then
+						if not string_find(name,ele) and not string_find(comment,ele) and not string_find(voiceChat,ele) then
 							table_insert(tb,ele)
 						end
 					end

@@ -190,11 +190,12 @@ function LookingForGroup_Core.GetSearchResultInfo(resultID)
 		concat_tb[#concat_tb+1] = "\n"
 		concat_tb[#concat_tb+1] = leaderName
 	end
-	if voiceChat and voiceChat~="" then
-		concat_tb[#concat_tb+1] = "\n"
-		concat_tb[#concat_tb+1]  = LFG_LIST_VOICE_CHAT
-		concat_tb[#concat_tb+1]  = " "
-		concat_tb[#concat_tb+1] = voiceChat
+	if voiceChat and voiceChat ~= "" then
+		table_insert(concat_tb,"\n")
+		table_insert(concat_tb,LFG_LIST_VOICE_CHAT)
+		table_insert(concat_tb," |c0000ff00")
+		table_insert(concat_tb,voiceChat)
+		table_insert(concat_tb,"|r")
 	end
 	if autoaccept then
 		concat_tb[#concat_tb+1] = "\n"
@@ -312,11 +313,12 @@ function LookingForGroup_Core.GetQuestSearchResultInfo(resultID)
 		concat_tb[#concat_tb+1] = "\n"
 		concat_tb[#concat_tb+1] = leaderName
 	end
-	if voiceChat and voiceChat~="" then
-		concat_tb[#concat_tb+1] = "\n"
-		concat_tb[#concat_tb+1]  = LFG_LIST_VOICE_CHAT_INSTR
-		concat_tb[#concat_tb+1]  = " "
-		concat_tb[#concat_tb+1] = voiceChat
+	if voiceChat and voiceChat ~= "" then
+		table_insert(concat_tb,"\n")
+		table_insert(concat_tb,LFG_LIST_VOICE_CHAT)
+		table_insert(concat_tb," |c0000ff00")
+		table_insert(concat_tb,voiceChat)
+		table_insert(concat_tb,"|r")
 	end
 	if autoaccept then
 		concat_tb[#concat_tb+1] = "\n"
@@ -402,7 +404,16 @@ function LookingForGroup_Core.GetActiveEntryInfo()
 	table_insert(concat_tb,"/")
 	table_insert(concat_tb,damager)
 	table_insert(concat_tb,")|r")
-	if questID == nil and comment ~= nil and comment ~= "" then
+	
+	if voiceChat and voiceChat ~= "" then
+		table_insert(concat_tb,"\n")
+		table_insert(concat_tb,LFG_LIST_VOICE_CHAT)
+		table_insert(concat_tb," |c0000ff00")
+		table_insert(concat_tb,voiceChat)
+		table_insert(concat_tb,"|r")
+	end
+	
+	if questID == nil and comment and comment ~= "" then
 		table_insert(concat_tb,"\n\n|cff8080cc")
 		table_insert(concat_tb,comment)
 		table_insert(concat_tb,"|r")
