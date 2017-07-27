@@ -20,7 +20,9 @@ function addon:DispatchMessage(message, ...)
             local listener,func = unpack(listener_tbl)
 
             if addon.debug_messages then
-                addon:print('dispatch m:'..message..' > '..(listener.name or 'nil'))
+                if not addon.DEBUG_IGNORE or not addon.DEBUG_IGNORE['m:'..message] then
+                    addon:print('p:'..(listener.priority or '?')..' |cff88ff88m:'..message..'|r > '..(listener.name or 'nil'))
+                end
             end
 
             if type(func) == 'string' and type(listener[func]) == 'function' then
@@ -82,7 +84,9 @@ local function event_frame_OnEvent(self,event,...)
                 end
 
                 if addon.debug_messages then
-                    addon:print('e:'..event..(unit and ' ['..unit..']' or '')..' > '..(table.name or 'nil'))
+                    if not addon.DEBUG_IGNORE or not addon.DEBUG_IGNORE['e:'..event] then
+                        addon:print('p:'..(table.priority or '?')..' |cffffff88e:'..event..(unit and ' |cff8888ff['..unit..']' or '')..'|r > '..(table.name or 'nil'))
+                    end
                 end
             else
                 addon:print('|cffff0000no listener for e:'..event..' in '..(table.name or 'nil'))
