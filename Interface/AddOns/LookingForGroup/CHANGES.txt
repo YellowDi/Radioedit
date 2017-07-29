@@ -1,9 +1,57 @@
 ------------------------------------------------------------------------
-r277 | euloanty@live.com | 2017-07-25 06:55:35 -0500 (Tue, 25 Jul 2017) | 1 line
+r286 | euloanty@live.com | 2017-07-28 08:23:46 -0500 (Fri, 28 Jul 2017) | 1 line
 Changed paths:
-   M /trunk/Options/options/Core.lua
+   M /trunk/Core/Core.lua
+
+lfg core color change
+------------------------------------------------------------------------
+r285 | euloanty@live.com | 2017-07-28 06:17:33 -0500 (Fri, 28 Jul 2017) | 1 line
+Changed paths:
    M /trunk/WQ/Core.lua
 
-world quest adds auto leave party feature
+wq
+------------------------------------------------------------------------
+r284 | euloanty@live.com | 2017-07-28 05:14:58 -0500 (Fri, 28 Jul 2017) | 1 line
+Changed paths:
+   M /trunk/Options/quick_join/Core.lua
+
+lfg
+------------------------------------------------------------------------
+r283 | euloanty@live.com | 2017-07-28 05:10:25 -0500 (Fri, 28 Jul 2017) | 1 line
+Changed paths:
+   M /trunk/Hook/Core.lua
+   M /trunk/Options/quick_join/Core.lua
+   M /trunk/Options/quick_join/checkbox.lua
+   M /trunk/Options/search_results/Core.lua
+
+allow role check
+------------------------------------------------------------------------
+r282 | euloanty@live.com | 2017-07-26 06:06:19 -0500 (Wed, 26 Jul 2017) | 1 line
+Changed paths:
+   M /trunk/Options/quick_join/Core.lua
+
+quick join
+------------------------------------------------------------------------
+r281 | euloanty@live.com | 2017-07-26 05:42:30 -0500 (Wed, 26 Jul 2017) | 1 line
+Changed paths:
+   M /trunk/Options/Core.lua
+   M /trunk/Options/Init.lua
+   M /trunk/Options/cr/Core.lua
+   M /trunk/Options/role/Core.lua
+   M /trunk/Options/search_results/Core.lua
+
+lfg
+------------------------------------------------------------------------
+r280 | euloanty@live.com | 2017-07-25 22:46:51 -0500 (Tue, 25 Jul 2017) | 1 line
+Changed paths:
+   M /trunk/Options/find/Core.lua
+
+expansion changed to Legacy
+------------------------------------------------------------------------
+r279 | euloanty@live.com | 2017-07-25 07:35:27 -0500 (Tue, 25 Jul 2017) | 1 line
+Changed paths:
+   M /trunk/Options/options/Core.lua
+
+add a lfg role check option
 ------------------------------------------------------------------------
 

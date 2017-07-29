@@ -30,6 +30,7 @@ function LookingForGroup_Options:OnInitialize()
 			find_a_group_filter = "",
 			find_a_group_encounters = {},
 			background_music = "sound\\music\\gluescreenmusic\\wow_main_theme.mp3",
+			role_comment_text = ""
 		}
 	},true)
 	options.args.profile = AceDBOptions:GetOptionsTable(LookingForGroup.db)

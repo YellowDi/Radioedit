@@ -27,7 +27,9 @@ function LookingForGroup_Options.GetRoleIcon(role)
 end
 
 function LookingForGroup_Options : push(key,val)
-	val.order = get_order()
+	if val.order == nil then
+		val.order = get_order()
+	end
 	self.option_table.args[key] = val
 end
 

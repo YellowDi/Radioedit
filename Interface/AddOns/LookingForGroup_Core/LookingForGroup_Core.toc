@@ -1,7 +1,7 @@
 ## Interface: 70200
 ## Author: cqwrteur
 ## Title: LookingForGroup Core
-## Version: 278
+## Version: 287
 ## Dependencies: LookingForGroup
 ## LoadOnDemand: 1
 

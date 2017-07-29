@@ -28,6 +28,7 @@ local function get_social()
 		local i
 		local fsr = LookingForGroup_Options.FilterSearchResult
 		local C_SocialQueue_GetGroupQueues = C_SocialQueue.GetGroupQueues
+		local temp_sup = {}
 		for i = 1, #all_groups do
 			local ai = all_groups[i]
 			local queues = C_SocialQueue_GetGroupQueues(ai)
@@ -40,23 +41,55 @@ local function get_social()
 						if lfgListID ~= nil then
 							if fsr(lfgListID) then
 								table_insert(social_tb,ai)
+								if select_sup[ai] then
+									temp_sup[ai] = true
+								end
 							end
 						else
 							table_insert(social_tb,ai)
+							if select_sup[ai] then
+								temp_sup[ai] = true
+							end
 						end
 					end
 				end
 			end
 		end
+		select_sup = temp_sup
 	end
 	return social_tb
 end
 
 function LookingForGroup_Options:EnableQuickJoin()
+	wipe(select_sup)
 	if LookingForGroup.db.profile.enable_qj then
 		self:RegisterEvent("SOCIAL_QUEUE_UPDATE")
 	else
 		self:UnregisterEvent("SOCIAL_QUEUE_UPDATE")
+	end
+end
+
+
+local function signup_func(comment_text)
+	local C_SocialQueue_GetGroupQueues = C_SocialQueue.GetGroupQueues
+	local C_LFGList_GetSearchResultInfo = C_LFGList.GetSearchResultInfo
+	local C_SocialQueue_RequestToJoin = C_SocialQueue.RequestToJoin
+	local apply_to_group = LookingForGroup_Options.ApplyToGroup
+	local tank,healer,damager =  select(2,GetLFGRoles())
+	local k,v
+	for k,v in pairs(select_sup) do
+		if v then
+			local queues = C_SocialQueue_GetGroupQueues(k)
+			if queues ~= nil then
+				local queueData = queues[1].queueData
+				local lfgListID = queueData.lfgListID
+				if lfgListID ~= nil then
+					apply_to_group(lfgListID,comment_text,tank,healer,damager)
+				else
+					C_SocialQueue_RequestToJoin(k,tank,healer,damager)
+				end
+			end
+		end
 	end
 end
 
@@ -72,24 +105,11 @@ LookingForGroup_Options:push("quick_join",{
 			name = SIGN_UP,
 			type = "execute",
 			func = function()
-				local C_SocialQueue_GetGroupQueues = C_SocialQueue.GetGroupQueues
-				local C_LFGList_GetSearchResultInfo = C_LFGList.GetSearchResultInfo
-				local C_SocialQueue_RequestToJoin = C_SocialQueue.RequestToJoin
-				local apply_to_group = LookingForGroup_Options.ApplyToGroup
-				local tank,healer,damager =  select(2,GetLFGRoles())
-				local k,v
-				for k,v in pairs(select_sup) do
-					if v then
-						local queues = C_SocialQueue_GetGroupQueues(k)
-						if queues ~= nil then
-							local queueData = queues[1].queueData
-							local lfgListID = queueData.lfgListID
-							if lfgListID ~= nil then
-								apply_to_group(lfgListID,"",tank,healer,damager)
-							else
-								C_SocialQueue_RequestToJoin(k,tank,healer,damager)
-							end
-						end
+				if next(select_sup) then
+					if LookingForGroup.db.profile.role_check then
+						LFGListApplicationDialog_Show(LFGListApplicationDialog,signup_func)
+					else
+						signup_func(LookingForGroup_Options.db.profile.role_comment_text)
 					end
 				end
 			end
@@ -195,6 +215,7 @@ AceGUI:RegisterWidgetType("LookingForGroup_Options_Quick_Join_Multiselect", func
 		local queues = C_SocialQueue.GetGroupQueues(val)
 		local queueData = queues[1].queueData
 		check:SetUserData("queueData", queueData)
+		check:SetValue(select_sup[val])
 		local lfgListID = queueData.lfgListID
 		if lfgListID ~= nil then
 			local id,activityID = C_LFGList.GetSearchResultInfo(lfgListID)
@@ -215,14 +236,14 @@ AceGUI:RegisterWidgetType("LookingForGroup_Options_Quick_Join_Multiselect", func
 			check:SetLabel("|cff8080cc"..SocialQueueUtil_GetQueueName(queueData).."|r")
 		end
 		check:SetCallback("OnValueChanged",function(self,event,val)
-			local user = self:GetUserDataTable()
-			local v = user.val
-			if select_sup[v] then
-				select_sup[v] = nil
+			if val then
+				val = nil
 			else
-				select_sup[v] = true
+				val = true
 			end
-			check:SetValue(select_sup[v])
+			local user = self:GetUserDataTable()
+			select_sup[user.val] = val
+			check:SetValue(val)
 		end)
 		check:SetCallback("OnLeave", function(self,...)
 			if LookingForGroup_Options.Quick_Join_Tooltip_Feedback_timer ~= nil then

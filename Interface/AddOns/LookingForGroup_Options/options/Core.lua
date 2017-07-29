@@ -110,6 +110,21 @@ LookingForGroup_Options:push("options",{
 				LookingForGroup_WQ:OnEnable()
 			end,
 		},
+		role_check =
+		{
+			name = LFG_LIST_ROLE_CHECK,
+			type = "toggle",
+			get = function(info)
+				return LookingForGroup.db.profile.role_check
+			end,
+			set = function(info,val)
+				if val then
+					LookingForGroup.db.profile.role_check = true
+				else
+					LookingForGroup.db.profile.role_check = nil
+				end
+			end,
+		},
 		hardware =
 		{
 			name = HARDWARE,

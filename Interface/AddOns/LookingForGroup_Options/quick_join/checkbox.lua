@@ -63,7 +63,7 @@ AceGUI:RegisterWidgetType("LookingForGroup_quick_join_checkbox", function()
 			end
 		else
 			local val = user.val
-			EasyMenu(GetSearchEntryMenu(val), LFGListFrameDropDown, self , 20, 0, "MENU")				
+			EasyMenu(GetSearchEntryMenu(val), LFGListFrameDropDown, "cursor" , 20, 0, "MENU")				
 		end
 	end)
 	check.width = "fill"

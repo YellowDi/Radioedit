@@ -16,10 +16,8 @@ function LookingForGroup_WQ:OnEnable()
 		self:RegisterEvent("QUEST_ACCEPTED")
 		self:RegisterEvent("QUEST_REMOVED")
 		self:RegisterEvent("QUEST_TURNED_IN")
-		local t = {button1=ACCEPT,button2=CANCEL}
-		t.timeOut = 45
-		StaticPopupDialogs.LookingForGroup_WQ_HardwareAPIDialog = t
-		
+		local tb = {button1=ACCEPT,button2=CANCEL,timeOut = 45}
+		StaticPopupDialogs.LookingForGroup_WQ_HardwareAPIDialog = tb
 	else
 		StaticPopupDialogs.LookingForGroup_WQ_HardwareAPIDialog = nil
 		self:UnregisterAllEvents()
@@ -191,12 +189,21 @@ function LookingForGroup_WQ:QUEST_ACCEPTED(info,index,wq_id)
 	end
 end
 
+
 function LookingForGroup_WQ:QUEST_REMOVED(info,id)
 	if LookingForGroup_WQ.db.profile.doing_wq == id then
 		if lfg_active() then
 			LookingForGroup_WQ.db.profile.doing_wq = nil
 			StaticPopup_Hide("LookingForGroup_WQ_HardwareAPIDialog")
 			return
+		end
+		local applications = C_LFGList.GetApplications()
+		local i
+		for i = 1,#applications do
+			local id,status = C_LFGList.GetApplicationInfo(applications[i])
+			if status == "invited" then
+				C_LFGList.DeclineInvite(id)
+			end
 		end
 		if IsMounted() then
 			LeaveParty()
@@ -226,6 +233,14 @@ function LookingForGroup_WQ:QUEST_TURNED_IN(info,id)
 		if lfg_active() then
 			StaticPopup_Hide("LookingForGroup_WQ_HardwareAPIDialog")
 			return
+		end
+		local applications = C_LFGList.GetApplications()
+		local i
+		for i = 1,#applications do
+			local id,status = C_LFGList.GetApplicationInfo(applications[i])
+			if status == "invited" then
+				C_LFGList.DeclineInvite(id)
+			end
 		end
 		if LookingForGroup.db.profile.wq_leave_party then
 			LeaveParty()

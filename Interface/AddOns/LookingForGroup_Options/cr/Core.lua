@@ -77,14 +77,15 @@ end
 sign_up=function()
 	local k,v
 	local tank,healer,dps = select(2,GetLFGRoles())
-	local ApplyToGroup = LookingForGroup_Options.SearchResults_ApplyToGroup
+	local ApplyToGroup = LookingForGroup_Options.ApplyToGroup
+	local comment_text = LookingForGroup_Options.db.profile.role_comment_text
 	for k,v in pairs(select_sup) do
 		if v then
 			local party = party_tb[k]
 			local i
 			local n = #party
 			for i=1,n do
-				ApplyToGroup(party[i],tank,healer,dps)
+				ApplyToGroup(party[i],comment_text,tank,healer,dps)
 			end
 		end
 	end

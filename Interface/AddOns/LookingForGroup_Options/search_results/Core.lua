@@ -19,8 +19,6 @@ local search_config_tb =
 	childGroups = "tab",
 }
 
-local comment_text = ""
-
 local failed_args =
 {
 	back = 
@@ -46,15 +44,9 @@ local failed_args =
 
 local select_sup = {}
 
---local signup_tb = 
-
 local ApplyToGroup = LookingForGroup_Options.ApplyToGroup
 
-function LookingForGroup_Options.SearchResults_ApplyToGroup(k,...)
-	ApplyToGroup(k,comment_text,...)
-end
-
-local function default_signup()
+local function signup_func(comment_text)
 	local k,v
 	local tank,healer,dps = select(2,GetLFGRoles())
 	for k,v in pairs(select_sup) do
@@ -64,75 +56,15 @@ local function default_signup()
 	end
 end
 
-local tank_icon = "|TInterface\\LFGFrame\\UI-LFG-ICON-PORTRAITROLES:16:16:0:0:64:64:0:19:22:41|t"
-local healer_icon = "|TInterface\\LFGFrame\\UI-LFG-ICON-PORTRAITROLES:16:16:0:0:64:64:20:39:1:20|t"
-local damager_icon = "|TInterface\\LFGFrame\\UI-LFG-ICON-PORTRAITROLES:16:16:0:0:64:64:20:39:22:41|t"
-local role =
-{
-	name = ROLE,
-	type = "group",
-	order = 5,
-	args =
-	{
-		tank = 
-		{
-			order = get_order(),
-			name = tank_icon,
-			desc = TANK,
-			type = "toggle",
-			get = function(info)
-				return select(2,GetLFGRoles())
-			end,
-			set = function(info,val)
-				local leader,tank,healer,damage = GetLFGRoles()
-				SetLFGRoles(leader,val,healer,damage)
-			end,
-			width = "full",
-		},
-		healer = 
-		{
-			order = get_order(),
-			name = healer_icon,
-			desc = HEALER,
-			type = "toggle",
-			get = function(info)
-				return select(3,GetLFGRoles())
-			end,
-			set = function(info,val)
-				local leader,tank,healer,damage = GetLFGRoles()
-				SetLFGRoles(leader,tank,val,damage)
-			end,
-			width = "full",
-		},
-		damage = 
-		{
-			order = get_order(),
-			name = damager_icon,
-			desc = DAMAGER,
-			type = "toggle",
-			get = function(info)
-				return select(4,GetLFGRoles())
-			end,
-			set = function(info,val)
-				local leader,tank,healer,damage = GetLFGRoles()
-				SetLFGRoles(leader,tank,healer,val)
-			end,
-			width = "full",
-		},
-		comment =
-		{
-			order = get_order(),
-			name = COMMENT,
-			type = "input",
-			multiline = true,
-			width = "full",
-			set = function(info,val)
-				comment_text = val
-			end,
-			get = function(info) return comment_text end,
-		}
-	}
-}
+local function default_signup()
+	if next(select_sup) then
+		if LookingForGroup.db.profile.role_check then
+			LFGListApplicationDialog_Show(LFGListApplicationDialog,signup_func)
+		else
+			signup_func(LookingForGroup_Options.db.profile.role_comment_text)
+		end
+	end
+end
 
 function LookingForGroup_Options.CreateReceivedArgs(dialogControl,values,group,custom_signup)
 	local args =
@@ -166,24 +98,14 @@ function LookingForGroup_Options.CreateReceivedArgs(dialogControl,values,group,c
 		},
 		results =
 		{
-			name = KBASE_SEARCH_RESULTS,
-			desc = LFG_LIST_SELECT_A_SEARCH_RESULT,
-			type = "group",
+			name = " ",
+			type = "multiselect",
 			order = 4,
-			args =
-			{
-				result =
-				{
-					name = " ",
-					type = "multiselect",
-					dialogControl = dialogControl,
-					values = values,
-					get = function(info,val)	return select_sup[val] end,
-					width = "full",
-				}
-			}
+			dialogControl = dialogControl,
+			values = values,
+			get = function(info,val)	return select_sup[val] end,
+			width = "full",
 		},
-		role = role
 	}
 	return args,select_sup
 end

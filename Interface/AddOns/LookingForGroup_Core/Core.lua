@@ -234,7 +234,7 @@ function LookingForGroup_Core.GetSearchResultInfo(resultID)
 		table_insert(name_ct," ")
 		table_insert(name_ct,name)
 	else
-		table_insert(name_ct," |c00ff6100")
+		table_insert(name_ct," |c0000ff00")
 		table_insert(name_ct,comment)
 		table_insert(name_ct,"|r")
 	end

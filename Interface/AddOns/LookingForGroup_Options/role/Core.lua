@@ -33,3 +33,103 @@ function LookingForGroup_Options.FilterRole(id,members,categoryID)
 		end
 	end
 end
+
+local order = 0
+local function get_order()
+	local temp = order
+	order = order +1
+	return temp
+end
+
+LookingForGroup_Options:push("role",
+{
+	name = ROLE,
+	type = "group",
+	order = 8,
+	args =
+	{
+		comment =
+		{
+			order = get_order(),
+			name = COMMENT,
+			type = "input",
+			multiline = true,
+			width = "full",
+			set = function(info,val)
+				LookingForGroup_Options.db.profile.role_comment_text = val
+			end,
+			get = function(info)
+				return LookingForGroup_Options.db.profile.role_comment_text
+			end,
+		},
+		cancel =
+		{
+			order = get_order(),
+			name = CANCEL,
+			type = "execute",
+			func = function()
+				LookingForGroup_Options:RestoreDBVariable("role_comment_text")
+			end
+		},
+		leader =
+		{
+			order = get_order(),
+			name = "|TInterface\\LFGFrame\\UI-LFG-ICON-PORTRAITROLES:16:16:0:0:64:64:0:19:1:20|t"..LEADER,
+			desc = GUIDE_TOOLTIP,
+			type = "toggle",
+			get = function(info)
+				return GetLFGRoles()
+			end,
+			set = function(info,val)
+				local leader,tank,healer,damage = GetLFGRoles()
+				SetLFGRoles(val,tank,healer,damage)
+			end,
+			width = "full",
+		},
+		tank = 
+		{
+			order = get_order(),
+			name = "|TInterface\\LFGFrame\\UI-LFG-ICON-PORTRAITROLES:16:16:0:0:64:64:0:19:22:41|t"..TANK,
+			desc = ROLE_DESCRIPTION_TANK,
+			type = "toggle",
+			get = function(info)
+				return select(2,GetLFGRoles())
+			end,
+			set = function(info,val)
+				local leader,tank,healer,damage = GetLFGRoles()
+				SetLFGRoles(leader,val,healer,damage)
+			end,
+			width = "full",
+		},
+		healer = 
+		{
+			order = get_order(),
+			name = "|TInterface\\LFGFrame\\UI-LFG-ICON-PORTRAITROLES:16:16:0:0:64:64:20:39:1:20|t"..HEALER,
+			desc = ROLE_DESCRIPTION_HEALER,
+			type = "toggle",
+			get = function(info)
+				return select(3,GetLFGRoles())
+			end,
+			set = function(info,val)
+				local leader,tank,healer,damage = GetLFGRoles()
+				SetLFGRoles(leader,tank,val,damage)
+			end,
+			width = "full",
+		},
+		damage = 
+		{
+			order = get_order(),
+			name = "|TInterface\\LFGFrame\\UI-LFG-ICON-PORTRAITROLES:16:16:0:0:64:64:20:39:22:41|t"..DAMAGER,
+			desc = ROLE_DESCRIPTION_DAMAGER,
+			type = "toggle",
+			get = function(info)
+				return select(4,GetLFGRoles())
+			end,
+			set = function(info,val)
+				local leader,tank,healer,damage = GetLFGRoles()
+				SetLFGRoles(leader,tank,healer,val)
+			end,
+			width = "full",
+		},
+	}
+})

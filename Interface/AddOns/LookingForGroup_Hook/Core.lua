@@ -29,6 +29,7 @@ function LookingForGroup_Hook:OnEnable()
 --		LFGListFrame:UnregisterEvent("LFG_LIST_APPLICANT_UPDATED")
 		self:RawHook(QuickJoinFrame,"Show",nullfun,true)
 		self:RawHookScript(LFGListFrame,"OnEvent",nullfun)
+		self:RawHookScript(LFGListApplicationDialog.SignUpButton,"OnClick","LFGListApplicationDialog_SignUpButton_OnClick")
 --		self:RawHookScript(QuickJoinMixin,"OnEvent",function() print("here") ;end,true)
 	else
 		self:UnhookAll()
@@ -151,4 +152,18 @@ function LookingForGroup_Hook:LFGListInviteDialog_Show(entry,resultID)
 
 	PlaySound("ReadyCheck");
 	FlashClientIcon();
+end
+
+function LookingForGroup_Hook:LFGListApplicationDialog_SignUpButton_OnClick(obj)
+	local dialog = obj:GetParent();
+	PlaySound("igMainMenuOptionCheckBoxOn");
+	local desc = dialog.Description.EditBox:GetText()
+	local results = dialog.resultID
+	local results_type = type(results)
+	if results_type == "number" then
+		C_LFGList.ApplyToGroup(results,desc, select(2,GetLFGRoles()));
+	elseif results_type == "function" then
+		results(desc)
+	end
+	StaticPopupSpecial_Hide(dialog);
 end

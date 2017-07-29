@@ -46,10 +46,10 @@ local C_LFGList_UpdateListing = C_LFGList.UpdateListing
 local C_LFGList_ClearSearchResults = C_LFGList.ClearSearchResults
 
 local function get_filters()
-	local expn = LookingForGroup_Options.db.profile.a_group_expansion
-	if expn then
+	local legacy = LookingForGroup_Options.db.profile.a_group_legacy
+	if legacy then
 		return LE_LFG_LIST_FILTER_NOT_RECOMMENDED
-	elseif expn == false then
+	elseif legacy == false then
 		return
 	else
 		return LE_LFG_LIST_FILTER_RECOMMENDED
@@ -167,11 +167,11 @@ function LookingForGroup_Options.UpdateEditing()
 			profile.start_a_group_title = ""
 		end
 		if bit.band(filters,LE_LFG_LIST_FILTER_RECOMMENDED) == 1 then
-			profile.a_group_expansion = nil
+			profile.a_group_legacy = nil
 		elseif bit.band(filters,LE_LFG_LIST_FILTER_NOT_RECOMMENDED) == 1 then
-			profile.a_group_expansion = false
+			profile.a_group_legacy = false
 		else
-			profile.a_group_expansion = true
+			profile.a_group_legacy = true
 		end
 		profile.a_group_category,profile.a_group_group,profile.a_group_activity = categoryID,groupID,activityID
 		wipe(encounters_tb)
@@ -360,29 +360,16 @@ local activity_options_args =
 		get = function(info) return LookingForGroup_Options.db.profile.a_group_activity end,
 		width = "full",
 	},
-	expansion =
+	legacy =
 	{
 		order = get_order(),
-		name = function() return _G["EXPANSION_NAME"..LFGListUtil_GetCurrentExpansion()] end,
+		name = LFG_LIST_LEGACY,
 		type = "toggle",
 		get = function(info)
-			local expn = LookingForGroup_Options.db.profile.a_group_expansion
-			if expn then
-				return
-			elseif expn == false then
-				return false
-			else
-				return true
-			end
+			return LookingForGroup_Options.db.profile.a_group_legacy
 		end,
 		set = function(info,val)
-			if val then
-				LookingForGroup_Options.db.profile.a_group_expansion = nil
-			elseif val == false then
-				LookingForGroup_Options.db.profile.a_group_expansion = false
-			else
-				LookingForGroup_Options.db.profile.a_group_expansion = true
-			end
+			LookingForGroup_Options.db.profile.a_group_legacy = val
 		end,
 		tristate = true,
 		width = "full",
@@ -395,7 +382,7 @@ local activity_options_args =
 			LookingForGroup_Options:RestoreDBVariable("a_group_category")
 			LookingForGroup_Options:RestoreDBVariable("a_group_activity")
 			LookingForGroup_Options:RestoreDBVariable("a_group_group")
-			LookingForGroup_Options.db.profile.a_group_expansion = nil
+			LookingForGroup_Options.db.profile.a_group_legacy = nil
 			wipe(encounters_tb)
 			wipe(LookingForGroup_Options.db.profile.find_a_group_encounters)
 		end
@@ -625,7 +612,7 @@ LookingForGroup_Options:push("find",{
 				Category = activity_options_args.Category,
 				Group =	activity_options_args.Group,
 				Activity = activity_options_args.Activity,
-				expansion = activity_options_args.expansion,
+				legacy = activity_options_args.legacy,
 				title =
 				{
 					order = get_order(),
