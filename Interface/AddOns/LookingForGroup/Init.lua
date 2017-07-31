@@ -36,12 +36,10 @@ function LookingForGroup.GetAddon(name)
 end
 
 function LookingForGroup:ChatCommand(input)
-	self.GetAddon("LookingForGroup_Options")
+	local LookingForGroup_Options = self.GetAddon("LookingForGroup_Options")
 	if not input or input:trim() == "" then
 		LibStub("AceConfigDialog-3.0"):Open("LookingForGroup")
 	else
-		local AceConfigCmd = LibStub("AceConfigCmd-3.0")
-		AceConfigCmd:HandleCommand("LookingForGroup", "LookingForGroup","")
-		AceConfigCmd:HandleCommand("LookingForGroup", "LookingForGroup",input)
+		LibStub("AceConfigCmd-3.0"):HandleCommand("LookingForGroup", "LookingForGroup",input)
 	end
 end

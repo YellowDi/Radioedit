@@ -124,5 +124,166 @@ LookingForGroup_Options:push("filter",{
 				return table.concat(LookingForGroup.db.profile.spam_filter_keywords,'\n')
 			end,
 		},
+		language =
+		{
+			name = LANGUAGE,
+			type = "group",
+			args =
+			{
+				enable =
+				{
+					name = ENABLE,
+					type = "toggle",
+					order = get_order(),
+					set = function(_,val)
+						if val then
+							LookingForGroup.db.profile.spam_filter_language = true
+						else
+							LookingForGroup.db.profile.spam_filter_language = nil
+						end
+					end,
+					get = function()
+						return LookingForGroup.db.profile.spam_filter_language
+					end,
+					width = "full"
+				},
+				english =
+				{
+					name = LFG_LIST_LANGUAGE_ENUS,
+					type = "toggle",
+					set = function(_,val)
+						if LookingForGroup.db.profile.spam_filter_language then
+							if val then
+								LookingForGroup.db.profile.spam_filter_language_english = true
+							else
+								LookingForGroup.db.profile.spam_filter_language_english = nil
+							end
+						end
+					end,
+					get = function()
+						return LookingForGroup.db.profile.spam_filter_language_english
+					end,
+				},
+				chinese =
+				{
+					name = LFG_LIST_LANGUAGE_ZHCN,
+					type = "toggle",
+					set = function(_,val)
+						if LookingForGroup.db.profile.spam_filter_language then
+							if val then
+								LookingForGroup.db.profile.spam_filter_language_chinese = true
+							else
+								LookingForGroup.db.profile.spam_filter_language_chinese = nil
+							end
+						end
+					end,
+					get = function()
+						return LookingForGroup.db.profile.spam_filter_language_chinese
+					end
+				},
+				korean =
+				{
+					name = LFG_LIST_LANGUAGE_KOKR,
+					type = "toggle",
+					set = function(_,val)
+						if LookingForGroup.db.profile.spam_filter_language then
+							if val then
+								LookingForGroup.db.profile.spam_filter_language_korean = true
+							else
+								LookingForGroup.db.profile.spam_filter_language_korean = nil
+							end
+						end
+					end,
+					get = function()
+						return LookingForGroup.db.profile.spam_filter_language_korean
+					end
+				},
+				russian =
+				{
+					name = LFG_LIST_LANGUAGE_RURU,
+					type = "toggle",
+					set = function(_,val)
+						if LookingForGroup.db.profile.spam_filter_language then
+							if val then
+								LookingForGroup.db.profile.spam_filter_language_russian = true
+							else
+								LookingForGroup.db.profile.spam_filter_language_russian = nil
+							end
+						end
+					end,
+					get = function()
+						return LookingForGroup.db.profile.spam_filter_language_russian
+					end
+				},
+				german =
+				{
+					name = LFG_LIST_LANGUAGE_DEDE,
+					type = "toggle",
+					set = function(_,val)
+						if LookingForGroup.db.profile.spam_filter_language then
+							if val then
+								LookingForGroup.db.profile.spam_filter_language_german = true
+							else
+								LookingForGroup.db.profile.spam_filter_language_german = nil
+							end
+						end
+					end,
+					get = function()
+						return LookingForGroup.db.profile.spam_filter_language_german
+					end
+				},
+				france =
+				{
+					name = LFG_LIST_LANGUAGE_FRFR,
+					type = "toggle",
+					set = function(_,val)
+						if LookingForGroup.db.profile.spam_filter_language then
+							if val then
+								LookingForGroup.db.profile.spam_filter_language_france = true
+							else
+								LookingForGroup.db.profile.spam_filter_language_france = nil
+							end
+						end
+					end,
+					get = function()
+						return LookingForGroup.db.profile.spam_filter_language_france
+					end
+				},
+				spanish =
+				{
+					name = LFG_LIST_LANGUAGE_ESES,
+					type = "toggle",
+					set = function(_,val)
+						if LookingForGroup.db.profile.spam_filter_language then
+							if val then
+								LookingForGroup.db.profile.spam_filter_language_spanish = true
+							else
+								LookingForGroup.db.profile.spam_filter_language_spanish = nil
+							end
+						end
+					end,
+					get = function()
+						return LookingForGroup.db.profile.spam_filter_language_spanish
+					end
+				},
+				portuguese =
+				{
+					name = LFG_LIST_LANGUAGE_PTBR,
+					type = "toggle",
+					set = function(_,val)
+						if LookingForGroup.db.profile.spam_filter_language then
+							if val then
+								LookingForGroup.db.profile.spam_filter_language_portuguese = true
+							else
+								LookingForGroup.db.profile.spam_filter_language_portuguese = nil
+							end
+						end
+					end,
+					get = function()
+						return LookingForGroup.db.profile.spam_filter_language_portuguese
+					end
+				}
+			}
+		}
 	}
 })

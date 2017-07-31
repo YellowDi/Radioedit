@@ -30,15 +30,6 @@ local function restore_chat_bubble()
 	end
 end
 
-local function disable_chat_bubble()
-	if chatbubbles == nil then
-		chatbubbles = GetCVarBool("chatBubbles")
-		SetCVar("chatBubbles",false)
-		C_Timer.NewTimer(0.01,restore_chat_bubble)
-	end
-	return true
-end
-
 local chatBubblesParty
 
 local function restore_chat_bubble_party()
@@ -78,28 +69,55 @@ end
 
 local function msg_filter(_, _, msg, player, _, _, _, _, _, _, _, _, _, guid)
 	if addon_filter(_, _, msg) then
-		return disable_chat_bubble()
+		return true
 	end
 	if guid and (IsGuildMember(guid) or IsCharacterFriend(guid) or UnitInRaid(player) or UnitInParty(player) or guid == UnitGUID("player") or select(2,BNGetGameAccountInfoByGUID(guid))) then
 		return
 	end
-	msg = msg:gsub(" ",""):lower()
-	local filters = LookingForGroup.db.profile.spam_filter_keywords
+	local profile = LookingForGroup.db.profile
 	local string_find = string.find
+	if profile.spam_filter_language then
+		if string_find(msg,"[\128-\255]") then
+			local f
+			if profile.spam_filter_language_russian and string_find(msg,"\208") then
+				f = true
+			end
+			if profile.spam_filter_language_chinese and string_find(msg,"\228-\233") then
+				f = true
+			end
+			if profile.spam_filter_language_korean and string_find(msg,"\234-\237") then
+				f = true
+			end
+			if not f then
+				return true
+			end
+		elseif profile.spam_filter_language_english then
+			return true
+		end
+	end
+	msg = msg:gsub(" ",""):lower()
+	local filters = profile.spam_filter_keywords
 	local n = #filters
 	for i=1,n do
 		local ele = filters[i]
 		if string_find(msg,ele) then
-			return disable_chat_bubble()
+			return true
 		end
 	end
 end
 
-local function system_filter(_, _, msg)
+local function msg_bubble_filter(...)
+	if msg_filter(...) then
+		if chatbubbles == nil then
+			chatbubbles = GetCVarBool("chatBubbles")
+			SetCVar("chatBubbles",false)
+			C_Timer.NewTimer(0.01,restore_chat_bubble)
+		end
+		return true
+	end
 end
 
 function LookingForGroup_SF:OnInitialize()
-	ChatFrame_AddMessageEventFilter("CHAT_MSG_SYSTEM",system_filter)
 end
 
 function LookingForGroup_SF:OnEnable()
@@ -108,10 +126,10 @@ function LookingForGroup_SF:OnEnable()
 		api = ChatFrame_AddMessageEventFilter
 	end
 	api("CHAT_MSG_WHISPER",msg_filter)
-	api("CHAT_MSG_SAY",msg_filter)
-	api("CHAT_MSG_DND",msg_filter)
-	api("CHAT_MSG_YELL",msg_filter)
-	api("CHAT_MSG_AFK",msg_filter)
+	api("CHAT_MSG_SAY",msg_bubble_filter)
+	api("CHAT_MSG_DND",msg_bubble_filter)
+	api("CHAT_MSG_YELL",msg_bubble_filter)
+	api("CHAT_MSG_AFK",msg_bubble_filter)
 	api("CHAT_MSG_CHANNEL",msg_filter)
 	api("CHAT_MSG_RAID",addon_filter)
 	api("CHAT_MSG_RAID_LEADER",addon_filter)

@@ -63,6 +63,31 @@ end
 
 local results_tb = {}
 
+local function language_filter(name,comment,voicechat)
+	local profile = LookingForGroup.db.profile
+	if profile.spam_filter_language then
+		local msg = name..voicechat..comment
+		if string_find(msg,"[\128-\255]") then
+			local f
+			if profile.spam_filter_language_russian and string_find(msg,"\208") then
+				f = true
+			end
+			if profile.spam_filter_language_chinese and string_find(msg,"\228-\233") then
+				f = true
+			end
+			if profile.spam_filter_language_korean and string_find(msg,"\234-\237") then
+				f = true
+			end
+			if not f then
+				return true
+			end
+		elseif not profile.spam_filter_language_english then
+			return true
+		end
+	end
+end
+
+
 local filter_realm = LookingForGroup.FilterRealm
 
 function LookingForGroup_Options.FilterSearchResult(groupid)
@@ -78,6 +103,9 @@ function LookingForGroup_Options.FilterSearchResult(groupid)
 		comment = summary
 	end
 	if not filter_realm(leaderName) then
+		return
+	end
+	if LookingForGroup_Options.db.profile.find_a_group_language and language_filter(name,comment,voiceChat) then
 		return
 	end
 	local i

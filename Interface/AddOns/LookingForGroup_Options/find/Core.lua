@@ -148,6 +148,7 @@ function LookingForGroup_Options.SetCategory(_,val)
 	profile.a_group_category = val
 	LookingForGroup_Options:RestoreDBVariable("a_group_group")
 	LookingForGroup_Options:RestoreDBVariable("a_group_activity")
+	LookingForGroup_Options.db.profile.find_a_group_activities = nil
 	wipe(encounters_tb)
 	wipe(profile.find_a_group_encounters)
 end
@@ -188,25 +189,78 @@ function LookingForGroup_Options.UpdateEditing()
 	end						
 end
 
+local function issubstr(s,substr)
+	local sbyte = string.byte
+	local i = 1
+	local slen = s:len()
+	local substr_len = substr:len()
+	local j = 1
+	while i <= slen and j <= substr_len do
+		if sbyte(s,i) == sbyte(substr,j) then
+			j = j + 1
+		else
+			j = 1
+		end
+		i = i + 1
+	end
+	if substr_len < j then
+		return true
+	end
+end
+
 local filter_role = LookingForGroup_Options.FilterRole
 
-local function filter_search_results(resultID,activity,encounters,mbnm,role,class,complete)
+local function filter_search_results(resultID,activity,encounters,mbnm,role,class,complete,twoxfilters)
 	local id, activityID, name, comment, voiceChat, iLvl, honorLevel,
 			age, numBNetFriends, numCharFriends, numGuildMates,
 			isDelisted, leaderName, numMembers = C_LFGList_GetSearchResultInfo(resultID)
-	if activity ~= nil and activity ~= activityID then
-		return false
-	end
-	if role or complete then
+	if role or complete or twoxfilters then
 		local fullName, shortName, categoryID, groupID, itemLevel, filters, minLevel, maxPlayers, displayType, activityOrder = C_LFGList_GetActivityInfo(activityID)
 		if (role and filter_role(id,numMembers,categoryID)) or (complete and numMembers < bit.rshift(maxPlayers,1) ) then
-			return false
+			return
+		end
+		if twoxfilters then
+			local profile = LookingForGroup_Options.db.profile
+			local activities = profile.find_a_group_activities
+			if activities and next(activities) then
+				local i = 1
+				while i <= #activities do
+					if issubstr(fullName,activities[i]) then
+						break
+					end
+					i = i + 1
+				end
+				if #activities < i then
+					return
+				end
+			end
+			local filter = profile.find_a_group_filter
+			if filter and next(filter) then
+				local summary,data = string_match(comment,'^(.*)%((^1^.+^^)%)$')
+				if summary then
+					comment = summary
+				end
+				if data and not issubstr(data,"LookingForGroup") then
+					name = ""
+					comment = summary
+				end
+				i = 1
+				while i <= #filter do
+					if issubstr(name,filter[i]) or issubstr(comment,filter[i]) or issubstr(voiceChat,filter[i]) then
+						break
+					end
+					i = i + 1
+				end
+				if #filter < i then
+					return
+				end
+			end
 		end
 	end
 	if class then
 		local class_tb = C_LFGList.GetSearchResultMemberCounts(resultID)
 		if class_tb[class] < 2 then
-			return false
+			return
 		end
 	end
 	local rse = C_LFGList_GetSearchResultEncounterInfo(id)
@@ -219,12 +273,12 @@ local function filter_search_results(resultID,activity,encounters,mbnm,role,clas
 				if gt then
 					mct = mct +1
 				elseif gt == false then
-					return false
+					return
 				end
 			end
 		end
 		if mct < mbnm then
-			return false
+			return
 		end
 	end
 	return true
@@ -269,11 +323,12 @@ local function get_search_result()
 		end
 	end
 	local complete = profile.find_a_group_complete
+	local twoxfilters = profile.find_a_group_2xfilters
 	applications_count = #results_table
 	local groupsIDs = GetSearchResults()
 	for i=1,#groupsIDs do
 		local number = groupsIDs[i]
-		if filter_search_results(number,activity,encounters,mbnm,find_a_group_role,class,complete) then
+		if filter_search_results(number,activity,encounters,mbnm,find_a_group_role,class,complete,twoxfilters) then
 			table_insert(results_table,number)
 		end
 	end
@@ -281,10 +336,9 @@ local function get_search_result()
 end
 				
 local matches = {}
-local searchTerm = {matches = matches}
-local filtermatches = {}
-local filterTerm = {matches = filtermatches}
-local terms = {searchTerm,filterTerm}
+local searchTerm = {}
+local filterTerm = {}
+local terms = {searchTerm}
 
 do_search=function()
 	local profile = LookingForGroup_Options.db.profile
@@ -292,28 +346,56 @@ do_search=function()
 	if ctg == 0 then
 		return
 	end
-	
-	wipe(filtermatches)
-	local gmatch = string.gmatch
-	for k,_ in gmatch(profile.find_a_group_filter, "([^\n]+)") do
-		table_insert(filtermatches,k)
-	end
-	local act = profile.a_group_activity
-	if act == 0 then
-		local grp = profile.a_group_group
-		if grp ~= 0 then
-			matches[1] = C_LFGList_GetActivityGroupInfo(grp)
+	local atvs = profile.find_a_group_activities
+	if atvs and next(atvs) then
+		if ctg == 2 then
+			if 3 < #atvs then
+				profile.find_a_group_2xfilters = true
+				matches[1] = nil
+				searchTerm.matches = matches
+			else
+				searchTerm.matches = atvs
+			end
 		else
-			matches[1] = nil
+			if 1 < #atvs then
+				profile.find_a_group_2xfilters = true
+				matches[1] = nil
+				searchTerm.matches = matches
+			else
+				searchTerm.matches = atvs
+			end
 		end
 	else
-		matches[1] = C_LFGList_GetActivityInfo(act)
+		local act = profile.a_group_activity
+		if act == 0 then
+			local grp = profile.a_group_group
+			if grp ~= 0 then
+				matches[1] = C_LFGList_GetActivityGroupInfo(grp)
+			else
+				matches[1] = nil
+			end
+		else
+			matches[1] = C_LFGList_GetActivityInfo(act)
+		end
+		searchTerm.matches = matches
+	end
+	local filter = profile.find_a_group_filter
+	if filter then
+		if 3 < #filter then
+			profile.find_a_group_2xfilters = true
+			terms[2] = nil
+		else
+			filterTerm.matches = profile.find_a_group_filter
+			terms[2] = filterTerm
+		end
+	else
+		terms[2] = nil
 	end
 	LookingForGroup_Options.Search(rc_args,get_search_result,ctg,terms,get_filters(),0)
 end
 rc_args.search_again.func = do_search				
 
-local select_tb = {}
+local activities_select_tb,filters_select_sup = {},{}
 
 local activity_options_args =
 {
@@ -360,6 +442,94 @@ local activity_options_args =
 		get = function(info) return LookingForGroup_Options.db.profile.a_group_activity end,
 		width = "full",
 	},
+	add =
+	{
+		order = get_order(),
+		name = ADD,
+		type = "execute",
+		func = function()
+			local profile = LookingForGroup_Options.db.profile
+			local act = profile.a_group_activity
+			local mtc
+			if act == 0 then
+				local grp = profile.a_group_group
+				if grp ~= 0 then
+					mtc = C_LFGList_GetActivityGroupInfo(grp)
+				end
+			else
+				mtc = C_LFGList_GetActivityInfo(act)
+			end
+			local atvs = profile.find_a_group_activities
+			if atvs then
+				for _,v in ipairs(atvs) do
+					if mtc == v then
+						return
+					end
+				end
+			else
+				atvs = {}
+				profile.find_a_group_activities = atvs
+			end
+			table_insert(atvs,mtc)
+		end
+	},
+	rmv = 
+	{
+		name = REMOVE,
+		type = "execute",
+		order = get_order(),
+		func = function()
+			local atvs = LookingForGroup_Options.db.profile.find_a_group_activities
+			if atvs then
+				local tb = {}
+				local i
+				for i = 1,#atvs do
+					if not activities_select_tb[i] then
+						table_insert(tb,atvs[i])
+					end
+				end
+				LookingForGroup_Options.db.profile.find_a_group_activities = tb
+				wipe(activities_select_tb)
+			end
+		end
+	},
+	activities =
+	{
+		order = get_order(),
+		name = FILTERS,
+		type = "multiselect",
+		width = "full",
+		values = function()
+			return LookingForGroup_Options.db.profile.find_a_group_activities
+		end,
+		get = function(info,key)
+			return activities_select_tb[key]
+		end,
+		set = function(info,key,val)
+			if val then
+				activities_select_tb[key] = true
+			else
+				activities_select_tb[key] = nil
+			end
+		end
+	},
+	cancel = 
+	{
+		order = get_order(),
+		name = CANCEL,
+		type = "execute",
+		func = function()
+			LookingForGroup_Options:RestoreDBVariable("a_group_category")
+			LookingForGroup_Options:RestoreDBVariable("a_group_activity")
+			LookingForGroup_Options:RestoreDBVariable("a_group_group")
+			LookingForGroup_Options.db.profile.a_group_legacy = nil
+			wipe(encounters_tb)
+			wipe(LookingForGroup_Options.db.profile.find_a_group_encounters)
+			wipe(activities_select_tb)
+			wipe(filters_select_sup)
+			LookingForGroup_Options.db.profile.find_a_group_activities = nil
+		end
+	},
 	legacy =
 	{
 		order = get_order(),
@@ -372,20 +542,6 @@ local activity_options_args =
 			LookingForGroup_Options.db.profile.a_group_legacy = val
 		end,
 		tristate = true,
-		width = "full",
-	},
-	cancel = 
-	{
-		name = CANCEL,
-		type = "execute",
-		func = function()
-			LookingForGroup_Options:RestoreDBVariable("a_group_category")
-			LookingForGroup_Options:RestoreDBVariable("a_group_activity")
-			LookingForGroup_Options:RestoreDBVariable("a_group_group")
-			LookingForGroup_Options.db.profile.a_group_legacy = nil
-			wipe(encounters_tb)
-			wipe(LookingForGroup_Options.db.profile.find_a_group_encounters)
-		end
 	},
 }
 
@@ -418,25 +574,106 @@ LookingForGroup_Options:push("find",{
 					type = "group",
 					args =
 					{
+						add =
+						{
+							order = get_order(),
+							name = ADD,
+							type = "input",
+							set = function(_,val)
+								if val == "" then
+									return
+								end
+								local profile = LookingForGroup_Options.db.profile
+								local ft = profile.find_a_group_filter
+								if ft == nil then
+									ft = {}
+									profile.find_a_group_filter = ft
+								end
+								for _,v in ipairs(ft) do
+									if val == v then
+										return
+									end
+								end
+								table_insert(ft,val)
+							end,
+							get = function()end,
+							width = "full"
+						},
 						filters =
 						{
 							order = get_order(),
 							name = FILTERS,
-							type = "input",
-							get = function(info) return LookingForGroup_Options.db.profile.find_a_group_filter end,
-							set = function(info,val) LookingForGroup_Options.db.profile.find_a_group_filter = val end,
+							type = "multiselect",
 							width = "full",
-							multiline = true,
+							values = function()
+								return LookingForGroup_Options.db.profile.find_a_group_filter
+							end,
+							get = function(info,key)
+								return filters_select_sup[key]
+							end,
+							set = function(info,key,val)
+								if val then
+									filters_select_sup[key] = true
+								else
+									filters_select_sup[key] = nil
+								end
+							end
 						},
-						cancel = 
+						rmv = 
+						{
+							name = REMOVE,
+							type = "execute",
+							order = get_order(),
+							func = function()
+								local ft = LookingForGroup_Options.db.profile.find_a_group_filter
+								if ft then
+									local tb = {}
+									local i
+									for i = 1,#ft do
+										if not filters_select_sup[i] then
+											table_insert(tb,ft[i])
+										end
+									end
+									LookingForGroup_Options.db.profile.find_a_group_filter = tb
+									wipe(filters_select_sup)
+								end
+							end
+						},
+						cancel =
 						{
 							order = get_order(),
 							name = CANCEL,
 							type = "execute",
 							func = function()
-								LookingForGroup_Options:RestoreDBVariable("find_a_group_filter")
+								wipe(filters_select_sup)
+								LookingForGroup_Options.db.profile.find_a_group_filter = nil
 							end
 						},
+						filter =
+						{
+							order = get_order(),
+							name = FILTERS,
+							type = "input",
+							set = function(_,val)
+								local gmatch = string.gmatch
+								local t,hash = {},{}
+								for k,_ in gmatch(val, "([^\n]+)") do
+									if not hash[k] then
+										table.insert(t,k)
+										hash[k] = true
+									end
+								end
+								LookingForGroup_Options.db.profile.find_a_group_filter = t
+							end,
+							get = function()
+								local ft = LookingForGroup_Options.db.profile.find_a_group_filter
+								if ft then
+									return table.concat(ft,'\n')
+								end
+							end,
+							width = "full",
+							multiline = true,
+						}
 					}
 				},
 				encounters =
@@ -503,7 +740,6 @@ LookingForGroup_Options:push("find",{
 					{
 						role =
 						{
-							order = get_order(),
 							name = ROLE,
 							type = "toggle",
 							get = function(info)
@@ -519,8 +755,7 @@ LookingForGroup_Options:push("find",{
 						},
 						class =
 						{
-							order = get_order(),
-							name = UnitClass("player"),
+							name = CLASS,
 							type = "toggle",
 							get = function(info)
 								return LookingForGroup_Options.db.profile.find_a_group_class
@@ -535,7 +770,6 @@ LookingForGroup_Options:push("find",{
 						},
 						complete =
 						{
-							order = get_order(),
 							name = COMPLETE,
 							type = "toggle",
 							get = function(info)
@@ -551,7 +785,6 @@ LookingForGroup_Options:push("find",{
 						},
 						gold =
 						{
-							order = get_order(),
 							name ="|TInterface\\MoneyFrame\\UI-GoldIcon:%d:%d:2:0|t",
 							type = "toggle",
 							get = function(info)
@@ -565,9 +798,39 @@ LookingForGroup_Options:push("find",{
 								end
 							end
 						},
+						language =
+						{
+							name = LANGUAGE,
+							type = "toggle",
+							get = function(info)
+								return LookingForGroup_Options.db.profile.find_a_group_language
+							end,
+							set = function(info,val)
+								if val then
+									LookingForGroup_Options.db.profile.find_a_group_language = true
+								else
+									LookingForGroup_Options.db.profile.find_a_group_language = nil
+								end
+							end
+						},
+						twoxfilters =
+						{
+							name = "2x"..FILTERS,
+							type = "toggle",
+							get = function()
+								return LookingForGroup_Options.db.profile.find_a_group_2xfilters
+							end,
+							set = function(_,val)
+								if val then
+									LookingForGroup_Options.db.profile.find_a_group_2xfilters = true
+								else
+									LookingForGroup_Options.db.profile.find_a_group_2xfilters = nil
+								end
+							end
+						},
 						cancel =
 						{
-							order = get_order(),
+							order = -1,
 							name = CANCEL,
 							type = "execute",
 							func = function()
@@ -575,7 +838,10 @@ LookingForGroup_Options:push("find",{
 								LookingForGroup_Options.db.profile.find_a_group_class = nil
 								LookingForGroup_Options.db.profile.find_a_group_gold = nil
 								LookingForGroup_Options.db.profile.find_a_group_complete = nil
-							end
+								LookingForGroup_Options.db.profile.find_a_group_language = nil
+								LookingForGroup_Options.db.profile.find_a_group_2xfilters = nil
+							end,
+							width = "full"
 						},
 					},
 				},
@@ -592,11 +858,14 @@ LookingForGroup_Options:push("find",{
 					name = CANCEL,
 					type = "execute",
 					func = function()
-						LookingForGroup_Options:RestoreDBVariable("find_a_group_filter")
+						LookingForGroup_Options.db.profile.find_a_group_filter = nil
+						wipe(filters_select_sup)
 						LookingForGroup_Options.db.profile.find_a_group_role = nil
 						LookingForGroup_Options.db.profile.find_a_group_class = nil
 						LookingForGroup_Options.db.profile.find_a_group_gold = nil
 						LookingForGroup_Options.db.profile.find_a_group_complete = nil
+						LookingForGroup_Options.db.profile.find_a_group_language = nil
+						LookingForGroup_Options.db.profile.find_a_group_2xfilters = nil
 						activity_options_args.cancel.func()
 					end
 				},

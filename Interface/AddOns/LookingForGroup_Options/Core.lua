@@ -27,7 +27,6 @@ function LookingForGroup_Options:OnInitialize()
 			start_a_group_voice_chat = "",
 			start_a_group_auto_accept = false,
 			start_a_group_private = false,
-			find_a_group_filter = "",
 			find_a_group_encounters = {},
 			background_music = "sound\\music\\gluescreenmusic\\wow_main_theme.mp3",
 			role_comment_text = ""
