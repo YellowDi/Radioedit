@@ -226,7 +226,7 @@ local av_tb =
 				cancel = 
 				{
 					order = get_order(),
-					name = CANCEL,
+					name = RESET,
 					type = "execute",
 					func = LookingForGroup_Options.UpdateEditing
 				},

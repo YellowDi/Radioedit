@@ -1,15 +1,8 @@
 ------------------------------------------------------------------------
-r293 | euloanty@live.com | 2017-07-30 03:57:15 -0500 (Sun, 30 Jul 2017) | 1 line
+r305 | euloanty@live.com | 2017-07-31 10:49:11 -0500 (Mon, 31 Jul 2017) | 1 line
 Changed paths:
-   M /trunk/Options/find/Core.lua
+   M /trunk/Options/options/Core.lua
 
-speed up
-------------------------------------------------------------------------
-r292 | euloanty@live.com | 2017-07-30 03:51:30 -0500 (Sun, 30 Jul 2017) | 1 line
-Changed paths:
-   M /trunk/Options/Core.lua
-   M /trunk/Options/find/Core.lua
-
-LFG 2x Filter searching
+bug fixing
 ------------------------------------------------------------------------
 

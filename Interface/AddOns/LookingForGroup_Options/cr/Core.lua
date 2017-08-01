@@ -9,7 +9,6 @@ local wipe = wipe
 local table_insert = table.insert
 local C_LFGList_GetSearchResultInfo = C_LFGList.GetSearchResultInfo
 local C_LFGList_ApplyToGroup = C_LFGList.ApplyToGroup
-local AceConfigRegistry = LibStub("AceConfigRegistry-3.0")
 local pairs = pairs
 
 local order = 0
@@ -70,7 +69,7 @@ local function callback()
 			table_insert(party_tb[realm],ri)
 		end
 	end
-	AceConfigRegistry:NotifyChange("LookingForGroup")
+	LookingForGroup_Options.NotifyChangeIfSelected("search_result")
 	return #party_tb
 end
 
@@ -137,7 +136,7 @@ LookingForGroup_Options:push("cr",{
 		cancel =
 		{
 			order = get_order(),
-			name = CANCEL,
+			name = RESET,
 			type = "execute",
 			func = function()
 				LookingForGroup_Options:RestoreDBVariable("cr_category")

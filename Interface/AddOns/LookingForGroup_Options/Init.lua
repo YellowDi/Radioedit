@@ -54,6 +54,25 @@ local tonumber = tonumber
 local string_match = string.match
 local table_insert = table.insert
 
+function LookingForGroup_Options.issubstr(s,substr)
+	local sbyte = string.byte
+	local i = 1
+	local slen = s:len()
+	local substr_len = substr:len()
+	local j = 1
+	while i <= slen and j <= substr_len do
+		if sbyte(s,i) == sbyte(substr,j) then
+			j = j + 1
+		else
+			j = 1
+		end
+		i = i + 1
+	end
+	if substr_len < j then
+		return true
+	end
+end
+
 function LookingForGroup_Options.GetLFG_AV()
 	if LookingForGroup_AV == nil then
 		LookingForGroup_AV = LookingForGroup.GetAddon("LookingForGroup_AV")
@@ -89,6 +108,7 @@ end
 
 
 local filter_realm = LookingForGroup.FilterRealm
+local issubstr = LookingForGroup_Options.issubstr
 
 function LookingForGroup_Options.FilterSearchResult(groupid)
 	local id, activityID, name, comment, voiceChat, iLvl, honorLevel,
@@ -98,7 +118,7 @@ function LookingForGroup_Options.FilterSearchResult(groupid)
 	if summary then
 		comment = summary
 	end
-	if data and not data:find("LookingForGroup") then
+	if data and not issubstr(data,"LookingForGroup") then
 		name = ""
 		comment = summary
 	end
@@ -157,6 +177,7 @@ function LookingForGroup_Options.GetSearchResults()
 			table_insert(results_tb,ele)
 		end
 	end
+	LookingForGroup_Options.SortSearchResults(results_tb)
 	return results_tb
 end
 

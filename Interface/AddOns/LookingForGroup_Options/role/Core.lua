@@ -65,7 +65,7 @@ LookingForGroup_Options:push("role",
 		cancel =
 		{
 			order = get_order(),
-			name = CANCEL,
+			name = RESET,
 			type = "execute",
 			func = function()
 				LookingForGroup_Options:RestoreDBVariable("role_comment_text")

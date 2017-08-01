@@ -47,6 +47,10 @@ end
 function LookingForGroup_Options:OnEnable()
 	self:EnableAV()
 	self:EnableQuickJoin()
+	local profile = self.db.profile
+	local v = AceConfigDialog:GetStatusTable("LookingForGroup")
+	v.width = profile.window_width
+	v.height = profile.window_height
 end
 
 function LookingForGroup_Options.IsSelected(groupname)

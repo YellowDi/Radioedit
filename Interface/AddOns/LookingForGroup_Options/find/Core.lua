@@ -189,26 +189,7 @@ function LookingForGroup_Options.UpdateEditing()
 	end						
 end
 
-local function issubstr(s,substr)
-	local sbyte = string.byte
-	local i = 1
-	local slen = s:len()
-	local substr_len = substr:len()
-	local j = 1
-	while i <= slen and j <= substr_len do
-		if sbyte(s,i) == sbyte(substr,j) then
-			j = j + 1
-		else
-			j = 1
-		end
-		i = i + 1
-	end
-	if substr_len < j then
-		return true
-	end
-end
-
-local filter_role = LookingForGroup_Options.FilterRole
+local issubstr = LookingForGroup_Options.issubstr
 
 local function filter_search_results(resultID,activity,encounters,mbnm,role,class,complete,twoxfilters)
 	local id, activityID, name, comment, voiceChat, iLvl, honorLevel,
@@ -216,7 +197,7 @@ local function filter_search_results(resultID,activity,encounters,mbnm,role,clas
 			isDelisted, leaderName, numMembers = C_LFGList_GetSearchResultInfo(resultID)
 	if role or complete or twoxfilters then
 		local fullName, shortName, categoryID, groupID, itemLevel, filters, minLevel, maxPlayers, displayType, activityOrder = C_LFGList_GetActivityInfo(activityID)
-		if (role and filter_role(id,numMembers,categoryID)) or (complete and numMembers < bit.rshift(maxPlayers,1) ) then
+		if (role and role(id,numMembers,categoryID)) or (complete and numMembers < bit.rshift(maxPlayers,1) ) then
 			return
 		end
 		if twoxfilters then
@@ -298,7 +279,10 @@ local function get_search_result()
 	local profile = LookingForGroup_Options.db.profile
 	local encounters = profile.find_a_group_encounters
 	local activity = profile.a_group_activity
-	local find_a_group_role = profile.find_a_group_role
+	local role
+	if profile.find_a_group_role then
+		role = LookingForGroup_Options.FilterRole
+	end
 	if activity == 0 then
 		activity = nil
 	end
@@ -328,7 +312,7 @@ local function get_search_result()
 	local groupsIDs = GetSearchResults()
 	for i=1,#groupsIDs do
 		local number = groupsIDs[i]
-		if filter_search_results(number,activity,encounters,mbnm,find_a_group_role,class,complete,twoxfilters) then
+		if filter_search_results(number,activity,encounters,mbnm,role,class,complete,twoxfilters) then
 			table_insert(results_table,number)
 		end
 	end
@@ -516,7 +500,7 @@ local activity_options_args =
 	cancel = 
 	{
 		order = get_order(),
-		name = CANCEL,
+		name = RESET,
 		type = "execute",
 		func = function()
 			LookingForGroup_Options:RestoreDBVariable("a_group_category")
@@ -642,7 +626,7 @@ LookingForGroup_Options:push("find",{
 						cancel =
 						{
 							order = get_order(),
-							name = CANCEL,
+							name = RESET,
 							type = "execute",
 							func = function()
 								wipe(filters_select_sup)
@@ -713,7 +697,7 @@ LookingForGroup_Options:push("find",{
 						cancel =
 						{
 							order = get_order(),
-							name = CANCEL,
+							name = RESET,
 							type = "execute",
 							func = function()
 								wipe(encounters_tb)
@@ -831,7 +815,7 @@ LookingForGroup_Options:push("find",{
 						cancel =
 						{
 							order = -1,
-							name = CANCEL,
+							name = RESET,
 							type = "execute",
 							func = function()
 								LookingForGroup_Options.db.profile.find_a_group_role = nil
@@ -855,7 +839,7 @@ LookingForGroup_Options:push("find",{
 				cancel = 
 				{
 					order = get_order(),
-					name = CANCEL,
+					name = RESET,
 					type = "execute",
 					func = function()
 						LookingForGroup_Options.db.profile.find_a_group_filter = nil
@@ -1092,7 +1076,7 @@ LookingForGroup_Options:push("find",{
 				cancel = 
 				{
 					order = get_order(),
-					name = CANCEL,
+					name = RESET,
 					type = "execute",
 					func = function()
 						activity_options_args.cancel.func()

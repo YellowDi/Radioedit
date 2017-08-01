@@ -79,7 +79,7 @@ LookingForGroup_Options:push("rf",{
 		},
 		cancel =
 		{
-			name = CANCEL,
+			name = RESET,
 			type = "execute",
 			order = get_order(),
 			func = function() wipe(select_tb) end

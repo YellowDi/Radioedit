@@ -1,4 +1,3 @@
-local LibStub = LibStub
 local AceAddon = LibStub("AceAddon-3.0")
 local LookingForGroup = AceAddon:GetAddon("LookingForGroup")
 local LookingForGroup_Options = AceAddon:GetAddon("LookingForGroup_Options")
@@ -194,7 +193,7 @@ LookingForGroup_Options:push("options",{
 				},
 				cancel = 
 				{
-					name = CANCEL,
+					name = RESET,
 					order = 4,
 					type = "execute",
 					func = function()
@@ -250,5 +249,94 @@ LookingForGroup_Options:push("options",{
 				}
 			}
 		},
+		windowed =
+		{
+			name = VIDEO_OPTIONS_WINDOWED,
+			type = "group",
+			args =
+			{
+				save = 
+				{
+					name = SAVE,
+					order = 1,
+					type = "execute",
+					func = function()
+						local st = LibStub("AceConfigDialog-3.0"):GetStatusTable("LookingForGroup")
+						local height, width	= st.height, st.width
+						local profile = LookingForGroup_Options.db.profile
+						if height == 500 then
+							profile.window_height = nil
+						else
+							profile.window_height = height
+						end
+						if width == 700 then
+							profile.window_width = nil
+						else
+							profile.window_width = width
+						end
+					end,
+				},
+				cancel = 
+				{
+					name = RESET,
+					order = 2,
+					type = "execute",
+					func = function()
+						local v = LibStub("AceConfigDialog-3.0"):GetStatusTable("LookingForGroup")
+						local profile = LookingForGroup_Options.db.profile
+						v.height = nil
+						profile.window_height = nil
+						v.width = nil
+						profile.window_width = nil
+					end,
+				},
+				height =
+				{
+					name = COMPACT_UNIT_FRAME_PROFILE_FRAMEHEIGHT,
+					type = "range",
+					max = tonumber(GetCVar("gxFullscreenResolution"):match("%d+x(%d+)")),
+					step = 0.01,
+					get = function()
+						local v = (LibStub("AceConfigDialog-3.0"):GetStatusTable("LookingForGroup")).height
+						if v then
+							return v
+						else
+							return 500
+						end
+					end,
+					set = function(info,val)
+						local st = LibStub("AceConfigDialog-3.0"):GetStatusTable("LookingForGroup")
+						if val == 500 then
+							st.height = nil
+						else
+							st.height = val
+						end
+					end,
+				},
+				width =
+				{
+					name = COMPACT_UNIT_FRAME_PROFILE_FRAMEWIDTH,
+					type = "range",
+					max = tonumber(GetCVar("gxFullscreenResolution"):match("(%d+)x%d+")),
+					step = 0.01,
+					get = function(info)
+						local v = (LibStub("AceConfigDialog-3.0"):GetStatusTable("LookingForGroup")).width
+						if v then
+							return v
+						else
+							return 700
+						end
+					end,
+					set = function(info,val)
+						local st = LibStub("AceConfigDialog-3.0"):GetStatusTable("LookingForGroup")
+						if val == 700 then
+							st.width = nil
+						else
+							st.width = val
+						end
+					end,
+				},
+			}
+		}
 	}
 })

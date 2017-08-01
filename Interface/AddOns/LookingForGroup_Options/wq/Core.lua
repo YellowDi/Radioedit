@@ -75,14 +75,14 @@ end
 rc_args.search_again.func = LookingForGroup_Options.do_wq_search
 
 LookingForGroup_Options:push("wq",{
-	name = TRACKER_HEADER_WORLD_QUESTS,
+	name = TRANSMOG_SOURCE_2,
 	type = "group",
 	args =
 	{
 		quest_id =
 		{
 			order = get_order(),
-			name = BATTLE_PET_SOURCE_2..ID,
+			name = ID,
 			type = "input",
 			get = function(info)
 				local quest_id = LookingForGroup_Options.db.profile.start_a_group_quest_id
@@ -123,7 +123,7 @@ LookingForGroup_Options:push("wq",{
 		cancel =
 		{
 			order = get_order(),
-			name = CANCEL,
+			name = RESET,
 			type = "execute",
 			func = function()
 				LookingForGroup_Options:RestoreDBVariable("start_a_group_quest_id")

@@ -186,8 +186,6 @@ local function requests_values()
 	return requests_vtb
 end
 
-local AceConfigRegistry = LibStub("AceConfigRegistry-3.0")
-
 function LookingForGroup_Options:LFG_LIST_APPLICANT_UPDATED()
 	if LookingForGroup_Options.Tooltip_Feedback_timer ~= nil then
 		LookingForGroup_Options:CancelTimer(LookingForGroup_Options.Tooltip_Feedback_timer)
@@ -203,7 +201,7 @@ function LookingForGroup_Options.clear_requests()
 	if LookingForGroup_Options.option_table.args.requests then
 		LookingForGroup_Options.option_table.args.requests = nil
 		wipe(app_tb)
-		AceConfigRegistry:NotifyChange("LookingForGroup")
+		LibStub("AceConfigRegistry-3.0"):NotifyChange("LookingForGroup")
 	end
 end
 
@@ -235,7 +233,7 @@ local requests =
 					end
 				end
 				wipe(app_tb)
-				AceConfigRegistry:NotifyChange("LookingForGroup")
+				LookingForGroup_Options.NotifyChangeIfSelected("requests")
 			end
 		},
 		delist = 
