@@ -16,6 +16,7 @@ function LookingForGroup_WQ:OnEnable()
 		self:RegisterEvent("QUEST_ACCEPTED")
 		self:RegisterEvent("QUEST_REMOVED")
 		self:RegisterEvent("QUEST_TURNED_IN")
+		self:RegisterEvent("LFG_LIST_ENTRY_EXPIRED_TOO_MANY_PLAYERS")
 		local tb = {button1=ACCEPT,button2=CANCEL,timeOut = 45}
 		StaticPopupDialogs.LookingForGroup_WQ_HardwareAPIDialog = tb
 	else
@@ -191,40 +192,42 @@ end
 
 
 function LookingForGroup_WQ:QUEST_REMOVED(info,id)
-	if LookingForGroup_WQ.db.profile.doing_wq == id then
-		if lfg_active() then
-			LookingForGroup_WQ.db.profile.doing_wq = nil
-			StaticPopup_Hide("LookingForGroup_WQ_HardwareAPIDialog")
-			return
-		end
-		local applications = C_LFGList.GetApplications()
-		local i
-		for i = 1,#applications do
-			local id,status = C_LFGList.GetApplicationInfo(applications[i])
-			if status == "invited" then
-				C_LFGList.DeclineInvite(id)
+	C_Timer.After(0.1,function()
+		if LookingForGroup_WQ.db.profile.doing_wq == id then
+			if lfg_active() then
+				LookingForGroup_WQ.db.profile.doing_wq = nil
+				StaticPopup_Hide("LookingForGroup_WQ_HardwareAPIDialog")
+				return
 			end
-		end
-		if IsMounted() then
-			LeaveParty()
-			LookingForGroup_WQ.db.profile.doing_wq = nil
-			StaticPopup_Hide("LookingForGroup_WQ_HardwareAPIDialog")
-			return
-		end
-		if GetNumGroupMembers() == 0 then
-			LookingForGroup_WQ.db.profile.doing_wq = nil
-			StaticPopup_Hide("LookingForGroup_WQ_HardwareAPIDialog")
-		else
-			StaticPopupDialogs.LookingForGroup_WQ_HardwareAPIDialog.text = PARTY_LEAVE
-			StaticPopupDialogs.LookingForGroup_WQ_HardwareAPIDialog.OnAccept = function()
-				LeaveParty()
-				if LookingForGroup_WQ.db.profile.doing_wq == id then
-					LookingForGroup_WQ.db.profile.doing_wq = nil
+			local applications = C_LFGList.GetApplications()
+			local i
+			for i = 1,#applications do
+				local id,status = C_LFGList.GetApplicationInfo(applications[i])
+				if status == "invited" then
+					C_LFGList.DeclineInvite(id)
 				end
 			end
-			StaticPopup_Show("LookingForGroup_WQ_HardwareAPIDialog")
+			if IsMounted() then
+				LeaveParty()
+				LookingForGroup_WQ.db.profile.doing_wq = nil
+				StaticPopup_Hide("LookingForGroup_WQ_HardwareAPIDialog")
+				return
+			end
+			if GetNumGroupMembers() == 0 then
+				LookingForGroup_WQ.db.profile.doing_wq = nil
+				StaticPopup_Hide("LookingForGroup_WQ_HardwareAPIDialog")
+			else
+				StaticPopupDialogs.LookingForGroup_WQ_HardwareAPIDialog.text = PARTY_LEAVE
+				StaticPopupDialogs.LookingForGroup_WQ_HardwareAPIDialog.OnAccept = function()
+					LeaveParty()
+					if LookingForGroup_WQ.db.profile.doing_wq == id then
+						LookingForGroup_WQ.db.profile.doing_wq = nil
+					end
+				end
+				StaticPopup_Show("LookingForGroup_WQ_HardwareAPIDialog")
+			end
 		end
-	end
+	end)
 end
 
 function LookingForGroup_WQ:QUEST_TURNED_IN(info,id)
@@ -253,6 +256,24 @@ function LookingForGroup_WQ:QUEST_TURNED_IN(info,id)
 			StaticPopupDialogs.LookingForGroup_WQ_HardwareAPIDialog.text = PARTY_LEAVE
 			StaticPopupDialogs.LookingForGroup_WQ_HardwareAPIDialog.OnAccept = LeaveParty
 			StaticPopup_Show("LookingForGroup_WQ_HardwareAPIDialog")
+		end
+	end
+end
+
+function LookingForGroup_WQ:LFG_LIST_ENTRY_EXPIRED_TOO_MANY_PLAYERS()
+	local doing_wq = LookingForGroup_WQ.db.profile.doing_wq
+	if doing_wq and UnitInParty("player") and UnitIsGroupLeader("player") then
+		if LookingForGroup.db.profile.hardware then
+			if LookingForGroup.db.profile.wq_start_a_group then
+				local dialog = StaticPopupDialogs.LookingForGroup_WQ_HardwareAPIDialog
+				dialog.text = START_A_GROUP
+				dialog.OnAccept = function()
+					C_LFGList.CreateListing(LFGListUtil_GetQuestCategoryData(doing_wq),"",0,0,"","",true,false,doing_wq)
+				end
+				StaticPopup_Show("LookingForGroup_WQ_HardwareAPIDialog")
+			end
+		else
+			C_LFGList.CreateListing(LFGListUtil_GetQuestCategoryData(doing_wq),"",0,0,"","",true,false,doing_wq)
 		end
 	end
 end

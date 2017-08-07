@@ -27,7 +27,9 @@ function LookingForGroup_Hook:OnEnable()
 --		LFGListFrame:UnregisterEvent("LFG_LIST_APPLICANT_LIST_UPDATED")
 --		LFGListFrame:UnregisterEvent("LFG_LIST_APPLICANT_LIST_UPDATED")
 --		LFGListFrame:UnregisterEvent("LFG_LIST_APPLICANT_UPDATED")
-		self:RawHook(QuickJoinFrame,"Show",nullfun,true)
+		if LookingForGroup.db.profile.hook_quick_join then
+			self:RawHook(QuickJoinFrame,"Show",nullfun,true)
+		end
 		self:RawHookScript(LFGListFrame,"OnEvent",nullfun)
 		self:RawHookScript(LFGListApplicationDialog.SignUpButton,"OnClick","LFGListApplicationDialog_SignUpButton_OnClick")
 --		self:RawHookScript(QuickJoinMixin,"OnEvent",function() print("here") ;end,true)
@@ -166,4 +168,8 @@ function LookingForGroup_Hook:LFGListApplicationDialog_SignUpButton_OnClick(obj)
 		results(desc)
 	end
 	StaticPopupSpecial_Hide(dialog);
+end
+
+function LookingForGroup_Hook:QuickJoinToastButton_OnShow(...)
+	LookingForGroup:Print(...)
 end

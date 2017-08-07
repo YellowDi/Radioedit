@@ -67,6 +67,10 @@ function LookingForGroup_Core.GetSearchResultName(resultID)
 	if summary then
 		comment = summary
 	end
+	if activityID == 44 and string_find(name,"#AV#") then
+		name = string.sub(name,5)
+		activityName = GetMapNameByID(401)
+	end
 	if data and not string_find(data,"LookingForGroup") then
 		name = '|cff8080cc'..activityName
 	else
@@ -94,6 +98,10 @@ function LookingForGroup_Core.GetSearchResultInviteDialog(resultID)
 			_, leaderName, numMembers = C_LFGList_GetSearchResultInfo(resultID)
 	local activityName, shortName, categoryID = C_LFGList_GetActivityInfo(activityID)
 	local summary,data = string_match(comment,'^(.*)%((^1^.+^^)%)$')
+	if activityID == 44 and string_find(name,"#AV#") then
+		name = string.sub(name,5)
+		activityName = GetMapNameByID(401)
+	end
 	if data and not string_find(data,"LookingForGroup") then
 		return activityName,add_role_num(nil,id,numMembers)
 	end
@@ -153,16 +161,19 @@ function LookingForGroup_Core.GetSearchResultInfo(resultID)
 	wipe(healer_tb)
 	wipe(damager_tb)
 	wipe(name_ct)
-	table_insert(name_ct,"|cff8080cc")
-	table_insert(name_ct,activityName)
-	table_insert(name_ct,"|r")
+	if activityID == 44 and string_find(name,"#AV#") then
+		name_ct[#name_ct+1]=GetMapNameByID(401)
+		name = string.sub(name,5)
+	else
+		name_ct[#name_ct+1]=activityName
+	end
 	local summary,data = string_match(comment,'^(.*)%((^1^.+^^)%)$')
 	if summary then
 		comment = summary
 	end
 	if string_find(name,"集合石") or (data and not string_find(data,"LookingForGroup")) then
 		name = nil
-	else
+	else	
 		name = "|cffffff00"..name.."|r"
 		concat_tb[#concat_tb+1] = name
 		concat_tb[#concat_tb+1] = "\n"
@@ -203,8 +214,6 @@ function LookingForGroup_Core.GetSearchResultInfo(resultID)
 	end
 	concat_tb[#concat_tb+1] = "\n"
 	concat_tb[#concat_tb+1] = numMembers
-	table_insert(name_ct," ")
-	table_insert(name_ct,numMembers)
 	local i
 	for i = 1, numMembers do
 		local role, class, class_localized = C_LFGList_GetSearchResultMemberInfo(id,i)
@@ -217,19 +226,40 @@ function LookingForGroup_Core.GetSearchResultInfo(resultID)
 		end
 	end
 	concat_tb[#concat_tb+1] = " ("
-	table_insert(name_ct,"(")
 	concat_tb[#concat_tb+1] = #tank_tb
-	table_insert(name_ct,#tank_tb)
 	concat_tb[#concat_tb+1] = "/"
-	table_insert(name_ct,"/")
 	concat_tb[#concat_tb+1] = #healer_tb
-	table_insert(name_ct,#healer_tb)
 	concat_tb[#concat_tb+1] = "/"
-	table_insert(name_ct,"/")
 	concat_tb[#concat_tb+1] = #damager_tb
-	table_insert(name_ct,#damager_tb)
 	concat_tb[#concat_tb+1] = ")"
-	table_insert(name_ct,")")
+	table_insert(name_ct," ")
+	if numMembers < 6 then
+		for i=1,#tank_tb do
+			table_insert(name_ct,"|c")
+			table_insert(name_ct,RAID_CLASS_COLORS[tank_tb[i]].colorStr)
+			table_insert(name_ct,"T|r")
+		end
+		for i=1,#healer_tb do
+			table_insert(name_ct,"|c")
+			table_insert(name_ct,RAID_CLASS_COLORS[healer_tb[i]].colorStr)
+			table_insert(name_ct,"H|r")
+		end
+		for i=1,#damager_tb do
+			table_insert(name_ct,"|c")
+			table_insert(name_ct,RAID_CLASS_COLORS[damager_tb[i]].colorStr)
+			table_insert(name_ct,"D|r")
+		end
+	else
+		name_ct[#name_ct+1] = "|cff8080cc"
+		table_insert(name_ct,numMembers)
+		table_insert(name_ct,"(")
+		table_insert(name_ct,#tank_tb)
+		table_insert(name_ct,"/")
+		table_insert(name_ct,#healer_tb)
+		table_insert(name_ct,"/")
+		table_insert(name_ct,#damager_tb)
+		table_insert(name_ct,")|r")
+	end
 	if name then
 		table_insert(name_ct," ")
 		table_insert(name_ct,name)
@@ -276,9 +306,7 @@ function LookingForGroup_Core.GetQuestSearchResultInfo(resultID)
 	wipe(damager_tb)
 	wipe(name_ct)
 	local activityName = C_LFGList_GetActivityInfo(activityID)
-	table_insert(name_ct,"|cff8080cc")
 	table_insert(name_ct,activityName)
-	table_insert(name_ct,"|r")
 	local summary,data = string_match(comment,'^(.*)%((^1^.+^^)%)$')
 	if summary then
 		comment = summary
@@ -330,8 +358,6 @@ function LookingForGroup_Core.GetQuestSearchResultInfo(resultID)
 	end
 	concat_tb[#concat_tb+1] = "\n"
 	concat_tb[#concat_tb+1] = numMembers
-	table_insert(name_ct," ")
-	table_insert(name_ct,numMembers)
 	local i
 	for i = 1, numMembers do
 		local role, class, class_localized = C_LFGList_GetSearchResultMemberInfo(id,i)
@@ -344,20 +370,41 @@ function LookingForGroup_Core.GetQuestSearchResultInfo(resultID)
 		end
 	end
 	concat_tb[#concat_tb+1] = " ("
-	table_insert(name_ct,"(")
 	concat_tb[#concat_tb+1] = #tank_tb
-	table_insert(name_ct,#tank_tb)
 	concat_tb[#concat_tb+1] = "/"
-	table_insert(name_ct,"/")
 	concat_tb[#concat_tb+1] = #healer_tb
-	table_insert(name_ct,#healer_tb)
 	concat_tb[#concat_tb+1] = "/"
-	table_insert(name_ct,"/")
 	concat_tb[#concat_tb+1] = #damager_tb
-	table_insert(name_ct,#damager_tb)
 	concat_tb[#concat_tb+1] = ")"
-	table_insert(name_ct,")")
-	if name ~=nil then
+	table_insert(name_ct," ")
+	if numMembers < 6 then
+		for i=1,#tank_tb do
+			table_insert(name_ct,"|c")
+			table_insert(name_ct,RAID_CLASS_COLORS[tank_tb[i]].colorStr)
+			table_insert(name_ct,"T|r")
+		end
+		for i=1,#healer_tb do
+			table_insert(name_ct,"|c")
+			table_insert(name_ct,RAID_CLASS_COLORS[healer_tb[i]].colorStr)
+			table_insert(name_ct,"H|r")
+		end
+		for i=1,#damager_tb do
+			table_insert(name_ct,"|c")
+			table_insert(name_ct,RAID_CLASS_COLORS[damager_tb[i]].colorStr)
+			table_insert(name_ct,"D|r")
+		end
+	else
+		name_ct[#name_ct+1] = "|cff8080cc"
+		table_insert(name_ct,numMembers)
+		table_insert(name_ct,"(")
+		table_insert(name_ct,#tank_tb)
+		table_insert(name_ct,"/")
+		table_insert(name_ct,#healer_tb)
+		table_insert(name_ct,"/")
+		table_insert(name_ct,#damager_tb)
+		table_insert(name_ct,")|r")
+	end
+	if name then
 		table_insert(name_ct," ")
 		table_insert(name_ct,name)
 	end
@@ -385,9 +432,14 @@ function LookingForGroup_Core.GetActiveEntryInfo()
 	if data and not string_find(data,"LookingForGroup") then
 		name = activityName
 	else
-		table_insert(concat_tb,"|cff8080cc")
-		table_insert(concat_tb,activityName)
-		table_insert(concat_tb,"|r\n")
+		concat_tb[#concat_tb+1] = "|cff8080cc"
+		if activityID == 44 and string_find(name,"#AV#") then
+			name = string.sub(name,5)
+			concat_tb[#concat_tb+1] = GetMapNameByID(401)
+		else
+			concat_tb[#concat_tb+1] = activityName
+		end
+		concat_tb[#concat_tb+1] ="|r\n"
 	end
 	table_insert(concat_tb,string_format(LFG_LIST_PENDING_APPLICANTS,numActiveApplicants))
 	local member_count_tb = GetGroupMemberCounts()

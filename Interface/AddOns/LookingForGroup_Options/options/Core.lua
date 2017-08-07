@@ -139,6 +139,38 @@ LookingForGroup_Options:push("options",{
 				end
 			end,
 		},
+		disable_blizzard =
+		{
+			name = DISABLE.." BlizzardUI",
+			type = "group",
+			args =
+			{
+				quick_join =
+				{
+					name = QUICK_JOIN,
+					type = "toggle",
+					get = function(info)
+						return LookingForGroup.db.profile.hook_quick_join
+					end,
+					set = function(info,val)
+						local status,LookingForGroup_Hook = pcall(AceAddon.GetAddon,AceAddon,"LookingForGroup_Hook")
+						if val then
+							LookingForGroup.db.profile.hook_quick_join = true
+							QuickJoinToastButton:Hide()
+							if status then
+								LookingForGroup_Hook:Unhook(QuickJoinFrame,"Show")
+							end
+						else
+							LookingForGroup.db.profile.hook_quick_join = nil
+							QuickJoinToastButton:Show()
+							if status then
+								LookingForGroup_Hook:RawHook(QuickJoinFrame,"Show",function()end,true)
+							end
+						end
+					end,
+				},
+			}
+		},
 		music =
 		{
 			name = ENABLE_MUSIC,
@@ -235,6 +267,7 @@ LookingForGroup_Options:push("options",{
 				leave_party =
 				{
 					name = PARTY_LEAVE,
+					desc = "QUEST_TURNED_IN",
 					type = "toggle",
 					get = function(info)
 						return LookingForGroup.db.profile.wq_leave_party
@@ -246,6 +279,24 @@ LookingForGroup_Options:push("options",{
 							LookingForGroup.db.profile.wq_leave_party = nil
 						end
 					end,
+					width = "full",
+				},
+				start_a_group =
+				{
+					name = '('..HARDWARE..')'..START_A_GROUP,
+					desc = "LFG_LIST_ENTRY_EXPIRED_TOO_MANY_PLAYERS",
+					type = "toggle",
+					width = "full",
+					get = function()
+						return LookingForGroup.db.profile.wq_start_a_group
+					end,
+					set = function(_,val)
+						if val then
+							LookingForGroup.db.profile.wq_start_a_group = true
+						else
+							LookingForGroup.db.profile.wq_start_a_group = nil
+						end
+					end
 				}
 			}
 		},
@@ -289,6 +340,13 @@ LookingForGroup_Options:push("options",{
 						v.width = nil
 						profile.window_width = nil
 					end,
+				},
+				line =
+				{
+					name = function()end,
+					order = 3,
+					type = "description",
+					width = "full"
 				},
 				height =
 				{

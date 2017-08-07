@@ -1,8 +1,8 @@
 ------------------------------------------------------------------------
-r305 | euloanty@live.com | 2017-07-31 10:49:11 -0500 (Mon, 31 Jul 2017) | 1 line
+r335 | euloanty@live.com | 2017-08-06 13:51:45 -0500 (Sun, 06 Aug 2017) | 1 line
 Changed paths:
-   M /trunk/Options/options/Core.lua
+   M /trunk/Core/Core.lua
 
-bug fixing
+lfg core color fixing
 ------------------------------------------------------------------------
 

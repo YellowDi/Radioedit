@@ -284,6 +284,31 @@ LookingForGroup_Options:push("filter",{
 					end
 				}
 			}
+		},
+		channel =
+		{
+			name = CHANNEL,
+			type = "group",
+			args =
+			{
+				guild =
+				{
+					name = GUILD,
+					type = "toggle",
+					set = function(_,val)
+						if val then
+							LookingForGroup.db.profile.spam_filter_channel_guild = true
+						else
+							LookingForGroup.db.profile.spam_filter_channel_guild = nil
+						end
+						local sf = LibStub("AceAddon-3.0"):GetAddon("LookingForGroup_SF")
+						sf:OnEnable()
+					end,
+					get = function()
+						return LookingForGroup.db.profile.spam_filter_channel_guild
+					end
+				}
+			}
 		}
 	}
 })

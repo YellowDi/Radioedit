@@ -166,6 +166,10 @@ function LookingForGroup_Options.FilterSearchResult(groupid)
 	end
 end
 
+function LookingForGroup_Options.GetResultsTB()
+	return results_tb
+end
+
 function LookingForGroup_Options.GetSearchResults()
 	local _,groupsIDs = C_LFGList.GetSearchResults()
 	wipe(results_tb)

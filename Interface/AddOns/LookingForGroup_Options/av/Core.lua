@@ -18,8 +18,6 @@ local function get_order()
 end
 
 
-local results_table = {}
-
 local function do_start()
 	local profile = LookingForGroup_Options.db.profile
 	local name = profile.start_a_group_title
@@ -34,7 +32,7 @@ local function do_start()
 					profile.start_a_group_minimum_honor_level,
 					profile.start_a_group_voice_chat,
 					profile.start_a_group_details,
-					profile.start_a_group_auto_accept,
+					false,
 					profile.start_a_group_private)
 		LookingForGroup_Options.set_requests()
 		AceConfigDialog:SelectGroup("LookingForGroup","requests")
@@ -42,26 +40,201 @@ local function do_start()
 end
 
 local rc_args,select_sup=LookingForGroup_Options.CreateReceivedArgs(
-						"LookingForGroup_Options_AV_Multiselect",results_table,"av")
+						"LookingForGroup_Options_AV_Multiselect",nil,"av")
 local function get_search_result()
-	local results = LookingForGroup_Options.GetSearchResults()
-	wipe(results_table)
-	local i
-	for i=1,#results do
-		table_insert(results_table,results[i])
+	local results_table = LookingForGroup_Options.GetSearchResults()
+	return #results_table
+end
+
+local activity_name = C_LFGList.GetActivityInfo(44)
+local searchTerms = {{matches = {activity_name}},{matches = {"#AV#"}}}
+
+local function do_search()
+	LookingForGroup_Options.Search(rc_args,get_search_result,3,searchTerms,LE_LFG_LIST_FILTER_NOT_RECOMMENDED,0)
+end
+rc_args.results.args.search_again.func = do_search
+
+local concat_tb = {}
+local class_table
+
+local start_av =
+{
+	name = START_A_GROUP,
+	type = "group",
+	args =
+	{
+		title =
+		{
+			order = get_order(),
+			name = LFG_LIST_TITLE,
+			desc = LFG_LIST_ENTER_NAME,
+			type = "input",
+			get = function(info) return LookingForGroup_Options.db.profile.start_a_group_title end,
+			set = function(info,val) LookingForGroup_Options.db.profile.start_a_group_title = val end,
+			width = "full"
+		},
+		details =
+		{
+			order = get_order(),
+			name = LFG_LIST_DETAILS,
+			desc = DESCRIPTION_OF_YOUR_GROUP,
+			type = "input",
+			multiline = true,
+			get = function(info) return LookingForGroup_Options.db.profile.start_a_group_details end,
+			set = function(info,val) LookingForGroup_Options.db.profile.start_a_group_details = val end,
+			width = "full"
+		},
+		minitemlvl =
+		{
+			order = get_order(),
+			name = LFG_LIST_ITEM_LEVEL_INSTR_SHORT,
+			desc = LFG_LIST_ITEM_LEVEL_REQ,
+			type = "input",
+			get = function(info)
+				local sminilv = LookingForGroup_Options.db.profile.start_a_group_minimum_item_level
+				if sminilv == 0 then
+					return ""
+				else
+					return tostring(sminilv)
+				end
+			end,
+			pattern = "^[0-9]*$",
+			set = function(info,val)
+				if val == nil or val == "" then
+					LookingForGroup_Options.db.profile.start_a_group_minimum_item_level = 0
+				else
+					local player_ilv = math_floor(GetAverageItemLevel())
+					val = tonumber(val)
+					if player_ilv < val then
+						LookingForGroup_Options.db.profile.start_a_group_minimum_item_level = player_ilv
+					else
+						LookingForGroup_Options.db.profile.start_a_group_minimum_item_level = val
+					end
+				end
+			end
+		},
+		minhonorlvl =
+		{
+			order = get_order(),
+			name = LFG_LIST_HONOR_LEVEL_INSTR_SHORT,
+			desc = LFG_LIST_HONOR_LEVEL_REQ,
+			type = "input",
+			get = function(info)
+				local sminilv = LookingForGroup_Options.db.profile.start_a_group_minimum_honor_level
+				if sminilv == 0 then
+					return ""
+				else
+					return tostring(sminilv)
+				end
+			end,
+			pattern = "^[0-9]*$",
+			set = function(info,val)
+				if val == nil or val == "" then
+					LookingForGroup_Options.db.profile.start_a_group_minimum_honor_level = 0
+				else
+					local player_ilv = math_floor(UnitHonorLevel("player"))
+					val = tonumber(val)
+					if player_ilv < val then
+						LookingForGroup_Options.db.profile.start_a_group_minimum_honor_level = player_ilv
+					else
+						LookingForGroup_Options.db.profile.start_a_group_minimum_honor_level = val
+					end
+				end
+			end,
+		},
+		vc =
+		{
+			order = get_order(),
+			name = VOICE_CHAT,
+			desc = LFG_LIST_VOICE_CHAT_INSTR,
+			type = "input",
+			get = function(info)
+				return LookingForGroup_Options.db.profile.start_a_group_voice_chat
+			end,
+			set = function(info,val)
+				LookingForGroup_Options.db.profile.start_a_group_voice_chat = val
+			end,
+			width = "full",
+		},
+		auto_acc =
+		{
+			order = get_order(),
+			name = LFG_LIST_AUTO_ACCEPT,
+			type = "toggle",
+			get = function(info)
+				return LookingForGroup_Options.db.profile.start_a_group_auto_accept
+			end,
+			set = function(info,val)
+				LookingForGroup_Options.db.profile.start_a_group_auto_accept = val
+			end
+		},
+		prv =
+		{
+			order = get_order(),
+			name = LFG_LIST_PRIVATE,
+			desc = LFG_LIST_PRIVATE_TOOLTIP,
+			type = "toggle",
+			get = function(info)
+				return LookingForGroup_Options.db.profile.start_a_group_private
+			end,
+			set = function(info,val)
+				LookingForGroup_Options.db.profile.start_a_group_private = val
+			end
+		},
+		start =
+		{
+			order = get_order(),
+			name = START,
+			type = "execute",
+			func = do_start
+		},
+		cancel = 
+		{
+			order = get_order(),
+			name = RESET,
+			type = "execute",
+			func = LookingForGroup_Options.UpdateEditing
+		},
+		back = 
+		{
+			order = get_order(),
+			name = BACK,
+			type = "execute",
+			func = function()
+				LookingForGroup_Options.option_table.args.av.args.s = nil
+				AceConfigDialog:SelectGroup("LookingForGroup","av")
+			end
+		},
+	}
+}
+
+local function av_rl_command(...)
+	local LookingForGroup_AV = AceAddon:GetAddon("LookingForGroup_AV")						
+	local profile = LookingForGroup_AV.db.profile
+	if profile.role == 2 then
+		local serialize = LookingForGroup_AV:Serialize(2,...)
+		local LookingForGroup_AV_SendCommand = LookingForGroup_AV.SendCommand
+		local parties = profile.parties
+		local k,v
+		for k,v in pairs(parties) do
+			LookingForGroup_AV_SendCommand(LookingForGroup_AV,serialize,"WHISPER",k)
+		end
 	end
 end
 
-local matches = {"#AV#"}
-local searchTerms = {{matches = matches}}
+local string_format = string.format
+local math_floor = math.floor
 
-local function do_search()
-	LookingForGroup_Options.Search(rc_args,get_search_result,3,searchTerms,0,0)
+local function convert_ms_to_xx_xx_xx_xx(value)
+	value = math_floor(value)
+	local hour = value / 3600000
+	local min_sec_ms = value % 3600000
+	local minute = min_sec_ms / 60000
+	local sec_ms = min_sec_ms % 60000
+	local sec = sec_ms / 1000
+	local ms = sec_ms % 1000
+	return string_format("%02d:%02d:%02d.%03d",hour,minute,sec,ms)
 end
-rc_args.search_again.func = do_search
-
-local party_tb = {}
-local concat_tb = {}
 
 local av_tb =
 {
@@ -76,174 +249,54 @@ local av_tb =
 			type = "execute",
 			func = do_search,
 		},
-		start =
+		start_a_g =
 		{
 			order = get_order(),
 			name = START_A_GROUP,
 			type = "execute",
-			func = function() 	AceConfigDialog:SelectGroup("LookingForGroup","av","s") end,
+			func = function()
+				local status,LookingForGroup_AV = pcall(AceAddon.GetAddon,AceAddon,"LookingForGroup_AV")
+				if status then
+					LookingForGroup_Options.option_table.args.av.args.s = start_av
+					AceConfigDialog:SelectGroup("LookingForGroup","av","s")
+				end
+			end,
 		},
 		disban =
 		{
 			order = get_order(),
-			name = TEAM_DISBAND,
+			name = RESET,
+			desc = TEAM_DISBAND,
 			type = "execute",
 			confirm = true,
 			func = function() LookingForGroup.GetAddon("LookingForGroup_AV").rl_disban() end,
 		},
-		s =
+		start =
 		{
-			name = START_A_GROUP,
 			order = get_order(),
-			type = "group",
-			args =
-			{
-				title =
-				{
-					order = get_order(),
-					name = LFG_LIST_TITLE,
-					desc = LFG_LIST_ENTER_NAME,
-					type = "input",
-					get = function(info) return LookingForGroup_Options.db.profile.start_a_group_title end,
-					set = function(info,val) LookingForGroup_Options.db.profile.start_a_group_title = val end,
-					width = "full"
-				},
-				details =
-				{
-					order = get_order(),
-					name = LFG_LIST_DETAILS,
-					desc = DESCRIPTION_OF_YOUR_GROUP,
-					type = "input",
-					multiline = true,
-					get = function(info) return LookingForGroup_Options.db.profile.start_a_group_details end,
-					set = function(info,val) LookingForGroup_Options.db.profile.start_a_group_details = val end,
-					width = "full"
-				},
-				minitemlvl =
-				{
-					order = get_order(),
-					name = LFG_LIST_ITEM_LEVEL_INSTR_SHORT,
-					desc = LFG_LIST_ITEM_LEVEL_REQ,
-					type = "input",
-					get = function(info)
-						local sminilv = LookingForGroup_Options.db.profile.start_a_group_minimum_item_level
-						if sminilv == 0 then
-							return ""
-						else
-							return tostring(sminilv)
-						end
-					end,
-					pattern = "^[0-9]*$",
-					set = function(info,val)
-						if val == nil or val == "" then
-							LookingForGroup_Options.db.profile.start_a_group_minimum_item_level = 0
-						else
-							local player_ilv = math_floor(GetAverageItemLevel())
-							val = tonumber(val)
-							if player_ilv < val then
-								LookingForGroup_Options.db.profile.start_a_group_minimum_item_level = player_ilv
-							else
-								LookingForGroup_Options.db.profile.start_a_group_minimum_item_level = val
-							end
-						end
-					end
-				},
-				minhonorlvl =
-				{
-					order = get_order(),
-					name = LFG_LIST_HONOR_LEVEL_INSTR_SHORT,
-					desc = LFG_LIST_HONOR_LEVEL_REQ,
-					type = "input",
-					get = function(info)
-						local sminilv = LookingForGroup_Options.db.profile.start_a_group_minimum_honor_level
-						if sminilv == 0 then
-							return ""
-						else
-							return tostring(sminilv)
-						end
-					end,
-					pattern = "^[0-9]*$",
-					set = function(info,val)
-						if val == nil or val == "" then
-							LookingForGroup_Options.db.profile.start_a_group_minimum_honor_level = 0
-						else
-							local player_ilv = math_floor(UnitHonorLevel("player"))
-							val = tonumber(val)
-							if player_ilv < val then
-								LookingForGroup_Options.db.profile.start_a_group_minimum_honor_level = player_ilv
-							else
-								LookingForGroup_Options.db.profile.start_a_group_minimum_honor_level = val
-							end
-						end
-					end,
-				},
-				vc =
-				{
-					order = get_order(),
-					name = VOICE_CHAT,
-					desc = LFG_LIST_VOICE_CHAT_INSTR,
-					type = "input",
-					get = function(info)
-						return LookingForGroup_Options.db.profile.start_a_group_voice_chat
-					end,
-					set = function(info,val)
-						LookingForGroup_Options.db.profile.start_a_group_voice_chat = val
-					end,
-					width = "full",
-				},
-				auto_acc =
-				{
-					order = get_order(),
-					name = LFG_LIST_AUTO_ACCEPT,
-					type = "toggle",
-					get = function(info)
-						return LookingForGroup_Options.db.profile.start_a_group_auto_accept
-					end,
-					set = function(info,val)
-						LookingForGroup_Options.db.profile.start_a_group_auto_accept = val
-					end
-				},
-				prv =
-				{
-					order = get_order(),
-					name = LFG_LIST_PRIVATE,
-					desc = LFG_LIST_PRIVATE_TOOLTIP,
-					type = "toggle",
-					get = function(info)
-						return LookingForGroup_Options.db.profile.start_a_group_private
-					end,
-					set = function(info,val)
-						LookingForGroup_Options.db.profile.start_a_group_private = val
-					end
-				},
-				start =
-				{
-					order = get_order(),
-					name = START,
-					type = "execute",
-					func = do_start
-				},
-				cancel = 
-				{
-					order = get_order(),
-					name = RESET,
-					type = "execute",
-					func = LookingForGroup_Options.UpdateEditing
-				},
-				back = 
-				{
-					order = get_order(),
-					name = BACK,
-					type = "execute",
-					func = function() AceConfigDialog:SelectGroup("LookingForGroup","av") end
-				},
-			}
+			name = START,
+			type = "execute",
+			func = function()
+				local LookingForGroup_AV = AceAddon:GetAddon("LookingForGroup_AV")
+				LookingForGroup_AV.Start()
+			end
 		},
-		
+		raid_leader =
+		{
+			order = get_order(),
+			width = "full",
+			type = "description",
+			name = function()
+				local LookingForGroup_AV = AceAddon:GetAddon("LookingForGroup_AV")
+				local rl = LookingForGroup_AV.db.profile.raid_leader
+				if rl then
+					return "|cff8080cc"..RAID_LEADER.."|r\n"..rl
+				end
+			end
+		},		
 		parties =
 		{
 			name = PARTY_MEMBERS,
-			order = get_order(),
 			type = "group",
 			args =
 			{
@@ -252,33 +305,44 @@ local av_tb =
 					order = get_order(),
 					name = ROLE_POLL,
 					type = "execute",
-					func = function() LookingForGroup.GetAddon("LookingForGroup_AV").rl_roleconfirm() end,
-					width = "full"
+					func = function() av_rl_command(3) end,
+				},
+				leave_queue =
+				{
+					order = get_order(),
+					name = LEAVE_QUEUE,
+					desc = "PROTECTED",
+					type = "execute",
+					confirm = true,
+					func = function()
+						av_rl_command(6)
+					end,
 				},
 				parties =
 				{
-					name = PARTY,
+					order = get_order(),
+					name = " ",
+					type = "multiselect",
+					order = get_order(),
+					values = function()end,
+					width = "full",
+					dialogControl = "LookingForGroup_Options_AV_Parties_Multiselect"
+				}
+			},
+		},
+		status =
+		{
+			name = STATUS,
+			type = "group",
+			args =
+			{
+				potentials =
+				{
+					name = " ",
 					type = "multiselect",
 					order = get_order(),
 					values = function()
-						wipe(party_tb)
-						local parties = LookingForGroup.GetAddon("LookingForGroup_AV").db.profile.parties
-						local table_insert = table.insert
-						local k,v
-						for k,v in pairs(parties) do
-							wipe(concat_tb)
-							table_insert(concat_tb,k)
-							table_insert(concat_tb,' (')
-							table_insert(concat_tb,#v+1)
-							table_insert(concat_tb,')')
-							local i
-							for i = 1,#v do
-								table_insert(concat_tb,'\n')
-								table_insert(concat_tb,v[i])
-							end
-							party_tb[k] = table.concat(concat_tb)
-						end
-						return party_tb
+						return LookingForGroup.GetAddon("LookingForGroup_AV").db.profile.potentials
 					end,
 					width = "full",
 					set = function()end,
@@ -375,5 +439,78 @@ AceGUI:RegisterWidgetType("LookingForGroup_Options_AV_Multiselect", function()
 		end)
 		self:AddChild(check)
 	end
+	return AceGUI:RegisterAsContainer(control)
+end , 1)
+
+AceGUI:RegisterWidgetType("LookingForGroup_Options_AV_Parties_Multiselect", function()
+	local control = AceGUI:Create("InlineGroup")
+	control:SetLayout("Flow")
+	control.width = "fill"
+	control.SetList = function()end
+	control.SetLabel = function()end
+	control.SetDisabled = function()end
+	control.SetMultiselect = function()end
+	control.SetItemValue = function()end
+	if class_table == nil then
+		class_table = FillLocalizedClassList({})
+	end
+	local ticker
+	ticker = C_Timer.NewTicker(0,function()
+		control:ReleaseChildren()
+		if not LookingForGroup_Options.IsSelected("av\1parties") then
+			ticker:Cancel()
+			return
+		end
+		local profile = AceAddon:GetAddon("LookingForGroup_AV").db.profile
+		local status = profile.status
+		local geticon = LookingForGroup_Options.GetRoleIcon
+		local gtime = GetTime()
+		local refresh
+		for k,v in pairs(profile.parties) do
+			local interactivelabel = AceGUI:Create("InteractiveLabel")
+			wipe(concat_tb)
+			concat_tb[#concat_tb+1] = k
+			concat_tb[#concat_tb+1] = '\n'
+			local status_k = status[k]
+			if status_k then
+				local st = status_k[1]
+				if st == 0 then
+					concat_tb[#concat_tb+1] = AVERAGE_WAIT_TIME
+					local average_wt = status_k[3]
+					local wait_time = status_k[4]+(gtime-status_k[2])*1000
+					if average_wt then
+						concat_tb[#concat_tb+1] = convert_ms_to_xx_xx_xx_xx(average_wt)
+						concat_tb[#concat_tb+1] = '\n'
+						if wait_time < average_wt then
+							concat_tb[#concat_tb+1] = TIME_REMAINING
+							concat_tb[#concat_tb+1] = convert_ms_to_xx_xx_xx_xx(average_wt-wait_time)
+							concat_tb[#concat_tb+1] = '\n'
+						end
+					end
+					concat_tb[#concat_tb+1] = format(TIME_IN_QUEUE,convert_ms_to_xx_xx_xx_xx(wait_time))
+					concat_tb[#concat_tb+1] = '\n'
+				elseif st == 1 then
+					concat_tb[#concat_tb+1] = TIME_REMAINING
+					concat_tb[#concat_tb+1] = convert_ms_to_xx_xx_xx_xx(status_k[3]-(gtime-status_k[2])*1000)
+					concat_tb[#concat_tb+1] = '\n'
+				end
+				refresh = true
+			end
+			for i=1,#v do
+				local vi = v[i]
+				local class = vi[3]
+				concat_tb[#concat_tb+1] = "|c"
+				concat_tb[#concat_tb+1] = RAID_CLASS_COLORS[class].colorStr
+				concat_tb[#concat_tb+1] = vi[1]
+				concat_tb[#concat_tb+1] = ' '
+				concat_tb[#concat_tb+1] = class_table[class]
+				concat_tb[#concat_tb+1] = '|r '
+				concat_tb[#concat_tb+1] = geticon(vi[2])
+				concat_tb[#concat_tb+1] = '\n'
+			end
+			interactivelabel:SetText(table.concat(concat_tb))
+			control:AddChild(interactivelabel)
+		end
+	end)
 	return AceGUI:RegisterAsContainer(control)
 end , 1)

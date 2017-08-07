@@ -109,7 +109,7 @@ function LookingForGroup_Options.DoCRSearch()
 									terms,0,0,0.3)
 end
 
-rc_args.search_again.func = LookingForGroup_Options.DoCRSearch
+rc_args.results.args.search_again.func = LookingForGroup_Options.DoCRSearch
 
 LookingForGroup_Options:push("cr",{
 	name = L["Cross Realm"],

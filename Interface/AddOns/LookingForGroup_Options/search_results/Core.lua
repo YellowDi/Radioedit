@@ -27,18 +27,27 @@ local failed_args =
 		name = BACK,
 		type = "execute",
 	},
-	search_again = 
+	results =
 	{
-		order = 2,
-		name = LFG_LIST_SEARCH_AGAIN,
-		type = "execute",
-	},
-	error_msg =
-	{
-		order = 3,
-		name = LFG_LIST_SEARCH_FAILED,
-		type = "description",
-		width = "full"
+		name = " ",
+		type = "group",
+		childGroups = "Tabs",
+		args =
+		{
+			search_again = 
+			{
+				order = 2,
+				name = LFG_LIST_SEARCH_AGAIN,
+				type = "execute",
+			},
+			error_msg =
+			{
+				order = 3,
+				name = LFG_LIST_SEARCH_FAILED,
+				type = "description",
+				width = "full"
+			}
+		}
 	}
 }
 
@@ -83,12 +92,6 @@ function LookingForGroup_Options.CreateReceivedArgs(dialogControl,values,group,c
 				AceConfigDialog:SelectGroup("LookingForGroup",group)
 			end
 		},
-		search_again = 
-		{
-			order = 2,
-			name = LFG_LIST_SEARCH_AGAIN,
-			type = "execute",
-		},
 		sign_up =
 		{
 			order = 3,
@@ -99,13 +102,28 @@ function LookingForGroup_Options.CreateReceivedArgs(dialogControl,values,group,c
 		results =
 		{
 			name = " ",
-			type = "multiselect",
-			order = 4,
-			dialogControl = dialogControl,
-			values = values,
-			get = function(info,val)	return select_sup[val] end,
-			width = "full",
-		},
+			type = "group",
+			childGroups = "Tabs",
+			args =
+			{
+				search_again = 
+				{
+					order = 1,
+					name = LFG_LIST_SEARCH_AGAIN,
+					type = "execute",
+				},
+				results =
+				{
+					name = " ",
+					type = "multiselect",
+					order = 3,
+					dialogControl = dialogControl,
+					values = values or LookingForGroup_Options.GetResultsTB,
+					get = function(info,val)	return select_sup[val] end,
+					width = "full",
+				}
+			}
+		}
 	}
 	return args,select_sup
 end
@@ -151,10 +169,10 @@ function LookingForGroup_Options.Search(rargs,callback,category,terms,filters,pr
 	LookingForGroup_Options:RegisterEvent("LFG_LIST_SEARCH_FAILED",function()
 		LookingForGroup_Options:UnregisterEvent("LFG_LIST_SEARCH_FAILED")
 		failed_args.back.func = rargs.back.func
-		failed_args.search_again.func = rargs.search_again.func
+		failed_args.results.args.search_again.func = rargs.results.args.search_again.func
 		search_config_tb.args = failed_args
 		LookingForGroup_Options.option_table.args.search_result = search_config_tb
-		LookingForGroup_Options.Background_Timer_Start(failed_args.search_again.func,5)
+		LookingForGroup_Options.Background_Timer_Start(failed_args.results.args.search_again.func,5)
 		AceConfigDialog:SelectGroup("LookingForGroup","search_result")
 	end)
 end

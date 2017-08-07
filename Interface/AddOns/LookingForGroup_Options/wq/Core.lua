@@ -50,16 +50,7 @@ end
 local rc_args,select_sup=LookingForGroup_Options.CreateReceivedArgs(
 						"LookingForGroup_Options_WQ_Multiselect",results_table,"wq")
 
-rc_args.start = 
-{
-	order = 7,
-	name = START,
-	type = "execute",
-	func = function()
-		LookingForGroup_Options.reset_search_result()
-		do_start()
-	end,
-}
+
 local matches = {}
 local searchTerms = {{matches = matches}}
 function LookingForGroup_Options.do_wq_search()
@@ -72,8 +63,17 @@ function LookingForGroup_Options.do_wq_search()
 		end
 	end
 end
-rc_args.search_again.func = LookingForGroup_Options.do_wq_search
-
+rc_args.results.args.search_again.func = LookingForGroup_Options.do_wq_search
+rc_args.results.args.start = 
+{
+	order = 2,
+	name = START,
+	type = "execute",
+	func = function()
+		LookingForGroup_Options.reset_search_result()
+		do_start()
+	end,
+}
 LookingForGroup_Options:push("wq",{
 	name = TRANSMOG_SOURCE_2,
 	type = "group",

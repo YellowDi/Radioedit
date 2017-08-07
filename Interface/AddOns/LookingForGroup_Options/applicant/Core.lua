@@ -98,25 +98,6 @@ local function member_info(t,name, class, localizedClass, level, itemLevel, hono
 	end
 end
 
-local function GetApplicantInfo(app_i)
-	local id, status, pendingStatus, numMembers, isNew, comment = C_LFGList_GetApplicantInfo(app_i)
-	local c1 = string_match(comment,"^#AV#(.*)$")
-	if c1 ~= nil then
-		if 1 == numMembers then
-			return id, status, pendingStatus, numMembers, isNew, c1
-		end
-		local name = C_LFGList_GetApplicantMemberInfo(id,1)
-		if string_find(name,'-') == nil then
-			return id, status, pendingStatus, numMembers, isNew, c1
-		end		
-	end
-	if status == "applied" then
---		C_LFGList_DeclineApplicant(app_i)
-		pendingStatus = "declined"
-	end
-	return id, status, pendingStatus, numMembers, isNew, comment
-end
-
 local concat_tb_tooltip = {}
 
 local function applicant_info(appid)

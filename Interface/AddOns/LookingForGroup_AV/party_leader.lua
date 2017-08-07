@@ -16,49 +16,29 @@ local function isrl(rl)
 	return LookingForGroup_AV.db.profile.raid_leader == rl
 end
 
-party_leader[1] = function(rl,name)-- party_leader.invite(rl,name)
+party_leader[1] = function(rl,name) -- party_leader.invite(rl,name)
 	if isp() and isrl(rl) then
 		InviteUnit(name)
 	end
 end
 
-local invite_temp
-
-local function cinvite()
-	LookingForGroup_AV.SetRole(1)
-	local i
-	for i = 1,#invite_temp do
-		InviteUnit(nms[i])
+party_leader[2] = function(rl,...) -- party_leader.create_invite(rl,...)
+	if isrl(rl) then
+		local invite_temp = {...}
+		LeaveParty()
+		LookingForGroup_AV:ScheduleTimer(function()
+			LookingForGroup_AV.SetRole(1)
+			local i
+			for i = 1,#invite_temp do
+				InviteUnit(invite_temp[i])
+			end
+		end,1)
 	end
 end
 
-party_leader[2] = function(rl,...)-- party_leader.create_invite(rl,...)
+party_leader[3] = function(rl) -- party_leader.roleconfirm(rl)
 	if isrl(rl) then
-		invite_temp = {...}
-		if UnitInParty("player") then
-			LeaveParty()
-			LookingForGroup_AV:ScheduleTimer(cinvite,3)
-		else
-			cinvite()
-		end
-	end
-end
-
---[[function LookingForGroup_AV.party_leave_raid()
-	if isp() then
-		LookingForGroup_AV.SetRole(0)
-		local profile = LookingForGroup_AV.db.profile
-		local raid_leader = profile.raid_leader
-		LookingForGroup_AV:SendCommand(serialize,"WHISPER",raid_leader)
-		profile.raid_leader = nil
-	end
-end]]
-
-local confirm_instruction = LookingForGroup_AV:Serialize(1,4)
-
-party_leader[3] = function(rl)-- party_leader.roleconfirm(rl)
-	if isrl(rl) then
-		LookingForGroup_AV_SendCommand(LookingForGroup_AV,confirm_instruction,"PARTY")
+		LookingForGroup_AV_SendCommand(LookingForGroup_AV,LookingForGroup_AV:Serialize(1,4),"PARTY")
 	end
 end
 
@@ -74,20 +54,42 @@ party_leader[5] = function(rl,...) -- party_leader.broadcast_chat_message(rl,...
 	end
 end
 
-local members = {}
+party_leader[6] = function(rl)
+	if isrl(rl) then
+		LookingForGroup_AV:SendCommand(LookingForGroup_AV:Serialize(1,5),"PARTY")
+	end
+end
 
 function LookingForGroup_AV:GROUP_ROSTER_UPDATE()
 	if isp() then
 		local profile = LookingForGroup_AV.db.profile
 		local raid_leader = profile.raid_leader
 		local numgm = GetNumGroupMembers()
-		wipe(members)
+		local members = {}
 		local i
 		for i = 1,numgm do
-			local name = UnitName("party"..i)
-			table_insert(members,name)
+			local unit = "player"
+			if 1 < i then
+				unit = "party"..i-1
+			end
+			local name,server = UnitFullName(unit)
+			table_insert(members,{name..'-'..server,UnitGroupRolesAssigned(unit),select(2,UnitClass(unit))})
 		end
 		LookingForGroup_AV:SendCommand(LookingForGroup_AV:Serialize(3,1,members),"WHISPER",raid_leader)
+	end
+end
+
+function LookingForGroup_AV:UPDATE_BATTLEFIELD_STATUS(event,index,...)
+	if isp() then
+		local raid_leader = LookingForGroup_AV.db.profile.raid_leader
+		local status = GetBattlefieldStatus(index)
+		if status == "none" then
+			LookingForGroup_AV:SendCommand(LookingForGroup_AV:Serialize(3,3),"WHISPER",raid_leader)
+		elseif status == "queued" then
+			LookingForGroup_AV:SendCommand(LookingForGroup_AV:Serialize(3,3,0,GetBattlefieldEstimatedWaitTime(index),GetBattlefieldTimeWaited(index)),"WHISPER",raid_leader)
+		elseif status == "confirm" then
+			LookingForGroup_AV:SendCommand(LookingForGroup_AV:Serialize(3,3,1,GetBattlefieldPortExpiration(index)),"WHISPER",raid_leader)
+		end
 	end
 end
 

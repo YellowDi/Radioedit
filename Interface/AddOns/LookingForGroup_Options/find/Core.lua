@@ -377,7 +377,7 @@ do_search=function()
 	end
 	LookingForGroup_Options.Search(rc_args,get_search_result,ctg,terms,get_filters(),0)
 end
-rc_args.search_again.func = do_search				
+rc_args.results.args.search_again.func = do_search				
 
 local activities_select_tb,filters_select_sup = {},{}
 

@@ -15,10 +15,11 @@ function LookingForGroup_AV:OnInitialize()
 		{
 			role = 0,
 			parties =
-			{
-			},
+			{},
 			potentials =
 			{},
+			status =
+			{}
 --			raid_leader = nil
 		}
 	},true)
@@ -28,9 +29,10 @@ end
 function LookingForGroup_AV:OnEnable()
 	if LookingForGroup.db.profile.enable_av then
 		self:RegisterEvent("GROUP_ROSTER_UPDATE")
+		self:RegisterEvent("UPDATE_BATTLEFIELD_STATUS")
 		self:RegisterChatCommand("v","ChatCommand")
 	else
-		self:UnregisterEvent("GROUP_ROSTER_UPDATE")
+		self:UnregisterAllEvents()
 		self:UnregisterChatCommand("v","ChatCommand")
 	end
 end

@@ -21,6 +21,9 @@ function LookingForGroup:OnEnable()
 	if profile.enable_av then
 		LoadAddOn("LookingForGroup_AV")
 	end
+	if profile.hook_quick_join then
+		QuickJoinToastButton:Hide()
+	end
 end
 
 function LookingForGroup.Search(callback,category,terms,filters,preferredfilters,delay)

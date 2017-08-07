@@ -1,7 +1,7 @@
 ## Interface: 70200
 ## Author: cqwrteur
 ## Title: LookingForGroup World Quest
-## Version: 306
+## Version: 336
 ## Dependencies: LookingForGroup
 ## SavedVariablesPerCharacter: LookingForGroup_WQCharacterDB
 ## LoadOnDemand: 1

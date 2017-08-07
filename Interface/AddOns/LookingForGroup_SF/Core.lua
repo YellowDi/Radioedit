@@ -91,7 +91,7 @@ local function msg_filter(_, _, msg, player, _, _, _, _, _, _, _, _, _, guid)
 			if not f then
 				return true
 			end
-		elseif profile.spam_filter_language_english then
+		elseif not profile.spam_filter_language_english then
 			return true
 		end
 	end
@@ -105,6 +105,43 @@ local function msg_filter(_, _, msg, player, _, _, _, _, _, _, _, _, _, guid)
 		end
 	end
 end
+
+local function guild_filter(_, _, msg, player, _, _, _, _, _, _, _, _, _, guid)
+	if addon_filter(_, _, msg) then
+		return true
+	end
+	local profile = LookingForGroup.db.profile
+	local string_find = string.find
+	if profile.spam_filter_language then
+		if string_find(msg,"[\128-\255]") then
+			local f
+			if profile.spam_filter_language_russian and string_find(msg,"\208") then
+				f = true
+			end
+			if profile.spam_filter_language_chinese and string_find(msg,"\228-\233") then
+				f = true
+			end
+			if profile.spam_filter_language_korean and string_find(msg,"\234-\237") then
+				f = true
+			end
+			if not f then
+				return true
+			end
+		elseif not profile.spam_filter_language_english then
+			return true
+		end
+	end
+	msg = msg:gsub(" ",""):lower()
+	local filters = profile.spam_filter_keywords
+	local n = #filters
+	for i=1,n do
+		local ele = filters[i]
+		if string_find(msg,ele) then
+			return true
+		end
+	end
+end
+
 
 local function msg_bubble_filter(...)
 	if msg_filter(...) then
@@ -122,8 +159,12 @@ end
 
 function LookingForGroup_SF:OnEnable()
 	local api = ChatFrame_RemoveMessageEventFilter
+	api("CHAT_MSG_GUILD",guild_filter)
 	if LookingForGroup.db.profile.enable_sf then
 		api = ChatFrame_AddMessageEventFilter
+		if LookingForGroup.db.profile.spam_filter_channel_guild then
+			ChatFrame_AddMessageEventFilter("CHAT_MSG_GUILD",guild_filter)
+		end
 	end
 	api("CHAT_MSG_WHISPER",msg_filter)
 	api("CHAT_MSG_SAY",msg_bubble_filter)
@@ -138,4 +179,5 @@ function LookingForGroup_SF:OnEnable()
 	api("CHAT_MSG_INSTANCE_CHAT",addon_filter)
 	api("CHAT_MSG_INSTANCE_CHAT_LEADER",addon_filter)
 	api("CHAT_MSG_RAID_WARNING",addon_filter)
+
 end
