@@ -14,16 +14,18 @@ local cc = CreateFrame('Frame')
 -- add media to LSM ############################################################
 LSM:Register(LSM.MediaType.FONT,'Yanone Kaffesatz Bold',kui.m.f.yanone)
 LSM:Register(LSM.MediaType.FONT,'FrancoisOne',kui.m.f.francois)
-LSM:Register(LSM.MediaType.FONT,'Roboto Condensed Bold',kui.m.f.roboto)
+LSM:Register(LSM.MediaType.FONT,'Roboto Condensed Bold',kui.m.f.roboto,
+    LSM.LOCALE_BIT_western + LSM.LOCALE_BIT_ruRU)
 
 LSM:Register(LSM.MediaType.STATUSBAR, 'Kui status bar', kui.m.t.bar)
 LSM:Register(LSM.MediaType.STATUSBAR, 'Kui status bar (brighter)', kui.m.t.brightbar)
 LSM:Register(LSM.MediaType.STATUSBAR, 'Kui shaded bar', kui.m.t.oldbar)
 
 local locale = GetLocale()
-local latin  = (locale ~= 'zhCN' and locale ~= 'zhTW' and locale ~= 'koKR' and locale ~= 'ruRU')
+local font_support = locale ~= 'zhCN' and locale ~= 'zhTW' and locale ~= 'koKR'
 
-local DEFAULT_FONT = latin and 'Roboto Condensed Bold' or LSM:GetDefault(LSM.MediaType.FONT)
+local DEFAULT_FONT = font_support and 'Roboto Condensed Bold' or
+                     LSM:GetDefault(LSM.MediaType.FONT)
 local DEFAULT_BAR = 'Kui status bar'
 -- default configuration #######################################################
 local default_config = {
@@ -74,7 +76,7 @@ local default_config = {
     font_style = 2,
     hide_names = true,
     font_size_normal = 11,
-    font_size_small = 9,
+    font_size_small = 10,
     name_text = true,
     level_text = false,
     health_text = false,
@@ -117,16 +119,16 @@ local default_config = {
     frame_height_minus = 9,
     frame_width_personal = 132,
     frame_height_personal = 13,
-    castbar_height = 5,
+    castbar_height = 6,
     powerbar_height = 3,
 
     auras_enabled = true,
     auras_on_personal = true,
-    auras_vanilla_filter = true,
-    auras_whitelist = false,
     auras_pulsate = true,
     auras_centre = true,
     auras_sort = 2,
+    auras_show_all_self = false,
+    auras_hide_all_other = false,
     auras_time_threshold = 60,
     auras_minimum_length = 0,
     auras_maximum_length = -1,
@@ -135,7 +137,7 @@ local default_config = {
     auras_icon_squareness = .7,
 
     castbar_enable = true,
-    castbar_colour = {.6,.6,.75},
+    castbar_colour = {.75,.75,.9},
     castbar_unin_colour = {.8,.3,.3},
     castbar_showpersonal = false,
     castbar_icon = true,
@@ -459,8 +461,6 @@ function configChanged.auras_enabled(v)
 
     configChangedAuras()
 end
-configChanged.auras_vanilla_filter = configChangedAuras
-configChanged.auras_whitelist = configChangedAuras
 configChanged.auras_pulsate = configChangedAuras
 configChanged.auras_centre = configChangedAuras
 configChanged.auras_sort = configChangedAuras
@@ -471,6 +471,8 @@ configChanged.auras_icon_normal_size = configChangedAuras
 configChanged.auras_icon_minus_size = configChangedAuras
 configChanged.auras_icon_squareness = configChangedAuras
 configChanged.auras_on_personal = configChangedAuras
+configChanged.auras_show_all_self = configChangedAuras
+configChanged.auras_hide_all_other = configChangedAuras
 
 function configChanged.classpowers_enable(v)
     if v then
@@ -620,7 +622,6 @@ configLoaded.castbar_enable = configChanged.castbar_enable
 configLoaded.level_text = configChanged.level_text
 
 configLoaded.auras_enabled = configChanged.auras_enabled
-configLoaded.auras_whitelist = configChangedAuras
 
 configLoaded.clickthrough_self = QueueClickthroughUpdate
 

@@ -38,6 +38,7 @@ local folder,ns=...
 local addon = KuiNameplates
 local kui = LibStub('Kui-1.0')
 local LSM = LibStub('LibSharedMedia-3.0')
+local KSL = LibStub('KuiSpellList-2.0')
 local core = KuiNameplatesCore
 
 -- frame fading plugin - called by some update functions
@@ -98,7 +99,10 @@ do
 
     local function FilledBar_SetStatusBarColor(self,...)
         self:orig_SetStatusBarColor(...)
-        self.fill:SetVertexColor(...)
+
+        if self.fill then
+            self.fill:SetVertexColor(...)
+        end
 
         if self.spark then
             local col = {...}
@@ -118,26 +122,25 @@ do
         self.fill:Hide()
     end
 
-    function CreateStatusBar(parent,spark)
+    function CreateStatusBar(parent,spark,no_fill,no_fade_spark)
         local bar = CreateFrame('StatusBar',nil,parent)
         bar:SetStatusBarTexture(BAR_TEXTURE)
         bar:SetFrameLevel(0)
 
-        local fill = parent:CreateTexture(nil,'BACKGROUND',nil,2)
-        fill:SetTexture(BAR_TEXTURE)
-        fill:SetAllPoints(bar)
-        fill:SetAlpha(.2)
+        if not no_fill then
+            local fill = parent:CreateTexture(nil,'BACKGROUND',nil,2)
+            fill:SetTexture(BAR_TEXTURE)
+            fill:SetAllPoints(bar)
+            fill:SetAlpha(.2)
 
-        bar.fill = fill
+            bar.fill = fill
 
-        bar.orig_SetStatusBarColor = bar.SetStatusBarColor
-        bar.SetStatusBarColor = FilledBar_SetStatusBarColor
+            bar.orig_Show = bar.Show
+            bar.Show = FilledBar_Show
 
-        bar.orig_Show = bar.Show
-        bar.Show = FilledBar_Show
-
-        bar.orig_Hide = bar.Hide
-        bar.Hide = FilledBar_Hide
+            bar.orig_Hide = bar.Hide
+            bar.Hide = FilledBar_Hide
+        end
 
         if spark then
             local texture = bar:GetStatusBarTexture()
@@ -150,8 +153,15 @@ do
 
             bar.spark = spark
 
-            bar:HookScript('OnValueChanged',FadeSpark)
-            bar:HookScript('OnMinMaxChanged',FadeSpark)
+            if not no_fade_spark then
+                bar:HookScript('OnValueChanged',FadeSpark)
+                bar:HookScript('OnMinMaxChanged',FadeSpark)
+            end
+        end
+
+        if not no_fill or spark then
+            bar.orig_SetStatusBarColor = bar.SetStatusBarColor
+            bar.SetStatusBarColor = FilledBar_SetStatusBarColor
         end
 
         return bar
@@ -521,10 +531,8 @@ do
     function core:CreateAbsorbBar(f)
         if not ABSORB_ENABLE then return end
 
-        -- not using CreateStatusBar as we don't want a background
-        local bar = CreateFrame('StatusBar',nil,f.HealthBar)
+        local bar = CreateStatusBar(f.HealthBar,nil,true)
         bar:SetAllPoints(f.HealthBar)
-        bar:SetFrameLevel(0)
 
         bar.t = bar:CreateTexture(nil,'ARTWORK')
         bar:SetStatusBarTexture(bar.t)
@@ -1034,68 +1042,70 @@ do
     local function UpdateCastbarSize(f)
         f.CastBar.bg:SetHeight(CASTBAR_HEIGHT)
         f.CastBar:SetHeight(CASTBAR_HEIGHT-2)
-        f.CastBar.spark:SetHeight(CASTBAR_HEIGHT+4)
     end
+
+    local function CreateSpellIcon(f)
+        local bg = f:CreateTexture(nil, 'BACKGROUND', nil, 1)
+        bg:SetTexture(kui.m.t.solid)
+        bg:SetVertexColor(0,0,0,.8)
+        bg:SetPoint('BOTTOMRIGHT', f.CastBar.bg, 'BOTTOMLEFT', -1, 0)
+        bg:SetPoint('TOPRIGHT', f.bg, 'TOPLEFT', -1, 0)
+        bg:Hide()
+
+        local icon = f.CastBar:CreateTexture(nil, 'ARTWORK', nil, 2)
+        icon:SetTexCoord(.1, .9, .2, .8)
+        icon:SetPoint('TOPLEFT', bg, 1, -1)
+        icon:SetPoint('BOTTOMRIGHT', bg, -1, 1)
+
+        icon.bg = bg
+
+        return icon
+    end
+    local function CreateSpellShield(f)
+        -- cast shield
+        local shield = f.HealthBar:CreateTexture(nil, 'ARTWORK', nil, 3)
+        shield:SetTexture(MEDIA..'Shield')
+        shield:SetTexCoord(0, .84375, 0, 1)
+        shield:SetSize(13.5, 16) -- 16 * .84375
+        shield:SetPoint('LEFT', f.CastBar.bg, -7, 0)
+        shield:SetVertexColor(.5, .5, .7)
+        shield:Hide()
+
+        return shield
+    end
+
     function core:CreateCastBar(f)
         local bg = f:CreateTexture(nil,'BACKGROUND',nil,1)
         bg:SetTexture(kui.m.t.solid)
         bg:SetVertexColor(0,0,0,.8)
         bg:SetPoint('TOPLEFT', f.bg, 'BOTTOMLEFT', 0, -1)
         bg:SetPoint('TOPRIGHT', f.bg, 'BOTTOMRIGHT')
+        bg:Hide()
 
-        local castbar = CreateFrame('StatusBar', nil, f)
-        castbar:SetFrameLevel(0)
-        castbar:SetStatusBarTexture(BAR_TEXTURE)
+        local castbar = CreateStatusBar(f,true,nil,true)
         castbar:SetPoint('TOPLEFT', bg, 1, -1)
         castbar:SetPoint('BOTTOMRIGHT', bg, -1, 1)
+        castbar:Hide()
+        castbar.bg = bg
 
         local spellname = CreateFontString(f.HealthBar,FONT_SIZE_SMALL)
         spellname:SetWordWrap()
+        spellname:Hide()
 
-        -- spell icon
-        local spelliconbg = f:CreateTexture(nil, 'BACKGROUND', nil, 1)
-        spelliconbg:SetTexture(kui.m.t.solid)
-        spelliconbg:SetVertexColor(0,0,0,.8)
-        spelliconbg:SetPoint('BOTTOMRIGHT', bg, 'BOTTOMLEFT', -1, 0)
-        spelliconbg:SetPoint('TOPRIGHT', f.bg, 'TOPLEFT', -1, 0)
+        -- register base elements
+        f.handler:RegisterElement('CastBar', castbar)
+        f.handler:RegisterElement('SpellName', spellname)
 
-        local spellicon = castbar:CreateTexture(nil, 'ARTWORK', nil, 2)
-        spellicon:SetTexCoord(.1, .9, .2, .8)
-        spellicon:SetPoint('TOPLEFT', spelliconbg, 1, -1)
-        spellicon:SetPoint('BOTTOMRIGHT', spelliconbg, -1, 1)
-
+        -- TODO create optional elements if enabled
+        -- create optional elements
+        local spellicon = CreateSpellIcon(f)
         if not CASTBAR_SHOW_ICON then
             spellicon:Hide()
         end
 
-        -- cast shield
-        local spellshield = f.HealthBar:CreateTexture(nil, 'ARTWORK', nil, 3)
-        spellshield:SetTexture(MEDIA..'Shield')
-        spellshield:SetTexCoord(0, .84375, 0, 1)
-        spellshield:SetSize(13.5, 16) -- 16 * .84375
-        spellshield:SetPoint('LEFT', bg, -7, 0)
-        spellshield:SetVertexColor(.5, .5, .7)
+        local spellshield = CreateSpellShield(f)
 
-        -- spark
-        local spark = castbar:CreateTexture(nil, 'ARTWORK', nil, 7)
-        spark:SetVertexColor(1,1,.8)
-        spark:SetTexture('Interface\\AddOns\\Kui_Media\\t\\spark')
-        spark:SetPoint('CENTER', castbar:GetRegions(), 'RIGHT', 1, 0)
-        spark:SetWidth(6)
-
-        -- hide elements by default
-        bg:Hide()
-        castbar:Hide()
-        spelliconbg:Hide()
-        spellshield:Hide()
-        spellname:Hide()
-
-        castbar.bg = bg
-        castbar.spark = spark
-        spellicon.bg = spelliconbg
-
-        f.handler:RegisterElement('CastBar', castbar)
-        f.handler:RegisterElement('SpellName', spellname)
+        -- register optional elements
         f.handler:RegisterElement('SpellIcon', spellicon)
         f.handler:RegisterElement('SpellShield', spellshield)
 
@@ -1179,6 +1189,7 @@ do
     local AURAS_MAX_LENGTH
     local AURAS_ON_PERSONAL
     local AURAS_ENABLED
+    local AURAS_SHOW_ALL_SELF,AURAS_HIDE_ALL_OTHER
 
     local function AuraFrame_SetFrameWidth(self)
         self:SetWidth(self.__width)
@@ -1232,8 +1243,6 @@ do
             y_spacing = 1,
             rows = 2,
 
-            vanilla_filter = self.profile.auras_vanilla_filter,
-            kui_whitelist = self.profile.auras_whitelist,
             pulsate = self.profile.auras_pulsate,
             timer_threshold = self.profile.auras_time_threshold > 0 and self.profile.auras_time_threshold or nil,
             squareness = self.profile.auras_icon_squareness,
@@ -1264,22 +1273,52 @@ do
 
         core.AurasButton_SetFont(button)
     end
-    function core.Auras_DisplayAura(frame,name,spellid,duration)
+    function core.Auras_DisplayAura(frame,name,spellid,duration,caster)
         if frame.id ~= 'core_dynamic' then return end
 
         if  AURAS_MIN_LENGTH and
             duration ~= 0 and duration <= AURAS_MIN_LENGTH
         then
-            return false
+            return 1
         end
 
         if  AURAS_MAX_LENGTH and
             (duration == 0 or duration > AURAS_MAX_LENGTH)
         then
-            return false
+            return 1
         end
 
-        return true
+        if KSL then
+            -- force show if included by spell list (all casters or self)
+            if  (KSL:SpellIncludedAll(spellid) or KSL:SpellIncludedAll(name)) or
+                ((caster == 'player' or caster == 'pet' or caster == 'vehcile') and
+                (KSL:SpellIncludedOwn(spellid) or KSL:SpellIncludedOwn(name)))
+            then
+                return 2
+            end
+
+            -- force hide if excluded by spell list
+            if KSL:SpellExcluded(spellid) or KSL:SpellExcluded(name) then
+                return 1
+            end
+        end
+
+        if AURAS_SHOW_ALL_SELF or AURAS_HIDE_ALL_OTHER then
+            if caster == 'player' or caster == 'pet' or caster == 'vehicle' then
+                if AURAS_SHOW_ALL_SELF then
+                    -- show all casts from the player
+                    return 2
+                end
+            else
+                if AURAS_HIDE_ALL_OTHER then
+                    -- hide all other players' casts (CC, etc.)
+                    return 1
+                end
+            end
+        end
+
+        -- process as normal
+        return
     end
 
     -- config changed
@@ -1300,6 +1339,9 @@ do
         AURAS_ENABLED = self.profile.auras_enabled
         AURAS_ON_PERSONAL = self.profile.auras_on_personal
 
+        AURAS_SHOW_ALL_SELF = self.profile.auras_show_all_self
+        AURAS_HIDE_ALL_OTHER = self.profile.auras_hide_all_other
+
         local timer_threshold = self.profile.auras_time_threshold
         if timer_threshold < 0 then
             timer_threshold = nil
@@ -1313,11 +1355,9 @@ do
                     af.pulsate = self.profile.auras_pulsate
                     af.timer_threshold = timer_threshold
                     af.squareness = self.profile.auras_icon_squareness
-                    af.vanilla_filter = self.profile.auras_vanilla_filter
                     af.centred = self.profile.auras_centre
 
                     af:SetSort(self.profile.auras_sort)
-                    af:SetWhitelist(nil,self.profile.auras_whitelist)
 
                     -- force size update
                     af.__width = nil
