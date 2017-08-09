@@ -1,3 +1,4 @@
+local LookingForGroup = LibStub("AceAddon-3.0"):GetAddon("LookingForGroup")
 local LookingForGroup_AV = LibStub("AceAddon-3.0"):GetAddon("LookingForGroup_AV")
 local InviteUnit = InviteUnit
 local LeaveParty = LeaveParty
@@ -9,7 +10,7 @@ local table_insert = table.insert
 local party_leader = {}
 
 local function isp()
-	return 0 < LookingForGroup_AV.db.profile.role
+	return 0 < LookingForGroup_AV.db.profile.role and (not UnitInParty("player") or UnitIsGroupLeader("player"))
 end
 
 local function isrl(rl)
@@ -56,7 +57,39 @@ end
 
 party_leader[6] = function(rl)
 	if isrl(rl) then
-		LookingForGroup_AV:SendCommand(LookingForGroup_AV:Serialize(1,5),"PARTY")
+		local GetBattlefieldStatus = GetBattlefieldStatus
+		for i=1,GetMaxBattlefieldID() do
+			local status, bg = GetBattlefieldStatus(i)
+			if status ~= "none" then
+				LookingForGroup:Print(LEAVE_QUEUE,bg)
+				return
+			end
+		end
+	end
+end
+
+party_leader[7] = function(rl)
+	if isrl(rl) then
+		local GetBattlefieldStatus = GetBattlefieldStatus
+		for i=1,GetMaxBattlefieldID() do
+			local status, bg = GetBattlefieldStatus(i)
+			if status == "none" then
+				LookingForGroup:Print(BATTLEFIELD_JOIN)
+				return
+			end
+		end
+	end
+end
+
+party_leader[8] = function(rl)
+	local profile = LookingForGroup_AV.db.profile
+	if profile.raid_leader == nil then
+		local dialog = StaticPopupDialogs.LookingForGroup_AV_Dialog
+		dialog.text = "LookingForGroup\n"..format(INVITATION,rl)
+		dialog.OnAccept = function()
+			profile.raid_leader = rl
+		end
+		StaticPopup_Show("LookingForGroup_AV_Dialog")
 	end
 end
 
@@ -73,7 +106,9 @@ function LookingForGroup_AV:GROUP_ROSTER_UPDATE()
 				unit = "party"..i-1
 			end
 			local name,server = UnitFullName(unit)
-			table_insert(members,{name..'-'..server,UnitGroupRolesAssigned(unit),select(2,UnitClass(unit))})
+			if name and server then
+				table_insert(members,{name..'-'..server,UnitGroupRolesAssigned(unit),select(2,UnitClass(unit))})
+			end
 		end
 		LookingForGroup_AV:SendCommand(LookingForGroup_AV:Serialize(3,1,members),"WHISPER",raid_leader)
 	end

@@ -3,7 +3,7 @@ local AceAddon = LibStub("AceAddon-3.0")
 local AceConfigDialog = LibStub("AceConfigDialog-3.0")
 local LookingForGroup = AceAddon:GetAddon("LookingForGroup")
 local LookingForGroup_Options = AceAddon:GetAddon("LookingForGroup_Options")
-local L = LibStub("AceLocale-3.0"):GetLocale("LookingForGroup_Options")
+local L = LibStub("AceLocale-3.0"):GetLocale("LookingForGroup")
 local wipe = wipe
 local pairs = pairs
 

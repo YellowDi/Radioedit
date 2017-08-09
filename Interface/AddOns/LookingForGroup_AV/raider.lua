@@ -1,4 +1,3 @@
-local LookingForGroup = LibStub("AceAddon-3.0"):GetAddon("LookingForGroup")
 local LookingForGroup_AV = LibStub("AceAddon-3.0"):GetAddon("LookingForGroup_AV")
 local string_find = string.find
 
@@ -38,19 +37,6 @@ raider[4] = function(pl) -- raider.roleconfirm(pl)
 	end
 end
 
-raider[5] = function(pl) -- raider.leavebg(pl)
-	if UnitIsGroupLeader(pl) then
-		local GetBattlefieldStatus = GetBattlefieldStatus
-		for i=1,GetMaxBattlefieldID() do
-			local status, bg = GetBattlefieldStatus(i)
-			if status ~= "none" then
-				LookingForGroup:Print(LEAVE_QUEUE,bg)
-				return
-			end
-		end
-	end
-end
-
 function LookingForGroup_AV:ChatCommand(msg)
 	LookingForGroup_AV:SendCommand(LookingForGroup_AV:Serialize(2,4,msg),"PARTY")
 end
@@ -59,7 +45,7 @@ function LookingForGroup_AV.ApplyToGroup(resultID, ...)
 	LookingForGroup_AV.SetRole(0)
 	LookingForGroup_AV.db.profile.raid_leader = nil
 	local leadername = select(13,C_LFGList.GetSearchResultInfo(resultID))
-	if not string_find(leadername,'-') then
+	if leadername and not string_find(leadername,'-') then
 		rl_tb[leadername] = resultID
 	end
 	C_LFGList.ApplyToGroup(resultID, ...)

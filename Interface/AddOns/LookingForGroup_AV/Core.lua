@@ -31,7 +31,10 @@ function LookingForGroup_AV:OnEnable()
 		self:RegisterEvent("GROUP_ROSTER_UPDATE")
 		self:RegisterEvent("UPDATE_BATTLEFIELD_STATUS")
 		self:RegisterChatCommand("v","ChatCommand")
+		local tb = {button1=ACCEPT,button2=CANCEL,timeOut = 60}
+		StaticPopupDialogs.LookingForGroup_AV_Dialog = tb
 	else
+		StaticPopupDialogs.LookingForGroup_AV_Dialog = nil
 		self:UnregisterAllEvents()
 		self:UnregisterChatCommand("v","ChatCommand")
 	end

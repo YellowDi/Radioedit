@@ -2,13 +2,13 @@
 ## Author: cqwrteur
 ## Title: LookingForGroup Alterac Valley
 ## Dependencies: LookingForGroup
-## Version: 336
+## Version: 363
 ## SavedVariablesPerCharacter: LookingForGroup_AVCharacterDB
 ## LoadOnDemand: 1
 
 #@no-lib-strip@
-Libs\AceComm-3.0\AceComm-3.0.xml
 Libs\AceSerializer-3.0\AceSerializer-3.0.xml
+Libs\AceComm-3.0\AceComm-3.0.xml
 #@end-no-lib-strip@
 
 Core.lua

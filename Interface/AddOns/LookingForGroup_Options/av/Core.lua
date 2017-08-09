@@ -236,6 +236,14 @@ local function convert_ms_to_xx_xx_xx_xx(value)
 	return string_format("%02d:%02d:%02d.%03d",hour,minute,sec,ms)
 end
 
+
+local function convert_name(name)
+	return string.upper(string.sub(name,1,1))..string.lower(string.sub(name,2,-1))
+end
+
+local select_tb = {}
+local party_tb = {}
+
 local av_tb =
 {
 	name = GetMapNameByID(401),
@@ -269,7 +277,10 @@ local av_tb =
 			desc = TEAM_DISBAND,
 			type = "execute",
 			confirm = true,
-			func = function() LookingForGroup.GetAddon("LookingForGroup_AV").rl_disban() end,
+			func = function()
+				LookingForGroup.GetAddon("LookingForGroup_AV").rl_disban()
+				wipe(select_tb)
+			end,
 		},
 		start =
 		{
@@ -284,16 +295,33 @@ local av_tb =
 		raid_leader =
 		{
 			order = get_order(),
-			width = "full",
-			type = "description",
-			name = function()
+			type = "input",
+			name = RAID_LEADER,
+			get = function()
 				local LookingForGroup_AV = AceAddon:GetAddon("LookingForGroup_AV")
 				local rl = LookingForGroup_AV.db.profile.raid_leader
 				if rl then
-					return "|cff8080cc"..RAID_LEADER.."|r\n"..rl
+					return rl
+				end
+			end,
+			set = function(_,val)
+				local LookingForGroup_AV = AceAddon:GetAddon("LookingForGroup_AV")
+				local profile = LookingForGroup_AV.db.profile
+				if profile.role == 0 then
+					if val and not string_find(val,'-') then
+						val = convert_name(val)
+						local name = UnitFullName("player")
+						profile.raid_leader = val
+						if name == val then
+							profile.role = 2
+						else
+							profile.role = 1
+							LookingForGroup_AV:SendCommand(LookingForGroup_AV:Serialize(3,4),"WHISPER",val)
+						end
+					end
 				end
 			end
-		},		
+		},
 		parties =
 		{
 			name = PARTY_MEMBERS,
@@ -306,16 +334,26 @@ local av_tb =
 					name = ROLE_POLL,
 					type = "execute",
 					func = function() av_rl_command(3) end,
+					width = "full"
 				},
 				leave_queue =
 				{
 					order = get_order(),
 					name = LEAVE_QUEUE,
-					desc = "PROTECTED",
 					type = "execute",
 					confirm = true,
 					func = function()
 						av_rl_command(6)
+					end,
+				},
+				join_battle =
+				{
+					order = get_order(),
+					name = BATTLEFIELD_JOIN,
+					type = "execute",
+					confirm = true,
+					func = function()
+						av_rl_command(7)
 					end,
 				},
 				parties =
@@ -336,6 +374,79 @@ local av_tb =
 			type = "group",
 			args =
 			{
+				add =
+				{
+					order = get_order(),
+					type = "input",
+					name = ADD,
+					get = function()
+					end,
+					set = function(_,val)
+						local LookingForGroup_AV = AceAddon:GetAddon("LookingForGroup_AV")
+						local profile = LookingForGroup_AV.db.profile
+						if profile.role == 2 then
+							if val and not string_find(val,'-') then
+								val = convert_name(val)
+								profile.parties[val] = {}
+								profile.status[val] = {}
+								LookingForGroup_AV:SendCommand(LookingForGroup_AV:Serialize(2,8),"WHISPER",val)
+							end
+						end
+					end
+				},
+				rem =
+				{
+					order = get_order(),
+					type = "execute",
+					name = REMOVE,
+					func = function()
+						local LookingForGroup_AV = AceAddon:GetAddon("LookingForGroup_AV")
+						local profile = LookingForGroup_AV.db.profile
+						for k,v in pairs(select_tb) do
+							if v then
+								profile.parties[k] = nil
+								profile.status[k] = nil
+							end
+						end
+						wipe(select_tb)
+					end
+				},
+				rest =
+				{
+					order = get_order(),
+					type = "execute",
+					name = RESET,
+					func = function()
+						wipe(select_tb)
+					end
+				},
+				prty =
+				{
+					type = "multiselect",
+					order = get_order(),
+					name = PARTY,
+					width = "full",
+					values = function()
+						local LookingForGroup_AV = AceAddon:GetAddon("LookingForGroup_AV")
+						local profile = LookingForGroup_AV.db.profile
+						local parties = profile.parties
+						wipe(party_tb)
+						for k,v in pairs(parties) do
+							party_tb[k] = k
+						end
+						return party_tb
+					end,
+					get = function(_,key)
+						return select_tb[key]
+					end,
+					set = function(_,key,val)
+						if val then
+							select_tb[key] = true
+						else
+							select_tb[key] = nil
+						end
+					end
+				},
 				potentials =
 				{
 					name = " ",

@@ -170,4 +170,17 @@ raid_leader[3] = function(source,status,...) -- raid_leader.update_status(source
 	end
 end
 
+raid_leader[4] = function(source)
+	local profile = LookingForGroup_AV.db.profile
+	if profile.role == 2 and profile.parties[source] == nil then
+		local dialog = StaticPopupDialogs.LookingForGroup_AV_Dialog
+		dialog.text = "LookingForGroup\n"..format(INVITE_CONFIRMATION_REQUEST,source)
+		dialog.OnAccept = function()
+			profile.parties[source] = {}
+			profile.status[source] = {}
+		end
+		StaticPopup_Show("LookingForGroup_AV_Dialog")
+	end
+end
+
 LookingForGroup_AV.member[3] = raid_leader

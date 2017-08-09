@@ -6,7 +6,7 @@ local C_LFGList_ReportSearchResult = C_LFGList.ReportSearchResult
 local ChatFrame_SendTell = ChatFrame_SendTell
 local EasyMenu = EasyMenu
 
-local L = LibStub("AceLocale-3.0"):GetLocale("LookingForGroup_Options")
+local L = LibStub("AceLocale-3.0"):GetLocale("LookingForGroup")
 
 local LFGListSearchReporter =
 {
@@ -119,7 +119,7 @@ local function GetSearchEntryMenu(resultID)
 				{
 					LFGListSearchReporter:new(
 					{
-						text = LFG_LIST_TITLE,
+						text = LFG_LIST_BAD_NAME,
 						func = function(_, id)
 							local title,comment = select(3,C_LFGList.GetSearchResultInfo(id))
 							if comment then
@@ -136,7 +136,7 @@ local function GetSearchEntryMenu(resultID)
 					}),
 					LFGListSearchReporter:new(
 					{
-						text = LFG_LIST_DETAILS,
+						text = LFG_LIST_BAD_DESCRIPTION,
 						func = function(_, id)
 							local comment = select(4,C_LFGList.GetSearchResultInfo(id))
 							if comment then
@@ -149,6 +149,26 @@ local function GetSearchEntryMenu(resultID)
 							end
 						end,
 					}),
+					LFGListSearchReporter:new(
+					{
+						text = VOICE_CHAT,
+						func = function(_, id)
+							local voiceChat = select(5,C_LFGList.GetSearchResultInfo(id))
+							if voiceChat then
+								paste(voiceChat)
+							end
+						end,
+					}),
+					LFGListSearchReporter:new(
+					{
+						text = LFG_LIST_BAD_LEADER_NAME,
+						func = function(_, id)
+							local leader = select(13,C_LFGList.GetSearchResultInfo(id))
+							if leader then
+								paste(leader)
+							end
+						end,
+					})
 				}
 			},
 			{
@@ -267,6 +287,7 @@ end
 
 AceGUI:RegisterWidgetType("LookingForGroup_search_result_checkbox", function()
 	local check = AceGUI:Create("CheckBox")
+	check.text:SetTextColor(0.5, 0.5, 0.8, 1)
 	local frame = check.frame
 	frame:RegisterForClicks("LeftButtonDown","RightButtonDown")
 	frame:SetScript("OnMouseUp",function(self,button)
@@ -274,7 +295,6 @@ AceGUI:RegisterWidgetType("LookingForGroup_search_result_checkbox", function()
 		local user = obj:GetUserDataTable()
 		if button == "LeftButton" then
 			if not obj.disabled then
---				obj:ToggleChecked()
 				if obj.checked then
 					PlaySound("igMainMenuOptionCheckBoxOn")
 				else -- for both nil and false (tristate)
@@ -285,7 +305,6 @@ AceGUI:RegisterWidgetType("LookingForGroup_search_result_checkbox", function()
 				AlignImage(obj)
 			end
 		else
---			LFGListFrameDropDown:SetPoint("CENTER"frame)
 			EasyMenu(GetSearchEntryMenu(user.val), LFGListFrameDropDown, "cursor" , 0, 0, "MENU")				
 		end
 	end)

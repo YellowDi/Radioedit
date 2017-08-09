@@ -1,9 +1,8 @@
 ## Interface: 70200
 ## Author: cqwrteur
-## Title: LookingForGroup World Quest
+## Title: LookingForGroup Kicker
 ## Version: 363
 ## Dependencies: LookingForGroup
-## SavedVariablesPerCharacter: LookingForGroup_WQCharacterDB
 ## LoadOnDemand: 1
 
 Core.lua

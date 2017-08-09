@@ -6,7 +6,7 @@ local C_LFGList_ReportSearchResult = C_LFGList.ReportSearchResult
 local ChatFrame_SendTell = ChatFrame_SendTell
 local EasyMenu = EasyMenu
 
-local L = LibStub("AceLocale-3.0"):GetLocale("LookingForGroup_Options")
+local L = LibStub("AceLocale-3.0"):GetLocale("LookingForGroup")
 
 local function AlignImage(self)
 	local img = self.image:GetTexture()

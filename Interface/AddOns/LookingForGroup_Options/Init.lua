@@ -1,3 +1,4 @@
+LoadAddOn("LookingForGroup_Locale")
 local AceAddon = LibStub("AceAddon-3.0")
 local LookingForGroup_Options = AceAddon:NewAddon("LookingForGroup_Options","AceEvent-3.0","AceTimer-3.0")
 local LookingForGroup = AceAddon:GetAddon("LookingForGroup")

@@ -1,16 +1,18 @@
 local AceAddon = LibStub("AceAddon-3.0")
 local LookingForGroup = AceAddon:GetAddon("LookingForGroup")
 local LookingForGroup_Options = AceAddon:GetAddon("LookingForGroup_Options")
-local L = LibStub("AceLocale-3.0"):GetLocale("LookingForGroup_Options")
+local L = LibStub("AceLocale-3.0"):GetLocale("LookingForGroup")
 
 LookingForGroup_Options:push("options",{
 	name = OPTIONS,
+	desc = "Toggles of Sub-AddOns",
 	type = "group",
 	args =
 	{
 		icon =
 		{
 			name = EMBLEM_SYMBOL,
+			desc = "LookingForGroup_Icon",
 			type = "toggle",
 			get = function(info)
 				return LookingForGroup.db.profile.enable_icon
@@ -27,6 +29,7 @@ LookingForGroup_Options:push("options",{
 		hook =
 		{
 			name = "Hook",
+			desc = "LookingForGroup_Hook",
 			type = "toggle",
 			get = function(info)
 				return LookingForGroup.db.profile.enable_hook
@@ -43,6 +46,7 @@ LookingForGroup_Options:push("options",{
 		event =
 		{
 			name = "Event",
+			desc = "LookingForGroup_Event",
 			type = "toggle",
 			get = function(info)
 				return LookingForGroup.db.profile.enable_event
@@ -59,6 +63,7 @@ LookingForGroup_Options:push("options",{
 		av =
 		{
 			name = GetMapNameByID(401),
+			desc = "LookingForGroup_AV",
 			type = "toggle",
 			get = function(info)
 				return LookingForGroup.db.profile.enable_av
@@ -80,6 +85,7 @@ LookingForGroup_Options:push("options",{
 		sf =
 		{
 			name = SPAM_FILTER,
+			desc = "LookingForGroup_SF",
 			type = "toggle",
 			get = function(info)
 				return LookingForGroup.db.profile.enable_sf
@@ -91,52 +97,6 @@ LookingForGroup_Options:push("options",{
 				end
 				local LookingForGroup_SF = AceAddon:GetAddon("LookingForGroup_SF")
 				LookingForGroup_SF:OnEnable()
-			end,
-		},
-		wq =
-		{
-			name = TRACKER_HEADER_WORLD_QUESTS,
-			type = "toggle",
-			get = function(info)
-				return LookingForGroup.db.profile.enable_wq
-			end,
-			set = function(info,val)
-				LookingForGroup.db.profile.enable_wq = val
-				if val then
-					LoadAddOn("LookingForGroup_WQ")
-				end
-				local LookingForGroup_WQ = AceAddon:GetAddon("LookingForGroup_WQ")
-				LookingForGroup_WQ:OnEnable()
-			end,
-		},
-		role_check =
-		{
-			name = LFG_LIST_ROLE_CHECK,
-			type = "toggle",
-			get = function(info)
-				return LookingForGroup.db.profile.role_check
-			end,
-			set = function(info,val)
-				if val then
-					LookingForGroup.db.profile.role_check = true
-				else
-					LookingForGroup.db.profile.role_check = nil
-				end
-			end,
-		},
-		hardware =
-		{
-			name = HARDWARE,
-			type = "toggle",
-			get = function(info)
-				return LookingForGroup.db.profile.hardware
-			end,
-			set = function(info,val)
-				if val then
-					LookingForGroup.db.profile.hardware = true
-				else
-					LookingForGroup.db.profile.hardware = nil
-				end
 			end,
 		},
 		disable_blizzard =
@@ -171,10 +131,11 @@ LookingForGroup_Options:push("options",{
 				},
 			}
 		},
-		music =
+		background =
 		{
-			name = ENABLE_MUSIC,
+			name = BACKGROUND,
 			type = "group",
+			desc = SEARCHING,
 			args =
 			{
 				enable_music =
@@ -258,12 +219,31 @@ LookingForGroup_Options:push("options",{
 				}
 			}
 		},
-		wq_config = 
+		wq = 
 		{
 			name = TRACKER_HEADER_WORLD_QUESTS,
 			type = "group",
 			args =
 			{
+				enable =
+				{
+					name = ENABLE,
+					desc = "LookingForGroup_WQ",
+					type = "toggle",
+					order = 1,
+					get = function(info)
+						return LookingForGroup.db.profile.enable_wq
+					end,
+					set = function(info,val)
+						LookingForGroup.db.profile.enable_wq = val
+						if val then
+							LoadAddOn("LookingForGroup_WQ")
+						end
+						local LookingForGroup_WQ = AceAddon:GetAddon("LookingForGroup_WQ")
+						LookingForGroup_WQ:OnEnable()
+					end,
+					width = "full"
+				},
 				leave_party =
 				{
 					name = PARTY_LEAVE,
@@ -295,6 +275,22 @@ LookingForGroup_Options:push("options",{
 							LookingForGroup.db.profile.wq_start_a_group = true
 						else
 							LookingForGroup.db.profile.wq_start_a_group = nil
+						end
+					end
+				},
+				kick =
+				{
+					name = CHAT_KICK,
+					type = "toggle",
+					width = "full",
+					get = function()
+						return not LookingForGroup.db.profile.wq_kick
+					end,
+					set = function(_,val)
+						if val then
+							LookingForGroup.db.profile.wq_kick = nil
+						else
+							LookingForGroup.db.profile.wq_kick = true
 						end
 					end
 				}
@@ -395,6 +391,119 @@ LookingForGroup_Options:push("options",{
 					end,
 				},
 			}
-		}
+		},
+		kick =
+		{
+			name = CHAT_KICK,
+			desc = "LookingForGroup_Kicker",
+			type = "group",
+			args =
+			{
+				wq =
+				{
+					name = TRACKER_HEADER_WORLD_QUESTS,
+					type = "toggle",
+					get = function()
+						return not LookingForGroup.db.profile.wq_kick
+					end,
+					set = function(_,val)
+						if val then
+							LookingForGroup.db.profile.wq_kick = nil
+						else
+							LookingForGroup.db.profile.wq_kick = true
+						end
+					end
+				},
+				lfr =
+				{
+					name = RAID_FINDER,
+					type = "toggle",
+					get = function()
+						return not LookingForGroup.db.profile.lfr_kick
+					end,
+					set = function(_,val)
+						if val then
+							LookingForGroup.db.profile.lfr_kick = nil
+						else
+							LookingForGroup.db.profile.lfr_kick = true
+						end
+					end
+				},
+				pug =
+				{
+					name = "PUG",
+					type = "toggle",
+					get = function()
+						return LookingForGroup.db.profile.pug_kick
+					end,
+					set = function(_,val)
+						if val then
+							LookingForGroup.db.profile.pug_kick = 0
+						else
+							LookingForGroup.db.profile.pug_kick = nil
+						end
+					end
+				},
+				pugdps =
+				{
+					name = "PUG",
+					desc = "DPS",
+					type = "input",
+					pattern = "^[0-9]*$",
+					get = function()
+						local pk = LookingForGroup.db.profile.pug_kick
+						if pk then
+							return tostring(pk)
+						end
+					end,
+					set = function(_,v)
+						if v=="" then
+							LookingForGroup.db.profile.pug_kick = nil
+						else
+							LookingForGroup.db.profile.pug_kick = tonumber(v)
+						end
+					end
+				},
+			}
+		},
+		advance =
+		{
+			name = ADVANCED_LABEL,
+			type = "group",
+			order = -1,
+			args =
+			{
+				role_check =
+				{
+					name = LFG_LIST_ROLE_CHECK,
+					type = "toggle",
+					get = function(info)
+						return LookingForGroup.db.profile.role_check
+					end,
+					set = function(info,val)
+						if val then
+							LookingForGroup.db.profile.role_check = true
+						else
+							LookingForGroup.db.profile.role_check = nil
+						end
+					end,
+				},
+				hardware =
+				{
+					name = HARDWARE,
+					type = "toggle",
+					get = function(info)
+						return LookingForGroup.db.profile.hardware
+					end,
+					set = function(info,val)
+						if val then
+							LookingForGroup.db.profile.hardware = true
+						else
+							LookingForGroup.db.profile.hardware = nil
+						end
+					end,
+				},
+			}
+		},
 	}
 })

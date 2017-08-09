@@ -4,7 +4,7 @@ local LookingForGroup = AceAddon:GetAddon("LookingForGroup")
 local LookingForGroup_Options = AceAddon:GetAddon("LookingForGroup_Options")
 local AceGUI = LibStub("AceGUI-3.0")
 local AceConfigDialog = LibStub("AceConfigDialog-3.0")
-local L = LibStub("AceLocale-3.0"):GetLocale("LookingForGroup_Options")
+local L = LibStub("AceLocale-3.0"):GetLocale("LookingForGroup")
 local wipe = wipe
 local table_insert = table.insert
 local C_LFGList_GetSearchResultInfo = C_LFGList.GetSearchResultInfo
@@ -113,6 +113,7 @@ rc_args.results.args.search_again.func = LookingForGroup_Options.DoCRSearch
 
 LookingForGroup_Options:push("cr",{
 	name = L["Cross Realm"],
+	desc = "X-Realm Scan!",
 	type = "group",
 	args =
 	{
