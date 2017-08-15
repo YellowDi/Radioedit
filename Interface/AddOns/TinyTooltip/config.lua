@@ -62,9 +62,11 @@ addon.db = {
                 isPlayer    = { enable = false, color = "ffffff",  wildcard = "(%s)", filter = "none" }, 
                 role        = { enable = false, color = "ffffff",  wildcard = "(%s)", filter = "none" },
                 moveSpeed   = { enable = false, color = "e8e7a8",  wildcard = "%d%%", filter = "none" },
+                zone        = { enable = true,  color = "ffffff",  wildcard = "%s", filter = "none" },
                 { "raidIcon", "roleIcon", "pvpIcon", "factionIcon", "classIcon", "title", "name", "realm", "statusAFK", "statusDND", "statusDC", },
                 { "guildName", "guildIndex", "guildRank", "guildRealm", },
                 { "levelValue", "factionName", "gender", "raceName", "className", "isPlayer", "role", "moveSpeed", },
+                { "zone" },
             },
         },
         npc = {

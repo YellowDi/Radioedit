@@ -104,9 +104,12 @@ function addon:HideLine(tooltip, keyword)
 end
 
 -- 刪行
-function addon:HideAllLine(tooltip, number)
+function addon:HideLines(tooltip, number, endNumber)
+    endNumber = endNumber or 999
     for i = number, tooltip:NumLines() do
-        _G[tooltip:GetName() .. "TextLeft" .. i]:SetText(nil)
+        if (endNumber >= i) then
+            _G[tooltip:GetName() .. "TextLeft" .. i]:SetText(nil)
+        end
     end
 end
 
@@ -162,6 +165,15 @@ function addon:GetBgFile(bgvalue)
     end
     if (LibMedia) then
         return LibMedia:Fetch("background", bgvalue)
+    end
+end
+
+--Bar
+function addon:GetBarFile(bgvalue)
+    if (bgvalue and LibMedia and LibMedia:IsValid("statusbar", bgvalue)) then
+        return LibMedia:Fetch("statusbar", bgvalue)
+    else
+        return bgvalue
     end
 end
 
@@ -258,6 +270,18 @@ function addon:GetNpcTitle(tip)
     return self:GetLine(tip, 2)
 end
 
+--地區
+function addon:GetZone(unit)
+    if not IsInGroup() then return end
+    local t, i = string.match(unit, "(.-)(%d+)")
+    local l = UnitIsGroupLeader("player")
+    if (i and l and t == "party") then
+        return select(7, GetRaidRosterInfo(i+1))
+    elseif (i) then
+        return select(7, GetRaidRosterInfo(i))
+    end
+end
+
 -- 全信息
 local t = {}
 function addon:GetUnitInfo(unit)
@@ -302,6 +326,7 @@ function addon:GetUnitInfo(unit)
     t.classifRare  = (classif == "rare" or classif == "rareelite") and RARE
     t.isPlayer     = UnitIsPlayer(unit) and PLAYER
     t.moveSpeed    = self:GetUnitSpeed(unit)
+    t.zone         = self:GetZone(unit)
     t.unit         = unit                     --unit
     t.level        = level                    --1~113|-1
     t.race         = race                     --nil|NightElf|Troll...
@@ -636,11 +661,7 @@ LibEvent:attachTrigger("tooltip.statusbar.font", function(self, font, size, flag
 end)
 
 LibEvent:attachTrigger("tooltip.statusbar.texture", function(self, bgvalue)
-    if (bgvalue and LibMedia and LibMedia:IsValid("statusbar", bgvalue)) then
-        GameTooltipStatusBar:SetStatusBarTexture(LibMedia:Fetch("statusbar", bgvalue))
-    elseif (bgvalue) then
-        GameTooltipStatusBar:SetStatusBarTexture(bgvalue)
-    end
+    GameTooltipStatusBar:SetStatusBarTexture(addon:GetBarFile(bgvalue))
 end)
 
 LibEvent:attachTrigger("tooltip.statusbar.position", function(self, position, offsetX, offsetY)

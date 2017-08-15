@@ -1,13 +1,14 @@
 
 local LibEvent = LibStub:GetLibrary("LibEvent.7000")
+local LibDropdown = LibStub:GetLibrary("LibDropdown.7000")
 
-local UIDropDownMenu_SetText = Lib_UIDropDownMenu_SetText or UIDropDownMenu_SetText
-local UIDropDownMenu_AddButton = Lib_UIDropDownMenu_AddButton or UIDropDownMenu_AddButton
-local UIDropDownMenu_CreateInfo = Lib_UIDropDownMenu_CreateInfo or UIDropDownMenu_CreateInfo
-local UIDropDownMenu_Initialize = Lib_UIDropDownMenu_Initialize or UIDropDownMenu_Initialize
-local UIDropDownMenu_GetSelectedValue = Lib_UIDropDownMenu_GetSelectedValue or UIDropDownMenu_GetSelectedValue
-local UIDropDownMenu_SetSelectedValue = Lib_UIDropDownMenu_SetSelectedValue or UIDropDownMenu_SetSelectedValue
-local UIDropDownMenuTemplate = "Lib_UIDropDownMenuTemplate"
+local UIDropDownMenu_SetText = LibDropdown.SetText
+local UIDropDownMenu_AddButton = LibDropdown.AddButton
+local UIDropDownMenu_CreateInfo = LibDropdown.CreateInfo
+local UIDropDownMenu_Initialize = LibDropdown.Initialize
+local UIDropDownMenu_GetSelectedValue = LibDropdown.GetSelectedValue
+local UIDropDownMenu_SetSelectedValue = LibDropdown.SetSelectedValue
+local UIDropDownMenuTemplate = "UIDropDownMenuTemplate"
 
 local addonName = ...
 local addon = TinyTooltip
@@ -15,7 +16,7 @@ local addon = TinyTooltip
 addon.L = addon.L or {}
 setmetatable(addon.L, { __index = function(self, k)
     local s = {strsplit(".", k)}
-    return rawget(self,s[#s]) or (s[#s]:gsub("([a-z])([A-Z])", "%1 %2"):gsub("^(%a)", function(c) return strupper(c) end))
+    return rawget(self,s[#s]) or (s[#s]:gsub("([a-z])([A-Z])", "%1 %2"):gsub("^(%a)", strupper))
 end})
 local L = addon.L
 
@@ -208,7 +209,7 @@ function widgets:dropdown(parent, config, labelText)
         local keystring = self.keystring
         local selectedValue = UIDropDownMenu_GetSelectedValue(self)
         local info
-        for _, v in pairs(self.dropdata) do
+        for _, v in ipairs(self.dropdata) do
             info = UIDropDownMenu_CreateInfo()
             info.text  = L["dropdown."..v]
             info.value = v
@@ -217,6 +218,11 @@ function widgets:dropdown(parent, config, labelText)
             info.func = function(self, dropdown)
                 SetVariable(dropdown.keystring, self.value)
                 UIDropDownMenu_SetSelectedValue(dropdown, self.value)
+            end
+            if (strfind(keystring, ".+Font$")) then
+                info.font = addon:GetFont(v)
+            elseif (strfind(keystring, ".+Texture$")) then
+                info.texture = addon:GetBarFile(v)
             end
             UIDropDownMenu_AddButton(info)
         end
@@ -520,6 +526,7 @@ local options = {
         { keystring = "unit.player.elements.isPlayer",    type = "element", color = true, wildcard = true, filter = true, },
         { keystring = "unit.player.elements.role",        type = "element", color = true, wildcard = true, filter = true, },
         { keystring = "unit.player.elements.moveSpeed",   type = "element", color = true, wildcard = true, filter = true, },
+        { keystring = "unit.player.elements.zone",        type = "element", color = true, wildcard = true, filter = true, },
     },
     npc = {
         { keystring = "unit.npc.showTarget",            type = "checkbox" },

@@ -63,6 +63,7 @@ addon.L = {
     ["unit.player.elements.isPlayer"]       = "玩家",
     ["unit.player.elements.role"]           = "角色",
     ["unit.player.elements.moveSpeed"]      = "移動速度",
+    ["unit.player.elements.zone"]           = "地區",
     
     ["unit.npc.anchor.position"]            = "框架錨點",
     ["unit.npc.anchor.returnInCombat"]      = "戰鬥時復位",

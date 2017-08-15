@@ -2,7 +2,7 @@
 ## Title: TinyTooltip
 ## Notes: TinyTooltip
 ## Author: M
-## Version: 2.1.6.2
+## Version: 2.1.7
 ## SavedVariables: BigTipDB
 
 libs\lib.xml
@@ -19,6 +19,5 @@ quest.lua
 linkid.lua
 skinframes.lua
 
-libs\UIDropDownMenu\UIDropDownMenu.xml
 locales\locales.xml
 options.lua
