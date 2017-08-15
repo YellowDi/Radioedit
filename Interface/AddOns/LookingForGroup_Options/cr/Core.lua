@@ -113,19 +113,28 @@ rc_args.results.args.search_again.func = LookingForGroup_Options.DoCRSearch
 
 LookingForGroup_Options:push("cr",{
 	name = L["Cross Realm"],
-	desc = "X-Realm Scan!",
 	type = "group",
 	args =
 	{
 		scan =
 		{
 			order = get_order(),
-			name = ENABLE,
+			name = L.cr_realm_scan,
+			desc = L.cr_realm_scan_desc,
 			type = "execute",
 			func = function()
 				LookingForGroup.GetAddon("LookingForGroup_CR").do_scan()
 			end,
-			width = "full"
+		},
+		rand_hop =
+		{
+			order = get_order(),
+			name = L.cr_realm_rand_hop,
+			desc = L.cr_realm_rand_hop_desc,
+			type = "execute",
+			func = function()
+				LookingForGroup.GetAddon("LookingForGroup_CR").do_hop()
+			end,
 		},
 		search =
 		{
@@ -182,6 +191,36 @@ LookingForGroup_Options:push("cr",{
 			get = function(info) return LookingForGroup_Options.db.profile.cr_category end,
 			set = function(info,key) LookingForGroup_Options.db.profile.cr_category = key end,
 		},
+		rdh =
+		{
+			name = L.cr_realm_rand_hop,
+			type = "group",
+			args =
+			{
+				aacpt = 
+				{
+					name = LFG_LIST_AUTO_ACCEPT,
+					type = "toggle",
+					get = function(info)
+						return LookingForGroup.db.profile.cr_auto_accept
+					end,
+					set = function(info,val)
+						LookingForGroup.db.profile.cr_auto_accept = val
+					end
+				},
+				lp = 
+				{
+					name = PARTY_LEAVE,
+					type = "toggle",
+					get = function(info)
+						return LookingForGroup.db.profile.cr_leave_party
+					end,
+					set = function(info,val)
+						LookingForGroup.db.profile.cr_leave_party = val
+					end
+				}
+			}
+		}
 	}
 })
 

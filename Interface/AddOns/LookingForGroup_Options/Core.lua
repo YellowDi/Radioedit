@@ -39,6 +39,7 @@ function LookingForGroup_Options:OnInitialize()
 	LookingForGroup.db.RegisterCallback(LookingForGroup, "OnProfileReset", "OnEnable")
 	self:RegisterEvent("LFG_LIST_APPLICANT_UPDATED")
 	self:RegisterEvent("LFG_LIST_ACTIVE_ENTRY_UPDATE")
+	self:RegisterEvent("LFG_UPDATE")
 	if C_LFGList.GetActiveEntryInfo() then
 		LookingForGroup_Options.set_requests()
 	end
@@ -79,6 +80,7 @@ function LookingForGroup_Options:LFG_LIST_ACTIVE_ENTRY_UPDATE()
 	else
 		LookingForGroup_Options.clear_requests()
 	end
+	self:NotifyChangeIfSelected("find")
 end
 
 function LookingForGroup_Options:RestoreDBVariable(key)

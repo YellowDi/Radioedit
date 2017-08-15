@@ -5,7 +5,7 @@ local L = LibStub("AceLocale-3.0"):GetLocale("LookingForGroup")
 
 LookingForGroup_Options:push("options",{
 	name = OPTIONS,
-	desc = "Toggles of Sub-AddOns",
+	desc = L.options,
 	type = "group",
 	args =
 	{
@@ -133,9 +133,8 @@ LookingForGroup_Options:push("options",{
 		},
 		background =
 		{
-			name = BACKGROUND,
+			name = L.background_search,
 			type = "group",
-			desc = SEARCHING,
 			args =
 			{
 				enable_music =
@@ -200,7 +199,7 @@ LookingForGroup_Options:push("options",{
 		addons =
 		{
 			name = ADDONS,
-			desc = L["Pretend we are using other LFG addons"],
+			desc = L.options_addons,
 			type = "group",
 			args =
 			{
@@ -216,6 +215,35 @@ LookingForGroup_Options:push("options",{
 						end
 					end,
 					get = function() return LookingForGroup_Options.db.profile.addon_meeting_stone end,
+					width = "full"
+				},
+				wqgf =
+				{
+					name = "World Quest Group Finder",
+					type = "toggle",
+					set = function(_,val)
+						if val then 
+							LookingForGroup.db.profile.addon_wqgf = true
+						else
+							LookingForGroup.db.profile.addon_wqgf = nil
+						end
+					end,
+					get = function() return LookingForGroup.db.profile.addon_wqgf end,
+					width = "full"
+				},
+				wqt =
+				{
+					name = "World Quest Tracker",
+					type = "toggle",
+					set = function(_,val)
+						if val then 
+							LookingForGroup.db.profile.addon_wqt = true
+						else
+							LookingForGroup.db.profile.addon_wqt = nil
+						end
+					end,
+					get = function() return LookingForGroup.db.profile.addon_wqt end,
+					width = "full"
 				}
 			}
 		},
@@ -263,7 +291,7 @@ LookingForGroup_Options:push("options",{
 				},
 				start_a_group =
 				{
-					name = '('..HARDWARE..')'..START_A_GROUP,
+					name = '('..HARDWARE..')'..L.Relist,
 					desc = "LFG_LIST_ENTRY_EXPIRED_TOO_MANY_PLAYERS",
 					type = "toggle",
 					width = "full",
@@ -271,34 +299,37 @@ LookingForGroup_Options:push("options",{
 						return LookingForGroup.db.profile.wq_start_a_group
 					end,
 					set = function(_,val)
-						if val then
-							LookingForGroup.db.profile.wq_start_a_group = true
-						else
-							LookingForGroup.db.profile.wq_start_a_group = nil
+						local profile = LookingForGroup.db.profile
+						if profile.hardware then
+							if val then
+								profile.wq_start_a_group = true
+							else
+								profile.wq_start_a_group = nil
+							end						
 						end
 					end
 				},
 				kick =
 				{
-					name = CHAT_KICK,
+					name = L.Kick,
 					type = "toggle",
 					width = "full",
 					get = function()
-						return not LookingForGroup.db.profile.wq_kick
+						return LookingForGroup.db.profile.wq_kick
 					end,
 					set = function(_,val)
 						if val then
-							LookingForGroup.db.profile.wq_kick = nil
-						else
 							LookingForGroup.db.profile.wq_kick = true
+						else
+							LookingForGroup.db.profile.wq_kick = nil
 						end
 					end
 				}
 			}
 		},
-		windowed =
+		window =
 		{
-			name = VIDEO_OPTIONS_WINDOWED,
+			name = L.options_window,
 			type = "group",
 			args =
 			{
@@ -394,7 +425,7 @@ LookingForGroup_Options:push("options",{
 		},
 		kick =
 		{
-			name = CHAT_KICK,
+			name = L.Kick,
 			desc = "LookingForGroup_Kicker",
 			type = "group",
 			args =
@@ -404,19 +435,20 @@ LookingForGroup_Options:push("options",{
 					name = TRACKER_HEADER_WORLD_QUESTS,
 					type = "toggle",
 					get = function()
-						return not LookingForGroup.db.profile.wq_kick
+						return LookingForGroup.db.profile.wq_kick
 					end,
 					set = function(_,val)
 						if val then
-							LookingForGroup.db.profile.wq_kick = nil
-						else
 							LookingForGroup.db.profile.wq_kick = true
+						else
+							LookingForGroup.db.profile.wq_kick = nil
 						end
 					end
 				},
 				lfr =
 				{
 					name = RAID_FINDER,
+					desc = CHAT_KICK.." DPS <= 600000",
 					type = "toggle",
 					get = function()
 						return not LookingForGroup.db.profile.lfr_kick
@@ -431,23 +463,21 @@ LookingForGroup_Options:push("options",{
 				},
 				pug =
 				{
-					name = "PUG",
+					name = L.options_pug,
 					type = "toggle",
 					get = function()
 						return LookingForGroup.db.profile.pug_kick
 					end,
 					set = function(_,val)
-						if val then
-							LookingForGroup.db.profile.pug_kick = 0
-						else
+						if not val then
 							LookingForGroup.db.profile.pug_kick = nil
 						end
 					end
 				},
 				pugdps =
 				{
-					name = "PUG",
-					desc = "DPS",
+					name = L.options_pug,
+					desc = L.options_pug_dps,
 					type = "input",
 					pattern = "^[0-9]*$",
 					get = function()
@@ -466,7 +496,7 @@ LookingForGroup_Options:push("options",{
 				},
 			}
 		},
-		advance =
+		advanced =
 		{
 			name = ADVANCED_LABEL,
 			type = "group",
@@ -491,6 +521,7 @@ LookingForGroup_Options:push("options",{
 				hardware =
 				{
 					name = HARDWARE,
+					desc = L.options_advanced_hardware,
 					type = "toggle",
 					get = function(info)
 						return LookingForGroup.db.profile.hardware

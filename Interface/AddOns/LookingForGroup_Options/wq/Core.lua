@@ -32,12 +32,31 @@ local function do_start()
 		end
 		local activityID = LFGListUtil_GetQuestCategoryData(quest_id)
 		if activityID ~= nil then
+			local profile = LookingForGroup.db.profile
+			local wqgf,wqt = profile.addon_wqgf,profile.addon_wqt
+			local comment
+			if wqft or wqt then
+				local tb = {}
+				if wqgf then
+					tb[#tb+1] = "#WQ:"
+					tb[#tb+1] = quest_id
+					tb[#tb+1] = "#PVE#"
+				end
+				if wqt then
+					tb[#tb+1] = "@ID"
+					tb[#tb+1] = quest_id
+					tb[#tb+1] = "@PVE"
+				end
+				comment = table.concat(tb)
+			else
+				comment = ""
+			end
 			funcListing(activityID,
 					"",
 					0,
 					0,
 					"",
-					"",
+					comment,
 					true,
 					false,
 					quest_id)
@@ -167,7 +186,6 @@ end
 AceGUI:RegisterWidgetType("LookingForGroup_Options_WQ_Multiselect", function()
 	local control = AceGUI:Create("InlineGroup")
 	control:SetLayout("Flow")
-	control:SetTitle(name)
 	control.width = "fill"
 	control.SetList = function(self,values)
 		self.values = values

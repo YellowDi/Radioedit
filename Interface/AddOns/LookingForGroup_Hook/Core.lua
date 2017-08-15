@@ -171,5 +171,4 @@ function LookingForGroup_Hook:LFGListApplicationDialog_SignUpButton_OnClick(obj)
 end
 
 function LookingForGroup_Hook:QuickJoinToastButton_OnShow(...)
-	LookingForGroup:Print(...)
 end

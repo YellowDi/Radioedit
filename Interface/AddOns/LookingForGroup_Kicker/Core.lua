@@ -30,6 +30,7 @@ end
 function LookingForGroup_Kicker.Kick()
 	if not InCombatLockdown() then
 		local guid_tb = {}
+		local format_str
 		local num = GetNumGroupMembers()
 		if UnitInRaid("player") then
 			format_str = "raid"
@@ -50,7 +51,7 @@ function LookingForGroup_Kicker.Kick()
 			local p = guid_tb[k]
 			if p then
 				kick_tb[k] = p
-				UninviteUnit(p)
+				UninviteUnit(p,"")
 			else
 				kick_tb[k] = nil
 			end
@@ -72,7 +73,7 @@ function LookingForGroup_Kicker:PLAYER_REGEN_DISABLED()
 	end
 	if self.button == nil then
 		local button = LibStub("AceGUI-3.0"):Create("Button")
-		button:SetText(CHAT_KICK)
+		button:SetText("Kick")
 		button:SetCallback("OnClick",function()
 			LookingForGroup_Kicker:Kick()
 			if next(kick_tb) == nil then
@@ -101,6 +102,7 @@ function LookingForGroup_Kicker.Check(mindps,allroles,isencounter,vote_to_kick)
 			return
 		end
 	end
+	local format_str
 	if UnitInRaid("player") then
 		format_str = "raid"
 	elseif UnitInParty("player") then
@@ -189,14 +191,14 @@ function LookingForGroup_Kicker:ENCOUNTER_END(event,encounterID, encounterName, 
 			LookingForGroup_Kicker.Check(pug,nil,true)
 		end
 		if difficultyID == 17 then
-			LookingForGroup_Kicker.Check(350000,nil,true,true)
+			LookingForGroup_Kicker.Check(300000,nil,true,true)
 		end
 	elseif mapid == 1676 then
 		if pug and (difficultyID == 14 or difficultyID == 15) then
 			LookingForGroup_Kicker.Check(pug,nil,true)
 		end
 		if difficultyID == 17 then
-			LookingForGroup_Kicker.Check(700000,nil,true,true)
+			LookingForGroup_Kicker.Check(600000,nil,true,true)
 		end
 	end
 end

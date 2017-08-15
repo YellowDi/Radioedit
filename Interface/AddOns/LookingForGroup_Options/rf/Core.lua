@@ -5,6 +5,7 @@ local LookingForGroup = AceAddon:GetAddon("LookingForGroup")
 local LookingForGroup_Options = AceAddon:GetAddon("LookingForGroup_Options")
 local wipe = wipe
 local pairs = pairs
+local L = LibStub("AceLocale-3.0"):GetLocale("LookingForGroup")
 
 local order = 0
 local function get_order()
@@ -26,6 +27,7 @@ LookingForGroup_Options:push("rf",{
 		mode =
 		{
 			name = MODE,
+			desc = L.rf_mode_desc,
 			order = get_order(),
 			type = "toggle",
 			get = function(info)

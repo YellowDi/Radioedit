@@ -456,7 +456,6 @@ function LookingForGroup_Core.GetActiveEntryInfo()
 	table_insert(concat_tb,"/")
 	table_insert(concat_tb,damager)
 	table_insert(concat_tb,")|r")
-	
 	if voiceChat and voiceChat ~= "" then
 		table_insert(concat_tb,"\n")
 		table_insert(concat_tb,LFG_LIST_VOICE_CHAT)
@@ -464,7 +463,6 @@ function LookingForGroup_Core.GetActiveEntryInfo()
 		table_insert(concat_tb,voiceChat)
 		table_insert(concat_tb,"|r")
 	end
-	
 	if questID == nil and comment and comment ~= "" then
 		table_insert(concat_tb,"\n\n|cff8080cc")
 		table_insert(concat_tb,comment)

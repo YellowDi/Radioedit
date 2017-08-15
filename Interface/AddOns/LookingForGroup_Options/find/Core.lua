@@ -45,6 +45,8 @@ local C_LFGList_CreateListing = C_LFGList.CreateListing
 local C_LFGList_UpdateListing = C_LFGList.UpdateListing
 local C_LFGList_ClearSearchResults = C_LFGList.ClearSearchResults
 
+local L = LibStub("AceLocale-3.0"):GetLocale("LookingForGroup")
+
 local function get_filters()
 	local legacy = LookingForGroup_Options.db.profile.a_group_legacy
 	if legacy then
@@ -480,7 +482,7 @@ local activity_options_args =
 	activities =
 	{
 		order = get_order(),
-		name = FILTERS,
+		name = L.Keywords,
 		type = "multiselect",
 		width = "full",
 		values = function()
@@ -514,16 +516,29 @@ local activity_options_args =
 			LookingForGroup_Options.db.profile.find_a_group_activities = nil
 		end
 	},
-	legacy =
+	recommanded =
 	{
 		order = get_order(),
-		name = LFG_LIST_LEGACY,
+		name = RECOMMENDED,
 		type = "toggle",
 		get = function(info)
-			return LookingForGroup_Options.db.profile.a_group_legacy
+			local legacy = LookingForGroup_Options.db.profile.a_group_legacy
+			if legacy then
+				return nil
+			elseif legacy == false then
+				return false
+			else
+				return true
+			end
 		end,
 		set = function(info,val)
-			LookingForGroup_Options.db.profile.a_group_legacy = val
+			if val then
+				LookingForGroup_Options.db.profile.a_group_legacy = nil
+			elseif val == false then
+				LookingForGroup_Options.db.profile.a_group_legacy = false
+			else
+				LookingForGroup_Options.db.profile.a_group_legacy = true
+			end
 		end,
 		tristate = true,
 	},
@@ -553,7 +568,8 @@ LookingForGroup_Options:push("find",{
 				},
 				filters =
 				{
-					name = FILTERS,
+					name = L.Keywords,
+					desc = KBASE_DEFAULT_SEARCH_TEXT,
 					order = get_order(),
 					type = "group",
 					args =
@@ -586,7 +602,7 @@ LookingForGroup_Options:push("find",{
 						filters =
 						{
 							order = get_order(),
-							name = FILTERS,
+							name = L.Keywords,
 							type = "multiselect",
 							width = "full",
 							values = function()
@@ -636,7 +652,8 @@ LookingForGroup_Options:push("find",{
 						filter =
 						{
 							order = get_order(),
-							name = FILTERS,
+							name = L.Keywords,
+							desc = KBASE_DEFAULT_SEARCH_TEXT,
 							type = "input",
 							set = function(_,val)
 								local gmatch = string.gmatch
@@ -662,7 +679,7 @@ LookingForGroup_Options:push("find",{
 				},
 				encounters =
 				{
-					name = RAID_ENCOUNTERS,
+					name = RAID_BOSSES,
 					order = get_order(),
 					type = "group",
 					args =
@@ -670,7 +687,8 @@ LookingForGroup_Options:push("find",{
 						encounters =
 						{
 							order = get_order(),
-							name = RAID_ENCOUNTERS,
+							name = RAID_BOSSES,
+							desc = L.find_f_encounters,
 							type = "multiselect",
 							width = "full",
 							values = encounters_values,
@@ -725,6 +743,7 @@ LookingForGroup_Options:push("find",{
 						role =
 						{
 							name = ROLE,
+							desc = L.find_f_advanced_role,
 							type = "toggle",
 							get = function(info)
 								return LookingForGroup_Options.db.profile.find_a_group_role
@@ -740,6 +759,7 @@ LookingForGroup_Options:push("find",{
 						class =
 						{
 							name = CLASS,
+							desc = L.find_f_advanced_class,
 							type = "toggle",
 							get = function(info)
 								return LookingForGroup_Options.db.profile.find_a_group_class
@@ -755,6 +775,7 @@ LookingForGroup_Options:push("find",{
 						complete =
 						{
 							name = COMPLETE,
+							desc = L.find_f_advanced_complete,
 							type = "toggle",
 							get = function(info)
 								return LookingForGroup_Options.db.profile.find_a_group_complete
@@ -771,6 +792,7 @@ LookingForGroup_Options:push("find",{
 						{
 							name ="|TInterface\\MoneyFrame\\UI-GoldIcon:%d:%d:2:0|t",
 							type = "toggle",
+							desc = L.find_f_advanced_gold,
 							get = function(info)
 								return LookingForGroup_Options.db.profile.find_a_group_gold
 							end,
@@ -785,6 +807,7 @@ LookingForGroup_Options:push("find",{
 						language =
 						{
 							name = LANGUAGE,
+							desc = format(L.find_f_advanced_language,SPAM_FILTER,LANGUAGE),
 							type = "toggle",
 							get = function(info)
 								return LookingForGroup_Options.db.profile.find_a_group_language
@@ -800,6 +823,7 @@ LookingForGroup_Options:push("find",{
 						twoxfilters =
 						{
 							name = "2x"..FILTERS,
+							desc = L.find_f_advanced_2xfilters,
 							type = "toggle",
 							get = function()
 								return LookingForGroup_Options.db.profile.find_a_group_2xfilters
@@ -1001,7 +1025,7 @@ LookingForGroup_Options:push("find",{
 					type = "input",
 					get = function(info)
 						local quest_id = LookingForGroup_Options.db.profile.start_a_group_quest_id
-						if quest_id ~= nil then
+						if quest_id then
 							return tostring(quest_id)
 						end
 					end,
@@ -1025,7 +1049,12 @@ LookingForGroup_Options:push("find",{
 				start =
 				{
 					order = get_order(),
-					name = START,
+					name = function()
+						if C_LFGList.GetActiveEntryInfo() then
+							return DONE_EDITING
+						end
+						return START
+					end,
 					type = "execute",
 					func = function()
 						local profile = LookingForGroup_Options.db.profile
@@ -1076,7 +1105,7 @@ LookingForGroup_Options:push("find",{
 				cancel = 
 				{
 					order = get_order(),
-					name = RESET,
+					name = CANCEL,
 					type = "execute",
 					func = function()
 						activity_options_args.cancel.func()
@@ -1118,7 +1147,6 @@ end
 AceGUI:RegisterWidgetType("LookingForGroup_Options_Search_Result_Multiselect", function()
 	local control = AceGUI:Create("InlineGroup")
 	control:SetLayout("Flow")
-	control:SetTitle(name)
 	control.width = "fill"
 	control.SetList = function(self,values)
 		self.values = values

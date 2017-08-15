@@ -86,13 +86,37 @@ function LookingForGroup_WQ:QUEST_ACCEPTED(info,index,wq_id)
 				return
 			end
 		end
-		
 		local activityID, categoryID, filters, questName = LFGListUtil_GetQuestCategoryData(wq_id)
 		if activityID then
 			LookingForGroup_WQ.db.profile.doing_wq = wq_id
 			local function create()
 				if LookingForGroup_WQ.db.profile.doing_wq == wq_id then
-					C_LFGList.CreateListing(activityID,"",0,0,"","",true,false,wq_id)
+					local profile = LookingForGroup.db.profile
+					local wqgf,wqt = profile.addon_wqgf,profile.addon_wqt
+					local comment
+					if wqft or wqt then
+						local tb = {}
+						if wqgf then
+							tb[#tb+1] = "#WQ:"
+							tb[#tb+1] = wq_id
+							tb[#tb+1] = "#PVE#"
+						end
+						if wqt then
+							tb[#tb+1] = "@ID"
+							tb[#tb+1] = wq_id
+							tb[#tb+1] = "@PVE"
+						end
+						comment = table.concat(tb)
+					else
+						comment = ""
+					end
+					C_LFGList.CreateListing(activityID,"",0,0,"",comment,true,false,wq_id)
+					if profile.wq_kick then
+						local LookingForGroup_Kicker = LookingForGroup.GetAddon("LookingForGroup_Kicker")
+						LookingForGroup_Kicker.ScheduleCheck(1,function()
+							return LookingForGroup_WQ.db.profile.doing_wq == nil
+						end,0,true)
+					end
 				end
 			end
 			local function callback()
@@ -104,16 +128,6 @@ function LookingForGroup_WQ:QUEST_ACCEPTED(info,index,wq_id)
 					hardware_api(START_A_GROUP,create)
 				else
 					local function apply()
-						local i
-						if 5 < #results then
-							local random = math.random
-							for i = #results,2,-1 do
-								local r = random(1,i)
-								local t = results[r]
-								results[r] = results[i]
-								results[i] = t
-							end
-						end
 						local i = 1
 						local b = 0
 						local _,tank,healer,dps = GetLFGRoles()
@@ -126,11 +140,6 @@ function LookingForGroup_WQ:QUEST_ACCEPTED(info,index,wq_id)
 								if autoaccept then
 									C_LFGList.ApplyToGroup(v, "", tank,healer,true)
 									b = b + 1
-								else
-									if comment:find("#WQ:"..wq_id.."#") then
-										C_LFGList.ApplyToGroup(v, "WorldQuestGroupFinderUser-"..wq_id, tank,healer,true)
-										b = b + 1
-									end
 								end
 							end
 							i = i+1
@@ -238,7 +247,6 @@ function LookingForGroup_WQ:QUEST_TURNED_IN(info,id)
 			return
 		end
 		local applications = C_LFGList.GetApplications()
-		local i
 		for i = 1,#applications do
 			local id,status = C_LFGList.GetApplicationInfo(applications[i])
 			if status == "invited" then

@@ -15,6 +15,7 @@
 	<Include file="cr\cr.xml"/>
 	<Include file="av\av.xml"/>
 	<Include file="quick_join\quick_join.xml"/>
+	<Include file="lfdlfr\lfdlfr.xml"/>
 	<Include file="sort\sort.xml"/>
 	<Include file="kicker\kicker.xml"/>
 	<Include file="applicant\applicant.xml"/>>

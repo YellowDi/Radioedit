@@ -501,7 +501,6 @@ end
 AceGUI:RegisterWidgetType("LookingForGroup_Options_AV_Multiselect", function()
 	local control = AceGUI:Create("InlineGroup")
 	control:SetLayout("Flow")
-	control:SetTitle(name)
 	control.width = "fill"
 	control.SetList = function(self,values)
 		self.values = values

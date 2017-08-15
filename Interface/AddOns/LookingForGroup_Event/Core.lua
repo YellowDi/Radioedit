@@ -72,21 +72,30 @@ function LookingForGroup_Event:LOADING_SCREEN_DISABLED()
 	end
 end
 
+local function relisting()
+	local active, activityID, iLevel, honorLevel, name, comment,
+		voiceChat, expiration, autoAccept, privateGroup, questID = C_LFGList.GetActiveEntryInfo()
+	if active then
+		if questID then
+			name = ""
+		end
+		C_LFGList.UpdateListing(activityID,name,iLevel,honorLevel,voiceChat,comment,autoAccept,privateGroup,questID)
+	end
+end
+
+local relisting_timer
+
 function LookingForGroup_Event:LFG_LIST_ACTIVE_ENTRY_UPDATE()
-	if not LookingForGroup.db.profile.wq_kick and LookingForGroup_WQCharacterDB then
-		local default = LookingForGroup_WQCharacterDB.profiles.Default
-		if default.doing_wq then
-			local status,LookingForGroup_Kicker = pcall(AceAddon.GetAddon,AceAddon,"LookingForGroup_Kicker")
-			if not status then
-				LookingForGroup_Kicker = LookingForGroup.GetAddon("LookingForGroup_Kicker")
-			end
-			LookingForGroup_Kicker.ScheduleCheck(1,function()
-				local id = default.doing_wq
-				if id and GetTaskInfo(id) then
-					return
-				end
-				return true
-			end,0,true)
+	local active, _, _, _, _, _, _, expiration = C_LFGList.GetActiveEntryInfo()
+	if relisting_timer then
+		relisting_timer:Cancel()
+		relisting_timer = nil
+	end
+	if active then
+		if 10 < expiration then
+			relisting_timer = C_Timer.NewTimer(expiration-10,relisting)
+		else
+			relisting()
 		end
 	end
 end

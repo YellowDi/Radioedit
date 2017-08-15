@@ -7,11 +7,14 @@ local LDB = LibStub("LibDataBroker-1.1"):NewDataObject("LookingForGroup_Icon",{
 	icon = "Interface/Icons/INV_Misc_GroupNeedMore"
 })
 
-local AceConfigDialog = LibStub("AceConfigDialog-3.0")
-
 function LDB:OnClick(button)
 	if button == "RightButton" then
-		LookingForGroup.GetAddon("LookingForGroup_CR").do_scan()
+		local LookingForGroup_CR = LookingForGroup.GetAddon("LookingForGroup_CR")
+		if IsControlKeyDown() or IsShiftKeyDown() then
+			LookingForGroup_CR.do_hop()
+		else
+			LookingForGroup_CR.do_scan()
+		end
 	elseif button == "MiddleButton" then
 		local status,LookingForGroup_Options = pcall(AceAddon.GetAddon,AceAddon,"LookingForGroup_Options")
 		if status then
@@ -21,6 +24,7 @@ function LDB:OnClick(button)
 			end
 		end
 	else
+		local AceConfigDialog = LibStub("AceConfigDialog-3.0")
 		if AceConfigDialog.OpenFrames.LookingForGroup then
 			AceConfigDialog:Close("LookingForGroup")
 		else
