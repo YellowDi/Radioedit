@@ -1,0 +1,55 @@
+VER 3 000000000000012F " " "INV_Misc_QuestionMark"
+#showtooltips
+/cast 自利
+/cast 荣耀勋章
+END
+VER 3 000000000000011F "1+1+1" "INV_Misc_QuestionMark"
+#showtooltips 冰风暴
+/castsequence reset=2 冰风暴,冰枪术,寒冰箭 
+END
+VER 3 0000000000000130 "·" "132874"
+/script ChatFrame_RemoveMessageGroup(ChatFrame1, "CHANNEL")
+END
+VER 3 0000000000000131 "保护之手" "134400"
+/G 工会仓库食物和附魔随便拿，不要的蓝绿装请丢仓库分解给大家做附魔，还有各种肉，鱼，血，不要的统统丢里面。（最近缺诅咒女王鱼，黑梭鱼，附魔材料魔光碎片)
+END
+VER 3 0000000000000124 "关闭动态视角" "1305156"
+/console ActionCam off
+END
+VER 3 0000000000000123 "冰风暴防多连+保险宏" "INV_Misc_QuestionMark"
+#showtooltips
+/cast [mod:alt]冰风暴
+/castsequence reset=1 冰风暴,0
+END
+VER 3 0000000000000125 "动态视角" "1305156"
+/console ActionCam full
+/console ActionCam focusOff 
+/console ActionCam noHeadMove
+END
+VER 3 0000000000000127 "法阵" "INV_Misc_QuestionMark"
+#showtooltip 燃烧
+/cast 缺指指环
+/castsequence [@cursor] reset=10 能量符文,流星,燃烧,火焰冲击,炎爆术,火焰冲击,炎爆术,火焰冲击,炎爆术,灼烧,炎爆术,灼烧,炎爆术,灼烧,炎爆术,龙息术
+END
+VER 3 000000000000012E "焦点羊" "INV_MISC_QUESTIONMARK"
+#showtooltip 变形术
+/cast [target=focus,exists]变形术;变形术
+END
+VER 3 000000000000012A "羽毛" "INV_Misc_QuestionMark"
+#showtooltip 天堂之羽
+/cast [@player] 天堂之羽
+/use 1
+END
+VER 3 000000000000012C "视角宏" "134331"
+/script SetCVar("cameradistanceMax",50)
+END
+VER 3 000000000000012D "镜像" "INV_Misc_QuestionMark"
+#showtooltip 燃烧
+/use  缺指指环
+/use 勇气号角
+/castsequence [@cursor] reset=10 镜像,流星,燃烧,火焰冲击,炎爆术,火焰冲击,炎爆术,火焰冲击,炎爆术,灼烧,炎爆术,灼烧,炎爆术,灼烧,炎爆术,龙息术
+END
+VER 3 0000000000000129 "风暴" "INV_Misc_QuestionMark"
+#showtooltip 烈焰风暴
+/cast [@cursor] 烈焰风暴
+END

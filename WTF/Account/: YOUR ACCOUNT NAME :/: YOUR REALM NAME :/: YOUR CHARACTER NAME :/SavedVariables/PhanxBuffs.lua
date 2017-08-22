@@ -1,0 +1,7 @@
+
+PhanxBuffsIgnoreDB = {
+	["buffs"] = {
+	},
+	["debuffs"] = {
+	},
+}

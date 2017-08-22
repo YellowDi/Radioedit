@@ -1,0 +1,7 @@
+
+AngryWorldQuests_Config = {
+	["__version"] = 11,
+	["sortMethod"] = 5,
+	["timeFilterDuration"] = 3,
+	["selectedFilters"] = 2,
+}

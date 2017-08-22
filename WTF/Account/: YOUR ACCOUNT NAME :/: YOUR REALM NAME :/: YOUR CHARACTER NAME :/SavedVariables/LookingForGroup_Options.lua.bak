@@ -1,0 +1,25 @@
+
+LookingForGroup_OptionsCharacterDB = {
+	["profileKeys"] = {
+		["Elenore - 格瑞姆巴托"] = "Default",
+	},
+	["profiles"] = {
+		["Default"] = {
+			["a_group_group"] = 114,
+			["find_a_group_encounters"] = {
+				["赫娅"] = true,
+				["神王斯科瓦尔德"] = true,
+				["海姆达尔"] = true,
+				["芬雷尔"] = true,
+				["奥丁"] = true,
+			},
+			["find_a_group_activities"] = {
+				"英灵殿（史诗）", -- [1]
+			},
+			["addon_meeting_stone"] = true,
+			["a_group_activity"] = 447,
+			["a_group_category"] = 2,
+			["find_a_group_filter"] = "艾",
+		},
+	},
+}
