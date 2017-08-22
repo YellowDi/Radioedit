@@ -1,4 +1,4 @@
-## Interface: 70000
+## Interface: 70200
 ## Title: EncounterJournal Plus - Instances Info
 ## Version: 0.1.1
 ## Notes: Adds saved instances info to EncounterJournal
