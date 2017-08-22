@@ -1,0 +1,8 @@
+## Interface: 70000
+## Title: Masque: A|cff99CCFFftermathh|r
+## Version: 1.0
+## Author: Aftermathh
+## Notes: Aftermathh skin for Masque.
+## Dependencies: Masque
+
+Masque_Aftermathh.lua
