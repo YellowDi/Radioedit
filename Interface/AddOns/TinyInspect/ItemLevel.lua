@@ -103,7 +103,7 @@ local function SetItemLevel(self, link, category)
         SetItemSlotString(frame.slotString, self.OrigItemClass, self.OrigItemEquipSlot, self.OrigItemLink)
     else
         local _, count, level, quality, class, equipSlot
-        if (link) then
+        if (link and string.match(link, "item:(%d+):")) then
             count, level, _, _, quality, _, _, class, _, _, equipSlot = LibItemInfo:GetItemInfo(link)
             if (count > 0) then
                 SetItemLevelString(frame.levelString, "...")
@@ -351,22 +351,28 @@ end)
 
 local function ChatItemLevel(Hyperlink)
     local link = string.match(Hyperlink, "|H(.-)|h")
-    local unknown, level, name, _, _, _, _, class, subclass, _, equipSlot = LibItemInfo:GetItemInfo(link)
-    if (unknown == 0 and level > 0) then
-        local num, info = LibItemGem:GetItemGemInfo(link)
-        local gem = ""
-        for i = 1, num do
-            gem = gem .. "|TInterface\\ItemSocketingFrame\\UI-EmptySocket-Prismatic:0|t"
-        end
-        if (gem ~= "") then gem = gem.." " end
+    local name, _, _, _, _, class, subclass, _, equipSlot = GetItemInfo(link)
+    local level = GetDetailedItemLevelInfo(link)
+    local yes = true
+    if (level) then
         if (equipSlot and string.find(equipSlot, "INVTYPE_")) then
             level = format("%s(%s)", level, _G[equipSlot] or equipSlot)
         elseif (class == ARMOR) then
             level = format("%s(%s)", level, class)
         elseif (subclass and string.find(subclass, RELICSLOT)) then
             level = format("%s(%s)", level, RELICSLOT)
+        else
+            yes = false
         end
-        Hyperlink = Hyperlink:gsub("|h%[(.-)%]|h", "|h["..level..":"..name.."]|h"..gem)
+        if (yes) then
+            local gem = ""
+            local num, info = LibItemGem:GetItemGemInfo(link)
+            for i = 1, num do
+                gem = gem .. "|TInterface\\ItemSocketingFrame\\UI-EmptySocket-Prismatic:0|t"
+            end
+            if (gem ~= "") then gem = gem.." " end
+            Hyperlink = Hyperlink:gsub("|h%[(.-)%]|h", "|h["..level..":"..name.."]|h"..gem)
+        end
     end
     return Hyperlink
 end
