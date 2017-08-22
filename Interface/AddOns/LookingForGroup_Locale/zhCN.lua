@@ -18,6 +18,9 @@ L["find_f_advanced_role"] = "依据你的职责。举个例子，如果你是治
 L["find_f_encounters"] = [=[正常勾 = 这个boss必须被击杀过。
 暗勾 = 这个boss必须未被击杀过。
 无勾 = 不在乎这个boss是否被击杀过]=]
+L["find_recommended_desc"] = [=[正常勾 = 只显示推荐的活动
+暗勾 = 显示其它活动
+无勾 = 显示全部活动]=]
 L["Keywords"] = "关键字"
 L["Kick"] = "踢"
 L["Maximum length"] = "最大长度"

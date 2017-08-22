@@ -520,6 +520,7 @@ local activity_options_args =
 	{
 		order = get_order(),
 		name = RECOMMENDED,
+		desc = L.find_recommended_desc,
 		type = "toggle",
 		get = function(info)
 			local legacy = LookingForGroup_Options.db.profile.a_group_legacy

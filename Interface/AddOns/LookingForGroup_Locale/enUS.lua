@@ -19,6 +19,9 @@ L["find_f_advanced_role"] = "According to your role. For example, if you are a h
 L["find_f_encounters"] = [=[Normal Click = This boss must be defeated
 Dark Click = This boss must not be defeated
 No Click = Do not care whether this boss is defeated or not.]=]
+L["find_recommended_desc"] = [=[Normal Click = Display recommended activities only
+Dark Click = Display other activities
+No Click = Display all activities]=]
 L["Keywords"] = true
 L["Kick"] = true
 L["Maximum length"] = true

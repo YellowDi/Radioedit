@@ -30,6 +30,8 @@ L["Cross Realm"] = "Кросс-сервер"
 --Translation missing 
 -- L["find_f_encounters"] = ""
 --Translation missing 
+-- L["find_recommended_desc"] = ""
+--Translation missing 
 -- L["Keywords"] = ""
 --Translation missing 
 -- L["Kick"] = ""

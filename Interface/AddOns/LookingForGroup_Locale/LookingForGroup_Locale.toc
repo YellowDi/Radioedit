@@ -1,7 +1,7 @@
 ## Interface: 70200
 ## Author: cqwrteur
 ## Title: LookingForGroup Locale
-## Version: 391
+## Version: 393
 ## Dependencies: LookingForGroup
 ## LoadOnDemand: 1
 

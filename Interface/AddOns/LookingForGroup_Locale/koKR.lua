@@ -18,6 +18,8 @@ L["find_f_advanced_role"] = "당신의 역할에 따릅니다. 예를 들어 당
 L["find_f_encounters"] = [=[보통 클릭 = 이 우두머리는 반드시 처치되었어야 합니다
 어두운 클릭 = 이 우두머리는 반드시 잔류중이어야 합니다
 클릭 안함 = 우두머리 처치 여부에 상관하지 않습니다.]=]
+--Translation missing 
+-- L["find_recommended_desc"] = ""
 L["Keywords"] = "키워드"
 L["Kick"] = "추방"
 L["Maximum length"] = "최대 길이"
