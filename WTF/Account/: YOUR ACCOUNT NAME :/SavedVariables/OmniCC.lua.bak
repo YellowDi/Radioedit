@@ -1,5 +1,7 @@
 
 OmniCC4Config = {
+	["groups"] = {
+	},
 	["version"] = "7.2.1",
 	["groupSettings"] = {
 		["base"] = {
@@ -24,20 +26,18 @@ OmniCC4Config = {
 				},
 			},
 			["effect"] = "pulse",
-			["fontFace"] = "Fonts\\ARKai_C.ttf",
-			["yOff"] = 0,
-			["mmSSDuration"] = 0,
+			["fontSize"] = 18,
+			["minSize"] = 0.5,
+			["minEffectDuration"] = 30.0000004470348,
 			["spiralOpacity"] = 1.00999997742474,
-			["minDuration"] = 2.00000002980232,
+			["yOff"] = 0,
 			["xOff"] = 0,
 			["tenthsDuration"] = 0,
 			["fontOutline"] = "THICKOUTLINE",
 			["anchor"] = "CENTER",
-			["minEffectDuration"] = 30.0000004470348,
-			["minSize"] = 0.5,
-			["fontSize"] = 18,
+			["mmSSDuration"] = 0,
+			["minDuration"] = 2.00000002980232,
+			["fontFace"] = "Fonts\\ARKai_C.ttf",
 		},
-	},
-	["groups"] = {
 	},
 }

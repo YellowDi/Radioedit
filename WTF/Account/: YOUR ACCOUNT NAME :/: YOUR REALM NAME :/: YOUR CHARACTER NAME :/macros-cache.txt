@@ -1,7 +1,10 @@
-VER 3 0100000000000001 "·" "INV_Misc_QuestionMark"
-#showtooltip 闪现术
-/stopcasting
-/cast 闪现术
+VER 3 010000000000000D "·" "894556"
+/use 治疗石
+/use 古代治疗药水
+/use 古代活力药水
+/use 重振雄风药水
+/use 陈年治疗药水
+/castSequence reset=2 0 1,0 2,0 3,0 4,0 5,0 6,0 7,0 8,0 9,0 10,0 11,0 12,0 13,0 14,0 15,0,16,9,0 10,0 11,0 12,0 13,0 14,0 15,0,16.
 END
 VER 3 0100000000000002 "·" "INV_Misc_QuestionMark"
 #showtooltip 变形术(绵羊)
@@ -55,11 +58,8 @@ VER 3 010000000000000C "·" "INV_Misc_QuestionMark"
 #showtooltip 暴风雪
 /cast [@cursor] 暴风雪
 END
-VER 3 010000000000000D "·" "894556"
-/use 治疗石
-/use 古代治疗药水
-/use 古代活力药水
-/use 重振雄风药水
-/use 陈年治疗药水
-/castSequence reset=2 0 1,0 2,0 3,0 4,0 5,0 6,0 7,0 8,0 9,0 10,0 11,0 12,0 13,0 14,0 15,0,16,9,0 10,0 11,0 12,0 13,0 14,0 15,0,16.
+VER 3 0100000000000001 "·" "INV_Misc_QuestionMark"
+#showtooltip 闪现术
+/stopcasting
+/cast 闪现术
 END

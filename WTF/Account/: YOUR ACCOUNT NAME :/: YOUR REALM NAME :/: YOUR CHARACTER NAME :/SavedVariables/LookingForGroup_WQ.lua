@@ -5,6 +5,7 @@ LookingForGroup_WQCharacterDB = {
 	},
 	["profiles"] = {
 		["Default"] = {
+			["doing_wq"] = 44786,
 		},
 	},
 }

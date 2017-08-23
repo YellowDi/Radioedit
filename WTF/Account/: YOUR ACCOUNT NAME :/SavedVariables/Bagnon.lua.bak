@@ -42,21 +42,21 @@ Bagnon_Sets = {
 			["brokerObject"] = "BagnonLauncher",
 			["columns"] = 14,
 			["bagFrame"] = false,
-			["actPanel"] = false,
-			["y"] = 0,
+			["borderColor"] = {
+			},
+			["bagBreak"] = false,
 			["x"] = -1.1824473631350e-005,
+			["y"] = 0,
+			["itemScale"] = 1,
+			["alpha"] = 1,
+			["hiddenRules"] = {
+			},
 			["color"] = {
 				0, -- [1]
 				0, -- [2]
 				0, -- [3]
 			},
-			["hiddenRules"] = {
-			},
-			["alpha"] = 1,
-			["bagBreak"] = false,
-			["itemScale"] = 1,
-			["borderColor"] = {
-			},
+			["actPanel"] = false,
 		},
 		["vault"] = {
 			["rules"] = {
@@ -165,10 +165,10 @@ Bagnon_Sets = {
 			["x"] = 0.914506196975708,
 			["borderColor"] = {
 			},
-			["alpha"] = 1,
-			["scale"] = 1,
-			["itemScale"] = 1,
 			["columns"] = 20,
+			["itemScale"] = 1,
+			["scale"] = 1,
+			["alpha"] = 1,
 		},
 	},
 	["glowAlpha"] = 0.5,
@@ -180,18 +180,22 @@ Bagnon_Sets = {
 	},
 	["inscribeColor"] = {
 	},
-	["leatherColor"] = {
-	},
-	["tackleColor"] = {
-	},
-	["herbColor"] = {
-	},
-	["normalColor"] = {
+	["players"] = {
+		["奥蕾莉亚"] = {
+		},
+		["主宰之剑"] = {
+		},
+		["格瑞姆巴托"] = {
+		},
 	},
 	["enchantColor"] = {
 	},
-	["players"] = {
-		["格瑞姆巴托"] = {
-		},
+	["normalColor"] = {
+	},
+	["herbColor"] = {
+	},
+	["tackleColor"] = {
+	},
+	["leatherColor"] = {
 	},
 }

@@ -54,7 +54,7 @@ DBM-VPJingjing: enabled
 DBM-VPTaotao: enabled
 DBM-DefaultSkin: enabled
 FilteredNamePlate: enabled
-LookingForGroup: enabled
+LookingForGroup: disabled
 AdvancedInterfaceOptions: enabled
 BadBoy: enabled
 ItemLinkLevel: enabled
@@ -72,7 +72,7 @@ NopTools: disabled
 LgTiger: disabled
 LgPanda: disabled
 LgSupa: disabled
-WindTools: enabled
+WindTools: disabled
 Immersion: enabled
 LookingForGroup_Kicker: enabled
 LookingForGroup_Locale: enabled

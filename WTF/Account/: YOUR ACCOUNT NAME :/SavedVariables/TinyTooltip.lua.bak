@@ -43,23 +43,23 @@ BigTipDB = {
 			0, -- [3]
 			0.8, -- [4]
 		},
-		["headerFontSize"] = 15,
+		["statusbarFontFlag"] = "OUTLINE",
 		["statusbarPosition"] = "bottom",
 		["alwaysShowIdInfo"] = false,
-		["bodyFontFlag"] = "OUTLINE",
+		["bgfile"] = "marble",
 		["bodyFontSize"] = 15,
+		["bodyFont"] = "微软雅黑Myriad",
+		["statusbarTexture"] = "TukTex",
+		["borderCorner"] = "angular",
+		["statusbarFont"] = "微软雅黑Myriad",
+		["statusbarOffsetY"] = 0,
+		["skinMoreFrames"] = true,
+		["statusbarHeight"] = 12,
+		["headerFontFlag"] = "OUTLINE",
 		["statusbarOffsetX"] = 0,
 		["statusbarColor"] = "auto",
-		["borderCorner"] = "angular",
-		["statusbarOffsetY"] = 0,
-		["statusbarFontFlag"] = "OUTLINE",
-		["statusbarHeight"] = 12,
-		["skinMoreFrames"] = true,
-		["headerFontFlag"] = "OUTLINE",
-		["statusbarFont"] = "微软雅黑Myriad",
-		["statusbarTexture"] = "TukTex",
-		["bodyFont"] = "微软雅黑Myriad",
-		["bgfile"] = "marble",
+		["bodyFontFlag"] = "OUTLINE",
+		["headerFontSize"] = 15,
 	},
 	["version"] = 2,
 	["item"] = {
@@ -216,10 +216,10 @@ BigTipDB = {
 					["wildcard"] = "<%s>",
 					["filter"] = "none",
 				},
-				["isPlayer"] = {
-					["enable"] = false,
+				["className"] = {
+					["enable"] = true,
 					["color"] = "ffffff",
-					["wildcard"] = "(%s)",
+					["wildcard"] = "%s",
 					["filter"] = "none",
 				},
 				["name"] = {
@@ -228,10 +228,10 @@ BigTipDB = {
 					["wildcard"] = "%s",
 					["filter"] = "none",
 				},
-				["className"] = {
-					["enable"] = true,
+				["isPlayer"] = {
+					["enable"] = false,
 					["color"] = "ffffff",
-					["wildcard"] = "%s",
+					["wildcard"] = "(%s)",
 					["filter"] = "none",
 				},
 				["classIcon"] = {
@@ -257,6 +257,7 @@ BigTipDB = {
 			["grayForDead"] = false,
 		},
 		["npc"] = {
+			["coloredBorder"] = "reaction",
 			["elements"] = {
 				{
 					"moveSpeed", -- [1]
@@ -340,7 +341,7 @@ BigTipDB = {
 					["filter"] = "none",
 				},
 			},
-			["coloredBorder"] = "reaction",
+			["showTarget"] = true,
 			["anchor"] = {
 				["returnOnUnitFrame"] = false,
 				["position"] = "inherit",
@@ -348,7 +349,6 @@ BigTipDB = {
 				["p"] = "BOTTOMRIGHT",
 				["returnInCombat"] = true,
 			},
-			["showTarget"] = true,
 			["background"] = {
 				["colorfunc"] = "default",
 				["alpha"] = 0.5,
