@@ -40,9 +40,13 @@ L["Add Note"] = "Добавить Заметку"
 L["Add ranks"] = "Добавить ранги"
 --Translation missing 
 -- L["Add rolls"] = ""
+--Translation missing 
+-- L["Add Rolls"] = ""
 L["add_ranks_desc"] = "Выберите минимальный ранг для участия в распределении добычи"
 --Translation missing 
 -- L["add_ranks_desc2"] = ""
+--Translation missing 
+-- L["add_rolls_desc"] = ""
 L["All items"] = "Все предметы"
 L["All items has been awarded and  the loot session concluded"] = "Все предметы были распределены, распределение добычи завершено"
 --Translation missing 
@@ -225,6 +229,8 @@ L["current_council_desc"] = "Нажмите, чтобы удалить опре�
 --Translation missing 
 -- L["customize_appearance_desc"] = ""
 --Translation missing 
+-- L["Data Received"] = ""
+--Translation missing 
 -- L["Date"] = ""
 L["days and x months"] = "%s и %d месяцев."
 L["days, x months, y years"] = "%s, %d месяцев и %d лет."
@@ -240,15 +246,23 @@ L["Disenchant"] = "Распыление"
 --Translation missing 
 -- L["disenchant_desc"] = ""
 --Translation missing 
+-- L["Done syncing"] = ""
+--Translation missing 
 -- L["Double click to delete this entry."] = ""
 L["DPS"] = "УВС"
 --Translation missing 
 -- L["Dropped by:"] = ""
 --Translation missing 
+-- L["Edit Entry"] = ""
+--Translation missing 
 -- L["Enable Loot History"] = ""
+--Translation missing 
+-- L["Enable Tier Buttons"] = ""
 --Translation missing 
 -- L["Enable Timeout"] = ""
 L["enable_loot_history_desc"] = "Включает ведение истории. RCLootCouncil не будет ничего записывать если отключено."
+--Translation missing 
+-- L["enable_tierbuttons_desc"] = ""
 --Translation missing 
 -- L["enable_timeout_desc"] = ""
 --Translation missing 
@@ -289,6 +303,8 @@ L["Hide Votes"] = "Скрыть Голоса"
 L["hide_votes_desc"] = "Только проголосовавшие игроки могут видеть результаты голосования"
 L["history"] = "история"
 --Translation missing 
+-- L["How to sync"] = ""
+--Translation missing 
 -- L["Ignore List"] = ""
 --Translation missing 
 -- L["Ignore Options"] = ""
@@ -308,6 +324,8 @@ L["ilvl: x"] = "илвл: %d"
 -- L["Item has been awarded"] = ""
 --Translation missing 
 -- L["Item received and added from 'player'"] = ""
+--Translation missing 
+-- L["Item was awarded to"] = ""
 --Translation missing 
 -- L["Item(s) replaced:"] = ""
 L["Items under consideration:"] = "Предметы, ожидающие рассмотрения:"
@@ -378,6 +396,8 @@ L["No"] = "Нет"
 --Translation missing 
 -- L["No items to award later registered"] = ""
 --Translation missing 
+-- L["No recipients available"] = ""
+--Translation missing 
 -- L["No session running"] = ""
 --Translation missing 
 -- L["No winners registered"] = ""
@@ -401,6 +421,8 @@ L["Not announced"] = "Не анонсированно"
 -- L["Now handles looting"] = ""
 --Translation missing 
 -- L["Number of buttons"] = ""
+--Translation missing 
+-- L["Number of raids received loot from:"] = ""
 L["Number of reasons"] = "Количество причин"
 --Translation missing 
 -- L["Number of responses"] = ""
@@ -426,14 +448,26 @@ L["open"] = "открыть"
 --Translation missing 
 -- L["open_the_loot_history_desc"] = ""
 --Translation missing 
+-- L["Opens the synchronizer"] = ""
+--Translation missing 
 -- L["Other piece"] = ""
 --Translation missing 
 -- L["Party"] = ""
 L["Pass"] = "Пас"
 --Translation missing 
+-- L["'player' can't receive 'type'"] = ""
+--Translation missing 
+-- L["'player' declined your sync request"] = ""
+--Translation missing 
 -- L["'player' has asked you to reroll"] = ""
 --Translation missing 
 -- L["'player' has ended the session"] = ""
+--Translation missing 
+-- L["'player' hasn't opened the sync window"] = ""
+--Translation missing 
+-- L["Please wait a few seconds until all data has been synchronized."] = ""
+--Translation missing 
+-- L["Please wait before trying to sync again."] = ""
 --Translation missing 
 -- L["Raid"] = ""
 --Translation missing 
@@ -442,6 +476,8 @@ L["Pass"] = "Пас"
 -- L["Rank"] = ""
 --Translation missing 
 -- L["Raw lua output. Doesn't work well with date selection."] = ""
+--Translation missing 
+-- L["RCLootCouncil - Synchronizer"] = ""
 --Translation missing 
 -- L["RCLootCouncil Loot Frame"] = ""
 --Translation missing 
@@ -457,6 +493,8 @@ L["Pass"] = "Пас"
 L["Reason"] = "Причина"
 --Translation missing 
 -- L["reason_desc"] = ""
+--Translation missing 
+-- L["Receiving data..."] = ""
 --Translation missing 
 -- L["Remove All"] = ""
 --Translation missing 
@@ -508,6 +546,8 @@ L["Self Vote"] = "Своё голосование"
 --Translation missing 
 -- L["send_history_desc"] = ""
 --Translation missing 
+-- L["Sending 'type' to 'player'..."] = ""
+--Translation missing 
 -- L["Sent whisper help to 'player'"] = ""
 --Translation missing 
 -- L["session_error"] = ""
@@ -517,6 +557,8 @@ L["Self Vote"] = "Своё голосование"
 -- L["Set the text on button 'number'"] = ""
 --Translation missing 
 -- L["Set the whisper keys for button i."] = ""
+--Translation missing 
+-- L["Settings"] = ""
 --Translation missing 
 -- L["Silent Auto Pass"] = ""
 --Translation missing 
@@ -529,12 +571,20 @@ L["Self Vote"] = "Своё голосование"
 -- L["skins_description"] = ""
 L["Something went wrong :'("] = "Что-то пошло не так :'("
 --Translation missing 
+-- L["Something went wrong during syncing, please try again."] = ""
+--Translation missing 
 -- L["Standard .csv output."] = ""
 L["Start"] = "Начать"
 --Translation missing 
 -- L["Status texts"] = ""
 --Translation missing 
 -- L["Successfully imported 'number' entries."] = ""
+--Translation missing 
+-- L["Successfully received 'type' from 'player'"] = ""
+--Translation missing 
+-- L["Sync"] = ""
+--Translation missing 
+-- L["sync_detailed_description"] = ""
 L["Tank"] = "Танк"
 L["Test"] = "Тест"
 L["test"] = "тест"
@@ -561,11 +611,15 @@ L["This item has been awarded"] = "Этот предмет был вручен"
 --Translation missing 
 -- L["Tier 20"] = ""
 --Translation missing 
+-- L["Tier Buttons and Responses"] = ""
+--Translation missing 
 -- L["Tier Piece that doesn't complete a set"] = ""
 --Translation missing 
 -- L["Tier Tokens ..."] = ""
 --Translation missing 
 -- L["Tier tokens received from here:"] = ""
+--Translation missing 
+-- L["tier_buttons_desc"] = ""
 --Translation missing 
 -- L["tier_token_heroic"] = ""
 --Translation missing 
@@ -578,6 +632,8 @@ L["This item has been awarded"] = "Этот предмет был вручен"
 -- L["Time left (num seconds)"] = ""
 --Translation missing 
 -- L["Timeout"] = ""
+--Translation missing 
+-- L["To target"] = ""
 --Translation missing 
 -- L["Tokens received"] = ""
 --Translation missing 
@@ -656,6 +712,8 @@ L["You can't start a session before all items are loaded!"] = "Вы не мож�
 -- L["You haven't selected an award reason to use for disenchanting!"] = ""
 --Translation missing 
 -- L["You haven't set a council! You can edit your council by typing '/rc council'"] = ""
+--Translation missing 
+-- L["You must select a target"] = ""
 L["Your note:"] = "Ваша заметка:"
 L["You're already running a session."] = "Вы уже запустили сессию распределения добычи."
 

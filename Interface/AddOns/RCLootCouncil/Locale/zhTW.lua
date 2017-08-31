@@ -26,6 +26,8 @@ L["Add Item"] = "添加物品"
 L["Add Note"] = "添加筆記"
 L["Add ranks"] = "添加階級"
 L["Add rolls"] = "添加擲骰"
+--Translation missing 
+-- L["Add Rolls"] = ""
 L["add_ranks_desc"] = "選擇可拾取成員的最低階級"
 L["add_ranks_desc2"] = [=[
 
@@ -34,6 +36,8 @@ L["add_ranks_desc2"] = [=[
 點擊左側階級，添加獨立玩家為可拾取成員
 
 點擊"目前分配組"分頁來查看所有可拾取成員]=]
+--Translation missing 
+-- L["add_rolls_desc"] = ""
 L["All items"] = "所有物品"
 L["All items has been awarded and  the loot session concluded"] = "所有物品已分配完成，總結分配"
 L["Alt click Looting"] = "按Alt拾取"
@@ -158,6 +162,8 @@ L["current_council_desc"] = [=[
 點擊將特定玩家從可拾取成員中移除]=]
 L["Customize appearance"] = "客製外觀"
 L["customize_appearance_desc"] = "你可以在這邊客製RCLootCouncil的外觀。點擊上面的保存鍵更換外觀。"
+--Translation missing 
+-- L["Data Received"] = ""
 L["Date"] = "日期"
 L["days and x months"] = "%s，%d月"
 L["days, x months, y years"] = "%s，%d月和%d年"
@@ -167,12 +173,20 @@ L["Deselect responses to filter them"] = "取消回應以過濾"
 L["Diff"] = "差異"
 L["Disenchant"] = "分解"
 L["disenchant_desc"] = "當你經由分解按鈕贏得物品時使用這個理由"
+--Translation missing 
+-- L["Done syncing"] = ""
 L["Double click to delete this entry."] = "點擊兩下刪除此條目"
 L["DPS"] = "輸出"
 L["Dropped by:"] = "掉落來源:"
+--Translation missing 
+-- L["Edit Entry"] = ""
 L["Enable Loot History"] = "啓用拾取歷史"
+--Translation missing 
+-- L["Enable Tier Buttons"] = ""
 L["Enable Timeout"] = "開啟超時限制"
 L["enable_loot_history_desc"] = "啓用拾取歷史。如果關閉RCLootCouncil 將不會記錄任何數據。"
+--Translation missing 
+-- L["enable_tierbuttons_desc"] = ""
 L["enable_timeout_desc"] = "點選啟動拾取視窗超時功能"
 L["Enter your note:"] = "輸入你的筆記："
 L["EQdkp-Plus XML output, tailored for Enjin import."] = "EQdkp-Plus XML輸出，適用於Enjin輸入。"
@@ -198,6 +212,8 @@ L["help"] = "幫助"
 L["Hide Votes"] = "隱藏投票"
 L["hide_votes_desc"] = "隱藏投票數直到有人投票"
 L["history"] = "歷史"
+--Translation missing 
+-- L["How to sync"] = ""
 L["Ignore List"] = "忽略列表"
 L["Ignore Options"] = "忽略選項"
 L["ignore_input_desc"] = "輸入一個物品ID 將其添加至忽略列表, RCLootCouncil 永遠不會將此物品加入分配"
@@ -209,6 +225,8 @@ L["ilvl: x"] = "ilv: %d"
 L["Item"] = "物品"
 L["Item has been awarded"] = "物品已分配"
 L["Item received and added from 'player'"] = "物品已收到，來自%s"
+--Translation missing 
+-- L["Item was awarded to"] = ""
 L["Item(s) replaced:"] = "取代物品:"
 L["Items under consideration:"] = "待決定的物品："
 L["Latest item(s) won"] = "上一次取得物品:"
@@ -251,6 +269,8 @@ L["No"] = "否"
 L["No (dis)enchanters found"] = "團隊中沒人會分解"
 L["No entries in the Loot History"] = "獲取記錄中沒有資料"
 L["No items to award later registered"] = "沒有物品登記"
+--Translation missing 
+-- L["No recipients available"] = ""
 L["No session running"] = "目前沒有分配進行中"
 L["No winners registered"] = "沒有贏家登記"
 L["None"] = "無"
@@ -264,6 +284,8 @@ L["Notes"] = "筆記"
 L["notes_desc"] = "允許可拾取成員發送筆記"
 L["Now handles looting"] = "現在負責拾取"
 L["Number of buttons"] = "按鈕數量"
+--Translation missing 
+-- L["Number of raids received loot from:"] = ""
 L["Number of reasons"] = "理由數量"
 L["Number of responses"] = "回覆數量"
 L["number_of_buttons_desc"] = "滑動以改變按鍵數量"
@@ -278,15 +300,29 @@ L["onlyUseInRaids_desc"] = "選取此項目會將RCLootCouncil在隊伍副本中
 L["open"] = "開啓"
 L["Open the Loot History"] = "開啟拾取歷史"
 L["open_the_loot_history_desc"] = "打開拾取歷史"
+--Translation missing 
+-- L["Opens the synchronizer"] = ""
 L["Other piece"] = "其他裝備"
 L["Party"] = "小隊"
 L["Pass"] = "放棄"
+--Translation missing 
+-- L["'player' can't receive 'type'"] = ""
+--Translation missing 
+-- L["'player' declined your sync request"] = ""
 L["'player' has asked you to reroll"] = "%s請你重新骰"
 L["'player' has ended the session"] = "%s結束了分配"
+--Translation missing 
+-- L["'player' hasn't opened the sync window"] = ""
+--Translation missing 
+-- L["Please wait a few seconds until all data has been synchronized."] = ""
+--Translation missing 
+-- L["Please wait before trying to sync again."] = ""
 L["Raid"] = "團隊"
 L["Raid Warning"] = "團隊警告"
 L["Rank"] = "階級"
 L["Raw lua output. Doesn't work well with date selection."] = "原始lua輸出。不適合日期選擇。"
+--Translation missing 
+-- L["RCLootCouncil - Synchronizer"] = ""
 L["RCLootCouncil Loot Frame"] = "RCLootCouncil 拾取介面"
 L["RCLootCouncil Loot History"] = "RCLootCouncil分裝紀錄"
 L["RCLootCouncil Session Setup"] = "RCLootCouncil 分配設定"
@@ -295,6 +331,8 @@ L["RCLootCouncil Voting Frame"] = "RCLootCouncil 投票介面"
 L["Reannounce ..."] = "再次通知..."
 L["Reason"] = "理由"
 L["reason_desc"] = "自動分配時分配理由將記錄在拾取歷史"
+--Translation missing 
+-- L["Receiving data..."] = ""
 L["Remove All"] = "移除全部"
 L["Remove from consideration"] = "從待決定中移除"
 L["remove_all_desc"] = "移除所有可拾取成員"
@@ -322,21 +360,33 @@ L["Self Vote"] = "自我投票"
 L["self_vote_desc"] = "允許投票者投給他自己"
 L["Send History"] = "發送歷史"
 L["send_history_desc"] = "發送數據給隊伍中所有成員。只有你是分裝者RCLootCouncil 才會發送數據"
+--Translation missing 
+-- L["Sending 'type' to 'player'..."] = ""
 L["Sent whisper help to 'player'"] = "發送密語幫助給%s"
 L["session_error"] = "出現了一些錯誤 - 請重新分配"
 L["Set the text for button i's response."] = "設定回應按鈕%d的文字"
 L["Set the text on button 'number'"] = "設置按鍵文字%i"
 L["Set the whisper keys for button i."] = "設定%d的密語關鍵字"
+--Translation missing 
+-- L["Settings"] = ""
 L["Silent Auto Pass"] = "隱藏自動放棄"
 L["silent_auto_pass_desc"] = "隱藏自動放棄信息"
 L["Simple BBCode output."] = "簡易BBCode輸出"
 L["Skins"] = "外觀"
 L["skins_description"] = "選取預設的外觀或者製作你自己的外觀。註解: 這只會影響外觀。打開版本檢查可以馬上看到結果 ('/rc version')。"
 L["Something went wrong :'("] = "出現了一些問題 哭哭"
+--Translation missing 
+-- L["Something went wrong during syncing, please try again."] = ""
 L["Standard .csv output."] = "標準.csv輸出格式"
 L["Start"] = "開始"
 L["Status texts"] = "狀態文字"
 L["Successfully imported 'number' entries."] = "成功輸入%d項條目"
+--Translation missing 
+-- L["Successfully received 'type' from 'player'"] = ""
+--Translation missing 
+-- L["Sync"] = ""
+--Translation missing 
+-- L["sync_detailed_description"] = ""
 L["Tank"] = "坦克"
 L["Test"] = "測試"
 L["test"] = "測試"
@@ -354,15 +404,21 @@ L["This item"] = "這件物品"
 L["This item has been awarded"] = "這件物品已分配"
 L["Tier 19"] = "T19"
 L["Tier 20"] = "T20"
+--Translation missing 
+-- L["Tier Buttons and Responses"] = ""
 L["Tier Piece that doesn't complete a set"] = "不會達成套裝加成效果的套裝裝備"
 L["Tier Tokens ..."] = "套裝代幣"
 L["Tier tokens received from here:"] = "從這邊獲得的套裝代幣:"
+--Translation missing 
+-- L["tier_buttons_desc"] = ""
 L["tier_token_heroic"] = "英雄"
 L["tier_token_mythic"] = "傳奇"
 L["tier_token_normal"] = "普通"
 L["Time"] = "時間"
 L["Time left (num seconds)"] = "剩下時間: %d"
 L["Timeout"] = "時間已到"
+--Translation missing 
+-- L["To target"] = ""
 L["Tokens received"] = "獲得代幣"
 L["Total awards"] = "總共獎勵"
 L["Total items received:"] = "總共獲得件數:"
@@ -419,6 +475,8 @@ L["You can't start a loot session while in combat."] = "戰鬥中無法分配"
 L["You can't start a session before all items are loaded!"] = "你無法在所有物品都讀取之前開始分裝程序!"
 L["You haven't selected an award reason to use for disenchanting!"] = "你沒有為拆裝選擇設定一個分裝理由。"
 L["You haven't set a council! You can edit your council by typing '/rc council'"] = "你還沒有設定分配 輸入 /rc council 來進行編輯"
+--Translation missing 
+-- L["You must select a target"] = ""
 L["Your note:"] = "你的筆記："
 L["You're already running a session."] = "你正在進行分配"
 

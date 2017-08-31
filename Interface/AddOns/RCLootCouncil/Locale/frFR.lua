@@ -30,10 +30,14 @@ L["Add Item"] = "Ajouter un objet"
 L["Add Note"] = "Ajouter une note"
 L["Add ranks"] = "Ajouter des rangs"
 L["Add rolls"] = "Ajouter un lancer de dés"
+--Translation missing 
+-- L["Add Rolls"] = ""
 L["add_ranks_desc"] = "Définir le rang minimum pour pouvoir participer au conseil du butin :"
 L["add_ranks_desc2"] = [=[Sélectionnez un rang ci-dessus pour ajouter au conseil tous les membres de ce rang et au-dessus.
 Cliquez sur les rangs à gauche pour ajouter des joueurs précis au conseil.
 Cliquez sur l'onglet 'Conseil actuel' pour afficher votre sélection.]=]
+--Translation missing 
+-- L["add_rolls_desc"] = ""
 L["All items"] = "Tous les objets"
 L["All items has been awarded and  the loot session concluded"] = "Tous les objets ont été attribués, la session de butin est terminée"
 L["Alt click Looting"] = "Butin en Alt-clic"
@@ -155,6 +159,8 @@ L["Current Council"] = "Conseil actuel"
 L["current_council_desc"] = "Cliquer pour retirer certains joueurs du conseil."
 L["Customize appearance"] = "Personnaliser l'apparence"
 L["customize_appearance_desc"] = "Dans ce menu, vous pouvez entièrement personnaliser l'apparence de RCLootCouncil. Utilisez la fonction sauvegarder ci-dessus pour changer rapidement d'apparence."
+--Translation missing 
+-- L["Data Received"] = ""
 L["Date"] = true
 L["days and x months"] = "%s et %d mois"
 L["days, x months, y years"] = "%s, %d mois et %d ans"
@@ -164,12 +170,20 @@ L["Deselect responses to filter them"] = "Désélectionner les réponses avant d
 L["Diff"] = true
 L["Disenchant"] = "Désenchanter"
 L["disenchant_desc"] = "Sélectionner cette option pour que ce motif soit choisi lorsque vous attribuez un objet par le biais du bouton 'Désenchanter'"
+--Translation missing 
+-- L["Done syncing"] = ""
 L["Double click to delete this entry."] = "Double cliquez pour supprimer cette occurence."
 L["DPS"] = true
 L["Dropped by:"] = "Dépouillé sur :"
+--Translation missing 
+-- L["Edit Entry"] = ""
 L["Enable Loot History"] = "Activer l'historique du butin"
+--Translation missing 
+-- L["Enable Tier Buttons"] = ""
 L["Enable Timeout"] = "Activer le délai de vote"
 L["enable_loot_history_desc"] = "Active l'historique. RCLootCouncil ne répertoriera rien si cette option est désactivée."
+--Translation missing 
+-- L["enable_tierbuttons_desc"] = ""
 L["enable_timeout_desc"] = "Cocher pour activer le délai de vote dans la fenêtre de butin"
 L["Enter your note:"] = "Saisissez votre note"
 L["EQdkp-Plus XML output, tailored for Enjin import."] = "Exporter en EQdkp-Plus XML, adapté pour être importé sur Enjin."
@@ -195,6 +209,8 @@ L["help"] = "aide"
 L["Hide Votes"] = "Masquer les votes"
 L["hide_votes_desc"] = "Seuls les joueurs ayant déjà voté pourront voir le résultat des votes."
 L["history"] = "historique"
+--Translation missing 
+-- L["How to sync"] = ""
 L["Ignore List"] = "Objets ignorés"
 L["Ignore Options"] = "Paramètres des objets ignorés"
 L["ignore_input_desc"] = "Introduisez l'ID d'un objet pour l'ajouter à la liste des objets ignorés, empêchant ainsi à RCLootCouncil de l'ajouter à l'avenir à une session"
@@ -206,6 +222,8 @@ L["ilvl: x"] = "ilvl : %d"
 L["Item"] = "Objet"
 L["Item has been awarded"] = "L'objet a été attribué"
 L["Item received and added from 'player'"] = "Objet reçu de %s et ajouté."
+--Translation missing 
+-- L["Item was awarded to"] = ""
 L["Item(s) replaced:"] = "Objet(s) remplacés :"
 L["Items under consideration:"] = "Objets en train d'être examinés"
 L["Latest item(s) won"] = "Dernier(s) objet(s) attribué(s)."
@@ -249,6 +267,8 @@ L["No"] = "Non"
 L["No (dis)enchanters found"] = "Aucun (dés)enchanteur trouvé"
 L["No entries in the Loot History"] = "Aucune entrée dans l'historique du butin"
 L["No items to award later registered"] = "Aucun objet devant être attribué plus tard enregistré"
+--Translation missing 
+-- L["No recipients available"] = ""
 L["No session running"] = "Aucune session en cours"
 L["No winners registered"] = "Aucun vainqueur répertorié"
 L["None"] = "Aucun"
@@ -262,6 +282,8 @@ L["Notes"] = true
 L["notes_desc"] = "Permet aux candidats d'envoyer une note au conseil en plus du choix de leur réponse."
 L["Now handles looting"] = "Gère à présent l'attribution du butin"
 L["Number of buttons"] = "Nombre de boutons"
+--Translation missing 
+-- L["Number of raids received loot from:"] = ""
 L["Number of reasons"] = "Nombre de motifs"
 L["Number of responses"] = "Nombre de réponses"
 L["number_of_buttons_desc"] = "Glisser pour modifier le nombre de boutons."
@@ -277,15 +299,29 @@ L["open"] = "ouvrir"
 L["Open the Loot History"] = "Ouvrir l'historique du butin"
 L["open_the_loot_history_desc"] = "Cliquer pour ouvrir l'historique du butin."
 --Translation missing 
+-- L["Opens the synchronizer"] = ""
+--Translation missing 
 -- L["Other piece"] = ""
 L["Party"] = "Groupe"
 L["Pass"] = "Passer"
+--Translation missing 
+-- L["'player' can't receive 'type'"] = ""
+--Translation missing 
+-- L["'player' declined your sync request"] = ""
 L["'player' has asked you to reroll"] = "%s a demandé que vous relanciez les dés"
 L["'player' has ended the session"] = "%s a mis fin à la session"
+--Translation missing 
+-- L["'player' hasn't opened the sync window"] = ""
+--Translation missing 
+-- L["Please wait a few seconds until all data has been synchronized."] = ""
+--Translation missing 
+-- L["Please wait before trying to sync again."] = ""
 L["Raid"] = true
 L["Raid Warning"] = "Alerte raid"
 L["Rank"] = "Rang"
 L["Raw lua output. Doesn't work well with date selection."] = "Exporter données lua brutes. Ne fonctionne pas bien avec la sélection de dates."
+--Translation missing 
+-- L["RCLootCouncil - Synchronizer"] = ""
 L["RCLootCouncil Loot Frame"] = "Fenêtre du butin de RCLootCouncil"
 L["RCLootCouncil Loot History"] = "Historique du butin de RCLootCouncil"
 L["RCLootCouncil Session Setup"] = "Paramétrage de session de RCLootCouncil"
@@ -294,6 +330,8 @@ L["RCLootCouncil Voting Frame"] = "Fenêtre de vote de RCLootCouncil"
 L["Reannounce ..."] = "Réannoncer ..."
 L["Reason"] = "Motif"
 L["reason_desc"] = "Motif d'attribution qui sera indiqué dans l'historique du butin lorsqu'un objet sera automatiquement attribué."
+--Translation missing 
+-- L["Receiving data..."] = ""
 L["Remove All"] = "Retirer tous les joueurs"
 L["Remove from consideration"] = "Retirer de la liste"
 L["remove_all_desc"] = "Retirer tous les membres du conseil"
@@ -324,22 +362,34 @@ L["Self Vote"] = "Vote pour soi"
 L["self_vote_desc"] = "Permet aux votants de voter pour eux."
 L["Send History"] = "Envoyer l'historique"
 L["send_history_desc"] = "Envoyer les données à tous les membres du raid, que vous enregistriez vous-même les données ou non. RCLootCouncil n'enverra de données que si vous êtes le maître du butin."
+--Translation missing 
+-- L["Sending 'type' to 'player'..."] = ""
 L["Sent whisper help to 'player'"] = "Chuchotement d'aide envoyé à %s"
 L["session_error"] = "Une erreur est survenue, veuillez relancer la session"
 L["Set the text for button i's response."] = "Définir le texte pour la réponse du bouton %d"
 L["Set the text on button 'number'"] = "Définir le texte du bouton %i"
 L["Set the whisper keys for button i."] = "Définissez les mots-clef de chuchotement du bouton &d."
+--Translation missing 
+-- L["Settings"] = ""
 L["Silent Auto Pass"] = "Passer automatiquement (silencieux)"
 L["silent_auto_pass_desc"] = "Cocher pour masquer les messages liés à la fonction \"passer automatiquement\""
 L["Simple BBCode output."] = "Exporter en BBCode simple."
 L["Skins"] = "Apparences"
 L["skins_description"] = "Sélectionnez une des apparences par défaut ou créez en une vous-même. Ces options sont purement esthétiques. Ouvrez le vérificateur de version pour immédiatement voir les changements (\"/rc version\")."
 L["Something went wrong :'("] = "Une erreur s'est produite :'("
+--Translation missing 
+-- L["Something went wrong during syncing, please try again."] = ""
 L["Standard .csv output."] = "Exporter en .csv standard."
 L["Start"] = "Débuter"
 L["Status texts"] = "Textes de statut"
 --Translation missing 
 -- L["Successfully imported 'number' entries."] = ""
+--Translation missing 
+-- L["Successfully received 'type' from 'player'"] = ""
+--Translation missing 
+-- L["Sync"] = ""
+--Translation missing 
+-- L["sync_detailed_description"] = ""
 L["Tank"] = true
 L["Test"] = true
 L["test"] = true
@@ -358,16 +408,22 @@ L["This item has been awarded"] = "Cet objet a été attribué"
 L["Tier 19"] = true
 L["Tier 20"] = true
 --Translation missing 
+-- L["Tier Buttons and Responses"] = ""
+--Translation missing 
 -- L["Tier Piece that doesn't complete a set"] = ""
 --Translation missing 
 -- L["Tier Tokens ..."] = ""
 L["Tier tokens received from here:"] = "Jetons d'armure obtenus dans cette instance :"
+--Translation missing 
+-- L["tier_buttons_desc"] = ""
 L["tier_token_heroic"] = "Héroïque"
 L["tier_token_mythic"] = "Mythique"
 L["tier_token_normal"] = "Normal"
 L["Time"] = "Temps"
 L["Time left (num seconds)"] = "Temps restant %d"
 L["Timeout"] = "Délai de vote"
+--Translation missing 
+-- L["To target"] = ""
 L["Tokens received"] = "Jetons obtenus"
 --Translation missing 
 -- L["Total awards"] = ""
@@ -429,6 +485,8 @@ L["You can't start a session before all items are loaded!"] = "Impossible de lan
 --Translation missing 
 -- L["You haven't selected an award reason to use for disenchanting!"] = ""
 L["You haven't set a council! You can edit your council by typing '/rc council'"] = "Vous n'avez pas choisi de conseil ! Vous pouvez modifier votre conseil en tapant '/rc council'"
+--Translation missing 
+-- L["You must select a target"] = ""
 L["Your note:"] = "Votre note :"
 L["You're already running a session."] = "Une session est déjà en cours"
 

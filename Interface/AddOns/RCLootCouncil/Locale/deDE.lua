@@ -28,6 +28,7 @@ L["Add Item"] = "Gegenstand hinzufügen"
 L["Add Note"] = "Notiz hinzufügen"
 L["Add ranks"] = "Ränge hinzufügen"
 L["Add rolls"] = "Würfe hinzufügen"
+L["Add Rolls"] = "Würfe hinzufügen"
 L["add_ranks_desc"] = "Wähle einen Mindestrang aus, der am Beuterat teilnehmen darf:"
 L["add_ranks_desc2"] = [=[
 
@@ -36,6 +37,8 @@ Wähle oben einen Rang aus, um alle Mitglieder, dieses oder höheren Ranges, zum
 Klicke auf die Ränge auf der linken Seite, um einzelne Spieler dem Rat hinzuzufügen.
 
 Klicke auf den Reiter Aktueller Rat, um deine Auswahl zu sehen.]=]
+--Translation missing 
+-- L["add_rolls_desc"] = ""
 L["All items"] = "Alle Gegenstände"
 L["All items has been awarded and  the loot session concluded"] = "Alle Gegenstände wurden vergeben und die Plündersitzung ist abgeschlossen."
 L["Alt click Looting"] = "Alt-Klick-Plündern"
@@ -162,6 +165,8 @@ L["current_council_desc"] = [=[Klicke, um bestimme Leute aus dem Rat zu entferne
 ]=]
 L["Customize appearance"] = "Aussehensanpassung"
 L["customize_appearance_desc"] = "Hier kannst Du das Aussehen von RCLootCouncil vollständig anpassen. Verwende die obenstehende Speicherfunktion, um schnell die Optik zu wechseln."
+--Translation missing 
+-- L["Data Received"] = ""
 L["Date"] = "Datum"
 L["days and x months"] = "%s and %d Monate."
 L["days, x months, y years"] = "%s, %d Monate und %d Jahre."
@@ -171,12 +176,19 @@ L["Deselect responses to filter them"] = "Wähle Antworten ab, um sie zu filtern
 L["Diff"] = "Diff."
 L["Disenchant"] = "Entzaubern"
 L["disenchant_desc"] = "Auswählen, um diesen Grund zu benutzen, wenn du einen Gegenstand über den Button 'Entzaubern' vergibst."
+L["Done syncing"] = "Synchronisierung abgeschlossen"
 L["Double click to delete this entry."] = "Doppelklick, um diesen Eintrag zu löschen"
 L["DPS"] = true
 L["Dropped by:"] = "Fallengelassen von:"
+--Translation missing 
+-- L["Edit Entry"] = ""
 L["Enable Loot History"] = "Beuteverlauf aktivieren"
+--Translation missing 
+-- L["Enable Tier Buttons"] = ""
 L["Enable Timeout"] = "Zeitbeschränkung aktivieren"
 L["enable_loot_history_desc"] = "Aktiviert den Verlauf. RCLootCouncil wird nichts protokollieren, falls deaktiviert."
+--Translation missing 
+-- L["enable_tierbuttons_desc"] = ""
 L["enable_timeout_desc"] = "Anhaken, um eine Zeitbeschränkung im Beutefenster zu aktivieren"
 L["Enter your note:"] = "Gib deine Notiz ein:"
 L["EQdkp-Plus XML output, tailored for Enjin import."] = "EQdkp-Plus-XML-Ausgabe, maßgeschneidert für den Enjin-Import."
@@ -202,6 +214,7 @@ L["help"] = "Hilfe"
 L["Hide Votes"] = "Stimmen verstecken"
 L["hide_votes_desc"] = "Nur Spieler, die bereits abgestimmt haben, werden die Stimmen sehen können."
 L["history"] = "Verlauf"
+L["How to sync"] = "So funktioniert das Synchronisieren"
 L["Ignore List"] = "Ignorierliste"
 L["Ignore Options"] = "Ignoriereinstellungen"
 L["ignore_input_desc"] = "Gib eine Gegenstands-ID ein, die der Ignorierliste hinzugefügt wird, dies bewirkt, dass RCLootCouncil diesen Gegenstand nie einer Sitzung hinzufügt."
@@ -213,6 +226,7 @@ L["ilvl: x"] = "GS: %d"
 L["Item"] = "Gegenstand"
 L["Item has been awarded"] = "Gegenstand wurde vergeben."
 L["Item received and added from 'player'"] = "Gegenstand erhalten und von %s hinzugefügt."
+L["Item was awarded to"] = "Gegenstand wurde vergeben an"
 L["Item(s) replaced:"] = "Ersetzte(r) Gegenstand/-ände:"
 L["Items under consideration:"] = "Gegenstände unter Betrachtung:"
 L["Latest item(s) won"] = "Kürzliche gewonne Gegenstände"
@@ -257,6 +271,8 @@ L["No"] = "Nein"
 L["No (dis)enchanters found"] = "Keine (Ent-)/Verzauberer gerfunden"
 L["No entries in the Loot History"] = "Keine Einträge im Beuteverlauf"
 L["No items to award later registered"] = "Keine Gegenstände wurden zur späteren Vergabe registriert."
+--Translation missing 
+-- L["No recipients available"] = ""
 L["No session running"] = "Es läuft keine Sitzung."
 L["No winners registered"] = "Keine Gewinner wurden registriert"
 L["None"] = "Keine"
@@ -271,6 +287,8 @@ L["Notes"] = "Notizen"
 L["notes_desc"] = "Erlaubt es Kandidaten, eine Notiz an den Rat zusammen mit ihrem Wurf zu schicken."
 L["Now handles looting"] = "Greift jetzt ins Plündern ein"
 L["Number of buttons"] = "Anzahl der Buttons"
+--Translation missing 
+-- L["Number of raids received loot from:"] = ""
 L["Number of reasons"] = "Anzahl der Gründe"
 L["Number of responses"] = "Anzahl der Antworten"
 L["number_of_buttons_desc"] = "Verschieben, um die Buttonanzahl zu ändern."
@@ -285,15 +303,23 @@ L["onlyUseInRaids_desc"] = "Hake diese Option an, um RCLootCouncil in Gruppen au
 L["open"] = "Öffnen"
 L["Open the Loot History"] = "Beuteverlauf öffnen"
 L["open_the_loot_history_desc"] = "Klicken, um den Beuteverlauf zu öffnen."
+L["Opens the synchronizer"] = "Öffnet den Synchronisierer"
 L["Other piece"] = "Anderes Teil"
 L["Party"] = "Gruppe"
 L["Pass"] = "Passen"
+L["'player' can't receive 'type'"] = "%s kann %s nicht empfangen – Version stimmt nicht überein?"
+L["'player' declined your sync request"] = "%s hat deine Synchronisierungsanfrage abgelehnt"
 L["'player' has asked you to reroll"] = "%s bittet dich erneut zu würfeln"
 L["'player' has ended the session"] = "%s hat die Sitzung beendet."
+L["'player' hasn't opened the sync window"] = "%s hat das Synchronisierungsfenster nicht geöffnet (/rc sync)"
+--Translation missing 
+-- L["Please wait a few seconds until all data has been synchronized."] = ""
+L["Please wait before trying to sync again."] = "Bitte warte, bevor Du versuchst, erneut zu synchronisieren."
 L["Raid"] = "Schlachtzug"
 L["Raid Warning"] = "Schlachtzugswarnung"
 L["Rank"] = "Rang"
 L["Raw lua output. Doesn't work well with date selection."] = "Unbearbeitete Lua-Ausgabe. Funktioniert nicht gut mit Datumsauswahl."
+L["RCLootCouncil - Synchronizer"] = "RCLootCouncil - Synchronisierer"
 L["RCLootCouncil Loot Frame"] = "RCLootCouncil Beutefenster"
 L["RCLootCouncil Loot History"] = "RCLootCouncil Beuteverlauf"
 L["RCLootCouncil Session Setup"] = "RCLootCouncil Sitzungseinrichtung"
@@ -302,6 +328,8 @@ L["RCLootCouncil Voting Frame"] = "RCLootCouncil Abstimmungsfenster"
 L["Reannounce ..."] = "Erneutes Ankündigen ..."
 L["Reason"] = "Grund"
 L["reason_desc"] = "Der Vergabegrund, der dem Beuteverlauf hinzugefügt wird, wenn automatisch vergeben wird."
+--Translation missing 
+-- L["Receiving data..."] = ""
 L["Remove All"] = "Alle entfernen"
 L["Remove from consideration"] = "Aus der Betrachtung entfernen"
 L["remove_all_desc"] = "Alle Ratsmitglieder entfernen"
@@ -330,21 +358,37 @@ L["Self Vote"] = "Selbstwahl"
 L["self_vote_desc"] = "Erlaubt es Wählern, sich selbst zu wählen."
 L["Send History"] = "Verlauf senden"
 L["send_history_desc"] = "Sendet Daten an alle Schlachtzugsmitglieder, unabhängig davon, ob du es selbst protokollierst. RCLootCouncil wird nur Daten senden, wenn du der Plündermeister bist."
+L["Sending 'type' to 'player'..."] = "Sende %s an %s..."
 L["Sent whisper help to 'player'"] = "Sende Hilfe zur Flüsterfunktion an %s"
 L["session_error"] = "Etwas ist schief gelaufen – Bitte starte die Sitzung erneut"
 L["Set the text for button i's response."] = "Stelle den Text für Antwort des Buttons %d ein"
 L["Set the text on button 'number'"] = "Stelle die Beschriftung des Buttons %i ein."
 L["Set the whisper keys for button i."] = "Lege die Flüsterschlüssel für Button %d fest."
+L["Settings"] = "Einstellungen"
 L["Silent Auto Pass"] = "Leises automatisches Passen"
 L["silent_auto_pass_desc"] = "Aktivieren, um Nachrichten aufgrund \"automatischen Passens\" zu verstecken."
 L["Simple BBCode output."] = "Einfache BBCode-Ausgabe."
 L["Skins"] = "Optiken"
 L["skins_description"] = "Wähle eine der Standardoptiken aus oder erstelle deine eigene. Beachte, dass diese Optionen rein ästhetisch sind. Öffne den Versionsprüfer, um das Ergebnis sofort zu sehen (/rc version)."
 L["Something went wrong :'("] = "Irgendwas ist schief gelaufen :'("
+L["Something went wrong during syncing, please try again."] = "Während der Synchronisierung ist ein Fehler aufgetreten. Bitte versuche es erneut."
 L["Standard .csv output."] = "Standard"
 L["Start"] = "Starten"
 L["Status texts"] = "Statustexte"
 L["Successfully imported 'number' entries."] = "%d Einträge wurden erfolgreich importiert."
+--Translation missing 
+-- L["Successfully received 'type' from 'player'"] = ""
+L["Sync"] = true
+L["sync_detailed_description"] = [=[1. Beide sollten das Synchronisationsfenster geöffnet habben (/rc sync).
+2. Wähle den zu sendenden Datentyp.
+3. Wähle den Spieler, der die Daten empfangen soll.
+4. Drücke 'Sync' – Eine Statusleiste mit den gesendeten Daten erscheint.
+
+Dieses Fenster muss geöffnet sein, um eine Synchronisierung einzuleiten,
+du kannst es jedoch schließen, ohne dass eine bereits laufende Synchronisierung abgebrochen wird.
+
+Targets include online guild- and groupmembers, friends and your current friendly target.
+]=]
 L["Tank"] = true
 L["Test"] = true
 L["test"] = "Test"
@@ -362,15 +406,20 @@ L["This item"] = "Dieser Gegenstand"
 L["This item has been awarded"] = "Dieser Gegenstand wurde vergeben."
 L["Tier 19"] = true
 L["Tier 20"] = true
+--Translation missing 
+-- L["Tier Buttons and Responses"] = ""
 L["Tier Piece that doesn't complete a set"] = "T-Teil, das kein Set vervollständigt"
 L["Tier Tokens ..."] = "T-Marken ..."
 L["Tier tokens received from here:"] = "Von hier erhaltene T-Marken:"
+--Translation missing 
+-- L["tier_buttons_desc"] = ""
 L["tier_token_heroic"] = "Heroisch"
 L["tier_token_mythic"] = "Mythisch"
 L["tier_token_normal"] = "Normal"
 L["Time"] = "Zeit"
 L["Time left (num seconds)"] = "Verbleibende Zeit: %d"
 L["Timeout"] = "Zeitbeschränkung"
+L["To target"] = "An Ziel"
 L["Tokens received"] = "Erhaltene Marken"
 --Translation missing 
 -- L["Total awards"] = ""
@@ -431,6 +480,7 @@ L["You can't start a session before all items are loaded!"] = "Du kannst keine S
 --Translation missing 
 -- L["You haven't selected an award reason to use for disenchanting!"] = ""
 L["You haven't set a council! You can edit your council by typing '/rc council'"] = "Du hast keinen Rat eingestellt! Du kannst deinen Rat bearbeiten, indem du '/rc council' eintippst."
+L["You must select a target"] = "Du musst ein Ziel auswählen"
 L["Your note:"] = "Deine Notiz:"
 L["You're already running a session."] = "Du führst bereits eine Sitzung aus."
 
