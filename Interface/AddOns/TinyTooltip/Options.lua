@@ -223,6 +223,7 @@ function widgets:dropdown(parent, config, labelText)
                 info.font = addon:GetFont(v)
             elseif (strfind(keystring, ".+Texture$")) then
                 info.texture = addon:GetBarFile(v)
+                info.staticWidth = 168
             end
             UIDropDownMenu_AddButton(info)
         end

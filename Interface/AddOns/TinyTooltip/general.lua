@@ -70,8 +70,8 @@ LibEvent:attachEvent("VARIABLES_LOADED", function()
         tinsert(addon.db.unit.player.elements, {"zone"})
     end
     --Init
-    LibEvent:trigger("tooltip.style.font.header", addon.db.general.headerFont, addon.db.general.headerFontSize, addon.db.general.headerFontFlag)
-    LibEvent:trigger("tooltip.style.font.body", addon.db.general.bodyFont, addon.db.general.bodyFontSize, addon.db.general.bodyFontFlag)
+    LibEvent:trigger("tooltip.style.font.header", GameTooltip, addon.db.general.headerFont, addon.db.general.headerFontSize, addon.db.general.headerFontFlag)
+    LibEvent:trigger("tooltip.style.font.body", GameTooltip, addon.db.general.bodyFont, addon.db.general.bodyFontSize, addon.db.general.bodyFontFlag)
     LibEvent:trigger("tooltip.statusbar.height", addon.db.general.statusbarHeight)
     LibEvent:trigger("tooltip.statusbar.text", addon.db.general.statusbarText)
     LibEvent:trigger("tooltip.statusbar.font", addon.db.general.statusbarFont, addon.db.general.statusbarFontSize, addon.db.general.statusbarFontFlag)

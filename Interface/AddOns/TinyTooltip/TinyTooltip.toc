@@ -1,8 +1,8 @@
-## Interface: 70200
+## Interface: 70300
 ## Title: TinyTooltip
 ## Notes: TinyTooltip
 ## Author: M
-## Version: 2.1.7
+## Version: 2.1.8
 ## SavedVariables: BigTipDB
 
 libs\lib.xml

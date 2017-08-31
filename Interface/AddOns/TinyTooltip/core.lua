@@ -151,7 +151,7 @@ function addon:GetFont(font, default)
     if (font == "default") then
         font = default
     elseif (font and _G[font]) then
-        font = _G[font]:GetFont()
+        font = _G[font].GetFont and _G[font]:GetFont()
     elseif(font and LibMedia and LibMedia:IsValid("font", font)) then
         font = LibMedia:Fetch("font", font)
     end
@@ -274,11 +274,12 @@ end
 function addon:GetZone(unit)
     if not IsInGroup() then return end
     local t, i = string.match(unit, "(.-)(%d+)")
-    local l = UnitIsGroupLeader("player")
-    if (i and l and t == "party") then
-        return select(7, GetRaidRosterInfo(i+1))
-    elseif (i) then
-        return select(7, GetRaidRosterInfo(i))
+    if (i and (t == "party" or t == "raid")) then
+        if (t == "party" and UnitIsGroupLeader("player")) then
+            return select(7, GetRaidRosterInfo(i+1))
+        else
+            return select(7, GetRaidRosterInfo(i))
+        end
     end
 end
 

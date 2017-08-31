@@ -17,6 +17,7 @@ DropDownFrame.Bg:SetPoint("TOPLEFT", DropDownFrame.BorderTopLeft, "BOTTOMRIGHT",
 DropDownFrame.Bg:SetPoint("BOTTOMRIGHT", DropDownFrame.BorderBottomRight, "TOPLEFT", 5, -5)
 DropDownFrame:SetFrameStrata("DIALOG")
 DropDownFrame:SetClampedToScreen(true)
+DropDownFrame:SetToplevel(true)
 DropDownFrame.ScrollFrame = CreateFrame("ScrollFrame", nil, DropDownFrame, "UIPanelScrollFrameTemplate")
 DropDownFrame.ScrollFrame:SetPoint("TOPLEFT", DropDownFrame, "TOPLEFT", 0, -6)
 DropDownFrame.ScrollFrame:SetPoint("BOTTOMRIGHT", DropDownFrame, "BOTTOMRIGHT", -2, 4)
@@ -24,12 +25,12 @@ DropDownFrame.ScrollFrame.ScrollBar:Hide()
 DropDownFrame.ScrollFrame.ScrollBar:ClearAllPoints()
 DropDownFrame.ScrollFrame.ScrollBar:SetPoint("TOPLEFT", DropDownFrame.ScrollFrame, "TOPRIGHT", -16, -15)
 DropDownFrame.ScrollFrame.ScrollBar:SetPoint("BOTTOMLEFT", DropDownFrame.ScrollFrame, "BOTTOMRIGHT", -16, 15)
-DropDownFrame.ScrollFrame:HookScript("OnScrollRangeChanged", function(self, xrange, yrange)
-    self.ScrollBar:SetShown(floor(yrange) ~= 0)
-end)
 DropDownFrame.ListFrame = CreateFrame("Frame", nil, DropDownFrame.ScrollFrame)
 DropDownFrame.ListFrame:SetPoint("TOPLEFT")
 DropDownFrame.ScrollFrame:SetScrollChild(DropDownFrame.ListFrame)
+DropDownFrame.ScrollFrame:HookScript("OnScrollRangeChanged", function(self, xrange, yrange)
+    self.ScrollBar:SetShown(floor(yrange) ~= 0)
+end)
 
 function DropDownFrame:HideButtons()
     local index = 1
@@ -109,11 +110,11 @@ function DropDownFrame:AddButton(info)
     button.info.font = info.font
     button.info.arg1 = info.arg1
     button.info.arg2 = info.arg2
-    local width = button.text:GetWidth()+32
+    local width = info.staticWidth and info.staticWidth or button.text:GetWidth()+32
     button:SetWidth(width)
     button:SetPoint("TOPLEFT", 2, -18*index+18)
     self.ListFrame:SetHeight(18*index)
-    self.ListFrame:SetWidth(max(DROPDOWNFRAME_MIN_WIDTH, self.ListFrame:GetWidth(), width+18))
+    self.ListFrame:SetWidth(max(DROPDOWNFRAME_MIN_WIDTH, self.ListFrame:GetWidth(), width+20))
     self:SetWidth(self.ListFrame:GetWidth())
 end
 
@@ -208,3 +209,8 @@ end
 lib.SetSelectedValue = function(frame, value, text)
     frame:SetSelectedValue(value, text)
 end
+
+lib.ToggleDropDownMenu = function(level, value, dropDownFrame, anchorName, xOffset, yOffset, menuList, button, autoHideDelay)
+    
+end
+
