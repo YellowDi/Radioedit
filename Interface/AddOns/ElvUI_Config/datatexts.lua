@@ -3,6 +3,15 @@ local DT = E:GetModule('DataTexts')
 
 local datatexts = {}
 
+local _G = _G
+local tonumber = tonumber
+local pairs = pairs
+local type = type
+local NONE = NONE
+local DELETE = DELETE
+local HideLeftChat = HideLeftChat
+local HideRightChat = HideRightChat
+
 function DT:PanelLayoutOptions()
 	for name, data in pairs(DT.RegisteredDataTexts) do
 		datatexts[name] = data.localizedName or L[name]
@@ -218,7 +227,7 @@ E.Options.args.datatexts = {
 							values = {
 								['SMART'] = L["Smart"],
 								['FULL'] = L["Full"],
-								['SHORT'] = L["Short"],
+								['SHORT'] = SHORT,
 								['SHORTINT'] = L["Short (Whole Numbers)"],
 								['CONDENSED'] = L["Condensed"],
 								['BLIZZARD'] = L["Blizzard Style"],
@@ -246,7 +255,7 @@ E.Options.args.datatexts = {
 						},
 						fontSize = {
 							order = 2,
-							name = L["Font Size"],
+							name = FONT_SIZE,
 							type = "range",
 							min = 4, max = 212, step = 1,
 						},
@@ -256,7 +265,7 @@ E.Options.args.datatexts = {
 							desc = L["Set the font outline."],
 							type = "select",
 							values = {
-								['NONE'] = L["None"],
+								['NONE'] = NONE,
 								['OUTLINE'] = 'OUTLINE',
 								['MONOCHROMEOUTLINE'] = 'MONOCROMEOUTLINE',
 								['THICKOUTLINE'] = 'THICKOUTLINE',
@@ -391,12 +400,12 @@ E.Options.args.datatexts = {
 		currencies = {
 			order = 5,
 			type = "group",
-			name = "Currencies", --Name of datatext, which isn't localized
+			name = CURRENCY,
 			args = {
 				header = {
 					order = 1,
 					type = "header",
-					name = "Currencies",
+					name = CURRENCY,
 				},
 				displayedCurrency = {
 					order = 2,
@@ -424,12 +433,12 @@ E.Options.args.datatexts = {
 		time = {
 			order = 6,
 			type = "group",
-			name = "Time", --Name of datatext, which isn't localized
+			name = L["Time"],
 			args = {
 				header = {
 					order = 1,
 					type = "header",
-					name = "Time",
+					name = L["Time"],
 				},
 				time24 = {
 					order = 2,

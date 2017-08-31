@@ -66,7 +66,6 @@ if(not ElvDB.profiles["Minimalistic"]) then
 			["ReputationBarMover"] = "TOPRIGHT,ElvUIParent,TOPRIGHT,-50,-228",
 			["ElvUF_AssistMover"] = "TOPLEFT,ElvUIParent,BOTTOMLEFT,51,937",
 		},
-		["bossAuraFiltersConverted"] = true,
 		["hideTutorial"] = true,
 		["auras"] = {
 			["font"] = "Expressway",
@@ -355,7 +354,7 @@ if(not ElvDB.profiles["Minimalistic"]) then
 			["editBoxPosition"] = "ABOVE_CHAT",
 			["fadeTabsNoBackdrop"] = false,
 			["font"] = "Expressway",
-			["tapFontSize"] = 11,
+			["tabFontSize"] = 11,
 			["panelBackdrop"] = "HIDEBOTH",
 		},
 		["tooltip"] = {
@@ -367,6 +366,9 @@ if(not ElvDB.profiles["Minimalistic"]) then
 			["fontSize"] = 11,
 			["smallTextFontSize"] = 11,
 			["headerFontSize"] = 11,
+		},
+		["nameplates"] = {
+			["filters"] = {},
 		},
 	}
 end
