@@ -262,8 +262,7 @@ L["Changes the sort order of missions in Mission panel"] = "Verändert die Sorti
 L["Combat ally is proposed for missions so you can consider unassigning him"] = "Der Kampfgefährte wird für Missionen vorgeschlagen, du kannst dann entscheiden, ob du ihn abziehen möchtest"
 L["Complete all missions without confirmation"] = "Alle Missionen ohne Bestätigung abschließen"
 L["Configuration for mission party builder"] = "Konfiguration des Gruppenerstellers für Missionen"
---Translation missing 
-L["Cost reduced"] = "Cost reduced"
+L["Cost reduced"] = "Kosten reduziert"
 L["Dont kill Troops"] = "Trupps nicht töten"
 L["Don't use troops"] = "Keine Truppen verwenden"
 L["Duration reduced"] = "Dauer reduziert"
@@ -272,12 +271,10 @@ L["Expiration Time"] = "Ablaufzeit"
 L["Favours leveling follower for xp missions"] = "Bevorzugt niedrigstufige Anhänger für EP-Missionen"
 L["Followers status "] = "Anhängerstatus"
 L["General"] = "Allgemein"
-L["Global approx. xp reward"] = "Ca. Insgesamte EP-Belohnung"
---Translation missing 
-L["Global approx. xp reward per hour"] = "Global approx. xp reward per hour"
+L["Global approx. xp reward"] = "EP-Belohnung gesamt"
+L["Global approx. xp reward per hour"] = "EP-Belohnung pro Stunde"
 L["HallComander Quick Mission Completion"] = "HallComander Schneller Missionsabschluss"
---Translation missing 
-L["If not checked, inactive followers are used as last chance"] = "If not checked, inactive followers are used as last chance"
+L["If not checked, inactive followers are used as last chance"] = "Wenn nicht ausgewählt, werden inaktive Anhänger als letzte Möglichkeit verwendet"
 L[ [=[If you %s, you will lose them
 Click on %s to abort]=] ] = [=[Wenn du %s, wirst du sie verlieren.
 Klicke auf %s, um abzubrechen]=]
@@ -289,28 +286,24 @@ L["Keep time short"] = "Zeit kurz halten"
 L["Keep time VERY short"] = "Zeit SEHR kurz halten"
 L["Level"] = "Stufe"
 L["Make Order Hall Mission Panel movable"] = "Ordenshallen-Missionsfenster beweglich machen"
---Translation missing 
-L["Max champions"] = "Max champions"
+L["Max champions"] = "Max. Anhänger"
 --Translation missing 
 L["Maximize filled missions"] = "Maximize filled missions"
 L["Maximize xp gain"] = "Erfahrungszunahme maximieren"
 L["Mission duration reduced"] = "Missionsdauer reduziert"
 L["Missions"] = "Missionen"
 L["No follower gained xp"] = "Kein Anhänger erhielt EP"
---Translation missing 
-L["Not enough troops, raise maximum champions' number"] = "Not enough troops, raise maximum champions' number"
+L["Not enough troops, raise maximum champions' number"] = "Du hast nicht genügend Trupps, erhöhe die maximale Anzahl von Anhängern pro Mission"
 L["Nothing to report"] = "Nichts zu berichten"
 L["Notifies you when you have troops ready to be collected"] = "Benachrichtigt, wenn Truppen bereit sind, gesammelt zu werden"
 L["Only accept missions with time improved"] = "Nur Missionen mit verkürzter Dauer annehmen"
---Translation missing 
-L["Only use champions even if troops are available"] = "Only use champions even if troops are available"
---Translation missing 
+L["Only use champions even if troops are available"] = "Verwende nur Anhänger, auch wenn Trupps vorhanden sind"
 L[ [=[OrderHallCommander overrides GarrisonCommander for Order Hall Management.
  You can revert to GarrisonCommander simply disabling OrderhallCommander.
-If instead you like OrderHallCommander remember to add it to Curse client and keep it updated]=] ] = [=[OrderHallCommander overrides GarrisonCommander for Order Hall Management.
- You can revert to GarrisonCommander simply disabling OrderhallCommander.
-If instead you like OrderHallCommander remember to add it to Curse client and keep it updated]=]
-L["Original method"] = "Ursprüngliche Methode"
+If instead you like OrderHallCommander remember to add it to Curse client and keep it updated]=] ] = [=[OrderHallCommander überschreibt GarrisonCommaner für Mission in der Ordenshalle.
+Du kannst OrderhallCommander einfach deaktvieren um wieder OrderhallCommander zu verwenden.
+Wenn du OrderhallCommander allerdings gut findest, vergiss nicht es in deinem Curse Client hinzuzufügen und aktuell zu halten.]=]
+L["Original method"] = "Standard"
 L["Position is not saved on logout"] = "Die Position wird beim Ausloggen nicht gespeichert"
 L["Resurrect troops effect"] = "Truppen wiederbeleben"
 L["Reward type"] = "Belohnungsart"
@@ -318,18 +311,15 @@ L["Show/hide OrderHallCommander mission menu"] = "OrderHallCommander-Missionsmen
 L["Sort missions by:"] = "Sortieren nach:"
 L["Success Chance"] = "Erfolgschance"
 L["Troop ready alert"] = "Warnung Trupp bereit"
---Translation missing 
-L["Unable to fill missions. Check your switches"] = "Unable to fill missions. Check your switches"
-L["Upgrading to |cff00ff00%d|r"] = "Aktualisieren auf | cff00ff00% d | r"
---Translation missing 
-L["URL Copy"] = "URL Copy"
---Translation missing 
-L["Use at most this many champions"] = "Use at most this many champions"
+L["Unable to fill missions. Check your switches"] = "Mit den aktuellen Einstellungen kann keine Mission besetzt werden"
+L["Upgrading to |cff00ff00%d|r"] = "Erhöhe Stufe auf |cff00ff00%d|r"
+L["URL Copy"] = "URL kopieren"
+L["Use at most this many champions"] = "Verwende maximal so viele Anhänger pro Mission"
 L["Use combat ally"] = "Kampfgefährten verwenden"
 --Translation missing 
 L["When no free followers are available shows empty follower"] = "When no free followers are available shows empty follower"
-L["You are wasting |cffff0000%d|cffffd200 point(s)!!!"] = "Sie verschwenden | cffff0000% d | cffffd200 Punkt (e) !!!"
-L["You have no troops"] = "Sie haben keine Trupps"
+L["You are wasting |cffff0000%d|cffffd200 point(s)!!!"] = "Du verschwendst |cffff0000%d |cffffd200|4Punkt:Punkte;!"
+L["You have no troops"] = "Du hast keine Trupps"
 
 return
 end
@@ -583,95 +573,75 @@ L=l:NewLocale(me,"ruRU")
 if (L) then
 L["Always counter increased resource cost"] = "Учитывать увеличение стоимости ресурсов."
 L["Always counter increased time"] = "Учитывать увеличение времени на задание"
-L["Always counter kill troops (ignored if we can only use troops with just 1 durability left)"] = "Учитывать жизни валарьяров. (Игнорируется, если остались войска только с 1 ед.здоровья)"
+L["Always counter kill troops (ignored if we can only use troops with just 1 durability left)"] = "Всегда учитывать смерть войска. (Игнорируется, если остались войска только с 1 ед.здоровья)"
 L["Always counter no bonus loot threat"] = [=[Игнорировать миссии, если
 нет шанса на дополнительную добычу]=]
---Translation missing 
-L["Artifact shown value is the base value without considering knowledge multiplier"] = "Artifact shown value is the base value without considering knowledge multiplier"
---Translation missing 
-L["Attempts to use less champions for missions, in order to fill more missions"] = "Attempts to use less champions for missions, in order to fill more missions"
+L["Artifact shown value is the base value without considering knowledge multiplier"] = "Показывать базовое значение артефакта без учета множителя знания"
+L["Attempts to use less champions for missions, in order to fill more missions"] = "Попытаться использовать меньше чемпионов для миссий, для того чтобы выполнить больше миссий"
 L["Better parties available in next future"] = "Лучшая партия будет скоро доступна"
 L["Building Final report"] = "Создать отчет."
 L["Capped %1$s. Spend at least %2$d of them"] = "Достигнуто %1$. Потратьте  по крайней мере 2%$"
-L["Changes the sort order of missions in Mission panel"] = "Изменение порядка сортировки миссий"
+L["Changes the sort order of missions in Mission panel"] = "Изменяет порядок сортировки миссий на панели"
 L["Combat ally is proposed for missions so you can consider unassigning him"] = [=[Использовать боевого соратника в расчетах.
 Перед отправкой освободите соратника.]=]
 L["Complete all missions without confirmation"] = "Завершить все миссии без подтверждения"
-L["Configuration for mission party builder"] = "Конфигурация для построения мисии"
---Translation missing 
-L["Cost reduced"] = "Cost reduced"
-L["Dont kill Troops"] = "Не убивать валарьяров"
---Translation missing 
-L["Don't use troops"] = "Don't use troops"
+L["Configuration for mission party builder"] = "Конфигурация для создания, групповой миссии"
+L["Cost reduced"] = "Стоимость уменьшена"
+L["Dont kill Troops"] = "Не убивать войска"
+L["Don't use troops"] = "Не использовать войска"
 L["Duration reduced"] = "Продолжительность уменьшена"
 L["Duration Time"] = "Продолжительность"
 L["Expiration Time"] = "Время окончания"
 L["Favours leveling follower for xp missions"] = "В миссиях на опыт, использовать гибкую прокачку соратников"
---Translation missing 
-L["Followers status "] = "Followers status "
+L["Followers status "] = "Статус соратников"
 L["General"] = "Основные"
-L["Global approx. xp reward"] = "Опыт"
---Translation missing 
-L["Global approx. xp reward per hour"] = "Global approx. xp reward per hour"
+L["Global approx. xp reward"] = "Общая прибл. награда опыта"
+L["Global approx. xp reward per hour"] = "Общий прибл. опыт в час"
 L["HallComander Quick Mission Completion"] = "HallComander Быстрое завершение миссий"
---Translation missing 
-L["If not checked, inactive followers are used as last chance"] = "If not checked, inactive followers are used as last chance"
+L["If not checked, inactive followers are used as last chance"] = "Если этот флажок не установлен, неактивные соратники используются как последний шанс"
 L[ [=[If you %s, you will lose them
-Click on %s to abort]=] ] = [=[Если вы %, вы потеряете их.
-Нажмите на %, чтобы прервать]=]
---Translation missing 
-L["Ignore busy followers"] = "Ignore busy followers"
---Translation missing 
-L["Ignore inactive followers"] = "Ignore inactive followers"
+Click on %s to abort]=] ] = [=[Если Ваш %s слишком мал, вы можете потерять их
+Щелкните %s для прерывания]=]
+L["Ignore busy followers"] = "Игнорировать занятых соратников"
+L["Ignore inactive followers"] = "Игнорировать неактивных соратников"
 L["Keep cost low"] = "Дешевые миссии"
 L["Keep extra bonus"] = "Дополнительная добыча"
 L["Keep time short"] = "Короткие миссии"
 L["Keep time VERY short"] = "Быстрые миссии"
 L["Level"] = "Уровень"
-L["Make Order Hall Mission Panel movable"] = "  Разрешить перемещать панель Order Hall"
---Translation missing 
-L["Max champions"] = "Max champions"
---Translation missing 
-L["Maximize filled missions"] = "Maximize filled missions"
+L["Make Order Hall Mission Panel movable"] = "Сделать панель оплота класса передвигаемой"
+L["Max champions"] = "Макс. защитников"
+L["Maximize filled missions"] = "Максимизировать заполненые миссий"
 L["Maximize xp gain"] = "Максимальный опыт"
---Translation missing 
-L["Mission duration reduced"] = "Mission duration reduced"
+L["Mission duration reduced"] = "Сокращена продолжительность миссии"
 L["Missions"] = "Миссии"
 L["No follower gained xp"] = "Соратник не получает опыт"
---Translation missing 
-L["Not enough troops, raise maximum champions' number"] = "Not enough troops, raise maximum champions' number"
+L["Not enough troops, raise maximum champions' number"] = "Недостаточное количество войск, максимальное число чемпионов"
 L["Nothing to report"] = "Без отчета"
-L["Notifies you when you have troops ready to be collected"] = "Уведомлять о готовности свежих войск"
-L["Only accept missions with time improved"] = "Разрешать миссии только с ускоренным выполнением"
---Translation missing 
-L["Only use champions even if troops are available"] = "Only use champions even if troops are available"
---Translation missing 
+L["Notifies you when you have troops ready to be collected"] = "Уведомлять вас, когда имеются готовые войска, и готовы к сбору"
+L["Only accept missions with time improved"] = "Принимать, только миссии с улучшенным временем"
+L["Only use champions even if troops are available"] = "Использовать только защитников, даже если войска доступны"
 L[ [=[OrderHallCommander overrides GarrisonCommander for Order Hall Management.
  You can revert to GarrisonCommander simply disabling OrderhallCommander.
-If instead you like OrderHallCommander remember to add it to Curse client and keep it updated]=] ] = [=[OrderHallCommander overrides GarrisonCommander for Order Hall Management.
- You can revert to GarrisonCommander simply disabling OrderhallCommander.
-If instead you like OrderHallCommander remember to add it to Curse client and keep it updated]=]
+If instead you like OrderHallCommander remember to add it to Curse client and keep it updated]=] ] = [=[OrderHallCommander переопределяет GarrisonCommander для управления заказами.
+ Вы можете вернуться к GarrisonCommander, просто отключив OrderhallCommander.
+Если вам нравится OrderHallCommander, не забудьте добавить его в Curse client и обновить его]=]
 L["Original method"] = "Обычный метод"
-L["Position is not saved on logout"] = "Позиция не сохранится при выходе из системы"
+L["Position is not saved on logout"] = "Положение не сохраняется при выходе"
 L["Resurrect troops effect"] = "Эффект воскрешения войск"
 L["Reward type"] = "Награда"
-L["Show/hide OrderHallCommander mission menu"] = "Показать/скрыть меню OrderHallCommander"
+L["Show/hide OrderHallCommander mission menu"] = "Показать/скрыть меню миссий OrderHallCommander"
 L["Sort missions by:"] = "Сортировать миссии по:"
 L["Success Chance"] = "Шанс успеха"
-L["Troop ready alert"] = "Предупреждать о готовности войск"
---Translation missing 
-L["Unable to fill missions. Check your switches"] = "Unable to fill missions. Check your switches"
+L["Troop ready alert"] = "Оповещение о готовности войск"
+L["Unable to fill missions. Check your switches"] = "Не удается заполнить миссии. Проверьте параметры"
 L["Upgrading to |cff00ff00%d|r"] = "Обновление до |cff00ff00%d|r"
---Translation missing 
-L["URL Copy"] = "URL Copy"
---Translation missing 
-L["Use at most this many champions"] = "Use at most this many champions"
+L["URL Copy"] = "Копировать ссылку"
+L["Use at most this many champions"] = "На сколько много использовать защитников"
 L["Use combat ally"] = "Боевой соратник"
---Translation missing 
-L["When no free followers are available shows empty follower"] = "When no free followers are available shows empty follower"
+L["When no free followers are available shows empty follower"] = "Если свободные соратники недоступны, отображается пустой соратник"
 L["You are wasting |cffff0000%d|cffffd200 point(s)!!!"] = "Вы тратите |cffff0000%d|cffffd200 очков !!!"
---Translation missing 
-L["You have no troops"] = "You have no troops"
+L["You have no troops"] = "У вас нет войск"
 
 return
 end

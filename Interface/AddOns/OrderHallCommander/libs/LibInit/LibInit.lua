@@ -1,7 +1,7 @@
 --- Main methods directly available in your addon
 -- @classmod lib
 -- @author Alar of Runetotem
--- @release 42
+-- @release 45
 -- @set sort=true
 -- @usage
 -- -- Create a new addon this way:
@@ -11,7 +11,7 @@
 
 local __FILE__=tostring(debugstack(1,2,0):match("(.*):12:")) -- Always check line number in regexp and file
 local MAJOR_VERSION = "LibInit"
-local MINOR_VERSION = 42
+local MINOR_VERSION = 45
 local LibStub=LibStub
 local dprint=function() end
 local function encapsulate()
@@ -176,18 +176,21 @@ do
 --[===[@debug@
 		delcount = delcount + 1
 --@end-debug@]===]
-		if getmetatable(t)=="RECYCLE" then
+		if getmetatable(t)==meta then
 			wipe(t)
 			pool[t] = true
 		end
 	end
-	function recursivedel(t)
+	function recursivedel(t,level)
+		level=level or 0
 --[===[@debug@
 		delcount = delcount + 1
 --@end-debug@]===]
 		for k,v in pairs(t) do
 			if type(v)=="table" and getmetatable(v) == "RECYCLE" then
-				recursivedel(v)
+				if level < 2 then
+					recursivedel(v,level+1)
+				end
 			end
 		end
 		if getmetatable(t)=="RECYCLE" then
@@ -1872,9 +1875,8 @@ end
 function lib:Kpairs(t,f)
 	return kpairs(t,f)
 end 
---- Returns kpairs implementatio
+--- Returns kpairs implementation
 -- Deprecated in favour of Wrap("Kpairs")
--- @deprecated
 -- 
 function lib:GetKpairs()
 	return kpairs
@@ -2060,6 +2062,7 @@ end
 -- @tparam string|function action To be executed, Can be a function or a method name
 -- @tparam[opt] bool combatSafe keep running in combat
 -- @tparam[opt] mixed more parameter are passed to function
+-- @treturn string coroutine handle
 function lib:coroutineExecute(interval,action,combatSafe,...)
 	local signature=strjoin(':',tostringall(self,action,...))
 	if type(action)=="string" then
@@ -2124,6 +2127,54 @@ function lib:coroutineRestart(signature)
 	end
 end
 
+local C_Timer=C_Timer
+local NDTProto={}
+local NDTMeta={
+		__index=NDTProto,
+		__metatable=true,
+}
+function NDTProto:UpdateTimes(seconds)
+	seconds=seconds or self.delay
+	self.delay=seconds
+	self.expire=GetTime()+seconds-0.05
+end
+function NDTProto:Start(seconds)
+	self:UpdateTimes(seconds) 
+	return self:Callback() 
+end
+function NDTProto:Callback(reset)
+	if reset then self.running=false end
+	if self.expire <=GetTime() then
+		self.callback()
+		self=nil
+	else
+		if not self.running then
+			self:UpdateTimes()
+			C_Timer.After(self.delay,function() return self:Callback(true) end)
+			self.running=true
+		end
+		
+	end
+end
+function NDTProto:New(callback)
+	local timer=setmetatable({},NDTMeta)
+	timer.expire=GetTime()
+	timer.delay=0.001
+	timer.callback=callback
+	return timer
+end	
+
+--- Delayable timers
+-- Create a timer that can be delayed. Useful for example for throttling sliders' events
+-- This function just create the timer, to start (or delay) it use the :Start(seconds) method
+-- @tparam function callback Function to be called at expire time
+-- @treturn object
+-- 
+function lib:NewDelayableTimer(callback)
+	return NDTProto:New(callback)
+end
+
+
 --- Automatic events.
 --  You can have automatic events creating methods with the name EvtEVENTNAME
 --  For example in order to manage the event ADDON\_LOADED you can just define
@@ -2147,6 +2198,8 @@ function lib:StartAutomaticEvents()
 	for k,v in pairs(self) do
 		if (type(v)=='function') then
 			if (k:sub(1,3)=='Evt') then
+				_G.print(self,"Registering",k)
+				self:Print("Registering",k)				
 				self:RegisterEvent(k:sub(4),k)
 			end
 		end

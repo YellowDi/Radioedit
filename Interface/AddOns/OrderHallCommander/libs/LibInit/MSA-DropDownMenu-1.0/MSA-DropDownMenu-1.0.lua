@@ -10,7 +10,8 @@
 ---
 --- https://mods.curse.com/addons/wow/254936-msa-dropdownmenu-1-0
 
-local name, minor = "MSA-DropDownMenu-1.0", 1	-- 7.2.0.23877
+--local name, minor = "MSA-DropDownMenu-1.0", 1	-- 7.2.0.23877
+local name, minor = "MSA-DropDownMenu-1.0", 2	-- 7.3.0.24920
 
 local lib = LibStub:NewLibrary(name, minor)
 if not lib then return end
@@ -804,7 +805,7 @@ function MSA_DropDownMenuButton_OnClick(self)
 	end
 
 	if ( playSound ) then
-		PlaySound("UChatScrollButton");
+		PlaySound(SOUNDKIT.U_CHAT_SCROLL_BUTTON);
 	end
 end
 
