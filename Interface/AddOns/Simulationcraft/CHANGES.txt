@@ -1,18 +1,12 @@
-tag 259ac9e32ac552be8fb54a6f13f6578e04a8227e v1.7.5
+tag a23723b50bf66f964bd537d7cd6ea17c0c39fd07 v1.8.1
 Author:	Navv <navv1234@gmail.com>
-Date:	Thu Jul 6 20:25:35 2017 +0300
+Date:	Thu Aug 31 01:00:14 2017 +0300
 
-v1.7.5
+v1.8.1
 
-commit 450d3c6926f51eb0b253fd8899832fa8fae359ed
+commit 5d49b56601b39f88523c8de1ddfacc651bb7d064
 Author: Navv <navv1234@gmail.com>
-Date:   Thu Jul 6 20:07:20 2017 +0300
+Date:   Thu Aug 31 00:59:40 2017 +0300
 
-    Add debug/nobags options to /simc
-
-commit 03cb25906a733da324155216e8f43a68ea56805e
-Author: Navv <navv1234@gmail.com>
-Date:   Thu Jul 6 19:48:26 2017 +0300
-
-    Rewrite gem handling
+    Fix an issue with artifact option generation
 
