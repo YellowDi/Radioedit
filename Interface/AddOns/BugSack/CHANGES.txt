@@ -1,0 +1,12 @@
+tag bbe67b71002c8f52411c978d4bc7e4626cab73e9 v7.3.1
+Author:	funkydude <funkydude@users.noreply.github.com>
+Date:	Tue Aug 29 23:41:01 2017 +0100
+
+Tagging as v7.3.1
+
+commit bb69b78cfee77b76326fbb11b054de2bd5cdc064
+Author: funkydude <funkydude@users.noreply.github.com>
+Date:   Tue Aug 29 23:05:14 2017 +0100
+
+    remove compat code
+
