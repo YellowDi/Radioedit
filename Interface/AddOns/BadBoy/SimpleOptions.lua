@@ -25,7 +25,7 @@ close:SetPoint("TOPRIGHT", badboy, "TOPRIGHT", -5, -5)
 
 local title = badboy:CreateFontString(nil, nil, "GameFontNormalLarge")
 title:SetPoint("TOPLEFT", 16, -16)
-title:SetText("BadBoy v7.2.236") -- packager magic, replaced with tag version
+title:SetText("BadBoy v7.3.0") -- packager magic, replaced with tag version
 
 --[[ Show spam checkbox ]]--
 local btnShowSpam = CreateFrame("CheckButton", nil, badboy, "OptionsBaseCheckButtonTemplate")
@@ -34,9 +34,9 @@ btnShowSpam:SetScript("OnClick", function(frame)
 	local tick = frame:GetChecked()
 	BADBOY_OPTIONS.tipSpam = tick
 	if tick then
-		PlaySound(PlaySoundKitID and "igMainMenuOptionCheckBoxOn" or 856) -- SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON
+		PlaySound(856) -- SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON
 	else
-		PlaySound(PlaySoundKitID and "igMainMenuOptionCheckBoxOff" or 857) -- SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_OFF
+		PlaySound(857) -- SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_OFF
 	end
 end)
 btnShowSpam:SetScript("OnShow", function(frame)
@@ -54,9 +54,9 @@ btnNoAnim:SetScript("OnClick", function(frame)
 	local tick = frame:GetChecked()
 	BADBOY_OPTIONS.noAnim = tick
 	if tick then
-		PlaySound(PlaySoundKitID and "igMainMenuOptionCheckBoxOn" or 856) -- SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON
+		PlaySound(856) -- SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON
 	else
-		PlaySound(PlaySoundKitID and "igMainMenuOptionCheckBoxOff" or 857) -- SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_OFF
+		PlaySound(857) -- SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_OFF
 	end
 end)
 btnNoAnim:SetScript("OnShow", function(frame)
@@ -74,9 +74,9 @@ btnFreqButton:SetScript("OnClick", function(frame)
 	local tick = frame:GetChecked()
 	BADBOY_OPTIONS.freqBtn = tick
 	if tick then
-		PlaySound(PlaySoundKitID and "igMainMenuOptionCheckBoxOn" or 856) -- SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON
+		PlaySound(856) -- SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON
 	else
-		PlaySound(PlaySoundKitID and "igMainMenuOptionCheckBoxOff" or 857) -- SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_OFF
+		PlaySound(857) -- SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_OFF
 	end
 end)
 btnFreqButton:SetScript("OnShow", function(frame)
