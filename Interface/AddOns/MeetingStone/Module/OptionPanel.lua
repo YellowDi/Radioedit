@@ -1,4 +1,4 @@
-
+﻿
 BuildEnv(...)
 
 SettingPanel = Addon:NewModule(CreateFrame('Frame', nil, MainPanel), 'SettingPanel', 'AceEvent-3.0', 'AceTimer-3.0')

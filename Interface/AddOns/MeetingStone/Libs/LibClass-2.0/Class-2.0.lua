@@ -1,5 +1,5 @@
 
-local MAJOR, MINOR = 'LibClass-2.0', 7
+local MAJOR, MINOR = 'LibClass-2.0', 997
 local Class = LibStub:NewLibrary(MAJOR, MINOR)
 if not Class then
     return
@@ -188,7 +188,7 @@ local _UIBaseClass = setmetatable(Class._UIBaseClass, {__index = function(t, k)
         class._Meta = {
             __index = class,
             __type  = class,
-            __ui    = k,
+            __ui    = k == "scrollframe" and "ScrollFrame" or class:GetObjectType(),
         }
         class:Hide()
         class.Constructor = class.SetParent
