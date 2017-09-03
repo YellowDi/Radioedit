@@ -1618,3 +1618,52 @@ GTFO.SpellID["230348"] = {
   --desc = "Fel Pool (Goroth)";
   sound = 1;
 };
+
+GTFO.SpellID["241262"] = {
+  --desc = "Felburn (Rez the Tombwatching)";
+  sound = 1;
+};
+
+GTFO.SpellID["233901"] = {
+  --desc = "Suffocating Dark";
+  sound = 1;
+};
+
+GTFO.SpellID["234129"] = {
+  --desc = "Splashy Cleave (Razorjaw Gladiator)";
+  sound = 4;
+  negatingDebuffSpellID = 234016; -- Driven Assault
+  soundLFR = 0;  
+};
+
+GTFO.SpellID["245087"] = {
+  --desc = "Wake of Shadows";
+  sound = 1;
+  damageMinimum = 1;
+};
+
+GTFO.SpellID["245253"] = {
+  --desc = "Unstable Rift";
+  sound = 1;
+  damageMinimum = 1;
+};
+
+--- *********
+--- * Argus *
+--- *********
+
+GTFO.SpellID["250885"] = {
+  --desc = "Felshock Bombardment (Antaen Light-Breaker)";
+  sound = 1;
+  negatingBuffSpellID = 250895; -- Light's Protection
+};
+
+GTFO.SpellID["241557"] = {
+  --desc = "Molten Fel (Aggonar)";
+  sound = 1;
+};
+
+GTFO.SpellID["251701"] = {
+  --desc = "Fel Lava";
+  sound = 1;
+};

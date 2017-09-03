@@ -279,3 +279,14 @@ GTFO.SpellID["39174"] = {
 	trivialLevel = 80;
 };
 
+GTFO.SpellID["40631"] = {
+  --desc = "Flame Blast (Flame of Azzinoth)";
+  sound = 3;
+  tankSound = 0;
+};
+
+GTFO.SpellID["40904"] = {
+  --desc = "Draw Soul (Illidan Stormrage)";
+  sound = 3;
+  tankSound = 0;
+};

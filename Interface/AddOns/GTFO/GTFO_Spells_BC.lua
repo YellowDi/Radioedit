@@ -429,3 +429,8 @@ GTFO.SpellID["138561"] = {
 	--desc = "Kanrethad Ebonlocke (Black Temple)";
 	sound = 1;
 };
+
+GTFO.SpellID["40841"] = {
+  --desc = "Flame Crash (Black Temple)";
+  sound = 1;
+};

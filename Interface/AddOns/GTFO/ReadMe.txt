@@ -1247,3 +1247,9 @@ Change Log:
 
 4.42.18
 * Removed trivial flags for Black Temple (Timewalking)
+
+4.43
+* Updated for patch 7.3
+
+4.43.1
+* Added Legion spells for Argus

@@ -1936,3 +1936,39 @@ GTFO.SpellID["242924"] = {
   --desc = "Impact";
   sound = 3;
 };
+
+GTFO.SpellID["233431"] = {
+  --desc = "Calcified Quills (Atrigan)";
+	applicationOnly = true;
+	soundFunction = function() 
+		-- Calcified Quills
+		GTFO_AddEvent("CalcifiedQuills", 8);
+		return 0;
+	end
+};
+
+GTFO.SpellID["233435"] = {
+  --desc = "Calcified Quills (Atrigan)";
+  sound = 3;
+	ignoreEvent = "CalcifiedQuills";
+};
+
+GTFO.SpellID["244974"] = {
+  --desc = "Shadow Crash (Unsettling Despair)";
+  sound = 3;
+};
+
+--- *********
+--- * Argus *
+--- *********
+
+GTFO.SpellID["251100"] = {
+  --desc = "Erupting Crack (Kar'aaz)";
+  applicationOnly = true;
+  sound = 3;
+};
+
+GTFO.SpellID["244623"] = {
+  --desc = "Glaive Blast (Xeth'tal)";
+  sound = 3;
+};
