@@ -4,7 +4,7 @@
 -- @release $Id: AceConfigDialog-3.0.lua 1139 2016-07-03 07:43:51Z nevcairiel $
 
 local LibStub = LibStub
-local MAJOR, MINOR = "AceConfigDialog-3.0", 61
+local MAJOR, MINOR = "AceConfigDialog-3.0-Z", 64
 local AceConfigDialog, oldminor = LibStub:NewLibrary(MAJOR, MINOR)
 
 if not AceConfigDialog then return end
@@ -17,8 +17,8 @@ AceConfigDialog.frame.apps = AceConfigDialog.frame.apps or {}
 AceConfigDialog.frame.closing = AceConfigDialog.frame.closing or {}
 AceConfigDialog.frame.closeAllOverride = AceConfigDialog.frame.closeAllOverride or {}
 
-local gui = LibStub("AceGUI-3.0")
-local reg = LibStub("AceConfigRegistry-3.0")
+local gui = LibStub("AceGUI-3.0-Z")
+local reg = LibStub("AceConfigRegistry-3.0-Z")
 
 -- Lua APIs
 local tconcat, tinsert, tsort, tremove, tsort = table.concat, table.insert, table.sort, table.remove, table.sort
@@ -398,7 +398,7 @@ local function CleanUserData(widget, event)
 		del(user.path)
 	end
 
-	if widget.type == "TreeGroup" then
+	if widget.type == "TreeGroup-Z" then
 		local tree = user.tree
 		widget:SetTree(nil)
 		if tree then
@@ -410,14 +410,14 @@ local function CleanUserData(widget, event)
 		end
 	end
 
-	if widget.type == "TabGroup" then
+	if widget.type == "TabGroup-Z" then
 		widget:SetTabs(nil)
 		if user.tablist then
 			del(user.tablist)
 		end
 	end
 
-	if widget.type == "DropdownGroup" then
+	if widget.type == "DropdownGroup-Z" then
 		widget:SetGroupList(nil)
 		if user.grouplist then
 			del(user.grouplist)
@@ -468,7 +468,7 @@ function AceConfigDialog:SelectGroup(appName, ...)
 	
 	local app = reg:GetOptionsTable(appName)
 	if not app then
-		error(("%s isn't registed with AceConfigRegistry, unable to open config"):format(appName), 2)
+		error(("%s isn't registered with AceConfigRegistry, unable to open config"):format(appName), 2)
 	end
 	local options = app("dialog", MAJOR)
 	local group = options
@@ -542,7 +542,10 @@ local function OptionOnMouseOver(widget, event)
 	
 	if descStyle and descStyle ~= "tooltip" then return end
 	
-	GameTooltip:SetText(name, 1, .82, 0, true)
+	if opt.type == "multiselect" or type(desc)=="string" or type(usage)=="string" then
+		name=name or ""
+		GameTooltip:SetText(name, 1, .82, 0, true)
+	end
 	
 	if opt.type == "multiselect" then
 		GameTooltip:AddLine(user.text, 0.5, 0.5, 0.8, true)
@@ -703,7 +706,7 @@ local function ActivateControl(widget, event, ...)
 		else
 			-- TODO: do something else.
 		end
-		PlaySound("igPlayerInviteDecline")
+		PlaySound(PlaySoundKitID and "igPlayerInviteDecline" or SOUNDKIT.IG_QUEST_LOG_ABANDON_QUEST)
 		del(info)
 		return true
 	elseif not validated then
@@ -721,7 +724,7 @@ local function ActivateControl(widget, event, ...)
 		else
 			-- TODO: do something else
 		end
-		PlaySound("igPlayerInviteDecline")
+		PlaySound(PlaySoundKitID and "igPlayerInviteDecline" or SOUNDKIT.IG_QUEST_LOG_ABANDON_QUEST)
 		del(info)
 		return true
 	else
@@ -806,7 +809,6 @@ local function ActivateControl(widget, event, ...)
 		--full refresh of the frame, some controls dont cause this on all events
 		if option.type == "color" then
 			if event == "OnValueConfirmed" then
-				
 				if iscustom then
 					AceConfigDialog:Open(user.appName, user.rootframe, unpack(basepath))
 				else
@@ -815,6 +817,14 @@ local function ActivateControl(widget, event, ...)
 			end
 		elseif option.type == "range" then
 			if event == "OnMouseUp" then
+				if iscustom then
+					AceConfigDialog:Open(user.appName, user.rootframe, unpack(basepath))
+				else
+					AceConfigDialog:Open(user.appName, unpack(basepath))
+				end
+			end
+		elseif option.type == "select" and option.style == "slider" then
+			if event == "OnMouseUp" then  -- sinus wishes we could have event == "OnValueChanged" here, too, but redrawing controls causes dropping of the dragged slider. Bummer.
 				if iscustom then
 					AceConfigDialog:Open(user.appName, user.rootframe, unpack(basepath))
 				else
@@ -848,6 +858,11 @@ local function ActivateSlider(widget, event, value)
 	if max then
 		value = math_min(value, max)
 	end
+	ActivateControl(widget,event,value)
+end
+
+local function ActivateSliderLabeled(widget, event, value)
+	local option = widget:GetUserData("option")
 	ActivateControl(widget,event,value)
 end
 
@@ -1070,14 +1085,20 @@ local function FeedOptions(appName, options,container,rootframe,path,group,inlin
 					--Inline group
 					local GroupContainer
 					if name and name ~= "" then
-						GroupContainer = gui:Create("InlineGroup")
+						GroupContainer = gui:Create("InlineGroup-Z")
 						GroupContainer:SetTitle(name or "")
+						if v.font then
+							GroupContainer:SetFontObject(v.font)
+						end
 					else
-						GroupContainer = gui:Create("SimpleGroup")
+						GroupContainer = gui:Create("SimpleGroup-Z")
 					end
+
+					if v.marginTop then GroupContainer.marginTop=v.marginTop end
 					
-					GroupContainer.width = "fill"
-					GroupContainer:SetLayout("flow")
+					GroupContainer.width = v.width or "fill"
+					if (tonumber(v.width)) then GroupContainer:SetWidth(v.width) end
+					GroupContainer:SetLayout(v.useLayout or "flow")
 					container:AddChild(GroupContainer)
 					FeedOptions(appName,options,GroupContainer,rootframe,path,v,true)
 				end
@@ -1093,7 +1114,7 @@ local function FeedOptions(appName, options,container,rootframe,path,group,inlin
 					local image, width, height = GetOptionsMemberValue("image",v, options, path, appName)
 					
 					if type(image) == "string" or type(image) == "number" then
-						control = gui:Create("Icon")
+						control = gui:Create("Icon-Z")
 						if not width then
 							width = GetOptionsMemberValue("imageWidth",v, options, path, appName)
 						end
@@ -1114,21 +1135,45 @@ local function FeedOptions(appName, options,container,rootframe,path,group,inlin
 						control:SetImageSize(width, height)
 						control:SetLabel(name)
 					else
-						control = gui:Create("Button")
+						control = gui:Create("Button-Z")
 						control:SetText(name)
+						control:SetFontObject(v.font or GameFontNormal)  --sinus@zygor
+						control:SetHighlightFontObject(v.highlightFont or v.font or GameFontHighlight)  --sinus@zygor
 					end
 					control:SetCallback("OnClick",ActivateControl)
 
 				elseif v.type == "input" then
-					local controlType = v.dialogControl or v.control or (v.multiline and "MultiLineEditBox") or "EditBox"
+					local controlType = v.dialogControl or v.control or (v.multiline and "MultiLineEditBox-Z") or "EditBox-Z"
 					control = gui:Create(controlType)
 					if not control then
 						geterrorhandler()(("Invalid Custom Control Type - %s"):format(tostring(controlType)))
-						control = gui:Create(v.multiline and "MultiLineEditBox" or "EditBox")
+						control = gui:Create(v.multiline and "MultiLineEditBox-Z" or "EditBox-Z")
 					end
 					
 					if v.multiline and control.SetNumLines then
 						control:SetNumLines(tonumber(v.multiline) or 4)
+					end
+					if v.buttontext then  -- shooter@zygor
+						control:SetButtonText(v.buttontext)
+					end
+					if v.buttonwidth then
+						control:SetButtonWidth(v.buttonwidth)
+					end
+					if v.buttonheight then
+						control:SetButtonHeight(v.buttonheight)
+					end
+					if v.font then
+						control:SetEditFontObject(v.font)
+					end
+					if v.labelFont then
+						control:SetLabelFontObject(v.labelFont)
+					end
+					if v.buttonNormalFont then
+						control:SetButtonNormalFontObject(v.buttonNormalFont)
+						control:SetButtonHighlightFontObject(v.buttonHighlightFont or v.buttonNormalFont)
+					end
+					if v.buttonStatic then
+						control:SetButtonStatic(v.buttonStatic)
 					end
 					control:SetLabel(name)
 					control:SetCallback("OnEnterPressed",ActivateControl)
@@ -1139,12 +1184,14 @@ local function FeedOptions(appName, options,container,rootframe,path,group,inlin
 					control:SetText(text)
 
 				elseif v.type == "toggle" then
-					control = gui:Create("CheckBox")
+					control = gui:Create("CheckBox-Z")
 					control:SetLabel(name)
 					control:SetTriState(v.tristate)
+					control:SetPlusMinus(v.plusminus)  --sinus@zygor
 					local value = GetOptionsMemberValue("get",v, options, path, appName)
 					control:SetValue(value)
 					control:SetCallback("OnValueChanged",ActivateControl)
+					control:SetIndent(v.indent or 0)
 					
 					if v.descStyle == "inline" then
 						local desc = GetOptionsMemberValue("desc", v, options, path, appName)
@@ -1161,8 +1208,14 @@ local function FeedOptions(appName, options,container,rootframe,path,group,inlin
 							control:SetImage(image)
 						end
 					end
+
+					if v.font then
+						control:SetFontObject(v.font)  --sinus@zygor
+					end
+					--control:SetDescriptionFontObject(GetOptionsMemberValue("descFont",v, options, path, appName) or GameFontHighlightSmall)
+
 				elseif v.type == "range" then
-					control = gui:Create("Slider")
+					control = gui:Create("Slider-Z")
 					control:SetLabel(name)
 					control:SetSliderValues(v.softMin or v.min or 0, v.softMax or v.max or 100, v.bigStep or v.step or 0)
 					control:SetIsPercent(v.isPercent)
@@ -1173,13 +1226,22 @@ local function FeedOptions(appName, options,container,rootframe,path,group,inlin
 					control:SetValue(value)
 					control:SetCallback("OnValueChanged",ActivateSlider)
 					control:SetCallback("OnMouseUp",ActivateSlider)
+					if v.labelFont then
+						control:SetLabelFontObject(v.labelFont)  --sinus@zygor
+					end
+					if v.rangeFont then
+						control:SetRangeFontObject(v.rangeFont)  --sinus@zygor
+					end
+					if v.valueFont then
+						control:SetValueFontObject(v.valueFont)  --sinus@zygor
+					end
 
 				elseif v.type == "select" then
 					local values = GetOptionsMemberValue("values", v, options, path, appName)
 					if v.style == "radio" then
 						local disabled = CheckOptionDisabled(v, options, path, appName)
 						local width = GetOptionsMemberValue("width",v,options,path,appName)
-						control = gui:Create("InlineGroup")
+						control = gui:Create("InlineGroup-Z")
 						control:SetLayout("Flow")
 						control:SetTitle(name)
 						control.width = "fill"
@@ -1193,7 +1255,7 @@ local function FeedOptions(appName, options,container,rootframe,path,group,inlin
 						tsort(t)
 						for k, value in ipairs(t) do
 							local text = values[value]
-							local radio = gui:Create("CheckBox")
+							local radio = gui:Create("CheckBox-Z")
 							radio:SetLabel(text)
 							radio:SetUserData("value", value)
 							radio:SetUserData("text", text)
@@ -1209,19 +1271,44 @@ local function FeedOptions(appName, options,container,rootframe,path,group,inlin
 								radio:SetWidth(width_multiplier / 2)
 							elseif width == "full" then
 								radio.width = "fill"
+							elseif tonumber(width) then  --sinus@zygor
+								radio:SetWidth(tonumber(width))
 							else
 								radio:SetWidth(width_multiplier)
 							end
 						end
 						control:ResumeLayout()
 						control:DoLayout()
+					elseif v.style == "slider" then  --sinus@zygor
+						control = gui:Create("SliderLabeled-Z")
+						control:SetLabel(name)
+						control:SetSliderValues(v.values)
+						local value = GetOptionsMemberValue("get",v, options, path, appName)
+						control:SetValue(value)
+						control:SetCallback("OnValueChanged",ActivateSliderLabeled)
+						control:SetCallback("OnMouseUp",ActivateSliderLabeled)
+
+						if v.labelFont then
+							control:SetLabelFontObject(v.labelFont)  --sinus@zygor
+						end
+						if v.valueFont then
+							control:SetValueFontObject(v.valueFont)  --sinus@zygor
+						end
 					else
-						local controlType = v.dialogControl or v.control or "Dropdown"
+						local controlType = v.dialogControl or v.control or "Dropdown-Z"
 						control = gui:Create(controlType)
 						if not control then
 							geterrorhandler()(("Invalid Custom Control Type - %s"):format(tostring(controlType)))
-							control = gui:Create("Dropdown")
+							control = gui:Create("Dropdown-Z")
 						end
+						
+						if v.labelFont then
+							control:SetLabelFontObject(v.labelFont)  --sinus@zygor
+						end
+						if v.valueFont then
+							control:SetValueFontObject(v.valueFont)  --sinus@zygor
+						end
+
 						local itemType = v.itemControl
 						if itemType and not gui:GetWidgetVersion(itemType) then
 							geterrorhandler()(("Invalid Custom Item Type - %s"):format(tostring(itemType)))
@@ -1235,6 +1322,18 @@ local function FeedOptions(appName, options,container,rootframe,path,group,inlin
 						end
 						control:SetValue(value)
 						control:SetCallback("OnValueChanged", ActivateControl)
+
+						local pulloutWidth = v.pulloutWidth
+						if pulloutWidth == "double" then
+							control:SetPulloutWidth(width_multiplier * 2)
+						elseif pulloutWidth == "single" then
+							control:SetPulloutWidth(width_multiplier)
+						elseif pulloutWidth == "half" then
+							control:SetPulloutWidth(width_multiplier / 2)
+						elseif tonumber(pulloutWidth) then
+							control:SetPulloutWidth(tonumber(pulloutWidth))
+						end
+
 					end
 
 				elseif v.type == "multiselect" then
@@ -1271,6 +1370,8 @@ local function FeedOptions(appName, options,container,rootframe,path,group,inlin
 							control:SetWidth(width_multiplier / 2)
 						elseif width == "full" then
 							control.width = "fill"
+						elseif tonumber(width) then  --sinus@zygor
+							control:SetWidth(tonumber(width))
 						else
 							control:SetWidth(width_multiplier)
 						end
@@ -1281,7 +1382,7 @@ local function FeedOptions(appName, options,container,rootframe,path,group,inlin
 							control:SetItemValue(key,value)
 						end
 					else
-						control = gui:Create("InlineGroup")
+						control = gui:Create("InlineGroup-Z")
 						control:SetLayout("Flow")
 						control:SetTitle(name)
 						control.width = "fill"
@@ -1291,7 +1392,7 @@ local function FeedOptions(appName, options,container,rootframe,path,group,inlin
 						for i = 1, #valuesort do
 							local value = valuesort[i]
 							local text = values[value]
-							local check = gui:Create("CheckBox")
+							local check = gui:Create("CheckBox-Z")
 							check:SetLabel(text)
 							check:SetUserData("value", value)
 							check:SetUserData("text", text)
@@ -1307,6 +1408,8 @@ local function FeedOptions(appName, options,container,rootframe,path,group,inlin
 								check:SetWidth(width_multiplier / 2)
 							elseif width == "full" then
 								check.width = "fill"
+							elseif tonumber(width) then  --sinus@zygor
+								check:SetWidth(tonumber(width))
 							else
 								check:SetWidth(width_multiplier)
 							end
@@ -1320,30 +1423,39 @@ local function FeedOptions(appName, options,container,rootframe,path,group,inlin
 					del(valuesort)
 
 				elseif v.type == "color" then
-					control = gui:Create("ColorPicker")
+					control = gui:Create("ColorPicker-Z")
 					control:SetLabel(name)
 					control:SetHasAlpha(GetOptionsMemberValue("hasAlpha",v, options, path, appName))
 					control:SetColor(GetOptionsMemberValue("get",v, options, path, appName))
 					control:SetCallback("OnValueChanged",ActivateControl)
 					control:SetCallback("OnValueConfirmed",ActivateControl)
+					if v.font then
+						control:SetFontObject(v.font)
+					end
 
 				elseif v.type == "keybinding" then
-					control = gui:Create("Keybinding")
+					control = gui:Create("Keybinding-Z")
 					control:SetLabel(name)
 					control:SetKey(GetOptionsMemberValue("get",v, options, path, appName))
 					control:SetCallback("OnKeyChanged",ActivateControl)
 
 				elseif v.type == "header" then
-					control = gui:Create("Heading")
+					control = gui:Create("Heading-Z")
 					control:SetText(name)
+					if v.font then
+						control:SetFontObject(v.font)
+					end
 					control.width = "fill"
 
 				elseif v.type == "description" then
-					control = gui:Create("Label")
+					control = gui:Create("Label-Z")
 					control:SetText(name)
 					
 					local fontSize = GetOptionsMemberValue("fontSize",v, options, path, appName)
-					if fontSize == "medium" then
+					local font = GetOptionsMemberValue("font",v, options, path, appName)
+					if font then
+						control:SetFontObject(font)
+					elseif fontSize == "medium" then
 						control:SetFontObject(GameFontHighlight)
 					elseif fontSize == "large" then
 						control:SetFontObject(GameFontHighlightLarge)
@@ -1388,6 +1500,8 @@ local function FeedOptions(appName, options,container,rootframe,path,group,inlin
 							control:SetWidth(width_multiplier / 2)
 						elseif width == "full" then
 							control.width = "fill"
+						elseif tonumber(width) then  --sinus@zygor
+							control:SetWidth(tonumber(width))
 						else
 							control:SetWidth(width_multiplier)
 						end
@@ -1442,7 +1556,7 @@ local function TreeOnButtonEnter(widget, event, uniquevalue, button)
 	local desc = GetOptionsMemberValue("desc", group, options, feedpath, appName)
 	
 	GameTooltip:SetOwner(button, "ANCHOR_NONE")
-	if widget.type == "TabGroup" then
+	if widget.type == "TabGroup-Z" then
 		GameTooltip:SetPoint("BOTTOM",button,"TOP")
 	else
 		GameTooltip:SetPoint("LEFT",button,"RIGHT")
@@ -1569,13 +1683,14 @@ function AceConfigDialog:FeedGroup(appName,options,container,rootframe,path, isR
 		end
 	end
 
-	container:SetLayout("flow")
+	local custom_layout = (container.optiontable and container.optiontable.useLayout) or container.useLayout
+	container:SetLayout(custom_layout or "flow")
 	local scroll
 
 	--Add a scrollframe if we are not going to add a group control, this is the inverse of the conditions for that later on
 	if (not (hasChildGroups and not inline)) or (grouptype ~= "tab" and grouptype ~= "select" and (parenttype == "tree" and not isRoot)) then
-		if container.type ~= "InlineGroup" and container.type ~= "SimpleGroup" then
-			scroll = gui:Create("ScrollFrame")
+		if container.type ~= "InlineGroup-Z" and container.type ~= "SimpleGroup-Z" then
+			scroll = gui:Create("ScrollFrame-Z")
 			scroll:SetLayout("flow")
 			scroll.width = "fill"
 			scroll.height = "fill"
@@ -1600,7 +1715,7 @@ function AceConfigDialog:FeedGroup(appName,options,container,rootframe,path, isR
 		local name = GetOptionsMemberValue("name", group, options, path, appName)
 		if grouptype == "tab" then
 
-			local tab = gui:Create("TabGroup")
+			local tab = gui:Create("TabGroup-Z")
 			InjectInfo(tab, options, group, path, rootframe, appName)
 			tab:SetCallback("OnGroupSelected", GroupSelected)
 			tab:SetCallback("OnTabEnter", TreeOnButtonEnter)
@@ -1630,7 +1745,7 @@ function AceConfigDialog:FeedGroup(appName,options,container,rootframe,path, isR
 
 		elseif grouptype == "select" then
 
-			local select = gui:Create("DropdownGroup")
+			local select = gui:Create("DropdownGroup-Z")
 			select:SetTitle(name)
 			InjectInfo(select, options, group, path, rootframe, appName)
 			select:SetCallback("OnGroupSelected", GroupSelected)
@@ -1657,7 +1772,7 @@ function AceConfigDialog:FeedGroup(appName,options,container,rootframe,path, isR
 		--assume tree group by default
 		--if parenttype is tree then this group is already a node on that tree
 		elseif (parenttype ~= "tree") or isRoot then
-			local tree = gui:Create("TreeGroup")
+			local tree = gui:Create("TreeGroup-Z")
 			InjectInfo(tree, options, group, path, rootframe, appName)
 			tree:EnableButtonTooltips(false)
 			
@@ -1818,7 +1933,7 @@ function AceConfigDialog:Open(appName, container, ...)
 	end
 	
 	local option = options
-	if type(container) == "table" and container.type == "BlizOptionsGroup" and #path > 0 then
+	if type(container) == "table" and container.type == "BlizOptionsGroup-Z" and #path > 0 then
 		for i = 1, #path do
 			option = options.args[path[i]]
 		end
@@ -1847,9 +1962,13 @@ function AceConfigDialog:Open(appName, container, ...)
 		if f.SetTitle then
 			f:SetTitle(name or "")
 		end
+		local font = GetOptionsMemberValue("font", options, options, path, appName)
+		if f.SetTitleFontObject and font then
+			f:SetTitleFontObject(font)
+		end
 	else
 		if not self.OpenFrames[appName] then
-			f = gui:Create("Frame")
+			f = gui:Create("Frame-Z")
 			self.OpenFrames[appName] = f
 		else
 			f = self.OpenFrames[appName]
@@ -1863,6 +1982,7 @@ function AceConfigDialog:Open(appName, container, ...)
 		f:SetTitle(name or "")
 		local status = AceConfigDialog:GetStatusTable(appName)
 		f:SetStatusTable(status)
+		--f:SetTitleFontObject(f.titleFont)
 	end
 
 	self:FeedGroup(appName,options,f,f,path,true)
@@ -1932,7 +2052,7 @@ function AceConfigDialog:AddToBlizOptions(appName, name, parent, ...)
 	end
 	
 	if not BlizOptions[appName][key] then
-		local group = gui:Create("BlizOptionsGroup")
+		local group = gui:Create("BlizOptionsGroup-Z")
 		BlizOptions[appName][key] = group
 		group:SetName(name or appName, parent)
 

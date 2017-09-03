@@ -76,6 +76,8 @@ NOP.T_RECIPES = { -- [ItemId] = {count_to_use, "gsub regex" | tooltip-line-numbe
   [147727] = {1,1,nil}, -- Greater Legionfall Insignia
 }
 NOP.T_ITEMS = { -- [itemID] = {count_to_use,{"sub-Zone",...},{[mapID]=true,...},auraID}, table for opening/use item by itemID, is no possible to check any common text
+  [151653] = {10,nil,nil}, -- Broken Isles Recipe Scrap
+  [ 94223] = {1,nil,nil}, -- Stolen Shado-Pan Insignia
   [151423] = {1,nil,nil}, -- Stabilized Titan Essence
   [150737] = {1,nil,nil}, -- Abundant Order Resources Cache
   [142363] = {1,nil,nil}, -- Mark of Prey

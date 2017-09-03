@@ -1,4 +1,17 @@
 -- Revisions:
+--[[<p>08.04 01.09.2017</p>
+<ul>
+<li>Added Stolen Shado-Pan Insignia, Broken Isles Recipe Scrap.</li>
+<li>Fix QuestButton tooltip.</li>
+</ul>
+]]
+--[[<p>08.02 31.08.2017</p>
+<ul>
+<li>7.3 patch is here, lets up TOC and version to new milenia.</li>
+<li>Mouse buttons have icon in tooltip.</li>
+<li>Update to all libraries to 7.3 patch compatible version.</li>
+</ul>
+]]
 --[[<p>07.40 24.07.2017</p>
 <ul>
 <li>Cooldown on button and quest bar, fix.</li>

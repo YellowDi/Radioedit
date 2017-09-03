@@ -99,11 +99,11 @@ function NOP:ButtonOnEnter(button) -- show tooltip
     GameTooltip:SetText(BROWSE_NO_RESULTS)
   end
   GameTooltip:AddLine(" ")
-  GameTooltip:AddLine(private.CLICK_OPEN_MSG,0,1,0)
-  GameTooltip:AddLine(private.CLICK_SKIP_MSG,0,1,0)
-  GameTooltip:AddLine(private.CLICK_BLACKLIST_MSG)
+  GameTooltip:AddLine(private.MOUSE_LB .. private.CLICK_OPEN_MSG,0,1,0)
+  GameTooltip:AddLine(private.MOUSE_RB .. private.CLICK_SKIP_MSG,0,1,0)
+  GameTooltip:AddLine(private.MOUSE_RB .. private.CLICK_BLACKLIST_MSG)
   if not NOP.DB.lockButton then 
-    GameTooltip:AddLine(private.CLICK_DRAG_MSG)
+    GameTooltip:AddLine(private.MOUSE_LB .. private.CLICK_DRAG_MSG)
   end
   GameTooltip:SetClampedToScreen(true) -- tooltip must stay at screen
   GameTooltip:Show()

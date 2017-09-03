@@ -2,8 +2,8 @@
 Button Widget
 Graphical Button.
 -------------------------------------------------------------------------------]]
-local Type, Version = "Button", 23
-local AceGUI = LibStub and LibStub("AceGUI-3.0", true)
+local Type, Version = "Button-Z", 23
+local AceGUI = LibStub and LibStub("AceGUI-3.0-Z", true)
 if not AceGUI or (AceGUI:GetWidgetVersion(Type) or 0) >= Version then return end
 
 -- Lua APIs
@@ -18,7 +18,7 @@ Scripts
 -------------------------------------------------------------------------------]]
 local function Button_OnClick(frame, ...)
 	AceGUI:ClearFocus()
-	PlaySound("igMainMenuOption")
+	PlaySound(PlaySoundKitID and "igMainMenuOption" or SOUNDKIT.IG_MAINMENU_OPTION)
 	frame.obj:Fire("OnClick", ...)
 end
 
@@ -41,6 +41,8 @@ local methods = {
 		self:SetDisabled(false)
 		self:SetAutoWidth(false)
 		self:SetText()
+		self:SetFontObject()
+		self:SetHighlightFontObject()
 	end,
 
 	-- ["OnRelease"] = nil,
@@ -66,14 +68,22 @@ local methods = {
 		else
 			self.frame:Enable()
 		end
-	end
+	end,
+
+	["SetFontObject"] = function(self, font)
+		self.frame:SetNormalFontObject(font or GameFontNormal)
+	end,
+
+	["SetHighlightFontObject"] = function(self, font)
+		self.frame:SetHighlightFontObject(font or GameFontHighlight)
+	end,
 }
 
 --[[-----------------------------------------------------------------------------
 Constructor
 -------------------------------------------------------------------------------]]
 local function Constructor()
-	local name = "AceGUI30Button" .. AceGUI:GetNextWidgetNum(Type)
+	local name = AceGUI.Prefix.."Button" .. AceGUI:GetNextWidgetNum(Type)
 	local frame = CreateFrame("Button", name, UIParent, "UIPanelButtonTemplate")
 	frame:Hide()
 

@@ -1,6 +1,8 @@
---[[ $Id: AceGUIWidget-DropDown-Items.lua 1153 2016-11-20 09:57:15Z nevcairiel $ ]]--
+--[[ $Id: AceGUIWidget-DropDown-Items.lua 1137 2016-05-15 10:57:36Z nevcairiel $ ]]--
 
-local AceGUI = LibStub("AceGUI-3.0")
+local AceGUI = LibStub("AceGUI-3.0-Z")
+
+local IsLegion = select(4, GetBuildInfo()) >= 70000
 
 -- Lua APIs
 local select, assert = select, assert
@@ -41,7 +43,7 @@ local ItemBase = {
 	-- NOTE: The ItemBase version is added to each item's version number
 	--       to ensure proper updates on ItemBase changes.
 	--       Use at least 1000er steps.
-	version = 1000,
+	version = 2000,
 	counter = 0,
 }
 
@@ -147,10 +149,16 @@ function ItemBase.SetOnEnter(self, func)
 	self.specialOnEnter = func
 end
 
+function ItemBase.SetFontObject(self, font)
+	font = font or GameFontHighlightSmall
+	self.text:SetFontObject(font)
+	self.text:SetTextColor(font:GetTextColor())
+end
+
 function ItemBase.Create(type)
 	-- NOTE: Most of the following code is copied from AceGUI-3.0/Dropdown widget
 	local count = AceGUI:GetNextWidgetNum(type)
-	local frame = CreateFrame("Button", "AceGUI30DropDownItem"..count)
+	local frame = CreateFrame("Button", AceGUI.Prefix.."DropDownItem"..count)
 	local self = {}
 	self.frame = frame
 	frame.obj = self
@@ -208,6 +216,8 @@ function ItemBase.Create(type)
 	self.SetPoint   = ItemBase.SetPoint
 	self.Show       = ItemBase.Show
 	self.Hide       = ItemBase.Hide
+
+	self.SetFontObject       = ItemBase.SetFontObject
 	
 	self.SetOnLeave = ItemBase.SetOnLeave
 	self.SetOnEnter = ItemBase.SetOnEnter
@@ -245,7 +255,7 @@ end
 -- A single text entry.
 -- Special: Different text color and no highlight
 do
-	local widgetType = "Dropdown-Item-Header"
+	local widgetType = "Dropdown-Item-Header-Z"
 	local widgetVersion = 1
 	
 	local function OnEnter(this)
@@ -294,7 +304,7 @@ end
 -- Item: Execute
 -- A simple button
 do
-	local widgetType = "Dropdown-Item-Execute"
+	local widgetType = "Dropdown-Item-Execute-Z"
 	local widgetVersion = 1
 	
 	local function Frame_OnClick(this, button)
@@ -322,7 +332,7 @@ end
 -- Some sort of checkbox for dropdown menus.
 -- Does not close the pullout on click.
 do
-	local widgetType = "Dropdown-Item-Toggle"
+	local widgetType = "Dropdown-Item-Toggle-Z"
 	local widgetVersion = 3
 	
 	local function UpdateToggle(self)
@@ -343,9 +353,9 @@ do
 		if self.disabled then return end
 		self.value = not self.value
 		if self.value then
-			PlaySound("igMainMenuOptionCheckBoxOn")
+			PlaySound(PlaySoundKitID and "igMainMenuOptionCheckBoxOn" or SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON)
 		else
-			PlaySound("igMainMenuOptionCheckBoxOff")
+			PlaySound(PlaySoundKitID and "igMainMenuOptionCheckBoxOff" or SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_OFF)
 		end
 		UpdateToggle(self)
 		self:Fire("OnValueChanged", self.value)
@@ -382,7 +392,7 @@ end
 -- Shows a submenu on mouse over
 -- Does not close the pullout on click
 do
-	local widgetType = "Dropdown-Item-Menu"
+	local widgetType = "Dropdown-Item-Menu-Z"
 	local widgetVersion = 2
 	
 	local function OnEnter(this)
@@ -439,7 +449,7 @@ end
 -- Item: Separator
 -- A single line to separate items
 do
-	local widgetType = "Dropdown-Item-Separator"
+	local widgetType = "Dropdown-Item-Separator-Z"
 	local widgetVersion = 2
 	
 	-- exported, override
@@ -455,7 +465,11 @@ do
 		
 		local line = self.frame:CreateTexture(nil, "OVERLAY")
 		line:SetHeight(1)
-		line:SetColorTexture(.5, .5, .5)
+		if IsLegion then
+			line:SetColorTexture(.5, .5, .5)
+		else
+			line:SetTexture(.5, .5, .5)
+		end
 		line:SetPoint("LEFT", self.frame, "LEFT", 10, 0)
 		line:SetPoint("RIGHT", self.frame, "RIGHT", -10, 0)
 		

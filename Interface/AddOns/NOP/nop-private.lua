@@ -53,3 +53,5 @@ private.TIMER_RECHECK = 10.0 -- delay for slow non-event driven item lookup in b
 private.LOAD_RETRY = 10 -- update cache cycles for items and spell
 private.PRINT_HEAD = "|cff7f7f7f%s|r [|cff00ffff%s|r]"
 private.BLACKLIST = {[90043] = true,} -- special blacklist
+private.MOUSE_LB = "\124TInterface\\TutorialFrame\\UI-Tutorial-Frame:12:12:0:0:512:512:10:65:228:283\124t" -- left mouse button
+private.MOUSE_RB = "\124TInterface\\TutorialFrame\\UI-Tutorial-Frame:12:12:0:0:512:512:10:65:330:385\124t" -- right mouse button

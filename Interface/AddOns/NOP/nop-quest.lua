@@ -94,8 +94,8 @@ function NOP:QBOnEnter(bt) -- build and show tooltip
   end
   GameTooltip:AddLine(text, 0, 1, 0)
   GameTooltip:AddLine(" ")
-  GameTooltip:AddLine(private.CLICK_SKIP_MSG,0,1,0)
-  GameTooltip:AddLine(private.CLICK_BLACKLIST_MSG)
+  GameTooltip:AddLine(private.MOUSE_RB .. private.CLICK_SKIP_MSG,0,1,0)
+  GameTooltip:AddLine(private.MOUSE_RB .. private.CLICK_BLACKLIST_MSG)
   GameTooltip:Show()
 end
 function NOP:QBOnLeave(bt) -- close tooltip
