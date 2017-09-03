@@ -1,0 +1,33 @@
+## Interface: 70300
+## Title: DGC - Daily Global Check
+## Author: Jadya EU - Well of Eternity
+## Notes: Tracks the completion of daily quests of choice
+## eMail: n_rhygar@yahoo.it
+## DefaultState: Enabled
+## LoadOnDemand: 0
+## SavedVariables: DailyGlobalCheck_Options,DailyGlobalCheck_CharData,DGC_CustomLists,DailyGlobalCheck_Localization
+## SavedVariablesPerCharacter: DailyGlobalCheck_PluginData
+lib\LibStub.lua
+lib\CallbackHandler-1.0.lua
+lib\LibDataBroker-1.1.lua
+lib\LibDBIcon-1.0.lua
+components\NyxGUI-1.0\NyxGUI.xml
+localization.lua
+constants.lua
+constructors.lua
+components\components.xml
+plugins.lua
+lists.lua
+DailyGlobalCheck.lua
+quest.lua
+constr_mainframe.lua
+modes.lua
+characters.lua
+options.lua
+tools.lua
+pages.lua
+menus.lua
+map.lua
+helpframe.lua
+editquest.lua
+world_quests.lua

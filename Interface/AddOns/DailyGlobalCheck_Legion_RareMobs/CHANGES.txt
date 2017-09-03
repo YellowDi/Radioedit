@@ -1,0 +1,10 @@
+lightweight tag ed57eadcc9265040ba91c5e585cafc30738c96da v1.1.1-incomplete-7
+Author:	Saregon <n_rhygar@yahoo.it>
+Date:	Sat Sep 2 23:01:13 2017 +0200
+
+commit ed57eadcc9265040ba91c5e585cafc30738c96da
+Author: Saregon <n_rhygar@yahoo.it>
+Date:   Sat Sep 2 23:01:13 2017 +0200
+
+    added an option to show only argus rares that drop a toy pet or mount
+

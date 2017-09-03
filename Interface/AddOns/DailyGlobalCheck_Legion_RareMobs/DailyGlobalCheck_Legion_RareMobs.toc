@@ -1,0 +1,10 @@
+## Interface: 70300
+## Title: DGC - Legion Rare Mobs
+## Author: Jadya  EU-Well of Eternity
+## Notes: A |cff00FF00Daily Global Check|r plugin that tracks Rare Mobs in Legion zones
+## eMail: n_rhygar@yahoo.it
+## Dependencies: DailyGlobalCheck
+## DefaultState: Enabled
+## LoadOnDemand: 0
+db.lua
+DailyGlobalCheck_Legion_RareMobs.lua

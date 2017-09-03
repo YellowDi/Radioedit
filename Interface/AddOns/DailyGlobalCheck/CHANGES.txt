@@ -1,0 +1,10 @@
+lightweight tag 5ff033bb3d7c878b61f08fb87abff2cc8a7e00ad v1.5.2.6
+Author:	Saregon <n_rhygar@yahoo.it>
+Date:	Wed Aug 30 21:28:22 2017 +0200
+
+commit 5ff033bb3d7c878b61f08fb87abff2cc8a7e00ad
+Author: Saregon <n_rhygar@yahoo.it>
+Date:   Wed Aug 30 21:28:22 2017 +0200
+
+    7.3 toc update
+

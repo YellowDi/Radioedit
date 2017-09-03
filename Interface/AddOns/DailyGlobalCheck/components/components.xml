@@ -1,0 +1,371 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+
+	<Script file="components.lua"/>
+
+	<Font name="DGCQuestButtonsFont" inherits="Tooltip_Med"></Font>
+	
+	<!-- Mainframe quest button -->
+	<Frame name="DGCQuestButton" virtual="true">
+	<Size x="50" y="12"/>
+		<Scripts>
+			<OnLoad>
+				DGCQuestButton_OnLoad(self)
+			</OnLoad>
+		</Scripts>
+		<Layers>
+			<Layer level="ARTWORK">
+				<Texture parentKey="questtype" file="Interface\Minimap\ObjectIcons" hidden="true">
+					<Size x="12" y="12"/>
+					<Anchors><Anchor point="LEFT"/></Anchors>
+				</Texture>
+				<FontString name="$parentString1" justifyH="LEFT" inherits="DGCQuestButtonsFont" wordwrap="false" parentKey="zone"></FontString>
+				<FontString name="$parentString2" justifyH="LEFT" inherits="DGCQuestButtonsFont" wordwrap="false" parentKey="name"></FontString>
+				<FontString name="$parentString3" justifyH="LEFT" inherits="DGCQuestButtonsFont" wordwrap="false" parentKey="prefix"></FontString>
+				<FontString name="$parentString4" justifyH="LEFT" inherits="DGCQuestButtonsFont" wordwrap="false" parentKey="suffix"></FontString>
+				<FontString name="$parentString5" justifyH="LEFT" inherits="DGCQuestButtonsFont" wordwrap="false" parentKey="coords"></FontString>
+				<FontString name="$parentString6" justifyH="RIGHT" inherits="DGCQuestButtonsFont" wordwrap="false" parentKey="completed"></FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+		    <!-- completion overlay -->
+			<Frame name="$parentFoldingButton" parentKey="folding">
+				<Scripts>
+					<OnMouseUp>
+						DailyGlobalCheck.PagesFunctions:Fold(self)
+						DailyGlobalCheck:Refresh()
+					</OnMouseUp>
+				</Scripts>
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parentString3"></Anchor>
+					<Anchor point="BOTTOMRIGHT" relativeTo="$parentString3" x="14"></Anchor>
+				</Anchors>
+				<Layers>
+					<Layer level="ARTWORK">
+						<Texture parentKey="icon" file="Interface\Guildbankframe\UI-GuildBankFrame-NewTab">
+							<Size x="12" y="12"/>
+							<Anchors>
+								<Anchor point="RIGHT"/>
+							</Anchors>
+						</Texture>
+					</Layer>
+				</Layers>
+			</Frame>
+			<!-- completion overlay -->
+			<Frame name="$parentOverlayInfo" parentKey="overlay">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parentString6"></Anchor>
+					<Anchor point="BOTTOMRIGHT" relativeTo="$parentString6"></Anchor>
+				</Anchors>
+				<Scripts>
+					<OnEnter>DailyGlobalCheck.QuestFunctions:ShowOverlay(self:GetParent())</OnEnter>
+					<OnLeave>DailyGlobalCheck.QuestFunctions:HideOverlay(self:GetParent())</OnLeave>
+                    <OnMouseUp>DGCQuestButtonOverlay_OnMouseUp(self)</OnMouseUp>
+				</Scripts>
+			</Frame>
+		</Frames>
+	</Frame>
+	
+	<Button name="DGCPluginListButton" inherits="NyxGUIListButton" virtual="true">
+		<Size><AbsDimension x="80" y="25"/></Size>
+		<Scripts>
+			<OnLoad>
+				DGCPluginListButton_OnLoad(self)
+			</OnLoad>
+		</Scripts>
+		<Layers>
+			<Layer level="ARTWORK">
+				<FontString name="$parentString1" justifyH="LEFT" inherits="GameFontHighlight" wordwrap="false" parentKey="title">
+					<Anchors><Anchor point="LEFT" x="28"/></Anchors>
+				</FontString>
+				
+				<Texture name="$parentListIcon" parentKey="icon">
+					<Size><AbsDimension x="22" y="22"/></Size>
+					<Anchors>
+						<Anchor point="LEFT" x="3"/>
+					</Anchors>
+				</Texture>
+			</Layer>
+		</Layers>
+
+		<Frames>
+			<Button name="$parentVisibilityButton" parentkey="btnvisibility" inherits="NyxGUIButton">
+				<Size><AbsDimension x="65" y="20"/></Size>
+				
+				<Scripts>
+					<OnClick>
+						DGCPluginListButton_Visibility_OnClick(self)
+					</OnClick>
+				</Scripts>
+				
+				<Backdrop bgFile="Interface\Buttons\GreyscaleRamp64" edgeFile="Interface\Buttons\WHITE8X8">
+					<Color r="0" g="0" b="0" a="1"/>
+					<BorderColor r="1" g="1" b="1" a="1"/>
+					<EdgeSize val="1"/>
+				</Backdrop>
+				
+				<Anchors><Anchor point="RIGHT" x="-3" y="0"/></Anchors>
+				
+				<HighlightTexture file="Interface\Buttons\UI-Listbox-Highlight2" alphaMode="ADD">
+					<Color r="1" g="1" b="1" a="0.2" />
+				</HighlightTexture>
+			</Button>
+		</Frames>
+	
+		<HighlightTexture file="Interface\QuestFrame\UI-QuestLogTitleHighlight" alphaMode="ADD">
+			<Color r="0" g="1" b="0" a="0.4"/>
+			<Anchors>
+				<Anchor point="TOPLEFT">	
+					<Offset>
+						<AbsDimension x="0" y="1"/>
+					</Offset>
+				</Anchor>
+				<Anchor point="BOTTOMRIGHT">	
+					<Offset>
+						<AbsDimension x="0" y="1"/>
+					</Offset>
+				</Anchor>
+			</Anchors>
+		</HighlightTexture>
+	</Button>
+	
+	<!-- Edit Mode List Button -->
+	<Button name="DGCEditListButton" inherits="NyxGUIListButton" virtual="true">
+		<Size x="300" y="32"/>
+		<Scripts>
+			<OnLoad>
+				DGCEditQuestListButton_OnLoad(self)
+			</OnLoad>
+		</Scripts>
+		<Layers>
+			<Layer level="ARTWORK">
+				<FontString name="$parentString2" justifyH="LEFT" inherits="DGCQuestButtonsFont" wordwrap="false" parentKey="name">
+					<Anchors><Anchor point="TOPLEFT" x="2" y="-3"/></Anchors>
+				</FontString>
+				<FontString name="$parentString1" justifyH="LEFT" inherits="DGCQuestButtonsFont" wordwrap="false" parentKey="zone">
+					<Anchors><Anchor point="BOTTOMLEFT" x="2" y="3"/></Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+	
+		<Frames>
+			<Button name="$parentArrowUp" parentKey="arrowUp">
+				<Size x="18" y="14"/>
+				
+				<Scripts>
+					<OnClick>
+						DailyGlobalCheck.Tools:EditListButton_ArrowUpClick(self)
+					</OnClick>
+				</Scripts>
+				
+				<Anchors>
+					<Anchor point="TOPLEFT" x="1"></Anchor>
+				</Anchors>
+				<NormalTexture file="Interface\Buttons\Arrow-Up-Up" />
+				<PushedTexture file="Interface\Buttons\Arrow-Up-Down" />
+			</Button>
+			<Button name="$parentArrowDown" parentKey="arrowDown">
+				<Size x="18" y="14"/>
+				
+				<Scripts>
+					<OnClick>
+						DailyGlobalCheck.Tools:EditListButton_ArrowDownClick(self)
+					</OnClick>
+				</Scripts>
+				
+				<Anchors>
+					<Anchor point="BOTTOMLEFT" x="1"></Anchor>
+				</Anchors>
+				<NormalTexture file="Interface\Buttons\Arrow-Down-Up" />
+				<PushedTexture file="Interface\Buttons\Arrow-Down-Down" />
+			</Button>
+	
+			<Button name="$parentRemoveButton" parentKey="remove">
+				<Size x="16" y="16"/>
+				
+				<Scripts>
+					<OnClick>
+						DailyGlobalCheck.Tools:RemoveQuestButtonClick(self)
+					</OnClick>
+				</Scripts>
+				
+				<NormalTexture file="Interface\Common\VOICECHAT-MUTED" />
+				<Anchors>
+					<Anchor point="RIGHT" x="-30"></Anchor>
+				</Anchors>
+			</Button>
+			
+			<Button name="$parentEditButton" parentKey="edit">
+				<Size x="16" y="16"/>
+				
+				<NormalTexture file="Interface\Minimap\Vehicle-HammerGold-2" />
+				
+				<Scripts>
+					<OnClick>
+						DailyGlobalCheck.Tools:EditQuestButtonClick(self)
+					</OnClick>
+				</Scripts>
+				
+				<Anchors>
+					<Anchor point="RIGHT" relativeTo="$parentRemoveButton" relativePoint="LEFT" x="-5"></Anchor>
+				</Anchors>
+			</Button>
+		</Frames>
+	</Button>
+	
+	
+	<!-- Edit Mode Quest Pool List Button -->
+	<Button name="DGCEditQuestPoolListButton" inherits="NyxGUIListButton" virtual="true">
+		<Size x="300" y="32"/>
+		<Scripts>
+			<OnLoad>
+				DGCEditQuestPoolListButton_OnLoad(self)
+			</OnLoad>
+		</Scripts>
+		<Layers>
+			<Layer level="ARTWORK">
+				<Texture name="$parentIcon" file="Interface\Buttons\UI-MicroStream-Yellow" parentKey="icon">
+					<Size><AbsDimension x="24" y="24"/></Size>
+					<Anchors>
+						<Anchor point="LEFT" x="2"/>
+					</Anchors>
+				</Texture>
+				
+				<FontString name="$parentString2" justifyH="LEFT" inherits="DGCQuestButtonsFont" wordwrap="false" parentKey="name">
+					<Anchors><Anchor point="TOPLEFT" x="2" y="-3"/></Anchors>
+				</FontString>
+				<FontString name="$parentString1" justifyH="LEFT" inherits="DGCQuestButtonsFont" wordwrap="false" parentKey="zone">
+					<Anchors><Anchor point="BOTTOMLEFT" x="2" y="3"/></Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		
+		<Frames>
+			<Button name="$parentRemoveButton" parentKey="remove">
+				<Size x="16" y="16"/>
+				
+				<Scripts>
+					<OnClick>
+						DailyGlobalCheck.Tools:RemovePoolQuestButtonClick(self)
+					</OnClick>
+				</Scripts>
+				
+				<NormalTexture file="Interface\Common\VOICECHAT-MUTED" />
+				<Anchors>
+					<Anchor point="RIGHT" x="-50"></Anchor>
+				</Anchors>
+			</Button>
+			
+		<Button name="$parentEditButton" parentKey="edit">
+				<Size x="16" y="16"/>
+				
+				<NormalTexture file="Interface\Minimap\Vehicle-HammerGold-2" />
+				
+				<Scripts>
+					<OnClick>
+						DailyGlobalCheck.Tools:EditQuestButtonClick(self)
+					</OnClick>
+				</Scripts>
+				
+				<Anchors>
+					<Anchor point="RIGHT" relativeTo="$parentRemoveButton" relativePoint="LEFT" x="-5"></Anchor>
+				</Anchors>
+			</Button>
+		</Frames>
+	</Button>
+	
+	<!-- Simple Listbox List Button -->
+	<Button name="DGCSimpleListButton" virtual="true" inherits="NyxGUIListButton">
+		<Size><AbsDimension x="80" y="13"/></Size>
+	
+		<Layers>
+			<Layer level="ARTWORK">
+				<FontString name="$parentString1" justifyH="LEFT" inherits="GameFontHighlightSmall" wordwrap="false" parentKey="left_text">
+					<Anchors><Anchor point="LEFT" x="1"/></Anchors>
+				</FontString>
+				<FontString name="$parentString2" justifyH="LEFT" inherits="GameFontHighlightSmall" wordwrap="false" parentKey="right_text">
+					<Anchors><Anchor point="RIGHT" x="-1"/></Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+	</Button>
+	
+	<!-- Custom HelpPlateTooltip (ElvUI kills the original one for some reason) -->
+	<Frame name="DGC_HelpPlateTooltip" inherits="GlowBoxTemplate" parent="UIParent" hidden="true" frameStrata="FULLSCREEN_DIALOG" frameLevel="2">
+		<Size x="220" y="100"/>
+		<Layers>
+			<Layer level="OVERLAY">
+				<FontString parentKey="Text" inherits="GameFontHighlightLeft">
+					<Size x="200" y="0"/>
+					<Anchors>
+						<Anchor point="TOPLEFT" x="15" y="-15"/>
+					</Anchors>
+				</FontString>
+			</Layer>
+			<Layer level="ARTWORK">
+				<Texture parentKey="ArrowUP" inherits="HelpPlateArrowDOWN" hidden="true">
+					<Size x="53" y="21"/>
+					<Anchors>
+						<Anchor point="TOP" relativePoint="BOTTOM" x="0" y="3"/>
+					</Anchors>
+				</Texture>
+				<Texture parentKey="ArrowDOWN" inherits="HelpPlateArrowUP" hidden="true">
+					<Size x="53" y="21"/>
+					<Anchors>
+						<Anchor point="BOTTOM" relativePoint="TOP" x="0" y="-3"/>
+					</Anchors>
+				</Texture>
+				<Texture parentKey="ArrowRIGHT" inherits="HelpPlateArrowDOWN" hidden="true">
+					<Size x="53" y="21"/>
+					<Anchors>
+						<Anchor point="RIGHT" relativePoint="LEFT" x="3" y="0"/>
+					</Anchors>
+				</Texture>
+				<Texture parentKey="ArrowLEFT" inherits="HelpPlateArrowDOWN" hidden="true">
+					<Size x="53" y="21"/>
+					<Anchors>
+						<Anchor point="LEFT" relativePoint="RIGHT" x="-3" y="0"/>
+					</Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="BORDER">
+				<Texture parentKey="ArrowGlowUP" inherits="HelpPlateArrow-GlowDOWN" hidden="true" alphaMode="ADD" alpha="0.5">
+					<Size x="53" y="21"/>
+					<Anchors>
+						<Anchor point="TOP" relativePoint="BOTTOM" x="0" y="3"/>
+					</Anchors>
+				</Texture>
+				<Texture parentKey="ArrowGlowDOWN" inherits="HelpPlateArrow-GlowUP" hidden="true" alphaMode="ADD" alpha="0.5">
+					<Size x="53" y="21"/>
+					<Anchors>
+						<Anchor point="BOTTOM" relativePoint="TOP" x="0" y="-3"/>
+					</Anchors>
+				</Texture>
+				<Texture parentKey="ArrowGlowRIGHT" inherits="HelpPlateArrow-GlowDOWN" hidden="true" alphaMode="ADD" alpha="0.5">
+					<Size x="53" y="21"/>
+					<Anchors>
+						<Anchor point="RIGHT" relativePoint="LEFT" x="3" y="0"/>
+					</Anchors>
+				</Texture>
+				<Texture parentKey="ArrowGlowLEFT" inherits="HelpPlateArrow-GlowDOWN" hidden="true" alphaMode="ADD" alpha="0.5">
+					<Size x="53" y="21"/>
+					<Anchors>
+						<Anchor point="LEFT" relativePoint="RIGHT" x="-3" y="0"/>
+					</Anchors>
+				</Texture>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnLoad>
+				self.Text:SetSpacing(4)
+				SetClampedTextureRotation(self.ArrowLEFT, 270)
+				SetClampedTextureRotation(self.ArrowRIGHT, 90)
+				SetClampedTextureRotation(self.ArrowGlowLEFT, 270)
+				SetClampedTextureRotation(self.ArrowGlowRIGHT, 90)
+			</OnLoad>
+			<OnShow>
+				self:SetHeight(self.Text:GetHeight()+30)
+			</OnShow>
+		</Scripts>
+	</Frame>
+	
+</Ui>
