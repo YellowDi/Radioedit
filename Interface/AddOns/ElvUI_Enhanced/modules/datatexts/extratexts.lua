@@ -164,51 +164,51 @@ function EDT:UpdateCheckedMenuOption()
 end
 
 local enhancedClickMenu = function(self, button)
-	-- menuDatatext = self
-	-- menuPanel = DT.RegisteredPanels[self:GetParent():GetName()]
+	menuDatatext = self
+	menuPanel = DT.RegisteredPanels[self:GetParent():GetName()]
 
-	-- if button == "RightButton" and IsAltKeyDown() and IsControlKeyDown() then
-		-- menuFrame.point = "BOTTOM"
-		-- menuFrame.relativePoint = "TOP"
+	if button == "RightButton" and IsAltKeyDown() and IsControlKeyDown() then
+		menuFrame.point = "BOTTOM"
+		menuFrame.relativePoint = "TOP"
 		
-		-- EDT:UpdateCheckedMenuOption()
+		EDT:UpdateCheckedMenuOption()
 		
-		-- EasyMenu(menu, menuFrame, menuDatatext, 0 , 0, "MENU", 2);			
-	-- else
-		-- local data = DT.RegisteredDataTexts[EDT:GetPanelDatatextName()]
-		-- if data and data['origOnClick'] then
-			-- data['origOnClick'](self, button)
-		-- end
-	-- end
+		EasyMenu(menu, menuFrame, menuDatatext, 0 , 0, "MENU", 2);			
+	else
+		local data = DT.RegisteredDataTexts[EDT:GetPanelDatatextName()]
+		if data and data['origOnClick'] then
+			data['origOnClick'](self, button)
+		end
+	end
 end
 
 function EDT:ExtendClickFunction(data)
-	-- if data['onClick'] then
-		-- data['origOnClick'] = data['onClick']
-	-- end
-	-- data['onClick'] = enhancedClickMenu
+	if data['onClick'] then
+		data['origOnClick'] = data['onClick']
+	end
+	data['onClick'] = enhancedClickMenu
 end
 
 function EDT:HookClickMenuToEmptyDataText()
-	-- for panelName, panel in pairs(DT.RegisteredPanels) do
-		-- for i=1, panel.numPoints do
-			-- local pointIndex = DT.PointLocation[i]
-			-- local datatext = panel.dataPanels[pointIndex]
-			-- local isSet
-			-- if panel.numPoints == 1 then
-				-- isSet = E.db.datatexts.panels[panelName]
-			-- else
-				-- if E.db.datatexts.panels[panelName] then
-				    -- isSet = E.db.datatexts.panels[panelName][pointIndex] --20141124
-				-- else
-				    -- isSet = ''
-				-- end				
-			-- end
-			-- if not isSet or isSet == '' then
-				-- datatext:SetScript('OnClick', enhancedClickMenu)
-			-- end
-		-- end		
-	-- end
+	for panelName, panel in pairs(DT.RegisteredPanels) do
+		for i=1, panel.numPoints do
+			local pointIndex = DT.PointLocation[i]
+			local datatext = panel.dataPanels[pointIndex]
+			local isSet
+			if panel.numPoints == 1 then
+				isSet = E.db.datatexts.panels[panelName]
+			else
+				if E.db.datatexts.panels[panelName] then
+				    isSet = E.db.datatexts.panels[panelName][pointIndex] --20141124
+				else
+				    isSet = ''
+				end				
+			end
+			if not isSet or isSet == '' then
+				datatext:SetScript('OnClick', enhancedClickMenu)
+			end
+		end		
+	end
 end
 
 function EDT:OnInitialize()
