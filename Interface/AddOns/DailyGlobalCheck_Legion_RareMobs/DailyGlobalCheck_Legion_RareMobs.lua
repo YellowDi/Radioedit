@@ -1,5 +1,5 @@
 -- Daily Global Check - Legion Rare Mobs plugin
--- Jadya EU-Well of Eternity
+-- Vildiesel EU-Well of Eternity
 
 local addonName, addonTable = ...
 
@@ -43,16 +43,18 @@ local list = {
                 {
                 {Z[1021],47133,46202,46092,46096,46098,46304,46093,46100,46099,46094,46313,46095,47001,47036,46951,47028,46090,46102,46091,46101,47068,46097,46953,46965,47026,46995}
                 },
-                -- Argus
+                -- Argus 1 (Krokuun, Antoraan Wastes)
                 {
                 {Z[1135]},
                 {Z[1171]},
-                {Z[1170]}
                 --{Z[1135],48628,48666,48562,48564,48664,48665,48627,48629,48565,48667,48561,48563},
                 --{Z[1171],48821,48809,48970,48865,48815,49241,48817,48818,49183,48810,48811,48812,48814,48820,48813,48966,49240,48968,48967,48824,48816,48971,48822},
-                --{Z[1170],48705,48697,48707,48721,48714,48935,48713,48704,48719,48700,48711,48703,48718,48695,48709},
                 },
-                -- temporary
+                -- Argus 2 (Mac'Aree)
+                {
+                {Z[1170]}
+                --{Z[1170],48705,48697,48707,48721,48714,48935,48713,48704,48719,48700,48711,48703,48718,48695,48709,48706,48717,48702},
+                },
                 {
                 {"Temporary",}
                 }
@@ -63,20 +65,28 @@ local list = {
 -- argus only
 local argus_order_cache = {{Z[1135],48628,48666,48562,48564,48664,48665,48627,48629,48565,48667,48561,48563},
                            {Z[1171],48821,48809,48970,48865,48815,49241,48817,48818,49183,48810,48811,48812,48814,48820,48813,48966,49240,48968,48967,48824,48816,48971,48822},
-                           {Z[1170],48705,48697,48707,48721,48714,48935,48713,48704,48719,48700,48711,48703,48718,48695,48709},}
+                           {Z[1170],48705,48697,48707,48721,48714,48935,48713,48704,48719,48700,48711,48703,48718,48695,48709,48706,48717,48702},}
 
 local function onOptionChanged(i)
+ local svar = DailyGlobalCheck_PluginData["Legion Rare Mobs"]
  local o = list.Order
  local maps = DailyGlobalCheck.MapFunctions
+ local showall
 
+ if not svar or not svar.options or svar.options[1] == nil then
+  showall = true
+ else
+  showall = svar.options[1]
+ end 
+ 
  local t
  for k,data in pairs(argus_order_cache) do
-  -- argus index == 7
-  t = o[7][k]
+  -- moved mac'aree to another page to avoid cluttering
+  t = k == 3 and o[8][1] or o[7][k]
   wipe(t)
   t[1] = data[1]
   for j = 2, #data do
-   if i == 1 then
+   if showall then
     t[#t + 1] = data[j]
    elseif questsdata[data[j]].t_type then
     if questsdata[data[j]].t_type == "toy" or questsdata[data[j]].t_type == "mount" or questsdata[data[j]].t_type == "pet" then
@@ -232,19 +242,21 @@ local function GenerateData()
  q[48705] = {mac,"Venomtail Skyfin"        ,nil,nil,{1170, 33.65, 48.10},nil,nil,mobs_icon, t_itemid = 152844, t_type = "mount"}
  q[48697] = {mac,"Kaara The pale"          ,nil,nil,{1170, 38.64, 55.58},nil,nil,mobs_icon}
  q[48707] = {mac,"Captain Faruq"           ,nil,nil,{1170, 27.16, 30   },nil,nil,mobs_icon}
- q[48721] = {mac,"Skreeg the Devourer"     ,nil,nil,{1170, 49.81,  9.83},nil,nil,mobs_icon, t_itemid = 152904, t_type = "mount"}
+ q[48721] = {mac,"Skreeg the Devourer"     ,nil,nil,{1170, 49.81,  9.83},nil,nil,mobs_icon, t_itemid = 152904, t_type = "mount"} --
  q[48714] = {mac,"Overseer y'Beda"         ,nil,nil,{1170, 58.73, 37.60},nil,nil,mobs_icon}
- q[48935] = {mac,"Slithon the last"        ,nil,nil,{1170, 48.95, 51.91},nil,nil,mobs_icon}
+ q[48935] = {mac,"Slithon the last"        ,nil,nil,{1170, 48.79, 52.35},nil,nil,mobs_icon}
  q[48713] = {mac,"Jed'hin Champion Vorsuk" ,nil,nil,{1170, 48.11, 40.60},nil,nil,mobs_icon}
- 
- q[48704] = {mac,"Vigilant Kuro"           ,nil,nil,{1170, 63.89, 64.42},nil,nil,mobs_icon}
+ q[48704] = {mac,"Vigilant Kuro"           ,nil,nil,{1170, 63.89, 64.42},nil,nil,mobs_icon} --
  q[48719] = {mac,"Zul'tan the Numerous"    ,nil,nil,{1170, 64.03, 29.52},nil,nil,mobs_icon}
  q[48700] = {mac,"Baruut the Bloodthirsty" ,nil,nil,{1170, 43.81, 60.63},nil,nil,mobs_icon, t_itemid = 153193, t_type = "toy"}
- q[48711] = {mac,"Herald of Chaos"         ,nil,nil,{1170, 35.95, 58.97},nil,nil,mobs_icon, t_info = "Second floor"}
+ q[48711] = {mac,"Herald of Chaos"         ,nil,nil,{1170, 35.95, 58.97},nil,nil,mobs_icon, t_info = "Second floor"} --
  q[48703] = {mac,"Vigilant Thanos"         ,nil,nil,{1170, 36.73, 23.88},nil,nil,mobs_icon}
- q[48718] = {mac,"Instructor Tarahna"      ,nil,nil,{1170, 61.89, 50.37},nil,nil,mobs_icon, t_itemid = 153179, t_type = "toy", t_info = "Drops three different colored versions of the toy"}
+ q[48718] = {mac,"Instructor Tarahna"      ,nil,nil,{1170, 61.89, 50.37},nil,nil,mobs_icon, t_itemid = 153179, t_type = "toy", t_info = "Drops three different colored versions of the toy"} --
  q[48695] = {mac,"Wrangler Kravos"         ,nil,nil,{1170, 55.58, 60.25},nil,nil,mobs_icon, t_itemid = 152814, t_type = "mount"}
  q[48709] = {mac,"Ataxon"                  ,nil,nil,{1170, 30.13, 40.21},nil,nil,mobs_icon, t_itemid = 153056, t_type = "pet"}
+ q[48706] = {mac,"Turek the Lucid"         ,nil,nil,{1170, 39.15, 66.72},nil,nil,mobs_icon} --
+ q[48717] = {mac,"Overseer Y'Morna"        ,nil,nil,{1170, 60.92, 29.83},nil,nil,mobs_icon} --
+ q[48702] = {mac,"Feasel the Muffin Thief" ,nil,nil,{1170, 41.15, 11.49},nil,nil,mobs_icon}
  
  --48870
  -- call of the devourer itemID 152786
@@ -260,28 +272,25 @@ local function GenerateData()
  --q["rarestmp"..12] = {mac,"Ataxon" ,nil,nil,{1170, 30.3, 40.4},nil,nil,mobs_icon, t_itemid = 153056, t_type = "all"}
  --q["rarestmp"..13] = {mac,"Herald of Chaos" ,nil,nil,{1170, 35.5, 58.7},nil,nil,mobs_icon, t_info = "Second floor"}
  --q["rarestmp"..14] = {mac,"Jed'hin Champion Vorusk" ,nil,nil,{1170, 48.5, 40.9},nil,nil,mobs_icon}
- q["rarestmp"..15] = {mac,"Overseer Y'Sorna" ,nil,nil,{1170, 58  , 30.9},nil,nil,mobs_icon}
  --q["rarestmp"..16] = {mac,"Instructor Tarahna" ,nil,nil,{1170, 61.4, 50.2},nil,nil,mobs_icon, t_itemid = 153179, t_type = "all", t_info = "Drops three different color versions of the toy"}
- q["rarestmp"..17] = {mac,"Commander Xethgar" ,nil,nil,{1170, 56.8, 14.5},nil,nil,mobs_icon}
+ q["rarestmp"..1] = {mac,"Commander Xethgar" ,nil,nil,{1170, 56.8, 14.5},nil,nil,mobs_icon}
  --q["rarestmp"..18] = {mac,"Slithon the Last" ,nil,nil,{1170, 49.5, 52.8},nil,nil,mobs_icon}
- q["rarestmp"..22] = {mac,"Shadowcaster Voruun" ,nil,nil,{1170, 44.6, 71.6},nil,nil,mobs_icon}
- q["rarestmp"..29] = {mac,"Soultwisted Monstrosity" ,nil,nil,{1170, 53.09, 66.72},nil,nil,mobs_icon}
+ q["rarestmp"..2] = {mac,"Shadowcaster Voruun" ,nil,nil,{1170, 44.6, 71.6},nil,nil,mobs_icon}
+ q["rarestmp"..3] = {mac,"Soultwisted Monstrosity" ,nil,nil,{1170, 53.09, 66.72},nil,nil,mobs_icon}
  --q["rarestmp"..30] = {mac,"Kaara the Pale" ,nil,nil,{1170, 38.7, 55.8},nil,nil,mobs_icon}
- q["rarestmp"..31] = {mac,"Feasel the Muffin Thief" ,nil,nil,{1170, 41.3, 11.6},nil,nil,mobs_icon}
  --q["rarestmp"..32] = {mac,"Vigilant Kuro" ,nil,nil,{1170, 63.8, 64.6},nil,nil,mobs_icon}
- q["rarestmp"..33] = {mac,"Turek the Lucid" ,nil,nil,{1170, 39.2, 66.6},nil,nil,mobs_icon}
- q["rarestmp"..34] = {mac,"Umbraliss" ,nil,nil,{1170, 35.2, 37.2},nil,nil,mobs_icon}
- q["rarestmp"..35] = {mac,"Sorolis the Ill-Fated" ,nil,nil,{1170, 70.4, 46.7},nil,nil,mobs_icon}
- q["rarestmp"..36] = {mac,"Sabuul" ,nil,nil,{1170, 44.2, 49.8},nil,nil,mobs_icon}
+ q["rarestmp"..4] = {mac,"Umbraliss" ,nil,nil,{1170, 35.2, 37.2},nil,nil,mobs_icon}
+ q["rarestmp"..5] = {mac,"Sorolis the Ill-Fated" ,nil,nil,{1170, 70.4, 46.7},nil,nil,mobs_icon}
+ q["rarestmp"..6] = {mac,"Sabuul" ,nil,nil,{1170, 44.2, 49.8},nil,nil,mobs_icon}
  --q["rarestmp"..37] = {mac,"Overseer Y'Beda" ,nil,nil,{1170, 59.2, 37.7},nil,nil,mobs_icon}
- q["rarestmp"..38] = {mac,"Overseer Y'Morna" ,nil,nil,{1170, 60.4, 29.7},nil,nil,mobs_icon}
+ q["rarestmp"..7] = {mac,"Overseer Y'Sorna" ,nil,nil,{1170, 58  , 30.9},nil,nil,mobs_icon}
  --q["rarestmp"..39] = {mac,"Zul'tan the Numerous" ,nil,nil,{1170, 64, 29.5},nil,nil,mobs_icon}
  --q["rarestmp"..40] = {mac,"Skreeg the Devourer" ,nil,nil,{1170, 49.7, 9.9},nil,nil,mobs_icon}
 
  -- tmp
- for i = 1,43 do
+ for i = 1,7 do
   local questID = "rarestmp"..i
-  list.Order[8][1][i + 1] = questID
+  list.Order[9][1][i + 1] = questID
   if q[questID] then
    q[questID][8] = missing_icon
    q[questID].t_info = (q[questID].t_info and (q[questID].t_info.."@") or "").."Tracking ID missing (it doesn't disappear when killed)@To be fixed in future updates"
@@ -503,7 +512,7 @@ local function GenerateData()
  eventframe:SetScript("OnEvent", update_overlay_info)
  
  local svar = DailyGlobalCheck_PluginData["Legion Rare Mobs"]
- if not svar or not svar.options then
+ if not svar or not svar.options or svar.options[1] == nil then
   onOptionChanged(1)
  else
   onOptionChanged(svar.options[1] and 1 or 2)
