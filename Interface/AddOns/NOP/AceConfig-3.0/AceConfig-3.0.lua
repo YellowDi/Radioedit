@@ -12,13 +12,13 @@ Very light wrapper library that combines all the AceConfig subcomponents into on
 
 ]]
 
-local MAJOR, MINOR = "AceConfig-3.0", 2
+local MAJOR, MINOR = "AceConfig-3.0-Z", 2
 local AceConfig = LibStub:NewLibrary(MAJOR, MINOR)
 
 if not AceConfig then return end
 
-local cfgreg = LibStub("AceConfigRegistry-3.0")
-local cfgcmd = LibStub("AceConfigCmd-3.0")
+local cfgreg = LibStub("AceConfigRegistry-3.0-Z")
+local cfgcmd = LibStub("AceConfigCmd-3.0-Z")
 --TODO: local cfgdlg = LibStub("AceConfigDialog-3.0", true)
 --TODO: local cfgdrp = LibStub("AceConfigDropdown-3.0", true)
 

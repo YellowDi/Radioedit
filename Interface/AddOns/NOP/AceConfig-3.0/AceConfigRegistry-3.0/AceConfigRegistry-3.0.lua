@@ -9,7 +9,7 @@
 -- @class file
 -- @name AceConfigRegistry-3.0
 -- @release $Id: AceConfigRegistry-3.0.lua 1139 2016-07-03 07:43:51Z nevcairiel $
-local MAJOR, MINOR = "AceConfigRegistry-3.0", 16
+local MAJOR, MINOR = "AceConfigRegistry-3.0-Z", 18
 local AceConfigRegistry = LibStub:NewLibrary(MAJOR, MINOR)
 
 if not AceConfigRegistry then return end
@@ -58,6 +58,7 @@ local ismethodtable={["table"]=true,["string"]=true,["function"]=true,   _="meth
 local optstring={["nil"]=true,["string"]=true, _="string"}
 local optstringfunc={["nil"]=true,["string"]=true,["function"]=true, _="string or funcref"}
 local optstringnumberfunc={["nil"]=true,["string"]=true,["number"]=true,["function"]=true, _="string, number or funcref"}
+local optstringnumber={["nil"]=true,["string"]=true,["number"]=true, _="string or number"}
 local optnumber={["nil"]=true,["number"]=true, _="number"}
 local optmethod={["nil"]=true,["string"]=true,["function"]=true, _="methodname or funcref"}
 local optmethodfalse={["nil"]=true,["string"]=true,["function"]=true,["boolean"]={[false]=true},  _="methodname, funcref or false"}
@@ -90,16 +91,21 @@ local basekeys={
 	set=optmethodfalse,
 	func=optmethodfalse,
 	arg={["*"]=true},
-	width=optstring,
+	width=optstringnumber,
+	indent=optnumber,  --sinus@zygor
+	marginTop=optnumber, --shooter@zygor
 }
 
 local typedkeys={
-	header={},
+	header={
+		font=opttable,  --sinus@zygor
+	},
 	description={
 		image=optstringnumberfunc,
 		imageCoords=optmethodtable,
 		imageHeight=optnumber,
 		imageWidth=optnumber,
+		font=opttable,  --sinus@zygor
 		fontSize=optstringfunc,
 	},
 	group={
@@ -110,26 +116,41 @@ local typedkeys={
 			guiInline=optbool,
 			dropdownInline=optbool,
 			dialogInline=optbool,
+			useLayout=optstring,
 		childGroups=optstring,
+		font=opttable,
 	},
 	execute={
 		image=optstringnumberfunc,
 		imageCoords=optmethodtable,
 		imageHeight=optnumber,
 		imageWidth=optnumber,
+		font=opttable,  --sinus@zygor
+		highlightFont=opttable,  --sinus@zygor
 	},
 	input={
 		pattern=optstring,
 		usage=optstring,
 		control=optstring,
+		buttontext=optstring,
+		buttonwidth=optstringnumber,
+		buttonheight=optstringnumber,
+		editheight=optstringnumber,
 		dialogControl=optstring,
 		dropdownControl=optstring,
 		multiline=optboolnumber,
+		font=opttable,  --sinus@zygor
+		labelFont=opttable,  --sinus@zygor
+		buttonNormalFont=opttable,  --sinus@zygor
+		buttonHighlightFont=opttable,  --sinus@zygor
+		buttonStatic=optbool,  --shooter@zygor
 	},
 	toggle={
 		tristate=optbool,
 		image=optstringnumberfunc,
 		imageCoords=optmethodtable,
+		plusminus=optbool, --sinus@zygor
+		font=opttable,  --sinus@zygor
 	},
 	tristate={
 	},
@@ -141,18 +162,25 @@ local typedkeys={
 		step=optnumber,
 		bigStep=optnumber,
 		isPercent=optbool,
+		labelFont=opttable,  --sinus@zygor
+		valueFont=opttable,  --sinus@zygor
+		rangeFont=opttable,  --sinus@zygor
 	},
 	select={
 		values=ismethodtable,
 		style={
 			["nil"]=true, 
-			["string"]={dropdown=true,radio=true}, 
-			_="string: 'dropdown' or 'radio'"
+			["string"]={dropdown=true,radio=true,slider=true}, 
+			_="string: 'dropdown' or 'radio' or 'slider'"
 		},
 		control=optstring,
 		dialogControl=optstring,
 		dropdownControl=optstring,
 		itemControl=optstring,
+		labelFont=opttable,  --sinus@zygor
+		valueFont=opttable,  --sinus@zygor
+		pulloutWidth=optstringnumber,
+		sliderWidth=optstringnumber,
 	},
 	multiselect={
 		values=ismethodtable,
@@ -161,9 +189,11 @@ local typedkeys={
 		control=optstring,
 		dialogControl=optstring,
 		dropdownControl=optstring,
+		font=opttable,  --sinus@zygor
 	},
 	color={
 		hasAlpha=optmethodbool,
+		font=opttable,  --sinus@zygor
 	},
 	keybinding={
 		-- TODO

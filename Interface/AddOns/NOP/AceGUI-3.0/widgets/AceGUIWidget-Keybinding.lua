@@ -2,8 +2,8 @@
 Keybinding Widget
 Set Keybindings in the Config UI.
 -------------------------------------------------------------------------------]]
-local Type, Version = "Keybinding", 25
-local AceGUI = LibStub and LibStub("AceGUI-3.0", true)
+local Type, Version = "Keybinding-Z", 25
+local AceGUI = LibStub and LibStub("AceGUI-3.0-Z", true)
 if not AceGUI or (AceGUI:GetWidgetVersion(Type) or 0) >= Version then return end
 
 -- Lua APIs
@@ -185,7 +185,7 @@ local function keybindingMsgFixWidth(frame)
 end
 
 local function Constructor()
-	local name = "AceGUI30KeybindingButton" .. AceGUI:GetNextWidgetNum(Type)
+	local name = AceGUI.Prefix.."KeybindingButton" .. AceGUI:GetNextWidgetNum(Type)
 
 	local frame = CreateFrame("Frame", nil, UIParent)
 	local button = CreateFrame("Button", name, frame, "UIPanelButtonTemplate")

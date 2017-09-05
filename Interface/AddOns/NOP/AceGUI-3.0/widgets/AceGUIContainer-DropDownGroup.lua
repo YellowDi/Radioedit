@@ -2,8 +2,8 @@
 DropdownGroup Container
 Container controlled by a dropdown on the top.
 -------------------------------------------------------------------------------]]
-local Type, Version = "DropdownGroup", 21
-local AceGUI = LibStub and LibStub("AceGUI-3.0", true)
+local Type, Version = "DropdownGroup-Z", 21
+local AceGUI = LibStub and LibStub("AceGUI-3.0-Z", true)
 if not AceGUI or (AceGUI:GetWidgetVersion(Type) or 0) >= Version then return end
 
 -- Lua APIs
@@ -117,7 +117,7 @@ local function Constructor()
 	titletext:SetJustifyH("LEFT")
 	titletext:SetHeight(18)
 
-	local dropdown = AceGUI:Create("Dropdown")
+	local dropdown = AceGUI:Create("Dropdown-Z")
 	dropdown.frame:SetParent(frame)
 	dropdown.frame:SetFrameLevel(dropdown.frame:GetFrameLevel() + 2)
 	dropdown:SetCallback("OnValueChanged", SelectedGroup)

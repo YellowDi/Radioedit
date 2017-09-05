@@ -1,8 +1,8 @@
 --[[-----------------------------------------------------------------------------
 InteractiveLabel Widget
 -------------------------------------------------------------------------------]]
-local Type, Version = "InteractiveLabel", 21
-local AceGUI = LibStub and LibStub("AceGUI-3.0", true)
+local Type, Version = "InteractiveLabel-Z", 20
+local AceGUI = LibStub and LibStub("AceGUI-3.0-Z", true)
 if not AceGUI or (AceGUI:GetWidgetVersion(Type) or 0) >= Version then return end
 
 -- Lua APIs
@@ -74,7 +74,7 @@ Constructor
 -------------------------------------------------------------------------------]]
 local function Constructor()
 	-- create a Label type that we will hijack
-	local label = AceGUI:Create("Label")
+	local label = AceGUI:Create("Label-Z")
 
 	local frame = label.frame
 	frame:EnableMouse(true)

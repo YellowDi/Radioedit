@@ -2,8 +2,8 @@
 BlizOptionsGroup Container
 Simple container widget for the integration of AceGUI into the Blizzard Interface Options
 -------------------------------------------------------------------------------]]
-local Type, Version = "BlizOptionsGroup", 21
-local AceGUI = LibStub and LibStub("AceGUI-3.0", true)
+local Type, Version = "BlizOptionsGroup-Z", 21
+local AceGUI = LibStub and LibStub("AceGUI-3.0-Z", true)
 if not AceGUI or (AceGUI:GetWidgetVersion(Type) or 0) >= Version then return end
 
 -- Lua APIs
@@ -92,7 +92,13 @@ local methods = {
 			self.label:SetText(title)
 		end
 		content:SetPoint("BOTTOMRIGHT", -10, 10)
-	end
+	end,
+
+	["SetTitleFontObject"] = function(self, font)
+		font = font or GameFontNormalLarge
+		self.label:SetFont(font:GetFont())
+		self.label:SetTextColor(font:GetTextColor())
+	end,
 }
 
 --[[-----------------------------------------------------------------------------

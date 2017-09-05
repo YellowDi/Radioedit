@@ -2,9 +2,11 @@
 ScrollFrame Container
 Plain container that scrolls its content and doesn't grow in height.
 -------------------------------------------------------------------------------]]
-local Type, Version = "ScrollFrame", 24
-local AceGUI = LibStub and LibStub("AceGUI-3.0", true)
+local Type, Version = "ScrollFrame-Z", 24
+local AceGUI = LibStub and LibStub("AceGUI-3.0-Z", true)
 if not AceGUI or (AceGUI:GetWidgetVersion(Type) or 0) >= Version then return end
+
+local IsLegion = select(4, GetBuildInfo()) >= 70000
 
 -- Lua APIs
 local pairs, assert, type = pairs, assert, type
@@ -156,14 +158,14 @@ local function Constructor()
 	local frame = CreateFrame("Frame", nil, UIParent)
 	local num = AceGUI:GetNextWidgetNum(Type)
 
-	local scrollframe = CreateFrame("ScrollFrame", nil, frame)
+	local scrollframe = CreateFrame("ScrollFrame", AceGUI.Prefix..("ScrollFrame%dScroll"):format(num), frame)
 	scrollframe:SetPoint("TOPLEFT")
 	scrollframe:SetPoint("BOTTOMRIGHT")
 	scrollframe:EnableMouseWheel(true)
 	scrollframe:SetScript("OnMouseWheel", ScrollFrame_OnMouseWheel)
 	scrollframe:SetScript("OnSizeChanged", ScrollFrame_OnSizeChanged)
 
-	local scrollbar = CreateFrame("Slider", ("AceConfigDialogScrollFrame%dScrollBar"):format(num), scrollframe, "UIPanelScrollBarTemplate")
+	local scrollbar = CreateFrame("Slider", AceGUI.Prefix..("ScrollFrame%dScrollBar"):format(num), scrollframe, "UIPanelScrollBarTemplate")
 	scrollbar:SetPoint("TOPLEFT", scrollframe, "TOPRIGHT", 4, -16)
 	scrollbar:SetPoint("BOTTOMLEFT", scrollframe, "BOTTOMRIGHT", 4, 16)
 	scrollbar:SetMinMaxValues(0, 1000)
@@ -176,10 +178,14 @@ local function Constructor()
 
 	local scrollbg = scrollbar:CreateTexture(nil, "BACKGROUND")
 	scrollbg:SetAllPoints(scrollbar)
-	scrollbg:SetColorTexture(0, 0, 0, 0.4)
+	if IsLegion then
+		scrollbg:SetColorTexture(0, 0, 0, 0.4)
+	else
+		scrollbg:SetTexture(0, 0, 0, 0.4)
+	end
 
 	--Container Support
-	local content = CreateFrame("Frame", nil, scrollframe)
+	local content = CreateFrame("Frame", AceGUI.Prefix..("ScrollFrame%dScrollChild"):format(num), scrollframe)
 	content:SetPoint("TOPLEFT")
 	content:SetPoint("TOPRIGHT")
 	content:SetHeight(400)

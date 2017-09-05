@@ -1,8 +1,8 @@
 --[[-----------------------------------------------------------------------------
 Heading Widget
 -------------------------------------------------------------------------------]]
-local Type, Version = "Heading", 20
-local AceGUI = LibStub and LibStub("AceGUI-3.0", true)
+local Type, Version = "Heading-Z", 20
+local AceGUI = LibStub and LibStub("AceGUI-3.0-Z", true)
 if not AceGUI or (AceGUI:GetWidgetVersion(Type) or 0) >= Version then return end
 
 -- Lua APIs
@@ -19,6 +19,7 @@ local methods = {
 		self:SetText()
 		self:SetFullWidth()
 		self:SetHeight(18)
+		self:SetFontObject()
 	end,
 
 	-- ["OnRelease"] = nil,
@@ -32,7 +33,11 @@ local methods = {
 			self.left:SetPoint("RIGHT", -3, 0)
 			self.right:Hide()
 		end
-	end
+	end,
+
+	["SetFontObject"] = function(self, font)
+		self.label:SetFontObject(font or GameFontNormal)
+	end,
 }
 
 --[[-----------------------------------------------------------------------------

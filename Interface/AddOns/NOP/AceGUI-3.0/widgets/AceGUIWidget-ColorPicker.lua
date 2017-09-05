@@ -1,9 +1,11 @@
 --[[-----------------------------------------------------------------------------
 ColorPicker Widget
 -------------------------------------------------------------------------------]]
-local Type, Version = "ColorPicker", 23
-local AceGUI = LibStub and LibStub("AceGUI-3.0", true)
+local Type, Version = "ColorPicker-Z", 23
+local AceGUI = LibStub and LibStub("AceGUI-3.0-Z", true)
 if not AceGUI or (AceGUI:GetWidgetVersion(Type) or 0) >= Version then return end
+
+local IsLegion = select(4, GetBuildInfo()) >= 70000
 
 -- Lua APIs
 local pairs = pairs
@@ -93,6 +95,7 @@ local methods = {
 		self:SetColor(0, 0, 0, 1)
 		self:SetDisabled(nil)
 		self:SetLabel(nil)
+		self:SetFontObject()
 	end,
 
 	-- ["OnRelease"] = nil,
@@ -122,7 +125,11 @@ local methods = {
 			self.frame:Enable()
 			self.text:SetTextColor(1, 1, 1)
 		end
-	end
+	end,
+
+	["SetFontObject"] = function(self, font)
+		self.text:SetFontObject(font or GameFontNormal)
+	end,
 }
 
 --[[-----------------------------------------------------------------------------
@@ -146,7 +153,11 @@ local function Constructor()
 	local texture = frame:CreateTexture(nil, "BACKGROUND")
 	texture:SetWidth(16)
 	texture:SetHeight(16)
-	texture:SetColorTexture(1, 1, 1)
+	if IsLegion then
+		texture:SetColorTexture(1, 1, 1)
+	else
+		texture:SetTexture(1, 1, 1)
+	end
 	texture:SetPoint("CENTER", colorSwatch)
 	texture:Show()
 
