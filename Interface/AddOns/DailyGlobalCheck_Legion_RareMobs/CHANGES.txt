@@ -1,10 +1,10 @@
-lightweight tag dccd9bcaebde6b5a8e274859762e90a08992b42a v1.1.1-nearly-complete-8
+lightweight tag 671700577c60723634ce777cd904aac1585099cd v1.1.1
 Author:	Saregon <n_rhygar@yahoo.it>
-Date:	Mon Sep 4 14:42:25 2017 +0200
+Date:	Thu Sep 7 06:59:29 2017 +0200
 
-commit dccd9bcaebde6b5a8e274859762e90a08992b42a
+commit 671700577c60723634ce777cd904aac1585099cd
 Author: Saregon <n_rhygar@yahoo.it>
-Date:   Mon Sep 4 14:42:25 2017 +0200
+Date:   Thu Sep 7 06:59:29 2017 +0200
 
-    mac'aree rares moved to another page to avoid cluttering
+    completed argus IDs
 

@@ -47,17 +47,11 @@ local list = {
                 {
                 {Z[1135]},
                 {Z[1171]},
-                --{Z[1135],48628,48666,48562,48564,48664,48665,48627,48629,48565,48667,48561,48563},
-                --{Z[1171],48821,48809,48970,48865,48815,49241,48817,48818,49183,48810,48811,48812,48814,48820,48813,48966,49240,48968,48967,48824,48816,48971,48822},
                 },
                 -- Argus 2 (Mac'Aree)
                 {
                 {Z[1170]}
-                --{Z[1170],48705,48697,48707,48721,48714,48935,48713,48704,48719,48700,48711,48703,48718,48695,48709,48706,48717,48702},
                 },
-                {
-                {"Temporary",}
-                }
 			 },
  }
  
@@ -65,8 +59,8 @@ local list = {
 -- argus only
 local argus_order_cache = {{Z[1135],48628,48666,48562,48564,48664,48665,48627,48629,48565,48667,48561,48563},
                            {Z[1171],48821,48809,48970,48865,48815,49241,48817,48818,49183,48810,48811,48812,48814,48820,48813,48966,49240,48968,48967,48824,48816,48971,48822},
-                           {Z[1170],48705,48697,48707,48721,48714,48935,48713,48704,48719,48700,48711,48703,48718,48695,48709,48706,48717,48702},}
-
+                           {Z[1170],48705,48697,48707,48721,48714,48935,48713,48704,48719,48700,48711,48703,48718,48695,48709,48706,48717,48702,48693,48716,48712,48720,48692,48708,48710},}
+                          
 local function onOptionChanged(i)
  local svar = DailyGlobalCheck_PluginData["Legion Rare Mobs"]
  local o = list.Order
@@ -77,8 +71,8 @@ local function onOptionChanged(i)
   showall = true
  else
   showall = svar.options[1]
- end 
- 
+ end
+
  local t
  for k,data in pairs(argus_order_cache) do
   -- moved mac'aree to another page to avoid cluttering
@@ -199,14 +193,14 @@ local function GenerateData()
  -- Krokuun
  q[48628] = {kro,"Talestra the Vile"        ,nil,nil,{1135, 54.8 , 81.31},nil,nil,mobs_icon}
  q[48666] = {kro,"Imp Mother Laglath"       ,nil,nil,{1135, 42.34, 69.83},nil,nil,mobs_icon}
- q[48562] = {kro,"Commander Sathrenael"     ,nil,nil,{1135, 33.62, 75.43},nil,nil,mobs_icon}
+ q[48562] = {kro,"Commander Sathrenael"     ,nil,nil,{1135, 33.19, 76.12},nil,nil,mobs_icon}
  q[48564] = {kro,"Commander Endaxis"        ,nil,nil,{1135, 45.39, 58.77},nil,nil,mobs_icon}
  q[48664] = {kro,"Tereck the Selector"      ,nil,nil,{1135, 69.29, 59.47},nil,nil,mobs_icon, t_info = "In the cave"}
  q[48665] = {kro,"Tar Spitter"              ,nil,nil,{1135, 70.18, 81.24},nil,nil,mobs_icon}
  q[48627] = {kro,"Siegemaster Voraan"       ,nil,nil,{1135, 58.31, 75.69},nil,nil,mobs_icon}
  q[48629] = {kro,"Vagath the Betrayed"      ,nil,nil,{1135, 60.89, 19.6 },nil,nil,mobs_icon}
  q[48565] = {kro,"Sister Subversia"         ,nil,nil,{1135, 52.87, 31.08},nil,nil,mobs_icon, t_itemid = 153124, t_type = "toy"}
- q[48667] = {kro,"Naroua"                   ,nil,nil,{1135, 71.06, 32.72},nil,nil,mobs_icon}
+ q[48667] = {kro,"Naroua"                   ,nil,nil,{1135, 71.06, 32.72},nil,nil,mobs_icon, t_itemid = 153190, t_type = "pet"}
  q[48561] = {kro,"Khazaduum"                ,nil,nil,{1135, 50.58, 17.71},nil,nil,mobs_icon, t_info = "At the end of the hallway"}
  q[48563] = {kro,"Commander Vecaya"         ,nil,nil,{1135, 38.36, 59.52, nil, 1135, 41.2, 56.76, {icon=arrowup, desc="Up here"}},nil,nil,mobs_icon, t_info = "On the Xenedar"}
  
@@ -222,17 +216,28 @@ local function GenerateData()
  q[49183] = {ant,"Blistermaw"               ,nil,nil,{1171, 61.78, 36.96},nil,nil,mobs_icon, t_itemid = 152905, t_type = "mount"}
  q[48810] = {ant,"Vrax'thul"                ,nil,nil,{1171, 53.03, 36.08},nil,nil,mobs_icon}
  q[48811] = {ant,"Ven'orn"                  ,nil,nil,{1171, 66.38, 54.24},nil,nil,mobs_icon, t_info = "In the cave"}
- q[48812] = {ant,"Varga"                    ,nil,nil,{1171, 64.29, 48.09},nil,nil,mobs_icon, t_info = "In the cave, at river level"}
+ q[48812] = {ant,"Varga"                    ,nil,nil,{1171, 64.29, 48.09},nil,nil,mobs_icon, t_itemid = 153190, t_type = "pet", t_info = "In the cave, at river level"}
  q[48814] = {ant,"Wrath-Lord Yarez"         ,nil,nil,{1171, 61.33, 65.15},nil,nil,mobs_icon, t_itemid = 153126, t_type = "toy"}
  q[48820] = {ant,"WorldSplitter Skuul"      ,nil,nil,{1171, 50.9 , 55.3 },nil,nil,mobs_icon, t_info = "Patrolling the skies"}
  q[48813] = {ant,"Lieutenant Xakaar"        ,nil,nil,{1171, 62.21, 53.52},nil,nil,mobs_icon}
- q[48966] = {ant,"The Many-Faced Devourer"  ,nil,nil,{1171, 54.8 , 39.15},nil,nil,mobs_icon, t_itemid = 153195, t_type = "pet", t_info = "Drop Call of the Devourer from mobs around,@collect the three bones and summon him using the Bone Effigy twice@Bones at:@|cff00ffff50.4 56.1@|cff00ffff52.4 35.3@|cff00ffff65.8 19.4|r (in the imps' cave)"}
+ 
+ if IsQuestFlaggedCompleted(48870) then
+  q[48966] = {ant,"The Many-Faced Devourer"  ,nil,nil,{1171, 54.8 , 39.15},nil,nil,mobs_icon, t_itemid = 153195, t_type = "pet", t_info = "Use the Bone Effigy"}
+ else
+  q[48966] = {ant,"The Many-Faced Devourer"  ,nil,nil,{1171, 54.8 , 39.15},nil,nil,mobs_icon, t_itemid = 153195, t_type = "pet", t_info = "Drop Call of the Devourer from mobs around,@collect the three bones and summon him using the Bone Effigy twice@Bones at:@|cff00ffff50.4 56.1@|cff00ffff52.4 35.3@|cff00ffff65.8 19.4|r (in the imps' cave)"}
+ end
 --                                                      1171, 50.4 , 56.1 , {icon = bone_icon, desc = "Requires Call of the Devourer in bags"},
 --                                                      1171, 65.89, 19.42, {icon = bone_icon, desc = "In the imps' cave, requires Call of the Devourer in bags"},
 --                                                      1171, 52.4 , 35.3 , {icon = bone_icon, desc = "Requires Call of the Devourer in bags"}},nil,nil,mobs_icon, t_itemid = 153195, t_type = "all"}
  q[49240] = {ant,"Mistress Il'thendra"      ,nil,nil,{1171, 57.32, 33.57},nil,nil,mobs_icon}
  q[48968] = {ant,"Doomcaster Suprax"        ,nil,nil,{1171, 58, 12},nil,nil,mobs_icon, t_itemid = 153194, t_type = "toy", t_info = "Needs three players to stand over runes"}
- q[48967] = {ant,"Squadron Commander Vishax",nil,nil,{1171, 84.6, 81  , nil, 1171,77.46, 74.61,cave_entrance},nil,nil,mobs_icon, t_itemid = 153253, t_type = "toy", t_info = "Requires Vishax's Portal Generator"}
+ 
+ if IsQuestFlaggedCompleted(49007) then
+  q[48967] = {ant,"Squadron Commander Vishax",nil,nil,{1171, 84.6, 81  , nil, 1171,77.46, 74.61,cave_entrance},nil,nil,mobs_icon, t_itemid = 153253, t_type = "toy", t_info = "Use the portal"}
+ else
+  q[48967] = {ant,"Squadron Commander Vishax",nil,nil,{1171, 84.6, 81  , nil, 1171,77.46, 74.61,cave_entrance},nil,nil,mobs_icon, t_itemid = 153253, t_type = "toy", t_info = "Requires Vishax's Portal Generator, loot mobs in the area"}
+ end
+ 
  q[48824] = {ant,"Void Warden Valsuran"     ,nil,nil,{1171, 55.39, 21.64},nil,nil,mobs_icon}
  q[48816] = {ant,"Commander Texlaz"         ,nil,nil,{1171, 82.66, 65.63, nil, 1171, 80.5, 62.69, cave_entrance},nil,nil,mobs_icon}
  q[48971] = {ant,"Rezira the Seer"          ,nil,nil,{1171, 64.92, 82.88},nil,nil,mobs_icon, t_itemid = 153293, t_type = "toy", t_info = "Portal to get here can be opened using Observer's Locus Resonator"}
@@ -240,63 +245,31 @@ local function GenerateData()
  
  -- Mac'aree
  q[48705] = {mac,"Venomtail Skyfin"        ,nil,nil,{1170, 33.65, 48.10},nil,nil,mobs_icon, t_itemid = 152844, t_type = "mount"}
- q[48697] = {mac,"Kaara The pale"          ,nil,nil,{1170, 38.64, 55.58},nil,nil,mobs_icon}
+ q[48697] = {mac,"Kaara The pale"          ,nil,nil,{1170, 38.64, 55.58},nil,nil,mobs_icon, t_itemid = 153190, t_type = "pet"}
  q[48707] = {mac,"Captain Faruq"           ,nil,nil,{1170, 27.16, 30   },nil,nil,mobs_icon}
- q[48721] = {mac,"Skreeg the Devourer"     ,nil,nil,{1170, 49.81,  9.83},nil,nil,mobs_icon, t_itemid = 152904, t_type = "mount"} --
- q[48714] = {mac,"Overseer y'Beda"         ,nil,nil,{1170, 58.73, 37.60},nil,nil,mobs_icon}
+ q[48721] = {mac,"Skreeg the Devourer"     ,nil,nil,{1170, 49.79, 9.58 },nil,nil,mobs_icon, t_itemid = 152904, t_type = "mount"} --
+ q[48714] = {mac,"Overseer Y'Beda"         ,nil,nil,{1170, 58.73, 37.60},nil,nil,mobs_icon}
  q[48935] = {mac,"Slithon the last"        ,nil,nil,{1170, 48.79, 52.35},nil,nil,mobs_icon}
- q[48713] = {mac,"Jed'hin Champion Vorsuk" ,nil,nil,{1170, 48.11, 40.60},nil,nil,mobs_icon}
- q[48704] = {mac,"Vigilant Kuro"           ,nil,nil,{1170, 63.89, 64.42},nil,nil,mobs_icon} --
+ q[48713] = {mac,"Jed'hin Champion Vorsuk" ,nil,nil,{1170, 48.1 , 40.63},nil,nil,mobs_icon} -- 48741?
+ q[48704] = {mac,"Vigilant Kuro"           ,nil,nil,{1170, 63.89, 64.42},nil,nil,mobs_icon, t_itemid = 153183, t_type = "toy"} --
  q[48719] = {mac,"Zul'tan the Numerous"    ,nil,nil,{1170, 64.03, 29.52},nil,nil,mobs_icon}
  q[48700] = {mac,"Baruut the Bloodthirsty" ,nil,nil,{1170, 43.81, 60.63},nil,nil,mobs_icon, t_itemid = 153193, t_type = "toy"}
  q[48711] = {mac,"Herald of Chaos"         ,nil,nil,{1170, 35.95, 58.97},nil,nil,mobs_icon, t_info = "Second floor"} --
  q[48703] = {mac,"Vigilant Thanos"         ,nil,nil,{1170, 36.73, 23.88},nil,nil,mobs_icon}
  q[48718] = {mac,"Instructor Tarahna"      ,nil,nil,{1170, 61.89, 50.37},nil,nil,mobs_icon, t_itemid = 153179, t_type = "toy", t_info = "Drops three different colored versions of the toy"} --
- q[48695] = {mac,"Wrangler Kravos"         ,nil,nil,{1170, 55.58, 60.25},nil,nil,mobs_icon, t_itemid = 152814, t_type = "mount"}
+ q[48695] = {mac,"Wrangler Kravos"         ,nil,nil,{1170, 55.6 , 60.15},nil,nil,mobs_icon, t_itemid = 152814, t_type = "mount"}
  q[48709] = {mac,"Ataxon"                  ,nil,nil,{1170, 30.13, 40.21},nil,nil,mobs_icon, t_itemid = 153056, t_type = "pet"}
- q[48706] = {mac,"Turek the Lucid"         ,nil,nil,{1170, 39.15, 66.72},nil,nil,mobs_icon} --
- q[48717] = {mac,"Overseer Y'Morna"        ,nil,nil,{1170, 60.92, 29.83},nil,nil,mobs_icon} --
+ q[48706] = {mac,"Turek the Lucid"         ,nil,nil,{1170, 39.19, 66.79},nil,nil,mobs_icon, t_info = "In the house"} --
+ q[48717] = {mac,"Overseer Y'Morna"        ,nil,nil,{1170, 60.86, 29.76},nil,nil,mobs_icon} --
  q[48702] = {mac,"Feasel the Muffin Thief" ,nil,nil,{1170, 41.15, 11.49},nil,nil,mobs_icon}
- 
- --48870
- -- call of the devourer itemID 152786
- 
+ q[48693] = {mac,"Soultwisted Monstrosity" ,nil,nil,{1170, 52.92, 66.67},nil,nil,mobs_icon}
+ q[48716] = {mac,"Overseer Y'Sorna"        ,nil,nil,{1170, 57.03, 29.19},nil,nil,mobs_icon}
+ q[48712] = {mac,"Sabuul"                  ,nil,nil,{1170, 44.16, 48.96},nil,nil,mobs_icon, t_itemid = 153190, t_type = "pet"}
+ q[48720] = {mac,"Commander Xethgar"       ,nil,nil,{1170, 56.84, 14.63},nil,nil,mobs_icon}
+ q[48692] = {mac,"Shadowcaster Voruun"     ,nil,nil,{1170, 44.6 , 71.6 },nil,nil,mobs_icon}
+ q[48708] = {mac,"Umbraliss"               ,nil,nil,{1170, 35.2 , 37.2 },nil,nil,mobs_icon}
+ q[48710] = {mac,"Sorolis the Ill-Fated"   ,nil,nil,{1170, 70.4 , 46.7 },nil,nil,mobs_icon}
 
- --q["rarestmp"..1] = {kro,"Soultender Videx" ,nil,nil,{1135, 0, 0},nil,nil,mobs_icon}
- 
- --q["rarestmp"..5] = {mac,"Wrangler Kravos" ,nil,nil,{1170, 55.7, 59.9},nil,nil,mobs_icon, t_itemid = 152814, t_type = "all"}
- --q["rarestmp"..6] = {mac,"Baruut the Bloodthirsty" ,nil,nil,{1170, 43.8, 60.2},nil,nil,mobs_icon, t_itemid = 153193, t_type = "all"}
- --q["rarestmp"..7] = {mac,"Vigilant Thanos" ,nil,nil,{1170, 36.3, 23.6},nil,nil,mobs_icon}
- --q["rarestmp"..8] = {mac,"Venomtail Skyfin" ,nil,nil,{1170, 33.7, 47.5},nil,nil,mobs_icon}
--- q["rarestmp"..11] = {mac,"Captain Faruq" ,nil,nil,{1170, 27.2, 29.8},nil,nil,mobs_icon}
- --q["rarestmp"..12] = {mac,"Ataxon" ,nil,nil,{1170, 30.3, 40.4},nil,nil,mobs_icon, t_itemid = 153056, t_type = "all"}
- --q["rarestmp"..13] = {mac,"Herald of Chaos" ,nil,nil,{1170, 35.5, 58.7},nil,nil,mobs_icon, t_info = "Second floor"}
- --q["rarestmp"..14] = {mac,"Jed'hin Champion Vorusk" ,nil,nil,{1170, 48.5, 40.9},nil,nil,mobs_icon}
- --q["rarestmp"..16] = {mac,"Instructor Tarahna" ,nil,nil,{1170, 61.4, 50.2},nil,nil,mobs_icon, t_itemid = 153179, t_type = "all", t_info = "Drops three different color versions of the toy"}
- q["rarestmp"..1] = {mac,"Commander Xethgar" ,nil,nil,{1170, 56.8, 14.5},nil,nil,mobs_icon}
- --q["rarestmp"..18] = {mac,"Slithon the Last" ,nil,nil,{1170, 49.5, 52.8},nil,nil,mobs_icon}
- q["rarestmp"..2] = {mac,"Shadowcaster Voruun" ,nil,nil,{1170, 44.6, 71.6},nil,nil,mobs_icon}
- q["rarestmp"..3] = {mac,"Soultwisted Monstrosity" ,nil,nil,{1170, 53.09, 66.72},nil,nil,mobs_icon}
- --q["rarestmp"..30] = {mac,"Kaara the Pale" ,nil,nil,{1170, 38.7, 55.8},nil,nil,mobs_icon}
- --q["rarestmp"..32] = {mac,"Vigilant Kuro" ,nil,nil,{1170, 63.8, 64.6},nil,nil,mobs_icon}
- q["rarestmp"..4] = {mac,"Umbraliss" ,nil,nil,{1170, 35.2, 37.2},nil,nil,mobs_icon}
- q["rarestmp"..5] = {mac,"Sorolis the Ill-Fated" ,nil,nil,{1170, 70.4, 46.7},nil,nil,mobs_icon}
- q["rarestmp"..6] = {mac,"Sabuul" ,nil,nil,{1170, 44.2, 49.8},nil,nil,mobs_icon}
- --q["rarestmp"..37] = {mac,"Overseer Y'Beda" ,nil,nil,{1170, 59.2, 37.7},nil,nil,mobs_icon}
- q["rarestmp"..7] = {mac,"Overseer Y'Sorna" ,nil,nil,{1170, 58  , 30.9},nil,nil,mobs_icon}
- --q["rarestmp"..39] = {mac,"Zul'tan the Numerous" ,nil,nil,{1170, 64, 29.5},nil,nil,mobs_icon}
- --q["rarestmp"..40] = {mac,"Skreeg the Devourer" ,nil,nil,{1170, 49.7, 9.9},nil,nil,mobs_icon}
-
- -- tmp
- for i = 1,7 do
-  local questID = "rarestmp"..i
-  list.Order[9][1][i + 1] = questID
-  if q[questID] then
-   q[questID][8] = missing_icon
-   q[questID].t_info = (q[questID].t_info and (q[questID].t_info.."@") or "").."Tracking ID missing (it doesn't disappear when killed)@To be fixed in future updates"
-  end
- end
-  
            -------- Broken Shore ---------
  q[47133] = {bro,DailyGlobalCheck.LocalizeSection(q, 47133, 2, "Rare Mob Daily Bonus", "quest", 47133)}
  
