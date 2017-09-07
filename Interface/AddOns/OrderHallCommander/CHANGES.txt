@@ -1,18 +1,16 @@
-tag a4c6a6947a12686cac1d5535165920eb5a639862 1.4.2.1
+tag c6b8aae8ee336de97c8d107e4077df427220ab75 1.4.4
 Author:	Alar of Runetotem <alar@aspide.it>
-Date:	Wed Aug 30 20:14:31 2017 +0200
+Date:	Tue Sep 5 16:28:21 2017 +0200
 
-Repackaged with updated libraries
+Feature: updated equipment list
+Fix: "Not enough champions" warning now works. Give it a trt again
+Fix: #67 UI messed up on opening it after closing it with followers tab
+last opened
+Fix: MAKEITVERYQUICK switch testing had a typo
 
-commit 801c8e2218c559db47a6c12aaf1941fcf5620705
+commit 0a1222ca65037266e480c8dc9adab3174e2c4788
 Author: Alar of Runetotem <alar@aspide.it>
-Date:   Wed Aug 30 10:53:52 2017 +0200
+Date:   Tue Sep 5 16:26:08 2017 +0200
 
-    Notes
-
-commit 38fd2d611c22dcd267da7b15b4116ed4542ace0b
-Author: Alar of Runetotem <alar@aspide.it>
-Date:   Wed Aug 30 10:52:32 2017 +0200
-
-    Fixed PlaySound
+    Fix: MAKEITVERYQUICK switch testing had a typo
 
