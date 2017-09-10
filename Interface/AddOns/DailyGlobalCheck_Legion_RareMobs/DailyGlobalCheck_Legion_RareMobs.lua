@@ -255,7 +255,7 @@ local function GenerateData()
  q[48719] = {mac,"Zul'tan the Numerous"    ,nil,nil,{1170, 64.03, 29.52},nil,nil,mobs_icon}
  q[48700] = {mac,"Baruut the Bloodthirsty" ,nil,nil,{1170, 43.81, 60.63},nil,nil,mobs_icon, t_itemid = 153193, t_type = "toy"}
  q[48711] = {mac,"Herald of Chaos"         ,nil,nil,{1170, 35.95, 58.97},nil,nil,mobs_icon, t_info = "Second floor"} --
- q[48703] = {mac,"Vigilant Thanos"         ,nil,nil,{1170, 36.73, 23.88},nil,nil,mobs_icon}
+ q[48703] = {mac,"Vigilant Thanos"         ,nil,nil,{1170, 36.73, 23.88},nil,nil,mobs_icon, t_itemid = 153183, t_type = "toy"} --
  q[48718] = {mac,"Instructor Tarahna"      ,nil,nil,{1170, 61.89, 50.37},nil,nil,mobs_icon, t_itemid = 153179, t_type = "toy", t_info = "Drops three different colored versions of the toy"} --
  q[48695] = {mac,"Wrangler Kravos"         ,nil,nil,{1170, 55.6 , 60.15},nil,nil,mobs_icon, t_itemid = 152814, t_type = "mount"}
  q[48709] = {mac,"Ataxon"                  ,nil,nil,{1170, 30.13, 40.21},nil,nil,mobs_icon, t_itemid = 153056, t_type = "pet"}
