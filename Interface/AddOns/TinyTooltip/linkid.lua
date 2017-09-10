@@ -67,3 +67,8 @@ hooksecurefunc(GameTooltip, "SetArtifactPowerByID", function(self, powerID)
     ShowId(self, "Power", powerID)
     ShowId(self, "Spell", C_ArtifactUI.GetPowerInfo(powerID).spellID, 1)
 end)
+
+-- Quest
+hooksecurefunc("QuestMapLogTitleButton_OnEnter", function(self)
+    if (self.questID) then ShowId(GameTooltip, "Quest", self.questID) end
+end)
