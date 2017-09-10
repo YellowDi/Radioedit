@@ -151,14 +151,17 @@ function LookingForGroup_Hook:LFGListInviteDialog_Show(entry,resultID)
 	end
 
 	StaticPopupSpecial_Show(entry);
-
-	PlaySound("ReadyCheck");
+	if not LookingForGroup.db.profile.mute then
+		PlaySound(SOUNDKIT.READY_CHECK);
+	end
 	FlashClientIcon();
 end
 
 function LookingForGroup_Hook:LFGListApplicationDialog_SignUpButton_OnClick(obj)
 	local dialog = obj:GetParent();
-	PlaySound("igMainMenuOptionCheckBoxOn");
+	if not LookingForGroup.db.profile.mute then
+		PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON);
+	end
 	local desc = dialog.Description.EditBox:GetText()
 	local results = dialog.resultID
 	local results_type = type(results)

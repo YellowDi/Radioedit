@@ -1,8 +1,8 @@
-## Interface: 70200
+## Interface: 70300
 ## Author: cqwrteur
 ## Title: LookingForGroup Alterac Valley
 ## Dependencies: LookingForGroup
-## Version: 393
+## Version: 398
 ## SavedVariablesPerCharacter: LookingForGroup_AVCharacterDB
 ## LoadOnDemand: 1
 

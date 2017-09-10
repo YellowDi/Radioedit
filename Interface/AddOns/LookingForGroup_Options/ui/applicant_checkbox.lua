@@ -136,9 +136,9 @@ AceGUI:RegisterWidgetType("LookingForGroup_applicant_checkbox", function()
 			if not obj.disabled then
 --				obj:ToggleChecked()
 				if obj.checked then
-					PlaySound("igMainMenuOptionCheckBoxOn")
+					PlaySound(856)
 				else -- for both nil and false (tristate)
-					PlaySound("igMainMenuOptionCheckBoxOff")
+					PlaySound(857)
 				end
 				
 				obj:Fire("OnValueChanged", obj.checked)

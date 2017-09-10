@@ -534,6 +534,21 @@ LookingForGroup_Options:push("options",{
 						end
 					end,
 				},
+				mute =
+				{
+					name = MUTE,
+					type = "toggle",
+					get = function(info)
+						return LookingForGroup.db.profile.mute
+					end,
+					set = function(info,val)
+						if val then
+							LookingForGroup.db.profile.mute = true
+						else
+							LookingForGroup.db.profile.mute = nil
+						end
+					end,
+				},
 			}
 		},
 	}

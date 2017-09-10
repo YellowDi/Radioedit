@@ -296,9 +296,9 @@ AceGUI:RegisterWidgetType("LookingForGroup_search_result_checkbox", function()
 		if button == "LeftButton" then
 			if not obj.disabled then
 				if obj.checked then
-					PlaySound("igMainMenuOptionCheckBoxOn")
+					PlaySound(856)
 				else -- for both nil and false (tristate)
-					PlaySound("igMainMenuOptionCheckBoxOff")
+					PlaySound(857)
 				end
 				
 				obj:Fire("OnValueChanged", obj.checked)
