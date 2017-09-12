@@ -7,15 +7,17 @@ local Z = DailyGlobalCheck.Z
 
 local questsdata = {}
 local questIDs_to_achi = {}
+-- achievement criterias are being shuffled with every patch lately, not safe anymore
 --local questIDs_to_achi = addonTable.questIDs_to_achi
 
-local mobs_icon = "Interface\\WorldMap\\Skull_64Red"
+local mobs_icon = 311238 -- "Interface\\WorldMap\\Skull_64Red"
 
 local list = {
  ["Title"] = "Legion Rare Mobs",
  ["Icon"]  = "Interface\\Icons\\Ability_Hunter_Camouflage",
  ["Options"] = {{"Radiobutton","Show every Argus rare",true},
                 {"Radiobutton","Only Argus rares with toy, pet or mount",false}},
+-- ["MapIcons"] = {311231},
  ["Version"] = 1004,
  ["Order"] = {
 			    -- Azsuna
@@ -60,7 +62,7 @@ local list = {
 local argus_order_cache = {{Z[1135],48628,48666,48562,48564,48664,48665,48627,48629,48565,48667,48561,48563},
                            {Z[1171],48821,48809,48970,48865,48815,49241,48817,48818,49183,48810,48811,48812,48814,48820,48813,48966,49240,48968,48967,48824,48816,48971,48822},
                            {Z[1170],48705,48697,48707,48721,48714,48935,48713,48704,48719,48700,48711,48703,48718,48695,48709,48706,48717,48702,48693,48716,48712,48720,48692,48708,48710},}
-                          
+
 local function onOptionChanged(i)
  local svar = DailyGlobalCheck_PluginData["Legion Rare Mobs"]
  local o = list.Order
@@ -183,9 +185,9 @@ local function GenerateData()
  local ant = Z[1171]
  local mac = Z[1170]
 
- local arrowup = "Interface\\Minimap\\Vehicle-SilvershardMines-Arrow"
- local missing_icon = "interface\\worldmap\\SkullGear_64Grey"
- local bone_icon = "interface\\icons\\INV_Misc_Bone_01"
+ local arrowup = 651945 -- "Interface\\Minimap\\Vehicle-SilvershardMines-Arrow"
+ local missing_icon = 311234 -- "interface\\worldmap\\SkullGear_64Grey"
+ local bone_icon = 133718 -- "interface\\icons\\INV_Misc_Bone_01"
  
  local cave_entrance = DailyGlobalCheck.template_cave_entrance
  
@@ -206,7 +208,7 @@ local function GenerateData()
  
  -- Antoran Wastes 
  q[48821] = {ant,"Houndmaster Kerrax"       ,nil,nil,{1171, 62.9 , 24.99},nil,nil,mobs_icon, t_itemid = 152790, t_type = "mount", t_info = "In the cave"}
- q[48809] = {ant,"Puscilla"                 ,nil,nil,{1171, 63.85, 21.08, nil, 1171, 65.57, 27.48, cave_entrance},nil,nil,mobs_icon, t_info = "Entrance on the bridge"}
+ q[48809] = {ant,"Puscilla"                 ,nil,nil,{1171, 63.85, 21.08, nil, 1171, 65.57, 27.48, cave_entrance},nil,nil,mobs_icon, t_itemid = 152903, t_type = "mount", t_info = "Entrance on the bridge"}
  q[48970] = {ant,"Mother Rosula"            ,nil,nil,{1171, 66.71, 17.99, nil, 1171, 65.57, 27.48, cave_entrance},nil,nil,mobs_icon, t_itemid = 153252, t_type = "pet", t_info = "Entrance on the bridge@Collect 100 Imp meat and create a feast to summon her"}
  q[48865] = {ant,"Chief Alchemist Munculus" ,nil,nil,{1171, 61.44, 21.02},nil,nil,mobs_icon}
  q[48815] = {ant,"Inquisitor Vethroz"       ,nil,nil,{1171, 60.63, 48.38},nil,nil,mobs_icon}
@@ -214,7 +216,7 @@ local function GenerateData()
  q[48817] = {ant,"Admiral Rel'var"          ,nil,nil,{1171, 73.58, 72.09},nil,nil,mobs_icon}
  q[48818] = {ant,"All-Seer Xanarian"        ,nil,nil,{1171, 74.98, 57.07},nil,nil,mobs_icon, t_info = "In the cave"}
  q[49183] = {ant,"Blistermaw"               ,nil,nil,{1171, 61.78, 36.96},nil,nil,mobs_icon, t_itemid = 152905, t_type = "mount"}
- q[48810] = {ant,"Vrax'thul"                ,nil,nil,{1171, 53.03, 36.08},nil,nil,mobs_icon}
+ q[48810] = {ant,"Vrax'thul"                ,nil,nil,{1171, 53.03, 36.08},nil,nil,mobs_icon, t_itemid = 152903, t_type = "mount"}
  q[48811] = {ant,"Ven'orn"                  ,nil,nil,{1171, 66.38, 54.24},nil,nil,mobs_icon, t_info = "In the cave"}
  q[48812] = {ant,"Varga"                    ,nil,nil,{1171, 64.29, 48.09},nil,nil,mobs_icon, t_itemid = 153190, t_type = "pet", t_info = "In the cave, at river level"}
  q[48814] = {ant,"Wrath-Lord Yarez"         ,nil,nil,{1171, 61.33, 65.15},nil,nil,mobs_icon, t_itemid = 153126, t_type = "toy"}
@@ -245,7 +247,8 @@ local function GenerateData()
  
  -- Mac'aree
  q[48705] = {mac,"Venomtail Skyfin"        ,nil,nil,{1170, 33.65, 48.10},nil,nil,mobs_icon, t_itemid = 152844, t_type = "mount"}
- q[48697] = {mac,"Kaara The pale"          ,nil,nil,{1170, 38.64, 55.58},nil,nil,mobs_icon, t_itemid = 153190, t_type = "pet"}
+ --q[48697] = {mac,"Kaara The pale"          ,nil,nil,{1170, 38.64, 55.58},nil,nil,mobs_icon, t_itemid = 153190, t_type = "pet"}
+ q[48697] = {mac,"Kaara The pale"          ,nil,nil,{1170, 38.64, 55.58},nil,nil,mobs_icon}
  q[48707] = {mac,"Captain Faruq"           ,nil,nil,{1170, 27.16, 30   },nil,nil,mobs_icon}
  q[48721] = {mac,"Skreeg the Devourer"     ,nil,nil,{1170, 49.79, 9.58 },nil,nil,mobs_icon, t_itemid = 152904, t_type = "mount"} --
  q[48714] = {mac,"Overseer Y'Beda"         ,nil,nil,{1170, 58.73, 37.60},nil,nil,mobs_icon}

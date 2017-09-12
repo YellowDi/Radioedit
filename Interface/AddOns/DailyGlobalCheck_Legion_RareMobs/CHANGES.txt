@@ -1,10 +1,11 @@
-lightweight tag b363febc7d48a8354a646c094282293a14651b69 v1.1.1a
+lightweight tag 0243d1fa4850c99fb570ba1fce411f482b639e30 v1.1.2
 Author:	Saregon <n_rhygar@yahoo.it>
-Date:	Fri Sep 8 23:46:11 2017 +0200
+Date:	Tue Sep 12 00:04:18 2017 +0200
 
-commit b363febc7d48a8354a646c094282293a14651b69
+commit 0243d1fa4850c99fb570ba1fce411f482b639e30
 Author: Saregon <n_rhygar@yahoo.it>
-Date:   Fri Sep 8 23:46:11 2017 +0200
+Date:   Tue Sep 12 00:04:18 2017 +0200
 
-    added toy information to Vigilant Thanos
+    add Biletooth Gnasher mount to Puscilla and Vrax'thul
+    rem Egg from Kaara the pale
 
