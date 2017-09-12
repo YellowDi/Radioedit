@@ -1253,3 +1253,6 @@ Change Log:
 
 4.43.1
 * Added Legion spells for Argus
+
+4.43.2
+* Added Legion spells for Argus

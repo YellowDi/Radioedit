@@ -1667,3 +1667,52 @@ GTFO.SpellID["251701"] = {
   --desc = "Fel Lava";
   sound = 1;
 };
+
+GTFO.SpellID["243842"] = {
+  --desc = "Laser Field";
+  sound = 1;
+};
+
+GTFO.SpellID["252122"] = {
+  --desc = "Maddening Spores";
+  sound = 1;
+};
+
+GTFO.SpellID["252119"] = {
+  --desc = "Spore Pool";
+  sound = 1;
+};
+
+GTFO.SpellID["239281"] = {
+  --desc = "Viscous Webs";
+  sound = 2;
+};
+
+GTFO.SpellID["250686"] = {
+  --desc = "Crush (Deep Terror)";
+  sound = 3;
+};
+
+GTFO.SpellID["251564"] = {
+  --desc = "Crippling Cold";
+  applicationOnly = true;
+	minimumStacks = 14;
+  sound = 1;
+};
+
+GTFO.SpellID["249398"] = {
+  --desc = "Rain of Fire (Vel'thrak the Punisher)";
+  sound = 1;
+};
+
+GTFO.SpellID["242973"] = {
+  --desc = "Fel Infused";
+  sound = 1;
+  damageMinimum = 1;
+};
+
+GTFO.SpellID["251682"] = {
+  --desc = "Blizzard";
+  tankSound = 2;
+  sound = 1;
+};
