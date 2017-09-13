@@ -95,6 +95,9 @@ local compatibility = {
 		end)
 	end,
 ----------------------------------
+	['DialogKey'] = function(self)
+		L.Set('enablenumbers', true)
+	end,
 }
 
 ----------------------------------
@@ -124,6 +127,10 @@ frame.ADDON_LOADED = function(self, name)
 			L.cfg.disableflyin = nil
 			L.cfg.anidivisor = 1
 		end
+
+		-- Hide portrait 
+		talkbox.PortraitFrame:SetShown(not L('disableportrait'))
+		talkbox.MainFrame.Model.PortraitBG:SetShown(not L('disableportrait'))
 
 		-- Set frame ignore for hideUI features on load.
 		L.ToggleIgnoreFrame(Minimap, not L('hideminimap'))
@@ -238,9 +245,9 @@ Mixin(text, L.TextMixin) -- see Text.lua
 -- Set array of fonts so the fontstring can be as big as possible without truncating the text
 text:SetFontObjectsToTry(SystemFont_Shadow_Large, SystemFont_Shadow_Med2, SystemFont_Shadow_Med1)
 -- Run a 'talk' animation on the portrait model whenever a new text is set
-hooksecurefunc(text, 'SetNext', function(self, ...)
-	local text = ...
+hooksecurefunc(text, 'SetNext', function(self, text)
 	local counter = talkbox.TextFrame.SpeechProgress
+	talkbox.TextFrame.FadeIn:Stop()
 	talkbox.TextFrame.FadeIn:Play()
 	if text then
 		model:PrepareAnimation(model:GetUnit(), text)
@@ -345,7 +352,7 @@ end
 frame.FadeIns = {
 	talkbox.MainFrame.InAnim,
 	talkbox.NameFrame.FadeIn,
-	talkbox.TextFrame.FadeIn,
+--	talkbox.TextFrame.FadeIn,
 	talkbox.PortraitFrame.FadeIn,
 }
 
@@ -432,6 +439,7 @@ end
 -- Hook the regular talking head,
 -- so that the offset is increased
 -- when they are shown at the same time.
+-- TODO: Remove this shit.
 ----------------------------------
 hooksecurefunc('TalkingHead_LoadUI', function()
 	local thf = TalkingHeadFrame

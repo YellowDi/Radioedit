@@ -1,11 +1,11 @@
 local Button, _, L = {}, ...
 L.ButtonMixin = Button
 
-function Button:OnClick(button, down)
+function Button:OnClick()
 	local func = self[self.type]
 	if func then
 		func(self)
-		PlaySound(PlaySoundKitID and 'igQuestListSelect' or SOUNDKIT.IG_QUEST_LIST_SELECT)
+		PlaySound(SOUNDKIT.IG_QUEST_LIST_SELECT)
 	end
 end
 

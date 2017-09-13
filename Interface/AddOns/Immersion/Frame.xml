@@ -48,6 +48,11 @@
 					end
 				end
 			</OnClick>
+			<OnDoubleClick>
+				if ( not IsModifiedClick() and self.container and self.container.chooseItems and self.type == "choice" ) then
+					GetQuestReward(self:GetID());
+				end
+			</OnDoubleClick>
 			<OnLeave>
 				GameTooltip:Hide();
 				ResetCursor();
@@ -755,6 +760,9 @@
 								<Alpha childKey="SpeechProgress" startDelay="0" duration="0.25" order="1" fromAlpha="1" toAlpha="0"/>
 							</AnimationGroup>
 						</Animations>
+						<Frames>
+							
+						</Frames>
 					</Frame>
 					<Frame parentKey="BackgroundFrame" setAllPoints="true" useParentLevel="true">
 						<Layers>
@@ -903,9 +911,86 @@
 								<Alpha childKey="Model.PortraitBg" duration="0.75" order="1" fromAlpha="0" toAlpha="1"/>
 								<Alpha childKey="Indicator" duration="0.75" order="1" fromAlpha="0" toAlpha="1"/>
 							</AnimationGroup>
+							<AnimationGroup parentKey="SheenOnly" setToFinalAlpha="true">
+								<Alpha childKey="Sheen" startDelay="0" duration="0.5" order="1" fromAlpha="0" toAlpha="0.7"/>
+								<Scale childKey="Sheen" startDelay="0" duration="0.25" order="1" fromScaleX="0.25" fromScaleY="1" toScaleX="1" toScaleY="1">
+									<Origin point="LEFT">
+										<Offset x="0" y="0"/>
+									</Origin>
+								</Scale>
+								<Alpha childKey="Sheen" startDelay="0.5" duration="0.5" order="1" fromAlpha="0.7" toAlpha="0"/>
+								<Alpha childKey="TextSheen" startDelay="0.25" duration="0.5" order="1" fromAlpha="0" toAlpha="0.7"/>
+								<Scale childKey="TextSheen" startDelay="0.25" duration="0.25" order="1" fromScaleX="0.25" fromScaleY="1" toScaleX="1" toScaleY="1">
+									<Origin point="LEFT">
+										<Offset x="0" y="0"/>
+									</Origin>
+								</Scale>
+								<Alpha childKey="TextSheen" startDelay="0.75" duration="0.5" order="1" fromAlpha="0.7" toAlpha="0"/>
+							</AnimationGroup>
 						</Animations>
 					</Frame>
-					<StatusBar parentKey="StatusBar" hidden="true">
+					<StatusBar parentKey="ProgressionBar" hidden="true">
+						<Size x="530" y="4"/>
+						<Anchors>
+							<Anchor point="BOTTOM" x="0" y="4"/>
+						</Anchors>
+						<Layers>
+							<Layer level="ARTWORK">
+								<Texture file="Interface\Common\friendship-parts">  <!-- the bar itself -->
+									<Size x="20" y="15"/>
+									<Anchors>
+										<Anchor point="LEFT" x="-1" y="2"/>
+									</Anchors>
+									<TexCoords left="0.53515625" right="0.4" top="0.01562500" bottom="0.60937500"/>
+								</Texture>
+								<Texture file="Interface\Common\friendship-parts">  <!-- the bar itself -->
+									<Size x="20" y="15"/>
+									<Anchors>
+										<Anchor point="RIGHT" x="1" y="2"/>
+									</Anchors>
+									<TexCoords left="0.4" right="0.53515625" top="0.01562500" bottom="0.60937500"/>
+								</Texture>
+								<Texture file="Interface\Common\friendship-parts">  <!-- the bar itself -->
+									<Size x="0" y="15"/>
+									<Anchors>
+										<Anchor point="LEFT" x="19" y="2"/>
+										<Anchor point="RIGHT" x="-19" y="2"/>
+									</Anchors>
+									<TexCoords left="0.3" right="0.4" top="0.01562500" bottom="0.60937500"/>
+								</Texture>
+							</Layer>
+							<Layer level="BACKGROUND">
+								<Texture setAllPoints="true">  <!-- bar fill background -->
+									<Color r="0" g="0" b="0" a="0.5"/>
+								</Texture>
+							</Layer>
+						</Layers>
+						<Scripts>
+							<OnUpdate>
+								self.throttle = self.throttle + elapsed;
+								if self.throttle > 0.015 then
+									local value = self.Text:GetCurrentProgress();
+									local modifiedValue = value or 1
+									self:SetValue(modifiedValue);
+									self:SetAlpha(1 - (modifiedValue)^8);
+									self.throttle = 0
+									if (not value) then
+										self:Hide();
+									end
+								end
+							</OnUpdate>
+							<OnLoad>
+								self.throttle = 0
+								self.Text = self:GetParent().TextFrame.Text
+								self:SetStatusBarTexture(1, 1, 1, "BORDER", -1);
+								self:GetStatusBarTexture():SetGradient("VERTICAL", 8/255, 93/255, 72/255, 11/255, 136/255, 105/255);
+								self:SetStatusBarColor(1, 0.8, 0);
+								self:SetMinMaxValues(0, 1);
+								self:SetFrameLevel(self:GetFrameLevel() - 1)
+							</OnLoad>
+						</Scripts>
+					</StatusBar>
+					<StatusBar parentKey="ReputationBar" hidden="true">
 						<Size x="230" y="14"/>
 						<Anchors>
 							<Anchor point="TOPLEFT" x="32" y="0"/>

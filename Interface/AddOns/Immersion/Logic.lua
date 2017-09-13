@@ -201,7 +201,7 @@ function NPC:SelectBestOption()
 			button.Hilite:SetAlpha(1)
 			button:Click()
 			button:OnLeave()
-			PlaySound(PlaySoundKitID and 'igQuestListSelect' or SOUNDKIT.IG_QUEST_LIST_SELECT)
+			PlaySound(SOUNDKIT.IG_QUEST_LIST_SELECT)
 		end
 	end
 end
@@ -247,11 +247,15 @@ function NPC:UpdateTalkingHead(title, text, npcType, explicitUnit)
 	end
 	local talkBox = self.TalkBox
 	talkBox:SetExtraOffset(0)
-	talkBox.StatusBar:Show()
+	talkBox.ReputationBar:Show()
 	talkBox.MainFrame.Indicator:SetTexture('Interface\\GossipFrame\\' .. npcType .. 'Icon')
 	talkBox.MainFrame.Model:SetUnit(unit)
 	talkBox.NameFrame.Name:SetText(title)
-	talkBox.TextFrame.Text:SetText(text)
+	local textFrame = talkBox.TextFrame
+	textFrame.Text:SetText(text)
+	if textFrame.Text:IsSequence() and L('showprogressbar') and not L('disableprogression') then
+		talkBox.ProgressionBar:Show()
+	end
 end
 
 
@@ -295,7 +299,7 @@ function NPC:ShowItems()
 	local items, hasChoice, hasExtra = inspector.Items
 	local extras, choices = inspector.Extras, inspector.Choices
 	inspector:Show()
-	for id, item in pairs(items) do
+	for id, item in ipairs(items) do
 		local tooltip = inspector.tooltipFramePool:Acquire()
 		local owner = item.type == 'choice' and choices or extras
 		local columnID = ( id % 3 == 0 ) and 3 or ( id % 3 )
@@ -350,12 +354,12 @@ end
 function NPC:UpdateItems()
 	local items = self.Inspector.Items
 	wipe(items)
-	for _, item in pairs(self.TalkBox.Elements.Content.RewardsFrame.Buttons) do
+	for _, item in ipairs(self.TalkBox.Elements.Content.RewardsFrame.Buttons) do
 		if item:IsVisible() then
 			items[#items + 1] = item
 		end
 	end
-	for _, item in pairs(self.TalkBox.Elements.Progress.Buttons) do
+	for _, item in ipairs(self.TalkBox.Elements.Progress.Buttons) do
 		if item:IsVisible() then
 			items[#items + 1] = item
 		end
@@ -369,7 +373,7 @@ end
 ----------------------------------
 function NPC:PlayIntro(event, ignoreFrameFade)
 	local isShown = self:IsVisible()
-	local shouldAnimate = isShown and not L('disableglowani')
+	local shouldAnimate = not isShown and not L('disableglowani')
 	self:Show()
 	if IsOptionFrameOpen() then
 		self:ForceClose()
@@ -381,6 +385,9 @@ function NPC:PlayIntro(event, ignoreFrameFade)
 		local x, y = L('boxoffsetX'), L('boxoffsetY')
 		box:ClearAllPoints()
 		box:SetOffset(box.offsetX or x, box.offsetY or y)
+		if not shouldAnimate and not L('disableglowani') then
+			self.TalkBox.MainFrame.SheenOnly:Play()
+		end
 	end
 end
 
@@ -428,12 +435,25 @@ local inputs = {
 		CloseQuest()
 	end,
 	number = function(self, id)
-		local button = self.TitleButtons.Buttons[id]
-		if button then
-			button.Hilite:SetAlpha(1)
-			button:Click()
-			button:OnLeave()
-			PlaySound(PlaySoundKitID and 'igQuestListSelect' or SOUNDKIT.IG_QUEST_LIST_SELECT)
+		if self.hasItems then
+			local choiceIterator = 0
+			for _, item in ipairs(self.TalkBox.Elements.Content.RewardsFrame.Buttons) do
+				if item:IsVisible() and item.type == 'choice' then
+					choiceIterator = choiceIterator + 1
+					if choiceIterator == id then
+						item:Click()
+						return
+					end
+				end
+			end
+		else
+			local button = self.TitleButtons.Buttons[id]
+			if button then
+				button.Hilite:SetAlpha(1)
+				button:Click()
+				button:OnLeave()
+				PlaySound(SOUNDKIT.IG_QUEST_LIST_SELECT)
+			end
 		end
 	end,
 }

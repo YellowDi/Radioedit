@@ -1,5 +1,6 @@
 local _, L = ...
 local Timer = CreateFrame('Frame')
+local GetTime = GetTime
 
 -- Borrowed fixes from Storyline :)
 local LINE_FEED_CODE = string.char(10)
@@ -112,21 +113,29 @@ function Text:GetProgressPercent()
 	return 1
 end
 
+function Text:GetCurrentProgress()
+	local delayCounter = self.delays and self.delays[1]
+	local fullDelay = self.currentDelay
+	if delayCounter and fullDelay then
+		return (1 - delayCounter / fullDelay)
+	end
+end
+
 function Text:GetNumTexts() return self.numTexts or 0 end
 
 function Text:OnFinished()
 	self.strings = nil
 	self.delays = nil
-	self.timeToFinish = nil
-	self.timeStarted = nil
+--	self.timeToFinish = nil
+--	self.timeStarted = nil
 end
 
 function Text:ForceNext()
 	if self.delays and self.strings then
-		tremove(self.delays, 1)
+		self.timeToFinish = self.timeToFinish - tremove(self.delays, 1)
 		tremove(self.strings, 1)
 		if self.strings[1] then
-			self:SetNext(self.strings[1])
+			self:SetNext(self.strings[1], self.delays[1])
 		else
 			self:StopProgression()
 			self:RepeatTexts()
@@ -148,7 +157,7 @@ function Text:StopTexts()
 	self:SetNext()
 end
 
-function Text:SetNext(text)
+function Text:SetNext(text, currentDelay)
 	if not self:GetFont() then
 		if not self.fontObjectsToTry then
 			error('No fonts applied to TextMixin, call SetFontObjectsToTry first')
@@ -157,6 +166,7 @@ function Text:SetNext(text)
 	end
 
 	getmetatable(self).__index.SetText(self, text)
+	self:SetCurrentDelay(currentDelay)
 	self:ApplyFontObjects()
 end
 
@@ -178,6 +188,10 @@ function Text:ApplyFontObjects()
 			break
 		end
 	end
+end
+
+function Text:SetCurrentDelay(delay)
+	self.currentDelay = delay or 0
 end
 
 function Text:SetFormattedText(format, ...)
@@ -224,7 +238,7 @@ function Timer:OnUpdate(elapsed)
 		if 	( text.strings and text.delays ) and
 		 	( next(text.strings) and next(text.delays) ) then
 			if not text:GetText() then
-				text:SetNext(text.strings[1])
+				text:SetNext(text.strings[1], text.delays[1])
 			end
 			-- deduct elapsed time since update from current delay
 			text.delays[1] = text.delays[1] - elapsed
@@ -234,7 +248,7 @@ function Timer:OnUpdate(elapsed)
 				tremove(text.strings, 1)
 				-- check if there's another line waiting
 				if text.strings[1] then
-					text:SetNext(text.strings[1])
+					text:SetNext(text.strings[1], text.delays[1])
 				else
 					self:OnTextFinished(text)
 				end

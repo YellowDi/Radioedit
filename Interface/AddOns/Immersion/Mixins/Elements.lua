@@ -248,7 +248,7 @@ end
 ----------------------------------
 function Elements:ShowRewards()
 	local elements = self
-	local self = self.Content.RewardsFrame
+	local self = self.Content.RewardsFrame -- more convenient this way
 	local rewardButtons = self.Buttons
 	local 	numQuestRewards, numQuestChoices, numQuestCurrencies,
 			money,
@@ -673,7 +673,7 @@ function Elements:AcceptQuest()
 			AcceptQuest()
 		end
 	end
-	PlaySound(PlaySoundKitID and 'igQuestListOpen' or SOUNDKIT.IG_QUEST_LIST_OPEN)
+	PlaySound(SOUNDKIT.IG_QUEST_LIST_OPEN)
 end
 
 function Elements:ShowProgress(material)
