@@ -325,10 +325,10 @@ saframe:SetScript("OnDragStop", function(self)
         SetVariable(self.kx, floor(right - GetScreenWidth())+4)
         SetVariable(self.ky, floor(top-GetScreenHeight()))
     elseif (p == "TOP") then
-        SetVariable(self.kx, floor(left-GetScreenWidth()/2)+50)
+        SetVariable(self.kx, floor(left-GetScreenWidth()/2))
         SetVariable(self.ky, floor(top-GetScreenHeight()))
     elseif (p == "BOTTOM") then
-        SetVariable(self.kx, floor(left-GetScreenWidth()/2)+50)
+        SetVariable(self.kx, floor(left-GetScreenWidth()/2))
         SetVariable(self.ky, floor(bottom)-3)
     end
 end)
