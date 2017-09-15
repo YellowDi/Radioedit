@@ -1963,6 +1963,17 @@ GTFO.SpellID["233021"] = {
   sound = 3;
 };
 
+GTFO.SpellID["238037"] = {
+  --desc = "Light Echoes (Maiden of Vigiliance)";
+  sound = 3;
+};
+
+GTFO.SpellID["238420"] = {
+  --desc = "Fel Echoes (Maiden of Vigiliance)";
+  sound = 3;
+};
+
+
 
 --- *********
 --- * Argus *
@@ -2009,6 +2020,16 @@ GTFO.SpellID["249407"] = {
   sound = 3;
 };
 
+GTFO.SpellID["249408"] = {
+  --desc = "Blast Waves (Vel'thrak the Punisher)";
+  sound = 3;
+};
+
+GTFO.SpellID["248651"] = {
+  --desc = "Fragment of Argus (Dread Knight Zak'gal)";
+  sound = 3;
+};
+
 GTFO.SpellID["248652"] = {
   --desc = "Flames of Argus (Fragment of Argus)";
   sound = 3;
@@ -2019,3 +2040,55 @@ GTFO.SpellID["248665"] = {
   sound = 3;
 };
 
+GTFO.SpellID["252093"] = {
+  --desc = "Sacred Vines";
+  applicationOnly = true;
+  sound = 3;
+};
+
+GTFO.SpellID["218969"] = {
+  --desc = "Fel Meteor (Invasive Gazer)";
+  sound = 3;
+};
+
+GTFO.SpellID["240364"] = {
+  --desc = "Molten Fel";
+  sound = 3;
+};
+
+GTFO.SpellID["252575"] = {
+  --desc = "Fiery Release (Bursting Elemental)";
+  sound = 3;
+};
+
+--- ***************************
+--- * Seat of the Triumvirate *
+--- ***************************
+
+GTFO.SpellID["248130"] = {
+  --desc = "Darkened Ramnant (Rift Warden)";
+  sound = 3;
+};
+
+GTFO.SpellID["246026"] = {
+  --desc = "Void Trap (Saprish)";
+  applicationOnly = true;
+  sound = 3;
+};
+
+GTFO.SpellID["250188"] = {
+  --desc = "Void Fragment";
+  sound = 3;
+};
+
+GTFO.SpellID["248067"] = {
+  --desc = "Grand Swing (Umbral War-Adept)";
+  sound = 3;
+  tankSound = 0;
+};
+
+GTFO.SpellID["246900"] = {
+  --desc = "Dark Outbreak (Void Discharge)";
+  sound = 3;
+  applicationOnly = true;
+};

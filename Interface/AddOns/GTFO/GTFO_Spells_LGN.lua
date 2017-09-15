@@ -1522,7 +1522,7 @@ GTFO.SpellID["236241"] = {
 GTFO.SpellID["236464"] = {
   --desc = "Soulbind (Engine of Souls)";
   sound = 4;
-  test = true;
+  negatingDebuffSpellID = 236459; -- Soulbind
 };
 
 GTFO.SpellID["235989"] = {
@@ -1648,6 +1648,27 @@ GTFO.SpellID["245253"] = {
   damageMinimum = 1;
 };
 
+GTFO.SpellID["238028"] = {
+  --desc = "Light Remanence (Maiden of Vigiliance)";
+  sound = 1;
+};
+
+GTFO.SpellID["238408"] = {
+  --desc = "Fel Remanence (Maiden of Vigiliance)";
+  sound = 1;
+};
+
+GTFO.SpellID["239212"] = {
+  --desc = "Lingering Darkness (Fallen Avatar)";
+  sound = 1;
+};
+
+GTFO.SpellID["242017"] = {
+  --desc = "Black Winds (Fallen Avatar)";
+  applicationOnly = true;
+  sound = 1;
+};
+
 --- *********
 --- * Argus *
 --- *********
@@ -1691,6 +1712,7 @@ GTFO.SpellID["239281"] = {
 GTFO.SpellID["250686"] = {
   --desc = "Crush (Deep Terror)";
   sound = 3;
+  damageMinimum = 1;
 };
 
 GTFO.SpellID["251564"] = {
@@ -1714,5 +1736,41 @@ GTFO.SpellID["242973"] = {
 GTFO.SpellID["251682"] = {
   --desc = "Blizzard";
   tankSound = 2;
+  sound = 1;
+};
+
+GTFO.SpellID["249263"] = {
+  --desc = "Wake of Blood";
+  sound = 1;
+};
+
+GTFO.SpellID["251901"] = {
+  --desc = "Molten Lava";
+  sound = 1;
+};
+
+GTFO.SpellID["249067"] = {
+  --desc = "Eye of Darkness (Harbinger Drel'nathar)";
+  sound = 1;
+};
+
+
+--- ***************************
+--- * Seat of the Triumvirate *
+--- ***************************
+
+GTFO.SpellID["244588"] = {
+  --desc = "Void Sludge (Zuraal the Ascended)";
+  sound = 1;
+};
+
+GTFO.SpellID["244906"] = {
+  --desc = "Collapsing Void (Viceroy Nezhar)";
+  sound = 1;
+};
+
+GTFO.SpellID["250820"] = {
+  --desc = "Growing Pressure";
+  applicationOnly = true;
   sound = 1;
 };
