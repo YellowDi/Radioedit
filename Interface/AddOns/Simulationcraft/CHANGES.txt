@@ -1,12 +1,12 @@
-tag a23723b50bf66f964bd537d7cd6ea17c0c39fd07 v1.8.1
+tag c63f45cfffc337746f56d4195b710e7bb0e236e2 v1.8.2
 Author:	Navv <navv1234@gmail.com>
-Date:	Thu Aug 31 01:00:14 2017 +0300
+Date:	Wed Sep 13 22:22:22 2017 +0300
 
-v1.8.1
+v1.8.2
 
-commit 5d49b56601b39f88523c8de1ddfacc651bb7d064
+commit c2ae0eea5142ae00591873889f96dec9b225fade
 Author: Navv <navv1234@gmail.com>
-Date:   Thu Aug 31 00:59:40 2017 +0300
+Date:   Mon Sep 11 22:26:50 2017 +0300
 
-    Fix an issue with artifact option generation
+    Reimplement crucible= option handling
 
