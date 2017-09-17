@@ -442,18 +442,19 @@ end
 -- TODO: Remove this shit.
 ----------------------------------
 hooksecurefunc('TalkingHead_LoadUI', function()
-	local thf = TalkingHeadFrame
-	if L('boxpoint') == 'Bottom' and thf:IsVisible() then
-		talkbox:SetOffset(nil, thf:GetTop() + 8)
+	local function MoveTalkingHead(self)
+		self:ClearAllPoints()
+		self:SetPoint('BOTTOM', talkbox, talkbox:IsVisible() and 'TOP' or 'BOTTOM', 0, 0)
 	end
-	thf:HookScript('OnShow', function(self)
-		if L('boxpoint') == 'Bottom' then
-			talkbox:SetOffset(nil, self:GetTop() + 8)
-		end
+
+	MoveTalkingHead(TalkingHeadFrame)
+	TalkingHeadFrame:HookScript('OnShow', MoveTalkingHead)
+
+	talkbox:HookScript('OnShow', function(self)
+		MoveTalkingHead(TalkingHeadFrame)
 	end)
-	thf:HookScript('OnHide', function(self)
-		if L('boxpoint') == 'Bottom' then
-			talkbox:SetOffset()
-		end
+
+	talkbox:HookScript('OnHide', function(self)
+		MoveTalkingHead(TalkingHeadFrame)
 	end)
 end)

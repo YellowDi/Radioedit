@@ -936,21 +936,21 @@
 						</Anchors>
 						<Layers>
 							<Layer level="ARTWORK">
-								<Texture file="Interface\Common\friendship-parts">  <!-- the bar itself -->
+								<Texture file="Interface\Common\friendship-parts"> <!-- left edge -->
 									<Size x="20" y="15"/>
 									<Anchors>
 										<Anchor point="LEFT" x="-1" y="2"/>
 									</Anchors>
 									<TexCoords left="0.53515625" right="0.4" top="0.01562500" bottom="0.60937500"/>
 								</Texture>
-								<Texture file="Interface\Common\friendship-parts">  <!-- the bar itself -->
+								<Texture file="Interface\Common\friendship-parts"> <!-- right edge -->
 									<Size x="20" y="15"/>
 									<Anchors>
 										<Anchor point="RIGHT" x="1" y="2"/>
 									</Anchors>
 									<TexCoords left="0.4" right="0.53515625" top="0.01562500" bottom="0.60937500"/>
 								</Texture>
-								<Texture file="Interface\Common\friendship-parts">  <!-- the bar itself -->
+								<Texture file="Interface\Common\friendship-parts"> <!-- middle -->
 									<Size x="0" y="15"/>
 									<Anchors>
 										<Anchor point="LEFT" x="19" y="2"/>

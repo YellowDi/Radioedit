@@ -1,4 +1,4 @@
-## Interface: 70200
+## Interface: 70300
 ## Title: Immersion
 ## Notes: Immersive replacement for quest & gossip
 ## Version: 0.4.5
