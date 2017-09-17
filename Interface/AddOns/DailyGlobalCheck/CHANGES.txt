@@ -1,10 +1,16 @@
-lightweight tag 5ff033bb3d7c878b61f08fb87abff2cc8a7e00ad v1.5.2.6
+lightweight tag 9b0ccf7d436be639157cc5fb011099d7983569ff v1.5.2.7
 Author:	Saregon <n_rhygar@yahoo.it>
-Date:	Wed Aug 30 21:28:22 2017 +0200
+Date:	Sat Sep 16 17:04:27 2017 +0200
 
-commit 5ff033bb3d7c878b61f08fb87abff2cc8a7e00ad
+commit 9b0ccf7d436be639157cc5fb011099d7983569ff
 Author: Saregon <n_rhygar@yahoo.it>
-Date:   Wed Aug 30 21:28:22 2017 +0200
+Date:   Sat Sep 16 17:04:27 2017 +0200
 
-    7.3 toc update
+    map functions tweaked
+
+commit dcb49a515cd7438e5dbcfdc187ec711f92cd1adf
+Author: Saregon <n_rhygar@yahoo.it>
+Date:   Thu Sep 14 11:03:18 2017 +0200
+
+    map functions tweaked
 

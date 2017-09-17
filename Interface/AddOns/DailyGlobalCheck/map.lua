@@ -1,5 +1,5 @@
 -- Daily Global Check
--- by Jadya
+-- by Vildiesel
 -- EU-Well of Eternity
 
 --[[ map related functions ]]--
@@ -79,7 +79,7 @@ local frames_pool = {}
 local updates = {} -- option update functions
 local icons = { worldmap = {}, minimap = {} }
 local map_tooltip
-local player_mapID, player_instanceID, player_dungeonID
+local mapID, player_mapID, player_instanceID, player_dungeonID
 local dungeon_data = {}
 -- minimap vars
 local minimap_icons_in_radius = {}
@@ -104,31 +104,78 @@ local function freebtn(btn)
 end
 --
 
-local function getMapIcon(v, k)
+local function getMapIcon(v, k, list)
  return (type(v[5][k + 3]) == "table" and v[5][k + 3].icon) or
 --        (type(v[8])        == "table" and v[8][1])          or
-        v[8] or
+        (v[15] and list.MapIcons[v[15]] or nil) or v[8] or
         T.dgcicon
+end
+
+function maps:UpdateQuestIcons(t, v)
+
+ if not not v[5] then return end
+
+ local mapID = map_data[v[5][1]].id
+ 
+ if not mapID or not icons[t][mapID] or not icons[t][mapID][v] then
+  return
+ end
+ 
+ local i = icons[t][mapID][v]
+ for k = 1, i.numIcons do
+  local btn = i["button"..k]
+  
+  if btn then
+   btn.tex:SetTexture(getMapIcon(v, k, i.list))
+  end
+ end
+end
+
+function maps:GetQuestIcons(t, v)
+ if v[5] and map_data[v[5][1]].id and icons[t][map_data[v[5][1]].id] then
+  for data, i in pairs(icons[t][map_data[v[5][1]].id]) do
+   if v == data then
+    return i
+   end
+  end
+ end
+end
+
+local visible_icons_cache = {}
+function maps:GetVisibleIcons(t)
+ if t == "minimap" then
+  return minimap_icons_in_radius
+ else
+  wipe(visible_icons_cache)
+  if mapID and map_data[mapID] and icons[t][map_data[mapID].id] then
+   for v,i in pairs(icons[t][map_data[mapID].id]) do
+    if v[5] and v[5][1] == mapID and i.visible then
+     visible_icons_cache[v] = i
+    end
+   end
+  end
+  return visible_icons_cache
+ end
 end
 
 -- icon events
 local function mapbutton_onmouseup(self, mousebutton)
- if not IsControlKeyDown() or mousebutton ~= "RightButton" then
-  local p = self:GetParent()
+ if IsControlKeyDown() and mousebutton == "RightButton" then
+  if self.data then
+   local x = self.data[5][2] / 100
+   local y = self.data[5][3] / 100
+   addonTable.setTomTomWP(self.data[5][1], nil, x, y, { title = self.data[2]})
+  end
+ else
+  -- plugin mouseUp override
+  if self.data and self.data[14] and self.data[14](self, mousebutton) then
+   return
+  end
   if self:GetParent() == wmf then
    WorldMapButton_OnClick(WorldMapButton, mousebutton)
   else
    Minimap_OnClick(Minimap, mousebutton)
   end
-  return
- end
-
- local data = self.data
-
- if data then
-  local x = data[5][2] / 100
-  local y = data[5][3] / 100
-  addonTable.setTomTomWP(data[5][1], nil, x, y, { title = data[2]})
  end
 end
 
@@ -201,6 +248,7 @@ local function createButton(t)
   f.tex = f:CreateTexture()
   f.tex:SetAllPoints()
   counter = counter + 1
+  f:Hide()
  end
 
  f:SetParent(t == "worldmap" and wmf or mmf)
@@ -210,20 +258,20 @@ local function createButton(t)
  return f
 end
 
-local function removeButton(i, v, index)
+local function removeButton(t, i, v, index)
  if not i then return end
  
  minimap_icons_in_radius[v] = nil
  
  if index then
-  if i["button"..index] then
-   freebtn(i["button"..index])
-   i["button"..index] = nil
-  end
+  DGCEventFrame:Fire("MAP_ICON_VISIBILITY_CHANGED", t, v, i["button"..index])
+  freebtn(i["button"..index])
+  i["button"..index] = nil
   return
  end
 
  for k = 1, (i.numIcons or 1) do
+  DGCEventFrame:Fire("MAP_ICON_VISIBILITY_CHANGED", t, v, i["button"..k])
   freebtn(i["button"..k])
   i["button"..k] = nil
  end
@@ -233,9 +281,9 @@ function maps:RemoveList(t, list)
  if not lists:isList(list) then return end
 
  for _,v in pairs(icons[t]) do
-  for j,i in pairs(v) do
+  for _,i in pairs(v) do
    if i.list == list then
-    removeButton(i, v)
+    removeButton(t, i, v)
     i.visible = false
    end
   end
@@ -296,7 +344,7 @@ function maps:Update(t)
 end
 
 -- worldmap
-local function updateWorldmapIcon(i, v, current_data, mapID)
+local function updateWorldmapIcon(i, v, current_data)
  local inDungeon = dungeon_data.id ~= 0
 
  local k = 1
@@ -328,7 +376,7 @@ local function updateWorldmapIcon(i, v, current_data, mapID)
   end
 
   if not rect.l or not rect.r or not rect.t or not rect.b then
-   removeButton(i, v)
+   removeButton("worldmap", i, v)
    break
   end
 
@@ -343,16 +391,20 @@ local function updateWorldmapIcon(i, v, current_data, mapID)
    local btn = i["button"..index]
    if not btn then
     btn = createButton("worldmap")
-    btn.tex:SetTexture(getMapIcon(v, k))
+    btn.tex:SetTexture(getMapIcon(v, k, i.list))
 	i["button"..index] = btn
 	btn.i = i
     btn.data = v
     btn.info = v[5][k + 3]
    end
    btn:SetPoint("CENTER", wmf, "TOPLEFT", wmf.w * x, wmf.h * y)
-   btn:Show()
-  elseif i["button"..index] then
+   if not btn:IsShown() then
+    btn:Show()
+    DGCEventFrame:Fire("MAP_ICON_VISIBILITY_CHANGED", "worldmap", v, btn, true)
+   end
+  elseif i["button"..index] and i["button"..index]:IsShown() then
    i["button"..index]:Hide()
+   DGCEventFrame:Fire("MAP_ICON_VISIBILITY_CHANGED", "worldmap", v, i["button"..index])
    --removeButton(i, index)
   end
   k = k + 4
@@ -365,6 +417,7 @@ end
 
 local last_check = 0
 local function updateWorldmap()
+ 
  if not wmf:IsVisible() then return end
  
  wmf.w, wmf.h = wmf:GetWidth(), wmf:GetHeight()
@@ -372,7 +425,7 @@ local function updateWorldmap()
  dungeon_data.id, dungeon_data.r,
  dungeon_data.b, dungeon_data.l, dungeon_data.t = GetCurrentMapDungeonLevel()
 
- local mapID = GetCurrentMapAreaID()
+ mapID = GetCurrentMapAreaID()
  local current_data = map_data[mapID]
 
  -- general check every 2~ minutes to be sure we hide every completed quest icon
@@ -385,7 +438,7 @@ local function updateWorldmap()
 	 if not current_data or j ~= current_data.id then
 	  for v,i in pairs(data) do
        if checkQuestCompletion(v, i) then
-	    removeButton(i, v)
+	    removeButton("worldmap", i, v)
 	    v[j] = nil
 	   end
 	  end
@@ -398,25 +451,37 @@ local function updateWorldmap()
  
  if icons.worldmap[wmf.last_instanceID] and (not current_data or wmf.last_instanceID ~= current_data.id or dungeon_data.id ~= wmf.last_dungeon) then
   for v,i in pairs(icons.worldmap[wmf.last_instanceID]) do
-   removeButton(i, v)
+   removeButton("worldmap", i, v)
   end
  end
 
  if current_data and WorldMapButton:IsVisible() and icons.worldmap[current_data.id] then
   for v, i in pairs(icons.worldmap[current_data.id]) do
    if checkQuestCompletion(v, i) then
-    removeButton(i, v)
+    removeButton("worldmap", i, v)
     icons.worldmap[current_data.id][v] = nil
    else
-    updateWorldmapIcon(i, v, current_data, mapID)
+    updateWorldmapIcon(i, v, current_data)
    end
   end
  end
  wmf.last_instanceID = current_data and current_data.id
  wmf.last_dungeon = dungeon_data.id
+ 
+ DGCEventFrame:Fire("DGC_WORLDMAP_UPDATE")
 end
 --
 wmf.update = updateWorldmap
+
+local wmfUpdateScheduled = 0
+local function wmfUpdate(_, elapsed)
+ if wmfUpdateScheduled == 1 then
+  wmfUpdateScheduled = 2
+ elseif wmfUpdateScheduled == 2 then
+  updateWorldmap()
+  wmfUpdateScheduled = 0
+ end
+end
 
 -- minimap
 local function updateMinimapIcon(i, v)
@@ -454,7 +519,7 @@ local function updateMinimapIcon(i, v)
    local btn = i["button"..index]
    if not btn then
     btn = createButton("minimap")
-	btn.tex:SetTexture(getMapIcon(v, k))
+	btn.tex:SetTexture(getMapIcon(v, k, i.list))
 	i["button"..index] = btn
    end
 
@@ -462,9 +527,13 @@ local function updateMinimapIcon(i, v)
    btn.data = v
    btn.info = v[5][k + 3]
    btn:SetPoint("CENTER", mmf, "CENTER", x, y)
-   btn:Show()
-  elseif i["button"..index] then
+   if not btn:IsShown() then
+    btn:Show()
+    DGCEventFrame:Fire("MAP_ICON_VISIBILITY_CHANGED", "minimap", v, btn, true)
+   end
+  elseif i["button"..index] and i["button"..index]:IsShown() then
    i["button"..index]:Hide()
+   DGCEventFrame:Fire("MAP_ICON_VISIBILITY_CHANGED", "minimap", v, i["button"..index])
    --removeButton(i, index)
   end
   k = k + 4
@@ -501,7 +570,17 @@ local function updateMinimap(forced)
    fcos = cos(facing)
   end
 
+  
   if last_minimap_refresh > 2 or forced then
+  
+   for v, i in pairs(minimap_icons_in_radius) do
+    for k = 1, i.numIcons or 1 do
+     if i["button"..k] then
+      i["button"..k]:Hide()
+     end
+    end
+   end
+
    last_minimap_refresh = 0
    wipe(minimap_icons_in_radius)
    for v, i in pairs(icons.minimap[player_instanceID]) do
@@ -514,13 +593,13 @@ local function updateMinimap(forced)
        local wy = map_data[v[5][k]].mh * v[5][k + 2] / 100 + map_data[v[5][k]].mt
 	   if sqrt((player_last_x - wx)^2 + (player_last_y - wy)^2) < 300 then
         minimap_icons_in_radius[v] = i
-	   elseif i["button"..k] then
-	    i["button"..k]:Hide()
+	   --elseif i["button"..k] then
+	   -- i["button"..k]:Hide()
 	   end
 	  end
 	  k = k + 4
      end
-	end
+	end    
    end
   end
 
@@ -528,13 +607,12 @@ local function updateMinimap(forced)
    if not DailyGlobalCheck.isquestcompleted(v.questID, true, i.list, v) then
     updateMinimapIcon(i, v)
    else
-	removeButton(icons.minimap[player_instanceID][v], v)
+	removeButton("minimap", icons.minimap[player_instanceID][v], v)
 	icons.minimap[player_instanceID][v] = nil
    end
   end
  end
 end
-
 mmf.update = updateMinimap
 
 local last_time = 0
@@ -611,7 +689,7 @@ end
 local function hideIcons(t)
  for _,data in pairs(icons[t]) do
   for v, i in pairs(data) do
-   removeButton(i, v)
+   removeButton(t, i, v)
   end
  end
 end
@@ -620,6 +698,7 @@ function maps:Initialize()
  svar = DailyGlobalCheck_Options
 
  wmf:SetAllPoints()
+ wmf:SetScript("OnUpdate", wmfUpdate)
 
  mmWidth  = 0
  mmHeight = 0
@@ -631,6 +710,7 @@ function maps:Initialize()
  mmf:SetAllPoints()
  isRotating = GetCVar("rotateMinimap") == "1"
  mmf:SetScript("OnUpdate", minimapOnUpdate)
+ 
 
  map_tooltip = CreateFrame("GameTooltip","DailyGlobalCheck_maptooltip", nil, "GameTooltipTemplate")
  map_tooltip:SetFrameStrata("TOOLTIP")
@@ -639,7 +719,7 @@ function maps:Initialize()
  map_tooltip.info:SetScale(0.9)
 
  DGCEventFrame:RegisterEvent("WORLD_MAP_UPDATE")
- DGCEventFrame.WORLD_MAP_UPDATE = updateWorldmap
+ DGCEventFrame.WORLD_MAP_UPDATE = function() wmfUpdateScheduled = 1 end
 
  DGCEventFrame:RegisterEvent("MINIMAP_UPDATE_ZOOM")
  DGCEventFrame.MINIMAP_UPDATE_ZOOM = updateMinimapZoom

@@ -1,5 +1,5 @@
 -- Daily Global Check - WoD Rare Mobs plugin
--- Jadya EU-Well of Eternity
+-- Vildiesel EU-Well of Eternity
 
 local _, addonTable = ...
 
@@ -80,6 +80,75 @@ function addonTable:setItemlevel(a, b)
  return s, counter
 end
 
+addonTable.searchTerms = {
+ -- krokuun
+ [48628] = "talestra^talestra the vile",
+ [48666] = "imp mother^laglath^imp mother laglath",
+ [48562] = "sathrenael^commander sathrenael",
+ [48564] = "endaxis^commander endaxis",
+ [48664] = "tereck^selector^tereck the selector",
+ [48665] = "tar spitter",
+ [48627] = "voraan^siegemaster voraan",
+ [48629] = "vagath^vagath betrayed",
+ [48565] = "subversia^sister subversia",
+ [48667] = "naroua",
+ [48561] = "khazaduum",
+ [48563] = "vecaya^commander vecaya",
+
+ -- antoran wastes 
+ [48821] = "houndmaster^kerrax^houndmaster kerrax",
+ [48809] = "puscilla",
+ [48970] = "rosula^mother rosula",
+ [48865] = "chief alchemist^munculus^chief alchemist munculus",
+ [48815] = "vethroz^inquisitor vethroz",
+ [49241] = "garzoth^gar'zoth",
+ [48817] = "rel'var^relvar^admiral rel'var",
+ [48818] = "all-seer^xanarian^all-seer xanarian",
+ [49183] = "blistermaw",
+ [48810] = "vraxthul^vrax'thul",
+ [48811] = "venorn^ven'orn",
+ [48812] = "varga",
+ [48814] = "yarez^wrath-lord yarez",
+ [48820] = "skuul^worldsplitter^worldsplitter skuul",
+ [48813] = "xakaar^lieutenant xakaar",
+ [48966] = "many faced^the many-faced devourer",
+ [49240] = "il'thendra^ilthendra^mistress il'thendra",
+ [48968] = "suprax^doomcaster suprax",
+ [48967] = "vishax^squadron commander vishax",
+ [48824] = "valsuran^void warden valsuran",
+ [48816] = "texlaz^commander texlaz",
+ [48971] = "rezira^rezira the seer",
+ [48822] = "aival^watcher aival",
+ 
+ -- mac'aree
+ [48705] = "skyfin^venomtail skyfin",
+ [48697] = "kaara^kaara the pale",
+ [48707] = "faruq^captain faruq",
+ [48721] = "skreeg^skreeg the devourer",
+ [48714] = "y'beda^ybeda^overseer y'beda",
+ [48935] = "slithon^slithon the last",
+ [48713] = "vorsuk^jed'hin champion^jed'hin champion vorsuk",
+ [48704] = "kuro^vigilant kuro",
+ [48719] = "zul'tan^zultan^ the numerous",
+ [48700] = "baruut^baruut the bloodthirsty",
+ [48711] = "herald of chaos",
+ [48703] = "thanos^vigilant thanos",
+ [48718] = "tarahna^instructor tarahna",
+ [48695] = "kravos^wrangler kravos",
+ [48709] = "ataxon",
+ [48706] = "turek^turek the lucid",
+ [48717] = "y'morna^ymorna^overseer y'morna",
+ [48702] = "feasel^feasel the muffin thief",
+ [48693] = "soultwisted^soultwisted monstrosity",
+ [48716] = "y'sorna^ysorna^overseer y'sorna",
+ [48712] = "sabuul",
+ [48720] = "xethgar^commander xethgar",
+ [48692] = "voruun^shadowcaster voruun",
+ [48708] = "umbraliss",
+ [48710] = "sorolis^sorolis the ill-fated",
+}
+
+--[[
 addonTable.questIDs_to_achi = {
  -- azsuna
  [37726] = {11261, 1}, -- Valyaka the Stormbringer
@@ -220,6 +289,7 @@ addonTable.questIDs_to_achi = {
  [44124] = {11265, 31}, -- Mar'tura
  [40905] = {11265, 32}, -- strathmar
 }
+]]
 
 function addonTable:GetEligibleItemTypes()
  local _, class = UnitClass("player")

@@ -6,5 +6,6 @@
 ## Dependencies: DailyGlobalCheck
 ## DefaultState: Enabled
 ## LoadOnDemand: 0
+## SavedVariables: DGCRareMobs_Saves
 db.lua
 DailyGlobalCheck_Legion_RareMobs.lua

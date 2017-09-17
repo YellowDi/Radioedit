@@ -1,5 +1,5 @@
 -- Daily Global Check
--- by Jadya
+-- by Vildiesel
 -- EU-Well of Eternity
 
 local addonName, addonTable = ...
@@ -33,10 +33,12 @@ local addontitle_short = "|cff00AAFFDGC|r"
  11 - plugin title
  12 - hidden in the quests pool (edit mode)
  13 - overlay info
+ 14 - map icon special mouse up function
+ 15 - dynamic icon id (overrides [8])
 ]]
 
 function dgc:GetVersion()
- return C.version
+ return C.version, C.minor_version
 end
 
 -- saved variables
@@ -174,7 +176,7 @@ function dgc:GetCoord(data)
  --local behavior = data[6]
  return v and AddColor(beautify(v[2]).."  "..beautify(v[3]), DailyGlobalCheck_Options.Colors[5]) or ""
 end
- 
+
 ------------------------------------------------------------------------------
 function dgc.isquestcompleted(questID, mainCharOnly, notSelectedPlugin, qdata)
 

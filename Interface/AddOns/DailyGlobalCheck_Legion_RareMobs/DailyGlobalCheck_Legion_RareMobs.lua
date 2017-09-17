@@ -1,6 +1,8 @@
 -- Daily Global Check - Legion Rare Mobs plugin
 -- Vildiesel EU-Well of Eternity
 
+local lower, floor = string.lower, math.floor
+
 local addonName, addonTable = ...
 
 local Z = DailyGlobalCheck.Z
@@ -16,8 +18,9 @@ local list = {
  ["Title"] = "Legion Rare Mobs",
  ["Icon"]  = "Interface\\Icons\\Ability_Hunter_Camouflage",
  ["Options"] = {{"Radiobutton","Show every Argus rare",true},
-                {"Radiobutton","Only Argus rares with toy, pet or mount",false}},
--- ["MapIcons"] = {311231},
+                {"Radiobutton","Only Argus rares with toy, pet or mount",false},
+                --{"Radiobutton","Attempt to mark available rares",true}},
+                },
  ["Version"] = 1004,
  ["Order"] = {
 			    -- Azsuna
@@ -57,7 +60,6 @@ local list = {
 			 },
  }
  
- 
 -- argus only
 local argus_order_cache = {{Z[1135],48628,48666,48562,48564,48664,48665,48627,48629,48565,48667,48561,48563},
                            {Z[1171],48821,48809,48970,48865,48815,49241,48817,48818,49183,48810,48811,48812,48814,48820,48813,48966,49240,48968,48967,48824,48816,48971,48822},
@@ -95,12 +97,138 @@ local function onOptionChanged(i)
  maps:UpdateList("worldmap", list, true)
  maps:UpdateList("minimap", list, true)
 end
+
+-- effects
+local effects_pool = {}
+local visible_effects = {}
+
+local function animator_update()
+ for _, f in pairs(visible_effects) do
+  f.rot = f.rot + 0.05
+  f.tex:SetRotation(f.rot)
+ end
+end
+
+local function geteffect(btn)
+ local f = tremove(effects_pool, 1)
+
+ if not f then
+  f = CreateFrame("Frame")
+  f:SetSize(50, 50)
+  f.rot = 0
+
+  f.tex = f:CreateTexture()
+  f.tex:SetAllPoints()
+  f.tex:SetBlendMode("ADD")
+  f.tex:SetTexture("environments\\stars\\nexus_circle_orbital")
+ end
+
+ visible_effects[btn] = f
+ return f
+end
+
+local function freeeffect(btn)
+ if not visible_effects[btn] then return end
+
+ effects_pool[#effects_pool + 1] = visible_effects[btn]
+ visible_effects[btn]:SetParent(nil)
+ visible_effects[btn]:Hide()
+ visible_effects[btn] = nil
+end
+--
+
+local function icon_visibility_changed(t, v, btn, visible)
+ freeeffect(btn)
+end
+
+local function showEffect(btn)
+ if btn then
+  local f = geteffect(btn)
+  f:SetParent(btn)
+  f:SetPoint("CENTER")
+  f:Show()
+ end
+end
+
+local function checkResults()
+ local num, t = C_LFGList.GetSearchResults()
+
+ for i = 1, #t do
+  local id = t[i]
+  local _, _, name = C_LFGList.GetSearchResultInfo(id)
+  
+  name = lower(name)
+  
+  for v, i in pairs(DailyGlobalCheck.MapFunctions:GetVisibleIcons("worldmap")) do
+   local terms = addonTable.searchTerms[v.questID]
+   
+   if terms and not visible_effects[i.button1] then
+    for j = 1, select("#", strsplit("^", terms)) do
+     local s = select(j, strsplit("^", terms))
+     if name:find(s) then
+      --print("found", s, " -> ", name)
+      showEffect(i.button1)
+      break
+     end
+    end
+   end
+  end
+ end
+end
+
+local function scan_button_update(self, elapsed)
  
+ self.t = self.t + elapsed
+ self:SetText("Scanning.. "..(3 - floor(self.t)))
+ if self.t >= 3 then
+  checkResults()
+  self:SetScript("OnUpdate", nil)
+  self:SetText("Rare Mobs Scan")
+  self:SetEnabled(true)
+ end
+end
+
+local scan_button_positions_table = {{"TOPRIGHT", WorldMapFrame.UIElementsFrame, "TOPRIGHT", -40, -3},
+                                     {"BOTTOMRIGHT", WorldMapFrame.UIElementsFrame, "BOTTOMRIGHT", -40, 3},
+                                     {"BOTTOM", WorldMapFrame.UIElementsFrame, "BOTTOM", 0, 3},
+                                     {"BOTTOMLEFT", WorldMapFrame.UIElementsFrame, "BOTTOMLEFT", 5, 3},
+                                     {"TOPLEFT", WorldMapFrame.UIElementsFrame, "TOPLEFT", 3, -35},
+                                     {"TOP", WorldMapFrame.UIElementsFrame, "TOP", 0, -3}}
+
+local function scan_button_setposition()
+ DGCRareMobsScanButton:ClearAllPoints()
+ DGCRareMobsScanButton:SetPoint(unpack(scan_button_positions_table[DGCRareMobs_Saves.pos]))
+end
+                                     
+local terms, languages = {}, {enUS = true}
+local function scan_button_click(self, button)
+ --C_LFGList.Search(self.categoryID, LFGListSearchPanel_ParseSearchTerms(searchText), self.filters, self.preferredFilters, languages);
+ if button == "RightButton" then
+  DGCRareMobs_Saves.pos = DGCRareMobs_Saves.pos + 1
+  if DGCRareMobs_Saves.pos > #scan_button_positions_table then
+   DGCRareMobs_Saves.pos = 1
+  end
+  scan_button_setposition()
+  return
+ end
+ 
+ for v in pairs(visible_effects) do
+  freeeffect(v)
+ end
+ 
+ wipe(terms)
+ self:SetEnabled(false)
+ self.t = 0
+ self:SetScript("OnUpdate", scan_button_update)
+ C_LFGList.Search(6, terms, nil, nil, languages)
+end
+
 local eligible_item_types
 local itemlevels = {[98] = 675, [99] = 685, [100] = 695, [101] = 705, [102] = 715, [103] = 725, [104] = 735, [105] = 745,
                     [106] = 755, [107] = 765, [108] = 775, [109] = 785, [110] = 785}    
 
 local function update_overlay_info(_, _, newlevel)
+
  local itemlevel, timerset
  local function scaleItem(itemID, t, suff, fixedilvl, try)
   
@@ -165,11 +293,11 @@ local function GenerateData()
   return faction == "Horde"
  end
  
+ local _, class = UnitClass("player")
  local function showshaman()
-  local _, class = UnitClass("player")
   return class == "SHAMAN"
  end
- 
+
  local q = questsdata
 
  local azs = Z[1015]
@@ -191,63 +319,67 @@ local function GenerateData()
  
  local cave_entrance = DailyGlobalCheck.template_cave_entrance
  
+ 
+ local function l(id, wq, name)
+  return DailyGlobalCheck.LocalizeSection(q, id, 2, name, "quest", wq)
+ end
+ 
  -- Argus
  -- Krokuun
- q[48628] = {kro,"Talestra the Vile"        ,nil,nil,{1135, 54.8 , 81.31},nil,nil,mobs_icon}
- q[48666] = {kro,"Imp Mother Laglath"       ,nil,nil,{1135, 42.34, 69.83},nil,nil,mobs_icon}
- q[48562] = {kro,"Commander Sathrenael"     ,nil,nil,{1135, 33.19, 76.12},nil,nil,mobs_icon}
- q[48564] = {kro,"Commander Endaxis"        ,nil,nil,{1135, 45.39, 58.77},nil,nil,mobs_icon}
- q[48664] = {kro,"Tereck the Selector"      ,nil,nil,{1135, 69.29, 59.47},nil,nil,mobs_icon, t_info = "In the cave"}
- q[48665] = {kro,"Tar Spitter"              ,nil,nil,{1135, 70.18, 81.24},nil,nil,mobs_icon}
- q[48627] = {kro,"Siegemaster Voraan"       ,nil,nil,{1135, 58.31, 75.69},nil,nil,mobs_icon}
- q[48629] = {kro,"Vagath the Betrayed"      ,nil,nil,{1135, 60.89, 19.6 },nil,nil,mobs_icon}
- q[48565] = {kro,"Sister Subversia"         ,nil,nil,{1135, 52.87, 31.08},nil,nil,mobs_icon, t_itemid = 153124, t_type = "toy"}
- q[48667] = {kro,"Naroua"                   ,nil,nil,{1135, 71.06, 32.72},nil,nil,mobs_icon, t_itemid = 153190, t_type = "pet"}
- q[48561] = {kro,"Khazaduum"                ,nil,nil,{1135, 50.58, 17.71},nil,nil,mobs_icon, t_info = "At the end of the hallway"}
- q[48563] = {kro,"Commander Vecaya"         ,nil,nil,{1135, 38.36, 59.52, nil, 1135, 41.2, 56.76, {icon=arrowup, desc="Up here"}},nil,nil,mobs_icon, t_info = "On the Xenedar"}
- 
+ q[48628] = {kro,l(48628, 47728, "Talestra the Vile")   ,nil,nil,{1135, 54.8 , 81.31},nil,nil,mobs_icon}
+ q[48666] = {kro,l(48666, 48282, "Imp Mother Laglath")  ,nil,nil,{1135, 42.34, 69.83},nil,nil,mobs_icon}
+ q[48562] = {kro,l(48562, 48509, "Commander Sathrenael"),nil,nil,{1135, 33.19, 76.12},nil,nil,mobs_icon}
+ q[48564] = {kro,l(48564, 48511, "Commander Endaxis")   ,nil,nil,{1135, 45.39, 58.77},nil,nil,mobs_icon}
+ q[48664] = {kro,l(48664, 47953, "Tereck the Selector") ,nil,nil,{1135, 69.29, 59.47},nil,nil,mobs_icon, t_info = "In the cave"}
+ q[48665] = {kro,l(48665, 48192, "Tar Spitter")         ,nil,nil,{1135, 70.18, 81.24},nil,nil,mobs_icon}
+ q[48627] = {kro,l(48627, 47542, "Siegemaster Voraan")  ,nil,nil,{1135, 58.31, 75.69},nil,nil,mobs_icon}
+ q[48629] = {kro,l(48629, 48091, "Vagath the Betrayed") ,nil,nil,{1135, 60.89, 19.6 },nil,nil,mobs_icon}
+ q[48565] = {kro,l(48565, 48512, "Sister Subversia")    ,nil,nil,{1135, 52.87, 31.08},nil,nil,mobs_icon, t_itemid = 153124, t_type = "toy"}
+ q[48667] = {kro,l(48667, 48502, "Naroua")              ,nil,nil,{1135, 71.06, 32.72},nil,nil,mobs_icon, t_itemid = 153190, t_type = "pet"}
+ q[48561] = {kro,l(48561, 47507, "Khazaduum")           ,nil,nil,{1135, 50.58, 17.71},nil,nil,mobs_icon, t_info = "At the end of the hallway"}
+ q[48563] = {kro,l(48563, 48510, "Commander Vecaya")    ,nil,nil,{1135, 38.36, 59.52, nil, 1135, 41.2, 56.76, {icon=arrowup, desc="Up here"}},nil,nil,mobs_icon, t_info = "On the Xenedar"}
+
  -- Antoran Wastes 
- q[48821] = {ant,"Houndmaster Kerrax"       ,nil,nil,{1171, 62.9 , 24.99},nil,nil,mobs_icon, t_itemid = 152790, t_type = "mount", t_info = "In the cave"}
- q[48809] = {ant,"Puscilla"                 ,nil,nil,{1171, 63.85, 21.08, nil, 1171, 65.57, 27.48, cave_entrance},nil,nil,mobs_icon, t_itemid = 152903, t_type = "mount", t_info = "Entrance on the bridge"}
- q[48970] = {ant,"Mother Rosula"            ,nil,nil,{1171, 66.71, 17.99, nil, 1171, 65.57, 27.48, cave_entrance},nil,nil,mobs_icon, t_itemid = 153252, t_type = "pet", t_info = "Entrance on the bridge@Collect 100 Imp meat and create a feast to summon her"}
- q[48865] = {ant,"Chief Alchemist Munculus" ,nil,nil,{1171, 61.44, 21.02},nil,nil,mobs_icon}
- q[48815] = {ant,"Inquisitor Vethroz"       ,nil,nil,{1171, 60.63, 48.38},nil,nil,mobs_icon}
- q[49241] = {ant,"Gar'zoth"                 ,nil,nil,{1171, 55.76, 45.95},nil,nil,mobs_icon}
- q[48817] = {ant,"Admiral Rel'var"          ,nil,nil,{1171, 73.58, 72.09},nil,nil,mobs_icon}
- q[48818] = {ant,"All-Seer Xanarian"        ,nil,nil,{1171, 74.98, 57.07},nil,nil,mobs_icon, t_info = "In the cave"}
- q[49183] = {ant,"Blistermaw"               ,nil,nil,{1171, 61.78, 36.96},nil,nil,mobs_icon, t_itemid = 152905, t_type = "mount"}
- q[48810] = {ant,"Vrax'thul"                ,nil,nil,{1171, 53.03, 36.08},nil,nil,mobs_icon, t_itemid = 152903, t_type = "mount"}
- q[48811] = {ant,"Ven'orn"                  ,nil,nil,{1171, 66.38, 54.24},nil,nil,mobs_icon, t_info = "In the cave"}
- q[48812] = {ant,"Varga"                    ,nil,nil,{1171, 64.29, 48.09},nil,nil,mobs_icon, t_itemid = 153190, t_type = "pet", t_info = "In the cave, at river level"}
- q[48814] = {ant,"Wrath-Lord Yarez"         ,nil,nil,{1171, 61.33, 65.15},nil,nil,mobs_icon, t_itemid = 153126, t_type = "toy"}
- q[48820] = {ant,"WorldSplitter Skuul"      ,nil,nil,{1171, 50.9 , 55.3 },nil,nil,mobs_icon, t_info = "Patrolling the skies"}
- q[48813] = {ant,"Lieutenant Xakaar"        ,nil,nil,{1171, 62.21, 53.52},nil,nil,mobs_icon}
+ q[48821] = {ant,l(48821, 48835, "Houndmaster Kerrax")      ,nil,nil,{1171, 62.9 , 24.99},nil,nil,mobs_icon, t_itemid = 152790, t_type = "mount", t_info = "In the cave"}
+ q[48809] = {ant,l(48809, 48467, "Puscilla")                ,nil,nil,{1171, 63.85, 21.08, nil, 1171, 65.57, 27.48, cave_entrance},nil,nil,mobs_icon, t_itemid = 152903, t_type = "mount", t_info = "Entrance on the bridge"}
+ q[48970] = {ant,"Mother Rosula"                            ,nil,nil,{1171, 66.71, 17.99, nil, 1171, 65.57, 27.48, cave_entrance},nil,nil,mobs_icon, t_itemid = 153252, t_type = "pet", t_info = "Entrance on the bridge@Collect 100 Imp meat and create a feast to summon her"}
+ q[48865] = {ant,l(48865, 48867, "Chief Alchemist Munculus"),nil,nil,{1171, 61.44, 21.02},nil,nil,mobs_icon}
+ q[48815] = {ant,l(48815, 48830, "Inquisitor Vethroz")      ,nil,nil,{1171, 60.63, 48.38},nil,nil,mobs_icon}
+ q[49241] = {ant,l(49241, 47566, "Gar'zoth")                ,nil,nil,{1171, 55.76, 45.95},nil,nil,mobs_icon}
+ q[48817] = {ant,l(48817, 48832, "Admiral Rel'var")         ,nil,nil,{1171, 73.58, 72.09},nil,nil,mobs_icon}
+ q[48818] = {ant,l(48818, 48837, "All-Seer Xanarian")       ,nil,nil,{1171, 74.98, 57.07},nil,nil,mobs_icon, t_info = "In the cave"}
+ q[49183] = {ant,l(49183, 47561, "Blistermaw")              ,nil,nil,{1171, 61.78, 36.96},nil,nil,mobs_icon, t_itemid = 152905, t_type = "mount"}
+ q[48810] = {ant,l(48810, 48465, "Vrax'thul")               ,nil,nil,{1171, 53.03, 36.08},nil,nil,mobs_icon, t_itemid = 152903, t_type = "mount"}
+ q[48811] = {ant,l(48811, 48466, "Ven'orn")                 ,nil,nil,{1171, 66.38, 54.24},nil,nil,mobs_icon, t_info = "In the cave"}
+ q[48812] = {ant,l(48812, 48827, "Varga")                   ,nil,nil,{1171, 64.29, 48.09},nil,nil,mobs_icon, t_itemid = 153190, t_type = "pet", t_info = "In the cave, at river level"}
+ q[48814] = {ant,l(48814, 48829, "Wrath-Lord Yarez")        ,nil,nil,{1171, 61.33, 65.15},nil,nil,mobs_icon, t_itemid = 153126, t_type = "toy"}
+ q[48820] = {ant,l(48820, 48834, "Worldsplitter Skuul")     ,nil,nil,{1171, 50.9 , 55.3 },nil,nil,mobs_icon, t_info = "Patrolling the skies"}
+ q[48813] = {ant,l(48813, 48828, "Lieutenant Xakaar")       ,nil,nil,{1171, 62.21, 53.52},nil,nil,mobs_icon}
  
  if IsQuestFlaggedCompleted(48870) then
-  q[48966] = {ant,"The Many-Faced Devourer"  ,nil,nil,{1171, 54.8 , 39.15},nil,nil,mobs_icon, t_itemid = 153195, t_type = "pet", t_info = "Use the Bone Effigy"}
+  q[48966] = {ant,l(48966, 48870, "The Many-Faced Devourer"),nil,nil,{1171, 54.8 , 39.15},nil,nil,mobs_icon, t_itemid = 153195, t_type = "pet", t_info = "Use the Bone Effigy"}
  else
-  q[48966] = {ant,"The Many-Faced Devourer"  ,nil,nil,{1171, 54.8 , 39.15},nil,nil,mobs_icon, t_itemid = 153195, t_type = "pet", t_info = "Drop Call of the Devourer from mobs around,@collect the three bones and summon him using the Bone Effigy twice@Bones at:@|cff00ffff50.4 56.1@|cff00ffff52.4 35.3@|cff00ffff65.8 19.4|r (in the imps' cave)"}
+  q[48966] = {ant,l(48966, 48870, "The Many-Faced Devourer"),nil,nil,{1171, 54.8 , 39.15},nil,nil,mobs_icon, t_itemid = 153195, t_type = "pet", t_info = "Drop Call of the Devourer from mobs around,@collect the three bones and summon him using the Bone Effigy twice@Bones at:@|cff00ffff50.4 56.1@|cff00ffff52.4 35.3@|cff00ffff65.8 19.4|r (in the imps' cave)"}
  end
 --                                                      1171, 50.4 , 56.1 , {icon = bone_icon, desc = "Requires Call of the Devourer in bags"},
 --                                                      1171, 65.89, 19.42, {icon = bone_icon, desc = "In the imps' cave, requires Call of the Devourer in bags"},
 --                                                      1171, 52.4 , 35.3 , {icon = bone_icon, desc = "Requires Call of the Devourer in bags"}},nil,nil,mobs_icon, t_itemid = 153195, t_type = "all"}
- q[49240] = {ant,"Mistress Il'thendra"      ,nil,nil,{1171, 57.32, 33.57},nil,nil,mobs_icon}
- q[48968] = {ant,"Doomcaster Suprax"        ,nil,nil,{1171, 58, 12},nil,nil,mobs_icon, t_itemid = 153194, t_type = "toy", t_info = "Needs three players to stand over runes"}
- 
+ q[49240] = {ant,l(49240, 47552, "Mistress Il'thendra"),nil,nil,{1171, 57.32, 33.57},nil,nil,mobs_icon}
+ q[48968] = {ant,"Doomcaster Suprax"                   ,nil,nil,{1171, 58, 12},nil,nil,mobs_icon, t_itemid = 153194, t_type = "toy", t_info = "Needs three players to stand over runes"}
+
  if IsQuestFlaggedCompleted(49007) then
   q[48967] = {ant,"Squadron Commander Vishax",nil,nil,{1171, 84.6, 81  , nil, 1171,77.46, 74.61,cave_entrance},nil,nil,mobs_icon, t_itemid = 153253, t_type = "toy", t_info = "Use the portal"}
  else
   q[48967] = {ant,"Squadron Commander Vishax",nil,nil,{1171, 84.6, 81  , nil, 1171,77.46, 74.61,cave_entrance},nil,nil,mobs_icon, t_itemid = 153253, t_type = "toy", t_info = "Requires Vishax's Portal Generator, loot mobs in the area"}
  end
  
- q[48824] = {ant,"Void Warden Valsuran"     ,nil,nil,{1171, 55.39, 21.64},nil,nil,mobs_icon}
- q[48816] = {ant,"Commander Texlaz"         ,nil,nil,{1171, 82.66, 65.63, nil, 1171, 80.5, 62.69, cave_entrance},nil,nil,mobs_icon}
- q[48971] = {ant,"Rezira the Seer"          ,nil,nil,{1171, 64.92, 82.88},nil,nil,mobs_icon, t_itemid = 153293, t_type = "toy", t_info = "Portal to get here can be opened using Observer's Locus Resonator"}
- q[48822] = {ant,"Watcher Aival"            ,nil,nil,{1171, 52.7 , 29.5 },nil,nil,mobs_icon}
+ q[48824] = {ant,l(48824, 48866, "Void Warden Valsuran"),nil,nil,{1171, 55.39, 21.64},nil,nil,mobs_icon}
+ q[48816] = {ant,l(48816, 48831, "Commander Texlaz")    ,nil,nil,{1171, 82.66, 65.63, nil, 1171, 80.5, 62.69, cave_entrance},nil,nil,mobs_icon}
+ q[48971] = {ant,"Rezira the Seer"                      ,nil,nil,{1171, 64.92, 82.88},nil,nil,mobs_icon, t_itemid = 153293, t_type = "toy", t_info = "Portal to get here can be opened using Observer's Locus Resonator"}
+ q[48822] = {ant,l(48822, 48836, "Watcher Aival")       ,nil,nil,{1171, 52.7 , 29.5 },nil,nil,mobs_icon}
  
  -- Mac'aree
  q[48705] = {mac,"Venomtail Skyfin"        ,nil,nil,{1170, 33.65, 48.10},nil,nil,mobs_icon, t_itemid = 152844, t_type = "mount"}
- --q[48697] = {mac,"Kaara The pale"          ,nil,nil,{1170, 38.64, 55.58},nil,nil,mobs_icon, t_itemid = 153190, t_type = "pet"}
  q[48697] = {mac,"Kaara The pale"          ,nil,nil,{1170, 38.64, 55.58},nil,nil,mobs_icon}
  q[48707] = {mac,"Captain Faruq"           ,nil,nil,{1170, 27.16, 30   },nil,nil,mobs_icon}
  q[48721] = {mac,"Skreeg the Devourer"     ,nil,nil,{1170, 49.79, 9.58 },nil,nil,mobs_icon, t_itemid = 152904, t_type = "mount"} --
@@ -255,7 +387,7 @@ local function GenerateData()
  q[48935] = {mac,"Slithon the last"        ,nil,nil,{1170, 48.79, 52.35},nil,nil,mobs_icon}
  q[48713] = {mac,"Jed'hin Champion Vorsuk" ,nil,nil,{1170, 48.1 , 40.63},nil,nil,mobs_icon} -- 48741?
  q[48704] = {mac,"Vigilant Kuro"           ,nil,nil,{1170, 63.89, 64.42},nil,nil,mobs_icon, t_itemid = 153183, t_type = "toy"} --
- q[48719] = {mac,"Zul'tan the Numerous"    ,nil,nil,{1170, 64.03, 29.52},nil,nil,mobs_icon}
+ q[48719] = {mac,"Zul'tan the Numerous"    ,nil,nil,{1170, 64.03, 29.52},nil,nil,mobs_icon, t_info = "In the house"}
  q[48700] = {mac,"Baruut the Bloodthirsty" ,nil,nil,{1170, 43.81, 60.63},nil,nil,mobs_icon, t_itemid = 153193, t_type = "toy"}
  q[48711] = {mac,"Herald of Chaos"         ,nil,nil,{1170, 35.95, 58.97},nil,nil,mobs_icon, t_info = "Second floor"} --
  q[48703] = {mac,"Vigilant Thanos"         ,nil,nil,{1170, 36.73, 23.88},nil,nil,mobs_icon, t_itemid = 153183, t_type = "toy"} --
@@ -274,7 +406,8 @@ local function GenerateData()
  q[48710] = {mac,"Sorolis the Ill-Fated"   ,nil,nil,{1170, 70.4 , 46.7 },nil,nil,mobs_icon}
 
            -------- Broken Shore ---------
- q[47133] = {bro,DailyGlobalCheck.LocalizeSection(q, 47133, 2, "Rare Mob Daily Bonus", "quest", 47133)}
+ --q[47133] = {bro,DailyGlobalCheck.LocalizeSection(q, 47133, 2, "Rare Mob Daily Bonus", "quest", 47133)}
+ q[47133] = {bro,"Rare Mob Daily Bonus"}
  
  q[46202] = {bro,"Dreadeye"                 ,nil,nil,{1021, 45.67, 79.75 },nil,nil,mobs_icon}
  q[46092] = {bro,"Malorus the Soulkeeper"   ,nil,nil,{1021, 42.33, 42.73 },nil,nil,mobs_icon}
@@ -494,6 +627,48 @@ local function GenerateData()
   onOptionChanged(svar.options[1] and 1 or 2)
  end
  DGCEventFrame:Hook("OPTION_CHANGED_PLUGIN", onOptionChanged)
+ 
+ 
+ -- rares detect feature effects
+ local _, minor = DailyGlobalCheck:GetVersion()
+
+ -- minor version implemented along with the map functions we need
+ if not minor then return end
+ 
+ if not DGCRareMobs_Saves then DGCRareMobs_Saves = { pos = 1 } end
+ 
+ DGCEventFrame:Hook("MAP_ICON_VISIBILITY_CHANGED", icon_visibility_changed)
+ DGCEventFrame:Hook("DGC_WORLDMAP_UPDATE", function() 
+   local mapID = GetCurrentMapAreaID()
+   if mapID ~= 1135 and mapID ~= 1170 and mapID ~= 1171 then
+    DGCRareMobsScanButton:SetScript("OnUpdate", nil)
+    DGCRareMobsScanButton:SetText("Rare Mobs Scan")
+    DGCRareMobsScanButton:SetEnabled(true)
+    DGCRareMobsScanButton:Hide()
+   else
+    DGCRareMobsScanButton:Show()
+   end
+  end)
+ 
+ local animator = CreateFrame("Frame", nil, DGCWorldMapOverlay)
+ animator:SetScript("OnUpdate", animator_update)
+ 
+ local scan_button = NyxGUI("1.0"):New("DailyGlobalCheck", "Button", "DGCRareMobsScanButton", WorldMapFrame.UIElementsFrame)
+ scan_button:SetWidth(125)
+ scan_button:SetText("Rare Mobs Scan")
+ scan_button:SetBackdropColor(0.1, 0.2, 0.7, 0.6)
+ scan_button:SetFrameStrata("HIGH")
+ scan_button_setposition()
+ scan_button:RegisterForClicks("LeftButtonUp", "RightButtonUp")
+ scan_button:SetScript("OnClick", scan_button_click)
+ scan_button:SetScript("OnEnter", function(self)
+  GameTooltip:SetOwner(self, "ANCHOR_TOPLEFT")
+  GameTooltip:AddLine("|cff00AAFFDaily Global Check - Legion Rare Mobs|r")
+  GameTooltip:AddLine("|cffffffffScan the group finder to detect available rares|r")
+  GameTooltip:AddLine("|cff00ff00Right-Click to change button position|r")
+  GameTooltip:Show()
+ end)
+ scan_button:SetScript("OnLeave", function() GameTooltip:Hide() end)
 end
 
 list.GenerateData = GenerateData

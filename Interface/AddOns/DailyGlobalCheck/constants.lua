@@ -11,6 +11,7 @@ local C = addonTable.C
 local T = addonTable.T
 
 C.version = 1004 -- current list structure version
+C.minor_version = 0
 C.str_version = "|cffAAAAAAv|cff00ff001.5|r"
 C.NyxGUIVersion = "1.0"
 
