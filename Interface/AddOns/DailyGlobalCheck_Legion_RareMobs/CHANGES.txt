@@ -1,10 +1,10 @@
-lightweight tag 5851a40ab53282d7a1d125feb6edee6bcd7030b2 v1.1.3b
+lightweight tag 410d24a0923e1ff110743cc24871d7e5a65a074e v1.1.3c
 Author:	Saregon <n_rhygar@yahoo.it>
-Date:	Sat Sep 16 23:31:01 2017 +0200
+Date:	Sun Sep 17 11:30:18 2017 +0200
 
-commit 5851a40ab53282d7a1d125feb6edee6bcd7030b2
+commit 410d24a0923e1ff110743cc24871d7e5a65a074e
 Author: Saregon <n_rhygar@yahoo.it>
-Date:   Sat Sep 16 23:31:01 2017 +0200
+Date:   Sun Sep 17 11:30:18 2017 +0200
 
-    rare mobs scan button can be repositioned
+    fix button visibility on full size worldmap
 
