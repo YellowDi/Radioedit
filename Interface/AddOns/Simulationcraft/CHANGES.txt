@@ -1,12 +1,18 @@
-tag c63f45cfffc337746f56d4195b710e7bb0e236e2 v1.8.2
+tag 0323d1a1be591b4cf8ca8c64edd99ff72f2cabfb v1.8.3
 Author:	Navv <navv1234@gmail.com>
-Date:	Wed Sep 13 22:22:22 2017 +0300
+Date:	Sat Sep 16 12:52:56 2017 +0300
 
-v1.8.2
+v1.8.3
 
-commit c2ae0eea5142ae00591873889f96dec9b225fade
+commit 8769cb38dd41bbfd30d5ae4e0b0d6e601a7b96cb
 Author: Navv <navv1234@gmail.com>
-Date:   Mon Sep 11 22:26:50 2017 +0300
+Date:   Sat Sep 16 12:52:37 2017 +0300
 
-    Reimplement crucible= option handling
+    Update version
+
+commit c3ae58d8174d455e493220fcb0943404554c1501
+Author: Navv <navv1234@gmail.com>
+Date:   Sat Sep 16 12:52:12 2017 +0300
+
+    Fix typo in Restoration Shaman artifact identifier
 
