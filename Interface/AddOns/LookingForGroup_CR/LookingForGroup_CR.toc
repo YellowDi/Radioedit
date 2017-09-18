@@ -1,7 +1,7 @@
 ## Interface: 70300
 ## Author: cqwrteur
 ## Title: LookingForGroup Cross Realm
-## Version: 398
+## Version: 400
 ## Dependencies: LookingForGroup
 ## LoadOnDemand: 1
 

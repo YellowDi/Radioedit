@@ -1,9 +1,8 @@
 ------------------------------------------------------------------------
-r397 | cqwrteur | 2017-09-09 15:49:24 -0500 (Sat, 09 Sep 2017) | 1 line
+r399 | cqwrteur | 2017-09-16 21:52:15 -0500 (Sat, 16 Sep 2017) | 1 line
 Changed paths:
-   M /trunk/Hook/Core.lua
-   M /trunk/Options/options/Core.lua
+   M /trunk/Options/lfdlfr/Core.lua
 
-Add Mute functionality
+lfd bug fixing
 ------------------------------------------------------------------------
 

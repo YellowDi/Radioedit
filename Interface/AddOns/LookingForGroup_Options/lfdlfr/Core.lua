@@ -62,6 +62,7 @@ LookingForGroup_Options:push("lfdlfr",
 				if GetLFGQueueStats(1) then
 					LeaveLFG(1)
 				elseif selected_dungeon then
+					ClearAllLFGDungeons(1)
 					JoinSingleLFG(1,selected_dungeon)
 				end
 			end
