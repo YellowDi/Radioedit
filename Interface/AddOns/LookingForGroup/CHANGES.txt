@@ -1,8 +1,8 @@
 ------------------------------------------------------------------------
-r399 | cqwrteur | 2017-09-16 21:52:15 -0500 (Sat, 16 Sep 2017) | 1 line
+r411 | cqwrteur | 2017-09-18 22:58:39 -0500 (Mon, 18 Sep 2017) | 1 line
 Changed paths:
-   M /trunk/Options/lfdlfr/Core.lua
+   M /trunk/Init.lua
 
-lfd bug fixing
+invasion point
 ------------------------------------------------------------------------
 

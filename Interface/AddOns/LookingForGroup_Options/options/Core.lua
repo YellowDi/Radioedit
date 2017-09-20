@@ -99,6 +99,7 @@ LookingForGroup_Options:push("options",{
 				LookingForGroup_SF:OnEnable()
 			end,
 		},
+		
 		disable_blizzard =
 		{
 			name = DISABLE.." BlizzardUI",
@@ -247,30 +248,57 @@ LookingForGroup_Options:push("options",{
 				}
 			}
 		},
-		wq = 
+		auto = 
 		{
 			name = TRACKER_HEADER_WORLD_QUESTS,
 			type = "group",
 			args =
 			{
-				enable =
+				addons =
 				{
-					name = ENABLE,
-					desc = "LookingForGroup_WQ",
-					type = "toggle",
-					order = 1,
-					get = function(info)
-						return LookingForGroup.db.profile.enable_wq
-					end,
-					set = function(info,val)
-						LookingForGroup.db.profile.enable_wq = val
-						if val then
-							LoadAddOn("LookingForGroup_WQ")
-						end
-						local LookingForGroup_WQ = AceAddon:GetAddon("LookingForGroup_WQ")
-						LookingForGroup_WQ:OnEnable()
-					end,
-					width = "full"
+					name = ADDONS,
+					type = "group",
+					args =
+					{
+						wq =
+						{
+							name = "WQ",
+							desc = TRACKER_HEADER_WORLD_QUESTS,
+							type = "toggle",
+							order = 1,
+							get = function(info)
+								return LookingForGroup.db.profile.enable_wq
+							end,
+							set = function(info,val)
+								LookingForGroup.db.profile.enable_wq = val
+								if val then
+									LoadAddOn("LookingForGroup_WQ")
+								end
+								local LookingForGroup_WQ = AceAddon:GetAddon("LookingForGroup_WQ")
+								LookingForGroup_WQ:OnEnable()
+							end,
+							width = "full"
+						},
+						ip =
+						{
+							name = "Invasion Point",
+							desc = "LookingForGroup_InvasionPoint",
+							type = "toggle",
+							order = 1,
+							get = function(info)
+								return LookingForGroup.db.profile.enable_invasionpoint
+							end,
+							set = function(info,val)
+								LookingForGroup.db.profile.enable_invasionpoint = val
+								if val then
+									LoadAddOn("LookingForGroup_InvasionPoint")
+								end
+								local LookingForGroup_InvasionPoint = AceAddon:GetAddon("LookingForGroup_InvasionPoint")
+								LookingForGroup_InvasionPoint:OnEnable()
+							end,
+							width = "full"
+						},
+					}
 				},
 				leave_party =
 				{

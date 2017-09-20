@@ -8,6 +8,7 @@ function LookingForGroup:OnInitialize()
 		profile =
 		{
 			enable_wq = true,
+			enable_invasionpoint = true,
 --			enable_av = false,
 			enable_icon = true,
 			enable_hook = true,

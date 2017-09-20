@@ -25,6 +25,8 @@ function LookingForGroup_Event:LFG_LIST_APPLICANT_LIST_UPDATED()
 		if autoAccept then
 			if activityID == 458 then
 				ConvertToRaid()
+			elseif comment and comment:find("Invasion Point:") then
+				ConvertToRaid()
 			elseif MAX_PARTY_MEMBERS + 1 < GetNumGroupMembers(LE_PARTY_CATEGORY_HOME) + C_LFGList.GetNumInvitedApplicantMembers() + C_LFGList.GetNumPendingApplicantMembers() then
 				local categoryID = select(3,C_LFGList.GetActivityInfo(activityID))
 				if categoryID == 3 or categoryID == 9 then

@@ -193,10 +193,13 @@ end
 
 local issubstr = LookingForGroup_Options.issubstr
 
-local function filter_search_results(resultID,activity,encounters,mbnm,role,class,complete,twoxfilters)
+local function filter_search_results(resultID,activity,encounters,mbnm,role,class,complete,twoxfilters,ilvl)
 	local id, activityID, name, comment, voiceChat, iLvl, honorLevel,
 			age, numBNetFriends, numCharFriends, numGuildMates,
 			isDelisted, leaderName, numMembers = C_LFGList_GetSearchResultInfo(resultID)
+	if iLvl < ilvl then
+		return
+	end
 	if role or complete or twoxfilters then
 		local fullName, shortName, categoryID, groupID, itemLevel, filters, minLevel, maxPlayers, displayType, activityOrder = C_LFGList_GetActivityInfo(activityID)
 		if (role and role(id,numMembers,categoryID)) or (complete and numMembers < bit.rshift(maxPlayers,1) ) then
@@ -310,11 +313,15 @@ local function get_search_result()
 	end
 	local complete = profile.find_a_group_complete
 	local twoxfilters = profile.find_a_group_2xfilters
+	local ilvl = profile.find_a_group_ilvl
+	if not ilvl then
+		ilvl = 0
+	end
 	applications_count = #results_table
 	local groupsIDs = GetSearchResults()
 	for i=1,#groupsIDs do
 		local number = groupsIDs[i]
-		if filter_search_results(number,activity,encounters,mbnm,role,class,complete,twoxfilters) then
+		if filter_search_results(number,activity,encounters,mbnm,role,class,complete,twoxfilters,ilvl) then
 			table_insert(results_table,number)
 		end
 	end
@@ -837,6 +844,33 @@ LookingForGroup_Options:push("find",{
 								end
 							end
 						},
+						ilvl =
+						{
+							name = ITEM_LEVEL_ABBR,
+							name = LFG_LIST_ITEM_LEVEL_REQ,
+							order = -1,
+							type = "input",
+							get = function()
+								local ilv = LookingForGroup_Options.db.profile.find_a_group_ilvl
+								if ilv then
+									return tostring(ilv)
+								end
+							end,
+							set = function(_,val)
+								if val then
+									local num = tonumber(val)
+									local average = GetAverageItemLevel()
+									if num <= average then
+										LookingForGroup_Options.db.profile.find_a_group_ilvl = num
+									else
+										LookingForGroup_Options.db.profile.find_a_group_ilvl = math_floor(average)
+									end
+								else
+									LookingForGroup_Options.db.profile.find_a_group_ilvl = nil
+								end
+							end,
+							pattern = "^[0-9]*$"
+						},
 						cancel =
 						{
 							order = -1,
@@ -849,8 +883,8 @@ LookingForGroup_Options:push("find",{
 								LookingForGroup_Options.db.profile.find_a_group_complete = nil
 								LookingForGroup_Options.db.profile.find_a_group_language = nil
 								LookingForGroup_Options.db.profile.find_a_group_2xfilters = nil
+								LookingForGroup_Options.db.profile.find_a_group_ilvl = nil
 							end,
-							width = "full"
 						},
 					},
 				},
@@ -875,6 +909,7 @@ LookingForGroup_Options:push("find",{
 						LookingForGroup_Options.db.profile.find_a_group_complete = nil
 						LookingForGroup_Options.db.profile.find_a_group_language = nil
 						LookingForGroup_Options.db.profile.find_a_group_2xfilters = nil
+						LookingForGroup_Options.db.profile.find_a_group_ilvl = nil
 						activity_options_args.cancel.func()
 					end
 				},

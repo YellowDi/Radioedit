@@ -6,6 +6,9 @@ function LookingForGroup:OnEnable()
 	if profile.enable_wq then
 		LoadAddOn("LookingForGroup_WQ")
 	end
+	if profile.enable_invasionpoint then
+		LoadAddOn("LookingForGroup_InvasionPoint")
+	end
 	if profile.enable_icon then
 		LoadAddOn("LookingForGroup_Icon")
 	end

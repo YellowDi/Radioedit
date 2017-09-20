@@ -1,9 +1,8 @@
 ## Interface: 70300
 ## Author: cqwrteur
-## Title: LookingForGroup Event
+## Title: LookingForGroup Duel
 ## Version: 412
-## Dependencies: LookingForGroup
+## Dependencies: LookingForGroup_Auto
 ## LoadOnDemand: 1
-
 
 Core.lua

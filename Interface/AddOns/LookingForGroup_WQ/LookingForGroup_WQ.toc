@@ -1,9 +1,8 @@
 ## Interface: 70300
 ## Author: cqwrteur
 ## Title: LookingForGroup World Quest
-## Version: 400
-## Dependencies: LookingForGroup
-## SavedVariablesPerCharacter: LookingForGroup_WQCharacterDB
+## Version: 412
+## Dependencies: LookingForGroup_Auto
 ## LoadOnDemand: 1
 
 Core.lua
