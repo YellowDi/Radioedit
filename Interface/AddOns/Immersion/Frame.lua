@@ -435,26 +435,49 @@ function frame:FadeOut(fadeTime, ignoreOnTheFly)
 end
 
 ----------------------------------
--- Hacky hacky
--- Hook the regular talking head,
--- so that the offset is increased
--- when they are shown at the same time.
--- TODO: Remove this shit.
+-- Anchor the real talking head to the fake talking head,
+-- make it appear IN PLACE of the fake one if the fake one isn't shown.
 ----------------------------------
-hooksecurefunc('TalkingHead_LoadUI', function()
-	local function MoveTalkingHead(self)
-		self:ClearAllPoints()
-		self:SetPoint('BOTTOM', talkbox, talkbox:IsVisible() and 'TOP' or 'BOTTOM', 0, 0)
+do 
+	local function InitiateTalkingHead()
+		-- Use this check to see if the frame has already been manipulated,
+		-- in which case do nothing. Need to please all them whiny bitches who use ElvUI.
+		if (not select(4, GetAddOnInfo('ElvUI'))) and UIPARENT_MANAGED_FRAME_POSITIONS.TalkingHeadFrame then
+			local mt = getmetatable(TalkingHeadFrame).__index
+			local SetPoint = mt.SetPoint
+			local ClearAllPoints = mt.ClearAllPoints
+
+			local function MoveTalkingHead(self)
+				ClearAllPoints(self)
+				SetPoint(self, 'BOTTOM', talkbox, talkbox:IsVisible() and 'TOP' or 'BOTTOM', 0, 0)
+			end
+
+			-- Need this to keep it from resetting position
+			TalkingHeadFrame.SetPoint = function() end
+			TalkingHeadFrame.ClearAllPoints = function() end
+			TalkingHeadFrame.ignoreFramePositionManager = true
+			UIPARENT_MANAGED_FRAME_POSITIONS.TalkingHeadFrame = nil
+
+			-- Remove from alert system, preventing other frames from anchoring to it.
+			for index, alertFrameSubSystem in ipairs(AlertFrame.alertFrameSubSystems) do
+				if alertFrameSubSystem.anchorFrame and alertFrameSubSystem.anchorFrame == TalkingHeadFrame then
+					table.remove(AlertFrame.alertFrameSubSystems, index)
+				end
+			end
+
+			-- Initial move, then hooks.
+			MoveTalkingHead(TalkingHeadFrame)
+
+			TalkingHeadFrame:HookScript('OnShow', MoveTalkingHead)
+			talkbox:HookScript('OnShow', function() MoveTalkingHead(TalkingHeadFrame) end)
+			talkbox:HookScript('OnHide', function() MoveTalkingHead(TalkingHeadFrame) end)
+		end
 	end
 
-	MoveTalkingHead(TalkingHeadFrame)
-	TalkingHeadFrame:HookScript('OnShow', MoveTalkingHead)
-
-	talkbox:HookScript('OnShow', function(self)
-		MoveTalkingHead(TalkingHeadFrame)
-	end)
-
-	talkbox:HookScript('OnHide', function(self)
-		MoveTalkingHead(TalkingHeadFrame)
-	end)
-end)
+	-- Run the init if the frame already exists (force loaded)
+	if TalkingHeadFrame then
+		InitiateTalkingHead()
+	else -- Hook to the loading function.
+		hooksecurefunc('TalkingHead_LoadUI', InitiateTalkingHead)
+	end
+end
