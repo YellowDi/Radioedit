@@ -2,11 +2,9 @@
 TreeGroup Container
 Container that uses a tree control to switch between groups.
 -------------------------------------------------------------------------------]]
-local Type, Version = "TreeGroup-Z", 40
-local AceGUI = LibStub and LibStub("AceGUI-3.0-Z", true)
+local Type, Version = "TreeGroup", 40
+local AceGUI = LibStub and LibStub("AceGUI-3.0", true)
 if not AceGUI or (AceGUI:GetWidgetVersion(Type) or 0) >= Version then return end
-
-local IsLegion = select(4, GetBuildInfo()) >= 70000
 
 -- Lua APIs
 local next, pairs, ipairs, assert, type = next, pairs, ipairs, assert, type
@@ -660,7 +658,7 @@ local function Constructor()
 	dragger:SetScript("OnMouseDown", Dragger_OnMouseDown)
 	dragger:SetScript("OnMouseUp", Dragger_OnMouseUp)
 
-	local scrollbar = CreateFrame("Slider", AceGUI.Prefix..("TreeGroup%dScrollBar"):format(num), treeframe, "UIPanelScrollBarTemplate")
+	local scrollbar = CreateFrame("Slider", ("AceConfigDialogTreeGroup%dScrollBar"):format(num), treeframe, "UIPanelScrollBarTemplate")
 	scrollbar:SetScript("OnValueChanged", nil)
 	scrollbar:SetPoint("TOPRIGHT", -10, -26)
 	scrollbar:SetPoint("BOTTOMRIGHT", -10, 26)
@@ -672,12 +670,7 @@ local function Constructor()
 
 	local scrollbg = scrollbar:CreateTexture(nil, "BACKGROUND")
 	scrollbg:SetAllPoints(scrollbar)
-
-	if IsLegion then
-		scrollbg:SetColorTexture(0,0,0,0.4)
-	else
-		scrollbg:SetTexture(0,0,0,0.4)
-	end
+	scrollbg:SetColorTexture(0,0,0,0.4)
 
 	local border = CreateFrame("Frame",nil,frame)
 	border:SetPoint("TOPLEFT", treeframe, "TOPRIGHT")

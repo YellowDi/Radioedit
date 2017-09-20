@@ -1,8 +1,8 @@
 --[[-----------------------------------------------------------------------------
 Checkbox Widget
 -------------------------------------------------------------------------------]]
-local Type, Version = "CheckBox-Z", 23
-local AceGUI = LibStub and LibStub("AceGUI-3.0-Z", true)
+local Type, Version = "CheckBox", 23
+local AceGUI = LibStub and LibStub("AceGUI-3.0", true)
 if not AceGUI or (AceGUI:GetWidgetVersion(Type) or 0) >= Version then return end
 
 -- Lua APIs
@@ -60,9 +60,9 @@ local function CheckBox_OnMouseUp(frame)
 		self:ToggleChecked()
 
 		if self.checked then
-			PlaySound(PlaySoundKitID and "igMainMenuOptionCheckBoxOn" or SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON)
+			PlaySound(856) -- SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON
 		else -- for both nil and false (tristate)
-			PlaySound(PlaySoundKitID and "igMainMenuOptionCheckBoxOff" or SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_OFF)
+			PlaySound(857) -- SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_OFF
 		end
 
 		self:Fire("OnValueChanged", self.checked)
@@ -83,20 +83,17 @@ local methods = {
 		self:SetImage()
 		self:SetDisabled(nil)
 		self:SetDescription(nil)
-		self:SetFontObject(GameFontHighlight)  -- NO. Setting it once again in the same frame would fail. WTF Blizz...
 	end,
 
 	-- ["OnRelease"] = nil,
 
 	["OnWidthSet"] = function(self, width)
 		if self.desc then
-			self.desc:SetWidth(width - 30 - (self.indent or 0))
+			self.desc:SetWidth(width - 30)
 			if self.desc:GetText() and self.desc:GetText() ~= "" then
 				self:SetHeight(28 + self.desc:GetHeight())
 			end
 		end
-		self.checkbg:SetPoint("TOPLEFT",self.frame,"TOPLEFT",self.indent or 0,0)
-		self.width = width
 	end,
 
 	["SetDisabled"] = function(self, disabled)
@@ -165,18 +162,6 @@ local methods = {
 			check:SetBlendMode("ADD")
 			highlight:SetTexture("Interface\\Buttons\\UI-RadioButton")
 			highlight:SetTexCoord(0.5, 0.75, 0, 1)
-		elseif self.plusminus then
-			size = 20
-			checkbg:SetTexture("Interface\\Buttons\\UI-PlusButton-Up")
-			checkbg:SetTexCoord(0, 1, 0, 1)
-			checkbg:SetPoint("TOPLEFT",2,0)
-			check:SetTexture("Interface\\Buttons\\UI-MinusButton-Up")
-			check:SetTexCoord(0, 1, 0, 1)
-			check:SetBlendMode("BLEND")
-			highlight:SetTexture("Interface\\Buttons\\UI-PlusButton-Hilight")
-			highlight:SetTexCoord(0, 1, 0, 1)
-			--self.text:SetPoint("LEFT", self.checkbg, "RIGHT", 2,0)
-			--if self.desc then self.desc:SetPoint("TOPLEFT", checkbg, "TOPRIGHT", 7, -21) end
 		else
 			size = 24
 			checkbg:SetTexture("Interface\\Buttons\\UI-CheckBox-Up")
@@ -189,11 +174,6 @@ local methods = {
 		end
 		checkbg:SetHeight(size)
 		checkbg:SetWidth(size)
-	end,
-	
-	["SetPlusMinus"] = function(self, enabled)
-		self.plusminus = enabled
-		self:SetType()
 	end,
 
 	["ToggleChecked"] = function(self)
@@ -230,7 +210,6 @@ local methods = {
 			self.desc:Show()
 			--self.text:SetFontObject(GameFontNormal)
 			self.desc:SetText(desc)
-			self:SetDescriptionFontObject(self.descFont)
 			self:SetHeight(28 + self.desc:GetHeight())
 		else
 			if self.desc then
@@ -255,31 +234,14 @@ local methods = {
 			end
 		end
 		AlignImage(self)
-	end,
-
-	["SetFontObject"] = function(self, font)
-		font = font or GameFontNormal
-		self.text:SetFontObject(font)
-		self.text:SetTextColor(font:GetTextColor())
-	end,
-
-	["SetDescriptionFontObject"] = function(self, font)
-		if not self.desc then return end
-		self.desc:SetFontObject(font)
-		self.desc:SetTextColor(font:GetTextColor())
-	end,
-	
-	["SetIndent"] = function(self, indent)
-		self.indent = indent or 0
-		self:OnWidthSet(self.width or 50)
-	end,
+	end
 }
 
 --[[-----------------------------------------------------------------------------
 Constructor
 -------------------------------------------------------------------------------]]
 local function Constructor()
-	local frame = CreateFrame("Button", AceGUI.Prefix.."CheckBox" .. AceGUI:GetNextWidgetNum(Type), UIParent)
+	local frame = CreateFrame("Button", nil, UIParent)
 	frame:Hide()
 
 	frame:EnableMouse(true)

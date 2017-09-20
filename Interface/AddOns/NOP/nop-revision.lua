@@ -1,4 +1,9 @@
 -- Revisions:
+--[[<p>08.06 18.09.2017</p>
+<ul>
+<li>Added Libram of Truth, Krokul Ridgestalker, Argussian Reach Insignia, Greater Argussian Reach Insignia, Army of the Light Insignia, Greater Army of the Light Insignia and Void-Purged Krokul.</li>
+</ul>
+]]
 --[[<p>08.04 01.09.2017</p>
 <ul>
 <li>Added Stolen Shado-Pan Insignia, Broken Isles Recipe Scrap.</li>

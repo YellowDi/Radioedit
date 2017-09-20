@@ -56,6 +56,8 @@ NOP.T_RECIPES = { -- [ItemId] = {count_to_use, "gsub regex" | tooltip-line-numbe
   [118427] = {1,3,nil,nil}, -- Autographed Hearthstone Card, 3rd line contains "Use: Adds this toy to your toy box."
   [127413] = {1,3,nil,nil}, -- Jeweled Arakkoa Effigy, 3rd line contains "Use: Pry out the eyes of the statue."
   [146748] = {1,3,nil,nil}, -- Highmountain Tribute open containers
+  [152958] = {1,1,nil}, -- Army of the Light Insignia
+  [152959] = {1,1,nil}, -- Argussian Reach Insignia
   [139023] = {1,1,nil}, -- Court of Farondis Insignia 
   [139021] = {1,1,nil}, -- Dreamweaver Insignia 
   [139024] = {1,1,nil}, -- Highmountain Tribe Insignia 
@@ -76,6 +78,9 @@ NOP.T_RECIPES = { -- [ItemId] = {count_to_use, "gsub regex" | tooltip-line-numbe
   [147727] = {1,1,nil}, -- Greater Legionfall Insignia
 }
 NOP.T_ITEMS = { -- [itemID] = {count_to_use,{"sub-Zone",...},{[mapID]=true,...},auraID}, table for opening/use item by itemID, is no possible to check any common text
+  [152096] = {1,nil,nil}, -- Void-Purged Krokul
+  [152095] = {1,nil,nil}, -- Krokul Ridgestalker
+  [140760] = {1,nil,nil}, -- Libram of Truth
   [151653] = {10,nil,nil}, -- Broken Isles Recipe Scrap
   [ 94223] = {1,nil,nil}, -- Stolen Shado-Pan Insignia
   [151423] = {1,nil,nil}, -- Stabilized Titan Essence

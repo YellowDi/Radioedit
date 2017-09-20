@@ -1,4 +1,4 @@
-local AceGUI = LibStub("AceGUI-3.0-Z")
+local AceGUI = LibStub("AceGUI-3.0")
 
 -- Lua APIs
 local pairs, assert, type = pairs, assert, type
@@ -20,15 +20,19 @@ local CreateFrame, UIParent = CreateFrame, UIParent
 
 ]]
 do
-	local Type = "Window-Z"
-	local Version = 4
+	local Type = "Window"
+	local Version = 6
+
+	local function frameOnShow(this)
+		this.obj:Fire("OnShow")
+	end
 
 	local function frameOnClose(this)
 		this.obj:Fire("OnClose")
 	end
 	
 	local function closeOnClick(this)
-		PlaySound(PlaySoundKitID and "gsTitleOptionExit" or SOUNDKIT.GS_TITLE_OPTION_EXIT)
+		PlaySound(799) -- SOUNDKIT.GS_TITLE_OPTION_EXIT
 		this.obj:Hide()
 	end
 	
@@ -153,7 +157,7 @@ do
 	local function Constructor()
 		local frame = CreateFrame("Frame",nil,UIParent)
 		local self = {}
-		self.type = Type
+		self.type = "Window"
 		
 		self.Hide = Hide
 		self.Show = Show
@@ -180,6 +184,7 @@ do
 		frame:SetFrameStrata("FULLSCREEN_DIALOG")
 		frame:SetScript("OnMouseDown", frameOnMouseDown)
 		
+		frame:SetScript("OnShow",frameOnShow)
 		frame:SetScript("OnHide",frameOnClose)
 		frame:SetMinResize(240,240)
 		frame:SetToplevel(true)

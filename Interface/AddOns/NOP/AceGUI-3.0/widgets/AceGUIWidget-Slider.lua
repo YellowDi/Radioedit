@@ -2,8 +2,8 @@
 Slider Widget
 Graphical Slider, like, for Range values.
 -------------------------------------------------------------------------------]]
-local Type, Version = "Slider-Z", 21
-local AceGUI = LibStub and LibStub("AceGUI-3.0-Z", true)
+local Type, Version = "Slider", 22
+local AceGUI = LibStub and LibStub("AceGUI-3.0", true)
 if not AceGUI or (AceGUI:GetWidgetVersion(Type) or 0) >= Version then return end
 
 -- Lua APIs
@@ -108,7 +108,7 @@ local function EditBox_OnEnterPressed(frame)
 	end
 	
 	if value then
-		PlaySound(PlaySoundKitID and "igMainMenuOptionCheckBoxOn" or SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON)
+		PlaySound(856) -- SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON
 		self.slider:SetValue(value)
 		self:Fire("OnMouseUp", value)
 	end
@@ -134,9 +134,6 @@ local methods = {
 		self:SetSliderValues(0,100,1)
 		self:SetValue(0)
 		self.slider:EnableMouseWheel(false)
-		self:SetLabelFontObject()
-		self:SetRangeFontObject()
-		self:SetValueFontObject()
 	end,
 
 	-- ["OnRelease"] = nil,
@@ -198,21 +195,7 @@ local methods = {
 		self.ispercent = value
 		UpdateLabels(self)
 		UpdateText(self)
-	end,
-
-	["SetLabelFontObject"] = function(self, font)
-		self.label:SetFontObject(font or GameFontNormal)
-	end,
-
-	["SetValueFontObject"] = function(self, font)
-		self.editbox:SetFontObject(font or GameFontHighlightSmall)
-	end,
-
-	["SetRangeFontObject"] = function(self, font)
-		self.hightext:SetFontObject(font or GameFontHighlightSmall)
-		self.lowtext:SetFontObject(font or GameFontHighlightSmall)
-	end,
-
+	end
 }
 
 --[[-----------------------------------------------------------------------------
@@ -291,7 +274,6 @@ local function Constructor()
 		frame       = frame,
 		type        = Type
 	}
-
 	for method, func in pairs(methods) do
 		widget[method] = func
 	end

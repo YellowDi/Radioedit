@@ -2,8 +2,8 @@
 TabGroup Container
 Container that uses tabs on top to switch between groups.
 -------------------------------------------------------------------------------]]
-local Type, Version = "TabGroup-Z", 35
-local AceGUI = LibStub and LibStub("AceGUI-3.0-Z", true)
+local Type, Version = "TabGroup", 36
+local AceGUI = LibStub and LibStub("AceGUI-3.0", true)
 if not AceGUI or (AceGUI:GetWidgetVersion(Type) or 0) >= Version then return end
 
 -- Lua APIs
@@ -63,7 +63,7 @@ Scripts
 -------------------------------------------------------------------------------]]
 local function Tab_OnClick(frame)
 	if not (frame.selected or frame.disabled) then
-		PlaySound(PlaySoundKitID and "igCharacterInfoTab" or SOUNDKIT.IG_CHARACTER_INFO_TAB)
+		PlaySound(841) -- SOUNDKIT.IG_CHARACTER_INFO_TAB
 		frame.obj:SelectTab(frame.value)
 	end
 end

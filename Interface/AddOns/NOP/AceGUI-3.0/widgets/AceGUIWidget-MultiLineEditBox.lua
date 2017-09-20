@@ -1,5 +1,5 @@
-local Type, Version = "MultiLineEditBox-Z", 28
-local AceGUI = LibStub and LibStub("AceGUI-3.0-Z", true)
+local Type, Version = "MultiLineEditBox", 28
+local AceGUI = LibStub and LibStub("AceGUI-3.0", true)
 if not AceGUI or (AceGUI:GetWidgetVersion(Type) or 0) >= Version then return end
 
 -- Lua APIs
@@ -167,10 +167,6 @@ local methods = {
 		self:SetNumLines()
 		self.entered = nil
 		self:SetMaxLetters(0)
-		self:SetLabelFontObject()
-		self:SetEditFontObject()
-		self:SetButtonNormalFontObject()
-		self:SetButtonHighlightFontObject()
 	end,
 
 	["OnRelease"] = function(self)
@@ -228,14 +224,6 @@ local methods = {
 		self.editBox:SetMaxLetters(num or 0)
 	end,
 
-	["SetButtonText"] = function(self, text)
-		self.button:SetText(text)
-	end,
-
-	["SetButtonWidth"] = function(self, value)
-		self.button:SetWidth(value)
-	end,
-
 	["DisableButton"] = function(self, disabled)
 		self.disablebutton = disabled
 		if disabled then
@@ -271,21 +259,6 @@ local methods = {
 	end,
 	
 	
-	["SetLabelFontObject"] = function(self, font)
-		self.label:SetFontObject(font or GameFontNormalSmall)
-	end,
-
-	["SetEditFontObject"] = function(self, font)
-		self.editBox:SetFontObject(font or ChatFontNormal)
-	end,
-
-	["SetButtonNormalFontObject"] = function(self, font)
-		self.button:SetNormalFontObject(font or ChatFontNormal)
-	end,
-
-	["SetButtonHighlightFontObject"] = function(self, font)
-		self.button:SetHighlightFontObject(font or ChatFontNormal)
-	end,
 }
 
 --[[-----------------------------------------------------------------------------

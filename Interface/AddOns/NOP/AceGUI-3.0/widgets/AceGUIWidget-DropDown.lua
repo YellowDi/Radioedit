@@ -1,5 +1,5 @@
---[[ $Id: AceGUIWidget-DropDown.lua 1116 2014-10-12 08:15:46Z nevcairiel $ ]]--
-local AceGUI = LibStub("AceGUI-3.0-Z")
+--[[ $Id: AceGUIWidget-DropDown.lua 1167 2017-08-29 22:08:48Z funkydude $ ]]--
+local AceGUI = LibStub("AceGUI-3.0")
 
 -- Lua APIs
 local min, max, floor = math.min, math.max, math.floor
@@ -38,7 +38,7 @@ local function fixstrata(strata, parent, ...)
 end
 
 do
-	local widgetType = "Dropdown-Pullout-Z"
+	local widgetType = "Dropdown-Pullout"
 	local widgetVersion = 3
 	
 	--[[ Static data ]]--
@@ -177,21 +177,9 @@ do
 		
 		item.frame:SetPoint("LEFT", self.itemFrame, "LEFT")
 		item.frame:SetPoint("RIGHT", self.itemFrame, "RIGHT")
-
+		
 		item:SetPullout(self)
 		item:SetOnEnter(OnEnter)
-
-		if item.SetFontObject then
-			item:SetFontObject(self.itemFontObject)
-		end
-	end
-
-	-- exported
-	local function SetItemFontObject(self, font)
-		for k,item in pairs(self.items) do
-			item:SetFontObject(font)
-			item:SetTextColor(font:GetTextColor())
-		end
 	end
 		
 	-- exported
@@ -270,7 +258,7 @@ do
 	
 	local function Constructor()
 		local count = AceGUI:GetNextWidgetNum(widgetType)
-		local frame = CreateFrame("Frame", AceGUI.Prefix.."Pullout"..count, UIParent)
+		local frame = CreateFrame("Frame", "AceGUI30Pullout"..count, UIParent)
 		local self = {}
 		self.count = count
 		self.type = widgetType
@@ -294,8 +282,6 @@ do
 		self.SetMaxHeight = SetMaxHeight
 		self.GetRightBorderWidth = GetRightBorderWidth
 		self.GetLeftBorderWidth = GetLeftBorderWidth
-
-		self.SetItemFontObject = SetItemFontObject
 		
 		self.items = {}
 		
@@ -323,7 +309,7 @@ do
 		scrollFrame.obj = self
 		itemFrame.obj = self
 		
-		local slider = CreateFrame("Slider", AceGUI.Prefix.."PulloutScrollbar"..count, scrollFrame)
+		local slider = CreateFrame("Slider", "AceGUI30PulloutScrollbar"..count, scrollFrame)
 		slider:SetOrientation("VERTICAL")
 		slider:SetHitRectInsets(0, 0, -10, 0)
 		slider:SetBackdrop(sliderBackdrop)
@@ -369,27 +355,19 @@ do
 end
 
 do
-	local widgetType = "Dropdown-Z"
-	local widgetVersion = 30
+	local widgetType = "Dropdown"
+	local widgetVersion = 31
 	
 	--[[ Static data ]]--
 	
 	--[[ UI event handler ]]--
 	
 	local function Control_OnEnter(this)
-		this.obj:Fire("OnEnter")
-	end
-	
-	local function Control_OnLeave(this)
-		this.obj:Fire("OnLeave")
-	end
-
-	local function Button_OnEnter(this)
 		this.obj.button:LockHighlight()
 		this.obj:Fire("OnEnter")
 	end
 	
-	local function Button_OnLeave(this)
+	local function Control_OnLeave(this)
 		this.obj.button:UnlockHighlight()
 		this.obj:Fire("OnLeave")
 	end
@@ -403,7 +381,7 @@ do
 	
 	local function Dropdown_TogglePullout(this)
 		local self = this.obj
-		PlaySound(PlaySoundKitID and "igMainMenuOptionCheckBoxOn" or SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON) -- missleading name, but the Blizzard code uses this sound
+		PlaySound(856) -- SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON
 		if self.open then
 			self.open = nil
 			self.pullout:Close()
@@ -439,7 +417,7 @@ do
 	local function ShowMultiText(self)
 		local text
 		for i, widget in self.pullout:IterateItems() do
-			if widget.type == "Dropdown-Item-Toggle-Z" then
+			if widget.type == "Dropdown-Item-Toggle" then
 				if widget:GetValue() then
 					if text then
 						text = text..", "..widget:GetText()
@@ -475,7 +453,7 @@ do
 	
 	-- exported, AceGUI callback
 	local function OnAcquire(self)
-		local pullout = AceGUI:Create("Dropdown-Pullout-Z")
+		local pullout = AceGUI:Create("Dropdown-Pullout")
 		self.pullout = pullout
 		pullout.userdata.obj = self
 		pullout:SetCallback("OnClose", OnPulloutClose)
@@ -487,8 +465,6 @@ do
 		self:SetWidth(200)
 		self:SetLabel()
 		self:SetPulloutWidth(nil)
-		self:SetLabelFontObject()
-		self:SetValueFontObject()
 	end
 	
 	-- exported, AceGUI callback
@@ -523,7 +499,7 @@ do
 		else
 			self.button:Enable()
 			self.button_cover:Enable()
-			self.label:SetTextColor(self.label:GetFontObject():GetTextColor())
+			self.label:SetTextColor(1,.82,0)
 			self.text:SetTextColor(1,1,1)
 		end
 	end
@@ -545,9 +521,9 @@ do
 		if text and text ~= "" then
 			self.label:SetText(text)
 			self.label:Show()
-			self.dropdown:SetPoint("TOPLEFT",self.frame,"TOPLEFT",-15,-19)
-			self:SetHeight(45)
-			self.alignoffset = 31
+			self.dropdown:SetPoint("TOPLEFT",self.frame,"TOPLEFT",-15,-14)
+			self:SetHeight(40)
+			self.alignoffset = 26
 		else
 			self.label:SetText("")
 			self.label:Hide()
@@ -593,7 +569,7 @@ do
 	end
 	
 	local function AddListItem(self, value, text, itemType)
-		if not itemType then itemType = "Dropdown-Item-Toggle-Z" end
+		if not itemType then itemType = "Dropdown-Item-Toggle" end
 		local exists = AceGUI:GetWidgetVersion(itemType)
 		if not exists then error(("The given item type, %q, does not exist within AceGUI-3.0"):format(tostring(itemType)), 2) end
 
@@ -602,15 +578,12 @@ do
 		item.userdata.obj = self
 		item.userdata.value = value
 		item:SetCallback("OnValueChanged", OnItemValueChanged)
-		if item.SetFontObject then
-			item:SetFontObject(self.itemFontObject)
-		end
 		self.pullout:AddItem(item)
 	end
 	
 	local function AddCloseButton(self)
 		if not self.hasClose then
-			local close = AceGUI:Create("Dropdown-Item-Execute-Z")
+			local close = AceGUI:Create("Dropdown-Item-Execute")
 			close:SetText(CLOSE)
 			self.pullout:AddItem(close)
 			self.hasClose = true
@@ -670,33 +643,14 @@ do
 	
 	local function SetPulloutWidth(self, width)
 		self.pulloutWidth = width
-		if not width then
-			self.dropdown:SetPoint("BOTTOMRIGHT",self.frame,"BOTTOMRIGHT",17,0)
-		else
-			self.dropdown:SetPoint("BOTTOMRIGHT",self.frame,"BOTTOMLEFT",width+17,0)
-		end
-	end
-	
-	local function SetLabelFontObject(self, font)
-		font = font or GameFontNormal
-		self.label:SetFontObject(font)
-		self.label:SetTextColor(font:GetTextColor())
-	end
-	
-	local function SetValueFontObject(self, font)
-		font = font or GameFontHighlightSmall
-		self.text:SetFontObject(font)
-		self.text:SetTextColor(font:GetTextColor())
-		self.pullout.itemFontObject = font
-		self.pullout:SetItemFontObject(font)
 	end
 	
 	--[[ Constructor ]]--
 	
 	local function Constructor()
 		local count = AceGUI:GetNextWidgetNum(widgetType)
-		local frame = CreateFrame("Frame", AceGUI.Prefix.."DropDown"..count.."Frame", UIParent)
-		local dropdown = CreateFrame("Frame", AceGUI.Prefix.."DropDown"..count, frame, "UIDropDownMenuTemplate")
+		local frame = CreateFrame("Frame", nil, UIParent)
+		local dropdown = CreateFrame("Frame", "AceGUI30DropDown"..count, frame, "UIDropDownMenuTemplate")
 		
 		local self = {}
 		self.type = widgetType
@@ -723,16 +677,10 @@ do
 		self.SetItemValue = SetItemValue
 		self.SetItemDisabled = SetItemDisabled
 		self.SetPulloutWidth = SetPulloutWidth
-
-		self.SetLabelFontObject = SetLabelFontObject
-		self.SetValueFontObject = SetValueFontObject
-
 		
 		self.alignoffset = 26
 		
 		frame:SetScript("OnHide",Dropdown_OnHide)
-		frame:SetScript("OnEnter",Control_OnEnter)
-		frame:SetScript("OnLeave",Control_OnLeave)
 
 		dropdown:ClearAllPoints()
 		dropdown:SetPoint("TOPLEFT",frame,"TOPLEFT",-15,0)
@@ -753,8 +701,8 @@ do
 		local button = _G[dropdown:GetName() .. "Button"]
 		self.button = button
 		button.obj = self
-		button:SetScript("OnEnter",Button_OnEnter)
-		button:SetScript("OnLeave",Button_OnLeave)
+		button:SetScript("OnEnter",Control_OnEnter)
+		button:SetScript("OnLeave",Control_OnLeave)
 		button:SetScript("OnClick",Dropdown_TogglePullout)
 		
 		local button_cover = CreateFrame("BUTTON",nil,self.frame)
@@ -762,8 +710,8 @@ do
 		button_cover.obj = self
 		button_cover:SetPoint("TOPLEFT",self.frame,"BOTTOMLEFT",0,25)
 		button_cover:SetPoint("BOTTOMRIGHT",self.frame,"BOTTOMRIGHT")
-		button_cover:SetScript("OnEnter",Button_OnEnter)
-		button_cover:SetScript("OnLeave",Button_OnLeave)
+		button_cover:SetScript("OnEnter",Control_OnEnter)
+		button_cover:SetScript("OnLeave",Control_OnLeave)
 		button_cover:SetScript("OnClick",Dropdown_TogglePullout)
 		
 		local text = _G[dropdown:GetName() .. "Text"]
