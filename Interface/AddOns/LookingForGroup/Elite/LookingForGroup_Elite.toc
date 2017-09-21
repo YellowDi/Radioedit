@@ -1,7 +1,7 @@
 ## Interface: 70300
 ## Author: cqwrteur
 ## Title: LookingForGroup Elite
-## Version: 412
+## Version: 419
 ## Dependencies: LookingForGroup_Auto
 ## LoadOnDemand: 1
 

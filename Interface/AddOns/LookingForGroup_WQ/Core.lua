@@ -63,7 +63,6 @@ function LookingForGroup_WQ:QUEST_ACCEPTED(info,index,wq_id)
 					C_LFGList.CreateListing(activityID,"",0,0,"",comment,true,false,wq_id)
 				end
 			end
-			LookingForGroup_Auto.db.profile.wq = wq_id
 			if IsInGroup() then
 				if UnitIsGroupLeader("player") then
 					if info == LookingForGroup then
@@ -73,13 +72,14 @@ function LookingForGroup_WQ:QUEST_ACCEPTED(info,index,wq_id)
 					end
 				end
 			else
+				LookingForGroup_Auto.db.profile.wq = wq_id
 				LookingForGroup_Auto.accepted(function()
 					LookingForGroup.Search(function()
 						if LookingForGroup_Auto.db.profile.wq == wq_id then
 							LookingForGroup_Auto.apply(create)
 						end
 					end,categoryID,{{matches = {questName}}},0,filters)
-				end)
+				end,info==LookingForGroup)
 			end
 		end
 	end

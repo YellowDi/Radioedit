@@ -14,13 +14,13 @@ function LookingForGroup_InvasionPoint:OnEnable()
 	end
 end
 
-local function callback()
+function LookingForGroup_InvasionPoint.callback(secure)
 	local mfn = GetMapInfo()
 	if mfn and mfn:find("InvasionPoint") then
 		local name = GetMapNameByID(GetCurrentMapAreaID())
 		local enfnm = mfn:gsub ("InvasionPoint", "")
 		local function create()
-			C_LFGList.CreateListing(16,name,0,0,"","LookingForGroup\nInvasion Point: "..enfnm,true,false)
+			C_LFGList.CreateListing(16,"Invasion Point: "..enfnm,0,0,"","LookingForGroup "..name,true,false)
 		end
 		if IsInGroup() then
 			if not C_LFGList.GetActiveEntryInfo() and UnitIsGroupLeader("player") then
@@ -31,12 +31,12 @@ local function callback()
 				LookingForGroup.Search(function()
 					LookingForGroup_Auto.apply(create)
 				end,6,{{matches = {name,enfnm}}},0,0)
-			end)
+			end,secure)
 		end
 	else
 		local active, activityID, iLevel, honorLevel, name, comment, voiceChat, expiration, oldAutoAccept, privateGroup, questID = C_LFGList.GetActiveEntryInfo()
 		if active then
-			if strfind(comment,enfnm) then
+			if strfind(comment,"Invasion Point") then
 				LookingForGroup_Auto.done()
 			end
 		end
@@ -44,5 +44,5 @@ local function callback()
 end
 
 function LookingForGroup_InvasionPoint:LOADING_SCREEN_DISABLED()
-	C_Timer.After(2,callback)
+	C_Timer.After(2,LookingForGroup_InvasionPoint.callback)
 end

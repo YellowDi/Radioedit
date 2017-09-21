@@ -26,7 +26,7 @@ function LDB:OnClick(button)
 		
 		local s,LookingForGroup_InvasionPoint = pcall(AceAddon.GetAddon,AceAddon,"LookingForGroup_InvasionPoint")
 		if s then
-			LookingForGroup_InvasionPoint:LOADING_SCREEN_DISABLED()
+			LookingForGroup_InvasionPoint.callback(true)
 		end
 	else
 		local AceConfigDialog = LibStub("AceConfigDialog-3.0")

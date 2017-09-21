@@ -107,13 +107,17 @@ function LookingForGroup_Auto.apply(create)
 	end
 end
 
-function LookingForGroup_Auto.accepted(search)
+function LookingForGroup_Auto.accepted(search,secure)
 	local status,LookingForGroup_Options = pcall(AceAddon.GetAddon,AceAddon,"LookingForGroup_Options")
 	if status then
 		LookingForGroup_Options.Background_Timer_Stop()
 		LookingForGroup_Options.Background_NoSearchResult_StartMusic()
 	end
-	LookingForGroup_Auto.hardware_api(SEARCH,search)
+	if secure then
+		search()
+	else
+		LookingForGroup_Auto.hardware_api(SEARCH,search)
+	end
 end
 
 

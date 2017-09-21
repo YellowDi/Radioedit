@@ -1,7 +1,7 @@
 ## Interface: 70300
 ## Author: cqwrteur
 ## Title: LookingForGroup Kicker
-## Version: 412
+## Version: 419
 ## Dependencies: LookingForGroup
 ## LoadOnDemand: 1
 
