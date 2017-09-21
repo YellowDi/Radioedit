@@ -1,7 +1,7 @@
 SLASH_FilteredNamePlate1 = "/fnp"
 
 local isInitedDrop
-
+local L = FNP_LOCALE_TEXT
 function SlashCmdList.FilteredNamePlate(msg)
 	if msg == "" then
 		print(L.FNP_PRINT_HELP0)

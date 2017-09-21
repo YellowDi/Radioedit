@@ -19,8 +19,8 @@ FilteredNamePlate.UITypeList = {
 	[1] = FNP_LOCALE_TEXT.FNP_ORIG_TITLE2,
 	[2] = "TidyPlates",
 	[3] = "Kui_NamePlates",
-	[4] = "EUI/ElvUI/RayUI",
-	[5] = "NDUI",
+	[4] = "RayUI",
+	[5] = "EUI/ElvUI/NDUI",
 	[6] = FNP_LOCALE_TEXT.FNP_EKNUM_TITLE,
 	[7] = "ShestackUI",
 	[8] = "CblUI",
@@ -29,14 +29,14 @@ FilteredNamePlate.UITypeList = {
 FilteredNamePlate.curScaleList = {}
 
 -- UIType  -> curNpFlag  curNpFlag1Type
--- 原生0,1		   0	UnitFrame
--- TidyPlates 简单2  1	carrier
--- KUI        简单3  1	kui
--- EUI/RayUI  简单4  1	UnitFrame
--- NDUI	      简单5  1    unitFrame
--- EKNum 6	    	2	 UnitFrame
--- she7		        3	 UnitFrame
--- CBL 8		    4	 UnitFrame
+-- 原生0,1		   0	   UnitFrame
+-- TidyPlates 简单2  1	    carrier
+-- KUI        简单3  1	    kui
+--  RayUI      简单4  1	        UnitFrame
+-- NDUI/EUI	   简单5  1    unitFrame
+-- EKNum 6	    	  2	 UnitFrame
+-- she7		         3	 UnitFrame
+-- CBL 8		     4	 UnitFrame
 function FilteredNamePlate:GenCurNpFlags()
 	local curNpFlag = 0 -- 上述UIType的下标
 	if Fnp_OtherNPFlag == 0 or Fnp_OtherNPFlag == 1 then
@@ -117,7 +117,7 @@ end
 function FilteredNamePlate:initScaleValues(curNpFlag)
 	local isScaleInited = false
 	for _, frame in pairs(GetNamePlates()) do
-		local foundUnit = frame.namePlateUnitToken or (frame.UnitFrame and frame.UnitFrame.unit)
+		local foundUnit = (frame.namePlateUnitToken or (frame.UnitFrame and frame.UnitFrame.unit)) or (frame.unitFrame and frame.unitFrame.unit)
 		local sys = 0
 		if foundUnit then
 			if curNpFlag == 0 then --Orig模型 调节名字宽度，调节血条高度，施法条高度
