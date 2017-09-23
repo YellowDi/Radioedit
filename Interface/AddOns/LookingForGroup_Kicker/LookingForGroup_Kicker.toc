@@ -1,8 +1,0 @@
-## Interface: 70300
-## Author: cqwrteur
-## Title: LookingForGroup Kicker
-## Version: 419
-## Dependencies: LookingForGroup
-## LoadOnDemand: 1
-
-Core.lua

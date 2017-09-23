@@ -1,8 +1,0 @@
-## Interface: 70300
-## Author: cqwrteur
-## Title: LookingForGroup Cross Realm
-## Version: 419
-## Dependencies: LookingForGroup
-## LoadOnDemand: 1
-
-Core.lua

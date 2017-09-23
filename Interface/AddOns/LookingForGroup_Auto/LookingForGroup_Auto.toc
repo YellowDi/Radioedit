@@ -1,9 +1,0 @@
-## Interface: 70300
-## Author: cqwrteur
-## Title: LookingForGroup Auto
-## Version: 419
-## Dependencies: LookingForGroup
-## SavedVariablesPerCharacter: LookingForGroup_AutoCharacterDB
-## LoadOnDemand: 1
-
-Core.lua
