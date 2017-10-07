@@ -24,6 +24,11 @@ local new=addon:Wrap("NewTable")
 local del=addon:Wrap("DelTable")
 local kpairs=addon:Wrap("Kpairs")
 local empty=addon:Wrap("Empty")
+
+local todefault=addon:Wrap("todefault")
+
+local tonumber=tonumber
+local type=type
 local OHF=OrderHallMissionFrame
 local OHFMissionTab=OrderHallMissionFrame.MissionTab --Container for mission list and single mission
 local OHFMissions=OrderHallMissionFrame.MissionTab.MissionList -- same as OrderHallMissionFrameMissions Call Update on this to refresh Mission Listing
@@ -33,6 +38,8 @@ local OHFFollowers=OrderHallMissionFrameFollowers -- Contains scroll list
 local OHFMissionPage=OrderHallMissionFrame.MissionTab.MissionPage -- Contains mission description and party setup 
 local OHFMapTab=OrderHallMissionFrame.MapTab -- Contains quest map
 local OHFCompleteDialog=OrderHallMissionFrameMissions.CompleteDialog
+local OHFMissionScroll=OrderHallMissionFrameMissionsListScrollFrame
+local OHFMissionScrollChild=OrderHallMissionFrameMissionsListScrollFrameScrollChild
 local followerType=LE_FOLLOWER_TYPE_GARRISON_7_0
 local garrisonType=LE_GARRISON_TYPE_7_0
 local FAKE_FOLLOWERID="0x0000000000000000"
@@ -59,6 +66,184 @@ local print=function() end
 --@end-non-debug@
 local LE_FOLLOWER_TYPE_GARRISON_7_0=LE_FOLLOWER_TYPE_GARRISON_7_0
 local LE_GARRISON_TYPE_7_0=LE_GARRISON_TYPE_7_0
+local GARRISON_FOLLOWER_COMBAT_ALLY=GARRISON_FOLLOWER_COMBAT_ALLY
+local GARRISON_FOLLOWER_ON_MISSION=GARRISON_FOLLOWER_ON_MISSION
+local GARRISON_FOLLOWER_INACTIVE=GARRISON_FOLLOWER_INACTIVE
+local ViragDevTool_AddData=_G.ViragDevTool_AddData
+if not ViragDevTool_AddData then ViragDevTool_AddData=function() end end
+local KEY_BUTTON1 = "\124TInterface\\TutorialFrame\\UI-Tutorial-Frame:12:12:0:0:512:512:10:65:228:283\124t" -- left mouse button
+local KEY_BUTTON2 = "\124TInterface\\TutorialFrame\\UI-Tutorial-Frame:12:12:0:0:512:512:10:65:330:385\124t" -- right mouse button
+local CTRL_KEY_TEXT,SHIFT_KEY_TEXT=CTRL_KEY_TEXT,SHIFT_KEY_TEXT
+
 
 -- End Template - DO NOT MODIFY ANYTHING BEFORE THIS LINE
 --*BEGIN 
+local wipe,pcall,pairs,IsShiftKeyDown,IsControlKeyDown=wipe,pcall,pairs,IsShiftKeyDown,IsControlKeyDown
+local PlaySound,SOUNDKIT=PlaySound,SOUNDKIT
+local OHFButtons=OHFMissions.listScroll.buttons
+
+local safeguard={}
+function module:Cleanup()
+	for followerID,missionID in pairs(safeguard) do
+		pcall(G.RemoveFollowerFromMission,missionID,followerID)
+	end
+	wipe(safeguard)
+end
+function module:GARRISON_MISSION_STARTED(event,missionType,missionID)
+	if missionType == LE_FOLLOWER_TYPE_GARRISON_7_0 then
+		self:UnregisterEvent("GARRISON_MISSION_STARTED")
+		local mission=G.GetBasicMissionInfo(missionID)
+		addon:UnReserveMission(missionID)
+		-- Remove used followers from safeguad
+		for i=1,#mission.followers do
+			safeguard[mission.followers[i]]=nil
+		end
+		-- safeguard should be empty now
+		self:Cleanup()
+	end
+end
+local truerun
+local multiple
+function module:RunMission()
+	truerun=IsShiftKeyDown() or IsControlKeyDown()
+	multiple=IsControlKeyDown()
+	return self:DoRunMissions()
+end
+function module:DoRunMissions()
+	local baseChance=addon:GetNumber('BASECHANCE')
+	wipe(safeguard)
+	local nothing=true
+	for i=1,#OHFButtons do
+		local frame=OHFButtons[i]
+		local mission=frame.info
+		local missionID=mission and mission.missionID
+		if missionID then
+			if not addon:IsBlacklisted(missionID) and addon:HasReservedFollowers(missionID) then
+				nothing=false
+				local key=addon:GetMissionKey(missionID)
+				local party=addon:GetMissionParties(missionID):GetSelectedParty(key)
+				local members = addon:GetMembersFrame(frame)
+				addon:Print(format(L["Attempting %s"],C(mission.name,'orange')))
+				 
+				if party.perc >= baseChance then
+					local info=""
+					for i=1,#members.Champions do
+						local followerID=members.Champions[i]:GetFollower()
+						if followerID then
+							safeguard[followerID]=missionID
+							local rc,res = pcall(G.AddFollowerToMission,missionID,followerID)
+							if rc then
+								info=info .. G.GetFollowerLink(followerID)
+							else
+								addon:Print(C(L["Unable to start mission, aborting"],"red"))
+								self:Cleanup()
+								break
+							end
+						end
+					end
+					local timestring,timeseconds,timeImproved,chance,buffs,missionEffects,xpBonus,materials,gold=G.GetPartyMissionInfo(missionID)
+          
+					if party.perc < chance then
+						addon:Print(C(L["Could not fulfill mission, aborting"],"red"))
+						self:Cleanup()
+						break
+					end
+          local r,n,i=addon:GetResources(true)
+          if select(2,G.GetMissionCost(missionID)) > r then
+            addon:Print(C(GARRISON_NOT_ENOUGH_MATERIALS_TOOLTIP,"red"))
+            self:Cleanup()
+            break
+          end
+					
+					nothing=false
+					if truerun then
+						self:RegisterEvent("GARRISON_MISSION_STARTED")
+						G.StartMission(missionID)						
+						addon:Print(C(L["Started with "],"green") ..info)
+						PlaySound(SOUNDKIT.UI_GARRISON_COMMAND_TABLE_MISSION_START)
+						--[===[@debug@
+						dprint("Calling OHF:UpdateMissions")  
+						--@end-debug@]===]
+						OHFFollowerList.dirtyList=true
+						OHFFollowerList:UpdateFollowers();	
+						OHFMissions:UpdateMissions()						
+						--[===[@debug@												
+						if multiple then
+						  addon:Print("Multiple is running")
+							self:ScheduleTimer("DoRunMissions",1)
+						end
+						--@end-debug@]===]
+						break
+					else
+						addon:Print(C(L["Would start with "],"green") ..info)
+						addon:Print(C("Shift-Click to actually start mission","green"))
+						self:Cleanup()
+					end
+				else
+					addon:Print(C(format(L["%1$d%% lower than %2$d%%. Lower %s"],party.perc,baseChance,L["Base Chance"]),"red"))
+				end
+			end
+		end
+	end
+	if nothing and not multiple then
+		addon:Print(C(L["No suitable missions. Have you reserved at least one follower?"],"red"))
+	end
+	multiple=true
+end
+function module:FireMission(missionID,frame,truerun)
+  if not addon:IsBlacklisted(missionID)  then
+    local baseChance=addon:GetNumber('BASECHANCE')
+    local key=addon:GetMissionKey(missionID)
+    local party=addon:GetMissionParties(missionID):GetSelectedParty(key)
+    local members = addon:GetMembersFrame(frame)
+    if party.perc >= baseChance then
+      local info=""
+      for i=1,#members.Champions do
+        local followerID=members.Champions[i]:GetFollower()
+        if followerID then
+          safeguard[followerID]=missionID
+          local rc,res = pcall(G.AddFollowerToMission,missionID,followerID)
+          if rc then
+            info=info .. G.GetFollowerLink(followerID)
+          else
+            addon:Print(C(L["Unable to start mission, aborting"],"red"))
+            self:Cleanup()
+            break
+          end
+        end
+      end
+      local timestring,timeseconds,timeImproved,chance,buffs,missionEffects,xpBonus,materials,gold=G.GetPartyMissionInfo(missionID)
+      if party.perc < chance then
+        addon:Print(C(L["Could not fulfill mission, aborting"],"red"))
+        self:Cleanup()
+        return true
+      end
+      local r,n,i=addon:GetResources(true)
+      if select(2,G.GetMissionCost(missionID)) > r then
+        addon:Print(C(GARRISON_NOT_ENOUGH_MATERIALS_TOOLTIP,"red"))
+        self:Cleanup()
+        return true
+      end
+      if truerun then
+        self:RegisterEvent("GARRISON_MISSION_STARTED")
+        G.StartMission(missionID)           
+        addon:Print(C(L["Started with "],"green") ..info)
+        PlaySound(SOUNDKIT.UI_GARRISON_COMMAND_TABLE_MISSION_START)
+        --[===[@debug@
+        dprint("Calling OHF:UpdateMissions")  
+        --@end-debug@]===]
+        OHFFollowerList.dirtyList=true
+        OHFFollowerList:UpdateFollowers();  
+        OHFMissions:UpdateMissions()            
+        return
+      else
+        addon:Print(C(L["Would start with "],"green") ..info)
+        addon:Print(C("Shift-Click to actually start mission","green"))
+        self:Cleanup()
+      end
+    else
+      addon:Print(C(format(L["%1$d%% lower than %2$d%%. Lower %s"],party.perc,baseChance,L["Base Chance"]),"red"))
+    end
+  end
+end
+

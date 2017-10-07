@@ -1,16 +1,20 @@
-tag c6b8aae8ee336de97c8d107e4077df427220ab75 1.4.4
+tag 5313b63e6108be8f63be85dc4a315bb77efac9eb 1.5.2
 Author:	Alar of Runetotem <alar@aspide.it>
-Date:	Tue Sep 5 16:28:21 2017 +0200
+Date:	Sat Sep 30 15:51:48 2017 +0200
 
-Feature: updated equipment list
-Fix: "Not enough champions" warning now works. Give it a trt again
-Fix: #67 UI messed up on opening it after closing it with followers tab
-last opened
-Fix: MAKEITVERYQUICK switch testing had a typo
+Fix: #108 Ignored/Blacklisted missions aren't sorted at the bottom since
+1.5.1
 
-commit 0a1222ca65037266e480c8dc9adab3174e2c4788
+commit c756fb02b0f8c799938df1cca3876ab6efe15467
 Author: Alar of Runetotem <alar@aspide.it>
-Date:   Tue Sep 5 16:26:08 2017 +0200
+Date:   Sat Sep 30 15:50:34 2017 +0200
 
-    Fix: MAKEITVERYQUICK switch testing had a typo
+    Fix: #108 Ignored/Blacklisted missions aren't sorted at the bottom since
+    1.5.1
+
+commit 1f8f5c3f91fa3ec6586cb448e0da9b044a48c1fa
+Author: Alar of Runetotem <alar@aspide.it>
+Date:   Fri Sep 29 19:40:15 2017 +0200
+
+    Removed debug prints
 

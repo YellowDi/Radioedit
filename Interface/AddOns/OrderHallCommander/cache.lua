@@ -24,15 +24,22 @@ local new=addon:Wrap("NewTable")
 local del=addon:Wrap("DelTable")
 local kpairs=addon:Wrap("Kpairs")
 local empty=addon:Wrap("Empty")
+
+local todefault=addon:Wrap("todefault")
+
+local tonumber=tonumber
+local type=type
 local OHF=OrderHallMissionFrame
 local OHFMissionTab=OrderHallMissionFrame.MissionTab --Container for mission list and single mission
 local OHFMissions=OrderHallMissionFrame.MissionTab.MissionList -- same as OrderHallMissionFrameMissions Call Update on this to refresh Mission Listing
 local OHFFollowerTab=OrderHallMissionFrame.FollowerTab -- Contains model view
 local OHFFollowerList=OrderHallMissionFrame.FollowerList -- Contains follower list (visible in both follower and mission mode)
 local OHFFollowers=OrderHallMissionFrameFollowers -- Contains scroll list
-local OHFMissionPage=OrderHallMissionFrame.MissionTab.MissionPage -- Contains mission description and party setup
+local OHFMissionPage=OrderHallMissionFrame.MissionTab.MissionPage -- Contains mission description and party setup 
 local OHFMapTab=OrderHallMissionFrame.MapTab -- Contains quest map
 local OHFCompleteDialog=OrderHallMissionFrameMissions.CompleteDialog
+local OHFMissionScroll=OrderHallMissionFrameMissionsListScrollFrame
+local OHFMissionScrollChild=OrderHallMissionFrameMissionsListScrollFrameScrollChild
 local followerType=LE_FOLLOWER_TYPE_GARRISON_7_0
 local garrisonType=LE_GARRISON_TYPE_7_0
 local FAKE_FOLLOWERID="0x0000000000000000"
@@ -59,16 +66,26 @@ local print=function() end
 --@end-non-debug@
 local LE_FOLLOWER_TYPE_GARRISON_7_0=LE_FOLLOWER_TYPE_GARRISON_7_0
 local LE_GARRISON_TYPE_7_0=LE_GARRISON_TYPE_7_0
+local GARRISON_FOLLOWER_COMBAT_ALLY=GARRISON_FOLLOWER_COMBAT_ALLY
+local GARRISON_FOLLOWER_ON_MISSION=GARRISON_FOLLOWER_ON_MISSION
+local GARRISON_FOLLOWER_INACTIVE=GARRISON_FOLLOWER_INACTIVE
+local ViragDevTool_AddData=_G.ViragDevTool_AddData
+if not ViragDevTool_AddData then ViragDevTool_AddData=function() end end
+local KEY_BUTTON1 = "\124TInterface\\TutorialFrame\\UI-Tutorial-Frame:12:12:0:0:512:512:10:65:228:283\124t" -- left mouse button
+local KEY_BUTTON2 = "\124TInterface\\TutorialFrame\\UI-Tutorial-Frame:12:12:0:0:512:512:10:65:330:385\124t" -- right mouse button
+local CTRL_KEY_TEXT,SHIFT_KEY_TEXT=CTRL_KEY_TEXT,SHIFT_KEY_TEXT
+
 
 -- End Template - DO NOT MODIFY ANYTHING BEFORE THIS LINE
 --*BEGIN
-local GARRISON_LANDING_COMPLETED=GARRISON_LANDING_COMPLETED:match( "(.-)%s*$")
-local CATEGORY_INFO_FORMAT=ORDER_HALL_COMMANDBAR_CATEGORY_COUNT .. ' (' .. GARRISON_LANDING_COMPLETED ..')'
-local pairs,math,wipe,tinsert,GetTime,next,ipairs,type=pairs,math,wipe,tinsert,GetTime,next,ipairs,type
+local CATEGORY_INFO_FORMAT=GARRISON_LANDING_COMPLETED:gsub("%%d/%%d","%%d/%%d %%d")
+local CATEGORY_INFO_FORMAT_SHORT="%d/%d %d " .. READY
+local pairs,math,wipe,tinsert,GetTime,next,ipairs,strjoin=pairs,math,wipe,tinsert,GetTime,next,ipairs,strjoin
 local GARRISON_FOLLOWER_INACTIVE=GARRISON_FOLLOWER_INACTIVE
 local AVAILABLE=AVAILABLE
 local GARRISON_FOLLOWER_COMBAT_ALLY=GARRISON_FOLLOWER_COMBAT_ALLY
 local GARRISON_FOLLOWER_ON_MISSION=GARRISON_FOLLOWER_ON_MISSION
+local GARRISON_FOLLOWER_IN_PARTY=GARRISON_FOLLOWER_IN_PARTY
 local missionsRefresh,followersRefresh=0,0
 local volatile={
 followers={
@@ -97,12 +114,7 @@ local cachedFollowers={}
 local cachedMissions={}
 local categoryInfo
 local shipmentInfo={}
-local emptyTable={}
-local permutations={
-	{},
-	{},
-	{}
-}
+local emptyTable=setmetatable({},{__newindex=function() end})
 local methods={available='GetAvailableMissions',inProgress='GetInProgressMissions',completed='GetCompleteMissions'}
 local catPool={}
 local function fillCachedMission(mission,time)
@@ -113,14 +125,14 @@ local function fillCachedMission(mission,time)
 	mission.enemies=enemies
 	mission.lastUpdate=time
 	mission.available=not mission.inProgress
-	addon:Reward2Class(mission)
 end
 local function getCachedMissions()
 	if not next(cachedMissions) then
 		local time=GetTime()
 		for property,method in pairs(methods) do
 			local missions=G[method](followerType)
-			for _,mission in ipairs(missions) do
+			for i=1,#missions do
+				local mission=missions[i]
 				mission[property]=true
 				fillCachedMission(mission,time)
 				cachedMissions[mission.missionID]=mission
@@ -134,7 +146,8 @@ local function getCachedFollowers()
 		local followers=G.GetFollowers(followerType)
 		if type(followers)=="table" then
 			local time=GetTime()
-			for _,follower in ipairs(followers) do
+			for i=1,#followers do
+				local follower=followers[i]
 				if follower.isCollected and follower.status ~= GARRISON_FOLLOWER_INACTIVE then
 					cachedFollowers[follower.followerID]=follower
 					cachedFollowers[follower.followerID].lastUpdate=time
@@ -160,33 +173,6 @@ function module:GetAverageLevels(cached)
 	end
 	return avgLevel,avgIlevel
 end
-local permutationsUpdate=0
-function addon:GetPermutations()
-	if next(permutations) and self.lastChange <permutationsUpdate then permutationsUpdate=self.lastChange return permutations end
-	local champs=new()
-	addon:GetAllChampions(champs)
-	local k=#champs
-	local refresh=false
-	for i=1,k do
-		if permutations[1][i]~=champs[i] then refresh=true end
-	end
-	if refresh then
-		wipe(permutations[1])
-		wipe(permutations[2])
-		wipe(permutations[3])
-		for i=1,k do
-			tinsert(permutations[1],champs[i].followerID)
-			for j=i+1,k do
-				tinsert(permutations[2],strjoin(',',tostringall(champs[i].followerID,champs[j].followerID)))
-				for z=j+1,k do
-					tinsert(permutations[3],strjoin(',',tostringall(champs[i].followerID,champs[j].followerID,champs[z].followerID)))
-				end
-			end
-		end
-	end
-	del(champs)
-	return permutations
-end
 function module:DeleteFollower(followerID)
 	if followerID and cachedFollowers[followerID] then
 		del(cachedFollowers[followerID])
@@ -209,7 +195,7 @@ function module:BuildFollower(followerID)
 		end
 	end
 end
-function module:BuildMission(missionIDfollowerID)
+function module:BuildMission(missionID,followerID)
 	local rc,data=pcall(G.GetFollowerInfo,followerID)
 	if rc then
 		if data and data.isCollected then
@@ -218,25 +204,6 @@ function module:BuildMission(missionIDfollowerID)
 			cachedFollowers[followerID]=data
 		elseif data then
 			del(data,true)
-		end
-	end
-end
-function module:refreshMission(data)
-	--local runtime,runtimesec,inProgress,duration,durationsec,bool1,string1=G.GetMissionTimes(data.missionID)
-end
-function module:refreshFollower(data)
-	if (data.lastUpdate or 0) < followersRefresh then
-		-- stale data, refresh volatile fields
-		local id=data.followerID
-		local rc,name=pcall(G.GetFollowerName,id)
-		if rc and name then
-			for field,func in pairs(volatile.followers) do
-				data[field]=func(id)
-			end
-			data.lastUpdate=followersRefresh
-		else
-			del(data,true)
-			data=nil
 		end
 	end
 end
@@ -254,7 +221,7 @@ function module:GetFollower(key)
 end
 --@end-debug@]===]
 local indexes={followers={},missions={}}
-local followerCache
+local followerCache={}
 local followerCacheUpdate=GetTime()
 local emptyFollower={}
 local function rebuildFollowerIndex()
@@ -264,15 +231,12 @@ local function rebuildFollowerIndex()
 		indexes.followers[followerCache[i].name]=i
 	end
 end
-local function GetFollowers()
-	followerCacheUpdate=GetTime()
-	return C_Garrison.GetFollowers(LE_FOLLOWER_TYPE_GARRISON_7_0)
-end
 --- Return followerdata-
 -- Available fields:
 --
 -- * classAtlas
 -- * className
+-- * classSpec
 -- * displayHeight
 -- * displayIDs = { followerPageScale=1,showWeapon=true,id=68026 }
 -- * durability
@@ -297,20 +261,25 @@ end
 -- * busyUntil
 --
 --
+local function GetFollowers()
+	if not empty(OHFFollowerList.followers) then return  OHFFollowerList.followers end
+	return G.GetFollowers(LE_FOLLOWER_TYPE_GARRISON_7_0) or emptyTable	
+end
+
 function module:GetFollowerData(followerID,field,defaultValue)
-	if empty(followerCache) or followerCacheUpdate < addon.lastChange then
-		followerCache=OHFFollowerList.followers or GetFollowers() or emptyTable
+	if empty(followerCache) then 
+		addon:RefreshFollowers()
 	end
-	if not followerID then return followerCache  end
+	if not followerID then return followerCache end
 	local followerIndex=indexes.followers[followerID]
 	local pointer=followerCache[followerIndex]
 	if not pointer or pointer.followerID~=followerID then
-		rebuildFollowerIndex()
+		addon:RefreshFollowers()
 	end
 	followerIndex=indexes.followers[followerID]
 	pointer=followerCache[followerIndex] or emptyFollower
 	if empty(pointer) then
-		return field and defaultValue or emptyFollower
+		return field and defaultValue or nil
 	end
 	if not field then return pointer end
 	if pointer[field] then
@@ -324,37 +293,9 @@ function module:GetFollowerData(followerID,field,defaultValue)
 		return defaultValue
 	end
 end
-function module:delGetFollowerData(...)
-	local id,key,defaultvalue=...
-	local f=getCachedFollowers()
-	if not id then
-		for _,data in pairs(f) do
-			self:refreshFollower(data)
-		end
-		return f
-	end
-	local data=f[id]
-	if data then
-		self:refreshFollower(data)
-	end
-	if data then
-		if key then
-			return self:GetKey(data,key,defaultvalue)
-		else
-			return data
-		end
-	else
-		if select('#',...) > 2 then
-			return defaultvalue
-		else
-			return emptyTable
-		end
-	end
-end
 --	local list=inProgress and m.inProgressMissions or m.availableMissions
 -- OHF.MissionTab.MissionList
 local emptyMissions={}
-local missionCache
 local missionCacheIndex={}
 local function scanList(map,id)
 	if map=="completedMissions" then
@@ -380,6 +321,95 @@ local function getMissionFromBlizzardData(cache,missionID)
 		end
 	end
 	return scanList("availableMissions",missionID) or scanList("inProgressMissions",missionID) or scanList("completedMissions",missionID) or emptyMissions
+end
+local missionCache=setmetatable({},{__index=
+		function(t,key)
+			return getMissionFromBlizzardData(t,key)
+		end
+	}
+)
+local classOrder=setmetatable({
+	["0"]=10,
+	["1342"]=11,
+	Artifact=20,
+	Equipment=30,
+	Quest=40,
+	Upgrades=50,
+	Reputation=60,
+	PlayerXP=70,
+	FollowerXP=80,
+	Generic=99999
+},{
+	__index=function(t,k) if type(k)=="number" then
+		t[k]=k
+		return k % 100000 
+		else
+			return 99999
+		end
+	end
+})
+local function GetItemQuality(itemid)
+	local _,_,quality=GetItemInfo(itemid)
+	return quality and quality or 0
+end
+local function Reward2Class(self,mission)	
+	if type(mission)=="number" then mission=addon:GetMissionData(mission) end
+	if not mission then return "Generic",0,0 end
+	local overReward=mission.overmaxRewards
+	if not overReward then overReward=mission.OverRewards end
+	local reward=mission.rewards
+	if not reward then reward=mission.Rewards end
+	if type(overReward)=="table" then
+		overReward=overReward[1]
+	else
+		overReward=emptyTable
+	end
+	if type(reward)=="table" then
+		reward=reward[1]
+	else
+		return "Generic",1 
+	end
+	if not overReward then overReward = emptyTable end
+	if reward.currencyID then
+		local qt=reward.currencyID==0 and reward.quantity/10000 or reward.quantity
+		return reward.currencyID,math.floor(qt)
+	elseif reward.followerXP then
+			return "FollowerXp",reward.followerXP
+	elseif type(reward.itemID) == "number" then
+		local artifactPower=self.allArtifactPower[reward.itemID]
+		if artifactPower then
+			return "Artifact",artifactPower or 1
+		elseif overReward.itemID==1447868 then
+			return "PlayerXP",1
+		elseif overReward.itemID==141344 then
+			return "Reputation",1
+		elseif tContains(self:GetData('Equipment'),reward.itemID) then
+			return "Equipment",GetItemInfo(reward.itemID) or 0
+		elseif tContains(self:GetData("Upgrades"),reward.itemID) then
+			return "Upgrades",1
+		elseif tContains(self:GetData("Upgrades"),reward.itemID) then
+			return "Upgrades2",2
+		elseif tContains(self:GetData("Upgrades"),reward.itemID) then
+			return "Upgrades3",3
+		elseif tContains(self:GetData("Upgrades"),reward.itemID) then
+			return "Upgrades4",4
+		else
+			local class,subclass=select(12,GetItemInfo(reward.itemID))
+			class=class or -1
+			if class==12 then
+				return "Quest",1
+			elseif class==7 then
+				return "Reagent",reward.quantity or 1
+			end
+		end
+	end
+	return "Generic",reward.quantity or 1
+end
+function addon:Reward2Class(mission)
+	local missionID=type(mission)=="table" and mission.missionID or mission
+	if not missionID then return "generic,0,99" end
+	local class,value=Reward2Class(self,mission)
+	return strjoin(',',tostringall(class,value,classOrder[tostring(class)]))
 end
 --- Retrieves mission data.
 -- Uses tables already loaded by Blizzard and works on both inProgress and availableMissions
@@ -413,21 +443,40 @@ end
 -- * rewards
 -- * mapPosX
 -- * requiredChampionCount
-function module:GetMissionData(missionID,field,defaultValue)
-	if not missionCache then missionCache=setmetatable({},{__index=
-		function(t,key)
-			return getMissionFromBlizzardData(t,key)
+-- Pseudo fields
+-- * class
+-- * classValue
+-- * classOrder
+-- * elite
+-- * baseXP
+-- * exhausting
+-- * enemies
+-- Calcolated field manager
+local mt={
+	__index=function(mission,field)
+		local missionID=rawget(mission,'missionID')
+		if not missionID then return end
+		if field=="class" or field=='classValue' then
+			mission.class,mission.classValue=strsplit(',',addon:Reward2Class(mission.missionID))
+		elseif field=="classOrder" then
+			return classOrder[mission.class] 
+		elseif field=="elite" then 
+			mission.elite = empty(mission.overmaxRewards) 
+		elseif field=="baseXP" or field =="enemies" or field=="exhausting" then 
+			local _,baseXP,_,_,_,_,exhausting,enemies=G.GetMissionInfo(mission.missionID)
+			mission.baseXP=addon:todefault(baseXP,0) 
 		end
-	})
+		return rawget(mission,field)
 	end
+}
+function module:GetMissionData(missionID,field,defaultValue)
 	if not missionID then return OHFMissions.availableMissions end
-	local mission=missionCache[missionID]
+	local mission=setmetatable(missionCache[missionID],mt)
 	if not field then return mission end
-	if field then
-		if field=="class" then return addon:Reward2Class(missionID) end
-		if field=="maxChance" then return empty(mission.overmaxRewards) and 100 or 200 end
-	end
-	if field and mission[field] then
+	if field then 
+		if empty(mission[field]) then
+			return defaultValue
+		end 
 		return mission[field]
 	else
 		return defaultValue
@@ -487,19 +536,18 @@ function module:GetTroopsFrame()
 end
 
 function module:ParseFollowers()
-	categoryInfo = G.GetClassSpecCategoryInfo(followerType)
-	if empty(categoryInfo) then
-		G.RequestClassSpecCategoryInfo(followerType)
-		self:ScheduleTimer("ParseFollowers",1)
-		return
-	end
+  G.RequestClassSpecCategoryInfo(followerType)
 	G.RequestLandingPageShipmentInfo();
+end	
+function module:GARRISON_FOLLOWER_CATEGORIES_UPDATED() 
+  categoryInfo = G.GetClassSpecCategoryInfo(followerType)
 	if not OHF:IsVisible() then return end
 	local main=self:GetTroopsFrame()
 	local numCategories = #categoryInfo;
 	local prevCategory, firstCategory;
-	local xSpacing = 20;	-- space between categories
-	for i, category in ipairs(categoryInfo) do
+	local nCategories=#categoryInfo
+	for i=1,#categoryInfo do
+		local category=categoryInfo[i]
 		local index=category.classSpec
 		if not catPool[index] then
 			catPool[index]=CreateFrame("Frame","FollowerIcon",main,"OrderHallClassSpecCategoryTemplate")
@@ -516,13 +564,14 @@ function module:ParseFollowers()
 		categoryInfoFrame.name = category.name;
 		categoryInfoFrame.description = category.description;
 		categoryInfoFrame.Count:SetFormattedText(
-			CATEGORY_INFO_FORMAT,
+			nCategories <5 and CATEGORY_INFO_FORMAT or CATEGORY_INFO_FORMAT_SHORT,
 			category.count, category.limit,unpack(shipmentInfo[category.icon]));
 		categoryInfoFrame.Count:SetWidth(categoryInfoFrame.Count:GetStringWidth()+10)
 		categoryInfoFrame:ClearAllPoints();
-		local w=35 + categoryInfoFrame.Count:GetWidth()
+		local padding= 600 / (nCategories * 1.5)
+		local w= padding + categoryInfoFrame.Count:GetWidth()
 		categoryInfoFrame:SetWidth(w)
-		categoryInfoFrame:SetPoint("TOPLEFT",60 +(w+10) *(i-1), 0);
+		categoryInfoFrame:SetPoint("TOPLEFT",50 +(w) *(i-1), 0);
 		categoryInfoFrame:Show();
 	end
 end
@@ -531,10 +580,10 @@ function addon:ParseFollowers()
 end
 local OrderHallCommanderAlertSystem=AlertFrame:AddSimpleAlertFrameSubSystem("OHCAlertFrameTemplate", alertSetup)
 local shownAlerts={}
-function module:GARRISON_LANDINGPAGE_SHIPMENTS(...)
+function module:GARRISON_LANDINGPAGE_SHIPMENTS()
 	if not addon:GetBoolean('TROOPALERT') then return end
 	if (not G.IsPlayerInGarrison(garrisonType)) then return end
-	local followerShipments = C_Garrison.GetFollowerShipments(garrisonType);
+	local followerShipments = G.GetFollowerShipments(garrisonType);
 	for _,t in pairs(shipmentInfo) do
 		t[1]=0
 		t[2]=0
@@ -559,30 +608,18 @@ function module:GARRISON_LANDINGPAGE_SHIPMENTS(...)
 	end
 
 end
-
 function module:Refresh(event,...)
---[===[@debug@
-	print(event,...)
---@end-debug@]===]
-	addon:RefreshFollowerStatus()
 	if (event == "CURRENCY_DISPLAY_UPDATE") then
 		resources = select(2,GetCurrencyInfo(currency))
 		return
-	end
-	if event=="GARRISON_FOLLOWER_REMOVED" then
-		local currentType=... -- alas, we dont have followerId here
+	elseif event=="GARRISON_FOLLOWER_REMOVED" or
+			event=="GARRISON_FOLLOWER_ADDED" then
 		return self:ParseFollowers()
-	elseif event=="GARRISON_FOLLOWER_CATEGORIES_UPDATED" then
-		return self:ParseFollowers()
-	elseif event=="GARRISON_FOLLOWER_ADDED" then
-		return self:ParseFollowers()
-	--elseif event=="GARRISON_FOLLOWER_XP_CHANGED"  then
-	--elseif event=="GARRISON_FOLLOWER_UPGRADED"then
-	--elseif event=="GARRISON_FOLLOWER_DURABILITY_CHANGED" then
-	elseif event=="GARRISON_FOLLOWER_LIST_UPDATE" or event=="GARRISON_MISSION_STARTED" or event=="GARRISON_MISSION_FINISHED" or event=="GARRISON_MISSION_LIST_UPDATE" then
-		rebuildFollowerIndex()
-	elseif event=="GARRISON_MISSION_COMPLETE_RESPONSE" then
-		rebuildFollowerIndex()
+	elseif event=="GARRISON_FOLLOWER_LIST_UPDATE" or 
+			event=="GARRISON_MISSION_STARTED" or 
+			event=="GARRISON_MISSION_FINISHED" or
+			event=="GARRISON_MISSION_COMPLETE_RESPONSE" then
+		return addon:RefreshFollowerStatus() 
 	end
 end
 function module:OnInitialized()
@@ -599,15 +636,12 @@ function module:Events()
 	self:RegisterEvent("GARRISON_FOLLOWER_REMOVED","Refresh")
 	self:RegisterEvent("GARRISON_FOLLOWER_LIST_UPDATE","Refresh")
 	self:RegisterEvent("GARRISON_FOLLOWER_ADDED","Refresh")
-	self:RegisterEvent("GARRISON_FOLLOWER_LIST_UPDATE","Refresh")
-	self:RegisterEvent("GARRISON_FOLLOWER_CATEGORIES_UPDATED","Refresh")
-	self:RegisterEvent("GARRISON_FOLLOWER_XP_CHANGED","Refresh")
-	self:RegisterEvent("GARRISON_FOLLOWER_DURABILITY_CHANGED","Refresh")
 	self:RegisterEvent("GARRISON_MISSION_STARTED","Refresh")
 	self:RegisterEvent("GARRISON_MISSION_FINISHED","Refresh")
 	self:RegisterEvent("GARRISON_MISSION_COMPLETE_RESPONSE","Refresh")
 	self:RegisterEvent("GARRISON_MISSION_LIST_UPDATE","Refresh")
 	self:RegisterEvent("GARRISON_LANDINGPAGE_SHIPMENTS")
+  self:RegisterEvent("GARRISON_FOLLOWER_CATEGORIES_UPDATED")
 end
 function module:EventsOff()
 	self:UnregisterAllEvents()
@@ -624,48 +658,166 @@ end
 function addon:GetMissionData(...)
 	return module:GetMissionData(...)
 end
+function addon:RefreshFollowers()
+	followerCache=G.GetFollowers(followerType)
+	rebuildFollowerIndex()
+--[===[@debug@	
+	print("Followeres refreshed:",#followerCache)
+--@end-debug@	]===]
+end
 function addon:GetFollowerData(...)
 	return module:GetFollowerData(...)
 end
 function addon:GetFollower(...)
 	return module:GetFollower(...)
 end
-function addon:GetFollowerCounts()
-	local t,c=0,0
-	for _,follower in pairs(self:GetFollowerData()) do
-		if follower.isTroop then
-			t=t+1
-		else
-			c=c+1
-		end
-	end
-	return c,t
-end
 function addon:GetFollowerName(id)
 	if not id then return "none" end
 	local rc,error=pcall(G.GetFollowerName,id)
 	return strconcat(tostringall(id,'(',error,')'))
 end
-function addon:GetAllChampions(table)
-	if not table then table=new() end
-	local skipInactive=addon:GetBoolean('IGNOREINACTIVE')
-	for _,follower in pairs(self:GetFollowerData()) do
-		if follower.isCollected and not follower.isTroop  then
-			if not skipInactive or G.GetFollowerStatus(follower.followerID) ~= GARRISON_FOLLOWER_INACTIVE then
-				tinsert(table,follower)
+
+local fullPermutations={}
+local classTroops={}
+local classDurability={}
+local function isGood(missionID,follower,durability,ignoreBusy)
+	local followerID=follower.followerID
+	local reserved=addon:IsReserved(followerID)
+	if reserved then return reserved==missionID end
+	if ignoreBusy then 
+		if G.GetFollowerStatus(followerID) then
+			return false
+		end
+	end
+	if not durability then return true end
+	if durability < 0 then
+		return follower.durability >= math.abs(durability)
+	else  
+		return follower.durability <= durability
+	end
+	return false
+end
+local troopCosts={}
+function addon:GetTroopCost(classSpec)
+	if not troopCosts[classSpec] then
+		local t=G.GetClassSpecCategoryInfo(followerType)
+		for i=1,#t do
+			troopCosts[t[i].classSpec]=t[i].limit * 100
+		end
+	end
+	return troopCosts[classSpec] or 0
+end
+local function sortLow(a,b)
+	return module:GetFollowerData(a,'durability',0) < module:GetFollowerData(b,'durability',0)
+end
+local function sortHigh(a,b)
+	return module:GetFollowerData(a,'durability',0) > module:GetFollowerData(b,'durability',0)
+end
+function addon:SortTroop()
+	local f=addon:GetBoolean("PREFERHIGH") and sortHigh or sortLow
+	for _,tipo in pairs(classTroops) do
+		table.sort(tipo,f)
+	end
+end
+function addon:GetTroop(classSpec,slot,missionID,durability,ignoreBusy)
+	local troops=classTroops[classSpec]
+	slot=slot or 1
+	if not troops then return end -- No troops for this spec
+	if not ignoreBusy and not durability and not missionID then -- no more check requested
+		return troops[slot]
+	end
+	for i=1,#troops do
+		local followerID=troops[i]
+		for j=1,1 do -- Used to break out from elaboration (I miss "continue")
+			if not self:IsUsable(missionID,followerID) then break end
+			if ignoreBusy and module:GetFollowerData(followerID,'status') then break end
+			if durability then
+				local d=module:GetFollowerData(followerID,'durability',0)
+				if durability < 0 then
+					if d < math.abs(durability) then break end
+				else  
+					if  d >= durability then break end
+				end
+			end
+			-- Didnt break out so this is a good one
+			if slot == 1 then
+				return followerID
+			else 
+				slot=1 -- max 2 troop for mission, so when I found a good one, the next one is good
 			end
 		end
 	end
-	return table
 end
-function addon:GetAllTroops(table)
-	for _,follower in pairs(self:GetFollowerData()) do
-		if follower.isTroop and follower.isCollected then
-			tinsert(table,follower)
+function addon:EmptyPermutations()
+  return #fullPermutations==0
+end
+function addon:GetFullPermutations(dowipe)
+	if dowipe then wipe(fullPermutations) end
+	if #fullPermutations==0 then
+    self:RefreshFollowers()
+		for _,v in pairs(classTroops) do wipe(v) end
+		local seen=new()
+		local all=new()
+		local t=module:GetFollowerData()
+		for i=1,#t do
+			local f=t[i]
+			if f.isCollected then
+				if f.isTroop then
+					if not classTroops[f.classSpec] then
+						classTroops[f.classSpec]={}
+					end 
+					tinsert(classTroops[f.classSpec],f.followerID) 
+					if not seen[f.classSpec] then
+						tinsert(all,strjoin('|','T',f.classSpec,self:GetTroopCost(f.classSpec)))
+						seen[f.classSpec]=1
+					else
+						seen[f.classSpec]=seen[f.classSpec] +1
+					end
+				else
+					tinsert(all,strjoin('|','H',f.followerID,f.level+(f.level==MAX_LEVEL and f.quality or 0)))
+				end
+			end
 		end
+		table.sort(all) -- We need champions first and a predictable order
+--[===[@debug@
+		for x=1,1 do
+--@end-debug@		]===]
+		for i=1,#all do
+			local class,id,value=strsplit('|',all[i])
+			if class=="T" then -- champions ended, troops only parties are invalid
+				break
+			end
+			tinsert(fullPermutations,'1,' .. all[i])
+			for j=i+1,#t do
+				if all[j] then
+					local class,id,value=strsplit('|',all[j])
+					tinsert(fullPermutations,'2,'.. strjoin(',',all[i],all[j]))
+					if class=="T" and seen[tonumber(id)] > 1 then
+						-- I only see a classSpec once. Here if i know I have more than one troop for this spec, i force
+						-- a combination with both of them
+						tinsert(fullPermutations,'3,'.. strjoin(',',all[i],all[j],all[j] .. '|2'))
+					end				
+				end
+				for k=j+1,#t do
+					if all[k] then
+						tinsert(fullPermutations,'3,'.. strjoin(',',all[i],all[j],all[k]))
+					end
+				end
+			end
+		end
+--[===[@debug@
+		end
+--@end-debug@		]===]
+		table.sort(fullPermutations)
+		del(all)
+		del(seen)
 	end
-	return table
+	return fullPermutations
 end
+function addon:DumpPermutations()
+	addon:Dump("Permutations",fullPermutations)
+end
+
 local function isInParty(followerID)
 	return G.GetFollowerStatus(followerID)==GARRISON_FOLLOWER_IN_PARTY
 end
@@ -697,12 +849,18 @@ local TROOPS_STATUS_FORMAT= FOLLOWERLIST_LABEL_TROOPS .. ":" ..
 							C(GARRISON_FOLLOWER_ON_MISSION .. ":%d ",'red')
 function addon:RefreshFollowerStatus()
 	if not OHF:IsVisible() then return end
-	if empty(addon:GetFollowerData()) then return end
 	wipe(s)
-	for _,follower in pairs(addon:GetFollowerData()) do
-		local rc,status=pcall(G.GetFollowerStatus,follower.followerID) -- Follower could have been exhasted and still present in cache
-		if rc then
-			status=status or AVAILABLE
+	local followers=module:GetFollowerData()
+	if type(followers)~="table" then
+	--[===[@debug@
+		print("GetFollowerData returned",followers)
+	--@end-debug@]===]
+		return
+	end
+	for i=1,#followers do
+		local follower=followers[i]
+		if follower.isCollected then
+			local status=follower.status or AVAILABLE
 			s[status]=s[status]+1
 			if follower.isTroop then
 				s['TROOP_'..status]=s['TROOP_'..status]+1
@@ -738,4 +896,9 @@ function addon:GetTotFollowers(status)
 	else
 		return s[status] or 0
 	end
+end
+local startedCacheMission
+function addon:CacheStartedMission(missionID,t)
+	
+	
 end

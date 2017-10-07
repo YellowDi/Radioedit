@@ -38,9 +38,9 @@ local strconcat=strconcat
 local tostring=tostring
 local tremove=tremove
 local _G=_G -- Unmodified env
---[===[@debug@
+--@debug@
 -- Checking packager behaviour
---@end-debug@]===]
+--@end-debug@
 
 local me, ns = ...
 local lib=obj --#Lib
@@ -142,13 +142,13 @@ local new, del, add, recursivedel,copy, cached, stats
 do
 	local meta={__metatable="RECYCLE"}
 	local pool = lib.pool
---[===[@debug@
+--@debug@
 	local newcount, delcount,createdcount= 0,0,0
---@end-debug@]===]
+--@end-debug@
 	function new(t)
---[===[@debug@
+--@debug@
 		newcount = newcount + 1
---@end-debug@]===]
+--@end-debug@
 		if type(t)=="table" then
 			local rc=pcall(setmetatable,t,meta)
 			return t
@@ -159,9 +159,9 @@ do
 			pool[t] = nil
 			return t
 		else
---[===[@debug@
+--@debug@
 			createdcount = createdcount + 1
---@end-debug@]===]
+--@end-debug@
 			return setmetatable({},meta)
 		end
 	end
@@ -173,9 +173,9 @@ do
 		return c
 	end
 	function del(t)
---[===[@debug@
+--@debug@
 		delcount = delcount + 1
---@end-debug@]===]
+--@end-debug@
 		if getmetatable(t)==meta then
 			wipe(t)
 			pool[t] = true
@@ -183,9 +183,9 @@ do
 	end
 	function recursivedel(t,level)
 		level=level or 0
---[===[@debug@
+--@debug@
 		delcount = delcount + 1
---@end-debug@]===]
+--@end-debug@
 		for k,v in pairs(t) do
 			if type(v)=="table" and getmetatable(v) == "RECYCLE" then
 				if level < 2 then
@@ -205,19 +205,19 @@ do
 		end
 		return n
 	end
---[===[@debug@
+--@debug@
 	function stats()
 		print("Created:",createdcount)
 		print("Aquired:",newcount)
 		print("Released:",delcount)
 		print("Cached:",cached())
 	end
---@end-debug@]===]
---@non-debug@
+--@end-debug@
+--[===[@non-debug@
 	function stats()
 		return
 	end
---@end-non-debug@
+--@end-non-debug@]===]
 end
 --- Get a new table from the recycle pool
 -- Preferred usage is assigning to a local via wrap function
@@ -750,7 +750,7 @@ local function loadOptionsTable(self)
 				func="Gui",
 				guiHidden=true,
 			},
---[===[@debug@
+--@debug@
 			help = {
 				name="HELP",
 				desc="Show help",
@@ -766,7 +766,7 @@ local function loadOptionsTable(self)
 				guiHidden=true,
 				cmdHidden=true,
 			},
---@end-debug@]===]
+--@end-debug@
 			silent = {
 				name="SILENT",
 				desc="Eliminates startup messages",
@@ -2074,9 +2074,9 @@ function lib:coroutineExecute(interval,action,combatSafe,...)
 	c.interval=interval
 	c.combatSafe=combatSafe
 	if c.running then
-	--[===[@debug@
+	--@debug@
 		print("")
-	--@end-debug@ ]===]
+	--@end-debug@ 
 		return signature
 	end
 	if type(c.co)=="thread" and coroutine.status(c.co)=="suspended" then return signature end
@@ -2371,3 +2371,6 @@ do
 	end
 end
 L=LibStub("AceLocale-3.0"):GetLocale(me,true)
+--@do-not-package@
+-- Packager stil not honoring this tag
+--@end-do-not-package@

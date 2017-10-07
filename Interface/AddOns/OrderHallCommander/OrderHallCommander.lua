@@ -26,15 +26,19 @@ local new=addon:Wrap("NewTable")
 local del=addon:Wrap("DelTable")
 local kpairs=addon:Wrap("Kpairs")
 local empty=addon:Wrap("Empty")
+local tonumber=tonumber
+local type=type
 local OHF=OrderHallMissionFrame
 local OHFMissionTab=OrderHallMissionFrame.MissionTab --Container for mission list and single mission
 local OHFMissions=OrderHallMissionFrame.MissionTab.MissionList -- same as OrderHallMissionFrameMissions Call Update on this to refresh Mission Listing
 local OHFFollowerTab=OrderHallMissionFrame.FollowerTab -- Contains model view
 local OHFFollowerList=OrderHallMissionFrame.FollowerList -- Contains follower list (visible in both follower and mission mode)
 local OHFFollowers=OrderHallMissionFrameFollowers -- Contains scroll list
-local OHFMissionPage=OrderHallMissionFrame.MissionTab.MissionPage -- Contains mission description and party setup
+local OHFMissionPage=OrderHallMissionFrame.MissionTab.MissionPage -- Contains mission description and party setup 
 local OHFMapTab=OrderHallMissionFrame.MapTab -- Contains quest map
 local OHFCompleteDialog=OrderHallMissionFrameMissions.CompleteDialog
+local OHFMissionScroll=OrderHallMissionFrameMissionsListScrollFrame
+local OHFMissionScrollChild=OrderHallMissionFrameMissionsListScrollFrameScrollChild
 local followerType=LE_FOLLOWER_TYPE_GARRISON_7_0
 local garrisonType=LE_GARRISON_TYPE_7_0
 local FAKE_FOLLOWERID="0x0000000000000000"
@@ -60,7 +64,7 @@ addon.safeG=setmetatable({},{
 			function(default,...)
 				return parse(default,pcall(G[key],...))
 			end
-		)
+		) 
 		return table[key]
 	end
 })
@@ -73,11 +77,21 @@ local print=function() end
 --@end-non-debug@
 local LE_FOLLOWER_TYPE_GARRISON_7_0=LE_FOLLOWER_TYPE_GARRISON_7_0
 local LE_GARRISON_TYPE_7_0=LE_GARRISON_TYPE_7_0
+local GARRISON_FOLLOWER_COMBAT_ALLY=GARRISON_FOLLOWER_COMBAT_ALLY
+local GARRISON_FOLLOWER_ON_MISSION=GARRISON_FOLLOWER_ON_MISSION
+local GARRISON_FOLLOWER_INACTIVE=GARRISON_FOLLOWER_INACTIVE
+local ViragDevTool_AddData=_G.ViragDevTool_AddData
+if not ViragDevTool_AddData then ViragDevTool_AddData=function() end end
+local KEY_BUTTON1 = "\124TInterface\\TutorialFrame\\UI-Tutorial-Frame:12:12:0:0:512:512:10:65:228:283\124t" -- left mouse button
+local KEY_BUTTON2 = "\124TInterface\\TutorialFrame\\UI-Tutorial-Frame:12:12:0:0:512:512:10:65:330:385\124t" -- right mouse button
+local CTRL_KEY_TEXT,SHIFT_KEY_TEXT=CTRL_KEY_TEXT,SHIFT_KEY_TEXT
+
 
 -- End Template - DO NOT MODIFY ANYTHING BEFORE THIS LINE
 --*BEGIN
 local MISSING=ITEM_MISSING:format(""):gsub(' ','')
 local IGNORED=IGNORED
+local UNUSED=UNUSED
 MISSING=C(MISSING:sub(1,1):upper() .. MISSING:sub(2),"Red")
 local ctr=0
 -- Sometimes matchmakimng starts before these are defined, so I put here a sensible default (actually, this values are constans)
@@ -85,7 +99,7 @@ function addon:MAXLEVEL()
 	return OHF.followerMaxLevel or 110
 end
 function addon:MAXQUALITY()
-	return OHF.followerMaxQuality or 4
+	return OHF.followerMaxQuality or 6
 end
 function addon:MAXQLEVEL()
 	return addon:MAXLEVEL()+addon:MAXQUALITY()
@@ -105,10 +119,85 @@ function addon:ColorFromBias(followerBias)
 			return C:Green()
 		end
 end
+-- todefault with default
+function addon:todefault(value,default)
+	if value~=value then return default
+	elseif value==math.huge then return default
+	else return tonumber(value) or default
+	end
+end
+
 function addon:SetDbDefaults(default)
 	default.profile=default.profile or {}
 	default.profile.blacklist={}
+	default.global.tutorialStep={}
 end
+do 
+local banned={}
+local byFollowers={}
+local byMissions=setmetatable({},{__index=function(t,k) rawset(t,k,{}) return rawget(t,k) end})
+local function refreshByMissions(missionID)
+	wipe(byMissions[missionID])
+	for f,m in pairs(byFollowers) do
+		if m==missionID then
+			tinsert(byMissions[missionID],f)
+		end
+	end
+end
+function addon:GetReservedFollowers(missionID)
+	if not missionID then return byMissions end
+	return byMissions[missionID]
+end
+function addon:HasReservedFollowers(missionID)
+	return #byMissions[missionID] > 0
+end
+function addon:UnReserveMission(missionID)
+	wipe(byMissions[missionID])
+	for followerID,mid in pairs(byFollowers) do
+		if mid==missionID then
+			byFollowers[followerID]=nil
+		end
+	end
+end
+function addon:UnReserve(followerID)
+	if not followerID then
+		wipe(byFollowers)
+		wipe(byMissions)
+	else
+		local missionID=byFollowers[followerID]
+		byFollowers[followerID]=nil
+		if missionID then
+			refreshByMissions(missionID)
+		end
+	end
+end
+function addon:Reserve(followerID,missionID)
+	byFollowers[followerID]=missionID
+	refreshByMissions(missionID)
+end
+function addon:IsUsable(missionID,followerID)
+	local ID=self:IsReserved(followerID)
+	return not ID or ID == missionID
+end
+function addon:IsReserved(followerID)
+	if not followerID then return byFollowers end
+	return byFollowers[followerID]
+end
+function addon:Ban(slot,missionID)
+	banned[slot..':'..missionID]=true
+end
+function addon:Unban(slot,missionID)
+	if not slot then 
+		wipe(banned)
+	else
+		banned[slot..':'..missionID]=nil
+	end
+end
+function addon:IsBanned(slot,missionID)
+	if not slot then return banned end
+	return banned[slot..':'.. missionID]
+end
+end -- DO closed
 local colors=addon.colors
 _G.OrderHallCommanderMixin={}
 _G.OrderHallCommanderMixinThreats={}
@@ -173,42 +262,39 @@ function Mixin:Dump(data)
 	tip:Show()
 end
 function Mixin.DumpData(tip,data)
-	for k,v in kpairs(data) do
-		local color="Silver"
-		if type(v)=="number" then color="Cyan"
-		elseif type(v)=="string" then color="Yellow" v=v:sub(1,30)
-		elseif type(v)=="boolean" then v=v and 'True' or 'False' color="White"
-		elseif type(v)=="table" then color="Green" if v.GetObjectType then v=v:GetObjectType() else v=tostring(v) end
-		else v=type(v) color="Blue"
-		end
-		if k=="description" then v =v:sub(1,10) end
-		tip:AddDoubleLine(k,v,colors("Orange",color))
+  if type(data)== "table" then
+  	for k,v in kpairs(data) do
+  		local color="Silver"
+  		if type(v)=="number" then color="Cyan"
+  		elseif type(v)=="string" then color="Yellow" v=v:sub(1,30)
+  		elseif type(v)=="boolean" then v=v and 'True' or 'False' color="White"
+  		elseif type(v)=="table" then color="Green" if v.GetObjectType then v=v:GetObjectType() else v=tostring(v) end
+  		else v=type(v) color="Blue"
+  		end
+  		if k=="description" then v =v:sub(1,10) end
+  		tip:AddDoubleLine(k,v,colors("Orange",color))
+  	end
+	else
+      tip:AddDoubleLine(tostring(data),type(data))
 	end
+	
 end
 function MixinThreats:OnLoad()
 	if not self.threatPool then self.threatPool=CreateFramePool("Frame",UIParent,"OHCThreatsCounters") end
 	self.usedPool={}
 end
-
 function MixinThreats:AddIcons(mechanics,biases)
-	local icons=OHF.abilityCountersForMechanicTypes
-	if not icons then
-		--[===[@debug@
-		print("Empty icons")
-		--@end-debug@]===]
-		return false
-	end
+	local frame=self:GetParent()
 	for i=1,#self.usedPool do
 		self.threatPool:Release(self.usedPool[i])
 	end
-	self.mechanics=mechanics
 	wipe(self.usedPool)
 	local previous
 	for index,mechanic in pairs(mechanics) do
 		local th=self.threatPool:Acquire()
 		tinsert(self.usedPool,th)
 		if mechanic and (mechanic.icon or mechanic.id) then
-			th.Icon:SetTexture(mechanic.icon or icons[mechanic.id].icon)
+			th.Icon:SetTexture(mechanic.icon)
 			th.Name=mechanic.name
 			th.Description=mechanic.description
 			th.Ability=mechanic.ability and mechanic.ability.name or mechanic.name
@@ -224,6 +310,7 @@ function MixinThreats:AddIcons(mechanics,biases)
 		th:SetParent(self)
 		th:SetFrameStrata(self:GetFrameStrata())
 		th:SetFrameLevel(self:GetFrameLevel()+1)
+		th:ClearAllPoints()
 		if not previous then
 			th:SetPoint("BOTTOMLEFT",0,0)
 			previous=th
@@ -235,51 +322,85 @@ function MixinThreats:AddIcons(mechanics,biases)
 	return previous
 end
 
+function MixinFollowerIcon:GetFollower()
+	return self.followerID
+end
 function MixinFollowerIcon:SetFollower(followerID,checkStatus,blacklisted)
 	local info=addon:GetFollowerData(followerID)
+	local missionID=self:GetParent():GetParent().info.missionID
 	if not info or not info.followerID then
 		local rc
 		rc,info=pcall(G.GetFollowerInfo,followerID)
 		if not rc or not info then
+			self.locked=false
 			return self:SetEmpty(LFG_LIST_APP_TIMED_OUT)
 		end
 	end
+	self.IsTroop=info.IsTroop
 	self.followerID=followerID
 	self:SetupPortrait(info)
 	local status=(followerID and checkStatus) and G.GetFollowerStatus(followerID) or nil
 	if info.isTroop then
 		self:SetILevel(0)
-		self.Level:SetText(FOLLOWERLIST_LABEL_TROOPS)
+		self.Level:SetText("") --FOLLOWERLIST_LABEL_TROOPS)
+		self.Durability:SetDurability(info.durability, info.maxDurability)
+		self.Durability:Show()
 	else
+		self.Durability:Hide()
 		if info.isMaxLevel then
 			self:SetILevel(info.iLevel)
 		else
 			self:SetLevel(info.level)
 		end
 	end
+	self.locked=addon:IsReserved(followerID) and true or false
+	self.banned=addon:IsBanned(self.Slot,missionID) and true or false
 	if status or blacklisted then
 		if not blacklisted then
 			self:SetILevel(0) --CHAT_FLAG_DND
 			self:GetParent():SetNotReady(true)
 			self.Level:SetText(status);
 		end
+		self.Durability:Hide()
 		self.Portrait:SetDesaturated(true)
 		self:SetQuality(1)
 	else
 		self.Portrait:SetDesaturated(false)
 	end
+	self:ShowLocks()
 	return status
 end
+function MixinFollowerIcon:ShowLocks()
+	if self.locked then 
+		self.LockIcon:Show()
+	else
+		self.LockIcon:Hide()
+	end
+	if self.banned then
+		self.IgnoreIcon:Show()
+	else
+		self.IgnoreIcon:Hide()
+	end	
+end
 function MixinFollowerIcon:SetEmpty(message)
+	local mission=self:GetParent():GetParent().info
 	self.followerID=false
 	self:SetLevel(message or MISSING)
 	self:SetPortraitIcon()
 	self:SetQuality(1)
-	if message ~=IGNORED then
+	self.locked=false
+	self.Durability:Hide()
+	self.banned=addon:IsBanned(self.Slot,mission and mission.missionID or 0)
+	if message ~=UNUSED then
 		self:GetParent():SetNotReady(true)
 	end
+	self:ShowLocks()
 end
+local gft -- =GarrisonFollowerTooltip
 function MixinFollowerIcon:ShowTooltip()
+	local mission=self:GetParent():GetParent().info
+	local missionID=mission.missionID
+	gft = mission.inProgress and GarrisonFollowerTooltip or OHCFollowerTip
 	if not self.followerID then
 --[===[@debug@
 		return self:Dump()
@@ -292,27 +413,157 @@ function MixinFollowerIcon:ShowTooltip()
 	if link then
 		local levelXP=G.GetFollowerLevelXP(self.followerID)
 		local xp=G.GetFollowerXP(self.followerID)
-		GarrisonFollowerTooltip:ClearAllPoints()
-		GarrisonFollowerTooltip:SetPoint("BOTTOM", self, "TOP")
 		local _, garrisonFollowerID, quality, level, itemLevel, ability1, ability2, ability3, ability4, trait1, trait2, trait3, trait4, spec1 = strsplit(":", link)
-		GarrisonFollowerTooltip_Show(tonumber(garrisonFollowerID), true, tonumber(quality), tonumber(level), xp,levelXP,  tonumber(itemLevel), tonumber(spec1), tonumber(ability1), tonumber(ability2), tonumber(ability3), tonumber(ability4), tonumber(trait1), tonumber(trait2), tonumber(trait3), tonumber(trait4))
-		if not GarrisonFollowerTooltip.Status then
-			GarrisonFollowerTooltip.Status=GarrisonFollowerTooltip:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
-			GarrisonFollowerTooltip.Status:SetPoint("BOTTOM",0,5)
+		GarrisonFollowerTooltip_Show(
+			tonumber(garrisonFollowerID), true, tonumber(quality), tonumber(level), xp,levelXP,  tonumber(itemLevel), 
+			tonumber(spec1), tonumber(ability1), tonumber(ability2), tonumber(ability3), tonumber(ability4), 
+			tonumber(trait1), tonumber(trait2), tonumber(trait3), tonumber(trait4),
+			true,nil,nil,gft
+		)
+		gft:ClearAllPoints()
+		gft:SetPoint("BOTTOM", self, "TOP")
+		if gft==GarrisonFollowerTooltip then return end
+		if OHFMissions.showInProgress then return end
+		local ypos=gft:GetHeight()
+		gft.Lines[1]:ClearAllPoints()
+		gft.Lines[1]:SetPoint("TOPLEFT",gft,"TOPLEFT",5,-ypos)
+
+		if self.locked then
+			self.AddLine(gft,KEY_BUTTON1 .. ' : ' .. C(L['Unlock this follower'],"Red"))
+		else
+			self.AddLine(gft,KEY_BUTTON1 .. ' : ' .. C(L['Lock this follower'],"Green"))
+		end		
+		if self.banned then
+			self.AddLine(gft,KEY_BUTTON2 .. ' : ' .. C(L['Use this slot'],"Green"))
+		elseif self:IsBannable() then
+			self.AddLine(gft,KEY_BUTTON2 .. ' : ' .. C(L['Dont use this slot'],"Red"))
+		end		
+		self.AddLine(gft,SHIFT_KEY_TEXT .. "  " .. KEY_BUTTON1 .. ' : ' .. L['Lock all']) 
+		self.AddLine(gft,SHIFT_KEY_TEXT .. "  " .. KEY_BUTTON2 .. ' : ' .. L['Unlock all']) 
+		self.AddLine(gft,C(L["Locked follower are only used in this mission"],"CYAN"))
+--[===[@debug@
+		self.AddLine(gft,tostring(self.followerID))
+		self.AddLine(gft,tostring(addon:GetFollowerData(self.followerID,'classSpec')))
+--@end-debug@		]===]
+		if not gft.Status then
+			gft.Status=gft:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
+			gft.Status:SetPoint("BOTTOM",0,5)
 		end
 		local status=G.GetFollowerStatus(self.followerID)
 		if status then
-			GarrisonFollowerTooltip.Status:SetText(TOKEN_MARKET_PRICE_NOT_AVAILABLE.. ': ' .. status)
-			GarrisonFollowerTooltip.Status:SetTextColor(C:Orange())
-			GarrisonFollowerTooltip.Status:Show()
-			GarrisonFollowerTooltip:SetHeight(GarrisonFollowerTooltip:GetHeight()+10)
+			gft.Status:SetText(TOKEN_MARKET_PRICE_NOT_AVAILABLE.. ': ' .. status)
+			gft.Status:SetTextColor(C:Orange())
+			gft.Status:Show()
+			gft:SetHeight(gft:GetHeight()+10)
 		else
-			GarrisonFollowerTooltip.Status:Hide()
+			gft.Status:Hide()
 		end
+		self.AdjustSize(gft)
 	end
 end
+function MixinFollowerIcon:AdjustSize()
+	for i=self.current+1,#gft.Lines do
+		self.Lines[i]:Hide()
+	end
+	self:SetHeight(self:GetHeight()+ (5 +self.Lines[1]:GetStringHeight()) * self.current)
+	self:SetWidth(self.maxWidth+5)
+	self.current=0
+	
+end
+function MixinFollowerIcon:AddLine(message)
+	self.current = (self.current or 0) +1
+	local i=self.current
+	if not self.Lines[i] then
+		self.Lines[i]=self:CreateFontString(nil, "OVERLAY","GameFontNormal")
+	end
+	local line=self.Lines[i]
+	if i > 1 then
+		line:SetPoint("TOPLEFT",self.Lines[i-1],"BOTTOMLEFT",0,-5)
+	else
+		self.maxWidth=0
+	end
+	line:SetText(message)
+	line:Show()
+	self.maxWidth=math.max( line:GetStringWidth(),self.maxWidth)
+	
+end
+function MixinFollowerIcon:Click(button)
+	local mission=self:GetParent():GetParent().info
+	if mission.InProgress then return end
+	local missionID=mission.missionID
+	if IsShiftKeyDown() then
+		local lockIt=button=="LeftButton"
+		for _,champion in	pairs(self:GetParent().Champions) do
+			if champion.followerID then
+				champion.locked=lockIt
+				if lockIt then
+					addon:Reserve(champion.followerID,missionID)
+				else
+					addon:UnReserve(champion.followerID)
+				end
+			end
+		end
+	elseif self.followerID then
+		if button == "LeftButton" then
+			if self.banned then return end
+			-- we cant lock a busy follower or to a blacklisted mission
+			if addon:IsReserved(self.followerID) then
+				self:Unlock()
+			elseif not G.GetFollowerStatus(self.followerID) and not addon.db.profile.blacklist[missionID] then
+				self:Lock(missionID)
+			end
+		end
+	end
+	if button == "RightButton" then
+		if self.locked then return end
+		if addon:IsBanned(self.Slot,missionID) then
+			self:Unban(missionID)
+		elseif self:IsBannable() then
+			self:Ban(missionID)
+		end
+	end
+	self:ShowTooltip()
+	addon:RefreshMissions()
+end
+function MixinFollowerIcon:Lock(missionID)
+	addon:Reserve(self.followerID,missionID)
+	self.locked=true
+	self:ShowLocks()
+end
+function MixinFollowerIcon:Unlock()
+	addon:UnReserve(self.followerID)
+	self.locked=nil
+	self:ShowLocks()
+end
+function MixinFollowerIcon:Ban(missionID)
+	addon:Ban(self.Slot,missionID)
+	self.banned=true
+	self:ShowLocks()
+end
+function MixinFollowerIcon:IsBannable()
+	if not self.followerID then return false end
+	if self.Slot==3 then return true end
+	if self.Slot==1 then return false end
+	local slot3=self:GetParent().Champions[3]
+	return not slot3.followerID or slot3.banned or slot3.locked
+end
+function MixinFollowerIcon:Unban(missionID)
+	addon:Unban(self.Slot,missionID)
+	self.banned=nil
+	self:ShowLocks()
+end
 function MixinFollowerIcon:HideTooltip()
-	GarrisonFollowerTooltip:Hide()
+	if gft then gft:Hide() end
+end
+function MixinMembers:Followers()
+	return 
+		function(t,index)
+			if not index then index =0 end
+			index=index+1
+			return index,t[index].followerID
+		end,
+		self.Champions,
+		nil
 end
 function MixinMembers:OnLoad()
 	for i=1,3 do
@@ -325,6 +576,7 @@ function MixinMembers:OnLoad()
 		self.Champions[i]:SetFrameLevel(self:GetFrameLevel()+1)
 		self.Champions[i]:Show()
 		self.Champions[i]:SetEmpty()
+		self.Champions[i].Slot=i
 	end
 	self:SetWidth(self.Champions[1]:GetWidth()*3+30)
 	self.NotReady.Text:SetFormattedText(RAID_MEMBER_NOT_READY,STATUS_TEXT_PARTY)
@@ -340,15 +592,19 @@ function MixinMembers:SetNotReady(show)
 		self.NotReady:Hide()
 	end
 end
+function MixinMembers:IsReady()
+	return not self.NotReady:IsShown()
+end
+function MixinMembers:Lock()
+	for i=1,3 do
+		if addon:IsReserved(self.Champions[i].followerID or "") then
+			self.Champions[i].LockIcon:Show()
+		else
+			self.Champions[i].LockIcon:Hide()
+		end
+	end
+end
 function MixinMenu:OnLoad()
-	self.Top:SetAtlas("_StoneFrameTile-Top", true);
-	self.Bottom:SetAtlas("_StoneFrameTile-Bottom", true);
-	self.Left:SetAtlas("!StoneFrameTile-Left", true);
-	self.Right:SetAtlas("!StoneFrameTile-Left", true);
-	self.GarrCorners.TopLeftGarrCorner:SetAtlas("StoneFrameCorner-TopLeft", true);
-	self.GarrCorners.TopRightGarrCorner:SetAtlas("StoneFrameCorner-TopLeft", true);
-	self.GarrCorners.BottomLeftGarrCorner:SetAtlas("StoneFrameCorner-TopLeft", true);
-	self.GarrCorners.BottomRightGarrCorner:SetAtlas("StoneFrameCorner-TopLeft", true);
-	self.CloseButton:SetScript("OnClick",function() MixinMenu.OnClick(self) end)
+	self.Close:SetScript("OnClick",function() MixinMenu.OnClick(self) end)
 end
 
