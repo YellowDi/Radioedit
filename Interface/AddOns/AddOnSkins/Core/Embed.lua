@@ -1,6 +1,8 @@
 local AS, ASL = unpack(AddOnSkins)
 
 local format, gsub, pairs, ipairs, select, tinsert, tonumber = format, gsub, pairs, ipairs, select, tinsert, tonumber
+local strlower, strmatch, strsub, floor, wipe, type = strlower, strmatch, strsub, floor, wipe, type
+local _G, CreateFrame = _G, CreateFrame
 
 AS.ChatFrameHider = CreateFrame('Frame')
 AS.ChatFrameHider:Hide()
@@ -67,7 +69,7 @@ function AS:EmbedInit()
 end
 
 function AS:Embed_Show()
-	EmbedSystem_MainWindow:Show();
+	EmbedSystem_MainWindow:Show()
 	if AS:CheckOption('EmbedSystem') then
 		if _G[EmbedSystem_MainWindow.FrameName] then _G[EmbedSystem_MainWindow.FrameName]:Show() end
 	end
@@ -81,7 +83,7 @@ function AS:Embed_Show()
 end
 
 function AS:Embed_Hide()
-	EmbedSystem_MainWindow:Hide();
+	EmbedSystem_MainWindow:Hide()
 	if AS:CheckOption('EmbedSystem') then
 		if _G[EmbedSystem_MainWindow.FrameName] then _G[EmbedSystem_MainWindow.FrameName]:Hide() end
 	end
@@ -499,10 +501,8 @@ if AS:CheckAddOn('Details') then
 			
 			if (window.skin ~= "Forced Square") then
 				if (AS:CheckOption("DetailsBackdrop")) then
-					window:SetBackgroundAlpha (1)
 					window:ShowSideBars()
 				else
-					window:SetBackgroundAlpha (0)
 					window:HideSideBars()
 					
 					local skin = Details.skins [window.skin]
@@ -519,9 +519,6 @@ if AS:CheckAddOn('Details') then
 				if (AS:CheckOption("DetailsBackdrop")) then
 					window:ShowSideBars()
 					window:InstanceColor (1, 1, 1, 1, nil, true)
-					
-					local skin = Details.skins [window.skin]
-					window:SetBackgroundAlpha (skin.instance_cprops.bg_alpha)
 				else
 					window:HideSideBars()
 					window:InstanceColor (1, 1, 1, 0, nil, true)
@@ -532,7 +529,6 @@ if AS:CheckAddOn('Details') then
 					window.row_info.space.right = skin.instance_cprops.row_info.space.right
 					
 					window:InstanceWallpaper (false)
-					window:SetBackgroundAlpha (0)
 					
 					window:SetBarGrowDirection()
 				end

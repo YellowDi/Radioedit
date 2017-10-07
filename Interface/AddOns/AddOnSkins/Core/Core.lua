@@ -3,6 +3,12 @@ local AddOnName = ...
 local ES
 local FoundError
 
+local select, pairs, ipairs, type, pcall = select, pairs, ipairs, type, pcall
+local floor, print, format, strlower, strfind, strmatch = floor, print, format, strlower, strfind, strmatch
+local sort, tinsert, tonumber = sort, tinsert, tonumber
+local _G = _G
+local IsAddOnLoaded, GetAddOnMetadata, C_Timer = IsAddOnLoaded, GetAddOnMetadata, C_Timer
+
 function AS:CheckOption(optionName, ...)
 	for i = 1, select('#', ...) do
 		local addon = select(i, ...)
@@ -147,7 +153,7 @@ function AS:RegisteredSkin(skinName, priority, func, events)
 		if not strfind(event, '%[') then
 			if not AS.events[event] then
 				AS[event] = GenerateEventFunction(event)
-				AS:RegisterEvent(event); 
+				AS:RegisterEvent(event) 
 				AS.events[event] = {} 
 			end
 			AS.events[event][skinName] = true
@@ -166,14 +172,14 @@ function AS:RunPreload(addonName)
 end
 
 function AS:CallSkin(skin, func, event, ...)
-	local pass, errormsg = pcall(func, self, event, ...)
-	if not pass then
-		local message = '%s %s: |cfFFF0000There was an error in the|r |cff0AFFFF%s|r |cffFF0000skin|r.'
-		local errormessage = '%s Error: %s'
-		DEFAULT_CHAT_FRAME:AddMessage(format(message, AS.Title, AS.Version, skin))
-		FoundError = true
-		if AS:CheckOption('SkinDebug') then
-			DEFAULT_CHAT_FRAME:AddMessage(format(errormessage, skin, errormsg))
+	if (AS:CheckOption('SkinDebug')) then
+		func(self, event, ...);
+	else
+		local pass, errormsg = pcall(func, self, event, ...)
+		if not pass then
+			local message = '%s %s: |cfFFF0000There was an error in the|r |cff0AFFFF%s|r |cffFF0000skin|r.'
+			DEFAULT_CHAT_FRAME:AddMessage(format(message, AS.Title, AS.Version, skin))
+			FoundError = true
 		end
 	end
 end
@@ -293,7 +299,7 @@ end
 
 function AS:AcceptFrame(MainText, Function)
 	if not AcceptFrame then
-		AcceptFrame = CreateFrame('Frame', 'AcceptFrame', UIParent)
+		local AcceptFrame = CreateFrame('Frame', 'AcceptFrame', UIParent)
 		AS:SkinFrame(AcceptFrame)
 		AcceptFrame:SetPoint('CENTER', UIParent, 'CENTER')
 		AcceptFrame:SetFrameStrata('DIALOG')
