@@ -95,7 +95,7 @@ function NOP:ACTIONBAR_UPDATE_COOLDOWN() -- update cooldowns on quest bar and it
   end
   local bt = self.BF -- item button
   if bt and bt.itemID and bt:IsShown() then
-    local start, duration, enable = GetContainerItemCooldown(bt.bagID, bt.slotID) -- GetItemCooldown(bt.itemID)
+    local start, duration, enable = GetItemCooldown(bt.itemID) -- GetContainerItemCooldown(bt.bagID, bt.slotID)
     self:ButtonOnUpdate(bt,start,duration)
   end
 end

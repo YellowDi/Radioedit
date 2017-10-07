@@ -1,4 +1,12 @@
 -- Revisions:
+--[[<p>08.08 04.10.2017</p>
+<ul>
+<li>Added Mac'Aree Armor Set, Relinquished Relics, Lightforged Bulwark, Nathrezim Tome of Manipulation and Xenedar Armor Set.</li>
+<li>Removed obsolete Artifact Research Notes.</li>
+<li>Fix for ticket #35, Toggle -> Swap: Option in configuration GUI is broken.</li>
+<li>Cooldown text on buttons now corectly dismiss when item on button is replaced and new item has no active cooldown.</li>
+</ul>
+]]
 --[[<p>08.06 18.09.2017</p>
 <ul>
 <li>Added Libram of Truth, Krokul Ridgestalker, Argussian Reach Insignia, Greater Argussian Reach Insignia, Army of the Light Insignia, Greater Army of the Light Insignia and Void-Purged Krokul.</li>

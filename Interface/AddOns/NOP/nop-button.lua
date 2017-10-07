@@ -320,8 +320,9 @@ function NOP:ButtonHotKey(key) -- abbreviation for hotkey string
   return key
 end
 function NOP:ButtonOnUpdate(bt,start,duration) -- setup timer on button
-  if not bt.timer then return; end -- timer text is not defined
-  if start > 0 and duration > 0 then
+  if not bt.timer then return end -- timer text is not defined
+  if (start > 0) and (duration > 0) then
+    -- self.printt("start",start,"duration",duration)
     local expire = start + duration
     if bt.expire == nil or bt.expire < expire then
       if bt.expire == nil and WoWBox then WoWBox:ItemCD(duration) end
@@ -330,16 +331,20 @@ function NOP:ButtonOnUpdate(bt,start,duration) -- setup timer on button
       bt:SetScript("OnUpdate", function(self,elapsed)
         if not self.update then self.update = 0 end
         self.update = self.update - elapsed
-        if self.update < 0 then
-          local cd = self.expire-GetTime()
-          if (cd > 0) then
-            local update,txt = NOP:SecondsToString(cd)
-            self.update = update
-            self.timer:SetText(txt)
-          else
-            self:SetScript("OnUpdate",nil)
-            self.timer:SetText(nil)
-            self.expire = nil
+        if (self.update < 0) then
+          if self.itemID and self:IsShown() then
+            local start, duration, enable = GetItemCooldown(self.itemID) -- item on button could be another one than when timer started
+            local cd = 0
+            if (start > 0) and (duration > 0) then cd = (start - GetTime()) + duration end
+            if (cd > 0) then
+              local update,txt = NOP:SecondsToString(cd)
+              self.update = update
+              self.timer:SetText(txt)
+            else
+              self:SetScript("OnUpdate",nil)
+              self.timer:SetText(nil)
+              self.expire = nil
+            end
           end
         end
       end)

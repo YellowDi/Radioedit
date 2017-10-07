@@ -19,6 +19,7 @@ NOP.T_SPELL_BY_NAME = { -- [itemID] = count_to_use, table to fetch via GetItemSp
   [140526] = 1, -- Eredar Signet, Use: Provides a significant increase to character experience.
   [141028] = 1, -- Grimoire of Knowledge, Use: Open your Followers page and use this item to grant 4000 XP directly to a Champion.
   [146663] = 1, -- Empowering, Soggy Tapestry, 150 artifact power
+  [153066] = 1, -- Create Relic, Relinquished Life Relic
 }
 NOP.T_SPELL_BY_USE_TEXT = { -- [spellID] = {count_to_use,itemID,{"sub-Zone",...},{[mapID]=true,...}}, table for opening via spell, used for multiple items with same spell text
   [243074] = {1,147837,nil,nil}, -- Create a Broken Isles relic appropriate for your loot specialization. Relinquished Relic
@@ -46,6 +47,7 @@ NOP.T_RECIPES = { -- [ItemId] = {count_to_use, "gsub regex" | tooltip-line-numbe
   [118592] = {2,"(.+:).*",nil,nil}, -- Partial Receipt: Gizmothingies
   [128440] = {1,"(.+:).*",nil,nil}, -- Contract: Dowser Goodwell
   [100863] = {1,"(.+:).*",nil,nil}, -- Pattern: Celestial Cloth and Its Uses, some old recipes has no learning spell
+  [141064] = {1,"(.+:).*",nil,nil}, -- Technique: Glyph of the Shivarra
   [138865] = {1,2,nil,nil}, -- Gladiator's Triumph 2nd line contains "Artifact Power"
   [138883] = {1,4,nil,nil}, -- 4th line contains Use: Target one of your troops to restore 1 vitality.
   [111972] = {1,2,nil,nil}, -- Enchanter's Study, Level 2, 2nd line contains "Garrison Blueprint"
@@ -78,6 +80,11 @@ NOP.T_RECIPES = { -- [ItemId] = {count_to_use, "gsub regex" | tooltip-line-numbe
   [147727] = {1,1,nil}, -- Greater Legionfall Insignia
 }
 NOP.T_ITEMS = { -- [itemID] = {count_to_use,{"sub-Zone",...},{[mapID]=true,...},auraID}, table for opening/use item by itemID, is no possible to check any common text
+  [153114] = {1,nil,nil}, -- Nathrezim Tome of Manipulation
+  [151844] = {1,nil,nil}, -- Xenedar Armor Set
+  [152097] = {1,nil,nil}, -- Lightforged Bulwark
+  [140928] = {1,nil,nil}, -- Ox Initiate's Pledge
+  [151843] = {1,nil,nil}, -- Mac'Aree Armor Set
   [152096] = {1,nil,nil}, -- Void-Purged Krokul
   [152095] = {1,nil,nil}, -- Krokul Ridgestalker
   [140760] = {1,nil,nil}, -- Libram of Truth
@@ -90,15 +97,15 @@ NOP.T_ITEMS = { -- [itemID] = {count_to_use,{"sub-Zone",...},{[mapID]=true,...},
   [139428] = {1,nil,nil}, -- A Master Plan
   [140749] = {1,nil,nil}, -- Horn of Winter
   [140767] = {5,nil,nil}, -- Pile of Bits and Bones
-  [144433] = {1,nil,nil}, -- Artifact Research Compendium: Volumes I
-  [144434] = {1,nil,nil}, -- Artifact Research Compendium: Volumes I-II
-  [144431] = {1,nil,nil}, -- Artifact Research Compendium: Volumes I-III
-  [144435] = {1,nil,nil}, -- Artifact Research Compendium: Volumes I-IV
-  [147852] = {1,nil,nil}, -- Artifact Research Compendium: Volumes I-V
-  [147853] = {1,nil,nil}, -- Artifact Research Compendium: Volumes I-VI
-  [147854] = {1,nil,nil}, -- Artifact Research Compendium: Volumes I-VII
-  [147855] = {1,nil,nil}, -- Artifact Research Compendium: Volumes I-VIII
-  [147856] = {1,nil,nil}, -- Artifact Research Compendium: Volumes I-IX
+  -- [144433] = {1,nil,nil}, -- Artifact Research Compendium: Volumes I
+  -- [144434] = {1,nil,nil}, -- Artifact Research Compendium: Volumes I-II
+  -- [144431] = {1,nil,nil}, -- Artifact Research Compendium: Volumes I-III
+  -- [144435] = {1,nil,nil}, -- Artifact Research Compendium: Volumes I-IV
+  -- [147852] = {1,nil,nil}, -- Artifact Research Compendium: Volumes I-V
+  -- [147853] = {1,nil,nil}, -- Artifact Research Compendium: Volumes I-VI
+  -- [147854] = {1,nil,nil}, -- Artifact Research Compendium: Volumes I-VII
+  -- [147855] = {1,nil,nil}, -- Artifact Research Compendium: Volumes I-VIII
+  -- [147856] = {1,nil,nil}, -- Artifact Research Compendium: Volumes I-IX
   [128373] = {1,{private.SHIPYARD_HORDE,private.SHIPYARD_ALLIANCE},{[private.FROSTFIRE_RIDGE]=true,[private.SHADOWMOON_VALLEY]=true}}, -- Rush Order: Shipyard, special handling for sub-zone
   [136806] = {1,nil,nil}, -- Glass of Arcwine
   [147729] = {1,nil,nil}, -- Netherchunk
@@ -111,7 +118,7 @@ NOP.T_ITEMS = { -- [itemID] = {count_to_use,{"sub-Zone",...},{[mapID]=true,...},
   [147348] = {1,nil,nil}, -- Bulky Armor Set
   [147384] = {1,nil,nil}, -- Legionfall Recompense
   [147860] = {1,nil,nil}, -- Empowered Elven Tome
-  [146745] = {1,nil,nil}, -- Artifacet Research Notes
+  -- [146745] = {1,nil,nil}, -- Artifacet Research Notes
   [140327] = {1,nil,nil}, -- Kyrtos's Research Notes
   [136269] = {1,nil,nil}, -- Kel'danath's Manaflask
   [140448] = {1,nil,nil}, -- Lens of Qin'dera

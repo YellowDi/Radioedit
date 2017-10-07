@@ -166,7 +166,7 @@ function NOP:OptionsLoad() -- load options for UI config
             desc = private.L["Swap location of numbers for count and cooldown timer"],
             type = "toggle",
             width = "full",    
-            set = function(info,val) NOP.DB["swap"] = val; NOP:ButtonSwap(NOP.DB.swap) end,
+            set = function(info,val) NOP.DB["swap"] = val; NOP:ButtonSwap(NOP.BF,NOP.DB.swap) end,
             get = function(info) return NOP.DB.swap end,
           },
           --[[ script = {
