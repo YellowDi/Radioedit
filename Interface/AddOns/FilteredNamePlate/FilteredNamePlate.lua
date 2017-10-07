@@ -74,7 +74,8 @@ local function registerMyEvents(self, event, ...)
 			Fnp_MyVersion = FNP_LOCALE_TEXT.FNP_VERSION
 		end
 		Fnp_CurVersion = nil -- 短期内不删除
-		if Fnp_MyVersion ~= nil and Fnp_MyVersion < FNP_LOCALE_TEXT.FNP_VERSION then
+		if Fnp_MyVersion ~= nil and Fnp_MyVersion ~= FNP_LOCALE_TEXT.FNP_VERSION then
+			FilteredNamePlate:ChangedSavedScaleList(Fnp_OtherNPFlag)
 			Fnp_MyVersion = FNP_LOCALE_TEXT.FNP_VERSION
 		end
 		-----*** inited **}
@@ -141,6 +142,9 @@ local HideAFrame = {
 		if frame.ouf then
 			if frame.ouf.Name then
 				frame.ouf.Name:SetFont(FilteredNamePlate.curScaleList.fontFace, FilteredNamePlate.curScaleList.small_name_font, FilteredNamePlate.curScaleList.fontFlag)
+			end
+			if frame.ouf.Level then
+				frame.ouf.Level:SetFont(FilteredNamePlate.curScaleList.fontFace, FilteredNamePlate.curScaleList.small_name_font, FilteredNamePlate.curScaleList.fontFlag)
 			end
 			if frame.ouf.Health then frame.ouf.Health:Hide() end
 		end
@@ -227,16 +231,20 @@ local ShowAFrame = {
 	[3] = function(frame, isOnlyShowSpellCast, restore, isOnlyUnit)
 		if frame and frame.ouf then
 			if restore == true then
+				frame.ouf.Level:SetFont(FilteredNamePlate.curScaleList.fontFace, FilteredNamePlate.curScaleList.NAME_FONT, FilteredNamePlate.curScaleList.fontFlag)
 				frame.ouf.Name:SetFont(FilteredNamePlate.curScaleList.fontFace, FilteredNamePlate.curScaleList.NAME_FONT, FilteredNamePlate.curScaleList.fontFlag)
 				frame.ouf.Health:Show()
 			elseif isOnlyShowSpellCast == false then
 				frame.ouf.Health:Show()
 				if isOnlyUnit then
+					frame.ouf.Level:SetFont(FilteredNamePlate.curScaleList.fontFace, FilteredNamePlate.curScaleList.only_name_font, FilteredNamePlate.curScaleList.fontFlag)
 					frame.ouf.Name:SetFont(FilteredNamePlate.curScaleList.fontFace, FilteredNamePlate.curScaleList.only_name_font, FilteredNamePlate.curScaleList.fontFlag)
 				else
+					frame.ouf.Level:SetFont(FilteredNamePlate.curScaleList.fontFace, FilteredNamePlate.curScaleList.normal_name_font, FilteredNamePlate.curScaleList.fontFlag)
 					frame.ouf.Name:SetFont(FilteredNamePlate.curScaleList.fontFace, FilteredNamePlate.curScaleList.normal_name_font, FilteredNamePlate.curScaleList.fontFlag)
 				end
 			else
+				frame.ouf.Level:SetFont(FilteredNamePlate.curScaleList.fontFace, FilteredNamePlate.curScaleList.mid_name_font, FilteredNamePlate.curScaleList.fontFlag)
 				frame.ouf.Name:SetFont(FilteredNamePlate.curScaleList.fontFace, FilteredNamePlate.curScaleList.mid_name_font, FilteredNamePlate.curScaleList.fontFlag)
 			end
 		end
@@ -451,7 +459,7 @@ local function actionUnitAdded(self, event, ...)
 	end
 
 	if SetupFlag == 0 then
-		local inited = FilteredNamePlate:initScaleValues(curNpFlag, false) -- 第一次
+		local inited = FilteredNamePlate:initScaleValues(curNpFlag, Fnp_OtherNPFlag) -- 第一次
 		if inited == false then
 			SetupFlag = 10 -- 错误永不再用，直到重载
 			print(L.FNP_PRINT_ERROR_UITYPE)
