@@ -404,6 +404,11 @@ GTFO.SpellID["223435"] = {
   sound = 3;
 };
 
+GTFO.SpellID["220324"] = {
+  --desc = "Fel Energy Barrier";
+  sound = 3;
+};
+
 
 -- **********
 -- * Mardum *
@@ -2048,7 +2053,9 @@ GTFO.SpellID["252093"] = {
 
 GTFO.SpellID["218969"] = {
   --desc = "Fel Meteor (Invasive Gazer)";
+  applicationOnly = true;
   sound = 3;
+  test = true;
 };
 
 GTFO.SpellID["240364"] = {
@@ -2060,6 +2067,35 @@ GTFO.SpellID["252575"] = {
   --desc = "Fiery Release (Bursting Elemental)";
   sound = 3;
 };
+
+GTFO.SpellID["247389"] = {
+  --desc = "Slumbering Gasp (Matron Folnuna)";
+  applicationOnly = true;
+  sound = 3;
+};
+
+GTFO.SpellID["247411"] = {
+  --desc = "Scorching Presence (Felblaze Maniac)";
+  applicationOnly = true;
+  sound = 3;
+};
+
+GTFO.SpellID["247499"] = {
+  --desc = "Grotesque Spawn (Matron Folnuna)";
+  sound = 3;
+};
+
+GTFO.SpellID["254201"] = {
+  --desc = "Wake of Destruction (Sotanathor)";
+  sound = 3;
+};
+
+GTFO.SpellID["251735"] = {
+  --desc = "Swarming Insects";
+  applicationOnly = true;
+  sound = 3;
+};
+
 
 --- ***************************
 --- * Seat of the Triumvirate *

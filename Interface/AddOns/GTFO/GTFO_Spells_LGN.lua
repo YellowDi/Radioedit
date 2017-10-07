@@ -1669,6 +1669,12 @@ GTFO.SpellID["242017"] = {
   sound = 1;
 };
 
+GTFO.SpellID["243294"] = {
+  --desc = "Fel Slicer (Accusator Gnazh)";
+  sound = 1;
+};
+
+
 --- *********
 --- * Argus *
 --- *********
@@ -1753,6 +1759,12 @@ GTFO.SpellID["249067"] = {
   --desc = "Eye of Darkness (Harbinger Drel'nathar)";
   sound = 1;
 };
+
+GTFO.SpellID["248700"] = {
+  --desc = "Fel Lightning (Fel Spike)";
+  sound = 1;
+};
+
 
 
 --- ***************************
