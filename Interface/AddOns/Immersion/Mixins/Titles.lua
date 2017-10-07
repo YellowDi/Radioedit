@@ -62,7 +62,7 @@ function Titles:OnUpdateOffset()
 			self:SetScript('OnUpdate', nil)
 		end
 	else
-		self:SetPoint(anchor, relativeRegion, relativeKey, x, offset + (ANI_DIVISOR > 0 and (diff / ANI_DIVISOR) or 0))
+		self:SetPoint(anchor, relativeRegion, relativeKey, x, offset + (ANI_DIVISOR > 1 and (diff / ANI_DIVISOR) or 0))
 	end
 end
 

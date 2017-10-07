@@ -7,9 +7,9 @@ local LINE_FEED_CODE = string.char(10)
 local CARRIAGE_RETURN_CODE = string.char(13)
 local WEIRD_LINE_BREAK = LINE_FEED_CODE .. CARRIAGE_RETURN_CODE .. LINE_FEED_CODE
 
-local DELAY_DIVISOR
-local DELAY_PADDING = 2
-local MAX_UNTIL_SPLIT = 200
+local DELAY_DIVISOR -- set later as baseline divisor for (text length / time).
+local DELAY_PADDING = 2 -- static padding, feels more natural with a pause to breathe.
+local MAX_UNTIL_SPLIT = 200 -- start recursive string splitting if the text is too long.
 
 Timer.Texts = {}
 L.TextMixin = {}
@@ -24,8 +24,8 @@ function Text:SetText(text)
 		local strings, delays = {}, {}
 		local timeToFinish = 0
 		text = text:gsub(LINE_FEED_CODE .. '+', '\n'):gsub(WEIRD_LINE_BREAK, '\n')
-		for i, str in pairs({strsplit('\n', text)}) do
-			timeToFinish = timeToFinish + self:AddString(str, strings, delays)
+		for _, paragraph in ipairs({strsplit('\n', text)}) do
+			timeToFinish = timeToFinish + self:AddString(paragraph, strings, delays)
 		end
 		self.numTexts = #strings
 		self.timeToFinish = timeToFinish
@@ -51,8 +51,8 @@ function Text:AddString(str, strings, delays)
 		if ( new == str ) then
 			force = true
 		else -- recursively split the altered string
-			for i, short in pairs({strsplit('\n', new)}) do
-				delay = delay + self:AddString(short, strings, delays)
+			for _, sentence in ipairs({strsplit('\n', new)}) do
+				delay = delay + self:AddString(sentence, strings, delays)
 			end
 			return delay
 		end
@@ -209,9 +209,6 @@ end
 function Timer:AddText(fontString)
 	if fontString then
 		self.Texts[fontString] = true
-		if not self:GetScript('OnUpdate') then
-			self.elapsed = 0
-		end
 		self:SetScript('OnUpdate', self.OnUpdate)
 	end
 end
@@ -242,7 +239,7 @@ function Timer:OnUpdate(elapsed)
 			end
 			-- deduct elapsed time since update from current delay
 			text.delays[1] = text.delays[1] - elapsed
-			-- delay is below zero, move on to next line
+			-- delay is below/equal to zero, move on to next line
 			if text.delays[1] <= 0 then
 				tremove(text.delays, 1)
 				tremove(text.strings, 1)

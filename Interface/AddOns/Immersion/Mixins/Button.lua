@@ -28,11 +28,13 @@ end
 
 function Button:OnDragStart(button)
 	if not L('titlelock') then
+		self.Container:SetClampedToScreen(true)
 		self.Container:StartMoving()
 	end
 end
 
 function Button:OnMouseWheel(delta)
+	self.Container:SetClampedToScreen(false)
 	self.Container:OnScroll(delta)
 end
 
