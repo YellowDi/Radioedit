@@ -85,7 +85,7 @@ L["Reward type"] = true
 L["Right-Click to blacklist"] = true
 L["Right-Click to remove from blacklist"] = true
 L["Sets all switches to a very permissive setup"] = true
-L["Shift-Click start the mission witout even opening the mission page. Non question asked"] = true
+L["Shift-Click start the mission witout even opening the mission page. No question asked"] = true
 L["Show tutorial"] = true
 L["Show/hide OrderHallCommander mission menu"] = true
 L["Sort missions by:"] = true
@@ -147,7 +147,7 @@ This not only implies %1$s and %3$s, but force OHC to never send to mission a tr
 The target for this switch is to totally avoid killing troops, even it for this we cant fill the party]=] ] = true
 L[ [=[You can blacklist missions right clicking mission button.
 Since 1.5.1 you can start a mission witout passing from mission page shift-clicking the mission button.
-Be sure you liked the party because non confirmation is asked]=] ] = true
+Be sure you liked the party because no confirmation is asked]=] ] = true
 L[ [=[You can choose to limit how much champions are sent together.
 Right now OHC is not using more than %3$s champions in the same mission-
 
@@ -291,7 +291,7 @@ L["Right-Click to remove from blacklist"] = "Right-Click to remove from blacklis
 --Translation missing 
 L["Sets all switches to a very permissive setup"] = "Sets all switches to a very permissive setup"
 --Translation missing 
-L["Shift-Click start the mission witout even opening the mission page. Non question asked"] = "Shift-Click start the mission witout even opening the mission page. Non question asked"
+L["Shift-Click start the mission witout even opening the mission page. No question asked"] = "Shift-Click start the mission witout even opening the mission page. No question asked"
 --Translation missing 
 L["Show tutorial"] = "Show tutorial"
 L["Show/hide OrderHallCommander mission menu"] = "Mostrar / ocultar o menu da missão OrderHallCommander"
@@ -405,9 +405,9 @@ The target for this switch is to totally avoid killing troops, even it for this 
 --Translation missing 
 L[ [=[You can blacklist missions right clicking mission button.
 Since 1.5.1 you can start a mission witout passing from mission page shift-clicking the mission button.
-Be sure you liked the party because non confirmation is asked]=] ] = [=[You can blacklist missions right clicking mission button.
+Be sure you liked the party because no confirmation is asked]=] ] = [=[You can blacklist missions right clicking mission button.
 Since 1.5.1 you can start a mission witout passing from mission page shift-clicking the mission button.
-Be sure you liked the party because non confirmation is asked]=]
+Be sure you liked the party because no confirmation is asked]=]
 --Translation missing 
 L[ [=[You can choose to limit how much champions are sent together.
 Right now OHC is not using more than %3$s champions in the same mission-
@@ -544,7 +544,7 @@ L["Right-Click to remove from blacklist"] = "Right-Click to remove from blacklis
 --Translation missing 
 L["Sets all switches to a very permissive setup"] = "Sets all switches to a very permissive setup"
 --Translation missing 
-L["Shift-Click start the mission witout even opening the mission page. Non question asked"] = "Shift-Click start the mission witout even opening the mission page. Non question asked"
+L["Shift-Click start the mission witout even opening the mission page. No question asked"] = "Shift-Click start the mission witout even opening the mission page. No question asked"
 --Translation missing 
 L["Show tutorial"] = "Show tutorial"
 L["Show/hide OrderHallCommander mission menu"] = "Afficher / masquer le menu de mission OrderHallCommander"
@@ -654,9 +654,9 @@ The target for this switch is to totally avoid killing troops, even it for this 
 --Translation missing 
 L[ [=[You can blacklist missions right clicking mission button.
 Since 1.5.1 you can start a mission witout passing from mission page shift-clicking the mission button.
-Be sure you liked the party because non confirmation is asked]=] ] = [=[You can blacklist missions right clicking mission button.
+Be sure you liked the party because no confirmation is asked]=] ] = [=[You can blacklist missions right clicking mission button.
 Since 1.5.1 you can start a mission witout passing from mission page shift-clicking the mission button.
-Be sure you liked the party because non confirmation is asked]=]
+Be sure you liked the party because no confirmation is asked]=]
 --Translation missing 
 L[ [=[You can choose to limit how much champions are sent together.
 Right now OHC is not using more than %3$s champions in the same mission-
@@ -681,15 +681,13 @@ L["Always counter no bonus loot threat"] = "Kontert immer Bedrohungen, die Bonus
 L["Artifact shown value is the base value without considering knowledge multiplier"] = "Der angezeigte Wert ist der Grundwert ohne die Berücksichtigung von Artefakwissen."
 --Translation missing 
 L["Attempting %s"] = "Attempting %s"
---Translation missing 
-L["Base Chance"] = "Base Chance"
+L["Base Chance"] = "Basis-Chance"
 L["Better parties available in next future"] = "Bessere Gruppen sind in absehbarer Zeit verfügbar"
 --Translation missing 
 L["Blacklisted"] = "Blacklisted"
 --Translation missing 
 L["Blacklisted missions are ignored in Mission Control"] = "Blacklisted missions are ignored in Mission Control"
---Translation missing 
-L["Bonus Chance"] = "Bonus Chance"
+L["Bonus Chance"] = "Bonus-Chance"
 L["Building Final report"] = "Erstelle Abschlussbericht"
 --Translation missing 
 L["but using troops with just one durability left"] = "but using troops with just one durability left"
@@ -701,10 +699,8 @@ L["Configuration for mission party builder"] = "Konfiguration des Gruppenerstell
 L["Cost reduced"] = "Kosten reduziert"
 --Translation missing 
 L["Could not fulfill mission, aborting"] = "Could not fulfill mission, aborting"
---Translation missing 
-L["Counter kill Troops"] = "Counter kill Troops"
---Translation missing 
-L["Disables warning: "] = "Disables warning: "
+L["Counter kill Troops"] = "Kontere Tödlich"
+L["Disables warning: "] = "Deaktiviert Warnung:"
 --Translation missing 
 L["Dont use this slot"] = "Dont use this slot"
 L["Don't use troops"] = "Keine Truppen verwenden"
@@ -754,8 +750,7 @@ L["Mission duration reduced"] = "Missionsdauer reduziert"
 --Translation missing 
 L["Mission was capped due to total chance less than"] = "Mission was capped due to total chance less than"
 L["Missions"] = "Missionen"
---Translation missing 
-L["Never kill Troops"] = "Never kill Troops"
+L["Never kill Troops"] = "Töte nie Truppen"
 L["No follower gained xp"] = "Kein Anhänger erhielt EP"
 --Translation missing 
 L["No suitable missions. Have you reserved at least one follower?"] = "No suitable missions. Have you reserved at least one follower?"
@@ -776,8 +771,7 @@ Du kannst OrderhallCommander einfach deaktvieren um wieder OrderhallCommander zu
 Wenn du OrderhallCommander allerdings gut findest, vergiss nicht es in deinem Curse Client hinzuzufügen und aktuell zu halten.]=]
 L["Original method"] = "Standard"
 L["Position is not saved on logout"] = "Die Position wird beim Ausloggen nicht gespeichert"
---Translation missing 
-L["Prefer high durability"] = "Prefer high durability"
+L["Prefer high durability"] = "Bevorzuge hohe Haltbarkeit"
 --Translation missing 
 L["Quick start first mission"] = "Quick start first mission"
 --Translation missing 
@@ -791,13 +785,11 @@ L["Right-Click to remove from blacklist"] = "Right-Click to remove from blacklis
 --Translation missing 
 L["Sets all switches to a very permissive setup"] = "Sets all switches to a very permissive setup"
 --Translation missing 
-L["Shift-Click start the mission witout even opening the mission page. Non question asked"] = "Shift-Click start the mission witout even opening the mission page. Non question asked"
---Translation missing 
-L["Show tutorial"] = "Show tutorial"
+L["Shift-Click start the mission witout even opening the mission page. No question asked"] = "Shift-Click start the mission witout even opening the mission page. No question asked"
+L["Show tutorial"] = "Zeige Tutorial"
 L["Show/hide OrderHallCommander mission menu"] = "OrderHallCommander-Missionsmenü zeigen/ausblenden"
 L["Sort missions by:"] = "Sortieren nach:"
---Translation missing 
-L["Started with "] = "Started with "
+L["Started with "] = "Startet mit"
 L["Success Chance"] = "Erfolgschance"
 L["Troop ready alert"] = "Warnung Trupp bereit"
 --Translation missing 
@@ -834,12 +826,9 @@ L[ [=[%1$s and %2$s switches work together to customize how you want your missio
 The value you set for %1$s (right now %3$s%%) is the minimum acceptable chance for attempting to achieve bonus while the value to set for %2$s (right now %4$s%%) is the chance you want achieve when you are forfaiting bonus (due to not enough powerful followers)]=] ] = [=[%1$s and %2$s switches work together to customize how you want your mission filled
 
 The value you set for %1$s (right now %3$s%%) is the minimum acceptable chance for attempting to achieve bonus while the value to set for %2$s (right now %4$s%%) is the chance you want achieve when you are forfaiting bonus (due to not enough powerful followers)]=]
---Translation missing 
-L["Base Chance"] = "Base Chance"
---Translation missing 
-L["Bonus Chance"] = "Bonus Chance"
---Translation missing 
-L["Counter Kill Troops"] = "Counter Kill Troops"
+L["Base Chance"] = "Basis-Chance"
+L["Bonus Chance"] = "Bonus-Chance"
+L["Counter Kill Troops"] = "Kontere Tödlich"
 --Translation missing 
 L[ [=[Equipment and upgrades are listed here as clickable buttons.
 Due to an issue with Blizzard Taint system, if you drag and drop an item from a bag, you receive an error.
@@ -862,12 +851,9 @@ L["If instead you just want to always see the best available mission just set %1
 L["Max champions"] = "Max champions"
 --Translation missing 
 L["Maximize xp gain"] = "Maximize xp gain"
---Translation missing 
-L["Never kill Troops"] = "Never kill Troops"
---Translation missing 
-L["Prefer high durability"] = "Prefer high durability"
---Translation missing 
-L["Restart the tutorial"] = "Restart the tutorial"
+L["Never kill Troops"] = "Töte nie Truppen"
+L["Prefer high durability"] = "Bevorzuge hohe Haltbarkeit"
+L["Restart the tutorial"] = "Startet das Tutorial neu"
 --Translation missing 
 L[ [=[Slots (non the follower in it but just the slot) can be banned.
 When you ban a slot, that slot will not be filled for that mission.
@@ -901,9 +887,9 @@ The target for this switch is to totally avoid killing troops, even it for this 
 --Translation missing 
 L[ [=[You can blacklist missions right clicking mission button.
 Since 1.5.1 you can start a mission witout passing from mission page shift-clicking the mission button.
-Be sure you liked the party because non confirmation is asked]=] ] = [=[You can blacklist missions right clicking mission button.
+Be sure you liked the party because no confirmation is asked]=] ] = [=[You can blacklist missions right clicking mission button.
 Since 1.5.1 you can start a mission witout passing from mission page shift-clicking the mission button.
-Be sure you liked the party because non confirmation is asked]=]
+Be sure you liked the party because no confirmation is asked]=]
 --Translation missing 
 L[ [=[You can choose to limit how much champions are sent together.
 Right now OHC is not using more than %3$s champions in the same mission-
@@ -1006,7 +992,7 @@ L["Right-Click to remove from blacklist"] = "Clicca col destro per rimuovere dal
 --Translation missing 
 L["Sets all switches to a very permissive setup"] = "Sets all switches to a very permissive setup"
 --Translation missing 
-L["Shift-Click start the mission witout even opening the mission page. Non question asked"] = "Shift-Click start the mission witout even opening the mission page. Non question asked"
+L["Shift-Click start the mission witout even opening the mission page. No question asked"] = "Shift-Click start the mission witout even opening the mission page. No question asked"
 --Translation missing 
 L["Show tutorial"] = "Show tutorial"
 L["Show/hide OrderHallCommander mission menu"] = "Mostra/ascondi il menu di missione di OrderHallCommander"
@@ -1105,9 +1091,9 @@ The target for this switch is to totally avoid killing troops, even it for this 
 --Translation missing 
 L[ [=[You can blacklist missions right clicking mission button.
 Since 1.5.1 you can start a mission witout passing from mission page shift-clicking the mission button.
-Be sure you liked the party because non confirmation is asked]=] ] = [=[You can blacklist missions right clicking mission button.
+Be sure you liked the party because no confirmation is asked]=] ] = [=[You can blacklist missions right clicking mission button.
 Since 1.5.1 you can start a mission witout passing from mission page shift-clicking the mission button.
-Be sure you liked the party because non confirmation is asked]=]
+Be sure you liked the party because no confirmation is asked]=]
 --Translation missing 
 L[ [=[You can choose to limit how much champions are sent together.
 Right now OHC is not using more than %3$s champions in the same mission-
@@ -1121,8 +1107,9 @@ return
 end
 L=l:NewLocale(me,"koKR")
 if (L) then
-L["%1$d%% lower than %2$d%%. Lower %s"] = "%2$d%% 보다 %1$d%% 낮습니다. %3$s 낮음"
-L["%s, please review the tutorial\\n(Click the icon to dismiss this message)"] = "OrderHallCommander의 새로운 버전입니다. 잠시 시간을 내어 설명서를 살펴봐주세요. 닫으려면 이 아이콘을 클릭하세요"
+L["%1$d%% lower than %2$d%%. Lower %s"] = "%2$d%%보다 %1$d%% 낮습니다. %3$s 낮습니다"
+L["%s, please review the tutorial\\n(Click the icon to dismiss this message)"] = [=[%s님, 설명서를 살펴봐주세요
+(이 메시지를 닫으려면 아이콘을 클릭하세요)]=]
 L["Always counter increased resource cost"] = "자원 비용 증가 항상 대응"
 L["Always counter increased time"] = "소요 시간 증가 항상 대응"
 L["Always counter kill troops (ignored if we can only use troops with just 1 durability left)"] = "병력 죽이기 항상 대응 (활력이 1만 남은 병력만 있을 땐 무시)"
@@ -1207,7 +1194,7 @@ L["Reward type"] = "보상 유형"
 L["Right-Click to blacklist"] = "차단하려면 오른쪽-클릭"
 L["Right-Click to remove from blacklist"] = "차단목록에서 제거하려면 오른쪽-클릭"
 L["Sets all switches to a very permissive setup"] = "모든 전환 설정을 허용적인 구성으로 설정"
-L["Shift-Click start the mission witout even opening the mission page. Non question asked"] = "Shift-클릭 임무 페이지를 열지 않고 임무를 시작합니다. 아무것도 묻지 않습니다"
+L["Shift-Click start the mission witout even opening the mission page. No question asked"] = "Shift-클릭 임무 페이지를 열지 않고 임무를 시작합니다. 아무것도 묻지 않습니다"
 L["Show tutorial"] = "살명서 보기"
 L["Show/hide OrderHallCommander mission menu"] = "OrderHallCommander 임무 메뉴 표시/숨기기"
 L["Sort missions by:"] = "임무 정렬 방법:"
@@ -1286,7 +1273,7 @@ The target for this switch is to totally avoid killing troops, even it for this 
 이 설정의 목적은 이것때문에 파티를 채우지 못하더라도 완벽히 병력을 죽이지 않기 위함입니다.]=]
 L[ [=[You can blacklist missions right clicking mission button.
 Since 1.5.1 you can start a mission witout passing from mission page shift-clicking the mission button.
-Be sure you liked the party because non confirmation is asked]=] ] = [=[임무 버튼을 오른쪽 클릭하여 임무를 차단할 수 있습니다.
+Be sure you liked the party because no confirmation is asked]=] ] = [=[임무 버튼을 오른쪽 클릭하여 임무를 차단할 수 있습니다.
 1.5.1 버전부터 임무 버튼을 Shift-클릭하여 임무 페이지를 보지 않고 임무를 시작할 수 있습니다.
 동의를 구하지 않기 때문에 파티가 올바른지 확인해주세요]=]
 L[ [=[You can choose to limit how much champions are sent together.
@@ -1437,7 +1424,7 @@ L["Right-Click to remove from blacklist"] = "Right-Click to remove from blacklis
 --Translation missing 
 L["Sets all switches to a very permissive setup"] = "Sets all switches to a very permissive setup"
 --Translation missing 
-L["Shift-Click start the mission witout even opening the mission page. Non question asked"] = "Shift-Click start the mission witout even opening the mission page. Non question asked"
+L["Shift-Click start the mission witout even opening the mission page. No question asked"] = "Shift-Click start the mission witout even opening the mission page. No question asked"
 --Translation missing 
 L["Show tutorial"] = "Show tutorial"
 L["Show/hide OrderHallCommander mission menu"] = "Mostrar / ocultar el menú de la misión OrderHallCommander"
@@ -1551,9 +1538,9 @@ The target for this switch is to totally avoid killing troops, even it for this 
 --Translation missing 
 L[ [=[You can blacklist missions right clicking mission button.
 Since 1.5.1 you can start a mission witout passing from mission page shift-clicking the mission button.
-Be sure you liked the party because non confirmation is asked]=] ] = [=[You can blacklist missions right clicking mission button.
+Be sure you liked the party because no confirmation is asked]=] ] = [=[You can blacklist missions right clicking mission button.
 Since 1.5.1 you can start a mission witout passing from mission page shift-clicking the mission button.
-Be sure you liked the party because non confirmation is asked]=]
+Be sure you liked the party because no confirmation is asked]=]
 --Translation missing 
 L[ [=[You can choose to limit how much champions are sent together.
 Right now OHC is not using more than %3$s champions in the same mission-
@@ -1567,236 +1554,168 @@ return
 end
 L=l:NewLocale(me,"ruRU")
 if (L) then
---Translation missing 
-L["%1$d%% lower than %2$d%%. Lower %s"] = "%1$d%% lower than %2$d%%. Lower %s"
---Translation missing 
-L["%s, please review the tutorial\\n(Click the icon to dismiss this message)"] = "%s, please review the tutorial\\n(Click the icon to dismiss this message)"
+L["%1$d%% lower than %2$d%%. Lower %s"] = "%1$d%% ниже чем %2$d%%. Ниже %s"
+L["%s, please review the tutorial\\n(Click the icon to dismiss this message)"] = "%s, пожалуйста пересмотрите инструкции\\nНажмите на иконку, чтобы убрать это сообщение"
 L["Always counter increased resource cost"] = "Учитывать увеличение стоимости ресурсов."
 L["Always counter increased time"] = "Учитывать увеличение времени на задание"
-L["Always counter kill troops (ignored if we can only use troops with just 1 durability left)"] = "Всегда учитывать смерть войска. (Игнорируется, если остались войска только с 1 ед.здоровья)"
-L["Always counter no bonus loot threat"] = [=[Игнорировать миссии, если
-нет шанса на дополнительную добычу]=]
-L["Artifact shown value is the base value without considering knowledge multiplier"] = "Показывать базовое значение артефакта без учета множителя знания"
---Translation missing 
-L["Attempting %s"] = "Attempting %s"
+L["Always counter kill troops (ignored if we can only use troops with just 1 durability left)"] = "Учитывать смерть войск. Игнорируется, если остались войска только с 1 единицей здоровья"
+L["Always counter no bonus loot threat"] = "Игнорировать задания, если нет шанса на дополнительную добычу"
+L["Artifact shown value is the base value without considering knowledge multiplier"] = "Показывать базовое значение силы артефакта без учета множителя знания"
+L["Attempting %s"] = "Пытаемся %s"
 L["Base Chance"] = "Базовый шанс"
-L["Better parties available in next future"] = "Лучшая партия будет скоро доступна"
+L["Better parties available in next future"] = "Лучшая группа будет доступна скоро"
 L["Blacklisted"] = "Блокированные"
-L["Blacklisted missions are ignored in Mission Control"] = "Миссии с черным списком игнорируются в управлении миссией"
---Translation missing 
-L["Bonus Chance"] = "Bonus Chance"
-L["Building Final report"] = "Создать отчет."
-L["but using troops with just one durability left"] = "но использовать войска, с 1 ед. здоровья"
+L["Blacklisted missions are ignored in Mission Control"] = "Задания из чёрного списка игнорируются при управлении заданиями"
+L["Bonus Chance"] = "Бонусный шанс"
+L["Building Final report"] = "Создать отчет по завершении задания"
+L["but using troops with just one durability left"] = "но использовать войска с 1 единицей здоровья"
 L["Capped %1$s. Spend at least %2$d of them"] = "Достигнуто %1$. Потратьте  по крайней мере 2%$"
-L["Changes the sort order of missions in Mission panel"] = "Изменяет порядок сортировки миссий на панели"
+L["Changes the sort order of missions in Mission panel"] = "Меняет порядок сортировки миссий на панели"
 L["Combat ally is proposed for missions so you can consider unassigning him"] = [=[Использовать боевого соратника в расчетах.
 Перед отправкой освободите соратника.]=]
-L["Complete all missions without confirmation"] = "Завершить все миссии без подтверждения"
-L["Configuration for mission party builder"] = "Конфигурация для создания, групповой миссии"
+L["Complete all missions without confirmation"] = "Завершить все задания без подтверждений"
+L["Configuration for mission party builder"] = "Конфигурация для создания группы для задания"
 L["Cost reduced"] = "Стоимость уменьшена"
---Translation missing 
-L["Could not fulfill mission, aborting"] = "Could not fulfill mission, aborting"
---Translation missing 
-L["Counter kill Troops"] = "Counter kill Troops"
+L["Could not fulfill mission, aborting"] = "Не удалось выполнить миссию, прерывание"
+L["Counter kill Troops"] = "Предупредить смерть войск"
 L["Disables warning: "] = "Отключить предупреждение: "
---Translation missing 
-L["Dont use this slot"] = "Dont use this slot"
+L["Dont use this slot"] = "Не использовать этот слот"
 L["Don't use troops"] = "Не использовать войска"
 L["Duration reduced"] = "Продолжительность уменьшена"
 L["Duration Time"] = "Продолжительность"
---Translation missing 
-L["Elites mission mode"] = "Elites mission mode"
-L["Empty missions sorted as last"] = "Отсортировать пустые миссии как последние"
-L["Empty or 0% success mission are sorted as last. Does not apply to \"original\" method"] = "Пустая или 0%-я успешная миссия, отсортирована как последняя. Не применяется к \"обычному\" методу"
-L["Expiration Time"] = "Время окончания"
-L["Favours leveling follower for xp missions"] = "В миссиях на опыт, использовать гибкую прокачку соратников"
+L["Elites mission mode"] = "Режим элитных заданий"
+L["Empty missions sorted as last"] = "Задания без групп сортируются как последние"
+L["Empty or 0% success mission are sorted as last. Does not apply to \"original\" method"] = "Задания без группы и провальные (0 %% успеха) задания отображаются последними при сортировке. Не относится к \"обычному\" методу"
+L["Expiration Time"] = "Время окончания активности"
+L["Favours leveling follower for xp missions"] = "Предпочесть набор уровня защитником в заданиях на опыт"
 L["General"] = "Основные"
-L["Global approx. xp reward"] = "Общая прибл. награда опыта"
-L["Global approx. xp reward per hour"] = "Общий прибл. опыт в час"
-L["HallComander Quick Mission Completion"] = "HallComander Быстрое завершение миссий"
---Translation missing 
-L["If %1$s is lower than this, then we try to achieve at least %2$s without going over 100%%. Ignored for elite missions."] = "If %1$s is lower than this, then we try to achieve at least %2$s without going over 100%%. Ignored for elite missions."
-L["If not checked, inactive followers are used as last chance"] = "Если этот флажок не установлен, неактивные соратники используются как последний шанс"
+L["Global approx. xp reward"] = "Общая оценка возможного к получению опыта"
+L["Global approx. xp reward per hour"] = "Общая оценка возможного к получению опыта в час"
+L["HallComander Quick Mission Completion"] = "Hall Comander Быстрое завершение миссий"
+L["If %1$s is lower than this, then we try to achieve at least %2$s without going over 100%%. Ignored for elite missions."] = "Если %1$s меньше этого значения, то мы попробуем получить хотя бы %2$s не превосходя 100%%. Игнорируется для элитных заданий"
+L["If not checked, inactive followers are used as last chance"] = "Если этот флажок не установлен, то неактивные защитники используются в последнюю очередь"
 L[ [=[If you %s, you will lose them
 Click on %s to abort]=] ] = [=[Если Ваш %s слишком мал, вы можете потерять их
 Щелкните %s для прерывания]=]
-L["Ignore busy followers"] = "Игнорировать занятых соратников"
-L["Ignore inactive followers"] = "Игнорировать неактивных соратников"
-L["Keep cost low"] = "Дешевые миссии"
+L["Ignore busy followers"] = "Игнорировать занятых защитников"
+L["Ignore inactive followers"] = "Игнорировать неактивных защитников"
+L["Keep cost low"] = "Дешёвые задания"
 L["Keep extra bonus"] = "Дополнительная добыча"
-L["Keep time short"] = "Короткие миссии"
-L["Keep time VERY short"] = "Быстрые миссии"
---Translation missing 
+L["Keep time short"] = "Короткие задания"
+L["Keep time VERY short"] = "Уменьшать время задания"
 L[ [=[Launch the first filled mission with at least one locked follower.
-Keep SHIFT pressed to actually launch, a simple click will only print mission name with its followers list]=] ] = [=[Launch the first filled mission with at least one locked follower.
-Keep SHIFT pressed to actually launch, a simple click will only print mission name with its followers list]=]
+Keep SHIFT pressed to actually launch, a simple click will only print mission name with its followers list]=] ] = "Запустить первую заполненную группу выполнять задание с по крайней мере одним заблокированным защитником. Держите кнопку Shift нажатой для начала выполнения (простое нажатие мышки выведет только имя задания со списком защитников)"
 L["Level"] = "Уровень"
---Translation missing 
-L["Lock all"] = "Lock all"
---Translation missing 
-L["Lock this follower"] = "Lock this follower"
---Translation missing 
-L["Locked follower are only used in this mission"] = "Locked follower are only used in this mission"
-L["Make Order Hall Mission Panel movable"] = "Сделать панель оплота класса передвигаемой"
---Translation missing 
-L["Makes sure that no troops will be killed"] = "Makes sure that no troops will be killed"
-L["Max champions"] = "Макс. защитников"
-L["Maximize xp gain"] = "Максимальный опыт"
-L["Mission duration reduced"] = "Сокращена продолжительность миссии"
---Translation missing 
-L["Mission was capped due to total chance less than"] = "Mission was capped due to total chance less than"
-L["Missions"] = "Миссии"
---Translation missing 
-L["Never kill Troops"] = "Never kill Troops"
-L["No follower gained xp"] = "Соратник не получает опыт"
---Translation missing 
-L["No suitable missions. Have you reserved at least one follower?"] = "No suitable missions. Have you reserved at least one follower?"
-L["Not blacklisted"] = "Не в черном списке"
-L["Nothing to report"] = "Без отчета"
-L["Notifies you when you have troops ready to be collected"] = "Уведомлять вас, когда имеются готовые войска, и готовы к сбору"
-L["Only accept missions with time improved"] = "Принимать, только миссии с улучшенным временем"
---Translation missing 
-L["Only consider elite missions"] = "Only consider elite missions"
+L["Lock all"] = "Заблокировать всех"
+L["Lock this follower"] = "Заблокировать этого защитника"
+L["Locked follower are only used in this mission"] = "Заблокированный защитник используется только в этой миссии"
+L["Make Order Hall Mission Panel movable"] = "Сделать панель заданий оплота класса перемещаемой"
+L["Makes sure that no troops will be killed"] = "Гарантирует, что никакие войска не будут убиты"
+L["Max champions"] = "Максимально защитников"
+L["Maximize xp gain"] = "Максимизировать получаемый опыт"
+L["Mission duration reduced"] = "Сокращена продолжительность задания"
+L["Mission was capped due to total chance less than"] = "Миссия была ограничена из-за общего шанса меньше, чем"
+L["Missions"] = "Задания"
+L["Never kill Troops"] = "Никогда не убивать войска"
+L["No follower gained xp"] = "Защитники не получили опыт"
+L["No suitable missions. Have you reserved at least one follower?"] = "Нет подходящих миссий. Вы зарезервировали хотя бы одного защитника?"
+L["Not blacklisted"] = "Не в чёрном списке"
+L["Nothing to report"] = "Без отчёта"
+L["Notifies you when you have troops ready to be collected"] = "Уведомлять Вас, когда имеются готовые войска, и готовы к сбору"
+L["Only accept missions with time improved"] = "Принимать только задания с улучшенным временем"
+L["Only consider elite missions"] = "Учитывать только элитные задания"
 L["Only use champions even if troops are available"] = "Использовать только защитников, даже если войска доступны"
---Translation missing 
-L["Open configuration"] = "Open configuration"
+L["Open configuration"] = "Открыть конфигурацию"
 L[ [=[OrderHallCommander overrides GarrisonCommander for Order Hall Management.
  You can revert to GarrisonCommander simply disabling OrderhallCommander.
-If instead you like OrderHallCommander remember to add it to Curse client and keep it updated]=] ] = [=[OrderHallCommander переопределяет GarrisonCommander для управления заказами.
- Вы можете вернуться к GarrisonCommander, просто отключив OrderhallCommander.
-Если вам нравится OrderHallCommander, не забудьте добавить его в Curse client и обновить его]=]
+If instead you like OrderHallCommander remember to add it to Curse client and keep it updated]=] ] = [=[Order Hall Commander переопределяет Garrison Commander для управления заказами.
+ Вы можете вернуться к Garrison Commander, просто отключив Orderhall Commander.
+Если вам нравится Order Hall Commander, не забудьте добавить его в клиент Twitch и обновить его]=]
 L["Original method"] = "Обычный метод"
 L["Position is not saved on logout"] = "Положение не сохраняется при выходе"
---Translation missing 
-L["Prefer high durability"] = "Prefer high durability"
---Translation missing 
-L["Quick start first mission"] = "Quick start first mission"
-L["Remove no champions warning"] = "Удалить предупреждение нет защитников"
+L["Prefer high durability"] = "Предпочесть войска с большим количеством единиц здоровья"
+L["Quick start first mission"] = "Быстрое начало первого задания"
+L["Remove no champions warning"] = "Удалить предупреждение об отсутствии защитников"
 L["Resurrect troops effect"] = "Эффект воскрешения войск"
 L["Reward type"] = "Награда"
-L["Right-Click to blacklist"] = "Правый щелчок для черного списка"
-L["Right-Click to remove from blacklist"] = "Правый щелчок для удаление черного списка"
---Translation missing 
-L["Sets all switches to a very permissive setup"] = "Sets all switches to a very permissive setup"
---Translation missing 
-L["Shift-Click start the mission witout even opening the mission page. Non question asked"] = "Shift-Click start the mission witout even opening the mission page. Non question asked"
---Translation missing 
-L["Show tutorial"] = "Show tutorial"
-L["Show/hide OrderHallCommander mission menu"] = "Показать/скрыть меню миссий OrderHallCommander"
-L["Sort missions by:"] = "Сортировать миссии по:"
---Translation missing 
-L["Started with "] = "Started with "
+L["Right-Click to blacklist"] = "Правый щелчок мышки для добавления в чёрный список"
+L["Right-Click to remove from blacklist"] = "Правый щелчок мышки для удаления из чёрного списка"
+L["Sets all switches to a very permissive setup"] = "Установить все переключатели так, чтобы предоставить большую возможность манёвра"
+L["Shift-Click start the mission witout even opening the mission page. No question asked"] = "Нажатие мышки с клавишей Shift  начинает выполнение задания без открытия экрана задания и без запроса подтверждений"
+L["Show tutorial"] = "Показать сборник инструкций"
+L["Show/hide OrderHallCommander mission menu"] = "Отобразить/скрыть меню заданий Order Hall Commander"
+L["Sort missions by:"] = "Сортировать задания по:"
+L["Started with "] = "Начали с"
 L["Success Chance"] = "Шанс успеха"
 L["Troop ready alert"] = "Оповещение о готовности войск"
-L["Unable to fill missions, raise \"%s\""] = "Не удается заполнить миссии, повысьте максимальное число защитников"
+L["Unable to fill missions, raise \"%s\""] = "Не удается заполнить группы заданий - повысьте максимальное число защитников в настройках на боковой панели"
 L["Unable to fill missions. Check your switches"] = "Не удается заполнить миссии. Проверьте параметры"
---Translation missing 
-L["Unable to start mission, aborting"] = "Unable to start mission, aborting"
+L["Unable to start mission, aborting"] = "Невозможно начать задание, отменяем"
 L["Unlock all"] = "Разблокировать всех"
---Translation missing 
-L["Unlock this follower"] = "Unlock this follower"
---Translation missing 
-L["Unlocks all follower and slots at once"] = "Unlocks all follower and slots at once"
+L["Unlock this follower"] = "Разблокировать этого защитника"
+L["Unlocks all follower and slots at once"] = "Разблокировать сразу всех защитников и слоты"
 L["Upgrading to |cff00ff00%d|r"] = "Обновление до |cff00ff00%d|r"
 L["URL Copy"] = "Копировать ссылку"
-L["Use at most this many champions"] = "На сколько много использовать защитников"
-L["Use combat ally"] = "Боевой соратник"
---Translation missing 
-L["Use this slot"] = "Use this slot"
---Translation missing 
-L["Uses troops with the highest durability instead of the ones with the lowest"] = "Uses troops with the highest durability instead of the ones with the lowest"
-L["When no free followers are available shows empty follower"] = "Если свободные соратники недоступны, отображается пустой соратник"
---Translation missing 
-L["When we cant achieve the requested %1$s, we try to reach at least this one without (if possible) going over 100%%"] = "When we cant achieve the requested %1$s, we try to reach at least this one without (if possible) going over 100%%"
---Translation missing 
-L["Would start with "] = "Would start with "
-L["You are wasting |cffff0000%d|cffffd200 point(s)!!!"] = "Вы тратите |cffff0000%d|cffffd200 очков !!!"
+L["Use at most this many champions"] = "Насколько много использовать защитников"
+L["Use combat ally"] = "Боевой защитник"
+L["Use this slot"] = "Использовать этот слот"
+L["Uses troops with the highest durability instead of the ones with the lowest"] = "Использует войска с максимальным количеством единиц здоровья вместо войск с минимальным количеством единиц здоровья"
+L["When no free followers are available shows empty follower"] = "Если свободные защитники недоступны,то отображается пустое место"
+L["When we cant achieve the requested %1$s, we try to reach at least this one without (if possible) going over 100%%"] = "Если мы не в состоянии достичь запрошенный %1$s, то мы попробуем по крайней мере получить больше 100%% (если возможно)"
+L["Would start with "] = "Начнём с того, что"
+L["You are wasting |cffff0000%d|cffffd200 point(s)!!!"] = "Вы теряете |cffff0000%d|cffffd200 очков !!!"
 
 -- Tutorial
---Translation missing 
 L[ [=[%1$s and %2$s switches work together to customize how you want your mission filled
 
-The value you set for %1$s (right now %3$s%%) is the minimum acceptable chance for attempting to achieve bonus while the value to set for %2$s (right now %4$s%%) is the chance you want achieve when you are forfaiting bonus (due to not enough powerful followers)]=] ] = [=[%1$s and %2$s switches work together to customize how you want your mission filled
-
-The value you set for %1$s (right now %3$s%%) is the minimum acceptable chance for attempting to achieve bonus while the value to set for %2$s (right now %4$s%%) is the chance you want achieve when you are forfaiting bonus (due to not enough powerful followers)]=]
---Translation missing 
-L["Base Chance"] = "Base Chance"
---Translation missing 
-L["Bonus Chance"] = "Bonus Chance"
---Translation missing 
-L["Counter Kill Troops"] = "Counter Kill Troops"
---Translation missing 
+The value you set for %1$s (right now %3$s%%) is the minimum acceptable chance for attempting to achieve bonus while the value to set for %2$s (right now %4$s%%) is the chance you want achieve when you are forfaiting bonus (due to not enough powerful followers)]=] ] = "Переключатели %1$s и %2$s действуют вместе, чтобы настроить, как Вы хотите отфильтровать Ваши задания. Значение, установленное вами для %1$s (сейчас равно %3$s%%), является минимальным приемлемым шансом при получении бонуса, в то время как значение, установленное для %2$s (сейчас равно %4$s%%), является шансом, который Вы хотите получить, когда вы теряете бонус (по причине недостаточного количества сильных защитников)"
+L["Base Chance"] = "Базовый шанс"
+L["Bonus Chance"] = "Бонусный шанс"
+L["Counter Kill Troops"] = "Предупредить смерть войск"
 L[ [=[Equipment and upgrades are listed here as clickable buttons.
 Due to an issue with Blizzard Taint system, if you drag and drop an item from a bag, you receive an error.
 In order to assign equipment which are not listed (I updated the list often but sometimes Blizzard is faster), you can right click the item in the bag and the left click the follower.
-This way you dont receive any error]=] ] = [=[Equipment and upgrades are listed here as clickable buttons.
-Due to an issue with Blizzard Taint system, if you drag and drop an item from a bag, you receive an error.
-In order to assign equipment which are not listed (I updated the list often but sometimes Blizzard is faster), you can right click the item in the bag and the left click the follower.
-This way you dont receive any error]=]
---Translation missing 
+This way you dont receive any error]=] ] = [=[Экипировка и снаряжение перечислены здесь в виде кнопок, которые могут быть нажаты.
+Из-за проблем с системой Blizzard Taint при перетаскивании предмета из сумки появляется сообщение об ошибке.
+Для того, чтобы назначить экипировку, которого нет в списке (я часто обновляю список, но иногда Blizzard быстрее), можно щелкнуть правой кнопкой на предмет в сумке, далее левой кнопкой на защитника.
+Таким образом, Вы не получите никаких ошибок]=]
 L[ [=[For example, let's say a mission can reach 95%%, 130%% and 180%% success chance.
 If %1$s is set to 170%%, the 180%% one will be choosen.
 If %1$s is set to 200%% OHC will try to find the nearest to 100%% respecting %2$s setting
-If for example %2$s is set to 100%%, then the 130%% one will be choosen, but if %2$s is set to 90%% then the 95%% one will be choosen]=] ] = [=[For example, let's say a mission can reach 95%%, 130%% and 180%% success chance.
-If %1$s is set to 170%%, the 180%% one will be choosen.
-If %1$s is set to 200%% OHC will try to find the nearest to 100%% respecting %2$s setting
-If for example %2$s is set to 100%%, then the 130%% one will be choosen, but if %2$s is set to 90%% then the 95%% one will be choosen]=]
---Translation missing 
-L["If instead you just want to always see the best available mission just set %1$s to 100%% and %2$s to 0%%"] = "If instead you just want to always see the best available mission just set %1$s to 100%% and %2$s to 0%%"
---Translation missing 
-L["Max champions"] = "Max champions"
---Translation missing 
-L["Maximize xp gain"] = "Maximize xp gain"
---Translation missing 
-L["Never kill Troops"] = "Never kill Troops"
---Translation missing 
-L["Prefer high durability"] = "Prefer high durability"
---Translation missing 
-L["Restart the tutorial"] = "Restart the tutorial"
---Translation missing 
+If for example %2$s is set to 100%%, then the 130%% one will be choosen, but if %2$s is set to 90%% then the 95%% one will be choosen]=] ] = [=[Для примера, миссия может достигать до 95%%, 130%% и 180%% вероятности успеха.
+Если %1$s имеет значение 170%%, до 180%% одно из этих будет выбрано.
+Если %1$s имеет значение 200%% Order Hall Commander попытается найти ближайшую к 100%% соблюдая настройку %2$s
+Если, например %2$s имеет значение 100%% или 130%% одно из этих будет выбрано, но если %2$s имеет значение 90%% или 95%% одно из этих будет выбрано]=]
+L["If instead you just want to always see the best available mission just set %1$s to 100%% and %2$s to 0%%"] = "Если Вы всегда хотите видеть только наиболее доступные для выполнения задания, установите %1$s в 100%% и %2$s в 0%%"
+L["Max champions"] = "Максимально защитников"
+L["Maximize xp gain"] = "Максимизировать получаемый опыт"
+L["Never kill Troops"] = "Никогда не убивать войска"
+L["Prefer high durability"] = "Предпочесть войска с большим количеством единиц здоровья"
+L["Restart the tutorial"] = "Перезапустить сборник инструкций"
 L[ [=[Slots (non the follower in it but just the slot) can be banned.
 When you ban a slot, that slot will not be filled for that mission.
-Exploiting the fact that troops are always in the leftmost slot(s) you can achieve a nice degree of custom tailoring, reducing the overall number of followers used for a mission]=] ] = [=[Slots (non the follower in it but just the slot) can be banned.
-When you ban a slot, that slot will not be filled for that mission.
-Exploiting the fact that troops are always in the leftmost slot(s) you can achieve a nice degree of custom tailoring, reducing the overall number of followers used for a mission]=]
---Translation missing 
-L["Terminate the tutorial. You can resume it anytime clicking on the info icon in the side menu"] = "Terminate the tutorial. You can resume it anytime clicking on the info icon in the side menu"
---Translation missing 
+Exploiting the fact that troops are always in the leftmost slot(s) you can achieve a nice degree of custom tailoring, reducing the overall number of followers used for a mission]=] ] = "Слот (не защитник в нём, а именно слот) может быть заблокирован. Когда Вы блокируете слот, он не будет заполнен для этого задания. Используя тот факт, что войска всегда находятся в самом левом слоте (слотах), вы можете добиться хорошей степени индивидуального настройки, уменьшая общее количество защитников, используемых для задания"
+L["Terminate the tutorial. You can resume it anytime clicking on the info icon in the side menu"] = "Закрыть инструкцию. Вы можете продолжить в любое время нажав на иконку информации в боковом меню"
 L[ [=[Usually OrderHallCOmmander tries to use troops with the lowest durability in order to let you enque new troops request as soon as possible.
-Checking %1$s reverse it and OrderHallCOmmander will choose for each mission troops with the highest possible durability]=] ] = [=[Usually OrderHallCOmmander tries to use troops with the lowest durability in order to let you enque new troops request as soon as possible.
-Checking %1$s reverse it and OrderHallCOmmander will choose for each mission troops with the highest possible durability]=]
---Translation missing 
+Checking %1$s reverse it and OrderHallCOmmander will choose for each mission troops with the highest possible durability]=] ] = "Обычно Order Hall Commander пытается использовать войска с наименьшим количеством единиц здоровья, чтобы вы могли как можно скорее ввести в бой новые войска. Проверка %1$s отменяет это и Order Hall Commander выберет для каждого задания войска с наибольшим количеством единиц здоровья"
 L[ [=[Welcome to a new release of OrderHallCommander
 Please follow this short tutorial to discover all new functionalities.
-You will not regret it]=] ] = [=[Welcome to a new release of OrderHallCommander
-Please follow this short tutorial to discover all new functionalities.
-You will not regret it]=]
---Translation missing 
+You will not regret it]=] ] = [=[Добро пожаловать в новый выпуск Order Hall Commander
+Следуйте этому краткой инструкции, чтобы узнать все новые функции.
+Вы не пожалеете об этом]=]
 L[ [=[With %1$s you ask to always counter the Hazard kill troop.
 This means that OHC will try to counter it OR use a troop with just one durability left.
-The target for this switch is to avoid wasting durability point, NOT to avoid troops' death.]=] ] = [=[With %1$s you ask to always counter the Hazard kill troop.
-This means that OHC will try to counter it OR use a troop with just one durability left.
-The target for this switch is to avoid wasting durability point, NOT to avoid troops' death.]=]
---Translation missing 
+The target for this switch is to avoid wasting durability point, NOT to avoid troops' death.]=] ] = "Используя %1$s, Вы можете попросить всегда учитывать опасность смерти войск. Это означает, что Order Hall Commander будет пытаться учитывать её или использовать войска с оставшейся только 1 единицей здоровья. Целью этого переключателя является предупреждение потери жизненных сил, но не предупреждения смертей войск."
 L[ [=[With %2$s you ask to never let a troop die.
 This not only implies %1$s and %3$s, but force OHC to never send to mission a troop which will die.
-The target for this switch is to totally avoid killing troops, even it for this we cant fill the party]=] ] = [=[With %2$s you ask to never let a troop die.
-This not only implies %1$s and %3$s, but force OHC to never send to mission a troop which will die.
-The target for this switch is to totally avoid killing troops, even it for this we cant fill the party]=]
---Translation missing 
+The target for this switch is to totally avoid killing troops, even it for this we cant fill the party]=] ] = "Используя %2$s, Вы можете попросить никогда не позволять умирать войскам. Это не только применяется к %1$s и %3$s, но заставляет Order Hall Commander никогда не отправлять на задание войска, которые могут погибнуть. Целью этого переключателя является предупреждение смертей войск, даже путём невозможности сбора группы для задания"
 L[ [=[You can blacklist missions right clicking mission button.
 Since 1.5.1 you can start a mission witout passing from mission page shift-clicking the mission button.
-Be sure you liked the party because non confirmation is asked]=] ] = [=[You can blacklist missions right clicking mission button.
-Since 1.5.1 you can start a mission witout passing from mission page shift-clicking the mission button.
-Be sure you liked the party because non confirmation is asked]=]
---Translation missing 
+Be sure you liked the party because no confirmation is asked]=] ] = "Вы можете занести в чёрный список задания нажав правую кнопку мыши. Начиная с 1.5.1 Вы можете начать задание сразу, не заходя на экран заданий, зажав кнопку Shift и выбрав задание мышкой. Убедитесь, что предлагаемая группа вас устраивает, так как задание начнётся без подтверждения"
 L[ [=[You can choose to limit how much champions are sent together.
 Right now OHC is not using more than %3$s champions in the same mission-
 
-Note that %2$s overrides it.]=] ] = [=[You can choose to limit how much champions are sent together.
-Right now OHC is not using more than %3$s champions in the same mission-
-
-Note that %2$s overrides it.]=]
+Note that %2$s overrides it.]=] ] = "Вы можете ограничить количество используемых одновременно в задании защитников. Сейчас Order Hall Commander использует не более %3$s защитников в одном задании. Обратите внимание, что %2$s имеет больший приоритет."
 
 return
 end
@@ -1934,7 +1853,7 @@ L["Right-Click to remove from blacklist"] = "Right-Click to remove from blacklis
 --Translation missing 
 L["Sets all switches to a very permissive setup"] = "Sets all switches to a very permissive setup"
 --Translation missing 
-L["Shift-Click start the mission witout even opening the mission page. Non question asked"] = "Shift-Click start the mission witout even opening the mission page. Non question asked"
+L["Shift-Click start the mission witout even opening the mission page. No question asked"] = "Shift-Click start the mission witout even opening the mission page. No question asked"
 --Translation missing 
 L["Show tutorial"] = "Show tutorial"
 L["Show/hide OrderHallCommander mission menu"] = "显示/隐藏大厅指挥官任务选单"
@@ -2047,9 +1966,9 @@ The target for this switch is to totally avoid killing troops, even it for this 
 --Translation missing 
 L[ [=[You can blacklist missions right clicking mission button.
 Since 1.5.1 you can start a mission witout passing from mission page shift-clicking the mission button.
-Be sure you liked the party because non confirmation is asked]=] ] = [=[You can blacklist missions right clicking mission button.
+Be sure you liked the party because no confirmation is asked]=] ] = [=[You can blacklist missions right clicking mission button.
 Since 1.5.1 you can start a mission witout passing from mission page shift-clicking the mission button.
-Be sure you liked the party because non confirmation is asked]=]
+Be sure you liked the party because no confirmation is asked]=]
 --Translation missing 
 L[ [=[You can choose to limit how much champions are sent together.
 Right now OHC is not using more than %3$s champions in the same mission-
@@ -2197,7 +2116,7 @@ L["Right-Click to remove from blacklist"] = "Right-Click to remove from blacklis
 --Translation missing 
 L["Sets all switches to a very permissive setup"] = "Sets all switches to a very permissive setup"
 --Translation missing 
-L["Shift-Click start the mission witout even opening the mission page. Non question asked"] = "Shift-Click start the mission witout even opening the mission page. Non question asked"
+L["Shift-Click start the mission witout even opening the mission page. No question asked"] = "Shift-Click start the mission witout even opening the mission page. No question asked"
 --Translation missing 
 L["Show tutorial"] = "Show tutorial"
 L["Show/hide OrderHallCommander mission menu"] = "Mostrar / ocultar el menú de la misión OrderHallCommander"
@@ -2310,9 +2229,9 @@ The target for this switch is to totally avoid killing troops, even it for this 
 --Translation missing 
 L[ [=[You can blacklist missions right clicking mission button.
 Since 1.5.1 you can start a mission witout passing from mission page shift-clicking the mission button.
-Be sure you liked the party because non confirmation is asked]=] ] = [=[You can blacklist missions right clicking mission button.
+Be sure you liked the party because no confirmation is asked]=] ] = [=[You can blacklist missions right clicking mission button.
 Since 1.5.1 you can start a mission witout passing from mission page shift-clicking the mission button.
-Be sure you liked the party because non confirmation is asked]=]
+Be sure you liked the party because no confirmation is asked]=]
 --Translation missing 
 L[ [=[You can choose to limit how much champions are sent together.
 Right now OHC is not using more than %3$s champions in the same mission-
@@ -2411,7 +2330,7 @@ L["Reward type"] = "獎勵類型"
 L["Right-Click to blacklist"] = "右鍵點擊加入黑名單"
 L["Right-Click to remove from blacklist"] = "右鍵點擊從黑名單移除"
 L["Sets all switches to a very permissive setup"] = "切換所有設置為非常寬容的設置"
-L["Shift-Click start the mission witout even opening the mission page. Non question asked"] = "Shift-點擊甚至可以不打開任務頁面就啟動任務， 沒問題"
+L["Shift-Click start the mission witout even opening the mission page. No question asked"] = "Shift-點擊甚至可以不打開任務頁面就啟動任務， 沒問題"
 L["Show tutorial"] = "顯示指南"
 L["Show/hide OrderHallCommander mission menu"] = "顯示/隱藏大廳指揮官任務選單"
 L["Sort missions by:"] = "排列任務根據："
@@ -2480,7 +2399,7 @@ The target for this switch is to totally avoid killing troops, even it for this 
 這個轉變的目標是完全避免殺死部隊，即使這樣我們也不能填補隊伍]=]
 L[ [=[You can blacklist missions right clicking mission button.
 Since 1.5.1 you can start a mission witout passing from mission page shift-clicking the mission button.
-Be sure you liked the party because non confirmation is asked]=] ] = "您可以右鍵點擊任務按鈕將任務加入黑名單。 自1.5.1以來，您可以shift-點擊任務按鈕開始任務而無須轉到任務頁面。 確保你喜歡此隊伍，因為不經確認"
+Be sure you liked the party because no confirmation is asked]=] ] = "您可以右鍵點擊任務按鈕將任務加入黑名單。 自1.5.1以來，您可以shift-點擊任務按鈕開始任務而無須轉到任務頁面。 確保你喜歡此隊伍，因為不經確認"
 L[ [=[You can choose to limit how much champions are sent together.
 Right now OHC is not using more than %3$s champions in the same mission-
 

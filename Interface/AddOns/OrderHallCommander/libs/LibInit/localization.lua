@@ -85,7 +85,7 @@ L["Reward type"] = true
 L["Right-Click to blacklist"] = true
 L["Right-Click to remove from blacklist"] = true
 L["Sets all switches to a very permissive setup"] = true
-L["Shift-Click start the mission witout even opening the mission page. Non question asked"] = true
+L["Shift-Click start the mission witout even opening the mission page. No question asked"] = true
 L["Show tutorial"] = true
 L["Show/hide OrderHallCommander mission menu"] = true
 L["Sort missions by:"] = true
@@ -147,7 +147,7 @@ This not only implies %1$s and %3$s, but force OHC to never send to mission a tr
 The target for this switch is to totally avoid killing troops, even it for this we cant fill the party]=] ] = true
 L[ [=[You can blacklist missions right clicking mission button.
 Since 1.5.1 you can start a mission witout passing from mission page shift-clicking the mission button.
-Be sure you liked the party because non confirmation is asked]=] ] = true
+Be sure you liked the party because no confirmation is asked]=] ] = true
 L[ [=[You can choose to limit how much champions are sent together.
 Right now OHC is not using more than %3$s champions in the same mission-
 
@@ -287,7 +287,7 @@ L["Reward type"] = "Tipo de recompensa"
 --Translation missing 
 -- L["Sets all switches to a very permissive setup"] = ""
 --Translation missing 
--- L["Shift-Click start the mission witout even opening the mission page. Non question asked"] = ""
+-- L["Shift-Click start the mission witout even opening the mission page. No question asked"] = ""
 --Translation missing 
 -- L["Show tutorial"] = ""
 L["Show/hide OrderHallCommander mission menu"] = "Mostrar / ocultar o menu da miss\195\163o OrderHallCommander"
@@ -384,7 +384,7 @@ The target for this switch is to totally avoid killing troops, even it for this 
 --Translation missing 
 -- L[ [=[You can blacklist missions right clicking mission button.
 Since 1.5.1 you can start a mission witout passing from mission page shift-clicking the mission button.
-Be sure you liked the party because non confirmation is asked]=] ] = ""
+Be sure you liked the party because no confirmation is asked]=] ] = ""
 --Translation missing 
 -- L[ [=[You can choose to limit how much champions are sent together.
 Right now OHC is not using more than %3$s champions in the same mission-
@@ -514,7 +514,7 @@ L["Reward type"] = "Type de r\195\169compense"
 --Translation missing 
 -- L["Sets all switches to a very permissive setup"] = ""
 --Translation missing 
--- L["Shift-Click start the mission witout even opening the mission page. Non question asked"] = ""
+-- L["Shift-Click start the mission witout even opening the mission page. No question asked"] = ""
 --Translation missing 
 -- L["Show tutorial"] = ""
 L["Show/hide OrderHallCommander mission menu"] = "Afficher / masquer le menu de mission OrderHallCommander"
@@ -607,7 +607,7 @@ The target for this switch is to totally avoid killing troops, even it for this 
 --Translation missing 
 -- L[ [=[You can blacklist missions right clicking mission button.
 Since 1.5.1 you can start a mission witout passing from mission page shift-clicking the mission button.
-Be sure you liked the party because non confirmation is asked]=] ] = ""
+Be sure you liked the party because no confirmation is asked]=] ] = ""
 --Translation missing 
 -- L[ [=[You can choose to limit how much champions are sent together.
 Right now OHC is not using more than %3$s champions in the same mission-
@@ -628,15 +628,13 @@ L["Always counter no bonus loot threat"] = "Kontert immer Bedrohungen, die Bonus
 L["Artifact shown value is the base value without considering knowledge multiplier"] = "Der angezeigte Wert ist der Grundwert ohne die Ber\195\188cksichtigung von Artefakwissen."
 --Translation missing 
 -- L["Attempting %s"] = ""
---Translation missing 
--- L["Base Chance"] = ""
+L["Base Chance"] = "Basis-Chance"
 L["Better parties available in next future"] = "Bessere Gruppen sind in absehbarer Zeit verf\195\188gbar"
 --Translation missing 
 -- L["Blacklisted"] = ""
 --Translation missing 
 -- L["Blacklisted missions are ignored in Mission Control"] = ""
---Translation missing 
--- L["Bonus Chance"] = ""
+L["Bonus Chance"] = "Bonus-Chance"
 L["Building Final report"] = "Erstelle Abschlussbericht"
 --Translation missing 
 -- L["but using troops with just one durability left"] = ""
@@ -648,10 +646,8 @@ L["Configuration for mission party builder"] = "Konfiguration des Gruppenerstell
 L["Cost reduced"] = "Kosten reduziert"
 --Translation missing 
 -- L["Could not fulfill mission, aborting"] = ""
---Translation missing 
--- L["Counter kill Troops"] = ""
---Translation missing 
--- L["Disables warning: "] = ""
+L["Counter kill Troops"] = "Kontere T\195\182dlich"
+L["Disables warning: "] = "Deaktiviert Warnung:"
 --Translation missing 
 -- L["Dont use this slot"] = ""
 L["Don't use troops"] = "Keine Truppen verwenden"
@@ -700,8 +696,7 @@ L["Mission duration reduced"] = "Missionsdauer reduziert"
 --Translation missing 
 -- L["Mission was capped due to total chance less than"] = ""
 L["Missions"] = "Missionen"
---Translation missing 
--- L["Never kill Troops"] = ""
+L["Never kill Troops"] = "T\195\182te nie Truppen"
 L["No follower gained xp"] = "Kein Anh\195\164nger erhielt EP"
 --Translation missing 
 -- L["No suitable missions. Have you reserved at least one follower?"] = ""
@@ -722,8 +717,7 @@ Du kannst OrderhallCommander einfach deaktvieren um wieder OrderhallCommander zu
 Wenn du OrderhallCommander allerdings gut findest, vergiss nicht es in deinem Curse Client hinzuzuf\195\188gen und aktuell zu halten.]=]
 L["Original method"] = "Standard"
 L["Position is not saved on logout"] = "Die Position wird beim Ausloggen nicht gespeichert"
---Translation missing 
--- L["Prefer high durability"] = ""
+L["Prefer high durability"] = "Bevorzuge hohe Haltbarkeit"
 --Translation missing 
 -- L["Quick start first mission"] = ""
 --Translation missing 
@@ -737,13 +731,11 @@ L["Reward type"] = "Belohnungsart"
 --Translation missing 
 -- L["Sets all switches to a very permissive setup"] = ""
 --Translation missing 
--- L["Shift-Click start the mission witout even opening the mission page. Non question asked"] = ""
---Translation missing 
--- L["Show tutorial"] = ""
+-- L["Shift-Click start the mission witout even opening the mission page. No question asked"] = ""
+L["Show tutorial"] = "Zeige Tutorial"
 L["Show/hide OrderHallCommander mission menu"] = "OrderHallCommander-Missionsmen\195\188 zeigen/ausblenden"
 L["Sort missions by:"] = "Sortieren nach:"
---Translation missing 
--- L["Started with "] = ""
+L["Started with "] = "Startet mit"
 L["Success Chance"] = "Erfolgschance"
 L["Troop ready alert"] = "Warnung Trupp bereit"
 --Translation missing 
@@ -778,12 +770,9 @@ L["You are wasting |cffff0000%d|cffffd200 point(s)!!!"] = "Du verschwendst |cfff
 -- L[ [=[%1$s and %2$s switches work together to customize how you want your mission filled
 
 The value you set for %1$s (right now %3$s%%) is the minimum acceptable chance for attempting to achieve bonus while the value to set for %2$s (right now %4$s%%) is the chance you want achieve when you are forfaiting bonus (due to not enough powerful followers)]=] ] = ""
---Translation missing 
--- L["Base Chance"] = ""
---Translation missing 
--- L["Bonus Chance"] = ""
---Translation missing 
--- L["Counter Kill Troops"] = ""
+L["Base Chance"] = "Basis-Chance"
+L["Bonus Chance"] = "Bonus-Chance"
+L["Counter Kill Troops"] = "Kontere T\195\182dlich"
 --Translation missing 
 -- L[ [=[Equipment and upgrades are listed here as clickable buttons.
 Due to an issue with Blizzard Taint system, if you drag and drop an item from a bag, you receive an error.
@@ -800,12 +789,9 @@ If for example %2$s is set to 100%%, then the 130%% one will be choosen, but if 
 -- L["Max champions"] = ""
 --Translation missing 
 -- L["Maximize xp gain"] = ""
---Translation missing 
--- L["Never kill Troops"] = ""
---Translation missing 
--- L["Prefer high durability"] = ""
---Translation missing 
--- L["Restart the tutorial"] = ""
+L["Never kill Troops"] = "T\195\182te nie Truppen"
+L["Prefer high durability"] = "Bevorzuge hohe Haltbarkeit"
+L["Restart the tutorial"] = "Startet das Tutorial neu"
 --Translation missing 
 -- L[ [=[Slots (non the follower in it but just the slot) can be banned.
 When you ban a slot, that slot will not be filled for that mission.
@@ -830,7 +816,7 @@ The target for this switch is to totally avoid killing troops, even it for this 
 --Translation missing 
 -- L[ [=[You can blacklist missions right clicking mission button.
 Since 1.5.1 you can start a mission witout passing from mission page shift-clicking the mission button.
-Be sure you liked the party because non confirmation is asked]=] ] = ""
+Be sure you liked the party because no confirmation is asked]=] ] = ""
 --Translation missing 
 -- L[ [=[You can choose to limit how much champions are sent together.
 Right now OHC is not using more than %3$s champions in the same mission-
@@ -929,7 +915,7 @@ L["Right-Click to remove from blacklist"] = "Clicca col destro per rimuovere dal
 --Translation missing 
 -- L["Sets all switches to a very permissive setup"] = ""
 --Translation missing 
--- L["Shift-Click start the mission witout even opening the mission page. Non question asked"] = ""
+-- L["Shift-Click start the mission witout even opening the mission page. No question asked"] = ""
 --Translation missing 
 -- L["Show tutorial"] = ""
 L["Show/hide OrderHallCommander mission menu"] = "Mostra/ascondi il menu di missione di OrderHallCommander"
@@ -1011,7 +997,7 @@ The target for this switch is to totally avoid killing troops, even it for this 
 --Translation missing 
 -- L[ [=[You can blacklist missions right clicking mission button.
 Since 1.5.1 you can start a mission witout passing from mission page shift-clicking the mission button.
-Be sure you liked the party because non confirmation is asked]=] ] = ""
+Be sure you liked the party because no confirmation is asked]=] ] = ""
 --Translation missing 
 -- L[ [=[You can choose to limit how much champions are sent together.
 Right now OHC is not using more than %3$s champions in the same mission-
@@ -1021,8 +1007,9 @@ Note that %2$s overrides it.]=] ] = ""
 	end
 	L=l:NewLocale(me,"koKR")
 	if (L) then
-L["%1$d%% lower than %2$d%%. Lower %s"] = "%2$d%% \235\179\180\235\139\164 %1$d%% \235\130\174\236\138\181\235\139\136\235\139\164. %3$s \235\130\174\236\157\140"
-L["%s, please review the tutorial\\n(Click the icon to dismiss this message)"] = "OrderHallCommander\236\157\152 \236\131\136\235\161\156\236\154\180 \235\178\132\236\160\132\236\158\133\235\139\136\235\139\164. \236\158\160\236\139\156 \236\139\156\234\176\132\236\157\132 \235\130\180\236\150\180 \236\132\164\235\170\133\236\132\156\235\165\188 \236\130\180\237\142\180\235\180\144\236\163\188\236\132\184\236\154\148. \235\139\171\236\156\188\235\160\164\235\169\180 \236\157\180 \236\149\132\236\157\180\236\189\152\236\157\132 \237\129\180\235\166\173\237\149\152\236\132\184\236\154\148"
+L["%1$d%% lower than %2$d%%. Lower %s"] = "%2$d%%\235\179\180\235\139\164 %1$d%% \235\130\174\236\138\181\235\139\136\235\139\164. %3$s \235\130\174\236\138\181\235\139\136\235\139\164"
+L["%s, please review the tutorial\\n(Click the icon to dismiss this message)"] = [=[%s\235\139\152, \236\132\164\235\170\133\236\132\156\235\165\188 \236\130\180\237\142\180\235\180\144\236\163\188\236\132\184\236\154\148
+(\236\157\180 \235\169\148\236\139\156\236\167\128\235\165\188 \235\139\171\236\156\188\235\160\164\235\169\180 \236\149\132\236\157\180\236\189\152\236\157\132 \237\129\180\235\166\173\237\149\152\236\132\184\236\154\148)]=]
 L["Always counter increased resource cost"] = "\236\158\144\236\155\144 \235\185\132\236\154\169 \236\166\157\234\176\128 \237\149\173\236\131\129 \235\140\128\236\157\145"
 L["Always counter increased time"] = "\236\134\140\236\154\148 \236\139\156\234\176\132 \236\166\157\234\176\128 \237\149\173\236\131\129 \235\140\128\236\157\145"
 L["Always counter kill troops (ignored if we can only use troops with just 1 durability left)"] = "\235\179\145\235\160\165 \236\163\189\236\157\180\234\184\176 \237\149\173\236\131\129 \235\140\128\236\157\145 (\237\153\156\235\160\165\236\157\180 1\235\167\140 \235\130\168\236\157\128 \235\179\145\235\160\165\235\167\140 \236\158\136\236\157\132 \235\149\144 \235\172\180\236\139\156)"
@@ -1107,7 +1094,7 @@ L["Reward type"] = "\235\179\180\236\131\129 \236\156\160\237\152\149"
 L["Right-Click to blacklist"] = "\236\176\168\235\139\168\237\149\152\235\160\164\235\169\180 \236\152\164\235\165\184\236\170\189-\237\129\180\235\166\173"
 L["Right-Click to remove from blacklist"] = "\236\176\168\235\139\168\235\170\169\235\161\157\236\151\144\236\132\156 \236\160\156\234\177\176\237\149\152\235\160\164\235\169\180 \236\152\164\235\165\184\236\170\189-\237\129\180\235\166\173"
 L["Sets all switches to a very permissive setup"] = "\235\170\168\235\147\160 \236\160\132\237\153\152 \236\132\164\236\160\149\236\157\132 \237\151\136\236\154\169\236\160\129\236\157\184 \234\181\172\236\132\177\236\156\188\235\161\156 \236\132\164\236\160\149"
-L["Shift-Click start the mission witout even opening the mission page. Non question asked"] = "Shift-\237\129\180\235\166\173 \236\158\132\235\172\180 \237\142\152\236\157\180\236\167\128\235\165\188 \236\151\180\236\167\128 \236\149\138\234\179\160 \236\158\132\235\172\180\235\165\188 \236\139\156\236\158\145\237\149\169\235\139\136\235\139\164. \236\149\132\235\172\180\234\178\131\235\143\132 \235\172\187\236\167\128 \236\149\138\236\138\181\235\139\136\235\139\164"
+L["Shift-Click start the mission witout even opening the mission page. No question asked"] = "Shift-\237\129\180\235\166\173 \236\158\132\235\172\180 \237\142\152\236\157\180\236\167\128\235\165\188 \236\151\180\236\167\128 \236\149\138\234\179\160 \236\158\132\235\172\180\235\165\188 \236\139\156\236\158\145\237\149\169\235\139\136\235\139\164. \236\149\132\235\172\180\234\178\131\235\143\132 \235\172\187\236\167\128 \236\149\138\236\138\181\235\139\136\235\139\164"
 L["Show tutorial"] = "\236\130\180\235\170\133\236\132\156 \235\179\180\234\184\176"
 L["Show/hide OrderHallCommander mission menu"] = "OrderHallCommander \236\158\132\235\172\180 \235\169\148\235\137\180 \237\145\156\236\139\156/\236\136\168\234\184\176\234\184\176"
 L["Sort missions by:"] = "\236\158\132\235\172\180 \236\160\149\235\160\172 \235\176\169\235\178\149:"
@@ -1186,7 +1173,7 @@ The target for this switch is to totally avoid killing troops, even it for this 
 \236\157\180 \236\132\164\236\160\149\236\157\152 \235\170\169\236\160\129\236\157\128 \236\157\180\234\178\131\235\149\140\235\172\184\236\151\144 \237\140\140\237\139\176\235\165\188 \236\177\132\236\154\176\236\167\128 \235\170\187\237\149\152\235\141\148\235\157\188\235\143\132 \236\153\132\235\178\189\237\158\136 \235\179\145\235\160\165\236\157\132 \236\163\189\236\157\180\236\167\128 \236\149\138\234\184\176 \236\156\132\237\149\168\236\158\133\235\139\136\235\139\164.]=]
 L[ [=[You can blacklist missions right clicking mission button.
 Since 1.5.1 you can start a mission witout passing from mission page shift-clicking the mission button.
-Be sure you liked the party because non confirmation is asked]=] ] = [=[\236\158\132\235\172\180 \235\178\132\237\138\188\236\157\132 \236\152\164\235\165\184\236\170\189 \237\129\180\235\166\173\237\149\152\236\151\172 \236\158\132\235\172\180\235\165\188 \236\176\168\235\139\168\237\149\160 \236\136\152 \236\158\136\236\138\181\235\139\136\235\139\164.
+Be sure you liked the party because no confirmation is asked]=] ] = [=[\236\158\132\235\172\180 \235\178\132\237\138\188\236\157\132 \236\152\164\235\165\184\236\170\189 \237\129\180\235\166\173\237\149\152\236\151\172 \236\158\132\235\172\180\235\165\188 \236\176\168\235\139\168\237\149\160 \236\136\152 \236\158\136\236\138\181\235\139\136\235\139\164.
 1.5.1 \235\178\132\236\160\132\235\182\128\237\132\176 \236\158\132\235\172\180 \235\178\132\237\138\188\236\157\132 Shift-\237\129\180\235\166\173\237\149\152\236\151\172 \236\158\132\235\172\180 \237\142\152\236\157\180\236\167\128\235\165\188 \235\179\180\236\167\128 \236\149\138\234\179\160 \236\158\132\235\172\180\235\165\188 \236\139\156\236\158\145\237\149\160 \236\136\152 \236\158\136\236\138\181\235\139\136\235\139\164.
 \235\143\153\236\157\152\235\165\188 \234\181\172\237\149\152\236\167\128 \236\149\138\234\184\176 \235\149\140\235\172\184\236\151\144 \237\140\140\237\139\176\234\176\128 \236\152\172\235\176\148\235\165\184\236\167\128 \237\153\149\236\157\184\237\149\180\236\163\188\236\132\184\236\154\148]=]
 L[ [=[You can choose to limit how much champions are sent together.
@@ -1332,7 +1319,7 @@ L["Reward type"] = "Tipo de recompensa"
 --Translation missing 
 -- L["Sets all switches to a very permissive setup"] = ""
 --Translation missing 
--- L["Shift-Click start the mission witout even opening the mission page. Non question asked"] = ""
+-- L["Shift-Click start the mission witout even opening the mission page. No question asked"] = ""
 --Translation missing 
 -- L["Show tutorial"] = ""
 L["Show/hide OrderHallCommander mission menu"] = "Mostrar / ocultar el men\195\186 de la misi\195\179n OrderHallCommander"
@@ -1429,7 +1416,7 @@ The target for this switch is to totally avoid killing troops, even it for this 
 --Translation missing 
 -- L[ [=[You can blacklist missions right clicking mission button.
 Since 1.5.1 you can start a mission witout passing from mission page shift-clicking the mission button.
-Be sure you liked the party because non confirmation is asked]=] ] = ""
+Be sure you liked the party because no confirmation is asked]=] ] = ""
 --Translation missing 
 -- L[ [=[You can choose to limit how much champions are sent together.
 Right now OHC is not using more than %3$s champions in the same mission-
@@ -1439,213 +1426,168 @@ Note that %2$s overrides it.]=] ] = ""
 	end
 	L=l:NewLocale(me,"ruRU")
 	if (L) then
---Translation missing 
--- L["%1$d%% lower than %2$d%%. Lower %s"] = ""
---Translation missing 
--- L["%s, please review the tutorial\\n(Click the icon to dismiss this message)"] = ""
+L["%1$d%% lower than %2$d%%. Lower %s"] = "%1$d%% \208\189\208\184\208\182\208\181 \209\135\208\181\208\188 %2$d%%. \208\157\208\184\208\182\208\181 %s"
+L["%s, please review the tutorial\\n(Click the icon to dismiss this message)"] = "%s, \208\191\208\190\208\182\208\176\208\187\209\131\208\185\209\129\209\130\208\176 \208\191\208\181\209\128\208\181\209\129\208\188\208\190\209\130\209\128\208\184\209\130\208\181 \208\184\208\189\209\129\209\130\209\128\209\131\208\186\209\134\208\184\208\184\\n\208\157\208\176\208\182\208\188\208\184\209\130\208\181 \208\189\208\176 \208\184\208\186\208\190\208\189\208\186\209\131, \209\135\209\130\208\190\208\177\209\139 \209\131\208\177\209\128\208\176\209\130\209\140 \209\141\209\130\208\190 \209\129\208\190\208\190\208\177\209\137\208\181\208\189\208\184\208\181"
 L["Always counter increased resource cost"] = "\208\163\209\135\208\184\209\130\209\139\208\178\208\176\209\130\209\140 \209\131\208\178\208\181\208\187\208\184\209\135\208\181\208\189\208\184\208\181 \209\129\209\130\208\190\208\184\208\188\208\190\209\129\209\130\208\184 \209\128\208\181\209\129\209\131\209\128\209\129\208\190\208\178."
 L["Always counter increased time"] = "\208\163\209\135\208\184\209\130\209\139\208\178\208\176\209\130\209\140 \209\131\208\178\208\181\208\187\208\184\209\135\208\181\208\189\208\184\208\181 \208\178\209\128\208\181\208\188\208\181\208\189\208\184 \208\189\208\176 \208\183\208\176\208\180\208\176\208\189\208\184\208\181"
-L["Always counter kill troops (ignored if we can only use troops with just 1 durability left)"] = "\208\146\209\129\208\181\208\179\208\180\208\176 \209\131\209\135\208\184\209\130\209\139\208\178\208\176\209\130\209\140 \209\129\208\188\208\181\209\128\209\130\209\140 \208\178\208\190\208\185\209\129\208\186\208\176. (\208\152\208\179\208\189\208\190\209\128\208\184\209\128\209\131\208\181\209\130\209\129\209\143, \208\181\209\129\208\187\208\184 \208\190\209\129\209\130\208\176\208\187\208\184\209\129\209\140 \208\178\208\190\208\185\209\129\208\186\208\176 \209\130\208\190\208\187\209\140\208\186\208\190 \209\129 1 \208\181\208\180.\208\183\208\180\208\190\209\128\208\190\208\178\209\140\209\143)"
-L["Always counter no bonus loot threat"] = [=[\208\152\208\179\208\189\208\190\209\128\208\184\209\128\208\190\208\178\208\176\209\130\209\140 \208\188\208\184\209\129\209\129\208\184\208\184, \208\181\209\129\208\187\208\184
-\208\189\208\181\209\130 \209\136\208\176\208\189\209\129\208\176 \208\189\208\176 \208\180\208\190\208\191\208\190\208\187\208\189\208\184\209\130\208\181\208\187\209\140\208\189\209\131\209\142 \208\180\208\190\208\177\209\139\209\135\209\131]=]
-L["Artifact shown value is the base value without considering knowledge multiplier"] = "\208\159\208\190\208\186\208\176\208\183\209\139\208\178\208\176\209\130\209\140 \208\177\208\176\208\183\208\190\208\178\208\190\208\181 \208\183\208\189\208\176\209\135\208\181\208\189\208\184\208\181 \208\176\209\128\209\130\208\181\209\132\208\176\208\186\209\130\208\176 \208\177\208\181\208\183 \209\131\209\135\208\181\209\130\208\176 \208\188\208\189\208\190\208\182\208\184\209\130\208\181\208\187\209\143 \208\183\208\189\208\176\208\189\208\184\209\143"
---Translation missing 
--- L["Attempting %s"] = ""
+L["Always counter kill troops (ignored if we can only use troops with just 1 durability left)"] = "\208\163\209\135\208\184\209\130\209\139\208\178\208\176\209\130\209\140 \209\129\208\188\208\181\209\128\209\130\209\140 \208\178\208\190\208\185\209\129\208\186. \208\152\208\179\208\189\208\190\209\128\208\184\209\128\209\131\208\181\209\130\209\129\209\143, \208\181\209\129\208\187\208\184 \208\190\209\129\209\130\208\176\208\187\208\184\209\129\209\140 \208\178\208\190\208\185\209\129\208\186\208\176 \209\130\208\190\208\187\209\140\208\186\208\190 \209\129 1 \208\181\208\180\208\184\208\189\208\184\209\134\208\181\208\185 \208\183\208\180\208\190\209\128\208\190\208\178\209\140\209\143"
+L["Always counter no bonus loot threat"] = "\208\152\208\179\208\189\208\190\209\128\208\184\209\128\208\190\208\178\208\176\209\130\209\140 \208\183\208\176\208\180\208\176\208\189\208\184\209\143, \208\181\209\129\208\187\208\184 \208\189\208\181\209\130 \209\136\208\176\208\189\209\129\208\176 \208\189\208\176 \208\180\208\190\208\191\208\190\208\187\208\189\208\184\209\130\208\181\208\187\209\140\208\189\209\131\209\142 \208\180\208\190\208\177\209\139\209\135\209\131"
+L["Artifact shown value is the base value without considering knowledge multiplier"] = "\208\159\208\190\208\186\208\176\208\183\209\139\208\178\208\176\209\130\209\140 \208\177\208\176\208\183\208\190\208\178\208\190\208\181 \208\183\208\189\208\176\209\135\208\181\208\189\208\184\208\181 \209\129\208\184\208\187\209\139 \208\176\209\128\209\130\208\181\209\132\208\176\208\186\209\130\208\176 \208\177\208\181\208\183 \209\131\209\135\208\181\209\130\208\176 \208\188\208\189\208\190\208\182\208\184\209\130\208\181\208\187\209\143 \208\183\208\189\208\176\208\189\208\184\209\143"
+L["Attempting %s"] = "\208\159\209\139\209\130\208\176\208\181\208\188\209\129\209\143 %s"
 L["Base Chance"] = "\208\145\208\176\208\183\208\190\208\178\209\139\208\185 \209\136\208\176\208\189\209\129"
-L["Better parties available in next future"] = "\208\155\209\131\209\135\209\136\208\176\209\143 \208\191\208\176\209\128\209\130\208\184\209\143 \208\177\209\131\208\180\208\181\209\130 \209\129\208\186\208\190\209\128\208\190 \208\180\208\190\209\129\209\130\209\131\208\191\208\189\208\176"
+L["Better parties available in next future"] = "\208\155\209\131\209\135\209\136\208\176\209\143 \208\179\209\128\209\131\208\191\208\191\208\176 \208\177\209\131\208\180\208\181\209\130 \208\180\208\190\209\129\209\130\209\131\208\191\208\189\208\176 \209\129\208\186\208\190\209\128\208\190"
 L["Blacklisted"] = "\208\145\208\187\208\190\208\186\208\184\209\128\208\190\208\178\208\176\208\189\208\189\209\139\208\181"
-L["Blacklisted missions are ignored in Mission Control"] = "\208\156\208\184\209\129\209\129\208\184\208\184 \209\129 \209\135\208\181\209\128\208\189\209\139\208\188 \209\129\208\191\208\184\209\129\208\186\208\190\208\188 \208\184\208\179\208\189\208\190\209\128\208\184\209\128\209\131\209\142\209\130\209\129\209\143 \208\178 \209\131\208\191\209\128\208\176\208\178\208\187\208\181\208\189\208\184\208\184 \208\188\208\184\209\129\209\129\208\184\208\181\208\185"
---Translation missing 
--- L["Bonus Chance"] = ""
-L["Building Final report"] = "\208\161\208\190\208\183\208\180\208\176\209\130\209\140 \208\190\209\130\209\135\208\181\209\130."
-L["but using troops with just one durability left"] = "\208\189\208\190 \208\184\209\129\208\191\208\190\208\187\209\140\208\183\208\190\208\178\208\176\209\130\209\140 \208\178\208\190\208\185\209\129\208\186\208\176, \209\129 1 \208\181\208\180. \208\183\208\180\208\190\209\128\208\190\208\178\209\140\209\143"
+L["Blacklisted missions are ignored in Mission Control"] = "\208\151\208\176\208\180\208\176\208\189\208\184\209\143 \208\184\208\183 \209\135\209\145\209\128\208\189\208\190\208\179\208\190 \209\129\208\191\208\184\209\129\208\186\208\176 \208\184\208\179\208\189\208\190\209\128\208\184\209\128\209\131\209\142\209\130\209\129\209\143 \208\191\209\128\208\184 \209\131\208\191\209\128\208\176\208\178\208\187\208\181\208\189\208\184\208\184 \208\183\208\176\208\180\208\176\208\189\208\184\209\143\208\188\208\184"
+L["Bonus Chance"] = "\208\145\208\190\208\189\209\131\209\129\208\189\209\139\208\185 \209\136\208\176\208\189\209\129"
+L["Building Final report"] = "\208\161\208\190\208\183\208\180\208\176\209\130\209\140 \208\190\209\130\209\135\208\181\209\130 \208\191\208\190 \208\183\208\176\208\178\208\181\209\128\209\136\208\181\208\189\208\184\208\184 \208\183\208\176\208\180\208\176\208\189\208\184\209\143"
+L["but using troops with just one durability left"] = "\208\189\208\190 \208\184\209\129\208\191\208\190\208\187\209\140\208\183\208\190\208\178\208\176\209\130\209\140 \208\178\208\190\208\185\209\129\208\186\208\176 \209\129 1 \208\181\208\180\208\184\208\189\208\184\209\134\208\181\208\185 \208\183\208\180\208\190\209\128\208\190\208\178\209\140\209\143"
 L["Capped %1$s. Spend at least %2$d of them"] = "\208\148\208\190\209\129\209\130\208\184\208\179\208\189\209\131\209\130\208\190 %1$. \208\159\208\190\209\130\209\128\208\176\209\130\209\140\209\130\208\181  \208\191\208\190 \208\186\209\128\208\176\208\185\208\189\208\181\208\185 \208\188\208\181\209\128\208\181 2%$"
-L["Changes the sort order of missions in Mission panel"] = "\208\152\208\183\208\188\208\181\208\189\209\143\208\181\209\130 \208\191\208\190\209\128\209\143\208\180\208\190\208\186 \209\129\208\190\209\128\209\130\208\184\209\128\208\190\208\178\208\186\208\184 \208\188\208\184\209\129\209\129\208\184\208\185 \208\189\208\176 \208\191\208\176\208\189\208\181\208\187\208\184"
+L["Changes the sort order of missions in Mission panel"] = "\208\156\208\181\208\189\209\143\208\181\209\130 \208\191\208\190\209\128\209\143\208\180\208\190\208\186 \209\129\208\190\209\128\209\130\208\184\209\128\208\190\208\178\208\186\208\184 \208\188\208\184\209\129\209\129\208\184\208\185 \208\189\208\176 \208\191\208\176\208\189\208\181\208\187\208\184"
 L["Combat ally is proposed for missions so you can consider unassigning him"] = [=[\208\152\209\129\208\191\208\190\208\187\209\140\208\183\208\190\208\178\208\176\209\130\209\140 \208\177\208\190\208\181\208\178\208\190\208\179\208\190 \209\129\208\190\209\128\208\176\209\130\208\189\208\184\208\186\208\176 \208\178 \209\128\208\176\209\129\209\135\208\181\209\130\208\176\209\133.
 \208\159\208\181\209\128\208\181\208\180 \208\190\209\130\208\191\209\128\208\176\208\178\208\186\208\190\208\185 \208\190\209\129\208\178\208\190\208\177\208\190\208\180\208\184\209\130\208\181 \209\129\208\190\209\128\208\176\209\130\208\189\208\184\208\186\208\176.]=]
-L["Complete all missions without confirmation"] = "\208\151\208\176\208\178\208\181\209\128\209\136\208\184\209\130\209\140 \208\178\209\129\208\181 \208\188\208\184\209\129\209\129\208\184\208\184 \208\177\208\181\208\183 \208\191\208\190\208\180\209\130\208\178\208\181\209\128\208\182\208\180\208\181\208\189\208\184\209\143"
-L["Configuration for mission party builder"] = "\208\154\208\190\208\189\209\132\208\184\208\179\209\131\209\128\208\176\209\134\208\184\209\143 \208\180\208\187\209\143 \209\129\208\190\208\183\208\180\208\176\208\189\208\184\209\143, \208\179\209\128\209\131\208\191\208\191\208\190\208\178\208\190\208\185 \208\188\208\184\209\129\209\129\208\184\208\184"
+L["Complete all missions without confirmation"] = "\208\151\208\176\208\178\208\181\209\128\209\136\208\184\209\130\209\140 \208\178\209\129\208\181 \208\183\208\176\208\180\208\176\208\189\208\184\209\143 \208\177\208\181\208\183 \208\191\208\190\208\180\209\130\208\178\208\181\209\128\208\182\208\180\208\181\208\189\208\184\208\185"
+L["Configuration for mission party builder"] = "\208\154\208\190\208\189\209\132\208\184\208\179\209\131\209\128\208\176\209\134\208\184\209\143 \208\180\208\187\209\143 \209\129\208\190\208\183\208\180\208\176\208\189\208\184\209\143 \208\179\209\128\209\131\208\191\208\191\209\139 \208\180\208\187\209\143 \208\183\208\176\208\180\208\176\208\189\208\184\209\143"
 L["Cost reduced"] = "\208\161\209\130\208\190\208\184\208\188\208\190\209\129\209\130\209\140 \209\131\208\188\208\181\208\189\209\140\209\136\208\181\208\189\208\176"
---Translation missing 
--- L["Could not fulfill mission, aborting"] = ""
---Translation missing 
--- L["Counter kill Troops"] = ""
+L["Could not fulfill mission, aborting"] = "\208\157\208\181 \209\131\208\180\208\176\208\187\208\190\209\129\209\140 \208\178\209\139\208\191\208\190\208\187\208\189\208\184\209\130\209\140 \208\188\208\184\209\129\209\129\208\184\209\142, \208\191\209\128\208\181\209\128\209\139\208\178\208\176\208\189\208\184\208\181"
+L["Counter kill Troops"] = "\208\159\209\128\208\181\208\180\209\131\208\191\209\128\208\181\208\180\208\184\209\130\209\140 \209\129\208\188\208\181\209\128\209\130\209\140 \208\178\208\190\208\185\209\129\208\186"
 L["Disables warning: "] = "\208\158\209\130\208\186\208\187\209\142\209\135\208\184\209\130\209\140 \208\191\209\128\208\181\208\180\209\131\208\191\209\128\208\181\208\182\208\180\208\181\208\189\208\184\208\181: "
---Translation missing 
--- L["Dont use this slot"] = ""
+L["Dont use this slot"] = "\208\157\208\181 \208\184\209\129\208\191\208\190\208\187\209\140\208\183\208\190\208\178\208\176\209\130\209\140 \209\141\209\130\208\190\209\130 \209\129\208\187\208\190\209\130"
 L["Don't use troops"] = "\208\157\208\181 \208\184\209\129\208\191\208\190\208\187\209\140\208\183\208\190\208\178\208\176\209\130\209\140 \208\178\208\190\208\185\209\129\208\186\208\176"
 L["Duration reduced"] = "\208\159\209\128\208\190\208\180\208\190\208\187\208\182\208\184\209\130\208\181\208\187\209\140\208\189\208\190\209\129\209\130\209\140 \209\131\208\188\208\181\208\189\209\140\209\136\208\181\208\189\208\176"
 L["Duration Time"] = "\208\159\209\128\208\190\208\180\208\190\208\187\208\182\208\184\209\130\208\181\208\187\209\140\208\189\208\190\209\129\209\130\209\140"
---Translation missing 
--- L["Elites mission mode"] = ""
-L["Empty missions sorted as last"] = "\208\158\209\130\209\129\208\190\209\128\209\130\208\184\209\128\208\190\208\178\208\176\209\130\209\140 \208\191\209\131\209\129\209\130\209\139\208\181 \208\188\208\184\209\129\209\129\208\184\208\184 \208\186\208\176\208\186 \208\191\208\190\209\129\208\187\208\181\208\180\208\189\208\184\208\181"
-L["Empty or 0% success mission are sorted as last. Does not apply to \"original\" method"] = "\208\159\209\131\209\129\209\130\208\176\209\143 \208\184\208\187\208\184 0%-\209\143 \209\131\209\129\208\191\208\181\209\136\208\189\208\176\209\143 \208\188\208\184\209\129\209\129\208\184\209\143, \208\190\209\130\209\129\208\190\209\128\209\130\208\184\209\128\208\190\208\178\208\176\208\189\208\176 \208\186\208\176\208\186 \208\191\208\190\209\129\208\187\208\181\208\180\208\189\209\143\209\143. \208\157\208\181 \208\191\209\128\208\184\208\188\208\181\208\189\209\143\208\181\209\130\209\129\209\143 \208\186 \"\208\190\208\177\209\139\209\135\208\189\208\190\208\188\209\131\" \208\188\208\181\209\130\208\190\208\180\209\131"
-L["Expiration Time"] = "\208\146\209\128\208\181\208\188\209\143 \208\190\208\186\208\190\208\189\209\135\208\176\208\189\208\184\209\143"
-L["Favours leveling follower for xp missions"] = "\208\146 \208\188\208\184\209\129\209\129\208\184\209\143\209\133 \208\189\208\176 \208\190\208\191\209\139\209\130, \208\184\209\129\208\191\208\190\208\187\209\140\208\183\208\190\208\178\208\176\209\130\209\140 \208\179\208\184\208\177\208\186\209\131\209\142 \208\191\209\128\208\190\208\186\208\176\209\135\208\186\209\131 \209\129\208\190\209\128\208\176\209\130\208\189\208\184\208\186\208\190\208\178"
+L["Elites mission mode"] = "\208\160\208\181\208\182\208\184\208\188 \209\141\208\187\208\184\209\130\208\189\209\139\209\133 \208\183\208\176\208\180\208\176\208\189\208\184\208\185"
+L["Empty missions sorted as last"] = "\208\151\208\176\208\180\208\176\208\189\208\184\209\143 \208\177\208\181\208\183 \208\179\209\128\209\131\208\191\208\191 \209\129\208\190\209\128\209\130\208\184\209\128\209\131\209\142\209\130\209\129\209\143 \208\186\208\176\208\186 \208\191\208\190\209\129\208\187\208\181\208\180\208\189\208\184\208\181"
+L["Empty or 0% success mission are sorted as last. Does not apply to \"original\" method"] = "\208\151\208\176\208\180\208\176\208\189\208\184\209\143 \208\177\208\181\208\183 \208\179\209\128\209\131\208\191\208\191\209\139 \208\184 \208\191\209\128\208\190\208\178\208\176\208\187\209\140\208\189\209\139\208\181 (0 %% \209\131\209\129\208\191\208\181\209\133\208\176) \208\183\208\176\208\180\208\176\208\189\208\184\209\143 \208\190\209\130\208\190\208\177\209\128\208\176\208\182\208\176\209\142\209\130\209\129\209\143 \208\191\208\190\209\129\208\187\208\181\208\180\208\189\208\184\208\188\208\184 \208\191\209\128\208\184 \209\129\208\190\209\128\209\130\208\184\209\128\208\190\208\178\208\186\208\181. \208\157\208\181 \208\190\209\130\208\189\208\190\209\129\208\184\209\130\209\129\209\143 \208\186 \"\208\190\208\177\209\139\209\135\208\189\208\190\208\188\209\131\" \208\188\208\181\209\130\208\190\208\180\209\131"
+L["Expiration Time"] = "\208\146\209\128\208\181\208\188\209\143 \208\190\208\186\208\190\208\189\209\135\208\176\208\189\208\184\209\143 \208\176\208\186\209\130\208\184\208\178\208\189\208\190\209\129\209\130\208\184"
+L["Favours leveling follower for xp missions"] = "\208\159\209\128\208\181\208\180\208\191\208\190\209\135\208\181\209\129\209\130\209\140 \208\189\208\176\208\177\208\190\209\128 \209\131\209\128\208\190\208\178\208\189\209\143 \208\183\208\176\209\137\208\184\209\130\208\189\208\184\208\186\208\190\208\188 \208\178 \208\183\208\176\208\180\208\176\208\189\208\184\209\143\209\133 \208\189\208\176 \208\190\208\191\209\139\209\130"
 L["General"] = "\208\158\209\129\208\189\208\190\208\178\208\189\209\139\208\181"
-L["Global approx. xp reward"] = "\208\158\208\177\209\137\208\176\209\143 \208\191\209\128\208\184\208\177\208\187. \208\189\208\176\208\179\209\128\208\176\208\180\208\176 \208\190\208\191\209\139\209\130\208\176"
-L["Global approx. xp reward per hour"] = "\208\158\208\177\209\137\208\184\208\185 \208\191\209\128\208\184\208\177\208\187. \208\190\208\191\209\139\209\130 \208\178 \209\135\208\176\209\129"
-L["HallComander Quick Mission Completion"] = "HallComander \208\145\209\139\209\129\209\130\209\128\208\190\208\181 \208\183\208\176\208\178\208\181\209\128\209\136\208\181\208\189\208\184\208\181 \208\188\208\184\209\129\209\129\208\184\208\185"
---Translation missing 
--- L["If %1$s is lower than this, then we try to achieve at least %2$s without going over 100%%. Ignored for elite missions."] = ""
-L["If not checked, inactive followers are used as last chance"] = "\208\149\209\129\208\187\208\184 \209\141\209\130\208\190\209\130 \209\132\208\187\208\176\208\182\208\190\208\186 \208\189\208\181 \209\131\209\129\209\130\208\176\208\189\208\190\208\178\208\187\208\181\208\189, \208\189\208\181\208\176\208\186\209\130\208\184\208\178\208\189\209\139\208\181 \209\129\208\190\209\128\208\176\209\130\208\189\208\184\208\186\208\184 \208\184\209\129\208\191\208\190\208\187\209\140\208\183\209\131\209\142\209\130\209\129\209\143 \208\186\208\176\208\186 \208\191\208\190\209\129\208\187\208\181\208\180\208\189\208\184\208\185 \209\136\208\176\208\189\209\129"
+L["Global approx. xp reward"] = "\208\158\208\177\209\137\208\176\209\143 \208\190\209\134\208\181\208\189\208\186\208\176 \208\178\208\190\208\183\208\188\208\190\208\182\208\189\208\190\208\179\208\190 \208\186 \208\191\208\190\208\187\209\131\209\135\208\181\208\189\208\184\209\142 \208\190\208\191\209\139\209\130\208\176"
+L["Global approx. xp reward per hour"] = "\208\158\208\177\209\137\208\176\209\143 \208\190\209\134\208\181\208\189\208\186\208\176 \208\178\208\190\208\183\208\188\208\190\208\182\208\189\208\190\208\179\208\190 \208\186 \208\191\208\190\208\187\209\131\209\135\208\181\208\189\208\184\209\142 \208\190\208\191\209\139\209\130\208\176 \208\178 \209\135\208\176\209\129"
+L["HallComander Quick Mission Completion"] = "Hall Comander \208\145\209\139\209\129\209\130\209\128\208\190\208\181 \208\183\208\176\208\178\208\181\209\128\209\136\208\181\208\189\208\184\208\181 \208\188\208\184\209\129\209\129\208\184\208\185"
+L["If %1$s is lower than this, then we try to achieve at least %2$s without going over 100%%. Ignored for elite missions."] = "\208\149\209\129\208\187\208\184 %1$s \208\188\208\181\208\189\209\140\209\136\208\181 \209\141\209\130\208\190\208\179\208\190 \208\183\208\189\208\176\209\135\208\181\208\189\208\184\209\143, \209\130\208\190 \208\188\209\139 \208\191\208\190\208\191\209\128\208\190\208\177\209\131\208\181\208\188 \208\191\208\190\208\187\209\131\209\135\208\184\209\130\209\140 \209\133\208\190\209\130\209\143 \208\177\209\139 %2$s \208\189\208\181 \208\191\209\128\208\181\208\178\208\190\209\129\209\133\208\190\208\180\209\143 100%%. \208\152\208\179\208\189\208\190\209\128\208\184\209\128\209\131\208\181\209\130\209\129\209\143 \208\180\208\187\209\143 \209\141\208\187\208\184\209\130\208\189\209\139\209\133 \208\183\208\176\208\180\208\176\208\189\208\184\208\185"
+L["If not checked, inactive followers are used as last chance"] = "\208\149\209\129\208\187\208\184 \209\141\209\130\208\190\209\130 \209\132\208\187\208\176\208\182\208\190\208\186 \208\189\208\181 \209\131\209\129\209\130\208\176\208\189\208\190\208\178\208\187\208\181\208\189, \209\130\208\190 \208\189\208\181\208\176\208\186\209\130\208\184\208\178\208\189\209\139\208\181 \208\183\208\176\209\137\208\184\209\130\208\189\208\184\208\186\208\184 \208\184\209\129\208\191\208\190\208\187\209\140\208\183\209\131\209\142\209\130\209\129\209\143 \208\178 \208\191\208\190\209\129\208\187\208\181\208\180\208\189\209\142\209\142 \208\190\209\135\208\181\209\128\208\181\208\180\209\140"
 L[ [=[If you %s, you will lose them
 Click on %s to abort]=] ] = [=[\208\149\209\129\208\187\208\184 \208\146\208\176\209\136 %s \209\129\208\187\208\184\209\136\208\186\208\190\208\188 \208\188\208\176\208\187, \208\178\209\139 \208\188\208\190\208\182\208\181\209\130\208\181 \208\191\208\190\209\130\208\181\209\128\209\143\209\130\209\140 \208\184\209\133
 \208\169\208\181\208\187\208\186\208\189\208\184\209\130\208\181 %s \208\180\208\187\209\143 \208\191\209\128\208\181\209\128\209\139\208\178\208\176\208\189\208\184\209\143]=]
-L["Ignore busy followers"] = "\208\152\208\179\208\189\208\190\209\128\208\184\209\128\208\190\208\178\208\176\209\130\209\140 \208\183\208\176\208\189\209\143\209\130\209\139\209\133 \209\129\208\190\209\128\208\176\209\130\208\189\208\184\208\186\208\190\208\178"
-L["Ignore inactive followers"] = "\208\152\208\179\208\189\208\190\209\128\208\184\209\128\208\190\208\178\208\176\209\130\209\140 \208\189\208\181\208\176\208\186\209\130\208\184\208\178\208\189\209\139\209\133 \209\129\208\190\209\128\208\176\209\130\208\189\208\184\208\186\208\190\208\178"
-L["Keep cost low"] = "\208\148\208\181\209\136\208\181\208\178\209\139\208\181 \208\188\208\184\209\129\209\129\208\184\208\184"
+L["Ignore busy followers"] = "\208\152\208\179\208\189\208\190\209\128\208\184\209\128\208\190\208\178\208\176\209\130\209\140 \208\183\208\176\208\189\209\143\209\130\209\139\209\133 \208\183\208\176\209\137\208\184\209\130\208\189\208\184\208\186\208\190\208\178"
+L["Ignore inactive followers"] = "\208\152\208\179\208\189\208\190\209\128\208\184\209\128\208\190\208\178\208\176\209\130\209\140 \208\189\208\181\208\176\208\186\209\130\208\184\208\178\208\189\209\139\209\133 \208\183\208\176\209\137\208\184\209\130\208\189\208\184\208\186\208\190\208\178"
+L["Keep cost low"] = "\208\148\208\181\209\136\209\145\208\178\209\139\208\181 \208\183\208\176\208\180\208\176\208\189\208\184\209\143"
 L["Keep extra bonus"] = "\208\148\208\190\208\191\208\190\208\187\208\189\208\184\209\130\208\181\208\187\209\140\208\189\208\176\209\143 \208\180\208\190\208\177\209\139\209\135\208\176"
-L["Keep time short"] = "\208\154\208\190\209\128\208\190\209\130\208\186\208\184\208\181 \208\188\208\184\209\129\209\129\208\184\208\184"
-L["Keep time VERY short"] = "\208\145\209\139\209\129\209\130\209\128\209\139\208\181 \208\188\208\184\209\129\209\129\208\184\208\184"
---Translation missing 
--- L[ [=[Launch the first filled mission with at least one locked follower.
-Keep SHIFT pressed to actually launch, a simple click will only print mission name with its followers list]=] ] = ""
+L["Keep time short"] = "\208\154\208\190\209\128\208\190\209\130\208\186\208\184\208\181 \208\183\208\176\208\180\208\176\208\189\208\184\209\143"
+L["Keep time VERY short"] = "\208\163\208\188\208\181\208\189\209\140\209\136\208\176\209\130\209\140 \208\178\209\128\208\181\208\188\209\143 \208\183\208\176\208\180\208\176\208\189\208\184\209\143"
+L[ [=[Launch the first filled mission with at least one locked follower.
+Keep SHIFT pressed to actually launch, a simple click will only print mission name with its followers list]=] ] = "\208\151\208\176\208\191\209\131\209\129\209\130\208\184\209\130\209\140 \208\191\208\181\209\128\208\178\209\131\209\142 \208\183\208\176\208\191\208\190\208\187\208\189\208\181\208\189\208\189\209\131\209\142 \208\179\209\128\209\131\208\191\208\191\209\131 \208\178\209\139\208\191\208\190\208\187\208\189\209\143\209\130\209\140 \208\183\208\176\208\180\208\176\208\189\208\184\208\181 \209\129 \208\191\208\190 \208\186\209\128\208\176\208\185\208\189\208\181\208\185 \208\188\208\181\209\128\208\181 \208\190\208\180\208\189\208\184\208\188 \208\183\208\176\208\177\208\187\208\190\208\186\208\184\209\128\208\190\208\178\208\176\208\189\208\189\209\139\208\188 \208\183\208\176\209\137\208\184\209\130\208\189\208\184\208\186\208\190\208\188. \208\148\208\181\209\128\208\182\208\184\209\130\208\181 \208\186\208\189\208\190\208\191\208\186\209\131 Shift \208\189\208\176\208\182\208\176\209\130\208\190\208\185 \208\180\208\187\209\143 \208\189\208\176\209\135\208\176\208\187\208\176 \208\178\209\139\208\191\208\190\208\187\208\189\208\181\208\189\208\184\209\143 (\208\191\209\128\208\190\209\129\209\130\208\190\208\181 \208\189\208\176\208\182\208\176\209\130\208\184\208\181 \208\188\209\139\209\136\208\186\208\184 \208\178\209\139\208\178\208\181\208\180\208\181\209\130 \209\130\208\190\208\187\209\140\208\186\208\190 \208\184\208\188\209\143 \208\183\208\176\208\180\208\176\208\189\208\184\209\143 \209\129\208\190 \209\129\208\191\208\184\209\129\208\186\208\190\208\188 \208\183\208\176\209\137\208\184\209\130\208\189\208\184\208\186\208\190\208\178)"
 L["Level"] = "\208\163\209\128\208\190\208\178\208\181\208\189\209\140"
---Translation missing 
--- L["Lock all"] = ""
---Translation missing 
--- L["Lock this follower"] = ""
---Translation missing 
--- L["Locked follower are only used in this mission"] = ""
-L["Make Order Hall Mission Panel movable"] = "\208\161\208\180\208\181\208\187\208\176\209\130\209\140 \208\191\208\176\208\189\208\181\208\187\209\140 \208\190\208\191\208\187\208\190\209\130\208\176 \208\186\208\187\208\176\209\129\209\129\208\176 \208\191\208\181\209\128\208\181\208\180\208\178\208\184\208\179\208\176\208\181\208\188\208\190\208\185"
---Translation missing 
--- L["Makes sure that no troops will be killed"] = ""
-L["Max champions"] = "\208\156\208\176\208\186\209\129. \208\183\208\176\209\137\208\184\209\130\208\189\208\184\208\186\208\190\208\178"
-L["Maximize xp gain"] = "\208\156\208\176\208\186\209\129\208\184\208\188\208\176\208\187\209\140\208\189\209\139\208\185 \208\190\208\191\209\139\209\130"
-L["Mission duration reduced"] = "\208\161\208\190\208\186\209\128\208\176\209\137\208\181\208\189\208\176 \208\191\209\128\208\190\208\180\208\190\208\187\208\182\208\184\209\130\208\181\208\187\209\140\208\189\208\190\209\129\209\130\209\140 \208\188\208\184\209\129\209\129\208\184\208\184"
---Translation missing 
--- L["Mission was capped due to total chance less than"] = ""
-L["Missions"] = "\208\156\208\184\209\129\209\129\208\184\208\184"
---Translation missing 
--- L["Never kill Troops"] = ""
-L["No follower gained xp"] = "\208\161\208\190\209\128\208\176\209\130\208\189\208\184\208\186 \208\189\208\181 \208\191\208\190\208\187\209\131\209\135\208\176\208\181\209\130 \208\190\208\191\209\139\209\130"
---Translation missing 
--- L["No suitable missions. Have you reserved at least one follower?"] = ""
-L["Not blacklisted"] = "\208\157\208\181 \208\178 \209\135\208\181\209\128\208\189\208\190\208\188 \209\129\208\191\208\184\209\129\208\186\208\181"
-L["Nothing to report"] = "\208\145\208\181\208\183 \208\190\209\130\209\135\208\181\209\130\208\176"
-L["Notifies you when you have troops ready to be collected"] = "\208\163\208\178\208\181\208\180\208\190\208\188\208\187\209\143\209\130\209\140 \208\178\208\176\209\129, \208\186\208\190\208\179\208\180\208\176 \208\184\208\188\208\181\209\142\209\130\209\129\209\143 \208\179\208\190\209\130\208\190\208\178\209\139\208\181 \208\178\208\190\208\185\209\129\208\186\208\176, \208\184 \208\179\208\190\209\130\208\190\208\178\209\139 \208\186 \209\129\208\177\208\190\209\128\209\131"
-L["Only accept missions with time improved"] = "\208\159\209\128\208\184\208\189\208\184\208\188\208\176\209\130\209\140, \209\130\208\190\208\187\209\140\208\186\208\190 \208\188\208\184\209\129\209\129\208\184\208\184 \209\129 \209\131\208\187\209\131\209\135\209\136\208\181\208\189\208\189\209\139\208\188 \208\178\209\128\208\181\208\188\208\181\208\189\208\181\208\188"
---Translation missing 
--- L["Only consider elite missions"] = ""
+L["Lock all"] = "\208\151\208\176\208\177\208\187\208\190\208\186\208\184\209\128\208\190\208\178\208\176\209\130\209\140 \208\178\209\129\208\181\209\133"
+L["Lock this follower"] = "\208\151\208\176\208\177\208\187\208\190\208\186\208\184\209\128\208\190\208\178\208\176\209\130\209\140 \209\141\209\130\208\190\208\179\208\190 \208\183\208\176\209\137\208\184\209\130\208\189\208\184\208\186\208\176"
+L["Locked follower are only used in this mission"] = "\208\151\208\176\208\177\208\187\208\190\208\186\208\184\209\128\208\190\208\178\208\176\208\189\208\189\209\139\208\185 \208\183\208\176\209\137\208\184\209\130\208\189\208\184\208\186 \208\184\209\129\208\191\208\190\208\187\209\140\208\183\209\131\208\181\209\130\209\129\209\143 \209\130\208\190\208\187\209\140\208\186\208\190 \208\178 \209\141\209\130\208\190\208\185 \208\188\208\184\209\129\209\129\208\184\208\184"
+L["Make Order Hall Mission Panel movable"] = "\208\161\208\180\208\181\208\187\208\176\209\130\209\140 \208\191\208\176\208\189\208\181\208\187\209\140 \208\183\208\176\208\180\208\176\208\189\208\184\208\185 \208\190\208\191\208\187\208\190\209\130\208\176 \208\186\208\187\208\176\209\129\209\129\208\176 \208\191\208\181\209\128\208\181\208\188\208\181\209\137\208\176\208\181\208\188\208\190\208\185"
+L["Makes sure that no troops will be killed"] = "\208\147\208\176\209\128\208\176\208\189\209\130\208\184\209\128\209\131\208\181\209\130, \209\135\209\130\208\190 \208\189\208\184\208\186\208\176\208\186\208\184\208\181 \208\178\208\190\208\185\209\129\208\186\208\176 \208\189\208\181 \208\177\209\131\208\180\209\131\209\130 \209\131\208\177\208\184\209\130\209\139"
+L["Max champions"] = "\208\156\208\176\208\186\209\129\208\184\208\188\208\176\208\187\209\140\208\189\208\190 \208\183\208\176\209\137\208\184\209\130\208\189\208\184\208\186\208\190\208\178"
+L["Maximize xp gain"] = "\208\156\208\176\208\186\209\129\208\184\208\188\208\184\208\183\208\184\209\128\208\190\208\178\208\176\209\130\209\140 \208\191\208\190\208\187\209\131\209\135\208\176\208\181\208\188\209\139\208\185 \208\190\208\191\209\139\209\130"
+L["Mission duration reduced"] = "\208\161\208\190\208\186\209\128\208\176\209\137\208\181\208\189\208\176 \208\191\209\128\208\190\208\180\208\190\208\187\208\182\208\184\209\130\208\181\208\187\209\140\208\189\208\190\209\129\209\130\209\140 \208\183\208\176\208\180\208\176\208\189\208\184\209\143"
+L["Mission was capped due to total chance less than"] = "\208\156\208\184\209\129\209\129\208\184\209\143 \208\177\209\139\208\187\208\176 \208\190\208\179\209\128\208\176\208\189\208\184\209\135\208\181\208\189\208\176 \208\184\208\183-\208\183\208\176 \208\190\208\177\209\137\208\181\208\179\208\190 \209\136\208\176\208\189\209\129\208\176 \208\188\208\181\208\189\209\140\209\136\208\181, \209\135\208\181\208\188"
+L["Missions"] = "\208\151\208\176\208\180\208\176\208\189\208\184\209\143"
+L["Never kill Troops"] = "\208\157\208\184\208\186\208\190\208\179\208\180\208\176 \208\189\208\181 \209\131\208\177\208\184\208\178\208\176\209\130\209\140 \208\178\208\190\208\185\209\129\208\186\208\176"
+L["No follower gained xp"] = "\208\151\208\176\209\137\208\184\209\130\208\189\208\184\208\186\208\184 \208\189\208\181 \208\191\208\190\208\187\209\131\209\135\208\184\208\187\208\184 \208\190\208\191\209\139\209\130"
+L["No suitable missions. Have you reserved at least one follower?"] = "\208\157\208\181\209\130 \208\191\208\190\208\180\209\133\208\190\208\180\209\143\209\137\208\184\209\133 \208\188\208\184\209\129\209\129\208\184\208\185. \208\146\209\139 \208\183\208\176\209\128\208\181\208\183\208\181\209\128\208\178\208\184\209\128\208\190\208\178\208\176\208\187\208\184 \209\133\208\190\209\130\209\143 \208\177\209\139 \208\190\208\180\208\189\208\190\208\179\208\190 \208\183\208\176\209\137\208\184\209\130\208\189\208\184\208\186\208\176?"
+L["Not blacklisted"] = "\208\157\208\181 \208\178 \209\135\209\145\209\128\208\189\208\190\208\188 \209\129\208\191\208\184\209\129\208\186\208\181"
+L["Nothing to report"] = "\208\145\208\181\208\183 \208\190\209\130\209\135\209\145\209\130\208\176"
+L["Notifies you when you have troops ready to be collected"] = "\208\163\208\178\208\181\208\180\208\190\208\188\208\187\209\143\209\130\209\140 \208\146\208\176\209\129, \208\186\208\190\208\179\208\180\208\176 \208\184\208\188\208\181\209\142\209\130\209\129\209\143 \208\179\208\190\209\130\208\190\208\178\209\139\208\181 \208\178\208\190\208\185\209\129\208\186\208\176, \208\184 \208\179\208\190\209\130\208\190\208\178\209\139 \208\186 \209\129\208\177\208\190\209\128\209\131"
+L["Only accept missions with time improved"] = "\208\159\209\128\208\184\208\189\208\184\208\188\208\176\209\130\209\140 \209\130\208\190\208\187\209\140\208\186\208\190 \208\183\208\176\208\180\208\176\208\189\208\184\209\143 \209\129 \209\131\208\187\209\131\209\135\209\136\208\181\208\189\208\189\209\139\208\188 \208\178\209\128\208\181\208\188\208\181\208\189\208\181\208\188"
+L["Only consider elite missions"] = "\208\163\209\135\208\184\209\130\209\139\208\178\208\176\209\130\209\140 \209\130\208\190\208\187\209\140\208\186\208\190 \209\141\208\187\208\184\209\130\208\189\209\139\208\181 \208\183\208\176\208\180\208\176\208\189\208\184\209\143"
 L["Only use champions even if troops are available"] = "\208\152\209\129\208\191\208\190\208\187\209\140\208\183\208\190\208\178\208\176\209\130\209\140 \209\130\208\190\208\187\209\140\208\186\208\190 \208\183\208\176\209\137\208\184\209\130\208\189\208\184\208\186\208\190\208\178, \208\180\208\176\208\182\208\181 \208\181\209\129\208\187\208\184 \208\178\208\190\208\185\209\129\208\186\208\176 \208\180\208\190\209\129\209\130\209\131\208\191\208\189\209\139"
---Translation missing 
--- L["Open configuration"] = ""
+L["Open configuration"] = "\208\158\209\130\208\186\209\128\209\139\209\130\209\140 \208\186\208\190\208\189\209\132\208\184\208\179\209\131\209\128\208\176\209\134\208\184\209\142"
 L[ [=[OrderHallCommander overrides GarrisonCommander for Order Hall Management.
  You can revert to GarrisonCommander simply disabling OrderhallCommander.
-If instead you like OrderHallCommander remember to add it to Curse client and keep it updated]=] ] = [=[OrderHallCommander \208\191\208\181\209\128\208\181\208\190\208\191\209\128\208\181\208\180\208\181\208\187\209\143\208\181\209\130 GarrisonCommander \208\180\208\187\209\143 \209\131\208\191\209\128\208\176\208\178\208\187\208\181\208\189\208\184\209\143 \208\183\208\176\208\186\208\176\208\183\208\176\208\188\208\184.
- \208\146\209\139 \208\188\208\190\208\182\208\181\209\130\208\181 \208\178\208\181\209\128\208\189\209\131\209\130\209\140\209\129\209\143 \208\186 GarrisonCommander, \208\191\209\128\208\190\209\129\209\130\208\190 \208\190\209\130\208\186\208\187\209\142\209\135\208\184\208\178 OrderhallCommander.
-\208\149\209\129\208\187\208\184 \208\178\208\176\208\188 \208\189\209\128\208\176\208\178\208\184\209\130\209\129\209\143 OrderHallCommander, \208\189\208\181 \208\183\208\176\208\177\209\131\208\180\209\140\209\130\208\181 \208\180\208\190\208\177\208\176\208\178\208\184\209\130\209\140 \208\181\208\179\208\190 \208\178 Curse client \208\184 \208\190\208\177\208\189\208\190\208\178\208\184\209\130\209\140 \208\181\208\179\208\190]=]
+If instead you like OrderHallCommander remember to add it to Curse client and keep it updated]=] ] = [=[Order Hall Commander \208\191\208\181\209\128\208\181\208\190\208\191\209\128\208\181\208\180\208\181\208\187\209\143\208\181\209\130 Garrison Commander \208\180\208\187\209\143 \209\131\208\191\209\128\208\176\208\178\208\187\208\181\208\189\208\184\209\143 \208\183\208\176\208\186\208\176\208\183\208\176\208\188\208\184.
+ \208\146\209\139 \208\188\208\190\208\182\208\181\209\130\208\181 \208\178\208\181\209\128\208\189\209\131\209\130\209\140\209\129\209\143 \208\186 Garrison Commander, \208\191\209\128\208\190\209\129\209\130\208\190 \208\190\209\130\208\186\208\187\209\142\209\135\208\184\208\178 Orderhall Commander.
+\208\149\209\129\208\187\208\184 \208\178\208\176\208\188 \208\189\209\128\208\176\208\178\208\184\209\130\209\129\209\143 Order Hall Commander, \208\189\208\181 \208\183\208\176\208\177\209\131\208\180\209\140\209\130\208\181 \208\180\208\190\208\177\208\176\208\178\208\184\209\130\209\140 \208\181\208\179\208\190 \208\178 \208\186\208\187\208\184\208\181\208\189\209\130 Twitch \208\184 \208\190\208\177\208\189\208\190\208\178\208\184\209\130\209\140 \208\181\208\179\208\190]=]
 L["Original method"] = "\208\158\208\177\209\139\209\135\208\189\209\139\208\185 \208\188\208\181\209\130\208\190\208\180"
 L["Position is not saved on logout"] = "\208\159\208\190\208\187\208\190\208\182\208\181\208\189\208\184\208\181 \208\189\208\181 \209\129\208\190\209\133\209\128\208\176\208\189\209\143\208\181\209\130\209\129\209\143 \208\191\209\128\208\184 \208\178\209\139\209\133\208\190\208\180\208\181"
---Translation missing 
--- L["Prefer high durability"] = ""
---Translation missing 
--- L["Quick start first mission"] = ""
-L["Remove no champions warning"] = "\208\163\208\180\208\176\208\187\208\184\209\130\209\140 \208\191\209\128\208\181\208\180\209\131\208\191\209\128\208\181\208\182\208\180\208\181\208\189\208\184\208\181 \208\189\208\181\209\130 \208\183\208\176\209\137\208\184\209\130\208\189\208\184\208\186\208\190\208\178"
+L["Prefer high durability"] = "\208\159\209\128\208\181\208\180\208\191\208\190\209\135\208\181\209\129\209\130\209\140 \208\178\208\190\208\185\209\129\208\186\208\176 \209\129 \208\177\208\190\208\187\209\140\209\136\208\184\208\188 \208\186\208\190\208\187\208\184\209\135\208\181\209\129\209\130\208\178\208\190\208\188 \208\181\208\180\208\184\208\189\208\184\209\134 \208\183\208\180\208\190\209\128\208\190\208\178\209\140\209\143"
+L["Quick start first mission"] = "\208\145\209\139\209\129\209\130\209\128\208\190\208\181 \208\189\208\176\209\135\208\176\208\187\208\190 \208\191\208\181\209\128\208\178\208\190\208\179\208\190 \208\183\208\176\208\180\208\176\208\189\208\184\209\143"
+L["Remove no champions warning"] = "\208\163\208\180\208\176\208\187\208\184\209\130\209\140 \208\191\209\128\208\181\208\180\209\131\208\191\209\128\208\181\208\182\208\180\208\181\208\189\208\184\208\181 \208\190\208\177 \208\190\209\130\209\129\209\131\209\130\209\129\209\130\208\178\208\184\208\184 \208\183\208\176\209\137\208\184\209\130\208\189\208\184\208\186\208\190\208\178"
 L["Resurrect troops effect"] = "\208\173\209\132\209\132\208\181\208\186\209\130 \208\178\208\190\209\129\208\186\209\128\208\181\209\136\208\181\208\189\208\184\209\143 \208\178\208\190\208\185\209\129\208\186"
 L["Reward type"] = "\208\157\208\176\208\179\209\128\208\176\208\180\208\176"
-L["Right-Click to blacklist"] = "\208\159\209\128\208\176\208\178\209\139\208\185 \209\137\208\181\208\187\209\135\208\190\208\186 \208\180\208\187\209\143 \209\135\208\181\209\128\208\189\208\190\208\179\208\190 \209\129\208\191\208\184\209\129\208\186\208\176"
-L["Right-Click to remove from blacklist"] = "\208\159\209\128\208\176\208\178\209\139\208\185 \209\137\208\181\208\187\209\135\208\190\208\186 \208\180\208\187\209\143 \209\131\208\180\208\176\208\187\208\181\208\189\208\184\208\181 \209\135\208\181\209\128\208\189\208\190\208\179\208\190 \209\129\208\191\208\184\209\129\208\186\208\176"
---Translation missing 
--- L["Sets all switches to a very permissive setup"] = ""
---Translation missing 
--- L["Shift-Click start the mission witout even opening the mission page. Non question asked"] = ""
---Translation missing 
--- L["Show tutorial"] = ""
-L["Show/hide OrderHallCommander mission menu"] = "\208\159\208\190\208\186\208\176\208\183\208\176\209\130\209\140/\209\129\208\186\209\128\209\139\209\130\209\140 \208\188\208\181\208\189\209\142 \208\188\208\184\209\129\209\129\208\184\208\185 OrderHallCommander"
-L["Sort missions by:"] = "\208\161\208\190\209\128\209\130\208\184\209\128\208\190\208\178\208\176\209\130\209\140 \208\188\208\184\209\129\209\129\208\184\208\184 \208\191\208\190:"
---Translation missing 
--- L["Started with "] = ""
+L["Right-Click to blacklist"] = "\208\159\209\128\208\176\208\178\209\139\208\185 \209\137\208\181\208\187\209\135\208\190\208\186 \208\188\209\139\209\136\208\186\208\184 \208\180\208\187\209\143 \208\180\208\190\208\177\208\176\208\178\208\187\208\181\208\189\208\184\209\143 \208\178 \209\135\209\145\209\128\208\189\209\139\208\185 \209\129\208\191\208\184\209\129\208\190\208\186"
+L["Right-Click to remove from blacklist"] = "\208\159\209\128\208\176\208\178\209\139\208\185 \209\137\208\181\208\187\209\135\208\190\208\186 \208\188\209\139\209\136\208\186\208\184 \208\180\208\187\209\143 \209\131\208\180\208\176\208\187\208\181\208\189\208\184\209\143 \208\184\208\183 \209\135\209\145\209\128\208\189\208\190\208\179\208\190 \209\129\208\191\208\184\209\129\208\186\208\176"
+L["Sets all switches to a very permissive setup"] = "\208\163\209\129\209\130\208\176\208\189\208\190\208\178\208\184\209\130\209\140 \208\178\209\129\208\181 \208\191\208\181\209\128\208\181\208\186\208\187\209\142\209\135\208\176\209\130\208\181\208\187\208\184 \209\130\208\176\208\186, \209\135\209\130\208\190\208\177\209\139 \208\191\209\128\208\181\208\180\208\190\209\129\209\130\208\176\208\178\208\184\209\130\209\140 \208\177\208\190\208\187\209\140\209\136\209\131\209\142 \208\178\208\190\208\183\208\188\208\190\208\182\208\189\208\190\209\129\209\130\209\140 \208\188\208\176\208\189\209\145\208\178\209\128\208\176"
+L["Shift-Click start the mission witout even opening the mission page. No question asked"] = "\208\157\208\176\208\182\208\176\209\130\208\184\208\181 \208\188\209\139\209\136\208\186\208\184 \209\129 \208\186\208\187\208\176\208\178\208\184\209\136\208\181\208\185 Shift  \208\189\208\176\209\135\208\184\208\189\208\176\208\181\209\130 \208\178\209\139\208\191\208\190\208\187\208\189\208\181\208\189\208\184\208\181 \208\183\208\176\208\180\208\176\208\189\208\184\209\143 \208\177\208\181\208\183 \208\190\209\130\208\186\209\128\209\139\209\130\208\184\209\143 \209\141\208\186\209\128\208\176\208\189\208\176 \208\183\208\176\208\180\208\176\208\189\208\184\209\143 \208\184 \208\177\208\181\208\183 \208\183\208\176\208\191\209\128\208\190\209\129\208\176 \208\191\208\190\208\180\209\130\208\178\208\181\209\128\208\182\208\180\208\181\208\189\208\184\208\185"
+L["Show tutorial"] = "\208\159\208\190\208\186\208\176\208\183\208\176\209\130\209\140 \209\129\208\177\208\190\209\128\208\189\208\184\208\186 \208\184\208\189\209\129\209\130\209\128\209\131\208\186\209\134\208\184\208\185"
+L["Show/hide OrderHallCommander mission menu"] = "\208\158\209\130\208\190\208\177\209\128\208\176\208\183\208\184\209\130\209\140/\209\129\208\186\209\128\209\139\209\130\209\140 \208\188\208\181\208\189\209\142 \208\183\208\176\208\180\208\176\208\189\208\184\208\185 Order Hall Commander"
+L["Sort missions by:"] = "\208\161\208\190\209\128\209\130\208\184\209\128\208\190\208\178\208\176\209\130\209\140 \208\183\208\176\208\180\208\176\208\189\208\184\209\143 \208\191\208\190:"
+L["Started with "] = "\208\157\208\176\209\135\208\176\208\187\208\184 \209\129"
 L["Success Chance"] = "\208\168\208\176\208\189\209\129 \209\131\209\129\208\191\208\181\209\133\208\176"
 L["Troop ready alert"] = "\208\158\208\191\208\190\208\178\208\181\209\137\208\181\208\189\208\184\208\181 \208\190 \208\179\208\190\209\130\208\190\208\178\208\189\208\190\209\129\209\130\208\184 \208\178\208\190\208\185\209\129\208\186"
-L["Unable to fill missions, raise \"%s\""] = "\208\157\208\181 \209\131\208\180\208\176\208\181\209\130\209\129\209\143 \208\183\208\176\208\191\208\190\208\187\208\189\208\184\209\130\209\140 \208\188\208\184\209\129\209\129\208\184\208\184, \208\191\208\190\208\178\209\139\209\129\209\140\209\130\208\181 \208\188\208\176\208\186\209\129\208\184\208\188\208\176\208\187\209\140\208\189\208\190\208\181 \209\135\208\184\209\129\208\187\208\190 \208\183\208\176\209\137\208\184\209\130\208\189\208\184\208\186\208\190\208\178"
+L["Unable to fill missions, raise \"%s\""] = "\208\157\208\181 \209\131\208\180\208\176\208\181\209\130\209\129\209\143 \208\183\208\176\208\191\208\190\208\187\208\189\208\184\209\130\209\140 \208\179\209\128\209\131\208\191\208\191\209\139 \208\183\208\176\208\180\208\176\208\189\208\184\208\185 - \208\191\208\190\208\178\209\139\209\129\209\140\209\130\208\181 \208\188\208\176\208\186\209\129\208\184\208\188\208\176\208\187\209\140\208\189\208\190\208\181 \209\135\208\184\209\129\208\187\208\190 \208\183\208\176\209\137\208\184\209\130\208\189\208\184\208\186\208\190\208\178 \208\178 \208\189\208\176\209\129\209\130\209\128\208\190\208\185\208\186\208\176\209\133 \208\189\208\176 \208\177\208\190\208\186\208\190\208\178\208\190\208\185 \208\191\208\176\208\189\208\181\208\187\208\184"
 L["Unable to fill missions. Check your switches"] = "\208\157\208\181 \209\131\208\180\208\176\208\181\209\130\209\129\209\143 \208\183\208\176\208\191\208\190\208\187\208\189\208\184\209\130\209\140 \208\188\208\184\209\129\209\129\208\184\208\184. \208\159\209\128\208\190\208\178\208\181\209\128\209\140\209\130\208\181 \208\191\208\176\209\128\208\176\208\188\208\181\209\130\209\128\209\139"
---Translation missing 
--- L["Unable to start mission, aborting"] = ""
+L["Unable to start mission, aborting"] = "\208\157\208\181\208\178\208\190\208\183\208\188\208\190\208\182\208\189\208\190 \208\189\208\176\209\135\208\176\209\130\209\140 \208\183\208\176\208\180\208\176\208\189\208\184\208\181, \208\190\209\130\208\188\208\181\208\189\209\143\208\181\208\188"
 L["Unlock all"] = "\208\160\208\176\208\183\208\177\208\187\208\190\208\186\208\184\209\128\208\190\208\178\208\176\209\130\209\140 \208\178\209\129\208\181\209\133"
---Translation missing 
--- L["Unlock this follower"] = ""
---Translation missing 
--- L["Unlocks all follower and slots at once"] = ""
+L["Unlock this follower"] = "\208\160\208\176\208\183\208\177\208\187\208\190\208\186\208\184\209\128\208\190\208\178\208\176\209\130\209\140 \209\141\209\130\208\190\208\179\208\190 \208\183\208\176\209\137\208\184\209\130\208\189\208\184\208\186\208\176"
+L["Unlocks all follower and slots at once"] = "\208\160\208\176\208\183\208\177\208\187\208\190\208\186\208\184\209\128\208\190\208\178\208\176\209\130\209\140 \209\129\209\128\208\176\208\183\209\131 \208\178\209\129\208\181\209\133 \208\183\208\176\209\137\208\184\209\130\208\189\208\184\208\186\208\190\208\178 \208\184 \209\129\208\187\208\190\209\130\209\139"
 L["Upgrading to |cff00ff00%d|r"] = "\208\158\208\177\208\189\208\190\208\178\208\187\208\181\208\189\208\184\208\181 \208\180\208\190 |cff00ff00%d|r"
 L["URL Copy"] = "\208\154\208\190\208\191\208\184\209\128\208\190\208\178\208\176\209\130\209\140 \209\129\209\129\209\139\208\187\208\186\209\131"
-L["Use at most this many champions"] = "\208\157\208\176 \209\129\208\186\208\190\208\187\209\140\208\186\208\190 \208\188\208\189\208\190\208\179\208\190 \208\184\209\129\208\191\208\190\208\187\209\140\208\183\208\190\208\178\208\176\209\130\209\140 \208\183\208\176\209\137\208\184\209\130\208\189\208\184\208\186\208\190\208\178"
-L["Use combat ally"] = "\208\145\208\190\208\181\208\178\208\190\208\185 \209\129\208\190\209\128\208\176\209\130\208\189\208\184\208\186"
---Translation missing 
--- L["Use this slot"] = ""
---Translation missing 
--- L["Uses troops with the highest durability instead of the ones with the lowest"] = ""
-L["When no free followers are available shows empty follower"] = "\208\149\209\129\208\187\208\184 \209\129\208\178\208\190\208\177\208\190\208\180\208\189\209\139\208\181 \209\129\208\190\209\128\208\176\209\130\208\189\208\184\208\186\208\184 \208\189\208\181\208\180\208\190\209\129\209\130\209\131\208\191\208\189\209\139, \208\190\209\130\208\190\208\177\209\128\208\176\208\182\208\176\208\181\209\130\209\129\209\143 \208\191\209\131\209\129\209\130\208\190\208\185 \209\129\208\190\209\128\208\176\209\130\208\189\208\184\208\186"
---Translation missing 
--- L["When we cant achieve the requested %1$s, we try to reach at least this one without (if possible) going over 100%%"] = ""
---Translation missing 
--- L["Would start with "] = ""
-L["You are wasting |cffff0000%d|cffffd200 point(s)!!!"] = "\208\146\209\139 \209\130\209\128\208\176\209\130\208\184\209\130\208\181 |cffff0000%d|cffffd200 \208\190\209\135\208\186\208\190\208\178 !!!"
+L["Use at most this many champions"] = "\208\157\208\176\209\129\208\186\208\190\208\187\209\140\208\186\208\190 \208\188\208\189\208\190\208\179\208\190 \208\184\209\129\208\191\208\190\208\187\209\140\208\183\208\190\208\178\208\176\209\130\209\140 \208\183\208\176\209\137\208\184\209\130\208\189\208\184\208\186\208\190\208\178"
+L["Use combat ally"] = "\208\145\208\190\208\181\208\178\208\190\208\185 \208\183\208\176\209\137\208\184\209\130\208\189\208\184\208\186"
+L["Use this slot"] = "\208\152\209\129\208\191\208\190\208\187\209\140\208\183\208\190\208\178\208\176\209\130\209\140 \209\141\209\130\208\190\209\130 \209\129\208\187\208\190\209\130"
+L["Uses troops with the highest durability instead of the ones with the lowest"] = "\208\152\209\129\208\191\208\190\208\187\209\140\208\183\209\131\208\181\209\130 \208\178\208\190\208\185\209\129\208\186\208\176 \209\129 \208\188\208\176\208\186\209\129\208\184\208\188\208\176\208\187\209\140\208\189\209\139\208\188 \208\186\208\190\208\187\208\184\209\135\208\181\209\129\209\130\208\178\208\190\208\188 \208\181\208\180\208\184\208\189\208\184\209\134 \208\183\208\180\208\190\209\128\208\190\208\178\209\140\209\143 \208\178\208\188\208\181\209\129\209\130\208\190 \208\178\208\190\208\185\209\129\208\186 \209\129 \208\188\208\184\208\189\208\184\208\188\208\176\208\187\209\140\208\189\209\139\208\188 \208\186\208\190\208\187\208\184\209\135\208\181\209\129\209\130\208\178\208\190\208\188 \208\181\208\180\208\184\208\189\208\184\209\134 \208\183\208\180\208\190\209\128\208\190\208\178\209\140\209\143"
+L["When no free followers are available shows empty follower"] = "\208\149\209\129\208\187\208\184 \209\129\208\178\208\190\208\177\208\190\208\180\208\189\209\139\208\181 \208\183\208\176\209\137\208\184\209\130\208\189\208\184\208\186\208\184 \208\189\208\181\208\180\208\190\209\129\209\130\209\131\208\191\208\189\209\139,\209\130\208\190 \208\190\209\130\208\190\208\177\209\128\208\176\208\182\208\176\208\181\209\130\209\129\209\143 \208\191\209\131\209\129\209\130\208\190\208\181 \208\188\208\181\209\129\209\130\208\190"
+L["When we cant achieve the requested %1$s, we try to reach at least this one without (if possible) going over 100%%"] = "\208\149\209\129\208\187\208\184 \208\188\209\139 \208\189\208\181 \208\178 \209\129\208\190\209\129\209\130\208\190\209\143\208\189\208\184\208\184 \208\180\208\190\209\129\209\130\208\184\209\135\209\140 \208\183\208\176\208\191\209\128\208\190\209\136\208\181\208\189\208\189\209\139\208\185 %1$s, \209\130\208\190 \208\188\209\139 \208\191\208\190\208\191\209\128\208\190\208\177\209\131\208\181\208\188 \208\191\208\190 \208\186\209\128\208\176\208\185\208\189\208\181\208\185 \208\188\208\181\209\128\208\181 \208\191\208\190\208\187\209\131\209\135\208\184\209\130\209\140 \208\177\208\190\208\187\209\140\209\136\208\181 100%% (\208\181\209\129\208\187\208\184 \208\178\208\190\208\183\208\188\208\190\208\182\208\189\208\190)"
+L["Would start with "] = "\208\157\208\176\209\135\208\189\209\145\208\188 \209\129 \209\130\208\190\208\179\208\190, \209\135\209\130\208\190"
+L["You are wasting |cffff0000%d|cffffd200 point(s)!!!"] = "\208\146\209\139 \209\130\208\181\209\128\209\143\208\181\209\130\208\181 |cffff0000%d|cffffd200 \208\190\209\135\208\186\208\190\208\178 !!!"
 
 -- Tutorial
---Translation missing 
--- L[ [=[%1$s and %2$s switches work together to customize how you want your mission filled
+L[ [=[%1$s and %2$s switches work together to customize how you want your mission filled
 
-The value you set for %1$s (right now %3$s%%) is the minimum acceptable chance for attempting to achieve bonus while the value to set for %2$s (right now %4$s%%) is the chance you want achieve when you are forfaiting bonus (due to not enough powerful followers)]=] ] = ""
---Translation missing 
--- L["Base Chance"] = ""
---Translation missing 
--- L["Bonus Chance"] = ""
---Translation missing 
--- L["Counter Kill Troops"] = ""
---Translation missing 
--- L[ [=[Equipment and upgrades are listed here as clickable buttons.
+The value you set for %1$s (right now %3$s%%) is the minimum acceptable chance for attempting to achieve bonus while the value to set for %2$s (right now %4$s%%) is the chance you want achieve when you are forfaiting bonus (due to not enough powerful followers)]=] ] = "\208\159\208\181\209\128\208\181\208\186\208\187\209\142\209\135\208\176\209\130\208\181\208\187\208\184 %1$s \208\184 %2$s \208\180\208\181\208\185\209\129\209\130\208\178\209\131\209\142\209\130 \208\178\208\188\208\181\209\129\209\130\208\181, \209\135\209\130\208\190\208\177\209\139 \208\189\208\176\209\129\209\130\209\128\208\190\208\184\209\130\209\140, \208\186\208\176\208\186 \208\146\209\139 \209\133\208\190\209\130\208\184\209\130\208\181 \208\190\209\130\209\132\208\184\208\187\209\140\209\130\209\128\208\190\208\178\208\176\209\130\209\140 \208\146\208\176\209\136\208\184 \208\183\208\176\208\180\208\176\208\189\208\184\209\143. \208\151\208\189\208\176\209\135\208\181\208\189\208\184\208\181, \209\131\209\129\209\130\208\176\208\189\208\190\208\178\208\187\208\181\208\189\208\189\208\190\208\181 \208\178\208\176\208\188\208\184 \208\180\208\187\209\143 %1$s (\209\129\208\181\208\185\209\135\208\176\209\129 \209\128\208\176\208\178\208\189\208\190 %3$s%%), \209\143\208\178\208\187\209\143\208\181\209\130\209\129\209\143 \208\188\208\184\208\189\208\184\208\188\208\176\208\187\209\140\208\189\209\139\208\188 \208\191\209\128\208\184\208\181\208\188\208\187\208\181\208\188\209\139\208\188 \209\136\208\176\208\189\209\129\208\190\208\188 \208\191\209\128\208\184 \208\191\208\190\208\187\209\131\209\135\208\181\208\189\208\184\208\184 \208\177\208\190\208\189\209\131\209\129\208\176, \208\178 \209\130\208\190 \208\178\209\128\208\181\208\188\209\143 \208\186\208\176\208\186 \208\183\208\189\208\176\209\135\208\181\208\189\208\184\208\181, \209\131\209\129\209\130\208\176\208\189\208\190\208\178\208\187\208\181\208\189\208\189\208\190\208\181 \208\180\208\187\209\143 %2$s (\209\129\208\181\208\185\209\135\208\176\209\129 \209\128\208\176\208\178\208\189\208\190 %4$s%%), \209\143\208\178\208\187\209\143\208\181\209\130\209\129\209\143 \209\136\208\176\208\189\209\129\208\190\208\188, \208\186\208\190\209\130\208\190\209\128\209\139\208\185 \208\146\209\139 \209\133\208\190\209\130\208\184\209\130\208\181 \208\191\208\190\208\187\209\131\209\135\208\184\209\130\209\140, \208\186\208\190\208\179\208\180\208\176 \208\178\209\139 \209\130\208\181\209\128\209\143\208\181\209\130\208\181 \208\177\208\190\208\189\209\131\209\129 (\208\191\208\190 \208\191\209\128\208\184\209\135\208\184\208\189\208\181 \208\189\208\181\208\180\208\190\209\129\209\130\208\176\209\130\208\190\209\135\208\189\208\190\208\179\208\190 \208\186\208\190\208\187\208\184\209\135\208\181\209\129\209\130\208\178\208\176 \209\129\208\184\208\187\209\140\208\189\209\139\209\133 \208\183\208\176\209\137\208\184\209\130\208\189\208\184\208\186\208\190\208\178)"
+L["Base Chance"] = "\208\145\208\176\208\183\208\190\208\178\209\139\208\185 \209\136\208\176\208\189\209\129"
+L["Bonus Chance"] = "\208\145\208\190\208\189\209\131\209\129\208\189\209\139\208\185 \209\136\208\176\208\189\209\129"
+L["Counter Kill Troops"] = "\208\159\209\128\208\181\208\180\209\131\208\191\209\128\208\181\208\180\208\184\209\130\209\140 \209\129\208\188\208\181\209\128\209\130\209\140 \208\178\208\190\208\185\209\129\208\186"
+L[ [=[Equipment and upgrades are listed here as clickable buttons.
 Due to an issue with Blizzard Taint system, if you drag and drop an item from a bag, you receive an error.
 In order to assign equipment which are not listed (I updated the list often but sometimes Blizzard is faster), you can right click the item in the bag and the left click the follower.
-This way you dont receive any error]=] ] = ""
---Translation missing 
--- L[ [=[For example, let's say a mission can reach 95%%, 130%% and 180%% success chance.
+This way you dont receive any error]=] ] = [=[\208\173\208\186\208\184\208\191\208\184\209\128\208\190\208\178\208\186\208\176 \208\184 \209\129\208\189\208\176\209\128\209\143\208\182\208\181\208\189\208\184\208\181 \208\191\208\181\209\128\208\181\209\135\208\184\209\129\208\187\208\181\208\189\209\139 \208\183\208\180\208\181\209\129\209\140 \208\178 \208\178\208\184\208\180\208\181 \208\186\208\189\208\190\208\191\208\190\208\186, \208\186\208\190\209\130\208\190\209\128\209\139\208\181 \208\188\208\190\208\179\209\131\209\130 \208\177\209\139\209\130\209\140 \208\189\208\176\208\182\208\176\209\130\209\139.
+\208\152\208\183-\208\183\208\176 \208\191\209\128\208\190\208\177\208\187\208\181\208\188 \209\129 \209\129\208\184\209\129\209\130\208\181\208\188\208\190\208\185 Blizzard Taint \208\191\209\128\208\184 \208\191\208\181\209\128\208\181\209\130\208\176\209\129\208\186\208\184\208\178\208\176\208\189\208\184\208\184 \208\191\209\128\208\181\208\180\208\188\208\181\209\130\208\176 \208\184\208\183 \209\129\209\131\208\188\208\186\208\184 \208\191\208\190\209\143\208\178\208\187\209\143\208\181\209\130\209\129\209\143 \209\129\208\190\208\190\208\177\209\137\208\181\208\189\208\184\208\181 \208\190\208\177 \208\190\209\136\208\184\208\177\208\186\208\181.
+\208\148\208\187\209\143 \209\130\208\190\208\179\208\190, \209\135\209\130\208\190\208\177\209\139 \208\189\208\176\208\183\208\189\208\176\209\135\208\184\209\130\209\140 \209\141\208\186\208\184\208\191\208\184\209\128\208\190\208\178\208\186\209\131, \208\186\208\190\209\130\208\190\209\128\208\190\208\179\208\190 \208\189\208\181\209\130 \208\178 \209\129\208\191\208\184\209\129\208\186\208\181 (\209\143 \209\135\208\176\209\129\209\130\208\190 \208\190\208\177\208\189\208\190\208\178\208\187\209\143\209\142 \209\129\208\191\208\184\209\129\208\190\208\186, \208\189\208\190 \208\184\208\189\208\190\208\179\208\180\208\176 Blizzard \208\177\209\139\209\129\209\130\209\128\208\181\208\181), \208\188\208\190\208\182\208\189\208\190 \209\137\208\181\208\187\208\186\208\189\209\131\209\130\209\140 \208\191\209\128\208\176\208\178\208\190\208\185 \208\186\208\189\208\190\208\191\208\186\208\190\208\185 \208\189\208\176 \208\191\209\128\208\181\208\180\208\188\208\181\209\130 \208\178 \209\129\209\131\208\188\208\186\208\181, \208\180\208\176\208\187\208\181\208\181 \208\187\208\181\208\178\208\190\208\185 \208\186\208\189\208\190\208\191\208\186\208\190\208\185 \208\189\208\176 \208\183\208\176\209\137\208\184\209\130\208\189\208\184\208\186\208\176.
+\208\162\208\176\208\186\208\184\208\188 \208\190\208\177\209\128\208\176\208\183\208\190\208\188, \208\146\209\139 \208\189\208\181 \208\191\208\190\208\187\209\131\209\135\208\184\209\130\208\181 \208\189\208\184\208\186\208\176\208\186\208\184\209\133 \208\190\209\136\208\184\208\177\208\190\208\186]=]
+L[ [=[For example, let's say a mission can reach 95%%, 130%% and 180%% success chance.
 If %1$s is set to 170%%, the 180%% one will be choosen.
 If %1$s is set to 200%% OHC will try to find the nearest to 100%% respecting %2$s setting
-If for example %2$s is set to 100%%, then the 130%% one will be choosen, but if %2$s is set to 90%% then the 95%% one will be choosen]=] ] = ""
---Translation missing 
--- L["If instead you just want to always see the best available mission just set %1$s to 100%% and %2$s to 0%%"] = ""
---Translation missing 
--- L["Max champions"] = ""
---Translation missing 
--- L["Maximize xp gain"] = ""
---Translation missing 
--- L["Never kill Troops"] = ""
---Translation missing 
--- L["Prefer high durability"] = ""
---Translation missing 
--- L["Restart the tutorial"] = ""
---Translation missing 
--- L[ [=[Slots (non the follower in it but just the slot) can be banned.
+If for example %2$s is set to 100%%, then the 130%% one will be choosen, but if %2$s is set to 90%% then the 95%% one will be choosen]=] ] = [=[\208\148\208\187\209\143 \208\191\209\128\208\184\208\188\208\181\209\128\208\176, \208\188\208\184\209\129\209\129\208\184\209\143 \208\188\208\190\208\182\208\181\209\130 \208\180\208\190\209\129\209\130\208\184\208\179\208\176\209\130\209\140 \208\180\208\190 95%%, 130%% \208\184 180%% \208\178\208\181\209\128\208\190\209\143\209\130\208\189\208\190\209\129\209\130\208\184 \209\131\209\129\208\191\208\181\209\133\208\176.
+\208\149\209\129\208\187\208\184 %1$s \208\184\208\188\208\181\208\181\209\130 \208\183\208\189\208\176\209\135\208\181\208\189\208\184\208\181 170%%, \208\180\208\190 180%% \208\190\208\180\208\189\208\190 \208\184\208\183 \209\141\209\130\208\184\209\133 \208\177\209\131\208\180\208\181\209\130 \208\178\209\139\208\177\209\128\208\176\208\189\208\190.
+\208\149\209\129\208\187\208\184 %1$s \208\184\208\188\208\181\208\181\209\130 \208\183\208\189\208\176\209\135\208\181\208\189\208\184\208\181 200%% Order Hall Commander \208\191\208\190\208\191\209\139\209\130\208\176\208\181\209\130\209\129\209\143 \208\189\208\176\208\185\209\130\208\184 \208\177\208\187\208\184\208\182\208\176\208\185\209\136\209\131\209\142 \208\186 100%% \209\129\208\190\208\177\208\187\209\142\208\180\208\176\209\143 \208\189\208\176\209\129\209\130\209\128\208\190\208\185\208\186\209\131 %2$s
+\208\149\209\129\208\187\208\184, \208\189\208\176\208\191\209\128\208\184\208\188\208\181\209\128 %2$s \208\184\208\188\208\181\208\181\209\130 \208\183\208\189\208\176\209\135\208\181\208\189\208\184\208\181 100%% \208\184\208\187\208\184 130%% \208\190\208\180\208\189\208\190 \208\184\208\183 \209\141\209\130\208\184\209\133 \208\177\209\131\208\180\208\181\209\130 \208\178\209\139\208\177\209\128\208\176\208\189\208\190, \208\189\208\190 \208\181\209\129\208\187\208\184 %2$s \208\184\208\188\208\181\208\181\209\130 \208\183\208\189\208\176\209\135\208\181\208\189\208\184\208\181 90%% \208\184\208\187\208\184 95%% \208\190\208\180\208\189\208\190 \208\184\208\183 \209\141\209\130\208\184\209\133 \208\177\209\131\208\180\208\181\209\130 \208\178\209\139\208\177\209\128\208\176\208\189\208\190]=]
+L["If instead you just want to always see the best available mission just set %1$s to 100%% and %2$s to 0%%"] = "\208\149\209\129\208\187\208\184 \208\146\209\139 \208\178\209\129\208\181\208\179\208\180\208\176 \209\133\208\190\209\130\208\184\209\130\208\181 \208\178\208\184\208\180\208\181\209\130\209\140 \209\130\208\190\208\187\209\140\208\186\208\190 \208\189\208\176\208\184\208\177\208\190\208\187\208\181\208\181 \208\180\208\190\209\129\209\130\209\131\208\191\208\189\209\139\208\181 \208\180\208\187\209\143 \208\178\209\139\208\191\208\190\208\187\208\189\208\181\208\189\208\184\209\143 \208\183\208\176\208\180\208\176\208\189\208\184\209\143, \209\131\209\129\209\130\208\176\208\189\208\190\208\178\208\184\209\130\208\181 %1$s \208\178 100%% \208\184 %2$s \208\178 0%%"
+L["Max champions"] = "\208\156\208\176\208\186\209\129\208\184\208\188\208\176\208\187\209\140\208\189\208\190 \208\183\208\176\209\137\208\184\209\130\208\189\208\184\208\186\208\190\208\178"
+L["Maximize xp gain"] = "\208\156\208\176\208\186\209\129\208\184\208\188\208\184\208\183\208\184\209\128\208\190\208\178\208\176\209\130\209\140 \208\191\208\190\208\187\209\131\209\135\208\176\208\181\208\188\209\139\208\185 \208\190\208\191\209\139\209\130"
+L["Never kill Troops"] = "\208\157\208\184\208\186\208\190\208\179\208\180\208\176 \208\189\208\181 \209\131\208\177\208\184\208\178\208\176\209\130\209\140 \208\178\208\190\208\185\209\129\208\186\208\176"
+L["Prefer high durability"] = "\208\159\209\128\208\181\208\180\208\191\208\190\209\135\208\181\209\129\209\130\209\140 \208\178\208\190\208\185\209\129\208\186\208\176 \209\129 \208\177\208\190\208\187\209\140\209\136\208\184\208\188 \208\186\208\190\208\187\208\184\209\135\208\181\209\129\209\130\208\178\208\190\208\188 \208\181\208\180\208\184\208\189\208\184\209\134 \208\183\208\180\208\190\209\128\208\190\208\178\209\140\209\143"
+L["Restart the tutorial"] = "\208\159\208\181\209\128\208\181\208\183\208\176\208\191\209\131\209\129\209\130\208\184\209\130\209\140 \209\129\208\177\208\190\209\128\208\189\208\184\208\186 \208\184\208\189\209\129\209\130\209\128\209\131\208\186\209\134\208\184\208\185"
+L[ [=[Slots (non the follower in it but just the slot) can be banned.
 When you ban a slot, that slot will not be filled for that mission.
-Exploiting the fact that troops are always in the leftmost slot(s) you can achieve a nice degree of custom tailoring, reducing the overall number of followers used for a mission]=] ] = ""
---Translation missing 
--- L["Terminate the tutorial. You can resume it anytime clicking on the info icon in the side menu"] = ""
---Translation missing 
--- L[ [=[Usually OrderHallCOmmander tries to use troops with the lowest durability in order to let you enque new troops request as soon as possible.
-Checking %1$s reverse it and OrderHallCOmmander will choose for each mission troops with the highest possible durability]=] ] = ""
---Translation missing 
--- L[ [=[Welcome to a new release of OrderHallCommander
+Exploiting the fact that troops are always in the leftmost slot(s) you can achieve a nice degree of custom tailoring, reducing the overall number of followers used for a mission]=] ] = "\208\161\208\187\208\190\209\130 (\208\189\208\181 \208\183\208\176\209\137\208\184\209\130\208\189\208\184\208\186 \208\178 \208\189\209\145\208\188, \208\176 \208\184\208\188\208\181\208\189\208\189\208\190 \209\129\208\187\208\190\209\130) \208\188\208\190\208\182\208\181\209\130 \208\177\209\139\209\130\209\140 \208\183\208\176\208\177\208\187\208\190\208\186\208\184\209\128\208\190\208\178\208\176\208\189. \208\154\208\190\208\179\208\180\208\176 \208\146\209\139 \208\177\208\187\208\190\208\186\208\184\209\128\209\131\208\181\209\130\208\181 \209\129\208\187\208\190\209\130, \208\190\208\189 \208\189\208\181 \208\177\209\131\208\180\208\181\209\130 \208\183\208\176\208\191\208\190\208\187\208\189\208\181\208\189 \208\180\208\187\209\143 \209\141\209\130\208\190\208\179\208\190 \208\183\208\176\208\180\208\176\208\189\208\184\209\143. \208\152\209\129\208\191\208\190\208\187\209\140\208\183\209\131\209\143 \209\130\208\190\209\130 \209\132\208\176\208\186\209\130, \209\135\209\130\208\190 \208\178\208\190\208\185\209\129\208\186\208\176 \208\178\209\129\208\181\208\179\208\180\208\176 \208\189\208\176\209\133\208\190\208\180\209\143\209\130\209\129\209\143 \208\178 \209\129\208\176\208\188\208\190\208\188 \208\187\208\181\208\178\208\190\208\188 \209\129\208\187\208\190\209\130\208\181 (\209\129\208\187\208\190\209\130\208\176\209\133), \208\178\209\139 \208\188\208\190\208\182\208\181\209\130\208\181 \208\180\208\190\208\177\208\184\209\130\209\140\209\129\209\143 \209\133\208\190\209\128\208\190\209\136\208\181\208\185 \209\129\209\130\208\181\208\191\208\181\208\189\208\184 \208\184\208\189\208\180\208\184\208\178\208\184\208\180\209\131\208\176\208\187\209\140\208\189\208\190\208\179\208\190 \208\189\208\176\209\129\209\130\209\128\208\190\208\185\208\186\208\184, \209\131\208\188\208\181\208\189\209\140\209\136\208\176\209\143 \208\190\208\177\209\137\208\181\208\181 \208\186\208\190\208\187\208\184\209\135\208\181\209\129\209\130\208\178\208\190 \208\183\208\176\209\137\208\184\209\130\208\189\208\184\208\186\208\190\208\178, \208\184\209\129\208\191\208\190\208\187\209\140\208\183\209\131\208\181\208\188\209\139\209\133 \208\180\208\187\209\143 \208\183\208\176\208\180\208\176\208\189\208\184\209\143"
+L["Terminate the tutorial. You can resume it anytime clicking on the info icon in the side menu"] = "\208\151\208\176\208\186\209\128\209\139\209\130\209\140 \208\184\208\189\209\129\209\130\209\128\209\131\208\186\209\134\208\184\209\142. \208\146\209\139 \208\188\208\190\208\182\208\181\209\130\208\181 \208\191\209\128\208\190\208\180\208\190\208\187\208\182\208\184\209\130\209\140 \208\178 \208\187\209\142\208\177\208\190\208\181 \208\178\209\128\208\181\208\188\209\143 \208\189\208\176\208\182\208\176\208\178 \208\189\208\176 \208\184\208\186\208\190\208\189\208\186\209\131 \208\184\208\189\209\132\208\190\209\128\208\188\208\176\209\134\208\184\208\184 \208\178 \208\177\208\190\208\186\208\190\208\178\208\190\208\188 \208\188\208\181\208\189\209\142"
+L[ [=[Usually OrderHallCOmmander tries to use troops with the lowest durability in order to let you enque new troops request as soon as possible.
+Checking %1$s reverse it and OrderHallCOmmander will choose for each mission troops with the highest possible durability]=] ] = "\208\158\208\177\209\139\209\135\208\189\208\190 Order Hall Commander \208\191\209\139\209\130\208\176\208\181\209\130\209\129\209\143 \208\184\209\129\208\191\208\190\208\187\209\140\208\183\208\190\208\178\208\176\209\130\209\140 \208\178\208\190\208\185\209\129\208\186\208\176 \209\129 \208\189\208\176\208\184\208\188\208\181\208\189\209\140\209\136\208\184\208\188 \208\186\208\190\208\187\208\184\209\135\208\181\209\129\209\130\208\178\208\190\208\188 \208\181\208\180\208\184\208\189\208\184\209\134 \208\183\208\180\208\190\209\128\208\190\208\178\209\140\209\143, \209\135\209\130\208\190\208\177\209\139 \208\178\209\139 \208\188\208\190\208\179\208\187\208\184 \208\186\208\176\208\186 \208\188\208\190\208\182\208\189\208\190 \209\129\208\186\208\190\209\128\208\181\208\181 \208\178\208\178\208\181\209\129\209\130\208\184 \208\178 \208\177\208\190\208\185 \208\189\208\190\208\178\209\139\208\181 \208\178\208\190\208\185\209\129\208\186\208\176. \208\159\209\128\208\190\208\178\208\181\209\128\208\186\208\176 %1$s \208\190\209\130\208\188\208\181\208\189\209\143\208\181\209\130 \209\141\209\130\208\190 \208\184 Order Hall Commander \208\178\209\139\208\177\208\181\209\128\208\181\209\130 \208\180\208\187\209\143 \208\186\208\176\208\182\208\180\208\190\208\179\208\190 \208\183\208\176\208\180\208\176\208\189\208\184\209\143 \208\178\208\190\208\185\209\129\208\186\208\176 \209\129 \208\189\208\176\208\184\208\177\208\190\208\187\209\140\209\136\208\184\208\188 \208\186\208\190\208\187\208\184\209\135\208\181\209\129\209\130\208\178\208\190\208\188 \208\181\208\180\208\184\208\189\208\184\209\134 \208\183\208\180\208\190\209\128\208\190\208\178\209\140\209\143"
+L[ [=[Welcome to a new release of OrderHallCommander
 Please follow this short tutorial to discover all new functionalities.
-You will not regret it]=] ] = ""
---Translation missing 
--- L[ [=[With %1$s you ask to always counter the Hazard kill troop.
+You will not regret it]=] ] = [=[\208\148\208\190\208\177\209\128\208\190 \208\191\208\190\208\182\208\176\208\187\208\190\208\178\208\176\209\130\209\140 \208\178 \208\189\208\190\208\178\209\139\208\185 \208\178\209\139\208\191\209\131\209\129\208\186 Order Hall Commander
+\208\161\208\187\208\181\208\180\209\131\208\185\209\130\208\181 \209\141\209\130\208\190\208\188\209\131 \208\186\209\128\208\176\209\130\208\186\208\190\208\185 \208\184\208\189\209\129\209\130\209\128\209\131\208\186\209\134\208\184\208\184, \209\135\209\130\208\190\208\177\209\139 \209\131\208\183\208\189\208\176\209\130\209\140 \208\178\209\129\208\181 \208\189\208\190\208\178\209\139\208\181 \209\132\209\131\208\189\208\186\209\134\208\184\208\184.
+\208\146\209\139 \208\189\208\181 \208\191\208\190\208\182\208\176\208\187\208\181\208\181\209\130\208\181 \208\190\208\177 \209\141\209\130\208\190\208\188]=]
+L[ [=[With %1$s you ask to always counter the Hazard kill troop.
 This means that OHC will try to counter it OR use a troop with just one durability left.
-The target for this switch is to avoid wasting durability point, NOT to avoid troops' death.]=] ] = ""
---Translation missing 
--- L[ [=[With %2$s you ask to never let a troop die.
+The target for this switch is to avoid wasting durability point, NOT to avoid troops' death.]=] ] = "\208\152\209\129\208\191\208\190\208\187\209\140\208\183\209\131\209\143 %1$s, \208\146\209\139 \208\188\208\190\208\182\208\181\209\130\208\181 \208\191\208\190\208\191\209\128\208\190\209\129\208\184\209\130\209\140 \208\178\209\129\208\181\208\179\208\180\208\176 \209\131\209\135\208\184\209\130\209\139\208\178\208\176\209\130\209\140 \208\190\208\191\208\176\209\129\208\189\208\190\209\129\209\130\209\140 \209\129\208\188\208\181\209\128\209\130\208\184 \208\178\208\190\208\185\209\129\208\186. \208\173\209\130\208\190 \208\190\208\183\208\189\208\176\209\135\208\176\208\181\209\130, \209\135\209\130\208\190 Order Hall Commander \208\177\209\131\208\180\208\181\209\130 \208\191\209\139\209\130\208\176\209\130\209\140\209\129\209\143 \209\131\209\135\208\184\209\130\209\139\208\178\208\176\209\130\209\140 \208\181\209\145 \208\184\208\187\208\184 \208\184\209\129\208\191\208\190\208\187\209\140\208\183\208\190\208\178\208\176\209\130\209\140 \208\178\208\190\208\185\209\129\208\186\208\176 \209\129 \208\190\209\129\209\130\208\176\208\178\209\136\208\181\208\185\209\129\209\143 \209\130\208\190\208\187\209\140\208\186\208\190 1 \208\181\208\180\208\184\208\189\208\184\209\134\208\181\208\185 \208\183\208\180\208\190\209\128\208\190\208\178\209\140\209\143. \208\166\208\181\208\187\209\140\209\142 \209\141\209\130\208\190\208\179\208\190 \208\191\208\181\209\128\208\181\208\186\208\187\209\142\209\135\208\176\209\130\208\181\208\187\209\143 \209\143\208\178\208\187\209\143\208\181\209\130\209\129\209\143 \208\191\209\128\208\181\208\180\209\131\208\191\209\128\208\181\208\182\208\180\208\181\208\189\208\184\208\181 \208\191\208\190\209\130\208\181\209\128\208\184 \208\182\208\184\208\183\208\189\208\181\208\189\208\189\209\139\209\133 \209\129\208\184\208\187, \208\189\208\190 \208\189\208\181 \208\191\209\128\208\181\208\180\209\131\208\191\209\128\208\181\208\182\208\180\208\181\208\189\208\184\209\143 \209\129\208\188\208\181\209\128\209\130\208\181\208\185 \208\178\208\190\208\185\209\129\208\186."
+L[ [=[With %2$s you ask to never let a troop die.
 This not only implies %1$s and %3$s, but force OHC to never send to mission a troop which will die.
-The target for this switch is to totally avoid killing troops, even it for this we cant fill the party]=] ] = ""
---Translation missing 
--- L[ [=[You can blacklist missions right clicking mission button.
+The target for this switch is to totally avoid killing troops, even it for this we cant fill the party]=] ] = "\208\152\209\129\208\191\208\190\208\187\209\140\208\183\209\131\209\143 %2$s, \208\146\209\139 \208\188\208\190\208\182\208\181\209\130\208\181 \208\191\208\190\208\191\209\128\208\190\209\129\208\184\209\130\209\140 \208\189\208\184\208\186\208\190\208\179\208\180\208\176 \208\189\208\181 \208\191\208\190\208\183\208\178\208\190\208\187\209\143\209\130\209\140 \209\131\208\188\208\184\209\128\208\176\209\130\209\140 \208\178\208\190\208\185\209\129\208\186\208\176\208\188. \208\173\209\130\208\190 \208\189\208\181 \209\130\208\190\208\187\209\140\208\186\208\190 \208\191\209\128\208\184\208\188\208\181\208\189\209\143\208\181\209\130\209\129\209\143 \208\186 %1$s \208\184 %3$s, \208\189\208\190 \208\183\208\176\209\129\209\130\208\176\208\178\208\187\209\143\208\181\209\130 Order Hall Commander \208\189\208\184\208\186\208\190\208\179\208\180\208\176 \208\189\208\181 \208\190\209\130\208\191\209\128\208\176\208\178\208\187\209\143\209\130\209\140 \208\189\208\176 \208\183\208\176\208\180\208\176\208\189\208\184\208\181 \208\178\208\190\208\185\209\129\208\186\208\176, \208\186\208\190\209\130\208\190\209\128\209\139\208\181 \208\188\208\190\208\179\209\131\209\130 \208\191\208\190\208\179\208\184\208\177\208\189\209\131\209\130\209\140. \208\166\208\181\208\187\209\140\209\142 \209\141\209\130\208\190\208\179\208\190 \208\191\208\181\209\128\208\181\208\186\208\187\209\142\209\135\208\176\209\130\208\181\208\187\209\143 \209\143\208\178\208\187\209\143\208\181\209\130\209\129\209\143 \208\191\209\128\208\181\208\180\209\131\208\191\209\128\208\181\208\182\208\180\208\181\208\189\208\184\208\181 \209\129\208\188\208\181\209\128\209\130\208\181\208\185 \208\178\208\190\208\185\209\129\208\186, \208\180\208\176\208\182\208\181 \208\191\209\131\209\130\209\145\208\188 \208\189\208\181\208\178\208\190\208\183\208\188\208\190\208\182\208\189\208\190\209\129\209\130\208\184 \209\129\208\177\208\190\209\128\208\176 \208\179\209\128\209\131\208\191\208\191\209\139 \208\180\208\187\209\143 \208\183\208\176\208\180\208\176\208\189\208\184\209\143"
+L[ [=[You can blacklist missions right clicking mission button.
 Since 1.5.1 you can start a mission witout passing from mission page shift-clicking the mission button.
-Be sure you liked the party because non confirmation is asked]=] ] = ""
---Translation missing 
--- L[ [=[You can choose to limit how much champions are sent together.
+Be sure you liked the party because no confirmation is asked]=] ] = "\208\146\209\139 \208\188\208\190\208\182\208\181\209\130\208\181 \208\183\208\176\208\189\208\181\209\129\209\130\208\184 \208\178 \209\135\209\145\209\128\208\189\209\139\208\185 \209\129\208\191\208\184\209\129\208\190\208\186 \208\183\208\176\208\180\208\176\208\189\208\184\209\143 \208\189\208\176\208\182\208\176\208\178 \208\191\209\128\208\176\208\178\209\131\209\142 \208\186\208\189\208\190\208\191\208\186\209\131 \208\188\209\139\209\136\208\184. \208\157\208\176\209\135\208\184\208\189\208\176\209\143 \209\129 1.5.1 \208\146\209\139 \208\188\208\190\208\182\208\181\209\130\208\181 \208\189\208\176\209\135\208\176\209\130\209\140 \208\183\208\176\208\180\208\176\208\189\208\184\208\181 \209\129\209\128\208\176\208\183\209\131, \208\189\208\181 \208\183\208\176\209\133\208\190\208\180\209\143 \208\189\208\176 \209\141\208\186\209\128\208\176\208\189 \208\183\208\176\208\180\208\176\208\189\208\184\208\185, \208\183\208\176\208\182\208\176\208\178 \208\186\208\189\208\190\208\191\208\186\209\131 Shift \208\184 \208\178\209\139\208\177\209\128\208\176\208\178 \208\183\208\176\208\180\208\176\208\189\208\184\208\181 \208\188\209\139\209\136\208\186\208\190\208\185. \208\163\208\177\208\181\208\180\208\184\209\130\208\181\209\129\209\140, \209\135\209\130\208\190 \208\191\209\128\208\181\208\180\208\187\208\176\208\179\208\176\208\181\208\188\208\176\209\143 \208\179\209\128\209\131\208\191\208\191\208\176 \208\178\208\176\209\129 \209\131\209\129\209\130\209\128\208\176\208\184\208\178\208\176\208\181\209\130, \209\130\208\176\208\186 \208\186\208\176\208\186 \208\183\208\176\208\180\208\176\208\189\208\184\208\181 \208\189\208\176\209\135\208\189\209\145\209\130\209\129\209\143 \208\177\208\181\208\183 \208\191\208\190\208\180\209\130\208\178\208\181\209\128\208\182\208\180\208\181\208\189\208\184\209\143"
+L[ [=[You can choose to limit how much champions are sent together.
 Right now OHC is not using more than %3$s champions in the same mission-
 
-Note that %2$s overrides it.]=] ] = ""
+Note that %2$s overrides it.]=] ] = "\208\146\209\139 \208\188\208\190\208\182\208\181\209\130\208\181 \208\190\208\179\209\128\208\176\208\189\208\184\209\135\208\184\209\130\209\140 \208\186\208\190\208\187\208\184\209\135\208\181\209\129\209\130\208\178\208\190 \208\184\209\129\208\191\208\190\208\187\209\140\208\183\209\131\208\181\208\188\209\139\209\133 \208\190\208\180\208\189\208\190\208\178\209\128\208\181\208\188\208\181\208\189\208\189\208\190 \208\178 \208\183\208\176\208\180\208\176\208\189\208\184\208\184 \208\183\208\176\209\137\208\184\209\130\208\189\208\184\208\186\208\190\208\178. \208\161\208\181\208\185\209\135\208\176\209\129 Order Hall Commander \208\184\209\129\208\191\208\190\208\187\209\140\208\183\209\131\208\181\209\130 \208\189\208\181 \208\177\208\190\208\187\208\181\208\181 %3$s \208\183\208\176\209\137\208\184\209\130\208\189\208\184\208\186\208\190\208\178 \208\178 \208\190\208\180\208\189\208\190\208\188 \208\183\208\176\208\180\208\176\208\189\208\184\208\184. \208\158\208\177\209\128\208\176\209\130\208\184\209\130\208\181 \208\178\208\189\208\184\208\188\208\176\208\189\208\184\208\181, \209\135\209\130\208\190 %2$s \208\184\208\188\208\181\208\181\209\130 \208\177\208\190\208\187\209\140\209\136\208\184\208\185 \208\191\209\128\208\184\208\190\209\128\208\184\209\130\208\181\209\130."
 
 	end
 	L=l:NewLocale(me,"zhCN")
@@ -1779,7 +1721,7 @@ L["Reward type"] = "\229\165\150\229\138\177\231\177\187\229\158\139"
 --Translation missing 
 -- L["Sets all switches to a very permissive setup"] = ""
 --Translation missing 
--- L["Shift-Click start the mission witout even opening the mission page. Non question asked"] = ""
+-- L["Shift-Click start the mission witout even opening the mission page. No question asked"] = ""
 --Translation missing 
 -- L["Show tutorial"] = ""
 L["Show/hide OrderHallCommander mission menu"] = "\230\152\190\231\164\186/\233\154\144\232\151\143\229\164\167\229\142\133\230\140\135\230\140\165\229\174\152\228\187\187\229\138\161\233\128\137\229\141\149"
@@ -1875,7 +1817,7 @@ The target for this switch is to totally avoid killing troops, even it for this 
 --Translation missing 
 -- L[ [=[You can blacklist missions right clicking mission button.
 Since 1.5.1 you can start a mission witout passing from mission page shift-clicking the mission button.
-Be sure you liked the party because non confirmation is asked]=] ] = ""
+Be sure you liked the party because no confirmation is asked]=] ] = ""
 --Translation missing 
 -- L[ [=[You can choose to limit how much champions are sent together.
 Right now OHC is not using more than %3$s champions in the same mission-
@@ -2015,7 +1957,7 @@ L["Reward type"] = "Tipo de recompensa"
 --Translation missing 
 -- L["Sets all switches to a very permissive setup"] = ""
 --Translation missing 
--- L["Shift-Click start the mission witout even opening the mission page. Non question asked"] = ""
+-- L["Shift-Click start the mission witout even opening the mission page. No question asked"] = ""
 --Translation missing 
 -- L["Show tutorial"] = ""
 L["Show/hide OrderHallCommander mission menu"] = "Mostrar / ocultar el men\195\186 de la misi\195\179n OrderHallCommander"
@@ -2111,7 +2053,7 @@ The target for this switch is to totally avoid killing troops, even it for this 
 --Translation missing 
 -- L[ [=[You can blacklist missions right clicking mission button.
 Since 1.5.1 you can start a mission witout passing from mission page shift-clicking the mission button.
-Be sure you liked the party because non confirmation is asked]=] ] = ""
+Be sure you liked the party because no confirmation is asked]=] ] = ""
 --Translation missing 
 -- L[ [=[You can choose to limit how much champions are sent together.
 Right now OHC is not using more than %3$s champions in the same mission-
@@ -2206,7 +2148,7 @@ L["Reward type"] = "\231\141\142\229\139\181\233\161\158\229\158\139"
 L["Right-Click to blacklist"] = "\229\143\179\233\141\181\233\187\158\230\147\138\229\138\160\229\133\165\233\187\145\229\144\141\229\150\174"
 L["Right-Click to remove from blacklist"] = "\229\143\179\233\141\181\233\187\158\230\147\138\229\190\158\233\187\145\229\144\141\229\150\174\231\167\187\233\153\164"
 L["Sets all switches to a very permissive setup"] = "\229\136\135\230\143\155\230\137\128\230\156\137\232\168\173\231\189\174\231\130\186\233\157\158\229\184\184\229\175\172\229\174\185\231\154\132\232\168\173\231\189\174"
-L["Shift-Click start the mission witout even opening the mission page. Non question asked"] = "Shift-\233\187\158\230\147\138\231\148\154\232\135\179\229\143\175\228\187\165\228\184\141\230\137\147\233\150\139\228\187\187\229\139\153\233\160\129\233\157\162\229\176\177\229\149\159\229\139\149\228\187\187\229\139\153\239\188\140 \230\178\146\229\149\143\233\161\140"
+L["Shift-Click start the mission witout even opening the mission page. No question asked"] = "Shift-\233\187\158\230\147\138\231\148\154\232\135\179\229\143\175\228\187\165\228\184\141\230\137\147\233\150\139\228\187\187\229\139\153\233\160\129\233\157\162\229\176\177\229\149\159\229\139\149\228\187\187\229\139\153\239\188\140 \230\178\146\229\149\143\233\161\140"
 L["Show tutorial"] = "\233\161\175\231\164\186\230\140\135\229\141\151"
 L["Show/hide OrderHallCommander mission menu"] = "\233\161\175\231\164\186/\233\154\177\232\151\143\229\164\167\229\187\179\230\140\135\230\143\174\229\174\152\228\187\187\229\139\153\233\129\184\229\150\174"
 L["Sort missions by:"] = "\230\142\146\229\136\151\228\187\187\229\139\153\230\160\185\230\147\154\239\188\154"
@@ -2275,7 +2217,7 @@ The target for this switch is to totally avoid killing troops, even it for this 
 \233\128\153\229\128\139\232\189\137\232\174\138\231\154\132\231\155\174\230\168\153\230\152\175\229\174\140\229\133\168\233\129\191\229\133\141\230\174\186\230\173\187\233\131\168\233\154\138\239\188\140\229\141\179\228\189\191\233\128\153\230\168\163\230\136\145\229\128\145\228\185\159\228\184\141\232\131\189\229\161\171\232\163\156\233\154\138\228\188\141]=]
 L[ [=[You can blacklist missions right clicking mission button.
 Since 1.5.1 you can start a mission witout passing from mission page shift-clicking the mission button.
-Be sure you liked the party because non confirmation is asked]=] ] = "\230\130\168\229\143\175\228\187\165\229\143\179\233\141\181\233\187\158\230\147\138\228\187\187\229\139\153\230\140\137\233\136\149\229\176\135\228\187\187\229\139\153\229\138\160\229\133\165\233\187\145\229\144\141\229\150\174\227\128\130 \232\135\1701.5.1\228\187\165\228\190\134\239\188\140\230\130\168\229\143\175\228\187\165shift-\233\187\158\230\147\138\228\187\187\229\139\153\230\140\137\233\136\149\233\150\139\229\167\139\228\187\187\229\139\153\232\128\140\231\132\161\233\160\136\232\189\137\229\136\176\228\187\187\229\139\153\233\160\129\233\157\162\227\128\130 \231\162\186\228\191\157\228\189\160\229\150\156\230\173\161\230\173\164\233\154\138\228\188\141\239\188\140\229\155\160\231\130\186\228\184\141\231\182\147\231\162\186\232\170\141"
+Be sure you liked the party because no confirmation is asked]=] ] = "\230\130\168\229\143\175\228\187\165\229\143\179\233\141\181\233\187\158\230\147\138\228\187\187\229\139\153\230\140\137\233\136\149\229\176\135\228\187\187\229\139\153\229\138\160\229\133\165\233\187\145\229\144\141\229\150\174\227\128\130 \232\135\1701.5.1\228\187\165\228\190\134\239\188\140\230\130\168\229\143\175\228\187\165shift-\233\187\158\230\147\138\228\187\187\229\139\153\230\140\137\233\136\149\233\150\139\229\167\139\228\187\187\229\139\153\232\128\140\231\132\161\233\160\136\232\189\137\229\136\176\228\187\187\229\139\153\233\160\129\233\157\162\227\128\130 \231\162\186\228\191\157\228\189\160\229\150\156\230\173\161\230\173\164\233\154\138\228\188\141\239\188\140\229\155\160\231\130\186\228\184\141\231\182\147\231\162\186\232\170\141"
 L[ [=[You can choose to limit how much champions are sent together.
 Right now OHC is not using more than %3$s champions in the same mission-
 

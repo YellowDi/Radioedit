@@ -1,20 +1,24 @@
-tag 5313b63e6108be8f63be85dc4a315bb77efac9eb 1.5.2
+tag 125ee3f64e791aa43b10d769c4c4ea62adb8c896 1.5.3
 Author:	Alar of Runetotem <alar@aspide.it>
-Date:	Sat Sep 30 15:51:48 2017 +0200
+Date:	Mon Oct 9 01:53:07 2017 +0200
 
-Fix: #108 Ignored/Blacklisted missions aren't sorted at the bottom since
-1.5.1
+Feature: you can now disable a troop type clicking its icon nin the OHC
+troop bar
+Fix: Maximize xp was ignoring cap
+Fix: #119 Bad display when more than 5 types of troops
+Fix: #109 Future mission were missing in tooltip
+Fix: #118 Troops with random abilities should now be considered
+Fix: #99 Caused by same issue of 118, should be fixed
 
-commit c756fb02b0f8c799938df1cca3876ab6efe15467
+commit 2d344dfe440ad559a350ea6894cc797c12343f5f
 Author: Alar of Runetotem <alar@aspide.it>
-Date:   Sat Sep 30 15:50:34 2017 +0200
+Date:   Mon Oct 9 01:51:15 2017 +0200
 
-    Fix: #108 Ignored/Blacklisted missions aren't sorted at the bottom since
-    1.5.1
+    Rel notes
 
-commit 1f8f5c3f91fa3ec6586cb448e0da9b044a48c1fa
+commit 86fe28b28f559ad8f64275b563a42073123ec5c3
 Author: Alar of Runetotem <alar@aspide.it>
-Date:   Fri Sep 29 19:40:15 2017 +0200
+Date:   Thu Oct 5 20:59:36 2017 +0200
 
-    Removed debug prints
+    Improved tropps shipments display
 
