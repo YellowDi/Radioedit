@@ -257,10 +257,14 @@ L["DPS"] = "УВС"
 --Translation missing 
 -- L["Enable Loot History"] = ""
 --Translation missing 
+-- L["Enable Relic Buttons"] = ""
+--Translation missing 
 -- L["Enable Tier Buttons"] = ""
 --Translation missing 
 -- L["Enable Timeout"] = ""
 L["enable_loot_history_desc"] = "Включает ведение истории. RCLootCouncil не будет ничего записывать если отключено."
+--Translation missing 
+-- L["enable_relicbuttons_desc"] = ""
 --Translation missing 
 -- L["enable_tierbuttons_desc"] = ""
 --Translation missing 
@@ -495,6 +499,10 @@ L["Reason"] = "Причина"
 -- L["reason_desc"] = ""
 --Translation missing 
 -- L["Receiving data..."] = ""
+--Translation missing 
+-- L["Relic Buttons and Responses"] = ""
+--Translation missing 
+-- L["relic_buttons_desc"] = ""
 --Translation missing 
 -- L["Remove All"] = ""
 --Translation missing 

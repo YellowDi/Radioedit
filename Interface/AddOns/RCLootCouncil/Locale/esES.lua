@@ -182,9 +182,13 @@ L["Dropped by:"] = "Despojado de"
 -- L["Edit Entry"] = ""
 L["Enable Loot History"] = "Activar historial de botin"
 --Translation missing 
+-- L["Enable Relic Buttons"] = ""
+--Translation missing 
 -- L["Enable Tier Buttons"] = ""
 L["Enable Timeout"] = "Habilitar tiempo de espera"
 L["enable_loot_history_desc"] = "Activado el historial. RCLootCouncil no registrara nada si esta deshabilitado."
+--Translation missing 
+-- L["enable_relicbuttons_desc"] = ""
 --Translation missing 
 -- L["enable_tierbuttons_desc"] = ""
 L["enable_timeout_desc"] = "Marca la casilla para habilitar tiempo maximo en la ventana de Loot"
@@ -335,6 +339,10 @@ L["Reason"] = "Motivo"
 L["reason_desc"] = "El motivo de la recompensa a añadir al Historial de Saqueo al repartir automaticamente."
 --Translation missing 
 -- L["Receiving data..."] = ""
+--Translation missing 
+-- L["Relic Buttons and Responses"] = ""
+--Translation missing 
+-- L["relic_buttons_desc"] = ""
 L["Remove All"] = "Eliminar todo"
 L["Remove from consideration"] = "Eliminar consideracion"
 L["remove_all_desc"] = "Eliminar todos los miembros del consejo"

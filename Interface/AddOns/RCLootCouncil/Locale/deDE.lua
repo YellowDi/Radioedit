@@ -184,9 +184,13 @@ L["Dropped by:"] = "Fallengelassen von:"
 -- L["Edit Entry"] = ""
 L["Enable Loot History"] = "Beuteverlauf aktivieren"
 --Translation missing 
+-- L["Enable Relic Buttons"] = ""
+--Translation missing 
 -- L["Enable Tier Buttons"] = ""
 L["Enable Timeout"] = "Zeitbeschränkung aktivieren"
 L["enable_loot_history_desc"] = "Aktiviert den Verlauf. RCLootCouncil wird nichts protokollieren, falls deaktiviert."
+--Translation missing 
+-- L["enable_relicbuttons_desc"] = ""
 --Translation missing 
 -- L["enable_tierbuttons_desc"] = ""
 L["enable_timeout_desc"] = "Anhaken, um eine Zeitbeschränkung im Beutefenster zu aktivieren"
@@ -330,6 +334,10 @@ L["Reason"] = "Grund"
 L["reason_desc"] = "Der Vergabegrund, der dem Beuteverlauf hinzugefügt wird, wenn automatisch vergeben wird."
 --Translation missing 
 -- L["Receiving data..."] = ""
+--Translation missing 
+-- L["Relic Buttons and Responses"] = ""
+--Translation missing 
+-- L["relic_buttons_desc"] = ""
 L["Remove All"] = "Alle entfernen"
 L["Remove from consideration"] = "Aus der Betrachtung entfernen"
 L["remove_all_desc"] = "Alle Ratsmitglieder entfernen"

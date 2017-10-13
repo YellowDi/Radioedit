@@ -186,9 +186,13 @@ L["Dropped by:"] = "掉落自："
 -- L["Edit Entry"] = ""
 L["Enable Loot History"] = "启用拾取历史"
 --Translation missing 
+-- L["Enable Relic Buttons"] = ""
+--Translation missing 
 -- L["Enable Tier Buttons"] = ""
 L["Enable Timeout"] = "启用超时"
 L["enable_loot_history_desc"] = "启用历史记录。如果关闭，RCLootCouncil 将不会记录任何数据。"
+--Translation missing 
+-- L["enable_relicbuttons_desc"] = ""
 --Translation missing 
 -- L["enable_tierbuttons_desc"] = ""
 L["enable_timeout_desc"] = "勾选以启用拾取窗口的计时器"
@@ -339,6 +343,10 @@ L["Reason"] = "理由"
 L["reason_desc"] = "自动分配时分配理由将自动添加至拾取历史记录。"
 --Translation missing 
 -- L["Receiving data..."] = ""
+--Translation missing 
+-- L["Relic Buttons and Responses"] = ""
+--Translation missing 
+-- L["relic_buttons_desc"] = ""
 L["Remove All"] = "移除所有"
 L["Remove from consideration"] = "从待定中移除"
 L["remove_all_desc"] = "移除所有议会成员。"

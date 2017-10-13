@@ -179,9 +179,13 @@ L["Dropped by:"] = "Dépouillé sur :"
 -- L["Edit Entry"] = ""
 L["Enable Loot History"] = "Activer l'historique du butin"
 --Translation missing 
+-- L["Enable Relic Buttons"] = ""
+--Translation missing 
 -- L["Enable Tier Buttons"] = ""
 L["Enable Timeout"] = "Activer le délai de vote"
 L["enable_loot_history_desc"] = "Active l'historique. RCLootCouncil ne répertoriera rien si cette option est désactivée."
+--Translation missing 
+-- L["enable_relicbuttons_desc"] = ""
 --Translation missing 
 -- L["enable_tierbuttons_desc"] = ""
 L["enable_timeout_desc"] = "Cocher pour activer le délai de vote dans la fenêtre de butin"
@@ -332,6 +336,10 @@ L["Reason"] = "Motif"
 L["reason_desc"] = "Motif d'attribution qui sera indiqué dans l'historique du butin lorsqu'un objet sera automatiquement attribué."
 --Translation missing 
 -- L["Receiving data..."] = ""
+--Translation missing 
+-- L["Relic Buttons and Responses"] = ""
+--Translation missing 
+-- L["relic_buttons_desc"] = ""
 L["Remove All"] = "Retirer tous les joueurs"
 L["Remove from consideration"] = "Retirer de la liste"
 L["remove_all_desc"] = "Retirer tous les membres du conseil"
