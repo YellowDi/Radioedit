@@ -55,3 +55,10 @@ private.PRINT_HEAD = "|cff7f7f7f%s|r [|cff00ffff%s|r]"
 private.BLACKLIST = {[90043] = true,} -- special blacklist
 private.MOUSE_LB = "\124TInterface\\TutorialFrame\\UI-Tutorial-Frame:12:12:0:0:512:512:10:65:228:283\124t" -- left mouse button
 private.MOUSE_RB = "\124TInterface\\TutorialFrame\\UI-Tutorial-Frame:12:12:0:0:512:512:10:65:330:385\124t" -- right mouse button
+private.WORK_ANNOUNCE = 0.4 -- 40% and more done is reported
+private.TOGO_ANNOUNCE = private.L["%s: %d done %d to go!"]
+private.REWARD_ANNOUNCE = private.L["Paragon reward for %s is ready!"]
+private.SHIPYARD_ANNOUNCE = private.L["Shipyard have %d/%d ships!"]
+private.ARTIFACT_ANNOUNCE = private.L["Artifact have %d talents ready!"]
+private.ARCHAELOGY_ANNOUNCE = private.L["Archaeology %s is ready!"]
+private.TALENT_ANNOUNCE = private.L["%s is ready!"]

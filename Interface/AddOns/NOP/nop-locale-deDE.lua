@@ -57,10 +57,14 @@ L["Visible"] = "Sichtbar machen"
 L["Make button visible by placing fake item on it"] = "Schaltfläche mithilfe eines Fake-Gegenstandes sichtbar machen"
 L["Swap"] = "Tauschen"
 L["Swap location of numbers for count and cooldown timer"] = "Position von Anzahl und Abklingzeit tauschen"
-L["Script"] = "Skript"
-L["Let button on use close unwanted windows like NPC trader, bank etc. You need enable custom scripts to run!"] = "Schaltfläche bei Benutzung ungewollte Fenster wie NPC-Händler, Bank usw. schließen lassen. Benutzerdefinierte Skripte müssen dabei aktiviert sein!"
 L["AutoQuest"]  = "Automatische Suche"
 L["Auto accept or hand out quests from AutoQuestPopupTracker!"] = "Automatische Annahme oder Abgabe von Quests aus AutoQuestPopupTracker"
+L["Strata"] = true
+L["Set strata for items button to HIGH, place it over normal windows."] = true
+L["Herald"] = true
+L["Announce completed work orders, artifact points etc.."] = true
+L["Skip on Error"] = true
+L["Temporary blacklist item when click produce error message"] = true
 L["Buttons per row"] = "Schaltflächen pro Reihe"
 L["Number of buttons placed in one row"] = "Wie viele Schaltflächen auf einer Reihe angezeigt werden sollen"
 L["Spacing"] = "Abstand"
@@ -81,6 +85,12 @@ L["Quest"] = "Quest"
 L["Quest not found for this item."] = "Quest für diesen Gegenstand nicht gefunden."
 L["Items cache update run |cFF00FF00%d."] = "Cache-Aktualisierung von Gegenständen |cFF00FF00%d."
 L["Spells cache update run |cFF00FF00%d."] = "Cache-Aktualisierung von Zaubern |cFF00FF00%d."
+L["%s: %d done %d to go!"] = true
+L["Paragon reward for %s is ready!"] = true
+L["Shipyard have %d/%d ships!"] = true
+L["Artifact have %d talents ready!"] = true
+L["Archaeology %s is ready!"] = true
+L["%s is ready!"] = true
 
 L["CONSOLE_USAGE"] = [=[ [reset|skin|lock|clear|list|unlist|skip|glow|zone|quest|show]
 reset  - setzt die Schaltfläche auf die Mitte des Bildschirms zurück

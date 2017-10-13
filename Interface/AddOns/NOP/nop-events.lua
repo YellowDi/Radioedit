@@ -17,10 +17,12 @@ function NOP:InitEvents()
   self:RegisterEvent("PLAYER_ENTERING_WORLD","ZONE_CHANGED") -- Loading screen
   self:RegisterEvent("ACTIONBAR_UPDATE_COOLDOWN") -- cooldown for quest bar
   self:RegisterEvent("QUEST_ACCEPTED") -- update Quest Bar if any item starting quest is placed on it
-  self:RegisterEvent("UI_ERROR_MESSAGE")
+  self:RegisterEvent("UI_ERROR_MESSAGE") -- blacklist some messages when items and spells are loaded from cache
+  self:RegisterEvent("GARRISON_LANDINGPAGE_SHIPMENTS") -- herald notify
+  self:RegisterEvent("PLAYER_ENTERING_WORLD") -- Loading screen
 end
 function NOP:UI_ERROR_MESSAGE(event, msgType, msg, ...) -- handle lockpicking item could be already unlocked or still locked and can't be used yet.
-  if (msgType == 35) and (msg == ERR_ITEM_LOCKED) then
+  if (msgType == 35) and (msg == ERR_ITEM_LOCKED) and not self:inCombat() then
     UIErrorsFrame:Clear()
     local bt = self.BF
     if bt and self:ItemToPicklock(bt.itemID) then
@@ -42,6 +44,12 @@ function NOP:UI_ERROR_MESSAGE(event, msgType, msg, ...) -- handle lockpicking it
   if (msgType == 27) and (msg == ERR_ITEM_NOT_FOUND) then 
     UIErrorsFrame:Clear()
     self:ItemShowNew()
+    return
+  end
+  if self.preClick and NOP.DB.SkipOnError then -- something with button went wrong, lets temporary blacklist it
+    self.printt(msg)
+    UIErrorsFrame:Clear()
+    self:BlacklistItem(false,self.BF.itemID)
     return
   end
   --self.printt("Type",msgType,"Msg",private.RGB_RED .. msg .. "|r")
@@ -84,6 +92,9 @@ function NOP:QUEST_ACCEPTED()
   if not NOP.DB.quest then return end -- quest bar is disabled and hidden nothing to do
   self:QBQuestAccept()
 end
+function NOP:PLAYER_ENTERING_WORLD() -- loading screen
+  self:CheckBuilding(true) -- refresh garrison landing page as well
+end
 function NOP:ACTIONBAR_UPDATE_COOLDOWN() -- update cooldowns on quest bar and item button
   if self.QB and NOP.DB.quest and not self.qbHidden then -- quest bar is not disabled or none and hidden nothing to do
     for _, bt in ipairs(self.QB.buttons) do -- quest bar buttons text cooldowns
@@ -99,9 +110,6 @@ function NOP:ACTIONBAR_UPDATE_COOLDOWN() -- update cooldowns on quest bar and it
     self:ButtonOnUpdate(bt,start,duration)
   end
 end
-function NOP:SPELLCAST(event,unitID) -- if click on item produce cast then is time to update it after end of cast
-  if self.itemClick and (unitID == private.UNITID_PLAYER) then
-    self.itemClick = nil
-    if not self.timerItemShowNew then self.timerItemShowNew = self:ScheduleTimer("ItemShowNew", private.TIMER_IDLE) end -- back to timer
-  end
+function NOP:GARRISON_LANDINGPAGE_SHIPMENTS()
+  self:CheckBuilding()
 end

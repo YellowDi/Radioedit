@@ -118,7 +118,7 @@ function NOP:ButtonPostClick(button) -- post click on button
       NOP:BlacklistItem(IsControlKeyDown(),self.BF.itemID)
     end
     if WoWBox then WoWBox.itemClick = nil end
-    if not self.timerItemShowNew then self.timerItemShowNew = self:ScheduleTimer("ItemShowNew", private.TIMER_IDLE) end -- back to timer
+    if not self.timerItemShowNew then self.timerItemShowNew = self:ScheduleTimer("ItemShowNew", private.TIMER_IDLE / 3) end -- back to timer
   end
 end
 function NOP:ButtonOnDragStart(button) -- start moving
@@ -210,11 +210,13 @@ function NOP:ButtonLoad() -- create button, restore his position
     self.BF = CreateFrame("Button", private.BUTTON_FRAME, self.frameHider, "SecureActionButtonTemplate, ActionButtonTemplate")
     local bt = self.BF
     if bt:IsVisible() or bt:IsShown() then bt:Hide() end
+    bt:SetFrameStrata(NOP.DB.strata and "HIGH" or "MEDIUM")
     self:ButtonBackdrop(bt) -- create backdrop around button if enabled
     bt:RegisterForDrag("LeftButton") -- ALT-LEFT-MOUSE for drag
     bt:RegisterForClicks("AnyUp") -- act on key release 
     bt:SetScript("OnEnter",     function(self) NOP:ButtonOnEnter(self) end)
     bt:SetScript("OnLeave",     function(self) NOP:ButtonOnLeave(self) end)
+    bt:SetScript("PreClick",    function(self,button) NOP.preClick = true end)
     bt:SetScript("PostClick",   function(self,button) NOP:ButtonPostClick(button) end)
     bt:SetScript("OnDragStart", function(self) NOP:ButtonOnDragStart(self) end)
     bt:SetScript("OnDragStop",  function(self) NOP:ButtonOnDragStop(self) end)

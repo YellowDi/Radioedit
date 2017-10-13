@@ -57,11 +57,15 @@ L["Visible"] = "可視的"
 L["Make button visible by placing fake item on it"] = "透過放置假物品使按鈕可見"
 L["Swap"] = "交換"
 L["Swap location of numbers for count and cooldown timer"] = "交換數字計數和冷卻時間的位置"
-L["Script"] = "腳本"
-L["Let button on use close unwanted windows like NPC trader, bank etc. You need enable custom scripts to run!"] = "讓按鈕使用關閉不需要的窗口，如NPC交易者，銀行等。你需要啟用自定義腳本運行！"
 L["Buttons per row"] = "每行幾個按鈕"
 L["AutoQuest"]  = "自動任務"
 L["Auto accept or hand out quests from AutoQuestPopupTracker!"] = "自動接受或交出任務從AutoQuestPopupTracker！"
+L["Strata"] = true
+L["Set strata for items button to HIGH, place it over normal windows."] = true
+L["Herald"] = true
+L["Announce completed work orders, artifact points etc.."] = true
+L["Skip on Error"] = true
+L["Temporary blacklist item when click produce error message"] = true
 L["Number of buttons placed in one row"] = "放置在一行的按鈕數"
 L["Spacing"] = "間距"
 L["Space between buttons"] = "按鈕之間的距離"
@@ -81,6 +85,12 @@ L["Quest"] = "任務"
 L["Quest not found for this item."] = "找不到此物品的任務。"
 L["Items cache update run |cFF00FF00%d."] = "物品快取更新執行|cFF00FF00%d。"
 L["Spells cache update run |cFF00FF00%d."] = "法術快取更新執行|cFF00FF00%d。"
+L["%s: %d done %d to go!"] = true
+L["Paragon reward for %s is ready!"] = true
+L["Shipyard have %d/%d ships!"] = true
+L["Artifact have %d talents ready!"] = true
+L["Archaeology %s is ready!"] = true
+L["%s is ready!"] = true
 
 L["CONSOLE_USAGE"] = [=[ [reset|skin|lock|clear|list|unlist|skip|glow|zone|quest|show]
 reset  - 將會重置物品位置到螢幕中間

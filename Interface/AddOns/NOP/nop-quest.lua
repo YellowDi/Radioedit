@@ -241,19 +241,25 @@ function NOP:QBQuestAccept() -- refresh items on Quest Items Bar when quest is a
   self.timerQBQuestAccept = nil
   self.LQI:Scan()
 end
+function NOP:QBAutoQuestTimer(ptype,qID)
+  if self:inCombat() then
+    if not self.timerQBAutoQuest then self.timerQBAutoQuest = self:ScheduleTimer("QBAutoQuestTimer", private.TIMER_IDLE,ptype,qID) end -- postspone
+  end
+  self.timerQBAutoQuest = nil
+  local index = GetQuestLogIndexByID(qID)
+  if not index then return end -- qest is not present now it was completed during fight
+  if (ptype == "OFFER") then
+    ShowQuestOffer(index)
+  else
+    ShowQuestComplete(index)
+  end
+end
 function NOP:QBAutoQuest()
   hooksecurefunc("AutoQuestPopupTracker_AddPopUp", 
     function(questID, popUpType)
       if NOP.DB.autoquest and (type(questID) == "number") and (type(popUpType) == "string") and questID then
         local index = GetQuestLogIndexByID(questID)
-        if index then
-          if (popUpType == "OFFER") then
-            ShowQuestOffer(index)
-          else
-            ShowQuestComplete(index)
-          end
-          -- AutoQuestPopupTracker_RemovePopUp(questID)
-        end
+        if index then NOP:QBAutoQuestTimer(popUpType,questID) end -- taint prevent
       end
     end
   )

@@ -57,10 +57,14 @@ L["Visible"] = "Visible"
 L["Make button visible by placing fake item on it"] = "Hace visible el botón colocando un artículo falso en él"
 L["Swap"] = "Intercambiar"
 L["Swap location of numbers for count and cooldown timer"] = "Intercambia la ubicación de los números para contador y temporizador de tiempo de reutilización"
-L["Script"] = "Script"
-L["Let button on use close unwanted windows like NPC trader, bank etc. You need enable custom scripts to run!"] = "Deje que el botón de uso cerrar ventanas no deseadas como NPC comerciante, banco, etc Usted necesita habilitar scripts personalizados para ejecutar!"
 L["AutoQuest"]  = "Búsqueda automática"
 L["Auto accept or hand out quests from AutoQuestPopupTracker!"] = "¡Acepte automáticamente o entregue las misiones de AutoQuestPopupTracker!"
+L["Strata"] = true
+L["Set strata for items button to HIGH, place it over normal windows."] = true
+L["Herald"] = true
+L["Announce completed work orders, artifact points etc.."] = true
+L["Skip on Error"] = true
+L["Temporary blacklist item when click produce error message"] = true
 L["Buttons per row"] = "Número de botones por línea"
 L["Number of buttons placed in one row"] = "Número de botones colocados en una línea"
 L["Spacing"] = "Espaciado"
@@ -81,6 +85,12 @@ L["Quest"] = "Misión"
 L["Quest not found for this item."] = "No se encuentra la misión relacionada con este objeto."
 L["Items cache update run |cFF00FF00%d."] = "Actualizados los objetos de cache |cFF00FF00%d."
 L["Spells cache update run |cFF00FF00%d."] = "Actualizados los hechizos de cache |cFF00FF00%d."
+L["%s: %d done %d to go!"] = true
+L["Paragon reward for %s is ready!"] = true
+L["Shipyard have %d/%d ships!"] = true
+L["Artifact have %d talents ready!"] = true
+L["Archaeology %s is ready!"] = true
+L["%s is ready!"] = true
 
 L["CONSOLE_USAGE"] = [=[ [reset|skin|lock|clear|list|unlist|skip|glow|zone|quest|show]
 reset  - Resetea la posición del botón colocándolo en el medio de la pantalla

@@ -227,7 +227,6 @@ function NOP:BlacklistItem(isPermanent,itemID) -- right click will add item into
       end
     end
     NOP.T_USE[itemID] = nil; NOP.T_CHECK[itemID] = nil
-    self:ItemShowNew() -- find another item
   end
 end
 function NOP:Profile(onStart) -- time profiling
@@ -283,4 +282,125 @@ function NOP:removekey(t, key) -- remove item in hash table by key
     return element
   end
   return nil
+end
+local HERALD_ANNOUNCED = {}
+function NOP:CheckBuilding(toCheck)
+  if not NOP.DB.herald then return end
+  if toCheck then C_Garrison.RequestLandingPageShipmentInfo(); return; end
+  if C_Garrison.HasGarrison(LE_GARRISON_TYPE_6_0) then -- garrison shipments
+    local buildings = C_Garrison.GetBuildings(LE_GARRISON_TYPE_6_0)
+    local numBuildings = #buildings
+    if(numBuildings > 0) then
+      for i = 1, numBuildings do
+        local buildingID = buildings[i].buildingID;
+        if buildingID and not HERALD_ANNOUNCED[buildingID] then
+          local name, _, _, shipmentsReady, shipmentsTotal = C_Garrison.GetLandingPageShipmentInfo(buildingID)
+          if name and shipmentsReady and shipmentsTotal and (shipmentsReady / shipmentsTotal) > private.WORK_ANNOUNCE then
+            self:PrintToActive((private.TOGO_ANNOUNCE):format(name,shipmentsReady,shipmentsTotal-shipmentsReady))
+            HERALD_ANNOUNCED[buildingID] = true
+          end
+        end
+      end
+    end
+  end
+  if C_Garrison.HasGarrison(LE_GARRISON_TYPE_7_0) then -- Order hall
+    local followerShipments = C_Garrison.GetFollowerShipments(LE_GARRISON_TYPE_7_0) -- troops ready
+    if followerShipments then
+      for i = 1, #followerShipments do
+        if not HERALD_ANNOUNCED[followerShipments[i]] then
+          local name, _, _, shipmentsReady, shipmentsTotal = C_Garrison.GetLandingPageShipmentInfoByContainerID(followerShipments[i])
+          if name and shipmentsReady and shipmentsTotal and (shipmentsReady / shipmentsTotal) > private.WORK_ANNOUNCE then
+            self:PrintToActive((private.TOGO_ANNOUNCE):format(name,shipmentsReady,shipmentsTotal-shipmentsReady))
+            HERALD_ANNOUNCED[followerShipments[i]] = true
+          end
+        end
+      end
+    end
+    local looseShipments = C_Garrison.GetLooseShipments(LE_GARRISON_TYPE_7_0) -- research
+    if looseShipments then
+      for i = 1, #looseShipments do
+        if not HERALD_ANNOUNCED[looseShipments[i]] then
+          local name, _, _, shipmentsReady, shipmentsTotal = C_Garrison.GetLandingPageShipmentInfoByContainerID(looseShipments[i])
+          if name and shipmentsReady and shipmentsTotal and (shipmentsReady / shipmentsTotal) > private.WORK_ANNOUNCE then
+            self:PrintToActive((private.TOGO_ANNOUNCE):format(name,shipmentsReady,shipmentsTotal-shipmentsReady))
+            HERALD_ANNOUNCED[looseShipments[i]] = true
+          end
+        end
+      end
+    end
+    local talentTrees = C_Garrison.GetTalentTreeIDsByClassID(LE_GARRISON_TYPE_7_0, select(3, UnitClass("player"))) -- orderhall talents
+    if talentTrees then
+      local completeTalentID = C_Garrison.GetCompleteTalent(LE_GARRISON_TYPE_7_0)
+      if not HERALD_ANNOUNCED[completeTalentID] then
+        for treeIndex, treeID in ipairs(talentTrees) do
+          local _, _, tree = C_Garrison.GetTalentTreeInfoForID(treeID)
+          for talentIndex, talent in ipairs(tree) do
+            if (talent.id == completeTalentID) then
+              self:PrintToActive((private.TALENT_ANNOUNCE):format(talent.name))
+              HERALD_ANNOUNCED[completeTalentID] = true
+            end
+          end
+        end
+      end
+    end
+  end
+  if HasArtifactEquipped() and not HERALD_ANNOUNCED[0] then -- artifact points to spend
+    local _, _, _, _, totalXP, pointsSpent, _, _, _, _, _, _, artifactTier = C_ArtifactUI.GetEquippedArtifactInfo()
+    local numPointsAvailableToSpend, xp, xpForNextPoint = MainMenuBar_GetNumArtifactTraitsPurchasableFromXP(pointsSpent, totalXP, artifactTier)
+    if numPointsAvailableToSpend > 0 then
+      self:PrintToActive((private.ARTIFACT_ANNOUNCE):format(numPointsAvailableToSpend))
+      HERALD_ANNOUNCED[0] = true
+    end
+  end
+  for i = 1, GetNumArchaeologyRaces() do -- archaelogy can be completed
+    local raceName, _, _, have, required = GetArchaeologyRaceInfo(i)
+    if raceName and (required > 0) and (have >= required) and not HERALD_ANNOUNCED[raceName] then
+      self:PrintToActive((private.ARCHAELOGY_ANNOUNCE):format(raceName))
+      HERALD_ANNOUNCED[raceName] = true
+    end
+  end
+  if not HERALD_ANNOUNCED["shipyard"] then -- shipyard missing ships
+    local activeShips, maxShips = C_Garrison.GetNumFollowers(LE_FOLLOWER_TYPE_SHIPYARD_6_2), 0
+    local _,_,_,_,_,shipyardRank = C_Garrison.GetOwnedBuildingInfo(98)
+    if shipyardRank == 1 then 
+      maxShips = 6
+    elseif shipyardRank == 2 then
+      maxShips = 8
+    elseif shipyardRank == 3 then
+      maxShips = 10 
+    end
+    if maxShips > 0 then
+      if activeShips < maxShips then
+        self:PrintToActive((private.SHIPYARD_ANNOUNCE):format(activeShips,maxShips))
+        HERALD_ANNOUNCED["shipyard"] = true
+      end
+    end
+  end
+  ExpandAllFactionHeaders()
+  local nF = GetNumFactions()
+  for i=1, nF do
+    local name, _, _, _, _, value, _, _, header, _, _, _, _, id = GetFactionInfo(i)
+    if name and not header and id then
+      if C_Reputation.IsFactionParagon(id) then
+        local reward = false
+        value, top, _, reward = C_Reputation.GetFactionParagonInfo(id)
+        while (value > top) do value = value - top end
+        if reward and not HERALD_ANNOUNCED[id] then 
+          self:PrintToActive((private.REWARD_ANNOUNCE):format(name))
+          HERALD_ANNOUNCED[id] = true
+        end
+      end
+    end
+  end
+end
+function NOP:PrintToActive(msg) -- print to all active chat windows
+  if msg then
+    local txt = ("|cff7f7f7f%s|r [|cff007f7f%s|r]" .. " %s"):format(ElvUI and "" or ("[" .. date("%H:%M") .. "]"),ADDON,msg)
+    for i = 1, NUM_CHAT_WINDOWS do
+      local name, fontSize, r, g, b, alpha, shown, locked, docked, uninteractable = GetChatWindowInfo(i)
+      if shown and _G["ChatFrame"..i] then
+        _G["ChatFrame"..i]:AddMessage(txt)
+      end
+    end
+  end
 end

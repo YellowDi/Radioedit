@@ -138,24 +138,25 @@ NOP.slash_handler = function(msg, editbox) -- /nop handler
   if cmd == "list" then
     if (NOP.DB["T_BLACKLIST"] ~= nil and NOP.DB.T_BLACKLIST[0]) or (NOP.DB["T_BLACKLIST_Q"] ~= nil and NOP.DB.T_BLACKLIST_Q[0])then
       NOP.printt(private.L["|cFFFF00FFPermanently blacklisted items:"])
+      NOP.printt("--Button--")
       for itemID,count in pairs(NOP.DB.T_BLACKLIST) do
         if itemID and itemID > 0 then
           local name = GetItemInfo(itemID)
           if not name then
-            NOP.printt("ItemID",itemID,"Not in cache, try later same command to see name.")
+            NOP.printt("ItemID:",itemID,"Not in cache, try later same command to see name.")
           else
-            NOP.printt(itemID, name)
+            NOP.printt("ItemID:",itemID,"Name:",name)
           end
         end
       end
-      NOP.printt()
+      NOP.printt("--Quest--")
       for itemID,count in pairs(NOP.DB.T_BLACKLIST_Q) do
         if itemID and itemID > 0 then
           local name = GetItemInfo(itemID)
           if not name then
-            NOP.printt("ItemID",itemID,"Not in cache, try later same command to see name.")
+            NOP.printt("ItemID:",itemID,"Not in cache, try later same command to see name.")
           else
-            NOP.printt(itemID, name)
+            NOP.printt("ItemID:",itemID,"Name:",name)
           end
         end
       end
@@ -167,9 +168,10 @@ NOP.slash_handler = function(msg, editbox) -- /nop handler
   if cmd == "unlist" then
     local id = tonumber(arg)
     if id then
-      if NOP.DB["T_BLACKLIST"] ~= nil then NOP.DB.T_BLACKLIST[id] = nil end
-      if NOP.DB["T_BLACKLIST_Q"] ~= nil then NOP.DB.T_BLACKLIST_Q[id] = nil end
+      if NOP.DB["T_BLACKLIST"] ~= nil and NOP.DB.T_BLACKLIST[id] then NOP.DB.T_BLACKLIST[id] = nil; NOP.printt("Removed ItemID:",id) end
+      if NOP.DB["T_BLACKLIST_Q"] ~= nil and NOP.DB.T_BLACKLIST_Q[id] then NOP.DB.T_BLACKLIST_Q[id] = nil; NOP.printt("Removed ItemID:",id) end
     end
+    return
   end
   if cmd == "zone" then
     NOP.DB["zoneUnlock"] = not NOP.DB.zoneUnlock

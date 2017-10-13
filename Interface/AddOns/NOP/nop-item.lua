@@ -277,8 +277,9 @@ function NOP:ItemShow(bagID,slotID,itemID,itemCount,itemTexture) -- add item to 
   end
 end
 function NOP:ItemShowNew() -- check bags for usable item and place it on button
+  self.preClick = nil -- from now error won't blacklist item on button
   if self:inCombat() or not (self.spellLoad and self.itemLoad) then -- postspone in combat and on loading
-    if not self.timerItemShowNew then self.timerItemShowNew = self:ScheduleTimer("ItemShowNew", private.TIMER_IDLE) end
+    self.timerItemShowNew = self:ScheduleTimer("ItemShowNew", private.TIMER_IDLE)
     return
   end
   self.timerItemShowNew = nil

@@ -80,6 +80,13 @@ NOP.T_RECIPES = { -- [ItemId] = {count_to_use, "gsub regex" | tooltip-line-numbe
   [147727] = {1,1,nil}, -- Greater Legionfall Insignia
 }
 NOP.T_ITEMS = { -- [itemID] = {count_to_use,{"sub-Zone",...},{[mapID]=true,...},auraID}, table for opening/use item by itemID, is no possible to check any common text
+  [147351] = {1,nil,nil}, -- Fel Armor Enhancement Token
+  [140924] = {1,nil,nil}, -- Ashtongue Beacon
+  [140925] = {1,nil,nil}, -- Enchanted Bark
+  [140926] = {1,nil,nil}, -- Bowmen's Orders
+  [140927] = {1,nil,nil}, -- Water Globe
+  [140933] = {1,nil,nil}, -- Runed Aspirant's Band
+  [128980] = {1,nil,nil}, -- Scroll of Forgotten Knowledge
   [153114] = {1,nil,nil}, -- Nathrezim Tome of Manipulation
   [151844] = {1,nil,nil}, -- Xenedar Armor Set
   [152097] = {1,nil,nil}, -- Lightforged Bulwark

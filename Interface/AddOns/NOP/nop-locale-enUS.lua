@@ -57,10 +57,14 @@ L["Visible"] = true
 L["Make button visible by placing fake item on it"] = true
 L["Swap"] = true
 L["Swap location of numbers for count and cooldown timer"] = true
-L["Script"] = true
-L["Let button on use close unwanted windows like NPC trader, bank etc. You need enable custom scripts to run!"] = true
 L["AutoQuest"]  = true
 L["Auto accept or hand out quests from AutoQuestPopupTracker!"] = true
+L["Strata"] = true
+L["Set strata for items button to HIGH, place it over normal windows."] = true
+L["Herald"] = true
+L["Announce completed work orders, artifact points etc.."] = true
+L["Skip on Error"] = true
+L["Temporary blacklist item when click produce error message"] = true
 L["Buttons per row"] = true
 L["Number of buttons placed in one row"] = true
 L["Spacing"] = true
@@ -81,6 +85,12 @@ L["Quest"] = true
 L["Quest not found for this item."] = true
 L["Items cache update run |cFF00FF00%d."] = true
 L["Spells cache update run |cFF00FF00%d."] = true
+L["%s: %d done %d to go!"] = true
+L["Paragon reward for %s is ready!"] = true
+L["Shipyard have %d/%d ships!"] = true
+L["Artifact have %d talents ready!"] = true
+L["Archaeology %s is ready!"] = true
+L["%s is ready!"] = true
 
 L["CONSOLE_USAGE"] = [=[ [reset|skin|lock|clear|list|unlist|skip|glow|zone|quest|show]
 reset  - will reset button position to middle of screen
