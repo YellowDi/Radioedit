@@ -94,7 +94,7 @@ local function CreateAboutFrame()
  
  f.leftfont:SetText(AddColor(" Daily Global Check ","GOLD")..C.str_version.."\n"..
                                          AddColor(" by\n","GRAY")..
-                                         AddColor(" Jadya","LIGHT_BLUE")..
+                                         AddColor(" Vildiesel","DEMONHUNTER")..
                                          AddColor(" EU-Well of Eternity\n\n","GRAY")..
 										 AddColor(" Plugins available on Curse:\n","LIGHT_GREEN")..
                                          AddColor(" Daily Global Check_Legion Rare Mobs\n"..

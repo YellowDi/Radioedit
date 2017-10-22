@@ -123,6 +123,8 @@ L["hidden"] = "Hidden"
 L["worldmap_icons"] = "Worldmap Icons"
 L["minimap_icons"] = "Minimap Icons"
 L["news_#11"] = "Want to save talent sets and change talents with a click? Check out my new addon, |cff00ff00Talent Set Manager|r!"
+
+L["search_icon"] = "Search Icon"
 --end
 
 local locale = GetLocale()
@@ -262,6 +264,8 @@ L["remmenuheader"] = "- Seleccione una misión para eliminar -"
 L["repeatable"] = "Repeatable"
 L["s_tomtomset"] = "|cff11DDFFDaily Global Check|r - Añadida ubicación al TomTom"
 L["search_by_name"] = "Búsqueda por nombre"
+--Translation missing 
+L["search_icon"] = "Search Icon"
 L["show_adjacent_map_icons"] = "Mostrar mapas contiguos/Continentes"
 L["shown"] = "Mostrado"
 L["spell_id"] = "ID de Hechizo"
@@ -489,6 +493,8 @@ L["s_tomtomset"] = "|cff11DDFFDaily Global Check|r - Waypoint added to TomTom"
 --Translation missing 
 L["search_by_name"] = "Search by name"
 --Translation missing 
+L["search_icon"] = "Search Icon"
+--Translation missing 
 L["show_adjacent_map_icons"] = "Show on adjacent/continent maps"
 --Translation missing 
 L["shown"] = "Shown"
@@ -647,6 +653,8 @@ L["repeatable"] = "Ripetibile"
 L["s_tomtomset"] = "|cff11DDFFDaily Global Check|r - Waypoint aggiunto a TomTom"
 --Translation missing 
 L["search_by_name"] = "Search by name"
+--Translation missing 
+L["search_icon"] = "Search Icon"
 --Translation missing 
 L["show_adjacent_map_icons"] = "Show on adjacent/continent maps"
 --Translation missing 
@@ -873,6 +881,8 @@ L["s_tomtomset"] = "|cff11DDFFDaily Global Check|r - Waypoint added to TomTom"
 --Translation missing 
 L["search_by_name"] = "Search by name"
 --Translation missing 
+L["search_icon"] = "Search Icon"
+--Translation missing 
 L["show_adjacent_map_icons"] = "Show on adjacent/continent maps"
 --Translation missing 
 L["shown"] = "Shown"
@@ -1078,6 +1088,8 @@ L["s_tomtomset"] = "|cff11DDFFDaily Global Check|r - Chemin ajouté à TomTom"
 --Translation missing 
 L["search_by_name"] = "Search by name"
 --Translation missing 
+L["search_icon"] = "Search Icon"
+--Translation missing 
 L["show_adjacent_map_icons"] = "Show on adjacent/continent maps"
 --Translation missing 
 L["shown"] = "Shown"
@@ -1229,6 +1241,8 @@ L["s_tomtomset"] = "|cff11DDFFDaily Global Check|r - Wegpunkt für TomTom hinzug
 --Translation missing 
 L["search_by_name"] = "Search by name"
 --Translation missing 
+L["search_icon"] = "Search Icon"
+--Translation missing 
 L["show_adjacent_map_icons"] = "Show on adjacent/continent maps"
 --Translation missing 
 L["shown"] = "Shown"
@@ -1364,6 +1378,8 @@ L["remmenuheader"] = "- Выберите задание для удаления 
 L["repeatable"] = "Повторяющийся"
 L["s_tomtomset"] = "|cff11DDFFDaily Global Check|r - в TomTom добавлено направление."
 L["search_by_name"] = "Поиск по имени"
+--Translation missing 
+L["search_icon"] = "Search Icon"
 L["show_adjacent_map_icons"] = "Показать карты континента/соседних карт"
 L["shown"] = "Показанный"
 L["spell_id"] = "ИД заклинания"
@@ -1575,6 +1591,8 @@ L["s_tomtomset"] = "|cff11DDFFDaily Global Check|r - 航点加入到TomTom"
 --Translation missing 
 L["search_by_name"] = "Search by name"
 --Translation missing 
+L["search_icon"] = "Search Icon"
+--Translation missing 
 L["show_adjacent_map_icons"] = "Show on adjacent/continent maps"
 --Translation missing 
 L["shown"] = "Shown"
@@ -1749,6 +1767,8 @@ L["repeatable"] = "可重複的"
 L["s_tomtomset"] = "|cff11DDFF艾澤拉斯的日常|r - 已經新增 TomTom 航點"
 --Translation missing 
 L["search_by_name"] = "Search by name"
+--Translation missing 
+L["search_icon"] = "Search Icon"
 --Translation missing 
 L["show_adjacent_map_icons"] = "Show on adjacent/continent maps"
 --Translation missing 
@@ -1976,6 +1996,8 @@ L["s_tomtomset"] = "|cff11DDFFDaily Global Check|r - Waypoint added to TomTom"
 --Translation missing 
 L["search_by_name"] = "Search by name"
 --Translation missing 
+L["search_icon"] = "Search Icon"
+--Translation missing 
 L["show_adjacent_map_icons"] = "Show on adjacent/continent maps"
 --Translation missing 
 L["shown"] = "Shown"
@@ -2126,6 +2148,7 @@ L["remmenuheader"] = "- Select the quest to remove -"
 L["repeatable"] = "Repeatable"
 L["s_tomtomset"] = "|cff11DDFFDaily Global Check|r - Waypoint added to TomTom"
 L["search_by_name"] = "Search by name"
+L["search_icon"] = "Search Icon"
 L["show_adjacent_map_icons"] = "Show on adjacent/continent maps"
 L["shown"] = "Shown"
 L["spell_id"] = "Spell ID"

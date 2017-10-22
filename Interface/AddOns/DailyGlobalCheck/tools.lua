@@ -1,5 +1,5 @@
 -- Daily Global Check
--- by Jadya
+-- by Vildiesel
 -- EU-Well of Eternity
 
 local tinsert, tremove, tsort, low = table.insert, table.remove, table.sort, string.lower
@@ -9,7 +9,7 @@ local addonName, addonTable = ...
 local L = addonTable.L
 local C = addonTable.C
 local T = addonTable.T
-local ng
+local ng, ntl
 
 local AddColor = addonTable.AddColor
 
@@ -22,6 +22,7 @@ local help         = DailyGlobalCheck.HelpFunctions
 local maps         = DailyGlobalCheck.MapFunctions
 
 local questpool_list_changed = true
+local icon_filenames, current_icons_list, filtered_filenames
 
 -- Visibility Mode --
 
@@ -464,6 +465,8 @@ local function move_pool_element(new_list, new_group, new_pos)
 end
 
 local function edit_listboxDragReceive(self)
+ if not DailyGlobalCheck.SelectedList then return end
+
  local t, itemID = GetCursorInfo()
 
  if t == "item" then
@@ -669,9 +672,156 @@ local function populate_lists_dropdown()
 end
 --
 
+--- icon selection dialog ---
+local icons_meta = setmetatable({}, { __index = function(t, k)
+                                                 return current_icons_list[k - icons_added]
+                                                end })
+                                                
+local function refreshIconTable()
+ local filter = low(DGCIconDialogPopup.filter)
+ wipe(icons_meta)
+ icons_added = 0
+ if filter == "" or ("inv_misc_questionmark"):find(filter) then
+  icons_meta[1] = "inv_misc_questionmark"
+  icons_added = icons_added + 1
+ end
+end
+
+function RecalculateDGCIconDialogPopup(name)
+ local popup = DGCIconDialogPopup
+
+ if not icon_filenames then
+  icon_filenames = ntl:GetList("icons")
+ end
+
+ DGCIconDialogPopupEditBox:HighlightText()
+ DGCIconDialogPopup_FilterList()
+ 
+ local list = DailyGlobalCheck.SelectedList
+ if list then
+  popup.selectedTexture = list.Icon
+ else
+  DGCIconDialogPopupEditBox:SetText("")
+  popup.selectedTexture = "interface\\icons\\inv_misc_questionmark"
+ end
+ 
+ local totalItems = #current_icons_list + icons_added
+ 
+ DGCIconDialogPopup_Update()
+ 
+ if popup.selectedTexture then
+  local foundIndex
+  for index = 1, totalItems do
+   if ("interface\\icons\\"..icons_meta[index]) == low(popup.selectedTexture) then
+    foundIndex = index
+    break
+   end
+  end
+
+  if not foundIndex then
+   foundIndex = 1
+  end
+
+  local offsetnumIcons = floor((totalItems - 1) / DGCIconDialogPopup.buttons_per_row) - DGCIconDialogPopup.buttons_per_row / 2
+  local offset = floor((foundIndex - 1) / DGCIconDialogPopup.buttons_per_row)
+  if foundIndex <= DGCIconDialogPopup.numrows * DGCIconDialogPopup.buttons_per_row then
+   offset = 0
+  elseif offset > offsetnumIcons then
+   offset = offsetnumIcons
+  end
+  FauxScrollFrame_OnVerticalScroll(DGCIconDialogPopupScrollFrame, offset * 36, 36, nil)
+ else
+  FauxScrollFrame_OnVerticalScroll(DGCIconDialogPopupScrollFrame, 0, 36, nil)
+ end
+end
+
+function DGCIconDialogPopup_FilterList(update)
+ if DGCIconDialogPopup.filter == "" then
+  current_icons_list = icon_filenames
+ else
+  current_icons_list = ntl:FilterList("icons", DGCIconDialogPopup.filter, filtered_filenames)
+ end
+
+ refreshIconTable()
+ 
+ if update then
+  DGCIconDialogPopup_Update()
+ end
+end
+
+function DGCIconDialogPopup_Update()
+ local popup = DGCIconDialogPopup
+ local buttons = popup.buttons
+ local offset = FauxScrollFrame_GetOffset(DGCIconDialogPopupScrollFrame) or 0
+
+ local button
+
+ -- Icon list
+ local texture, index, button
+ local length = #current_icons_list + icons_added
+
+ for i = 1, DGCIconDialogPopup.numrows * DGCIconDialogPopup.buttons_per_row do
+  local button = buttons[i]
+  index = offset * DGCIconDialogPopup.buttons_per_row + i
+  if index <= length then
+   texture = type(icons_meta[index]) == "string" and "interface\\icons\\"..icons_meta[index] or icons_meta[index]
+   button.icon:SetTexture(texture)
+   button.tex = texture
+   button:Show()
+   if texture == popup.selectedTexture then
+    button:SetChecked(true)
+    popup.selectedTexture = texture
+   else
+    button:SetChecked(false)
+   end
+  else
+   button.icon:SetTexture("")
+   button:Hide()
+  end
+ end
+
+ FauxScrollFrame_Update(DGCIconDialogPopupScrollFrame, ceil(length / DGCIconDialogPopup.buttons_per_row), DGCIconDialogPopup.numrows, 36 )
+end
+
+function DGCIconDialogPopupOkay_OnClick(self, button)
+ DailyGlobalCheck.SelectedList.Icon = DGCIconDialogPopup.selectedTexture
+ DGCIconDialogPopup:Hide()
+ DailyGlobalCheck:Refresh(DailyGlobalCheck.SelectedList)
+end
+
+function DGCIconDialogPopupCancel_OnClick()
+ DGCIconDialogPopup:Hide()
+end
+
+function DGCIconPopupButton_OnClick(self, button)
+ local offset = FauxScrollFrame_GetOffset(DGCIconDialogPopupScrollFrame) or 0
+ DGCIconDialogPopup.selectedTexture = self.tex
+ DGCIconDialogPopup_Update()
+end
+
+function DGCIconDialogPopup_OnHide(self)
+ DGCIconDialogPopup.name = nil
+ DGCIconDialogPopup.id = nil
+ DGCIconDialogPopup.selectedTexture = "interface\\icons\\inv_misc_questionmark"
+ DGCIconDialogPopupEditBox:SetText("")
+ collectgarbage()
+end
+
+local function changeListIcon(self)
+ if not DailyGlobalCheck.SelectedList then return end
+ 
+ DGCIconDialogPopup:Show()
+ DGCIconDialogPopup.isEdit = true
+ DGCIconDialogPopup.origName = DailyGlobalCheck.SelectedList.Icon
+ RecalculateDGCIconDialogPopup(DailyGlobalCheck.SelectedList.Icon)
+end
+
+-----------------------------
+
 function tools.setup_edit_mode_panel(p)
 
  ng = NyxGUI(C.NyxGUIVersion)
+ ntl = NyxTL("1.0")
 
  p:SetScript("OnShow", function()
   local list = DailyGlobalCheck.SelectedList
@@ -710,7 +860,7 @@ function tools.setup_edit_mode_panel(p)
  f.update_pre = questpool_listbox_update_pre
  f.update_button = questpool_listbox_update_button
  -- need to initialize before setting the region points, otherwise it will mess up the buttons' width
- f:SetSize(C.modes[C.MODE_EDIT].x / 2, C.modes[C.MODE_EDIT].y - 240)
+ f:SetSize(C.modes[C.MODE_EDIT].x / 2 - 40, C.modes[C.MODE_EDIT].y - 240)
  f:Initialize("DGCEditQuestPoolListButton")
  f:SetPoint("TOPLEFT", p, "TOPLEFT", 0, -60)
  f:SetPoint("BOTTOMRIGHT", p, "BOTTOM", -40, 0)
@@ -828,6 +978,19 @@ function tools.setup_edit_mode_panel(p)
  f:SetPoint("TOPRIGHT", DGC_Mainframe, "TOPRIGHT", -10, -50)
  f:SetText(L["delete_list"])
  f:SetScript("OnClick", delete_list)
+
+ -- icon selection frame init
+ addonTable:CreateIconSelectionFrame()
+ 
+ -- change icon button
+ f = CreateFrame("Frame", nil, p)
+ f:SetPoint("TOPLEFT", DGC_Mainframe.dgcicon, "TOPLEFT", -4, 4)
+ f:SetPoint("BOTTOMRIGHT", DGC_Mainframe.dgcicon, "BOTTOMRIGHT", 4, -4)
+ f.tex = f:CreateTexture()
+ f.tex:SetAllPoints()
+ f.tex:SetBlendMode("ADD")
+ f.tex:SetTexture("Interface\\Buttons\\ButtonHilight-Square")
+ f:SetScript("OnMouseUp", changeListIcon)
 
  -- new page button
  f = ng:New(addonName, "Button", nil, p)

@@ -1,16 +1,10 @@
-lightweight tag 9b0ccf7d436be639157cc5fb011099d7983569ff v1.5.2.7
+lightweight tag ee420ab49a1a8977c9205a9def6df4849c960e90 v1.5.3.0
 Author:	Saregon <n_rhygar@yahoo.it>
-Date:	Sat Sep 16 17:04:27 2017 +0200
+Date:	Wed Oct 18 15:45:34 2017 +0200
 
-commit 9b0ccf7d436be639157cc5fb011099d7983569ff
+commit ee420ab49a1a8977c9205a9def6df4849c960e90
 Author: Saregon <n_rhygar@yahoo.it>
-Date:   Sat Sep 16 17:04:27 2017 +0200
+Date:   Wed Oct 18 15:45:34 2017 +0200
 
-    map functions tweaked
-
-commit dcb49a515cd7438e5dbcfdc187ec711f92cd1adf
-Author: Saregon <n_rhygar@yahoo.it>
-Date:   Thu Sep 14 11:03:18 2017 +0200
-
-    map functions tweaked
+    custom list icon can be changed
 

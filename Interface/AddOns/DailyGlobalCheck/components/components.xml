@@ -251,7 +251,7 @@
 				
 				<NormalTexture file="Interface\Common\VOICECHAT-MUTED" />
 				<Anchors>
-					<Anchor point="RIGHT" x="-50"></Anchor>
+					<Anchor point="RIGHT" x="-10"></Anchor>
 				</Anchors>
 			</Button>
 			
@@ -368,4 +368,29 @@
 		</Scripts>
 	</Frame>
 	
+    <CheckButton name="DGCIconPopupButtonTemplate" inherits="SimplePopupButtonTemplate" virtual="true">
+		<Scripts>
+			<OnLoad>
+				local name = self:GetName()
+				self.icon = _G[name.."Icon"]
+				self.name = _G[name.."Name"]
+			</OnLoad>
+			<OnClick function="DGCIconPopupButton_OnClick" />
+		</Scripts>
+		<NormalTexture name="$parentIcon" nonBlocking="true">
+			<Size>
+				<AbsDimension x="36" y="36"/>
+			</Size>
+			<Anchors>
+				<Anchor point="CENTER">
+					<Offset>
+						<AbsDimension x="0" y="-1"/>
+					</Offset>
+				</Anchor>
+			</Anchors>
+		</NormalTexture>
+		<HighlightTexture alphaMode="ADD" file="Interface\Buttons\ButtonHilight-Square"/>
+		<CheckedTexture alphaMode="ADD" file="Interface\Buttons\CheckButtonHilight"/>
+	</CheckButton>
+    
 </Ui>

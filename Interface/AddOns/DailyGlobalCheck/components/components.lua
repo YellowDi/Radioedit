@@ -1,5 +1,5 @@
 -- Daily Global Check
--- by Jadya EU - Well of Eternity
+-- by Vildiesel EU - Well of Eternity
 
 local addonName, addonTable = ...
 

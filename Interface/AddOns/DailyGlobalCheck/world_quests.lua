@@ -41,7 +41,7 @@ WQ.TagInfo   = setmetatable({}, { __index = function(t, k)
  10 item reward type ("artifact_power", ...)
 ]]
 --
-
+ 
 local timer_force_update = 5
 local lowest_timer, timer_end, timer
 local zone_indexes = {
@@ -53,6 +53,9 @@ local zone_indexes = {
                       [1014] = 6,
                       [1096] = 7,
                       [1021] = 8,
+                      [1135] = 9,
+                      [1171] = 10,
+                      [1170] = 11,
 					 }
 
 local function isquestcompleted(questID)

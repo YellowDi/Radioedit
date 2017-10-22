@@ -12,6 +12,7 @@ lib\CallbackHandler-1.0.lua
 lib\LibDataBroker-1.1.lua
 lib\LibDBIcon-1.0.lua
 components\NyxGUI-1.0\NyxGUI.xml
+components\NyxTL-1.0\NyxTL.xml
 localization.lua
 constants.lua
 constructors.lua
@@ -31,3 +32,4 @@ map.lua
 helpframe.lua
 editquest.lua
 world_quests.lua
+iconselect.lua
