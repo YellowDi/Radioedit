@@ -85,10 +85,41 @@ if not ViragDevTool_AddData then ViragDevTool_AddData=function() end end
 local KEY_BUTTON1 = "\124TInterface\\TutorialFrame\\UI-Tutorial-Frame:12:12:0:0:512:512:10:65:228:283\124t" -- left mouse button
 local KEY_BUTTON2 = "\124TInterface\\TutorialFrame\\UI-Tutorial-Frame:12:12:0:0:512:512:10:65:330:385\124t" -- right mouse button
 local CTRL_KEY_TEXT,SHIFT_KEY_TEXT=CTRL_KEY_TEXT,SHIFT_KEY_TEXT
-
+local CTRL_KEY_TEXT,SHIFT_KEY_TEXT=CTRL_KEY_TEXT,SHIFT_KEY_TEXT
+local CTRL_SHIFT_KET_TEXT=CTRL_KEY_TEXT .. '-' ..SHIFT_KEY_TEXT
+local format,pcall=format,pcall
+local function safeformat(mask,...)
+  local rc,result=pcall(format,mask,...)
+  if not rc then
+    for k,v in pairs(L) do
+      if v==mask then
+        mask=k
+        break
+      end
+    end
+ end
+  rc,result=pcall(format,mask,...)
+  return rc and result or mask 
+end
 
 -- End Template - DO NOT MODIFY ANYTHING BEFORE THIS LINE
 --*BEGIN
+
+-- It's here because localization gets not sync'd
+--[===[@debug@
+_G.GAME_LOCALE="itIT"
+--@end-debug@]===]
+
+-- Dependency check
+
+if not LibStub("AceSerializer-3.0",true) then
+   ns.die=true
+end
+if ns.die then 
+  addon:Popup(L["You need to close and restart World of Warcraft in order to update this version of OrderHallCommander.\nSimply reloading UI is not enough"])
+  ns.die=true
+  return
+end  
 local MISSING=ITEM_MISSING:format(""):gsub(' ','')
 local IGNORED=IGNORED
 local UNUSED=UNUSED
@@ -130,7 +161,7 @@ end
 function addon:SetDbDefaults(default)
 	default.profile=default.profile or {}
 	default.profile.blacklist={}
-	default.global.tutorialStep={}
+	default.global.tutorialStep=1
 end
 do 
 local banned={}
@@ -523,7 +554,8 @@ function MixinFollowerIcon:Click(button)
 		end
 	end
 	self:ShowTooltip()
-	addon:RefreshMissions()
+  addon:PushRefresher("CleanMissionsCache")
+	addon:RedrawMissions()
 end
 function MixinFollowerIcon:Lock(missionID)
 	addon:Reserve(self.followerID,missionID)

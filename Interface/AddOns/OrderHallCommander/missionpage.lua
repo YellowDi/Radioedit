@@ -74,7 +74,22 @@ if not ViragDevTool_AddData then ViragDevTool_AddData=function() end end
 local KEY_BUTTON1 = "\124TInterface\\TutorialFrame\\UI-Tutorial-Frame:12:12:0:0:512:512:10:65:228:283\124t" -- left mouse button
 local KEY_BUTTON2 = "\124TInterface\\TutorialFrame\\UI-Tutorial-Frame:12:12:0:0:512:512:10:65:330:385\124t" -- right mouse button
 local CTRL_KEY_TEXT,SHIFT_KEY_TEXT=CTRL_KEY_TEXT,SHIFT_KEY_TEXT
-
+local CTRL_KEY_TEXT,SHIFT_KEY_TEXT=CTRL_KEY_TEXT,SHIFT_KEY_TEXT
+local CTRL_SHIFT_KET_TEXT=CTRL_KEY_TEXT .. '-' ..SHIFT_KEY_TEXT
+local format,pcall=format,pcall
+local function safeformat(mask,...)
+  local rc,result=pcall(format,mask,...)
+  if not rc then
+    for k,v in pairs(L) do
+      if v==mask then
+        mask=k
+        break
+      end
+    end
+ end
+  rc,result=pcall(format,mask,...)
+  return rc and result or mask 
+end
 
 -- End Template - DO NOT MODIFY ANYTHING BEFORE THIS LINE
 --*BEGIN 
@@ -115,11 +130,27 @@ end
 function module:FillParty(missionID,key)
 	--addon:HoldEvents()
 	local main=OHF
+--[===[@debug@
+	addon:Print("Clearing party")
+--@end-debug@]===]
 	main:ClearParty()
-	local party=addon:GetMissionParties(missionID):GetSelectedParty(key)
+	local parties=addon:GetMissionParties(missionID)
+	if not parties.candidatesIndex or #parties.candidatesIndex==1 then
+  --[===[@debug@
+    addon:Print("Rebuild party")
+  --@end-debug@]===]
+	 parties:Match()
+	end
+	local party=parties:GetSelectedParty(key)
 	local missionPage=main:GetMissionPage()
+--[===[@debug@
+	addon:Print("I have",#party,"slots to fill thanks to key",key,party.key)
+--@end-debug@]===]
 	for i=1,#party do
 		local followerID=party[i]
+--[===[@debug@
+    addon:Print("adding",addon:GetFollowerName(followerID))
+--@end-debug@]===]
 		if followerID and not G.GetFollowerStatus(followerID) then
 			missionPage:AddFollower(followerID)
 		end

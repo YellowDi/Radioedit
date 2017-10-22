@@ -74,7 +74,22 @@ if not ViragDevTool_AddData then ViragDevTool_AddData=function() end end
 local KEY_BUTTON1 = "\124TInterface\\TutorialFrame\\UI-Tutorial-Frame:12:12:0:0:512:512:10:65:228:283\124t" -- left mouse button
 local KEY_BUTTON2 = "\124TInterface\\TutorialFrame\\UI-Tutorial-Frame:12:12:0:0:512:512:10:65:330:385\124t" -- right mouse button
 local CTRL_KEY_TEXT,SHIFT_KEY_TEXT=CTRL_KEY_TEXT,SHIFT_KEY_TEXT
-
+local CTRL_KEY_TEXT,SHIFT_KEY_TEXT=CTRL_KEY_TEXT,SHIFT_KEY_TEXT
+local CTRL_SHIFT_KET_TEXT=CTRL_KEY_TEXT .. '-' ..SHIFT_KEY_TEXT
+local format,pcall=format,pcall
+local function safeformat(mask,...)
+  local rc,result=pcall(format,mask,...)
+  if not rc then
+    for k,v in pairs(L) do
+      if v==mask then
+        mask=k
+        break
+      end
+    end
+ end
+  rc,result=pcall(format,mask,...)
+  return rc and result or mask 
+end
 
 -- End Template - DO NOT MODIFY ANYTHING BEFORE THIS LINE
 --*BEGIN
@@ -82,7 +97,8 @@ local OHFButtons=OHFMissions.listScroll.buttons
 local HelpPlate_TooltipHide=HelpPlate_TooltipHide
 local HelpPlateTooltip=HelpPlateTooltip
 local platestrata = HelpPlateTooltip:GetFrameStrata()
-
+-- Uses X for key already present i standard file
+local X=L
 local currentTutorialIndex
 local fcolor="Yellow"
 local ncolor="Green"
@@ -97,7 +113,7 @@ tutorials={
   },
   {
     text=function()
-        local c,n=C(L["Counter Kill Troops"], fcolor),C(L["Never kill Troops"],fcolor),C(addon:GetNumber("MAXCHAMP"),ncolor)
+        local c,n=C(X["Counter kill Troops"], fcolor),C(X["Never kill Troops"],fcolor),C(addon:GetNumber("MAXCHAMP"),ncolor)
         return format(L["With %1$s you ask to always counter the Hazard kill troop.\nThis means that OHC will try to counter it OR use a troop with just one durability left.\nThe target for this switch is to avoid wasting durability point, NOT to avoid troops' death."],
         c)
     end,
@@ -106,7 +122,7 @@ tutorials={
   },
   {
     text=function()
-        local c,n,x=C(L["Counter Kill Troops"], fcolor),C(L["Never kill Troops"]),C(L["Prefer high durability"], fcolor)
+        local c,n,x=C(X["Counter kill Troops"], fcolor),C(X["Never kill Troops"]),C(L["Prefer high durability"], fcolor)
         return format(L["With %2$s you ask to never let a troop die.\nThis not only implies %1$s and %3$s, but force OHC to never send to mission a troop which will die.\nThe target for this switch is to totally avoid killing troops, even it for this we cant fill the party"],
         c,n,x)
     end,
@@ -124,7 +140,7 @@ tutorials={
   },
   {
     text=function()
-        local c,g,n=C(L["Max champions"], fcolor),C(L["Maximize xp gain"],fcolor),C(addon:GetNumber("MAXCHAMP"),ncolor)
+        local c,g,n=C(X["Max champions"], fcolor),C(X["Maximize xp gain"],fcolor),C(addon:GetNumber("MAXCHAMP"),ncolor)
         return format(L["You can choose to limit how much champions are sent together.\nRight now OHC is not using more than %3$s champions in the same mission-\n\nNote that %2$s overrides it."],
         c,g,n)
     end,
@@ -133,7 +149,7 @@ tutorials={
   },
   {
     text=function()
-        local g,b,ng,nb=C(L["Bonus Chance"],fcolor), C(L["Base Chance"],fcolor),C(addon:GetNumber("BONUSCHANCE"),ncolor),C(addon:GetNumber("BASECHANCE"),ncolor)
+        local g,b,ng,nb=C(X["Bonus Chance"],fcolor), C(X["Base Chance"],fcolor),C(addon:GetNumber("BONUSCHANCE"),ncolor),C(addon:GetNumber("BASECHANCE"),ncolor)
         return format(L["%1$s and %2$s switches work together to customize how you want your mission filled\n\nThe value you set for %1$s (right now %3$s%%) is the minimum acceptable chance for attempting to achieve bonus while the value to set for %2$s (right now %4$s%%) is the chance you want achieve when you are forfaiting bonus (due to not enough powerful followers)"],
         g,b,ng,nb)
     end,
@@ -142,7 +158,7 @@ tutorials={
   },
   {
     text=function()
-        local g,b=C(L["Bonus Chance"],fcolor), C(L["Base Chance"],fcolor)
+        local g,b=C(X["Bonus Chance"],fcolor), C(X["Base Chance"],fcolor)
         return format(L["For example, let's say a mission can reach 95%%, 130%% and 180%% success chance.\nIf %1$s is set to 170%%, the 180%% one will be choosen.\nIf %1$s is set to 200%% OHC will try to find the nearest to 100%% respecting %2$s setting\nIf for example %2$s is set to 100%%, then the 130%% one will be choosen, but if %2$s is set to 90%% then the 95%% one will be choosen"],
         g,b)
     end,
@@ -151,7 +167,7 @@ tutorials={
   },
   {
     text=function()
-        local g,b=C(L["Bonus Chance"],fcolor), C(L["Base Chance"],fcolor)
+        local g,b=C(X["Bonus Chance"],fcolor), C(X["Base Chance"],fcolor)
         return format(L["If instead you just want to always see the best available mission just set %1$s to 100%% and %2$s to 0%%"],
         g,b)
     end,
@@ -240,7 +256,7 @@ tutorials={
   {
     text=L["You can choose not to use a troop type clicking its icon"],
     parent=function() return addon:GetCacheModule():GetTroopsFrame() end,
-    anchor="BOTTOM",
+    anchor="TOP",
   },
   {
     back=2,
