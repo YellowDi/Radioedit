@@ -180,8 +180,7 @@ L["Done syncing"] = "Synchronisierung abgeschlossen"
 L["Double click to delete this entry."] = "Doppelklick, um diesen Eintrag zu löschen"
 L["DPS"] = true
 L["Dropped by:"] = "Fallengelassen von:"
---Translation missing 
--- L["Edit Entry"] = ""
+L["Edit Entry"] = "Eintrag bearbeiten"
 L["Enable Loot History"] = "Beuteverlauf aktivieren"
 --Translation missing 
 -- L["Enable Relic Buttons"] = ""
