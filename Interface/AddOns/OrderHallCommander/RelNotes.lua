@@ -14,10 +14,22 @@ self:Wiki([[
 == Silent mode ==
 typing /ohc silent in chat will eliminate every chat message from OrderHallCommander
 ]])
+self:RelNotes(1,5,6,[[
+Fix: #135 Using champion equipment causes the game to hang
+Fix: #117 Sometimes "in progress" mission were shown without followers
+Fix: Removed chat spam
+]])
+self:RelNotes(1,5,5,[[
+Feature: Base chance can be now set up to 120% to allow for a bit of overcapping
+Feature: New Elite Overcap switch to force elites mission to always stay over 100%, if possibile
+Feature: You can restore shift-click to send a single mission from mission list
+Fix: Reset button was not working 
+Fix: You can again change switches while viewing the mission page
+]])
 self:RelNotes(1,5,'4.1',[[
 Feature: Removed tutorial autoopening
-Fix: when capping a mission if a satisfying mission cannott be found, prefer overcaps 
-Fix: #133 Counter kil troops switch was not working
+Fix: when capping a mission if a satisfying mission cannot be found, prefer overcap over lowercap 
+Fix: #133 Counter kill troops switch was not working
 ]])
 self:RelNotes(1,5,4,[[
 Feature: #120 Starting mission from list now requires ctrl-shift

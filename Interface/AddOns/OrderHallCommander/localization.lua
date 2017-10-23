@@ -96,7 +96,7 @@ L["Restart tutorial from beginning"] = true
 L["Resume tutorial"] = true
 L["Resurrect troops effect"] = true
 L["Reward type"] = true
-L["Sets all switches to a very permissive setup"] = true
+L["Sets all switches to a very permissive setup. Very similar to 1.4.4"] = true
 L["Show tutorial"] = true
 L["Show/hide OrderHallCommander mission menu"] = true
 L["Sort missions by:"] = true
@@ -341,7 +341,7 @@ L["Resume tutorial"] = "Resume tutorial"
 L["Resurrect troops effect"] = "Resurrect efeito tropas"
 L["Reward type"] = "Tipo de recompensa"
 --Translation missing 
-L["Sets all switches to a very permissive setup"] = "Sets all switches to a very permissive setup"
+L["Sets all switches to a very permissive setup. Very similar to 1.4.4"] = "Sets all switches to a very permissive setup. Very similar to 1.4.4"
 --Translation missing 
 L["Show tutorial"] = "Show tutorial"
 L["Show/hide OrderHallCommander mission menu"] = "Mostrar / ocultar o menu da missão OrderHallCommander"
@@ -650,7 +650,7 @@ L["Resume tutorial"] = "Resume tutorial"
 L["Resurrect troops effect"] = "Effet Résurrection des troupes"
 L["Reward type"] = "Type de récompense"
 --Translation missing 
-L["Sets all switches to a very permissive setup"] = "Sets all switches to a very permissive setup"
+L["Sets all switches to a very permissive setup. Very similar to 1.4.4"] = "Sets all switches to a very permissive setup. Very similar to 1.4.4"
 --Translation missing 
 L["Show tutorial"] = "Show tutorial"
 L["Show/hide OrderHallCommander mission menu"] = "Afficher / masquer le menu de mission OrderHallCommander"
@@ -947,7 +947,7 @@ L["Resume tutorial"] = "Resume tutorial"
 L["Resurrect troops effect"] = "Truppen wiederbeleben"
 L["Reward type"] = "Belohnungsart"
 --Translation missing 
-L["Sets all switches to a very permissive setup"] = "Sets all switches to a very permissive setup"
+L["Sets all switches to a very permissive setup. Very similar to 1.4.4"] = "Sets all switches to a very permissive setup. Very similar to 1.4.4"
 L["Show tutorial"] = "Zeige Tutorial"
 L["Show/hide OrderHallCommander mission menu"] = "OrderHallCommander-Missionsmenü zeigen/ausblenden"
 L["Sort missions by:"] = "Sortieren nach:"
@@ -1209,7 +1209,7 @@ L["Resume tutorial"] = "Resume tutorial"
 L["Resurrect troops effect"] = "Resurrezione truppe possibile"
 L["Reward type"] = "Tipo ricompensa"
 --Translation missing 
-L["Sets all switches to a very permissive setup"] = "Sets all switches to a very permissive setup"
+L["Sets all switches to a very permissive setup. Very similar to 1.4.4"] = "Sets all switches to a very permissive setup. Very similar to 1.4.4"
 --Translation missing 
 L["Show tutorial"] = "Show tutorial"
 L["Show/hide OrderHallCommander mission menu"] = "Mostra/ascondi il menu di missione di OrderHallCommander"
@@ -1460,7 +1460,7 @@ L["Restart tutorial from beginning"] = "처음부터 설명서 다시 시작"
 L["Resume tutorial"] = "설명서 이어서 시작"
 L["Resurrect troops effect"] = "병력 부활 효과"
 L["Reward type"] = "보상 유형"
-L["Sets all switches to a very permissive setup"] = "모든 전환 설정을 허용적인 구성으로 설정"
+L["Sets all switches to a very permissive setup. Very similar to 1.4.4"] = "모든 전환 설정을 허용적인 구성으로 설정"
 L["Show tutorial"] = "살명서 보기"
 L["Show/hide OrderHallCommander mission menu"] = "OrderHallCommander 임무 메뉴 표시/숨기기"
 L["Sort missions by:"] = "임무 정렬 방법:"
@@ -1736,7 +1736,7 @@ L["Resume tutorial"] = "Resume tutorial"
 L["Resurrect troops effect"] = "Efecto de las tropas de resurrección"
 L["Reward type"] = "Tipo de recompensa"
 --Translation missing 
-L["Sets all switches to a very permissive setup"] = "Sets all switches to a very permissive setup"
+L["Sets all switches to a very permissive setup. Very similar to 1.4.4"] = "Sets all switches to a very permissive setup. Very similar to 1.4.4"
 --Translation missing 
 L["Show tutorial"] = "Show tutorial"
 L["Show/hide OrderHallCommander mission menu"] = "Mostrar / ocultar el menú de la misión OrderHallCommander"
@@ -1932,8 +1932,7 @@ L["Configuration for mission party builder"] = "Настройки для сбо
 L["Cost reduced"] = "Стоимость уменьшена"
 L["Could not fulfill mission, aborting"] = "Не удалось выполнить задание, прерывание"
 L["Counter kill Troops"] = "Предупредить смерть войск"
---Translation missing 
-L["Customization options (non mission related)"] = "Customization options (non mission related)"
+L["Customization options (non mission related)"] = "Вариативные настройки (не касающиеся заданий)"
 L["Disables warning: "] = "Отключить предупреждение: "
 L["Dont use this slot"] = "Не использовать этот слот"
 L["Don't use troops"] = "Не использовать войска"
@@ -1999,7 +1998,7 @@ L["Restart tutorial from beginning"] = "Перезапустить инстру�
 L["Resume tutorial"] = "Возобновить инструкции"
 L["Resurrect troops effect"] = "Эффект воскрешения войск"
 L["Reward type"] = "Награда"
-L["Sets all switches to a very permissive setup"] = "Установить все переключатели так, чтобы предоставить большую возможность манёвра"
+L["Sets all switches to a very permissive setup. Very similar to 1.4.4"] = "Установить все переключатели так, чтобы предоставить большую возможность манёвра. Очень похожими на 1.4.4"
 L["Show tutorial"] = "Показать сборник инструкций"
 L["Show/hide OrderHallCommander mission menu"] = "Отобразить/скрыть меню заданий Order Hall Commander"
 L["Sort missions by:"] = "Сортировать задания по:"
@@ -2215,7 +2214,7 @@ L["Resume tutorial"] = "Resume tutorial"
 L["Resurrect troops effect"] = "复活部队效果"
 L["Reward type"] = "奖励类型"
 --Translation missing 
-L["Sets all switches to a very permissive setup"] = "Sets all switches to a very permissive setup"
+L["Sets all switches to a very permissive setup. Very similar to 1.4.4"] = "Sets all switches to a very permissive setup. Very similar to 1.4.4"
 L["Show tutorial"] = "显示教程"
 L["Show/hide OrderHallCommander mission menu"] = "显示/隐藏大厅指挥官任务选单"
 L["Sort missions by:"] = "排列任务根据："
@@ -2511,7 +2510,7 @@ L["Resume tutorial"] = "Resume tutorial"
 L["Resurrect troops effect"] = "Efecto de las tropas de resurrección"
 L["Reward type"] = "Tipo de recompensa"
 --Translation missing 
-L["Sets all switches to a very permissive setup"] = "Sets all switches to a very permissive setup"
+L["Sets all switches to a very permissive setup. Very similar to 1.4.4"] = "Sets all switches to a very permissive setup. Very similar to 1.4.4"
 --Translation missing 
 L["Show tutorial"] = "Show tutorial"
 L["Show/hide OrderHallCommander mission menu"] = "Mostrar / ocultar el menú de la misión OrderHallCommander"
@@ -2706,8 +2705,7 @@ L["Configuration for mission party builder"] = "任務隊伍構建設置"
 L["Cost reduced"] = "花費已降低"
 L["Could not fulfill mission, aborting"] = "任務無法履行，忽略"
 L["Counter kill Troops"] = "反制殺死部隊"
---Translation missing 
-L["Customization options (non mission related)"] = "Customization options (non mission related)"
+L["Customization options (non mission related)"] = "自定義選項（非任務相關）"
 L["Disables warning: "] = "停用警告："
 L["Dont use this slot"] = "不要使用這個空槽"
 L["Don't use troops"] = "不要使用部隊"
@@ -2716,8 +2714,7 @@ L["Duration Time"] = "持續時間"
 L["Elites mission mode"] = "精英任務模式"
 L["Empty missions sorted as last"] = "空的任務排在最後"
 L["Empty or 0% success mission are sorted as last. Does not apply to \"original\" method"] = "空或0%成功率的任務排列在最後，對於\"原始\"方式排序無效。"
---Translation missing 
-L["Equipped by following champions:"] = "Equipped by following champions:"
+L["Equipped by following champions:"] = "已裝備在下列勇士："
 L["Expiration Time"] = "到期時間"
 L["Favours leveling follower for xp missions"] = "傾向於使用升級中追隨者在經驗值任務"
 L["General"] = "(G) 一般"
@@ -2773,7 +2770,7 @@ L["Restart tutorial from beginning"] = "從開始的地方重啟指南"
 L["Resume tutorial"] = "繼續指南"
 L["Resurrect troops effect"] = "復活部隊效果"
 L["Reward type"] = "獎勵類型"
-L["Sets all switches to a very permissive setup"] = "切換所有設置為非常寬容的設置"
+L["Sets all switches to a very permissive setup. Very similar to 1.4.4"] = "切換所有設置為非常寬容的設置"
 L["Show tutorial"] = "顯示指南"
 L["Show/hide OrderHallCommander mission menu"] = "顯示/隱藏大廳指揮官任務選單"
 L["Sort missions by:"] = "排列任務根據："

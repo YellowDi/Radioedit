@@ -1,20 +1,28 @@
-tag 0ae49277148f4d9a8ea585b87d9d10d9f7d97fd3 1.5.4.1
+tag f04c51f8b242f008e8184c7fb3baf6ea886b0345 1.5.6
 Author:	Alar of Runetotem <alar@aspide.it>
-Date:	Sun Oct 22 03:13:19 2017 +0200
+Date:	Mon Oct 23 12:40:04 2017 +0200
 
-Removed tutorial autoopen
-Small fixes and improvements
+Fix: #135 Using champion equipment causes the game to hang
+Fix: #117 Sometimes "in progress" mission were shown without followers
+Fix: Reset button was not working
+Fix: You can again change switches while viewing the mission page
+Fix: Removed chat spam
+Feature: Base chance can be now set up to 120% to allow for a bit of
+overcapping
+Feature: New Elite Overcap switch to force elites mission to always stay
+over 100%, if possibile
+Feature: You can restore shift-click to send a single mission from
+mission list
 
-commit e3ae530d967c74e7aa5fb7dfb51f4f657539c78b
+commit 27471a850ddb003d16006d42c959a21e93c0d801
 Author: Alar of Runetotem <alar@aspide.it>
-Date:   Sun Oct 22 03:07:33 2017 +0200
+Date:   Mon Oct 23 12:39:08 2017 +0200
 
-    Reenabled side menu on single mission page.
-    Added a check to repopulate party if needed
+    Doc
 
-commit 74eab6b412dcdff2fdab891859714aaf07df79d9
+commit 42da7698323a8b02db7b5d58a379f96275303992
 Author: Alar of Runetotem <alar@aspide.it>
-Date:   Sat Oct 14 01:24:53 2017 +0200
+Date:   Mon Oct 23 02:41:01 2017 +0200
 
-    Added icons for Krokuls troops Item
+    Shortened name in side menu title
 

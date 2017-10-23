@@ -12,10 +12,13 @@
 -- local factory=addon:GetFactory()
 -- local widget=factory:Checkbox(frame,true,"Checkbox","Checkbox tooltip")
 -- widget:SetOnChange(function(checked) end)
--- --You can set a cutom object so you can pass a method to SetOnChange:
+-- --You can set a custom object so you can pass a method to SetOnChange:
 -- widget:SetObj(mytable)
 -- widget:SetOnChange("method")
 
+local LibStub=LibStub
+local libinit,MINOR_VERSION = LibStub("LibInit")
+if not libinit then return end
 
 local GetTime=GetTime
 local GameTooltip=GameTooltip
@@ -23,7 +26,7 @@ local CreateFrame=CreateFrame
 local type=type
 local tostring=tostring
  
-local factory=LibStub:NewLibrary("LibInit-Factory",6) --#factory
+local factory=LibStub:NewLibrary("LibInit-Factory",MINOR_VERSION) --#factory
 if (not factory) then return end
 factory.nonce=factory.nonce or 0
 local backdrop = {
@@ -217,6 +220,10 @@ function factory:Checkbox(father,current,...)
 	frame:SetWidth(ck:GetWidth()+ck.Text:GetWidth()+2)
 	frame:SetHeight(ck:GetHeight())
 	frame:SetWidth(frame.maxwidth)
+	function frame:SetValue(value)
+	   ck:SetChecked(value)
+	   self:OnChange(value)
+	end
 	function frame:OnChange(value)
 		if value then
 			ck.Text:SetTextColor(0,1,0,1)
@@ -246,8 +253,10 @@ function factory:Button(father,...)
 	function bt:SetOnChange(func)
 		if type(func)=="function" then
 			bt:SetScript("OnClick",func)
+		elseif type(func)=="string" and bt.obj and type(bt.obj[func])=="function" then
+			bt:SetScript("OnClick",function(this,...) bt.obj[func](bt.obj,this,...) end)
 		else
-			bt:SetScript("OnClick",function(this,...) this.obj[func](this.obj,this,...) end)
+		  error("Or func is an invalid method or you didnt set an object [" .. tostring(bt.obj)..'] ['.. tostring(func)..']')
 		end
 	end
 	return bt
@@ -362,5 +371,6 @@ function factory:Option(addon,father,flag,maxwidth)
 	return w		
 end
 factory.Dropdown=factory.DropDown -- compatibility
+libinit:_SetFactory(factory)
 
 

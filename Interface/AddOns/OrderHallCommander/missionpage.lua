@@ -69,13 +69,14 @@ local LE_GARRISON_TYPE_7_0=LE_GARRISON_TYPE_7_0
 local GARRISON_FOLLOWER_COMBAT_ALLY=GARRISON_FOLLOWER_COMBAT_ALLY
 local GARRISON_FOLLOWER_ON_MISSION=GARRISON_FOLLOWER_ON_MISSION
 local GARRISON_FOLLOWER_INACTIVE=GARRISON_FOLLOWER_INACTIVE
+local GARRISON_FOLLOWER_AVAILABLE=AVAILABLE
 local ViragDevTool_AddData=_G.ViragDevTool_AddData
 if not ViragDevTool_AddData then ViragDevTool_AddData=function() end end
 local KEY_BUTTON1 = "\124TInterface\\TutorialFrame\\UI-Tutorial-Frame:12:12:0:0:512:512:10:65:228:283\124t" -- left mouse button
 local KEY_BUTTON2 = "\124TInterface\\TutorialFrame\\UI-Tutorial-Frame:12:12:0:0:512:512:10:65:330:385\124t" -- right mouse button
 local CTRL_KEY_TEXT,SHIFT_KEY_TEXT=CTRL_KEY_TEXT,SHIFT_KEY_TEXT
 local CTRL_KEY_TEXT,SHIFT_KEY_TEXT=CTRL_KEY_TEXT,SHIFT_KEY_TEXT
-local CTRL_SHIFT_KET_TEXT=CTRL_KEY_TEXT .. '-' ..SHIFT_KEY_TEXT
+local CTRL_SHIFT_KEY_TEXT=CTRL_KEY_TEXT .. '-' ..SHIFT_KEY_TEXT
 local format,pcall=format,pcall
 local function safeformat(mask,...)
   local rc,result=pcall(format,mask,...)
@@ -125,27 +126,18 @@ function module:FillMissionPage(missionInfo,key)
 --@end-debug@]===]
 	if( IsControlKeyDown()) then self:Print("Ctrl key, ignoring mission prefill") return end
 	if (addon:GetBoolean("NOFILL")) then return end
+	OHF:ClearParty()
 	self:FillParty(missionInfo.missionID,key)
+end
+function module:ClearParty()
+  OHF:ClearParty()
 end
 function module:FillParty(missionID,key)
 	--addon:HoldEvents()
-	local main=OHF
---[===[@debug@
-	addon:Print("Clearing party")
---@end-debug@]===]
-	main:ClearParty()
 	local parties=addon:GetMissionParties(missionID)
-	if not parties.candidatesIndex or #parties.candidatesIndex==1 then
-  --[===[@debug@
-    addon:Print("Rebuild party")
-  --@end-debug@]===]
-	 parties:Match()
-	end
+	if not parties then return end
 	local party=parties:GetSelectedParty(key)
-	local missionPage=main:GetMissionPage()
---[===[@debug@
-	addon:Print("I have",#party,"slots to fill thanks to key",key,party.key)
---@end-debug@]===]
+	local missionPage=OHF:GetMissionPage()
 	for i=1,#party do
 		local followerID=party[i]
 --[===[@debug@
