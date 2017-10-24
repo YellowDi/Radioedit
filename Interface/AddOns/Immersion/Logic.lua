@@ -63,11 +63,6 @@ function NPC:IsQuestAutoAccepted(questStartItemID)
 	-- from other quests, and different from eachother depending on the source of the quest. 
 	-- Handling here is prone to cause bugs/weird behaviour, update with caution.
 
-	-- reset quest flags for the objective tracker
-	-- (AddOns\Blizzard_ObjectiveTracker\Blizzard_AutoQuestPopUpTracker.lua)
-	QUEST_FRAME_AUTO_ACCEPT_QUEST_ID = 0
-	QUEST_FRAME_AUTO_ACCEPT_QUEST_START_ITEM_ID = 0
-
 	local questID = GetQuestID()
 	local isFromAdventureMap = QuestIsFromAdventureMap()
 	local isFromAreaTrigger = QuestGetAutoAccept() and QuestIsFromAreaTrigger()
@@ -80,12 +75,9 @@ function NPC:IsQuestAutoAccepted(questStartItemID)
 
 	-- an item pickup by loot caused this quest to show up, don't intrude on the user.
 	if isFromItem then
-		-- set these globals for the objective tracker popup, pray it doesn't spread taint.
-		QUEST_FRAME_AUTO_ACCEPT_QUEST_ID = questID
-		QUEST_FRAME_AUTO_ACCEPT_QUEST_START_ITEM_ID = questStartItemID
 		-- add a new quest tracker popup and close the quest dialog
-		if (AutoQuestPopupTracker_AddPopUp(questID, 'OFFER')) then
-			PlayAutoAcceptQuestSound();
+		if AddAutoQuestPopUp(questID, 'OFFER') then
+			PlayAutoAcceptQuestSound()
 		end
 		CloseQuest()
 		return true
@@ -95,7 +87,7 @@ function NPC:IsQuestAutoAccepted(questStartItemID)
 	-- let's not intrude on the user; just add a tracker popup.
 	if isFromAreaTrigger then
 		-- add a new quest tracker popup and close the quest dialog
-		if (AutoQuestPopupTracker_AddPopUp(questID, 'OFFER')) then
+		if AddAutoQuestPopUp(questID, 'OFFER') then
 			PlayAutoAcceptQuestSound()
 		end
 		CloseQuest()
