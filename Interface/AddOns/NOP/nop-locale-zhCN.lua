@@ -8,19 +8,19 @@ if not L then return end
 L["NOP_TITLE"] = "|cffCCCC88[菜单]|r一键开包"
 L["NOP_VERSION"] = "|cFFFFFFFF%s 使用 |cFFFF00FF/nop|cFFFFFFFF"
 
-L["ALT-LeftClick and drag to move."] = "ALT-左键拖动。"
-L["LeftClick to open or use."] = "左键点击开启或使用。"
-L["RightClick to skip item."] = "右键点击略过物品。"
-L["CTRL-RightClick to blacklist item."] = "CTRL-右键点击添加到黑名单。"
+L["CLICK_DRAG_MSG"] = "ALT-左键拖动。"
+L["CLICK_OPEN_MSG"] = "左键点击开启或使用。"
+L["CLICK_SKIP_MSG"] = "右键点击略过物品。"
+L["CLICK_BLACKLIST_MSG"] = "CTRL-右键点击添加到黑名单。"
 L["No openable items!"] = "没有可开启物品!"
-L["Reset and move button to middle of screen!"] = "重置并移动按钮到屏幕中间!"
-L["Use: "] = "使用:"
+L["BUTTON_RESET"] = "重置并移动按钮到屏幕中间!"
+L["NOP_USE"] = "使用:"
 L["Spell:"] = "施法:"
-L["|cFFFF00FFPermanently blacklisted items:"] = "|cFFFF00FF永久黑名单物品:"
-L["|cFFFF00FFPermanent blacklist is empty"] = "|cFFFF00FF永久黑名单是空的"
-L["Permanently Blacklisted:|cFF00FF00"] = "永久黑名单:|cFF00FF00"
-L["Session Blacklisted:|cFF00FF00"] = "本次上线黑名单:|cFF00FF00"
-L["Temporary Blacklisted:|cFF00FF00"] = "临时黑名单:|cFF00FF00"
+L["BLACKLISTED_ITEMS"] = "|cFFFF00FF永久黑名单物品:"
+L["BLACKLIST_EMPTY"] = "|cFFFF00FF永久黑名单是空的"
+L["PERMA_BLACKLIST"] = "永久黑名单:|cFF00FF00"
+L["SESSION_BLACKLIST"] = "本次上线黑名单:|cFF00FF00"
+L["TEMP_BLACKLIST"] = "临时黑名单:|cFF00FF00"
 L["|cFFFF0000Error loading tooltip for|r "] = "|cFFFF0000错误载入提示|r "
 L["Plans, patterns and recipes cache update."] = "图纸、配方缓存更新。"
 L["Spell patterns cache update."] = "法术图标缓存更新。"
@@ -65,6 +65,8 @@ L["Herald"] = true
 L["Announce completed work orders, artifact points etc.."] = true
 L["Skip on Error"] = true
 L["Temporary blacklist item when click produce error message"] = true
+L["HIDE_IN_COMBAT"] = "Hide in combat"
+L["HIDE_IN_COMBAT_HELP"] = "Hide items button when in combat"
 L["Buttons per row"] = "每行几个按钮"
 L["Number of buttons placed in one row"] = "放置在一行的按钮数"
 L["Spacing"] = "间距"
@@ -88,9 +90,10 @@ L["Spells cache update run |cFF00FF00%d."] = "法術快取更新執行|cFF00FF00
 L["%s: %d done %d to go!"] = true
 L["Paragon reward for %s is ready!"] = true
 L["Shipyard have %d/%d ships!"] = true
-L["Artifact have %d talents ready!"] = true
+L["Artifact have %d traits ready!"] = true
 L["Archaeology %s is ready!"] = true
 L["%s is ready!"] = true
+L["Temporary blacklist cleared, restarting lookup!"] = true
 
 L["CONSOLE_USAGE"] = [=[ [reset|skin|lock|clear|list|unlist|skip|glow|zone|quest|show]
 reset  - 將會重置物品位置到螢幕中間

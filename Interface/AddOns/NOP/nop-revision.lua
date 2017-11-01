@@ -1,4 +1,20 @@
 -- Revisions:
+--[[<p>08.14 29.10.2017</p>
+<ul>
+<li>Verbose message when preload of items and spells does fail.</li>
+<li>Fix for armor Unsullied tokens. Developers decide to put type of armor inside string!.</li>
+<li>SpellLoad() rewritten if there is bad item to load it does at least load all remaining patterns.</li>
+<li>Option to hide items button in combat. Quest bar still is shown in combat because there could be items usable in combat.</li>
+</ul>
+]]
+--[[<p>08.12 25.10.2017</p>
+<ul>
+<li>Added Golden Banana, Earthen Mark, Imp Pact, Reaves Battery, Shattered Soul, Squire's Oath</li>
+<li>Some locale now using short-names.</li>
+<li>ERR_SPELL_FAILED_ANOTHER_IN_PROGRESS won't trigger temp blacklist, it shall be produced when someone bash button too often.</li>
+<li>Fix for itemID 129097 GetItemInfo doesn't return any value.</li>
+</ul>
+]]
 --[[<p>08.10 12.10.2017</p>
 <ul>
 <li>/nop list is more verbose and /nop unlist itemID as well. Fixed printing help when /nop unlist was used even command is known and processed.</li>

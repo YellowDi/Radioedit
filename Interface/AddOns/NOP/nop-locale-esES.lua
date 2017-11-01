@@ -8,19 +8,19 @@ if not L then return end
 L["NOP_TITLE"] = "New Openables"
 L["NOP_VERSION"] = "|cFFFFFFFF%s use |cFFFF00FF/nop|cFFFFFFFF"
 
-L["ALT-LeftClick and drag to move."] = "ALT-ClicIzq y arrastre para mover."
-L["LeftClick to open or use."] = "ClicIzq para abrir o usar."
-L["RightClick to skip item."] = "ClicDcho para omitir el objeto."
-L["CTRL-RightClick to blacklist item."] = "CTRL-ClicDcho para la lista negra de objetos."
+L["CLICK_DRAG_MSG"] = "ALT-ClicIzq y arrastre para mover."
+L["CLICK_OPEN_MSG"] = "ClicIzq para abrir o usar."
+L["CLICK_SKIP_MSG"] = "ClicDcho para omitir el objeto."
+L["CLICK_BLACKLIST_MSG"] = "CTRL-ClicDcho para la lista negra de objetos."
 L["No openable items!"] = "¡No hay objetos que pueden abrirse!"
-L["Reset and move button to middle of screen!"] = "!Resetea el botón y lo mueve al medio de la pantalla!"
-L["Use: "] = "Utilizar: "
+L["BUTTON_RESET"] = "!Resetea el botón y lo mueve al medio de la pantalla!"
+L["NOP_USE"] = "Utilizar: "
 L["Spell:"] = "Hechizo:"
-L["|cFFFF00FFPermanently blacklisted items:"] = "|cFFFF00FFObjetos Añadidos de forma permante a la lista negra:"
-L["|cFFFF00FFPermanent blacklist is empty"] = "|cFFFF00FFLa lista negra esta vacía"
-L["Permanently Blacklisted:|cFF00FF00"] = "Añadidos a la lista negra permanentemente:|cFF00FF00"
-L["Session Blacklisted:|cFF00FF00"] = "Añadidos esta sesión a la Lista negra:|cFF00FF00"
-L["Temporary Blacklisted:|cFF00FF00"] = "Añadidos a la lista negra temporal:|cFF00FF00"
+L["BLACKLISTED_ITEMS"] = "|cFFFF00FFObjetos Añadidos de forma permante a la lista negra:"
+L["BLACKLIST_EMPTY"] = "|cFFFF00FFLa lista negra esta vacía"
+L["PERMA_BLACKLIST"] = "Añadidos a la lista negra permanentemente:|cFF00FF00"
+L["SESSION_BLACKLIST"] = "Añadidos esta sesión a la Lista negra:|cFF00FF00"
+L["TEMP_BLACKLIST"] = "Añadidos a la lista negra temporal:|cFF00FF00"
 L["|cFFFF0000Error loading tooltip for|r "] = "|cFFFF0000Se ha producido un error al cargar la ventana emergente de|r "
 L["Plans, patterns and recipes cache update."] = "Cache de planos, patrones y recetas actualizada."
 L["Spell patterns cache update."] = "Cache de patrones de hechizo actualizada."
@@ -65,6 +65,8 @@ L["Herald"] = true
 L["Announce completed work orders, artifact points etc.."] = true
 L["Skip on Error"] = true
 L["Temporary blacklist item when click produce error message"] = true
+L["HIDE_IN_COMBAT"] = "Hide in combat"
+L["HIDE_IN_COMBAT_HELP"] = "Hide items button when in combat"
 L["Buttons per row"] = "Número de botones por línea"
 L["Number of buttons placed in one row"] = "Número de botones colocados en una línea"
 L["Spacing"] = "Espaciado"
@@ -88,9 +90,10 @@ L["Spells cache update run |cFF00FF00%d."] = "Actualizados los hechizos de cache
 L["%s: %d done %d to go!"] = true
 L["Paragon reward for %s is ready!"] = true
 L["Shipyard have %d/%d ships!"] = true
-L["Artifact have %d talents ready!"] = true
+L["Artifact have %d traits ready!"] = true
 L["Archaeology %s is ready!"] = true
 L["%s is ready!"] = true
+L["Temporary blacklist cleared, restarting lookup!"] = true
 
 L["CONSOLE_USAGE"] = [=[ [reset|skin|lock|clear|list|unlist|skip|glow|zone|quest|show]
 reset  - Resetea la posición del botón colocándolo en el medio de la pantalla

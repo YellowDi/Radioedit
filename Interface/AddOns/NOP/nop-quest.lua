@@ -10,7 +10,7 @@ function NOP:QBAnchorMove() -- move anchor for quest bar
   if NOP.DB.qb_sticky then
     self.QB:SetAllPoints(private.BUTTON_FRAME)
   else
-    self.QB:SetPoint(NOP.DB.qb[1] or "CENTER", self.frameHider, NOP.DB.qb[3] or "CENTER", NOP.DB.qb[4] or 0, NOP.DB.qb[5] or 0)
+    self.QB:SetPoint(NOP.DB.qb[1] or "CENTER", self.frameHiderQ, NOP.DB.qb[3] or "CENTER", NOP.DB.qb[4] or 0, NOP.DB.qb[5] or 0)
   end
 end
 function NOP:QBAnchorSave() -- save Anchor pos after button position change
@@ -33,7 +33,7 @@ function NOP:QBAnchorSize() -- resize quest bar anchor to current icon size
   end
 end
 function NOP:QBAnchor() -- create quest bar anchor frame
-  self.QB = CreateFrame("Frame",private.QB_NAME.."Anchor",self.frameHider)
+  self.QB = CreateFrame("Frame",private.QB_NAME.."Anchor",self.frameHiderQ)
   self:QBAnchorSize() -- same size as item button
   self:QBAnchorMove() -- same position as item button
   self.QB.buttons = {} -- create empty button list
@@ -109,11 +109,11 @@ function NOP:QBBlacklist(isPermanent,itemID) -- add quest item to blacklist
       if not NOP.DB["T_BLACKLIST_Q"] then NOP.DB.T_BLACKLIST_Q = {} end
       NOP.DB.T_BLACKLIST_Q[0] = true
       NOP.DB.T_BLACKLIST_Q[itemID] = true
-      self.printt(private.L["Permanently Blacklisted:|cFF00FF00"],name or itemID)
+      self.printt(private.L["PERMA_BLACKLIST"],name or itemID)
     else
       NOP.T_BLACKLIST_Q[0] = true -- blacklist is defined
       NOP.T_BLACKLIST_Q[itemID] = true
-      self.printt(private.L["Session Blacklisted:|cFF00FF00"],name or itemID)
+      self.printt(private.L["SESSION_BLACKLIST"],name or itemID)
     end
     self:QBUpdate() -- force update
   end

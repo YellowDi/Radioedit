@@ -31,13 +31,13 @@ function NOP:TooltipCreate(name) -- create tooltip frame
 end
 function NOP:ItemLoad() -- load template item tooltips
   self.itemLoadRetry = self.itemLoadRetry - 1 -- only limited retries
-  if self.itemLoadRetry < 0 then self.itemLoad = true; return; end -- no more retry
+  if self.itemLoadRetry < 0 then self.itemLoad = true; self.printt("NOP:ItemLoad() retry limit reached!"); return; end -- no more retry
   self:Profile(true)
   local retry = false
-  local isCB = tonumber(GetCVar(private.CB_CVAR)) or 0 -- if colorblind mode activated then on 2nd line there is extra info
+  local nCB = tonumber(GetCVar(private.CB_CVAR)) -- if colorblind mode activated then on 2nd line there is extra info
   for itemID, data in pairs(NOP.T_RECIPES) do
     if not NOP.T_RECIPES_FIND[itemID] then -- need fill pattern
-      local name = GetItemInfo(itemID)
+      local name = GetItemInfo(itemID) -- query or fill client side cache
       if name == nil then -- item has no info on client side yet, let wait for server
         if (private.LOAD_RETRY - self.itemLoadRetry) > 1 then self:Verbose("ItemLoad:GetItemInfo(itemID)",itemID) end
         retry = true
@@ -49,8 +49,7 @@ function NOP:ItemLoad() -- load template item tooltips
           local c,pattern = unpack(data,1,2)
           if type(pattern) == "number" then
             if count >= pattern then
-              local i = pattern
-              if (isCB > 0) and (pattern > 1) then i = pattern + 1 end
+              local i = pattern + nCB
               local tooltipText = private.TOOLTIP_ITEM .. "TextLeft" .. i
               local text = _G[tooltipText].GetText and _G[tooltipText]:GetText() or "none"
               if text and (text ~= "none") then NOP.T_RECIPES_FIND[itemID] = {c,text,data[3],data[4]} end
@@ -67,7 +66,7 @@ function NOP:ItemLoad() -- load template item tooltips
           end
         else
           self:Verbose("ItemLoad:Empty tooltip", itemID)
-          retry = true -- /run NOP.itemFrame:ClearLines(); NOP.itemFrame:SetItemByID(111972); print(NOP.itemFrame:NumLines())
+          retry = true
           self.itemFrame = self:TooltipCreate(private.TOOLTIP_ITEM) -- empty tooltip I just throw out old one. Workaround for bad tooltip frame init damn Blizzard!
           break
         end
@@ -85,53 +84,40 @@ function NOP:ItemLoad() -- load template item tooltips
 end
 function NOP:SpellLoad() -- load spell patterns
   self.spellLoadRetry = self.spellLoadRetry - 1
-  if self.spellLoadRetry < 0 then self.spellLoad = true; return end
+  if self.spellLoadRetry < 0 then self.spellLoad = true; self.printt("NOP:SpellLoad() retry limit reached!"); return end
   self:Profile(true)
   local retry = false
+  NOP.T_OPEN[format("%s %s",ITEM_SPELL_TRIGGER_ONUSE,ITEM_OPENABLE)] = {1,nil} -- standard right click open
+  NOP.T_OPEN[ITEM_OPENABLE] = {1,nil} -- standard right click open
   for spellid, data in pairs(NOP.T_SPELL_BY_USE_TEXT) do -- [spellID] = {min-count,itemID,{"sub-Zone"},{[mapID]=true,[mapID]=true}}
     if data and data[2] then
-      local name = GetItemInfo(data[2]) -- now just cache all items into cache, later will get tooltip for spells over them
+      local name = GetItemInfo(data[2]) -- query or fill client side cache
       if name == nil then -- item has no info on client side yet, let wait for server
         if (private.LOAD_RETRY - self.spellLoadRetry) > 1 then self:Verbose("SpellLoad:GetItemInfo(data[2])",data[2]) end
         retry = true
+      else
+        self.spellFrame:ClearLines() -- clean tooltip frame
+        self.spellFrame:SetSpellByID(spellid) -- Fills the tooltip with information about a spell specified by ID
+        local spellName, spellRank, spellID = self.spellFrame:GetSpell() -- Returns information about the spell displayed in the tooltip
+        local count = self.spellFrame:NumLines()
+        if spellName then -- it has spell and tooltip has at least 2 lines
+          local tooltipText = private.TOOLTIP_SPELL .. "TextLeft" .. count
+          if _G[tooltipText] and _G[tooltipText].GetText then
+            local spell = _G[tooltipText]:GetText() -- get last line from tooltip
+            if spell ~= nil and spell ~= "" then
+              NOP.T_OPEN[format("%s %s",ITEM_SPELL_TRIGGER_ONUSE,spell)] = {data[1],data[3],data[4]} -- fill up string table to compare item tooltips for opening spellIDs
+            end
+          end
+        else
+          retry = true -- this is problem in tooltip frame! Workaround for bad tooltip frame init damn Blizzard!
+          if (count < 1) then 
+            self:Verbose("SpellLoad:Empty tooltip",spellid)
+            self.spellFrame = self:TooltipCreate(private.TOOLTIP_SPELL)
+          end
+        end
       end
     end
   end
-  if retry then
-    self.timerSpellLoad = self:ScheduleTimer("SpellLoad", private.TIMER_IDLE)
-    self:Profile(false)
-    return
-  end
-  retry = false
-  wipe(NOP.T_OPEN) -- clear table
-  NOP.T_OPEN[ITEM_OPENABLE] = {1,nil} -- standard right click open
-  for spellid,data in pairs(NOP.T_SPELL_BY_USE_TEXT) do -- [spellID] = {min-count,itemID,{"sub-Zone"},{[mapID]=true,[mapID]=true}}
-    self.spellFrame:ClearLines() -- clean tooltip frame
-    self.spellFrame:SetSpellByID(spellid) -- Fills the tooltip with information about a spell specified by ID
-    local spellName, spellRank, spellID = self.spellFrame:GetSpell() -- Returns information about the spell displayed in the tooltip
-    local count = self.spellFrame:NumLines()
-    if spellName then -- it has spell and tooltip has at least 2 lines
-      local tooltipText = private.TOOLTIP_SPELL .. "TextLeft" .. count
-      if _G[tooltipText] and _G[tooltipText].GetText then
-        local spell = _G[tooltipText]:GetText() -- get last line from tooltip
-        if spell ~= nil and spell ~= "" then
-          NOP.T_OPEN[format("%s %s",ITEM_SPELL_TRIGGER_ONUSE,spell)] = {data[1],data[3],data[4]} -- fill up string table to compare item tooltips for opening spellIDs
-        end -- /run foreach(NOP.T_OPEN,print)
-      end
-    else
-      retry = true -- this is problem in tooltip frame! Workaround for bad tooltip frame init damn Blizzard!
-      if (count < 1) then 
-        self:Verbose("SpellLoad:Empty tooltip",spellid)
-        self.spellFrame = self:TooltipCreate(private.TOOLTIP_SPELL)
-      end
-    end
-  end
-  if retry then
-    self.timerSpellLoad = self:ScheduleTimer("SpellLoad", private.TIMER_IDLE)
-    self:Profile(false)
-    return
-  end
-  retry = false
   for itemID,count in pairs(NOP.T_SPELL_BY_NAME) do
     local spell = GetItemSpell(itemID)
     if spell then
@@ -215,15 +201,15 @@ function NOP:BlacklistItem(isPermanent,itemID) -- right click will add item into
       if not (type(NOP.DB.T_BLACKLIST) == "table") then NOP.DB.T_BLACKLIST = {} end
       NOP.DB.T_BLACKLIST[0] = true
       NOP.DB.T_BLACKLIST[itemID] = true
-      self.printt(private.L["Permanently Blacklisted:|cFF00FF00"],name or itemID)
+      self.printt(private.L["PERMA_BLACKLIST"],name or itemID)
     else
       if not (type(NOP.T_BLACKLIST) == "table") then NOP.T_BLACKLIST = {} end
       NOP.T_BLACKLIST[0] = true -- blacklist is defined
       NOP.T_BLACKLIST[itemID] = true
       if NOP.DB.Skip then
-        self.printt(private.L["Session Blacklisted:|cFF00FF00"],name or itemID)
+        self.printt(private.L["SESSION_BLACKLIST"],name or itemID)
       else
-        self.printt(private.L["Temporary Blacklisted:|cFF00FF00"],name or itemID)
+        self.printt(private.L["TEMP_BLACKLIST"],name or itemID)
       end
     end
     NOP.T_USE[itemID] = nil; NOP.T_CHECK[itemID] = nil

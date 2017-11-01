@@ -8,19 +8,19 @@ if not L then return; end
 L["NOP_TITLE"] = "New Openables"
 L["NOP_VERSION"] = "|cFFFFFFFF%s - benutze |cFFFF00FF/nop|cFFFFFFFF"
 
-L["ALT-LeftClick and drag to move."] = "ALT-Linksklick und ziehen, um zu verschieben."
-L["LeftClick to open or use."] = "Linksklick, um Gegenstand zu öffnen oder benutzen."
-L["RightClick to skip item."] = "Rechtsklick, um Gegenstand zu überspringen."
-L["CTRL-RightClick to blacklist item."] = "STRG-Rechtsklick, um Gegenstand dauerhaft zu ignorieren."
+L["CLICK_DRAG_MSG"] = "ALT-Linksklick und ziehen, um zu verschieben."
+L["CLICK_OPEN_MSG"] = "Linksklick, um Gegenstand zu öffnen oder benutzen."
+L["CLICK_SKIP_MSG"] = "Rechtsklick, um Gegenstand zu überspringen."
+L["CLICK_BLACKLIST_MSG"] = "STRG-Rechtsklick, um Gegenstand dauerhaft zu ignorieren."
 L["No openable items!"] = "Keine Gegenstände, die geöffnet werden können!"
-L["Reset and move button to middle of screen!"] = "Schaltfläche auf die Mitte des Bildschirms zurückgesetzt!"
-L["Use: "] = "Benutze: "
+L["BUTTON_RESET"] = "Schaltfläche auf die Mitte des Bildschirms zurückgesetzt!"
+L["NOP_USE"] = "Benutze: "
 L["Spell:"] = "Zauber:"
-L["|cFFFF00FFPermanently blacklisted items:"] = "|cFFFF00FFDauerhaft ignorierte Gegenstände:"
-L["|cFFFF00FFPermanent blacklist is empty"] = "|cFFFF00FFKeine ignorierten Gegenstände"
-L["Permanently Blacklisted:|cFF00FF00"] = "Dauerhaft ignoriert:|cFF00FF00"
-L["Session Blacklisted:|cFF00FF00"] = "Für diese Session ignoriert:|cFF00FF00"
-L["Temporary Blacklisted:|cFF00FF00"] = "Temporär ignoriert:|cFF00FF00"
+L["BLACKLISTED_ITEMS"] = "|cFFFF00FFDauerhaft ignorierte Gegenstände:"
+L["BLACKLIST_EMPTY"] = "|cFFFF00FFKeine ignorierten Gegenstände"
+L["PERMA_BLACKLIST"] = "Dauerhaft ignoriert:|cFF00FF00"
+L["SESSION_BLACKLIST"] = "Für diese Session ignoriert:|cFF00FF00"
+L["TEMP_BLACKLIST"] = "Temporär ignoriert:|cFF00FF00"
 L["|cFFFF0000Error loading tooltip for|r "] = "|cFFFF0000Fehler beim Laden des Tooltips für|r "
 L["Plans, patterns and recipes cache update."] = "Cache-Aktualisierung von Plänen, Mustern und Rezepten."
 L["Spell patterns cache update."] = "Cache-Aktualisierung von Zaubermustern."
@@ -65,6 +65,8 @@ L["Herald"] = true
 L["Announce completed work orders, artifact points etc.."] = true
 L["Skip on Error"] = true
 L["Temporary blacklist item when click produce error message"] = true
+L["HIDE_IN_COMBAT"] = "Hide in combat"
+L["HIDE_IN_COMBAT_HELP"] = "Hide items button when in combat"
 L["Buttons per row"] = "Schaltflächen pro Reihe"
 L["Number of buttons placed in one row"] = "Wie viele Schaltflächen auf einer Reihe angezeigt werden sollen"
 L["Spacing"] = "Abstand"
@@ -88,9 +90,10 @@ L["Spells cache update run |cFF00FF00%d."] = "Cache-Aktualisierung von Zaubern |
 L["%s: %d done %d to go!"] = true
 L["Paragon reward for %s is ready!"] = true
 L["Shipyard have %d/%d ships!"] = true
-L["Artifact have %d talents ready!"] = true
+L["Artifact have %d traits ready!"] = true
 L["Archaeology %s is ready!"] = true
 L["%s is ready!"] = true
+L["Temporary blacklist cleared, restarting lookup!"] = true
 
 L["CONSOLE_USAGE"] = [=[ [reset|skin|lock|clear|list|unlist|skip|glow|zone|quest|show]
 reset  - setzt die Schaltfläche auf die Mitte des Bildschirms zurück

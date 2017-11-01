@@ -142,7 +142,7 @@ function NOP:ButtonReset() -- reset button to default position
   self:ButtonSize()
   self:ButtonMove()
   self:QBUpdate()
-  self.printt(private.L["Reset and move button to middle of screen!"])
+  self.printt(private.L["BUTTON_RESET"])
 end
 function NOP:ButtonSize() -- resize button
   if self:inCombat() then
@@ -170,7 +170,7 @@ function NOP:ButtonMove() -- move button from UI config
   self.timerButtonMove = nil
   self.BF:SetClampedToScreen(true)
   self.BF:ClearAllPoints()
-  self.BF:SetPoint(NOP.DB.button[1] or "CENTER", self.frameHider, NOP.DB.button[3] or "CENTER", NOP.DB.button[4] or 0, NOP.DB.button[5] or 0)
+  self.BF:SetPoint(NOP.DB.button[1] or "CENTER", self.frameHiderB, NOP.DB.button[3] or "CENTER", NOP.DB.button[4] or 0, NOP.DB.button[5] or 0)
   self:ButtonSave()
 end
 function NOP:ButtonStore(button) -- save default properties
@@ -207,7 +207,7 @@ function NOP:ButtonLoad() -- create button, restore his position
   end
   self.timerButtonLoad = nil
   if not self.BF then -- new button
-    self.BF = CreateFrame("Button", private.BUTTON_FRAME, self.frameHider, "SecureActionButtonTemplate, ActionButtonTemplate")
+    self.BF = CreateFrame("Button", private.BUTTON_FRAME, self.frameHiderB, "SecureActionButtonTemplate, ActionButtonTemplate")
     local bt = self.BF
     if bt:IsVisible() or bt:IsShown() then bt:Hide() end
     bt:SetFrameStrata(NOP.DB.strata and "HIGH" or "MEDIUM")
@@ -360,7 +360,7 @@ function NOP.ActionButton_GetOverlayGlow()
   local overlay = tremove(unusedOverlayGlows)
   if not overlay then
     numOverlays = numOverlays + 1
-    overlay = CreateFrame("Frame", ADDON .. "ActionButtonOverlay"..numOverlays, NOP.frameHider, "ActionBarButtonSpellActivationAlert")
+    overlay = CreateFrame("Frame", ADDON .. "ActionButtonOverlay"..numOverlays, NOP.frameHiderB, "ActionBarButtonSpellActivationAlert")
   end
   return overlay;
 end

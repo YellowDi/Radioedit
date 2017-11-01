@@ -137,7 +137,7 @@ NOP.slash_handler = function(msg, editbox) -- /nop handler
   end
   if cmd == "list" then
     if (NOP.DB["T_BLACKLIST"] ~= nil and NOP.DB.T_BLACKLIST[0]) or (NOP.DB["T_BLACKLIST_Q"] ~= nil and NOP.DB.T_BLACKLIST_Q[0])then
-      NOP.printt(private.L["|cFFFF00FFPermanently blacklisted items:"])
+      NOP.printt(private.L["BLACKLISTED_ITEMS"])
       NOP.printt("--Button--")
       for itemID,count in pairs(NOP.DB.T_BLACKLIST) do
         if itemID and itemID > 0 then
@@ -161,7 +161,7 @@ NOP.slash_handler = function(msg, editbox) -- /nop handler
         end
       end
     else
-      NOP.printt(private.L["|cFFFF00FFPermanent blacklist is empty"])
+      NOP.printt(private.L["BLACKLIST_EMPTY"])
     end
     return
   end
@@ -178,7 +178,7 @@ NOP.slash_handler = function(msg, editbox) -- /nop handler
     NOP:ItemShowNew()
     return
   end
-  local usage = {string.split("\n", private.L["Use: "] .. private.CONSOLE_CMD .. private.CONSOLE_USAGE)}
+  local usage = {string.split("\n", private.L["NOP_USE"] .. private.CONSOLE_CMD .. private.CONSOLE_USAGE)}
   for _,line in pairs(usage) do 
     NOP.printt(line)
   end

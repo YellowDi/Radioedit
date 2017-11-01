@@ -269,6 +269,7 @@ function NOP:ItemShow(bagID,slotID,itemID,itemCount,itemTexture) -- add item to 
     self:ButtonShow() -- show button
   else -- need hide button
     if self:BlacklistClear() then -- no more items to show, may be some are just temporary blacklisted
+      self.printt(private.L["Temporary blacklist cleared, restarting lookup!"])
       self:ItemShowNew() -- restart process
       return
     end

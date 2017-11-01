@@ -8,19 +8,19 @@ if not L then return; end
 L["NOP_TITLE"] = "New Openables"
 L["NOP_VERSION"] = "|cFFFFFFFF%s use |cFFFF00FF/nop|cFFFFFFFF"
 
-L["ALT-LeftClick and drag to move."] = true
-L["LeftClick to open or use."] = true
-L["RightClick to skip item."] = true
-L["CTRL-RightClick to blacklist item."] = true
+L["CLICK_DRAG_MSG"] = "ALT-LeftClick and drag to move."
+L["CLICK_OPEN_MSG"] = "LeftClick to open or use."
+L["CLICK_SKIP_MSG"] = "RightClick to skip item."
+L["CLICK_BLACKLIST_MSG"] = "CTRL-RightClick to blacklist item."
 L["No openable items!"] = true
-L["Reset and move button to middle of screen!"] = true
-L["Use: "] = true
+L["BUTTON_RESET"] = "Reset and move button to middle of screen!"
+L["NOP_USE"] = "Use: "
 L["Spell:"] = true
-L["|cFFFF00FFPermanently blacklisted items:"] = true
-L["|cFFFF00FFPermanent blacklist is empty"] = true
-L["Permanently Blacklisted:|cFF00FF00"] = true
-L["Session Blacklisted:|cFF00FF00"] = true
-L["Temporary Blacklisted:|cFF00FF00"] = true
+L["BLACKLISTED_ITEMS"] = "|cFFFF00FFPermanently blacklisted items:"
+L["BLACKLIST_EMPTY"] = "|cFFFF00FFPermanent blacklist is empty"
+L["PERMA_BLACKLIST"] = "Permanently Blacklisted:|cFF00FF00"
+L["SESSION_BLACKLIST"] = "Session Blacklisted:|cFF00FF00"
+L["TEMP_BLACKLIST"] = "Temporary Blacklisted:|cFF00FF00"
 L["|cFFFF0000Error loading tooltip for|r "] = true
 L["Plans, patterns and recipes cache update."] = true
 L["Spell patterns cache update."] = true
@@ -65,6 +65,8 @@ L["Herald"] = true
 L["Announce completed work orders, artifact points etc.."] = true
 L["Skip on Error"] = true
 L["Temporary blacklist item when click produce error message"] = true
+L["HIDE_IN_COMBAT"] = "Hide in combat"
+L["HIDE_IN_COMBAT_HELP"] = "Hide items button when in combat"
 L["Buttons per row"] = true
 L["Number of buttons placed in one row"] = true
 L["Spacing"] = true
@@ -88,9 +90,10 @@ L["Spells cache update run |cFF00FF00%d."] = true
 L["%s: %d done %d to go!"] = true
 L["Paragon reward for %s is ready!"] = true
 L["Shipyard have %d/%d ships!"] = true
-L["Artifact have %d talents ready!"] = true
+L["Artifact have %d traits ready!"] = true
 L["Archaeology %s is ready!"] = true
 L["%s is ready!"] = true
+L["Temporary blacklist cleared, restarting lookup!"] = true
 
 L["CONSOLE_USAGE"] = [=[ [reset|skin|lock|clear|list|unlist|skip|glow|zone|quest|show]
 reset  - will reset button position to middle of screen
