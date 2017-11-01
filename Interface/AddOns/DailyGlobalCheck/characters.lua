@@ -580,6 +580,7 @@ function chars:CreateCharactersFrame(parent)
  return chars_frame
 end
 
+--[[ -- forbidden as of wow 7.3.2
 local logoutfunc = Logout
 function Logout()
  if chars then chars:SaveCharData() end
@@ -591,10 +592,14 @@ function Quit()
  if chars then chars:SaveCharData() end
  quitfunc()
 end
+]]
 
---[[
 DGCEventFrame:RegisterEvent("PLAYER_LEAVING_WORLD")
 function DGCEventFrame.PLAYER_LEAVING_WORLD(...)
- chars:SaveCharData()
+ if chars then chars:SaveCharData() end
 end
-]]
+
+DGCEventFrame:RegisterEvent("PLAYER_LOGOUT")
+function DGCEventFrame.PLAYER_LOGOUT(...)
+ if chars then chars:SaveCharData() end
+end
