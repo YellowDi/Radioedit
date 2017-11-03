@@ -69,6 +69,7 @@ local LE_GARRISON_TYPE_7_0=LE_GARRISON_TYPE_7_0
 local GARRISON_FOLLOWER_COMBAT_ALLY=GARRISON_FOLLOWER_COMBAT_ALLY
 local GARRISON_FOLLOWER_ON_MISSION=GARRISON_FOLLOWER_ON_MISSION
 local GARRISON_FOLLOWER_INACTIVE=GARRISON_FOLLOWER_INACTIVE
+local GARRISON_FOLLOWER_IN_PARTY=GARRISON_FOLLOWER_IN_PARTY
 local GARRISON_FOLLOWER_AVAILABLE=AVAILABLE
 local ViragDevTool_AddData=_G.ViragDevTool_AddData
 if not ViragDevTool_AddData then ViragDevTool_AddData=function() end end
@@ -208,14 +209,15 @@ local eqCount={}
 function addon:RefreshEquipments()
   wipe(eqCount)
   for followerID,followerInfo in pairs(addon:GetFollowerData()) do
-    GarrisonFollowerTabMixin:SetupAbilities(followerInfo)
-    for i=1,#followerInfo.equipment do
-      local eq=followerInfo.equipment[i]
-      if eq.icon then
-        if not eqCount[eq.icon] then eqCount[eq.icon]={} end
-        tinsert(eqCount[eq.icon],followerInfo.followerID)
+    if pcall(GarrisonFollowerTabMixin.SetupAbilities,GarrisonFollowerTabMixin,followerInfo) then
+      for i=1,#followerInfo.equipment do
+        local eq=followerInfo.equipment[i]
+        if eq.icon then
+          if not eqCount[eq.icon] then eqCount[eq.icon]={} end
+          tinsert(eqCount[eq.icon],followerInfo.followerID)
+        end
       end
-    end
+    end   
   end
 end
 function module:RefreshUpgrades(model,followerID,displayID,showWeapon)

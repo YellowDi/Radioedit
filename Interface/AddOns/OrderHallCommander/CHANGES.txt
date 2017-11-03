@@ -1,28 +1,24 @@
-tag f04c51f8b242f008e8184c7fb3baf6ea886b0345 1.5.6
+tag c335a06979b4a2762b6c5f65c40beb312c10d8bf 1.5.8
 Author:	Alar of Runetotem <alar@aspide.it>
-Date:	Mon Oct 23 12:40:04 2017 +0200
+Date:	Sat Nov 4 00:25:16 2017 +0100
 
-Fix: #135 Using champion equipment causes the game to hang
-Fix: #117 Sometimes "in progress" mission were shown without followers
-Fix: Reset button was not working
-Fix: You can again change switches while viewing the mission page
-Fix: Removed chat spam
-Feature: Base chance can be now set up to 120% to allow for a bit of
-overcapping
-Feature: New Elite Overcap switch to force elites mission to always stay
-over 100%, if possibile
-Feature: You can restore shift-click to send a single mission from
-mission list
+Fix: 1x OrderHallCommander\missionlist.lua:469: attempt to call method :
+#136 (and others) Lua error
+Fix: #137 Removed chat spam
+Feature: Class specific troop generating items added. Let me know if
+your class has issue
+Feature: Total xp are now shown as "xp x followers", so you can better
+compare missions (feature request #97)
 
-commit 27471a850ddb003d16006d42c959a21e93c0d801
+commit 16b820f1a0702045425b60b07a952e04291ea780
 Author: Alar of Runetotem <alar@aspide.it>
-Date:   Mon Oct 23 12:39:08 2017 +0200
+Date:   Sat Nov 4 00:23:53 2017 +0100
 
-    Doc
+    Fix Lua error due to missing RefreshValue method
 
-commit 42da7698323a8b02db7b5d58a379f96275303992
+commit 992ef0777232b042f7a6dc9b9a1c12ae8a240f2e
 Author: Alar of Runetotem <alar@aspide.it>
-Date:   Mon Oct 23 02:41:01 2017 +0200
+Date:   Fri Nov 3 16:17:50 2017 +0100
 
-    Shortened name in side menu title
+    Notes
 

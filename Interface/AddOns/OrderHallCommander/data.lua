@@ -67,6 +67,7 @@ local LE_GARRISON_TYPE_7_0=LE_GARRISON_TYPE_7_0
 local GARRISON_FOLLOWER_COMBAT_ALLY=GARRISON_FOLLOWER_COMBAT_ALLY
 local GARRISON_FOLLOWER_ON_MISSION=GARRISON_FOLLOWER_ON_MISSION
 local GARRISON_FOLLOWER_INACTIVE=GARRISON_FOLLOWER_INACTIVE
+local GARRISON_FOLLOWER_IN_PARTY=GARRISON_FOLLOWER_IN_PARTY
 local GARRISON_FOLLOWER_AVAILABLE=AVAILABLE
 local ViragDevTool_AddData=_G.ViragDevTool_AddData
 if not ViragDevTool_AddData then ViragDevTool_AddData=function() end end
@@ -146,6 +147,34 @@ local data={
    152096,
    152097,
 	},
+	DEATHKNIGHT={
+	 140767
+	},
+	DEMONHUNTER={
+	 143849
+	},
+	DRUID={
+	},
+	HUNTER={
+	},
+	MAGE={
+	},
+	MONK={
+	},
+	PALADIN={
+	},
+	PRIEST={
+	},
+	ROGUE={
+	},
+	SHAMAN={
+	 143850
+	},
+	WARLOCK={
+	},
+	WARRIOR={
+	},
+	Class={},
 	Equipments={}
 }
 local icon2item={}
@@ -157,6 +186,10 @@ end
 local tickle
 function module:OnInitialized()
   data.Equipments=addon.allEquipments
+  local cs=data[select(2,UnitClass("player"))]
+  if cs then
+    data.Class=cs
+  end
 	--[===[@debug@
 	addon:Print("Starting coroutine")
 	--@end-debug@]===]

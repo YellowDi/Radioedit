@@ -69,6 +69,7 @@ local LE_GARRISON_TYPE_7_0=LE_GARRISON_TYPE_7_0
 local GARRISON_FOLLOWER_COMBAT_ALLY=GARRISON_FOLLOWER_COMBAT_ALLY
 local GARRISON_FOLLOWER_ON_MISSION=GARRISON_FOLLOWER_ON_MISSION
 local GARRISON_FOLLOWER_INACTIVE=GARRISON_FOLLOWER_INACTIVE
+local GARRISON_FOLLOWER_IN_PARTY=GARRISON_FOLLOWER_IN_PARTY
 local GARRISON_FOLLOWER_AVAILABLE=AVAILABLE
 local ViragDevTool_AddData=_G.ViragDevTool_AddData
 if not ViragDevTool_AddData then ViragDevTool_AddData=function() end end
@@ -94,6 +95,7 @@ end
 
 -- End Template - DO NOT MODIFY ANYTHING BEFORE THIS LINE
 --*BEGIN
+local XP_GAIN= XP_GAIN .. ' x %d'
 local pairs,wipe,tinsert,unpack=pairs,wipe,tinsert,unpack
 local UNCAPPED_PERC=PERCENTAGE_STRING
 local CAPPED_PERC=PERCENTAGE_STRING .. "**"
@@ -462,6 +464,7 @@ function addon:PauseApply(pause)
 end
 function addon:Apply(flag,value)
   if suspendApply then return end
+  local w=module:GetMenuItem(flag)
   addon:PushRefresher("CleanMissionsCache")
 	if not timer then timer=addon:NewDelayableTimer(function() addon:ReloadMissions() end) end
 	self:GetTutorialsModule():Refresh()
@@ -485,6 +488,13 @@ local PushRefresher,RunRefreshers,ListRefreshers do
     Refreshers[refresher]=obj or true 
   end  
   function RunRefreshers()
+  if next(Refreshers) and OHF:IsVisible() then
+--[===[@debug@      
+    addon:Print(debugstack(3,2,0))
+--@end-debug@]===]
+  else
+    return
+  end
     for method,obj in pairs(Refreshers) do
       if type(obj)=="boolean" then
         obj=addon
@@ -492,10 +502,12 @@ local PushRefresher,RunRefreshers,ListRefreshers do
 --[===[@debug@      
       addon:Print("Running refresher",method)
 --@end-debug@]===]
-      obj[method](obj)
+    if type(obj[method])=="function" then
+    obj[method](obj)
+    end
     end
     wipe(Refreshers)
-  end
+  end  
   function ListRefreshers()
     wipe(temp)
     for k,_ in pairs(Refreshers) do
@@ -632,6 +644,7 @@ function module:Menu(flag)
 		local f=factory:Option(addon,menu,flag,200)
 		optionlist[flag]=f
 		if type(f)=="table" and f.GetObjectType then
+      addon:GetVarInfo(flag).guiHidden=true
 			if previous then
 				f:SetPoint("TOPLEFT",previous,"BOTTOMLEFT",0,0)
 			else
@@ -679,12 +692,6 @@ function module:InitialSetup(this)
 	collectgarbage("stop")
 	if type(addon.db.global.warn01_seen)~="number" then	addon.db.global.warn01_seen =0 end
 	if type(addon.db.global.warn02_seen)~="number" then	addon.db.global.warn02_seen =0 end
-	if GetAddOnEnableState(UnitName("player"),"GarrisonCommander") > 0 then
-		if addon.db.global.warn02_seen  < 3 then
-			addon.db.global.warn02_seen=addon.db.global.warn02_seen+1
-			addon:Popup(L["OrderHallCommander overrides GarrisonCommander for Order Hall Management.\n You can revert to GarrisonCommander simply disabling OrderhallCommander.\nIf instead you like OrderHallCommander remember to add it to Curse client and keep it updated"],20)
-		end
-	end
 	self:Menu()
 	if addon.db.profile.showmenu then OpenMenu() else CloseMenu() end
 	self:Unhook(this,"OnShow")
@@ -1111,8 +1118,10 @@ function module:AddThreats(frame,threats,party,missionID)
 	end
 	threats.Cost:ClearAllPoints()
 	threats.Cost:SetPoint("LEFT",frame.Summary,"RIGHT",5,0)
-	if party.totalXP and party.totalXP > 0 then
-		threats.XP:SetFormattedText(XP_GAIN,party.totalXP or 0)
+	local xp=party.totalXP or 0
+	local gainers=party.xpGainers or 0
+	if xp * gainers ~= 0 then
+		threats.XP:SetFormattedText(XP_GAIN,xp/gainers,gainers)
 		threats.XP:ClearAllPoints()
 		threats.XP:SetPoint("LEFT",threats.Cost,"RIGHT",5,0)
 		threats.XP:Show()
