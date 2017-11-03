@@ -1,16 +1,52 @@
-lightweight tag 69a9a510c3395a500df78df142f5a546d6e8d654 3.58
+lightweight tag a7457946dcbb2ed5ec776541ddd4b1a3c1f4360e 3.61
 Author:	Azilroka <darktemplar9900@yahoo.com>
-Date:	Tue Oct 3 20:22:54 2017 -0500
+Date:	Thu Nov 2 18:48:20 2017 -0500
 
-commit 69a9a510c3395a500df78df142f5a546d6e8d654
+commit a7457946dcbb2ed5ec776541ddd4b1a3c1f4360e
 Author: Azilroka <darktemplar9900@yahoo.com>
-Date:   Tue Oct 3 20:22:54 2017 -0500
+Date:   Thu Nov 2 18:48:20 2017 -0500
 
-    3.58
+    3.61
 
-commit f483cb4446666f4c16a9f98b89928f59c85fefef
+commit 9f62e92d815d64536ce3a1d8cbbec34e14aae3bc
 Author: Azilroka <darktemplar9900@yahoo.com>
-Date:   Tue Oct 3 20:22:13 2017 -0500
+Date:   Thu Nov 2 18:47:54 2017 -0500
 
-    Missed
+    Omen Fix
+
+commit bc7efde9c591c748bbd7a1ec9f6c819aef152bcb
+Author: Merathilis <neo0608@gmail.com>
+Date:   Thu Nov 2 09:55:14 2017 +0100
+
+    Update ServerHop. I hope i catch all frames.
+
+commit bc7efde9c591c748bbd7a1ec9f6c819aef152bcb
+Author: Merathilis <neo0608@gmail.com>
+Date:   Thu Nov 2 09:55:14 2017 +0100
+
+    Update ServerHop. I hope i catch all frames.
+
+commit 13dc6c1880c3da41429d26082bd87a3502ab1518
+Author: Maharaja <altogoten@gmail.com>
+Date:   Wed Nov 1 12:24:11 2017 -0400
+
+    Update ServerHop.lua
+
+commit 13dc6c1880c3da41429d26082bd87a3502ab1518
+Author: Maharaja <altogoten@gmail.com>
+Date:   Wed Nov 1 12:24:11 2017 -0400
+
+    Update ServerHop.lua
+
+commit 13dc6c1880c3da41429d26082bd87a3502ab1518
+Author: Maharaja <altogoten@gmail.com>
+Date:   Wed Nov 1 12:24:11 2017 -0400
+
+    Update ServerHop.lua
+
+commit 5ded814f9251e6e05296e6bea38aa1c694c87808
+Author: Azilroka <darktemplar9900@yahoo.com>
+Date:   Tue Oct 31 18:53:15 2017 -0500
+
+    Remove this. It's not a skin.
 

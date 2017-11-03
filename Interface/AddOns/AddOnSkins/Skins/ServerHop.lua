@@ -29,21 +29,21 @@ function AS:ServerHop()
 	end
 
 	-- Main Frame
-	AS:SkinFrame(ServerHop)
-	AS:StripTextures(ServerHop.hopFrame)
-	AS:SkinButton(ServerHop.hopFrame.buttonHop, true)
-	ServerHop.hopFrame.buttonHop:SetPoint("RIGHT",-15,0)
-
-	AS:SkinButton(ServerHop.closeButton)
-	ServerHop.closeButton:SetPoint("TOPRIGHT",0,0)
-
-	AS:SkinButton(ServerHop.buttonOptions)
-	ServerHop.buttonOptions:SetPoint("TOPLEFT",0,0)
+	local hopAddOn = _G["ServerHop"]
+	local hopFrame = hopAddOn.hopFrame
+	AS:SkinFrame(hopFrame)
+	AS:SkinButton(hopFrame.buttonHop, true)
+	hopFrame.buttonHop:SetPoint("LEFT", 20, 0)
+	AS:SkinCloseButton(hopAddOn.closeButton)
+	hopAddOn.closeButton:SetPoint("TOPRIGHT", 0, 0)
+	AS:SkinButton(hopAddOn.buttonOptions)
+	hopAddOn.buttonOptions:SetPoint("TOPLEFT", 0, 0)
+	AS:SkinEditBox(hopFrame.description, 205, 18)
+	AS:SkinButton(sh_clearblbut)
+	sh_clearblbut:SetSize(24, 24)
 
 	SkinDropDownBox(hopFramepvpDrop, 128)
 	SkinDropDownBox(CountDrop, 128)
-
-	AS:SkinEditBox(ServerHop.hopFrame.description, 205, 20)
 
 	-- Options Frame
 	AS:SkinFrame(hopOptions)
@@ -51,21 +51,6 @@ function AS:ServerHop()
 	AS:StripTextures(hopOptions.optionsAuthor)
 	AS:SkinEditBox(hopOptions.optionsAuthor.linkBox)
 	AS:SkinEditBox(hopOptions.hopSearchOptionsFrame.linkBox)
-
-	AS:SkinFrame(hopOptions.tabList)
-	AS:SkinFrame(hopOptions.hopSearchOptionsFrame)
-	AS:SkinFrame(hopOptions.aboutTab)
-
-	AS:SkinCheckBox(CheckAutoinv)
-	AS:SkinSlideBar(ServerHop_sliderQueueWait,16, true)
-	AS:SkinSlideBar(ServerHop_sliderBL,16)
-
-	local HopEditBox = {hopOptions.hopSearchOptionsFrame:GetChildren()}
-	for i = 1, #HopEditBox do
-		if HopEditBox[i]:IsObjectType("EditBox") then
-			AS:SkinEditBox(HopEditBox[i])
-		end
-	end
 end
 
 AS:RegisterSkin('ServerHop', AS.ServerHop)
