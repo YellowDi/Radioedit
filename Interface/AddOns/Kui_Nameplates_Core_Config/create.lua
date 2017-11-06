@@ -8,7 +8,7 @@ version:SetTextColor(.5,.5,.5)
 version:SetPoint('TOPRIGHT',-12,-10)
 version:SetText(string.format(
     L.titles.version,
-    'KuiNameplates','Kesava','2.15.1'
+    'KuiNameplates','Kesava','2.15.2'
 ))
 
 opt:Initialise()

@@ -321,6 +321,7 @@ end
 local function AuraFrame_Update(self)
     if self.__DISABLED then return end
 
+    self:FactionUpdate() -- XXX workaround for #1
     self:GetAuras()
 
     for _,button in ipairs(self.buttons) do
@@ -363,6 +364,7 @@ local function AuraFrame_GetAuras(self)
               nps_own,spellid,_,_,_,nps_all =
               UnitAura(self.parent.unit,i,self.filter)
 
+        if not name then break end
         if name and spellid and
            self:ShouldShowAura(spellid,strlower(name),duration,caster,nps_own,nps_all)
         then
