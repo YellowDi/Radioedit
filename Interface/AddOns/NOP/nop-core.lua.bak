@@ -31,7 +31,7 @@ function NOP:TooltipCreate(name) -- create tooltip frame
 end
 function NOP:ItemLoad() -- load template item tooltips
   self.itemLoadRetry = self.itemLoadRetry - 1 -- only limited retries
-  if self.itemLoadRetry < 0 then self.itemLoad = true; self.printt("ItemLoad:","retry limit reached!"); return; end -- no more retry
+  if self.itemLoadRetry < 0 then self.itemLoad = true; self.printt("NOP:ItemLoad() retry limit reached!"); return; end -- no more retry
   self:Profile(true)
   local retry = false
   local nCB = tonumber(GetCVar(private.CB_CVAR)) -- if colorblind mode activated then on 2nd line there is extra info
@@ -39,7 +39,7 @@ function NOP:ItemLoad() -- load template item tooltips
     if not NOP.T_RECIPES_FIND[itemID] then -- need fill pattern
       local name = GetItemInfo(itemID) -- query or fill client side cache
       if name == nil then -- item has no info on client side yet, let wait for server
-        if (private.LOAD_RETRY - self.itemLoadRetry) > 1 then self:Verbose("ItemLoad:","itemID",itemID,"GetItemInfo(itemID) empty") end
+        if (private.LOAD_RETRY - self.itemLoadRetry) > 1 then self:Verbose("ItemLoad:GetItemInfo(itemID)",itemID) end
         retry = true
       else
         self.itemFrame:ClearLines() -- clean tooltip frame
@@ -79,21 +79,21 @@ function NOP:ItemLoad() -- load template item tooltips
     return
   end -- postspone
   self.itemLoad = true
-  if (private.LOAD_RETRY - self.itemLoadRetry) > 1 then self:Verbose("ItemLoad:",string.format(private.L["Items cache update run |cFF00FF00%d."],private.LOAD_RETRY - self.itemLoadRetry)) end
+  if (private.LOAD_RETRY - self.itemLoadRetry) > 1 then self:Verbose(string.format(private.L["Items cache update run |cFF00FF00%d."],private.LOAD_RETRY - self.itemLoadRetry)) end
   self.itemLoadRetry = private.LOAD_RETRY
 end
 function NOP:SpellLoad() -- load spell patterns
   self.spellLoadRetry = self.spellLoadRetry - 1
-  if self.spellLoadRetry < 0 then self.spellLoad = true; self.printt("SpellLoad:","retry limit reached!"); return end
+  if self.spellLoadRetry < 0 then self.spellLoad = true; self.printt("NOP:SpellLoad() retry limit reached!"); return end
   self:Profile(true)
   local retry = false
-  NOP.T_OPEN[format("%s %s",ITEM_SPELL_TRIGGER_ONUSE,ITEM_OPENABLE)] = {{1,private.PRI_OPEN},nil,nil} -- standard right click open
-  NOP.T_OPEN[ITEM_OPENABLE] = {{1,private.PRI_OPEN},nil,nil} -- standard right click open
-  for spellid, data in pairs(NOP.T_SPELL_BY_USE_TEXT) do -- [spellID] = {{count_to_use,priotity},itemID,{"sub-Zone",...},{[mapID]=true,...}}, table for opening via spell, used for multiple items with same spell text
+  NOP.T_OPEN[format("%s %s",ITEM_SPELL_TRIGGER_ONUSE,ITEM_OPENABLE)] = {1,nil} -- standard right click open
+  NOP.T_OPEN[ITEM_OPENABLE] = {1,nil} -- standard right click open
+  for spellid, data in pairs(NOP.T_SPELL_BY_USE_TEXT) do -- [spellID] = {min-count,itemID,{"sub-Zone"},{[mapID]=true,[mapID]=true}}
     if data and data[2] then
       local name = GetItemInfo(data[2]) -- query or fill client side cache
       if name == nil then -- item has no info on client side yet, let wait for server
-        if (private.LOAD_RETRY - self.spellLoadRetry) > 1 then self:Verbose("SpellLoad:","data[2]",data[2],"GetItemInfo(data[2]) is empty") end
+        if (private.LOAD_RETRY - self.spellLoadRetry) > 1 then self:Verbose("SpellLoad:GetItemInfo(data[2])",data[2]) end
         retry = true
       else
         self.spellFrame:ClearLines() -- clean tooltip frame
@@ -105,25 +105,25 @@ function NOP:SpellLoad() -- load spell patterns
           if _G[tooltipText] and _G[tooltipText].GetText then
             local spell = _G[tooltipText]:GetText() -- get last line from tooltip
             if spell ~= nil and spell ~= "" then
-              NOP.T_OPEN[format("%s %s",ITEM_SPELL_TRIGGER_ONUSE,spell)] = {data[1],data[3],data[4]} -- ["tooltip-string"] = {{count_to_use,priority},{"sub-ZoneName","sub-ZoneName"},{[mapID]=true,[mapID]=true}}, items by open-spell in tooltip
+              NOP.T_OPEN[format("%s %s",ITEM_SPELL_TRIGGER_ONUSE,spell)] = {data[1],data[3],data[4]} -- fill up string table to compare item tooltips for opening spellIDs
             end
           end
         else
           retry = true -- this is problem in tooltip frame! Workaround for bad tooltip frame init damn Blizzard!
           if (count < 1) then 
-            self:Verbose("SpellLoad:","spellid",spellid,"empty tooltip")
+            self:Verbose("SpellLoad:Empty tooltip",spellid)
             self.spellFrame = self:TooltipCreate(private.TOOLTIP_SPELL)
           end
         end
       end
     end
   end
-  for itemID,data in pairs(NOP.T_SPELL_BY_NAME) do
+  for itemID,count in pairs(NOP.T_SPELL_BY_NAME) do
     local spell = GetItemSpell(itemID)
-    if spell and spell ~= "" then
-      NOP.T_SPELL_FIND[spell] = data
+    if spell then
+      if (string.len(spell) > 0) then NOP.T_SPELL_FIND[spell] = count end
     else
-      self:Verbose("SpellLoad:","itemID,",itemID,"GetItemSpell(itemID) empty")
+      self:Verbose("SpellLoad:GetItemSpell(itemID)",itemID)
       retry = true
     end
   end
@@ -133,7 +133,7 @@ function NOP:SpellLoad() -- load spell patterns
     return
   end
   self.spellLoad = true
-  if (private.LOAD_RETRY - self.spellLoadRetry) > 1 then self:Verbose("SpellLoad:",string.format(private.L["Spells cache update run |cFF00FF00%d."],private.LOAD_RETRY - self.spellLoadRetry)) end
+  if (private.LOAD_RETRY - self.spellLoadRetry) > 1 then self:Verbose(string.format(private.L["Spells cache update run |cFF00FF00%d."],private.LOAD_RETRY - self.spellLoadRetry)) end
   self.spellLoadRetry = private.LOAD_RETRY -- limit number of retries
 end
 function NOP:PickLockUpdate() -- rogue picklocking
@@ -317,7 +317,7 @@ function NOP:CheckBuilding(toCheck)
     local talentTrees = C_Garrison.GetTalentTreeIDsByClassID(LE_GARRISON_TYPE_7_0, select(3, UnitClass("player"))) -- orderhall talents
     if talentTrees then
       local completeTalentID = C_Garrison.GetCompleteTalent(LE_GARRISON_TYPE_7_0)
-      if completeTalentID and not HERALD_ANNOUNCED[completeTalentID] then
+      if not HERALD_ANNOUNCED[completeTalentID] then
         for treeIndex, treeID in ipairs(talentTrees) do
           local _, _, tree = C_Garrison.GetTalentTreeInfoForID(treeID)
           for talentIndex, talent in ipairs(tree) do
@@ -328,24 +328,8 @@ function NOP:CheckBuilding(toCheck)
           end
         end
       end
-      for treeIndex, treeID in ipairs(talentTrees) do
-        local _, _, tree = C_Garrison.GetTalentTreeInfoForID(treeID)
-        for talentIndex, talent in ipairs(tree) do
-          if talent.selected and not HERALD_ANNOUNCED[talent.perkSpellID] and NOP.T_INSTA_WQ[talent.perkSpellID] then
-            local ability = GetSpellInfo(talent.perkSpellID) -- spell name
-            local _, duration = GetSpellCooldown(talent.perkSpellID)
-            local count = GetItemCount(NOP.T_INSTA_WQ[talent.perkSpellID])
-            local name = GetItemInfo(NOP.T_INSTA_WQ[talent.perkSpellID])
-            if duration == 0 then
-              local txt = " " .. private.RGB_RED .. ERR_SPELL_FAILED_REAGENTS_GENERIC .. " " .. private.RGB_YELLOW .. name
-              self:PrintToActive((private.TALENT_ANNOUNCE):format(ability) .. ((count == 0) and txt or ""))
-              HERALD_ANNOUNCED[talent.perkSpellID] = true
-            end
-          end
-        end
-      end
     end
-  end -- /run local _, _, t = C_Garrison.GetTalentTreeInfoForID(119); for a,b in ipairs(t) do print(a, b.selected, b.perkSpellID) end
+  end
   if HasArtifactEquipped() and not HERALD_ANNOUNCED[0] then -- artifact points to spend
     local _, _, _, _, totalXP, pointsSpent, _, _, _, _, _, _, artifactTier = C_ArtifactUI.GetEquippedArtifactInfo()
     local numPointsAvailableToSpend, xp, xpForNextPoint = MainMenuBar_GetNumArtifactTraitsPurchasableFromXP(pointsSpent, totalXP, artifactTier)

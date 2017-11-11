@@ -87,13 +87,13 @@ L["Quest"] = true
 L["Quest not found for this item."] = true
 L["Items cache update run |cFF00FF00%d."] = true
 L["Spells cache update run |cFF00FF00%d."] = true
-L["%s: %d done %d to go!"] = true
-L["Paragon reward for %s is ready!"] = true
-L["Shipyard have %d/%d ships!"] = true
-L["Artifact have %d traits ready!"] = true
-L["Archaeology %s is ready!"] = true
-L["%s is ready!"] = true
-L["Temporary blacklist cleared, restarting lookup!"] = true
+L["TOGO_ANNOUNCE"] = "%s: %d done %d to go!"
+L["REWARD_ANNOUNCE"] = "Paragon reward for %s is ready!"
+L["SHIPYARD_ANNOUNCE"] = "Shipyard have %d/%d ships!"
+L["ARTIFACT_ANNOUNCE"] = "Artifact have %d traits ready!"
+L["ARCHAELOGY_ANNOUNCE"] = "Archaeology %s is ready!"
+L["TALENT_ANNOUNCE"] = "%s is ready!"
+L["RESTARTED_LOOKUP"] = "Temporary blacklist cleared, restarting lookup!"
 
 L["CONSOLE_USAGE"] = [=[ [reset|skin|lock|clear|list|unlist|skip|glow|zone|quest|show]
 reset  - will reset button position to middle of screen

@@ -18,9 +18,12 @@ function NOP:ItemIsBlacklisted(itemID) -- is item blacklisted?
 end
 function NOP:ItemGetSpell(itemID) -- looking for usable item by spell attached to item
   local spell = GetItemSpell(itemID)
-  if spell and NOP.T_SPELL_FIND[spell] then
-    self:Verbose("ItemGetSpell:","itemID",itemID,"spell",spell)
-    return unpack(NOP.T_SPELL_FIND[spell])
+  if spell then
+    local count = NOP.T_SPELL_FIND[spell] -- how many of them I need?
+    if count then -- is in table and has no red text in tooltip
+      self:Verbose("itemID",itemID,"GetItemSpell", spell)
+      return count, 2
+    end
   end
 end
 function NOP:ItemGetItem(itemID) -- looking for usable item by itemID returns (count, 2, zone, map, aura) or nil
@@ -43,7 +46,7 @@ function NOP:ItemGetItem(itemID) -- looking for usable item by itemID returns (c
       end
     end
   end
-  return c[1], c[2], z, m, a
+  return count, 2, z, m, a
 end
 function NOP:ItemGetLockPattern(itemID) -- test tooltip for locked item
   if NOP.DB.profession and self.pickLockLevel and (self.scanFrame:NumLines() > 2) then -- rogue picklock in use
@@ -55,7 +58,7 @@ function NOP:ItemGetLockPattern(itemID) -- test tooltip for locked item
       if lockLevel and (self.pickLockLevel >= lockLevel) then -- I can picklock this!
         self:Verbose("ItemGetLockPattern:",itemID,"LockeLevel",lockLevel)
         T_PICK[itemID] = true
-        return 1, private.PRI_OPEN
+        return 1, 2
       end
     end
   end
@@ -70,13 +73,13 @@ function NOP:ItemGetPattern(itemID) -- looking for usable item via pattern in to
       for key, data in pairs(NOP.T_RECIPES_FIND) do
         local c, pattern, z, m = unpack(data,1,4)
         if strfind(heading,pattern,1,true) then
-          return c[1], c[2], z, m
+          return c, 2, z, m
         end
       end
       for key, data in pairs(NOP.T_OPEN) do
         if strfind(heading,key,1,true) then
           local c, z, m = unpack(data,1,3)
-          return c[1], c[2], z, m
+          return c, 2, z, m
         end
       end
     end
@@ -123,7 +126,7 @@ function NOP:ItemScan() -- /run NOP:ItemScan(); foreach(NOP.T_USE,print)
           if linkType == private.ITEM_TYPE_BATTLE_PET then
             local numCollected, limit = C_PetJournal.GetNumCollectedInfo(linkID)
             if (numCollected < limit) then
-              self:ItemToUse(itemID, 1, private.PRI_OPEN, nil, nil)
+              self:ItemToUse(itemID, 1, 2, nil, nil)
             else
               self:Verbose("ItemScan:","Pet",itemID,"have more than",limit)
               NOP.T_USE[itemID] = nil
@@ -230,43 +233,24 @@ function NOP:ItemToPicklock(itemID) -- need to find which item really need to un
           self.scanFrame:SetBagItem(bag, slot) -- fill up tooltip
         end
         if self:ItemGetLockPattern(id) then
-          self:Verbose("ItemToPicklock:","Locked item",id,"bag",bag,"slot",slot)
-          return bag, slot
+          self.BF.bagID, self.BF.slotID = bag, slot -- this item really need to unlock
+          self:Verbose("Locked item",id,"bag",bag,"slot",slot)
+          return true
         end
       end
     end
   end
 end
-function NOP:ItemShowRestart()
-  if self:BlacklistClear() then -- no more items to show, may be some are just temporary blacklisted
-    self.printt(private.L["RESTARTED_LOOKUP"])
-    self:ItemShowNew() -- restart process
-  else 
-    self.AceDB.char.itemID = nil
-    self:ButtonHide() -- hide button
-  end
-end
-function NOP:ItemShow(itemID,prio) -- add item to button
-  local bt = self.BF
-  if not bt then return end
-  if not itemID then self:ItemShowRestart(); return; end
-  local bagID, slotID = unpack(T_BAGS[itemID])
-  if not (bagID and slotID) then -- not in correct place
-    self:BlacklistItem(false,itemID)
-    self:ItemShowRestart()
-    return
-  end
-  local isGlow = (prio == private.PRI_POPUP) or nil
-  local itemCount = GetItemCount(itemID)
-  local itemTexture = GetContainerItemInfo(bagID, slotID)
-  if not itemTexture then -- not valid item info
-    self:BlacklistItem(false,itemID)
-    self:ItemShowRestart()
-    return
-  end
-  if WoWBox then
+function NOP:ItemShow(bagID,slotID,itemID,itemCount,itemTexture) -- add item to button
+  local button = self.BF
+  if not button then return end
+  if bagID then self:Verbose("itemID",itemID,"has",GetItemSpell(itemID) or "None") end
+  button.bagID = bagID; button.slotID = slotID -- used in tooltip
+  button.itemID = itemID; button.itemCount = itemCount; button.itemTexture = itemTexture -- used in button show
+  button.expiration = 0
+  if WoWBox and bagID then
     WoWBox.itemClick = nil
-    if isGlow then
+    if self.priorityItem then
       if (itemID == 118903) or (itemID == 118897) then -- mine
         WoWBox.itemClick = (itemCount > 5)
       elseif (itemID ~= private.RO_SHIPYARD) then -- salvage but not shipyard
@@ -274,28 +258,24 @@ function NOP:ItemShow(itemID,prio) -- add item to button
       end
     end
   end
-  local mtext = format(private.MACRO_ACTIVE,itemID)
-  if T_PICK[itemID] then -- item has picklock in tooltip
-    local bag, slot = self:ItemToPicklock(itemID) -- find where in bags is item which still with unlock because same itemID can be unlocked or locked it depends on state of item
-    if bag and slot then
-      bagID = bag
-      slotID = slot
-      mtext = format(private.MACRO_PICKLOCK,self.pickLockSpell,bagID,slotID) -- this one needs unlock
-      self.printt("ItemShow:","mtext",mtext)
+  if bagID and slotID and itemID and itemTexture then -- time to update button with 1st item
+    if (self.pickLockID == itemID) and self:ItemToPicklock(itemID) then -- search what item really need to unlock!
+      button.mtext = format(private.MACRO_PICKLOCK,self.pickLockSpell,button.bagID,button.slotID) -- bagId and slotID could change in self:ItemToPicklock(itemID)!
+    else
+      button.mtext = format(private.MACRO_ACTIVE,itemID)
     end
-  end
-  if (bt.itemCount ~= itemCount) or (bt.itemID ~= itemID) or (bt.isGlow ~= isGlow) or (bt.mtext ~= mtext) then
-    bt.showID = itemID
-    bt.itemID = itemID
-    bt.isGlow = isGlow
-    bt.mtext = mtext
-    bt.bagID = bagID
-    bt.slotID = slotID
-    bt.itemCount = itemCount
-    bt.itemTexture = itemTexture
-    self.AceDB.char.itemID = itemID
-    -- self.printt("ItemShow:","itemID",itemID,"prio",prio)
-    self:ButtonShow() -- show or refresh button
+    self:Verbose("itemID",itemID,"bag",button.bagID,"slot",button.slotID,"placed on button")
+    button.showID = itemID -- from now every item in bag is new one
+    self.AceDB.char.itemID = itemID -- store for restore as last item on button after logout/login
+    self:ButtonShow() -- show button
+  else -- need hide button
+    if self:BlacklistClear() then -- no more items to show, may be some are just temporary blacklisted
+      self.printt(private.L["Temporary blacklist cleared, restarting lookup!"])
+      self:ItemShowNew() -- restart process
+      return
+    end
+    self.AceDB.char.itemID = nil
+    self:ButtonHide() -- hide button
   end
 end
 function NOP:ItemShowNew() -- check bags for usable item and place it on button
@@ -322,10 +302,10 @@ function NOP:ItemShowNew() -- check bags for usable item and place it on button
         end
       end
       if inZone then
-        p = private.PRI_POPUP
+        p = 1
       else
         if NOP.DB.zoneUnlock and not a then
-          p = p + private.PRI_SKIP -- shift priority behind items not zone locked
+          p = p + 10 -- shift priority behind items not zone locked
           inZone = true
         else
           p = nil
@@ -350,7 +330,33 @@ function NOP:ItemShowNew() -- check bags for usable item and place it on button
       end
     end
   end
-  self:ItemShow(toShow,prio)
+  if toShow then -- have something to place on button
+    local bag,slot = unpack(T_BAGS[toShow])
+    local itemID = GetContainerItemID(bag,slot)
+    if (itemID ~= toShow) then -- gotcha in that slot is not that item, but GetItemCount telling us we have it, lets search it again
+      self:Verbose("Item",toShow,"moved in bags.")
+      for bag = BACKPACK_CONTAINER, NUM_BAG_SLOTS, 1 do
+        for slot = 1, GetContainerNumSlots(bag), 1 do
+          if toShow == GetContainerItemID(bag,slot) then T_BAGS[toShow] = {bag,slot} end -- update it
+        end
+      end
+      bag,slot = unpack(T_BAGS[toShow])
+      if not (toShow == GetContainerItemID(bag,slot)) then -- oh item is not there!
+        self:Profile(false)
+        self:Verbose("Item",toShow,"missing in bags.")
+        self:ItemShowNew() -- retry without that item
+        return
+      end
+    end
+    if (prio == 1) then self.priorityItem = toShow else self.priorityItem = nil end -- glow effect on button
+    local count = GetItemCount(toShow)
+    local itemTexture = GetContainerItemInfo(bag, slot)
+    self.pickLockID = T_PICK[toShow] and toShow -- it is item in picklocking table?, macro will be different
+    self:ItemShow(bag,slot,toShow,count,itemTexture) -- place new item on button
+  else
+    self.priorityItem = nil
+    self:ItemShow(nil)
+  end
   self:Profile(false)
 end
 function NOP:ItemTimer() -- slow backpack recheck

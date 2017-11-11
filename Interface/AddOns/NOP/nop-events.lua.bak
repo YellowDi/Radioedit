@@ -21,17 +21,8 @@ function NOP:InitEvents()
   self:RegisterEvent("GARRISON_LANDINGPAGE_SHIPMENTS") -- herald notify
   self:RegisterEvent("PLAYER_ENTERING_WORLD") -- Loading screen
 end
-local OK_ERROR_SHOW = { -- OK errors not ship but not clear them as well
-  [ERR_SPELL_FAILED_ANOTHER_IN_PROGRESS] = true,
-  [SPELL_FAILED_ITEM_NOT_READY] = true,
-  [ERR_NO_ITEMS_WHILE_SHAPESHIFTED] = true,
-}
-local OK_ERROR_NEXT = { -- OK error, clear and skip
- [ERR_ITEM_NOT_FOUND] = true,
- [SPELL_FAILED_BAD_TARGETS] = true,
-}
 function NOP:UI_ERROR_MESSAGE(event, msgType, msg, ...) -- handle lockpicking item could be already unlocked or still locked and can't be used yet.
-  if (msg == ERR_ITEM_LOCKED) and not self:inCombat() then -- replace action on button
+  if (msg == ERR_ITEM_LOCKED) and not self:inCombat() then
     UIErrorsFrame:Clear()
     local bt = self.BF
     if bt and self:ItemToPicklock(bt.itemID) then
@@ -41,14 +32,21 @@ function NOP:UI_ERROR_MESSAGE(event, msgType, msg, ...) -- handle lockpicking it
     end
     return
   end
-  if OK_ERROR_NEXT[msg] then -- someone bashing button or item did move in bags
-    UIErrorsFrame:Clear() -- remove error from error frame
-    self:ItemShowNew() -- look for another item
+  if (msg == SPELL_FAILED_BAD_TARGETS) then
+    UIErrorsFrame:Clear()
+    self:ItemShowNew()
     return
   end
-  if OK_ERROR_SHOW[msg] then -- these errors are ok, item is on CD or can't be used in current state
+  if (msg == SPELL_FAILED_ITEM_NOT_READY) or (msg == ERR_ITEM_COOLDOWN) then
+    UIErrorsFrame:Clear()
     return
   end
+  if (msg == ERR_ITEM_NOT_FOUND) then
+    UIErrorsFrame:Clear()
+    self:ItemShowNew()
+    return
+  end
+  if (msg == ERR_SPELL_FAILED_ANOTHER_IN_PROGRESS) then return end -- someone keep pushing button
   if self.preClick and NOP.DB.SkipOnError then -- something with button went wrong, lets temporary blacklist it
     self.printt(msg)
     UIErrorsFrame:Clear()
@@ -83,7 +81,6 @@ function NOP:PLAYER_LOGIN() -- player entering game
   self:PickLockUpdate() -- picklock skills
   local key = GetBindingKey("CLICK " .. private.BUTTON_FRAME .. ":LeftButton")
   if self.BF.hotkey then self.BF.hotkey:SetText(self:ButtonHotKey(key)) end
-  if not self.timerZoneChanged then self.timerZoneChanged = self:ScheduleTimer("ZoneChanged",private.TIMER_IDLE) end
   self.backTimer = self:ScheduleRepeatingTimer("ItemTimer", private.TIMER_RECHECK) -- slow backing timer for complete rescan, sometime GetItemSpell get hang or new item is added post events are triggered
 end
 function NOP:ZONE_CHANGED() -- map change, all items tied to zone need update

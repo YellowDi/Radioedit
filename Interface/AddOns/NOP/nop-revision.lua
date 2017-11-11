@@ -1,4 +1,13 @@
 -- Revisions:
+--[[<p>08.16 10.11.2017</p>
+<ul>
+<li>Instant world quest completion skills are now announced when become ready, it does check if necessary consumable is present.</li>
+<li>Implemented different priorities for groups of items like artefact power, tokens, reputation.</li>
+<li>Cleanup code and updates to item button is done only when really new item is placed on.</li>
+<li>Possible fix for lockpicking.</li>
+<li>Possible fix for stacks of cofee in garrison mine.</li>
+</ul>
+]]
 --[[<p>08.14 29.10.2017</p>
 <ul>
 <li>Verbose message when preload of items and spells does fail.</li>

@@ -115,7 +115,7 @@ end
 function NOP:ButtonPostClick(button) -- post click on button
   if button then
     if (button == 'RightButton') then
-      self:BlacklistItem(IsControlKeyDown(),self.BF.itemID)
+      NOP:BlacklistItem(IsControlKeyDown(),self.BF.itemID)
     end
     if WoWBox then WoWBox.itemClick = nil end
     if not self.timerItemShowNew then self.timerItemShowNew = self:ScheduleTimer("ItemShowNew", private.TIMER_IDLE / 3) end -- back to timer
@@ -269,20 +269,19 @@ function NOP:ButtonShow() -- display button
     return
   end
   self.timerButtonShow = nil
-  local bt = self.BF
-  self:ButtonCount(bt.itemCount)
-  bt.icon:SetTexture(bt.itemTexture or private.DEFAULT_ICON)
-  if (GetMouseFocus() == bt) then self:ButtonOnEnter(bt) end -- update tooltip if mouse is over button
+  local bt = self.BF; self:ButtonCount(bt.itemCount); bt.icon:SetTexture(bt.itemTexture or private.DEFAULT_ICON)
+  if (GetMouseFocus() == bt) then self:ButtonOnEnter(bt) end
   bt:SetAttribute("type1", "macro") -- "type1" Unmodified left click.
   bt:SetAttribute("macrotext1", bt.mtext)
-  self:Verbose("ButtonShow:","macro text",bt.mtext)
-  --self:printt("ButtonShow:","macro text",bt.mtext)
+  self:Verbose("Set Macro:",bt.mtext)
   if not (bt:IsVisible() or bt:IsShown()) then bt:Show() end
-  if NOP.DB.glowButton and bt.isGlow then
+  if NOP.DB.glowButton then
+    if self.priorityItem and self.priorityItem == bt.itemID then
       self.ActionButton_ShowOverlayGlow(bt)
     else
       self.ActionButton_HideOverlayGlow(bt)
     end
+  end
 end
 function NOP:ButtonHide() -- hide button
   if self:inCombat() then
@@ -290,17 +289,9 @@ function NOP:ButtonHide() -- hide button
     return
   end
   self.timerButtonHide = nil
-  local bt = self.BF
-  bt.itemCount = 0
-  bt.bagID = nil
-  bt.itemID = nil
-  bt.isGlow = nil
-  bt.mtext = private.MACRO_INACTIVE
-  bt.itemTexture = nil
-  bt.icon:SetTexture(private.DEFAULT_ICON)
-  bt:SetAttribute("macrotext1", private.MACRO_INACTIVE)
-  self:ButtonCount(bt.itemCount)
-  self.ActionButton_HideOverlayGlow(bt)
+  local bt = self.BF; bt.itemCount = 0; bt.bagID = nil; bt.itemID = nil; bt.mtext = private.MACRO_INACTIVE; bt.itemTexture = nil -- reset to defaults
+  bt.icon:SetTexture(private.DEFAULT_ICON); 
+  bt:SetAttribute("macrotext1", private.MACRO_INACTIVE); self:ButtonCount(bt.itemCount); self.ActionButton_HideOverlayGlow(bt)
   if NOP.DB.visible then  -- show fake button, instead hide.
     if not (bt:IsShown() or bt:IsVisible()) then bt:Show() end
   else
