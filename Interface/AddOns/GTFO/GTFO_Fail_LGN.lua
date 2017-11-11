@@ -480,6 +480,15 @@ GTFO.SpellID["247186"] = {
   sound = 3;
 };
 
+GTFO.SpellID["202323"] = {
+  --desc = "Goliath's Bane (Sigurd the Giantslayer)";
+  sound = 3;
+};
+
+GTFO.SpellID["197362"] = {
+  --desc = "Wandering Keg (Chen Stormstout)";
+  sound = 3;
+};
 
 -- ********************
 -- * The Broken Shore *
@@ -2094,6 +2103,12 @@ GTFO.SpellID["251735"] = {
   --desc = "Swarming Insects";
   applicationOnly = true;
   sound = 3;
+};
+
+GTFO.SpellID["249238"] = {
+  --desc = "Slumber (Slumber Fog)";
+  applicationOnly = true;
+  sound = 1;
 };
 
 

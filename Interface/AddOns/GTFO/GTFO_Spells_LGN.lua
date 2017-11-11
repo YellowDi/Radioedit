@@ -401,6 +401,11 @@ GTFO.SpellID["234422"] = {
   sound = 2;
 };
 
+GTFO.SpellID["199349"] = {
+  --desc = "Fel Flames";
+  sound = 1;
+};
+
 -- **********
 -- * Mardum *
 -- **********
@@ -1674,6 +1679,11 @@ GTFO.SpellID["243294"] = {
   sound = 1;
 };
 
+GTFO.SpellID["240262"] = {
+  --desc = "Burning (Kil'jaeden)";
+  sound = 1;
+};
+
 
 --- *********
 --- * Argus *
@@ -1753,6 +1763,7 @@ GTFO.SpellID["249263"] = {
 GTFO.SpellID["251901"] = {
   --desc = "Molten Lava";
   sound = 1;
+  tankSound = 0;
 };
 
 GTFO.SpellID["249067"] = {

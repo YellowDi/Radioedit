@@ -1269,3 +1269,7 @@ Change Log:
 4.43.5
 * Added Legion spells for Argus
 * Added Legion spells for Tomb of Sargeras
+
+4.43.6
+* Added Legion spells for Argus
+* Added Legion spells for Tomb of Sargeras
