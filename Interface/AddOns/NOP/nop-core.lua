@@ -29,9 +29,10 @@ function NOP:TooltipCreate(name) -- create tooltip frame
   frame:SetOwner(UIParent,"ANCHOR_NONE") -- frame out of screen and start updating
   return frame
 end
+local itemRetry = nil
 function NOP:ItemLoad() -- load template item tooltips
   self.itemLoadRetry = self.itemLoadRetry - 1 -- only limited retries
-  if self.itemLoadRetry < 0 then self.itemLoad = true; self.printt("ItemLoad:","retry limit reached!"); return; end -- no more retry
+  if self.itemLoadRetry < 0 then self.itemLoad = true; self.printt("ItemLoad:","retry limit reached! Last not seen itemID", itemRetry); return; end -- no more retry
   self:Profile(true)
   local retry = false
   local nCB = tonumber(GetCVar(private.CB_CVAR)) -- if colorblind mode activated then on 2nd line there is extra info
@@ -40,6 +41,7 @@ function NOP:ItemLoad() -- load template item tooltips
       local name = GetItemInfo(itemID) -- query or fill client side cache
       if name == nil then -- item has no info on client side yet, let wait for server
         if (private.LOAD_RETRY - self.itemLoadRetry) > 1 then self:Verbose("ItemLoad:","itemID",itemID,"GetItemInfo(itemID) empty") end
+        itemRetry = itemID
         retry = true
       else
         self.itemFrame:ClearLines() -- clean tooltip frame
@@ -66,6 +68,7 @@ function NOP:ItemLoad() -- load template item tooltips
           end
         else
           self:Verbose("ItemLoad:Empty tooltip", itemID)
+          itemRetry = itemID
           retry = true
           self.itemFrame = self:TooltipCreate(private.TOOLTIP_ITEM) -- empty tooltip I just throw out old one. Workaround for bad tooltip frame init damn Blizzard!
           break
@@ -82,9 +85,10 @@ function NOP:ItemLoad() -- load template item tooltips
   if (private.LOAD_RETRY - self.itemLoadRetry) > 1 then self:Verbose("ItemLoad:",string.format(private.L["Items cache update run |cFF00FF00%d."],private.LOAD_RETRY - self.itemLoadRetry)) end
   self.itemLoadRetry = private.LOAD_RETRY
 end
+local spellRetry = nil
 function NOP:SpellLoad() -- load spell patterns
   self.spellLoadRetry = self.spellLoadRetry - 1
-  if self.spellLoadRetry < 0 then self.spellLoad = true; self.printt("SpellLoad:","retry limit reached!"); return end
+  if self.spellLoadRetry < 0 then self.spellLoad = true; self.printt("SpellLoad:","retry limit reached! Last not seend spell on itemID", spellRetry); return end
   self:Profile(true)
   local retry = false
   NOP.T_OPEN[format("%s %s",ITEM_SPELL_TRIGGER_ONUSE,ITEM_OPENABLE)] = {{1,private.PRI_OPEN},nil,nil} -- standard right click open
@@ -94,6 +98,7 @@ function NOP:SpellLoad() -- load spell patterns
       local name = GetItemInfo(data[2]) -- query or fill client side cache
       if name == nil then -- item has no info on client side yet, let wait for server
         if (private.LOAD_RETRY - self.spellLoadRetry) > 1 then self:Verbose("SpellLoad:","data[2]",data[2],"GetItemInfo(data[2]) is empty") end
+        spellRetry = data[2]
         retry = true
       else
         self.spellFrame:ClearLines() -- clean tooltip frame
@@ -109,6 +114,7 @@ function NOP:SpellLoad() -- load spell patterns
             end
           end
         else
+          spellRetry = data[2] .. " spellID " .. spellid
           retry = true -- this is problem in tooltip frame! Workaround for bad tooltip frame init damn Blizzard!
           if (count < 1) then 
             self:Verbose("SpellLoad:","spellid",spellid,"empty tooltip")
@@ -124,6 +130,7 @@ function NOP:SpellLoad() -- load spell patterns
       NOP.T_SPELL_FIND[spell] = data
     else
       self:Verbose("SpellLoad:","itemID,",itemID,"GetItemSpell(itemID) empty")
+      spellRetry = itemID
       retry = true
     end
   end
@@ -336,7 +343,7 @@ function NOP:CheckBuilding(toCheck)
             local _, duration = GetSpellCooldown(talent.perkSpellID)
             local count = GetItemCount(NOP.T_INSTA_WQ[talent.perkSpellID])
             local name = GetItemInfo(NOP.T_INSTA_WQ[talent.perkSpellID])
-            if duration == 0 then
+            if duration == 0 and name then
               local txt = " " .. private.RGB_RED .. ERR_SPELL_FAILED_REAGENTS_GENERIC .. " " .. private.RGB_YELLOW .. name
               self:PrintToActive((private.TALENT_ANNOUNCE):format(ability) .. ((count == 0) and txt or ""))
               HERALD_ANNOUNCED[talent.perkSpellID] = true

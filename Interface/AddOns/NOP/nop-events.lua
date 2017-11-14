@@ -25,6 +25,7 @@ local OK_ERROR_SHOW = { -- OK errors not ship but not clear them as well
   [ERR_SPELL_FAILED_ANOTHER_IN_PROGRESS] = true,
   [SPELL_FAILED_ITEM_NOT_READY] = true,
   [ERR_NO_ITEMS_WHILE_SHAPESHIFTED] = true,
+  [SPELL_FAILED_MOVING] = true,
 }
 local OK_ERROR_NEXT = { -- OK error, clear and skip
  [ERR_ITEM_NOT_FOUND] = true,

@@ -1,4 +1,10 @@
 -- Revisions:
+--[[<p>08.18 14.11.2017</p>
+<ul>
+<li>Fix announce generating error when reagent name is not yet in cache.</li>
+<li>When spellLoad or itemLoad reach retry limit it prints last offending itemID and or spellID as well.</li>
+</ul>
+]]
 --[[<p>08.16 10.11.2017</p>
 <ul>
 <li>Instant world quest completion skills are now announced when become ready, it does check if necessary consumable is present.</li>

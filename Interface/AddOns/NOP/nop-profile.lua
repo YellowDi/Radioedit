@@ -71,7 +71,7 @@ function NOP:OptionsLoad() -- load options for UI config
       },
       toggle = {
         order = 1,
-        name = private.L["Toggle"],
+        name = private.L["TOGGLE"],
         type = "group",
         args = {
           blacklist = {
