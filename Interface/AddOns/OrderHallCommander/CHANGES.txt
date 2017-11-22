@@ -1,24 +1,20 @@
-tag c335a06979b4a2762b6c5f65c40beb312c10d8bf 1.5.8
+tag d5459e962892172dca938ef8a881504f69ac4cea 1.5.9
 Author:	Alar of Runetotem <alar@aspide.it>
-Date:	Sat Nov 4 00:25:16 2017 +0100
+Date:	Sun Nov 19 19:47:07 2017 +0100
 
-Fix: 1x OrderHallCommander\missionlist.lua:469: attempt to call method :
-#136 (and others) Lua error
-Fix: #137 Removed chat spam
-Feature: Class specific troop generating items added. Let me know if
-your class has issue
-Feature: Total xp are now shown as "xp x followers", so you can better
-compare missions (feature request #97)
+Feature: added more items to side bar
+Feature: removed from followerpage and moved to sidebar some items which
+doesnt need to be cast on a followe
+
+commit c038f5515b47e5ba750c5d3655c847ed4561452b
+Author: Alar of Runetotem <alar@aspide.it>
+Date:   Sun Nov 19 19:46:04 2017 +0100
+
+    Relnotes
 
 commit 16b820f1a0702045425b60b07a952e04291ea780
 Author: Alar of Runetotem <alar@aspide.it>
 Date:   Sat Nov 4 00:23:53 2017 +0100
 
     Fix Lua error due to missing RefreshValue method
-
-commit 992ef0777232b042f7a6dc9b9a1c12ae8a240f2e
-Author: Alar of Runetotem <alar@aspide.it>
-Date:   Fri Nov 3 16:17:50 2017 +0100
-
-    Notes
 
