@@ -14,37 +14,39 @@ NOP.T_INSTA_WQ = { -- [spellID] = itemID, list of OH advancements and spells for
   [221587] = 140155, -- Vanguard of the Silver Hand
   [221561] = 140158, -- Rift Cannon
 }
-NOP.T_SPELL_BY_NAME = { -- [itemID] = {count_to_use,priority}, table to fetch via GetItemSpell(itemID) for group of items where spell-name is the same
-  [  7973] = {1,private.PRI_REST}, -- Open the clam!, Big-Mouth Clam
-  [113355] = {1,private.PRI_REST}, -- Flip Card, Card of Omens
-  [112023] = {1,private.PRI_REST}, -- Learning, Recipe: Draenic Philosopher's Stone, all learnable, it should replace most items in table T_RECIPES
-  [114171] = {1,private.PRI_REST}, -- Crate Restored Artifact, common for all
-  [113271] = {1,private.PRI_REST}, -- Convert to garrison resources, Giant Kaliri Egg, Gain xxx Garrison Resources, common for all
-  [128316] = {1,private.PRI_REST}, -- Convert to Oil, Bulging Barrel of Oil,
-  [139669] = {1,private.PRI_REST}, -- Toss the fish back into the water, granting 50 Artifact Power to your fishing artifact.
-  [129097] = {1,private.PRI_REST}, -- 30 Ancient Mana, Ancient Mana Gem
-  [140401] = {1,private.PRI_REST}, -- 75 Ancient Mana, Blue Or'ligai Egg
-  [140236] = {1,private.PRI_REST}, -- 100 Ancient Mana, 
-  [140240] = {1,private.PRI_REST}, -- 150 Ancient Mana
-  [140242] = {1,private.PRI_REST}, -- 200 Ancient Mana
-  [140239] = {1,private.PRI_REST}, -- 300 Ancient Mana
-  [140526] = {1,private.PRI_REST}, -- Eredar Signet, Use: Provides a significant increase to character experience.
-  [141028] = {1,private.PRI_OPEN}, -- Grimoire of Knowledge, Use: Open your Followers page and use this item to grant 4000 XP directly to a Champion.
-  [146663] = {1,private.PRI_POWER}, -- Empowering, Soggy Tapestry, 150 artifact power
-  [147837] = {1,private.PRI_TOKEN}, -- Create Relic, Relinquished Life Relic
+NOP.T_SPELL_BY_NAME = { -- [itemID] = {{count_to_use,priority},{"sub-Zone",...},{[mapID]=true,...}} table to fetch via GetItemSpell(itemID) for group of items where spell-name is the same
+  [ 99726] = {{1,private.PRI_OPEN},nil,nil}, -- Create Item, Leggings of the Cursed Vanquisher
+  [113355] = {{1,private.PRI_OPEN},nil,nil}, -- Flip Card, Card of Omens
+  [112023] = {{1,private.PRI_OPEN},nil,nil}, -- Learning, Recipe: Draenic Philosopher's Stone, all learnable, it should replace most items in table T_RECIPES
+  [114171] = {{1,private.PRI_OPEN},nil,nil}, -- Crate Restored Artifact, common for all
+  [113271] = {{1,private.PRI_OPEN},nil,nil}, -- Convert to garrison resources, Giant Kaliri Egg, Gain xxx Garrison Resources, common for all
+  [128316] = {{1,private.PRI_OPEN},nil,nil}, -- Convert to Oil, Bulging Barrel of Oil,
+  [139669] = {{1,private.PRI_POWER},nil,nil}, -- Throw Back, Toss the fish back into the water, granting 50 Artifact Power to your fishing artifact.
+  [129097] = {{1,private.PRI_OPEN},nil,nil}, -- 30 Ancient Mana, Ancient Mana Gem
+  [140401] = {{1,private.PRI_OPEN},nil,nil}, -- 75 Ancient Mana, Blue Or'ligai Egg
+  [140236] = {{1,private.PRI_OPEN},nil,nil}, -- 100 Ancient Mana, 
+  [140240] = {{1,private.PRI_OPEN},nil,nil}, -- 150 Ancient Mana
+  [140242] = {{1,private.PRI_OPEN},nil,nil}, -- 200 Ancient Mana
+  [140239] = {{1,private.PRI_OPEN},nil,nil}, -- 300 Ancient Mana
+  [140526] = {{1,private.PRI_OPEN},nil,nil}, -- Eredar Signet, Use: Provides a significant increase to character experience.
+  [141028] = {{1,private.PRI_OPEN},nil,nil}, -- Grimoire of Knowledge, Use: Open your Followers page and use this item to grant 4000 XP directly to a Champion.
+  [146663] = {{1,private.PRI_POWER},nil,nil}, -- Empowering, Soggy Tapestry, 150 artifact power
+  [147837] = {{1,private.PRI_TOKEN},nil,nil}, -- Create Relic, Relinquished Life Relic
+  [114116] = {{1,private.PRI_REST},{private.SALVAGE_YARD},{[private.FROSTWALL]=true,[private.LUNARFALL]=true}}, -- Create Relic, Relinquished Life Relic
+  [116158] = {{1,private.PRI_REST},nil,{[private.FROSTWALL]=true,[private.LUNARFALL]=true}}, -- Toss Fish, Lunarfall Carp, can be used only in garrison shown on button only in garrison.
 }
 NOP.T_SPELL_BY_USE_TEXT = { -- [spellID] = {{count_to_use,priotity},itemID,{"sub-Zone",...},{[mapID]=true,...}}, table for opening via spell, used for multiple items with same spell text
   [168178] = {{1,private.PRI_REST},114116,{private.SALVAGE_YARD},{[private.FROSTWALL]=true,[private.LUNARFALL]=true}}, -- Salvage, Bag of Salvaged Goods, can be used only in salvage-yard shown on button only in garrison even if disabled zone-lock
-  [ 58165] = {{1,private.PRI_REST},  7973,nil,nil},  -- Open the clam!, Big-Mouth Clam
-  [166550] = {{1,private.PRI_REST},113355,nil,nil},  -- Flip Card, Card of Omens
+  -- [ 58165] = {{1,private.PRI_REST},  7973,nil,nil},  -- Open the clam!, Big-Mouth Clam
+  -- [166550] = {{1,private.PRI_REST},113355,nil,nil},  -- Flip Card, Card of Omens
   [163769] = {{1,private.PRI_REST},116158,nil,{[private.FROSTWALL]=true,[private.LUNARFALL]=true}}, -- Toss Fish, Lunarfall Carp, can be used only in garrison shown on button only in garrison.
   [233232] = {{1,private.PRI_REST},143748,nil,nil}, -- 25 mana
   [222333] = {{1,private.PRI_REST},139786,nil,nil}, -- 50 mana
-  [223677] = {{1,private.PRI_REST},140401,nil,nil}, -- 75 mana
-  [222942] = {{1,private.PRI_REST},140236,nil,nil}, -- 100 mana
-  [222947] = {{1,private.PRI_REST},140240,nil,nil}, -- 150 mana
-  [222950] = {{1,private.PRI_REST},140242,nil,nil}, -- 200 mana
-  [222945] = {{1,private.PRI_REST},140239,nil,nil}, -- 300 mana
+  --[223677] = {{1,private.PRI_REST},140401,nil,nil}, -- 75 mana
+  --[222942] = {{1,private.PRI_REST},140236,nil,nil}, -- 100 mana
+  --[222947] = {{1,private.PRI_REST},140240,nil,nil}, -- 150 mana
+  --[222950] = {{1,private.PRI_REST},140242,nil,nil}, -- 200 mana
+  --[222945] = {{1,private.PRI_REST},140239,nil,nil}, -- 300 mana
 }
 NOP.T_RECIPES = { -- [ItemId] = {{count_to_use,priority}, "gsub regex" | tooltip-line-number,{"sub-Zone",...},{[mapID]=true,...}}, item tooltip template only text to 1st match is compared, that mean all items of same school would be looked up.
   [153135] = {{1,private.PRI_TOKEN},4,nil,nil}, -- Unsullied Cloth Robes, why Blizzard did put in type of armor?
@@ -94,6 +96,10 @@ NOP.T_RECIPES = { -- [ItemId] = {{count_to_use,priority}, "gsub regex" | tooltip
   [147727] = {{1,private.PRI_REP},1,nil}, -- Greater Legionfall Insignia
 }
 NOP.T_ITEMS = { -- [itemID] = {{count_to_use,priority},{"sub-Zone",...},{[mapID]=true,...},auraID}, table for opening/use item by itemID, is no possible to check any common text
+  [  7973] = {{1,private.PRI_OPEN},nil,nil}, -- Big-Mouth Clam
+  [139786] = {{1,private.PRI_OPEN},nil,nil}, -- 25 mana
+  [143748] = {{1,private.PRI_OPEN},nil,nil}, -- Ancient Mana Crystal
+  [143849] = {{1,private.PRI_REST},nil,nil}, -- Summon Royal Guard
   [140929] = {{1,private.PRI_REST},nil,nil}, -- Squire's Oath
   [139177] = {{1,private.PRI_REST},nil,nil}, -- Shattered Soul
   [132523] = {{1,private.PRI_REST},nil,nil}, -- Reaves Battery

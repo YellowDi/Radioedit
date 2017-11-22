@@ -275,8 +275,8 @@ function NOP:ButtonShow() -- display button
   if (GetMouseFocus() == bt) then self:ButtonOnEnter(bt) end -- update tooltip if mouse is over button
   bt:SetAttribute("type1", "macro") -- "type1" Unmodified left click.
   bt:SetAttribute("macrotext1", bt.mtext)
-  self:Verbose("ButtonShow:","macro text",bt.mtext)
-  --self:printt("ButtonShow:","macro text",bt.mtext)
+  self:Verbose("ButtonShow:","macro text",self:CompressText(bt.mtext))
+  -- self:printt("ButtonShow:","macro text",self:CompressText(bt.mtext))
   if not (bt:IsVisible() or bt:IsShown()) then bt:Show() end
   if NOP.DB.glowButton and bt.isGlow then
       self.ActionButton_ShowOverlayGlow(bt)

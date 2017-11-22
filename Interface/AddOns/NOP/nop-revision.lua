@@ -1,4 +1,11 @@
 -- Revisions:
+--[[<p>08.20 17.11.2017</p>
+<ul>
+<li>Final fix for picklocking? Now when item is possible to unlock then item starts to glow.</li>
+<li>Most items identified by GetItemSpell() function moved. T_SPELL_BY_USE_TEXT now use only pattern for standard global strings ITEM_OPENABLE, and ITEM_SPELL_TRIGGER_ONUSE pattern match.</li>
+<li>Tokens leading to use spell Create Item.</li>
+</ul>
+]]
 --[[<p>08.18 14.11.2017</p>
 <ul>
 <li>Fix announce generating error when reagent name is not yet in cache.</li>

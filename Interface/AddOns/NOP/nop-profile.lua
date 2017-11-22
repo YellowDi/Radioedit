@@ -3,7 +3,7 @@ local _
 local ADDON, private = ...
 local NOP = LibStub("AceAddon-3.0"):GetAddon(ADDON)
 function NOP:ProfileChanged() -- LUA stored variables changed
-  self.DB = self.AceDB.profile.char.settings
+  self.DB = self.AceDB.profile
   self:ButtonLoad()
   self:QBUpdate()
   self:QBSkin()

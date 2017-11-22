@@ -93,6 +93,7 @@ function NOP:SpellLoad() -- load spell patterns
   local retry = false
   NOP.T_OPEN[format("%s %s",ITEM_SPELL_TRIGGER_ONUSE,ITEM_OPENABLE)] = {{1,private.PRI_OPEN},nil,nil} -- standard right click open
   NOP.T_OPEN[ITEM_OPENABLE] = {{1,private.PRI_OPEN},nil,nil} -- standard right click open
+--[[
   for spellid, data in pairs(NOP.T_SPELL_BY_USE_TEXT) do -- [spellID] = {{count_to_use,priotity},itemID,{"sub-Zone",...},{[mapID]=true,...}}, table for opening via spell, used for multiple items with same spell text
     if data and data[2] then
       local name = GetItemInfo(data[2]) -- query or fill client side cache
@@ -124,6 +125,7 @@ function NOP:SpellLoad() -- load spell patterns
       end
     end
   end
+--]]
   for itemID,data in pairs(NOP.T_SPELL_BY_NAME) do
     local spell = GetItemSpell(itemID)
     if spell and spell ~= "" then
@@ -412,4 +414,10 @@ function NOP:PrintToActive(msg) -- print to all active chat windows
       end
     end
   end
+end
+function NOP:CompressText(text) -- printable
+  text = string.gsub(text, "\n", "/n") -- novy radek
+  text = string.gsub(text, "/n$", "") -- novy radek na konci zahodit
+  text = string.gsub(text, "||", "/124") -- interni formatovani WoW
+  return string.trim(text)
 end

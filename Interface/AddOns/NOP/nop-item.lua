@@ -19,8 +19,9 @@ end
 function NOP:ItemGetSpell(itemID) -- looking for usable item by spell attached to item
   local spell = GetItemSpell(itemID)
   if spell and NOP.T_SPELL_FIND[spell] then
+    local c, z, m = unpack(NOP.T_SPELL_FIND[spell],1,3)
     self:Verbose("ItemGetSpell:","itemID",itemID,"spell",spell)
-    return unpack(NOP.T_SPELL_FIND[spell])
+    return c[1], c[2], z, m
   end
 end
 function NOP:ItemGetItem(itemID) -- looking for usable item by itemID returns (count, 2, zone, map, aura) or nil
@@ -103,7 +104,7 @@ function NOP:ItemToUse(itemID,count,prio,zone,map,aura) -- store item into table
   end
 end
 function NOP:ItemScan() -- /run NOP:ItemScan(); foreach(NOP.T_USE,print)
-  wipe(T_BAGS); wipe(T_PICK) -- wipe internal table
+  wipe(T_BAGS)
   for bag = BACKPACK_CONTAINER, NUM_BAG_SLOTS, 1 do
     for slot = 1, GetContainerNumSlots(bag), 1 do
       local itemID = GetContainerItemID(bag,slot)
@@ -280,8 +281,8 @@ function NOP:ItemShow(itemID,prio) -- add item to button
     if bag and slot then
       bagID = bag
       slotID = slot
+      isGlow = true
       mtext = format(private.MACRO_PICKLOCK,self.pickLockSpell,bagID,slotID) -- this one needs unlock
-      self.printt("ItemShow:","mtext",mtext)
     end
   end
   if (bt.itemCount ~= itemCount) or (bt.itemID ~= itemID) or (bt.isGlow ~= isGlow) or (bt.mtext ~= mtext) then
@@ -294,7 +295,6 @@ function NOP:ItemShow(itemID,prio) -- add item to button
     bt.itemCount = itemCount
     bt.itemTexture = itemTexture
     self.AceDB.char.itemID = itemID
-    -- self.printt("ItemShow:","itemID",itemID,"prio",prio)
     self:ButtonShow() -- show or refresh button
   end
 end
