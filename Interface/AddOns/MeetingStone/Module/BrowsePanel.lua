@@ -1,10 +1,9 @@
-﻿
+
 BuildEnv(...)
 
-BrowsePanel = Addon:NewModule(CreateFrame('Frame'), 'BrowsePanel', 'AceEvent-3.0', 'AceTimer-3.0', 'AceSerializer-3.0')
+BrowsePanel = Addon:NewModule(CreateFrame('Frame'), 'BrowsePanel', 'AceEvent-3.0', 'AceTimer-3.0', 'AceSerializer-3.0', 'AceBucket-3.0')
 
 function BrowsePanel:OnInitialize()
-    GUI:Embed(self, 'Owner', 'Refresh')
     MainPanel:RegisterPanel(L['查找活动'], self, 5, 100)
 
     self.activityHash = {}
@@ -112,12 +111,6 @@ function BrowsePanel:OnInitialize()
                 key = 'MemberRole',
                 text = L['成员'],
                 width = 125,
-                
-                sortHandler = function(activity)
-                    local numMembers = activity:GetNumMembers()
-                    return numMembers
-                end,
-                
                 class = Addon:GetClass('MemberDisplay'),
                 formatHandler = function(grid, activity)
                     grid:SetActivity(activity)
@@ -127,12 +120,6 @@ function BrowsePanel:OnInitialize()
                 key = 'Level',
                 text = L['等级'],
                 width = 60,
-                
-                sortHandler = function(activity)
-                    local minLevel = activity:GetMinLevel()
-                    return minLevel
-                end,
-                
                 textHandler = function(activity)
                     local minLevel = activity:GetMinLevel()
                     local maxLevel = activity:GetMaxLevel()
@@ -152,16 +139,6 @@ function BrowsePanel:OnInitialize()
                 key = 'ItemLeave',
                 text = L['要求'],
                 width = 60,
-                
-                sortHandler = function(activity)
-                    if activity:IsArenaActivity() then
-                        local pvpRating = activity:GetPvPRating()
-                        return pvpRating
-                    else
-                        local itemLevel = activity:GetItemLevel()
-                        return itemLevel
-                    end
-                end,
                 textHandler = function(activity)
                     if activity:IsArenaActivity() then
                         local pvpRating = activity:GetPvPRating()
@@ -311,10 +288,11 @@ function BrowsePanel:OnInitialize()
         ActivityDropdown:SetDefaultText(L['请选择活动类型'])
         ActivityDropdown:SetCallback('OnSelectChanged', function(_, data, ...)
             
+            self:StartSet()
             self:UpdateModeDropdown(data.categoryId)
             self:UpdateBossFilter(data.activityId, data.customId)
             self:ClearSearchProfile()
-            self:DoSearch()
+            self:EndSet()
         end)
     end
 
@@ -684,7 +662,8 @@ function BrowsePanel:OnInitialize()
     self:RegisterEvent('LFG_LIST_SEARCH_RESULTS_RECEIVED')
     self:RegisterEvent('LFG_LIST_SEARCH_FAILED', 'LFG_LIST_SEARCH_RESULTS_RECEIVED')
 
-    self:RegisterEvent('LFG_LIST_SEARCH_RESULT_UPDATED')
+    self:RegisterBucketEvent('LFG_LIST_SEARCH_RESULT_UPDATED', 0.1, 'LFG_LIST_SEARCH_RESULT_UPDATED_BUCKET')
+    -- self:RegisterEvent('LFG_LIST_SEARCH_RESULT_UPDATED')
     self:RegisterEvent('LFG_LIST_APPLICATION_STATUS_UPDATED', 'LFG_LIST_SEARCH_RESULT_UPDATED')
     self:RegisterMessage('MEETINGSTONE_SEARCH_PROFILE_UPDATE')
 
@@ -693,11 +672,11 @@ function BrowsePanel:OnInitialize()
     self:RegisterMessage('MEETINGSTONE_SPAMWORD_STATUS_UPDATE', 'OnToggleSpamWord')
     self:RegisterMessage('MEETINGSTONE_SPAMWORD_UPDATE', RefreshFilter)
 
-    self:SetScript('OnShow', self.OnShow)
+    self:RegisterMessage('MEETINGSTONE_OPEN')
 
     LFGListApplicationDialog.SignUpButton:SetScript('OnClick', function(self)
         local dialog = self:GetParent()
-        PlaySound('856')
+        PlaySound(SOUNDKIT and SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON or 'igMainMenuOptionCheckBoxOn')
         local id = dialog.resultID
         local comment = format('%s%s', dialog.Description.EditBox:GetText(), dialog.playerData or '')
         local tank = dialog.TankButton:IsShown() and dialog.TankButton.CheckButton:GetChecked()
@@ -726,11 +705,18 @@ end
 function BrowsePanel:LFG_LIST_AVAILABILITY_UPDATE()
     self.ActivityDropdown:SetMenuTable(GetActivitesMenuTable(ACTIVITY_FILTER_BROWSE))
     self.ActivityDropdown:SetValue(Profile:GetLastSearchValue())
-    self:Refresh()
+    -- self:Refresh()
 end
 
 function BrowsePanel:LFG_LIST_SEARCH_RESULT_UPDATED(_, id)
     self:UpdateActivity(id)
+    self.ActivityList:Refresh()
+end
+
+function BrowsePanel:LFG_LIST_SEARCH_RESULT_UPDATED_BUCKET(results)
+    for id in ipairs(results) do
+        self:UpdateActivity(id)
+    end
     self.ActivityList:Refresh()
 end
 
@@ -868,13 +854,16 @@ function BrowsePanel:DoSearch()
     self.SearchingBlocker:Show()
     self.NoResultBlocker:Hide()
     self.RefreshButton:Disable()
-    self:Refresh()
+    self:Search()
     self:CancelTimer(self.disableRefreshTimer)
     self.disableRefreshTimer = self:ScheduleTimer('OnRefreshTimer', 3)
 end
 
 function BrowsePanel:Search()
     if self:InSet() then
+        return
+    end
+    if self.searchedInFrame then
         return
     end
     local activityItem = self.ActivityDropdown:GetItem()
@@ -888,7 +877,7 @@ function BrowsePanel:Search()
     local baseFilter = activityItem.baseFilter
     local searchValue = activityItem.value
 
-    if not categoryId or not self:IsVisible() then
+    if not categoryId or not MainPanel:IsVisible() then
         return
     end
 
@@ -897,9 +886,15 @@ function BrowsePanel:Search()
     searchText = LFGListSearchPanel_ParseSearchTerms(searchText)
 
     Profile:SetLastSearchValue(searchValue)
+
     C_LFGList.Search(categoryId, searchText, 0, baseFilter)
 
     self.searchTimer = nil
+    self.searchedInFrame = true
+
+    C_Timer.After(0, function()
+        self.searchedInFrame = nil
+    end)
 end
 
 function BrowsePanel:GetSearchCode(fullName, mode, loot, customId)
@@ -909,24 +904,20 @@ function BrowsePanel:GetSearchCode(fullName, mode, loot, customId)
     if mode == 0 then
         mode = nil
     end
+    if customId == 0 then
+        customId = nil
+    end
+    if fullName and fullName:trim() == '' then
+        fullName = nil
+    end
     loot = loot and rawget(ACTIVITY_LOOT_LONG_NAMES, loot)
     mode = mode and rawget(ACTIVITY_MODE_NAMES, mode)
 
-    if mode then
-        return format('%s-%s-%s',
-            loot or '',
-            mode,
-            fullName or ''
-        )
-    elseif loot then
-        return format('-%s-%s',
-            loot,
-            fullName or ''
-        )
-    elseif customId and customId ~= 0 and fullName then
-        return '-' .. fullName
-    end
-    return fullName or ''
+    return format('%s %s %s',
+        fullName and format('%s%s', customId and '-' or '', fullName) or '',
+        loot and format('-%s-', loot) or '',
+        mode and format('-%s-', mode) or ''
+    )
 end
 
 function BrowsePanel:OnRefreshTimer()
@@ -1001,15 +992,11 @@ function BrowsePanel:GetCurrentActivity()
     return self.ActivityDropdown:GetItem()
 end
 
-function BrowsePanel:OnShow()
+function BrowsePanel:MEETINGSTONE_OPEN()
     if self.lastReceived and time() - self.lastReceived < 300 then
         return
     end
     self:DoSearch()
-end
-
-function BrowsePanel:Update()
-    self:Search()
 end
 
 function BrowsePanel:UpdateBossFilter(activityId, customId, bossFilter)

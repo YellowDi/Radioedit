@@ -1,4 +1,4 @@
-﻿
+
 BuildEnv(...)
 
 if not ADDON_REGIONSUPPORT then

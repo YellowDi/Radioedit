@@ -1,6 +1,6 @@
 --[[
 Throttle.lua
-@author  : DengSir (tdaddon@163.com)
+@Author  : DengSir (tdaddon@163.com)
 @Link    : https://dengsir.github.io
 ]]
 

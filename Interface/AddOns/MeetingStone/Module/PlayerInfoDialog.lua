@@ -1,4 +1,4 @@
-﻿
+
 BuildEnv(...)
 
 PlayerInfoDialog = GUI:GetClass('TitlePanel'):New(UIParent) do
