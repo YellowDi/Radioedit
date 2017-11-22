@@ -1,12 +1,18 @@
-tag bbe67b71002c8f52411c978d4bc7e4626cab73e9 v7.3.1
+tag eafdcd62093a37401d2a6ebfccfa89a2516331ce v7.3.2
 Author:	funkydude <funkydude@users.noreply.github.com>
-Date:	Tue Aug 29 23:41:01 2017 +0100
+Date:	Fri Nov 17 20:06:21 2017 +0000
 
-Tagging as v7.3.1
+Tagging as v7.3.2
 
-commit bb69b78cfee77b76326fbb11b054de2bd5cdc064
-Author: funkydude <funkydude@users.noreply.github.com>
-Date:   Tue Aug 29 23:05:14 2017 +0100
+commit eb0a9ca2f2e33c97590a5a1e693d71f28b8d6244
+Author: Resike <resike@gmail.com>
+Date:   Mon Oct 30 16:29:58 2017 +0100
 
-    remove compat code
+    GUI fix
+
+commit eb0a9ca2f2e33c97590a5a1e693d71f28b8d6244
+Author: Resike <resike@gmail.com>
+Date:   Mon Oct 30 16:29:58 2017 +0100
+
+    GUI fix
 

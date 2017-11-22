@@ -1,5 +1,5 @@
 ## Interface: 70300
-## Version: v7.3.1
+## Version: v7.3.2
 ## Title: BugSack
 ## Notes: Toss those bugs inna sack.
 ## Notes-deDE: Werft den Fehler in einen Sack.
