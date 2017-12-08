@@ -22,19 +22,14 @@ L[" you are now the Master Looter and RCLootCouncil is now handling looting."] =
 -- L["A new session has begun, type '/rc open' to open the voting frame."] = ""
 --Translation missing 
 -- L["A tab delimited output for Excel. Might work with other spreadsheets."] = ""
---Translation missing 
--- L["A tab delimited output for Excel. Might work with outher spreadsheets."] = ""
 L["Abort"] = "Сбросить"
 L["Accept Whispers"] = "Принимать Личные сообщения"
 --Translation missing 
 -- L["accept_whispers_desc"] = ""
 --Translation missing 
--- L["Acknowledged as 'response'"] = ""
---Translation missing 
 -- L["Active"] = ""
 --Translation missing 
 -- L["active_desc"] = ""
-L["add"] = "добавить"
 L["Add Item"] = "Добавить Предмет"
 L["Add Note"] = "Добавить Заметку"
 L["Add ranks"] = "Добавить ранги"
@@ -50,6 +45,10 @@ L["add_ranks_desc"] = "Выберите минимальный ранг для �
 L["All items"] = "Все предметы"
 L["All items has been awarded and  the loot session concluded"] = "Все предметы были распределены, распределение добычи завершено"
 --Translation missing 
+-- L["All items usable by the candidate"] = ""
+--Translation missing 
+-- L["All unawarded items"] = ""
+--Translation missing 
 -- L["Alt click Looting"] = ""
 --Translation missing 
 -- L["alt_click_looting_desc"] = ""
@@ -62,6 +61,20 @@ L["Announce Awards"] = "Анонсировать Врученные предме
 --Translation missing 
 -- L["Announce Considerations"] = ""
 --Translation missing 
+-- L["announce_&i_desc"] = ""
+--Translation missing 
+-- L["announce_&l_desc"] = ""
+--Translation missing 
+-- L["announce_&n_desc"] = ""
+--Translation missing 
+-- L["announce_&p_desc"] = ""
+--Translation missing 
+-- L["announce_&r_desc"] = ""
+--Translation missing 
+-- L["announce_&s_desc"] = ""
+--Translation missing 
+-- L["announce_&t_desc"] = ""
+--Translation missing 
 -- L["announce_awards_desc"] = ""
 --Translation missing 
 -- L["announce_awards_desc2"] = ""
@@ -70,14 +83,18 @@ L["Announce Awards"] = "Анонсировать Врученные предме
 --Translation missing 
 -- L["announce_considerations_desc2"] = ""
 --Translation missing 
+-- L["announce_item_string_desc"] = ""
+--Translation missing 
 -- L["Announcements"] = ""
 L["Anonymous Voting"] = "Анонимное Голосование"
 L["anonymous_voting_desc"] = "Включить анонимное голосование (т.е. люди не видят кто за что проголосовал)"
---Translation missing 
--- L["Appearance"] = ""
 L["Append realm names"] = "Добавлять названия игровых миров"
 L["Are you sure you want to abort?"] = "Вы уверены, что хотите отменить?"
 L["Are you sure you want to give #item to #player?"] = "Вы уверены, что хотите передать %s персонажу %s?"
+--Translation missing 
+-- L["Are you sure you want to reannounce all unawarded items to %s?"] = ""
+--Translation missing 
+-- L["Are you sure you want to request rolls for all unawarded items from %s?"] = ""
 --Translation missing 
 -- L["Armor Token"] = ""
 --Translation missing 
@@ -94,8 +111,6 @@ L["Auto Award to"] = "Автоматически Вручать"
 -- L["Auto Enable"] = ""
 --Translation missing 
 -- L["Auto extracted from whisper"] = ""
---Translation missing 
--- L["Auto Loot"] = ""
 --Translation missing 
 -- L["Auto Open"] = ""
 --Translation missing 
@@ -120,9 +135,15 @@ L["auto_award_to_desc"] = "Игроки для автоматического р
 -- L["auto_pass_desc"] = ""
 --Translation missing 
 -- L["auto_start_desc"] = ""
+--Translation missing 
+-- L["Autoloot all BoE"] = ""
 L["Autoloot BoE"] = "Автосбор ПпН-предметов"
 --Translation missing 
 -- L["autoloot_BoE_desc"] = ""
+--Translation missing 
+-- L["autoloot_others_BoE_desc"] = ""
+--Translation missing 
+-- L["autoloot_others_item_combat"] = ""
 L["Autopass"] = "Автопас"
 --Translation missing 
 -- L["Autopassed on 'item'"] = ""
@@ -137,10 +158,18 @@ L["Autopass"] = "Автопас"
 --Translation missing 
 -- L["Award for ..."] = ""
 --Translation missing 
+-- L["Award later"] = ""
+--Translation missing 
+-- L["Award later isn't supported when testing."] = ""
+--Translation missing 
 -- L["Award later?"] = ""
 L["Award Reasons"] = "Причина Вручения"
 L["award_reasons_desc"] = [=[Причины вручения, которые не могут быть выбраны во время ролла.
 Используется при изменении ответа в меню по правой кнопки мыши, и для автоматического вручения.]=]
+--Translation missing 
+-- L["Awarded"] = ""
+--Translation missing 
+-- L["Awarded item cannot be awarded later."] = ""
 L["Awards"] = "Награды"
 --Translation missing 
 -- L["Background"] = ""
@@ -158,8 +187,6 @@ L["Button"] = "Кнопка"
 -- L["Buttons and Responses"] = ""
 --Translation missing 
 -- L["buttons_and_responses_desc"] = ""
---Translation missing 
--- L["Cancel"] = ""
 L["Candidate didn't respond on time"] = "Кандидат не ответил вовремя"
 --Translation missing 
 -- L["Candidate has disabled RCLootCouncil"] = ""
@@ -168,15 +195,17 @@ L["Candidate didn't respond on time"] = "Кандидат не ответил в
 L["Candidate is selecting response, please wait"] = "Кандидат делает выбор, пожалуйста подождите"
 L["Candidate removed"] = "Кандидат удален"
 --Translation missing 
+-- L["Candidates that can't use the item"] = ""
+--Translation missing 
 -- L["Cannot autoaward:"] = ""
 --Translation missing 
 -- L["Cannot give 'item' to 'player' due to Blizzard limitations. Gave it to you for distribution."] = ""
 --Translation missing 
+-- L["Change Award"] = ""
+--Translation missing 
 -- L["Change Response"] = ""
 L["Changing loot threshold to enable Auto Awarding"] = "Измените порог распределения добычи, чтобы включить Автоматическое Вручение"
 L["Changing LootMethod to Master Looting"] = "Разделение добычи производится по системе Ответственный за добычу."
---Translation missing 
--- L["Channel"] = ""
 --Translation missing 
 -- L["channel_desc"] = ""
 --Translation missing 
@@ -185,6 +214,30 @@ L["Changing LootMethod to Master Looting"] = "Разделение добычи 
 -- L["chat version String"] = ""
 --Translation missing 
 -- L["chat_commands"] = ""
+--Translation missing 
+-- L["chat_commands_add"] = ""
+--Translation missing 
+-- L["chat_commands_award"] = ""
+--Translation missing 
+-- L["chat_commands_config"] = ""
+--Translation missing 
+-- L["chat_commands_council"] = ""
+--Translation missing 
+-- L["chat_commands_history"] = ""
+--Translation missing 
+-- L["chat_commands_open"] = ""
+--Translation missing 
+-- L["chat_commands_reset"] = ""
+--Translation missing 
+-- L["chat_commands_sync"] = ""
+--Translation missing 
+-- L["chat_commands_test"] = ""
+--Translation missing 
+-- L["chat_commands_version"] = ""
+--Translation missing 
+-- L["chat_commands_whisper"] = ""
+--Translation missing 
+-- L["chat_commands_winners"] = ""
 --Translation missing 
 -- L["Check this to loot the items and distribute them later."] = ""
 --Translation missing 
@@ -204,14 +257,18 @@ L["Changing LootMethod to Master Looting"] = "Разделение добычи 
 --Translation missing 
 -- L["Click to add note to send to the council."] = ""
 --Translation missing 
+-- L["Click to change your note."] = ""
+--Translation missing 
 -- L["Click to expand/collapse more info"] = ""
 --Translation missing 
 -- L["Click to switch to 'item'"] = ""
---Translation missing 
--- L["Close"] = ""
 L["config"] = "настройка"
 --Translation missing 
+-- L["confirm_award_later_text"] = ""
+--Translation missing 
 -- L["confirm_usage_text"] = ""
+--Translation missing 
+-- L["Conqueror Token"] = ""
 --Translation missing 
 -- L["Could not Auto Award i because the Loot Threshold is too high!"] = ""
 --Translation missing 
@@ -242,14 +299,12 @@ L["days, x months, y years"] = "%s, %d месяцев и %d лет."
 -- L["Deselect responses to filter them"] = ""
 --Translation missing 
 -- L["Diff"] = ""
-L["Disenchant"] = "Распыление"
 --Translation missing 
 -- L["disenchant_desc"] = ""
 --Translation missing 
 -- L["Done syncing"] = ""
 --Translation missing 
 -- L["Double click to delete this entry."] = ""
-L["DPS"] = "УВС"
 --Translation missing 
 -- L["Dropped by:"] = ""
 --Translation missing 
@@ -278,36 +333,30 @@ L["enable_loot_history_desc"] = "Включает ведение истории.
 --Translation missing 
 -- L["Export"] = ""
 --Translation missing 
--- L["Filter"] = ""
+-- L["Following items were registered in the award later list:"] = ""
 --Translation missing 
 -- L["Following winners was registered:"] = ""
-L["Free"] = "Бесплатно"
 --Translation missing 
--- L["From:"] = ""
+-- L["Frame options"] = ""
+L["Free"] = "Бесплатно"
 L["g1"] = "п1"
 L["g2"] = "п2"
 --Translation missing 
--- L["General"] = ""
+-- L["Gave the item to you for distribution."] = ""
 --Translation missing 
 -- L["General options"] = ""
-L["Greed"] = "Не откажусь"
---Translation missing 
--- L["Group"] = ""
 --Translation missing 
 -- L["Group Council Members"] = ""
 L["group_council_members_desc"] = "Используйте это, чтобы добавить членов совета с другого сервера или гильдии."
 L["group_council_members_head"] = "Добавить члена совета из текущей группы."
 --Translation missing 
--- L["Guild"] = ""
---Translation missing 
 -- L["Guild Council Members"] = ""
-L["Healer"] = "Целитель"
-L["help"] = "помощь"
 L["Hide Votes"] = "Скрыть Голоса"
 L["hide_votes_desc"] = "Только проголосовавшие игроки могут видеть результаты голосования"
-L["history"] = "история"
 --Translation missing 
 -- L["How to sync"] = ""
+--Translation missing 
+-- L["huge_export_desc"] = ""
 --Translation missing 
 -- L["Ignore List"] = ""
 --Translation missing 
@@ -320,18 +369,24 @@ L["history"] = "история"
 -- L["ignore_list_desc"] = ""
 --Translation missing 
 -- L["ignore_options_desc"] = ""
-L["ilvl"] = "илвл"
-L["ilvl: x"] = "илвл: %d"
+--Translation missing 
+-- L["import_desc"] = ""
 --Translation missing 
 -- L["Item"] = ""
 --Translation missing 
--- L["Item has been awarded"] = ""
+-- L["'Item' is added to the award later list."] = ""
+--Translation missing 
+-- L["Item quality is below the loot threshold"] = ""
 --Translation missing 
 -- L["Item received and added from 'player'"] = ""
 --Translation missing 
 -- L["Item was awarded to"] = ""
 --Translation missing 
 -- L["Item(s) replaced:"] = ""
+--Translation missing 
+-- L["item_in_bags_low_trade_time_remaining_reminder"] = ""
+--Translation missing 
+-- L["Items stored in the loot master's bag for award later cannot be awarded later."] = ""
 L["Items under consideration:"] = "Предметы, ожидающие рассмотрения:"
 --Translation missing 
 -- L["Latest item(s) won"] = ""
@@ -355,8 +410,6 @@ L["Loot announced, waiting for answer"] = "Добыча объявлена, ож
 --Translation missing 
 -- L["loot_history_desc"] = ""
 --Translation missing 
--- L["Looted items to award later"] = ""
---Translation missing 
 -- L["Looting options"] = ""
 L["Lower Quality Limit"] = "Нижняя Граница Качества"
 L["lower_quality_limit_desc"] = [=[Выберите нижний предел качества для автораспределения (это качество включается!).
@@ -369,6 +422,8 @@ L["Mainspec/Need"] = "Основной спек/Нужно"
 --Translation missing 
 -- L["Message"] = ""
 --Translation missing 
+-- L["Message for each item"] = ""
+--Translation missing 
 -- L["message_desc"] = ""
 --Translation missing 
 -- L["Minimize in combat"] = ""
@@ -376,6 +431,10 @@ L["Minor Upgrade"] = "Незначительное улучшение"
 L["ML sees voting"] = "МЛ видит результаты голосования"
 --Translation missing 
 -- L["ml_sees_voting_desc"] = ""
+--Translation missing 
+-- L["module_tVersion_outdated_msg"] = ""
+--Translation missing 
+-- L["module_version_outdated_msg"] = ""
 --Translation missing 
 -- L["Modules"] = ""
 --Translation missing 
@@ -388,15 +447,15 @@ L["Multi Vote"] = "Множественное голосование"
 --Translation missing 
 -- L["'n days' ago"] = ""
 --Translation missing 
--- L["Name"] = ""
-L["Need"] = "Нужно"
---Translation missing 
 -- L["Never use RCLootCouncil"] = ""
-L["No"] = "Нет"
+--Translation missing 
+-- L["new_ml_bagged_items_reminder"] = ""
 --Translation missing 
 -- L["No (dis)enchanters found"] = ""
 --Translation missing 
 -- L["No entries in the Loot History"] = ""
+--Translation missing 
+-- L["No entry in the award later list is removed."] = ""
 --Translation missing 
 -- L["No items to award later registered"] = ""
 --Translation missing 
@@ -405,18 +464,15 @@ L["No"] = "Нет"
 -- L["No session running"] = ""
 --Translation missing 
 -- L["No winners registered"] = ""
-L["None"] = "Никто"
 L["Not announced"] = "Не анонсированно"
 --Translation missing 
 -- L["Not cached, please reopen."] = ""
 --Translation missing 
 -- L["Not Found"] = ""
 --Translation missing 
+-- L["Not in your guild"] = ""
+--Translation missing 
 -- L["Not installed"] = ""
---Translation missing 
--- L["Note"] = ""
---Translation missing 
--- L["Note: Huge exports will cause lag."] = ""
 --Translation missing 
 -- L["Notes"] = ""
 --Translation missing 
@@ -438,8 +494,6 @@ L["Number of reasons"] = "Количество причин"
 -- L["Observe"] = ""
 --Translation missing 
 -- L["observe_desc"] = ""
---Translation missing 
--- L["Officer"] = ""
 L["Offline or RCLootCouncil not installed"] = "Вышел из сети или RCLootCouncil не установлен"
 L["Offspec/Greed"] = "Оффспек/Не откажусь"
 --Translation missing 
@@ -456,9 +510,6 @@ L["open"] = "открыть"
 --Translation missing 
 -- L["Other piece"] = ""
 --Translation missing 
--- L["Party"] = ""
-L["Pass"] = "Пас"
---Translation missing 
 -- L["'player' can't receive 'type'"] = ""
 --Translation missing 
 -- L["'player' declined your sync request"] = ""
@@ -467,17 +518,27 @@ L["Pass"] = "Пас"
 --Translation missing 
 -- L["'player' has ended the session"] = ""
 --Translation missing 
+-- L["'player' has rolled 'roll' for: 'item'"] = ""
+--Translation missing 
 -- L["'player' hasn't opened the sync window"] = ""
+--Translation missing 
+-- L["Player is not in the group"] = ""
+--Translation missing 
+-- L["Player is not in this instance or his inventory is full"] = ""
+--Translation missing 
+-- L["Player is not in this instance or is ineligible for this item"] = ""
+--Translation missing 
+-- L["Player is offline"] = ""
 --Translation missing 
 -- L["Please wait a few seconds until all data has been synchronized."] = ""
 --Translation missing 
 -- L["Please wait before trying to sync again."] = ""
 --Translation missing 
--- L["Raid"] = ""
+-- L["Print Responses"] = ""
 --Translation missing 
--- L["Raid Warning"] = ""
+-- L["print_response_desc"] = ""
 --Translation missing 
--- L["Rank"] = ""
+-- L["Protector Token"] = ""
 --Translation missing 
 -- L["Raw lua output. Doesn't work well with date selection."] = ""
 --Translation missing 
@@ -493,12 +554,14 @@ L["Pass"] = "Пас"
 --Translation missing 
 -- L["RCLootCouncil Voting Frame"] = ""
 --Translation missing 
+-- L["rclootcouncil_trade_add_item_confirm"] = ""
+--Translation missing 
 -- L["Reannounce ..."] = ""
+--Translation missing 
+-- L["Reannounced 'item' to 'target'"] = ""
 L["Reason"] = "Причина"
 --Translation missing 
 -- L["reason_desc"] = ""
---Translation missing 
--- L["Receiving data..."] = ""
 --Translation missing 
 -- L["Relic Buttons and Responses"] = ""
 --Translation missing 
@@ -510,12 +573,11 @@ L["Reason"] = "Причина"
 --Translation missing 
 -- L["remove_all_desc"] = ""
 --Translation missing 
--- L["reset"] = ""
+-- L["Requested rolls for 'item' from 'target'"] = ""
 --Translation missing 
 -- L["Reset Skin"] = ""
 --Translation missing 
 -- L["Reset skins"] = ""
-L["Reset to default"] = "Восстановить по умолчанию"
 --Translation missing 
 -- L["reset_announce_to_default_desc"] = ""
 --Translation missing 
@@ -531,21 +593,25 @@ L["Reset to default"] = "Восстановить по умолчанию"
 --Translation missing 
 -- L["Response color"] = ""
 --Translation missing 
+-- L["Response isn't available. Please upgrade RCLootCouncil."] = ""
+--Translation missing 
+-- L["Response options"] = ""
+--Translation missing 
+-- L["Response to 'item'"] = ""
+--Translation missing 
+-- L["Response to 'item' acknowledged as 'response'"] = ""
+--Translation missing 
 -- L["response_color_desc"] = ""
+--Translation missing 
+-- L["Responses"] = ""
 --Translation missing 
 -- L["Responses from Chat"] = ""
 --Translation missing 
 -- L["responses_from_chat_desc"] = ""
 --Translation missing 
--- L["Role"] = ""
---Translation missing 
--- L["Roll"] = ""
---Translation missing 
 -- L["Save Skin"] = ""
 --Translation missing 
 -- L["save_skin_desc"] = ""
---Translation missing 
--- L["Say"] = ""
 L["Self Vote"] = "Своё голосование"
 --Translation missing 
 -- L["self_vote_desc"] = ""
@@ -560,13 +626,19 @@ L["Self Vote"] = "Своё голосование"
 --Translation missing 
 -- L["session_error"] = ""
 --Translation missing 
+-- L["session_help_from_bag"] = ""
+--Translation missing 
+-- L["session_help_not_direct"] = ""
+--Translation missing 
 -- L["Set the text for button i's response."] = ""
 --Translation missing 
 -- L["Set the text on button 'number'"] = ""
 --Translation missing 
 -- L["Set the whisper keys for button i."] = ""
 --Translation missing 
--- L["Settings"] = ""
+-- L["Show Spec Icon"] = ""
+--Translation missing 
+-- L["show_spec_icon_desc"] = ""
 --Translation missing 
 -- L["Silent Auto Pass"] = ""
 --Translation missing 
@@ -581,10 +653,15 @@ L["Something went wrong :'("] = "Что-то пошло не так :'("
 --Translation missing 
 -- L["Something went wrong during syncing, please try again."] = ""
 --Translation missing 
+-- L["Sort Items"] = ""
+--Translation missing 
+-- L["sort_items_desc"] = ""
+--Translation missing 
 -- L["Standard .csv output."] = ""
-L["Start"] = "Начать"
 --Translation missing 
 -- L["Status texts"] = ""
+--Translation missing 
+-- L["Store in bag and award later"] = ""
 --Translation missing 
 -- L["Successfully imported 'number' entries."] = ""
 --Translation missing 
@@ -593,9 +670,8 @@ L["Start"] = "Начать"
 -- L["Sync"] = ""
 --Translation missing 
 -- L["sync_detailed_description"] = ""
-L["Tank"] = "Танк"
-L["Test"] = "Тест"
 L["test"] = "тест"
+L["Test"] = "Тест"
 --Translation missing 
 -- L["test_desc"] = ""
 L["Text color"] = "Цвет текста"
@@ -603,11 +679,25 @@ L["Text for reason #i"] = "Текст причины #"
 --Translation missing 
 -- L["text_color_desc"] = ""
 --Translation missing 
+-- L["The award later list has been cleared."] = ""
+--Translation missing 
+-- L["The award later list is empty."] = ""
+--Translation missing 
 -- L["The following council members have voted"] = ""
+--Translation missing 
+-- L["The following entries are removed from the award later list:"] = ""
+--Translation missing 
+-- L["The following items are removed from the award later list and traded to 'player'"] = ""
+--Translation missing 
+-- L["The item can only be looted by you but it is not bind on pick up"] = ""
+--Translation missing 
+-- L["The item will be awarded later"] = ""
 --Translation missing 
 -- L["The item would now be awarded to 'player'"] = ""
 --Translation missing 
 -- L["The loot is already on the list"] = ""
+--Translation missing 
+-- L["The loot master"] = ""
 L["The Master Looter doesn't allow multiple votes."] = "Ответственный за добычу не разрешил голосование за нескольких."
 L["The Master Looter doesn't allow votes for yourself."] = "Ответственный за добычу не разрешил голосовать за себя."
 --Translation missing 
@@ -618,6 +708,8 @@ L["This item has been awarded"] = "Этот предмет был вручен"
 -- L["Tier 19"] = ""
 --Translation missing 
 -- L["Tier 20"] = ""
+--Translation missing 
+-- L["Tier 21"] = ""
 --Translation missing 
 -- L["Tier Buttons and Responses"] = ""
 --Translation missing 
@@ -637,9 +729,9 @@ L["This item has been awarded"] = "Этот предмет был вручен"
 --Translation missing 
 -- L["Time"] = ""
 --Translation missing 
--- L["Time left (num seconds)"] = ""
---Translation missing 
 -- L["Timeout"] = ""
+--Translation missing 
+-- L["Timeout when giving 'item' to 'player'"] = ""
 --Translation missing 
 -- L["To target"] = ""
 --Translation missing 
@@ -651,24 +743,22 @@ L["This item has been awarded"] = "Этот предмет был вручен"
 --Translation missing 
 -- L["Total items won:"] = ""
 --Translation missing 
--- L["Totals"] = ""
---Translation missing 
 -- L["tVersion_outdated_msg"] = ""
+--Translation missing 
+-- L["Unable to give 'item' to 'player'"] = ""
 --Translation missing 
 -- L["Unable to give 'item' to 'player' - (player offline, left group or instance?)"] = ""
 --Translation missing 
 -- L["Unable to give out loot without the loot window open."] = ""
-L["Unguilded"] = "Не в гильдии"
 --Translation missing 
--- L["Unknown"] = ""
+-- L["Unawarded"] = ""
+L["Unguilded"] = "Не в гильдии"
 --Translation missing 
 -- L["Unknown date"] = ""
 --Translation missing 
 -- L["Unknown/Chest"] = ""
 --Translation missing 
 -- L["Unvote"] = ""
---Translation missing 
--- L["Upgrade"] = ""
 --Translation missing 
 -- L["Upgrade to existing tier/random upgrade"] = ""
 L["Upper Quality Limit"] = "Лимит улучшения качества"
@@ -678,6 +768,8 @@ L["Upper Quality Limit"] = "Лимит улучшения качества"
 -- L["Usage"] = ""
 --Translation missing 
 -- L["Usage Options"] = ""
+--Translation missing 
+-- L["Vanquisher Token"] = ""
 L["version"] = "версия"
 L["Version"] = "Версия"
 L["Version Check"] = "Проверка версии"
@@ -687,9 +779,7 @@ L["Vote"] = "Голос"
 L["Voters"] = "Голосующие"
 L["Votes"] = "Голоса"
 L["Voting options"] = "Опции голосования"
-L["Waiting for item info"] = "Ожидание сведения о предмете"
 L["Waiting for response"] = "Ожидание ответа"
-L["whisper"] = "шепот"
 --Translation missing 
 -- L["whisper_guide"] = ""
 --Translation missing 
@@ -706,8 +796,6 @@ L["winners"] = "выигравшие"
 L["x days"] = "%d дней"
 --Translation missing 
 -- L["x out of x have voted"] = ""
-L["Yell"] = "Крик"
-L["Yes"] = "Да"
 L["You are not allowed to see the Voting Frame right now."] = "Вы не можете видеть окно голования прямо сейчас."
 L["You can only auto award items with a quality lower than 'quality' to yourself due to Blizaard restrictions"] = "Вы можете автоматически передавать себе только те предметы, качество которых ниже, чем %s , из-за ограничений, установленных разработчиками игры."
 L["You cannot initiate a test while in a group without being the MasterLooter."] = "Вы не можете запустить тестовый режим в группе, не являясь ответственным за распределение добычи."

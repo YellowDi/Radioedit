@@ -1,6 +1,11 @@
 --- Contains all code required for syncronizing stuff
 -- @author: Potdisc
 -- 14/07/2017
+
+--[===[@debug@
+if LibDebug then LibDebug() end
+--@end-debug@]===]
+
 local addon = LibStub("AceAddon-3.0"):GetAddon("RCLootCouncil")
 local LibDialog = LibStub("LibDialog-1.0")
 local L = LibStub("AceLocale-3.0"):GetLocale("RCLootCouncil")
@@ -14,7 +19,7 @@ local last_sync_time = 0
 -- Handlers for incoming sync data - determines which sync types we can handle
 sync.syncHandlers = {
    settings = {
-      text = L["Settings"],
+      text = _G.SETTINGS,
       receive = function(data) for k,v in pairs(data) do addon.db.profile[k] = v end; addon:UpdateDB(); addon:ActivateSkin(addon.db.profile.currentSkin) end,
       send = function() return addon.db.profile end,
    },
@@ -116,7 +121,7 @@ function sync.OnSyncAccept(_, data)
    addon:SendCommand(sender, "syncAck", addon.playerName, type)
    sync.frame.statusBar:Show()
    sync.frame.statusBar.text:Show()
-   sync.frame.statusBar.text:SetText(L["Receiving data..."])
+   sync.frame.statusBar.text:SetText(_G.RETRIEVING_DATA)
    --sync.frame.statusBar:Hide()
 end
 -- LibDialog OnDecline
@@ -152,7 +157,7 @@ end
 -- Builds a list of targets we can sync to.
 -- Used in the options menu for an AceGUI dropdown.
 function sync:GetSyncTargetOptions()
-   local name, isOnline, class
+   local name, isOnline, class, _
    local ret = {}
    -- target
    if UnitIsFriend("player", "target") and UnitIsPlayer("target") then
@@ -250,7 +255,7 @@ function sync:Spawn()
       if not self.syncTarget then return addon:Print(L["You must select a target"]) end
       self:SendSyncRequest(self.syncTarget, self.syncType, self.syncHandlers[self.syncType].send())
    end)
-   f.exitButton = addon:CreateButton(L["Close"], f.content)
+   f.exitButton = addon:CreateButton(_G.CLOSE, f.content)
    f.exitButton:SetPoint("LEFT", f.syncButton, "RIGHT", 20, 0)
    f.exitButton:SetScript("OnClick", function()
       self.frame:Hide()
