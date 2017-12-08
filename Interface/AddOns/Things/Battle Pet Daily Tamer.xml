@@ -1,0 +1,152 @@
+<Ui>
+
+	<!-- template for the menu buttons -->
+	<Button name="BattlePetDailyTamerMenuTemplate" virtual="true">
+		<Size x="180" y="16"/>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture parentKey="Highlight" file="Interface\QuestFrame\UI-QuestTitleHighlight" alphaMode="ADD" setAllPoints="true" hidden="true"/>
+			</Layer>
+			<Layer level="ARTWORK">
+				<Texture parentKey="Check" file="Interface\Common\UI-DropDownRadioChecks">
+					<Size x="16" y="16"/>
+					<Anchors>
+						<Anchor point="LEFT"/>
+					</Anchors>
+				</Texture>
+				<Texture parentKey="Icon">
+					<Size x="16" y="16"/>
+					<Anchors>
+						<Anchor point="RIGHT"/>
+					</Anchors>
+				</Texture>
+			</Layer>
+		</Layers>
+		<ButtonText parentKey="Text">
+			<Anchors>
+				<Anchor point="LEFT" x="20" y="0"/>
+			</Anchors>
+		</ButtonText>
+		<NormalFont style="GameFontHighlightSmallLeft"/>
+		<HighlightFont style="GameFontHighlightSmallLeft"/>
+		<DisabledFont style="GameFontDisableSmallLeft"/>
+		<Scripts>
+			<OnEnter>
+				self.Highlight:Show()
+			</OnEnter>
+			<OnLeave>
+				self.Highlight:Hide()
+			</OnLeave>
+			<OnClick>
+				BattlePetDailyTamer.MenuButtonOnClick(self)
+			</OnClick>
+		</Scripts>
+	</Button>
+
+	<Button name="BattlePetDailyTamerButton" parent="WorldMapFrame" hidden="true">
+		<Size x="32" y="32"/>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture file="Interface\Minimap\UI-Minimap-Background">
+					<Size x="25" y="25"/>
+					<Anchors>
+						<Anchor point="TOPLEFT" x="2" y="-4"/>
+					</Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="OVERLAY">
+				<Texture file="Interface\Minimap\Minimap-TrackingBorder">
+					<Size x="54" y="54"/>
+					<Anchors>
+						<Anchor point="TOPLEFT"/>
+					</Anchors>
+				</Texture>
+			</Layer>
+		</Layers>
+		<NormalTexture file="Interface\Icons\Tracking_WildPet">
+			<Size x="18" y="18"/>
+			<Anchors>
+				<Anchor point="TOPLEFT" x="7" y="-7"/>
+			</Anchors>
+			<Color r="0.75" g="0.75" b="0.75"/>
+		</NormalTexture>
+		<PushedTexture file="Interface\Icons\Tracking_WildPet">
+			<Size x="18" y="18"/>
+			<Anchors>
+				<Anchor point="TOPLEFT" x="9" y="-9"/>
+			</Anchors>
+			<Color r="0.45" g="0.45" b="0.45"/>
+		</PushedTexture>
+		<HighlightTexture file="Interface\Minimap\UI-Minimap-ZoomButton-Highlight" alphaMode="ADD"/>
+
+
+		<Animations>
+			<AnimationGroup parentKey="SlideOut">
+				<Translation duration="0.15" order="1" offsetX="0" offsetY="-32"/>
+				<Scripts>
+					<OnPlay>
+						self:GetParent():SetPoint("TOP",WorldMapFrame.UIElementsFrame.TrackingOptionsButton)
+					</OnPlay>
+					<OnFinished>
+						self:GetParent():SetPoint("TOP",WorldMapFrame.UIElementsFrame.TrackingOptionsButton,"BOTTOM")
+					</OnFinished>
+				</Scripts>
+			</AnimationGroup>
+			<AnimationGroup parentKey="SlideIn">
+				<Translation duration="0.15" order="1" offsetX="0" offsetY="32"/>
+				<Scripts>
+					<OnPlay>
+						self:GetParent():SetPoint("TOP",WorldMapFrame.UIElementsFrame.TrackingOptionsButton,"BOTTOM")
+					</OnPlay>
+					<OnFinished>
+						self:GetParent():SetPoint("TOP",WorldMapFrame.UIElementsFrame.TrackingOptionsButton)
+						self:GetParent():Hide()
+					</OnFinished>
+				</Scripts>
+			</AnimationGroup>
+		</Animations>
+
+		<Frames>
+			<Frame parentKey="Menu" clampedToScreen="true" forceAlpha="true" hidden="true">
+				<Size x="200" y="128"/>
+				<Anchors>
+					<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT"/>
+				</Anchors>
+				<Backdrop bgFile="Interface\Tooltips\UI-Tooltip-Background" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+					<EdgeSize val="16"/>
+					<TileSize val="16"/>
+					<BackgroundInsets>
+						<AbsInset left="3" right="3" top="3" bottom="3"/>
+					</BackgroundInsets>
+					<Color r="0" g="0" b="0"/>
+				</Backdrop>
+				<Frames>
+					<Button parentKey="Title" inherits="BattlePetDailyTamerMenuTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" x="10" y="-15"/>
+						</Anchors>
+					</Button>
+				</Frames>
+				<Scripts>
+					<OnKeyDown>
+						BattlePetDailyTamer.MenuOnKeyDown(self,key)
+					</OnKeyDown>
+					<OnUpdate>
+						BattlePetDailyTamer.MenuOnUpdate(self,elapsed)
+					</OnUpdate>
+				</Scripts>
+			</Frame>
+		</Frames>
+
+		<Scripts>
+			<OnUpdate>
+				BattlePetDailyTamer.TrackingButtonOnUpdate(self,elapsed)
+			</OnUpdate>
+			<OnClick>
+				BattlePetDailyTamer.TrackingButtonOnClick(self,button)
+			</OnClick>
+		</Scripts>
+
+	</Button>
+
+</Ui>
