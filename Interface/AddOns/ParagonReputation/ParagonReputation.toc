@@ -1,0 +1,12 @@
+﻿## Interface: 70300
+## Title: |cFFFF0000[DK]|r |cff00ff00巅峰声望|r
+## Notes: 改变声望巅峰后快捷预览.
+## Author: |cffabd473Sev|r |cffbd87e7US-Drakkari|r
+## Version: 1.16
+## DefaultState: Enabled
+## LoadOnDemand: 0
+## SavedVariables: ParagonReputationDB
+
+core.lua
+options.lua
+localization.lua
