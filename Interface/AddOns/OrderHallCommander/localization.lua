@@ -1954,8 +1954,8 @@ L["Ignore busy followers"] = "Игнорировать занятых"
 L["Ignore inactive followers"] = "Игнорировать резерв"
 L["Keep cost low"] = "Снижать цену"
 L["Keep extra bonus"] = "Бонусная добыча"
-L["Keep time short"] = "Уменьшать время"
-L["Keep time VERY short"] = "Сильно уменьшать время"
+L["Keep time short"] = "Уменьшать время наполовину"
+L["Keep time VERY short"] = "Уменьшать время"
 L[ [=[Launch the first filled mission with at least one locked follower.
 Keep %s pressed to actually launch, a simple click will only print mission name with its followers list]=] ] = "Начать первое заполненное задание с одним назначенным защитником. Удерживайте %s, чтобы начать, простое нажатие только напишет название и список защитников"
 L[ [=[Launch the first filled mission with at least one locked follower.
@@ -2681,16 +2681,15 @@ L=l:NewLocale(me,"zhTW")
 if (L) then
 L["%1$d%% lower than %2$d%%. Lower %s"] = "%1$d%%低於%2$d%%，降低%s"
 L["%s for a wowhead link popup"] = "%s跳出wowhead連結"
-L["%s start the mission without even opening the mission page. No question asked"] = "%s甚至可以不打開任務頁面就啟動任務， 沒問題"
-L["%s starts missions"] = "%s開始任務"
---Translation missing 
-L["%s to actually start mission"] = "%s to actually start mission"
-L["%s to blacklist"] = "%s加入黑名單"
-L["%s to remove from blacklist"] = "%s從黑名單移除"
+L["%s start the mission without even opening the mission page. No question asked"] = "按下 %s 一鍵派出任務。不用打開任務頁面，不做任何詢問。"
+L["%s starts missions"] = "按下 %s 派出任務"
+L["%s to actually start mission"] = "按下 %s 馬上派出任務"
+L["%s to blacklist"] = "%s 加入忽略清單"
+L["%s to remove from blacklist"] = "%s 從忽略清單移除"
 L[ [=[%s, please review the tutorial
-(Click the icon to dismiss this message and start the tutorial)]=] ] = [=[%s，請查看本指南
-（點擊此圖示解除此訊息並開始指南）]=]
-L["%s, please review the tutorial\\n(Click the icon to dismiss this message)"] = "這是一個新版本的OrderHallCommander。 請花點時間查看本指南。 點擊此圖標關閉它"
+(Click the icon to dismiss this message and start the tutorial)]=] ] = [=[%s，請查看教學說明
+(點擊圖示關閉這個訊息並且打開教學說明)]=]
+L["%s, please review the tutorial\\n(Click the icon to dismiss this message)"] = "%s，請查看教學說明\\n(點擊圖示這個關閉訊息)"
 L["Allow to start a mission directly from the mission list page (no single mission page shown)"] = "允許直接從任務列表頁面啟動任務（不會顯示個別任務頁面）"
 L["Always counter increased resource cost"] = "總是反制增加資源花費"
 L["Always counter increased time"] = "總是反制增加任務時間"
@@ -2700,10 +2699,10 @@ L["Artifact shown value is the base value without considering knowledge multipli
 L["Attempting %s"] = "嘗試%s"
 L["Base Chance"] = "基礎機率"
 L["Better parties available in next future"] = "在將來有更好的隊伍"
-L["Blacklisted"] = "列入黑名單"
-L["Blacklisted missions are ignored in Mission Control"] = "列入黑名單的任務會在任務面板忽略"
+L["Blacklisted"] = "已在忽略清單"
+L["Blacklisted missions are ignored in Mission Control"] = "任務控制會忽略在忽略清單內的任務"
 L["Bonus Chance"] = "額外獎勵機率"
-L["Building Final report"] = "構建最終報告"
+L["Building Final report"] = "建立總結報告"
 L["but using troops with just one durability left"] = "但使用只有一個耐久度的部隊"
 L["Capped %1$s. Spend at least %2$d of them"] = "%1$s封頂了。花費至少%2$d在它身上"
 L["Changes the sort order of missions in Mission panel"] = "改變任務面板上的任務排列順序"
@@ -2719,16 +2718,14 @@ L["Dont use this slot"] = "不要使用這個空槽"
 L["Don't use troops"] = "不要使用部隊"
 L["Duration reduced"] = "持續時間已縮短"
 L["Duration Time"] = "持續時間"
---Translation missing 
-L["Elite: Prefer overcap"] = "Elite: Prefer overcap"
+L["Elite: Prefer overcap"] = "精英: 寧願增加花費"
 L["Elites mission mode"] = "精英任務模式"
 L["Empty missions sorted as last"] = "空的任務排在最後"
-L["Empty or 0% success mission are sorted as last. Does not apply to \"original\" method"] = "空或0%成功率的任務排列在最後，對於\"原始\"方式排序無效。"
+L["Empty or 0% success mission are sorted as last. Does not apply to \"original\" method"] = "空的或成功率 0% 的任務排列在最後面。不要套用到  \"原始方法\"。"
 L["Equipped by following champions:"] = "已裝備在下列勇士："
 L["Expiration Time"] = "到期時間"
 L["Favours leveling follower for xp missions"] = "傾向於使用升級中追隨者在經驗值任務"
---Translation missing 
-L["For elite missions, tries hard to not go under 100% even at cost of overcapping"] = "For elite missions, tries hard to not go under 100% even at cost of overcapping"
+L["For elite missions, tries hard to not go under 100% even at cost of overcapping"] = "對於精英任務，就算花費會增加，也別讓成功率低於 100%。"
 L["General"] = "(G) 一般"
 L["Global approx. xp reward"] = "整體大約經驗值獎勵"
 L["Global approx. xp reward per hour"] = "每小時獲得整體經驗值獎勵"
@@ -2745,11 +2742,11 @@ L["Keep extra bonus"] = "保持額外獎勵"
 L["Keep time short"] = "保持短時間"
 L["Keep time VERY short"] = "保持非常短的時間"
 L[ [=[Launch the first filled mission with at least one locked follower.
-Keep %s pressed to actually launch, a simple click will only print mission name with its followers list]=] ] = "用至少一個鎖定的追隨者啟動第一個填充任務。 按住%s按鈕實際啟動，一個簡單的點擊將只列印任務名稱與其追隨者名單"
---Translation missing 
+Keep %s pressed to actually launch, a simple click will only print mission name with its followers list]=] ] = [=[至少使用一個鎖定的追隨者來出第一個任務。
+按住 %s 會實際派出，點一下只會顯示任務名稱和和追隨者清單。]=]
 L[ [=[Launch the first filled mission with at least one locked follower.
-Keep SHIFT pressed to actually launch, a simple click will only print mission name with its followers list]=] ] = [=[Launch the first filled mission with at least one locked follower.
-Keep SHIFT pressed to actually launch, a simple click will only print mission name with its followers list]=]
+Keep SHIFT pressed to actually launch, a simple click will only print mission name with its followers list]=] ] = [=[至少使用一個鎖定的追隨者來出第一個任務。
+按住 SHIFT 會實際派出，點一下只會顯示任務名稱和和追隨者清單。]=]
 L["Level"] = "等級"
 L["Lock all"] = "全部鎖定"
 L["Lock this follower"] = "鎖定此追隨者"
@@ -2759,18 +2756,17 @@ L["Makes sure that no troops will be killed"] = "確保沒有部隊會被殺害"
 L["Max champions"] = "最多勇士"
 L["Maximize xp gain"] = "最大化經驗獲取"
 L["Mission duration reduced"] = "任務時間已縮短"
-L["Mission was capped due to total chance less than"] = "任務被限制了，由於總機率不及"
+L["Mission was capped due to total chance less than"] = "任務花費提高了，因為總成功率低於"
 L["Missions"] = "(M) 任務"
 L["Never kill Troops"] = "絕不殺死部隊"
 L["No follower gained xp"] = "沒有追隨者獲得經驗"
 L["No suitable missions. Have you reserved at least one follower?"] = "沒有合適的任務。 您是否至少保留一位追隨者？"
-L["Not blacklisted"] = "未列入黑名單"
+L["Not blacklisted"] = "不在忽略清單"
 L["Nothing to report"] = "沒什麼可報告"
 L["Notifies you when you have troops ready to be collected"] = "當部隊已準備好獲取時提醒你"
 L["Only accept missions with time improved"] = "只允許有時間改善的任務"
 L["Only consider elite missions"] = "只考慮精英任務"
---Translation missing 
-L["Only need %s instead of %s to start a mission from mission list"] = "Only need %s instead of %s to start a mission from mission list"
+L["Only need %s instead of %s to start a mission from mission list"] = "要從任務清單派出任務，只需要 %s 而不是 %s。"
 L["Only use champions even if troops are available"] = "有可用的部隊時，仍然只要使用勇士。"
 L["Open configuration"] = "開啟設置選項"
 L[ [=[OrderHallCommander overrides GarrisonCommander for Order Hall Management.
@@ -2781,16 +2777,16 @@ L["Original method"] = "原始方式"
 L["Position is not saved on logout"] = "位置不會在登出後儲存"
 L["Prefer high durability"] = "喜好高耐久度"
 L["Quick start first mission"] = "快速開始第一個任務"
-L["Remove no champions warning"] = "移除沒有勇士警告"
+L["Remove no champions warning"] = "沒有移除勇士警告"
 L["Restart tutorial from beginning"] = "從開始的地方重啟指南"
 L["Resume tutorial"] = "繼續指南"
 L["Resurrect troops effect"] = "復活部隊效果"
 L["Reward type"] = "獎勵類型"
-L["Sets all switches to a very permissive setup. Very similar to 1.4.4"] = "切換所有設置為非常寬容的設置"
+L["Sets all switches to a very permissive setup. Very similar to 1.4.4"] = "所有設定都更改為非常寬鬆的設定，和 1.44 版非常相似。"
 L["Show tutorial"] = "顯示指南"
 L["Show/hide OrderHallCommander mission menu"] = "顯示/隱藏大廳指揮官任務選單"
 L["Sort missions by:"] = "排列任務根據："
-L["Started with "] = "已開始"
+L["Started with "] = "已經派出 "
 L["Success Chance"] = "成功機率"
 L["Troop ready alert"] = "部隊整備提醒"
 L["Unable to fill missions, raise \"%s\""] = "無法指派任務，請提升 \"%s\""
@@ -2799,8 +2795,7 @@ L["Unable to start mission, aborting"] = "無法開始任務，中止"
 L["Unlock all"] = "全部解除鎖定"
 L["Unlock this follower"] = "解鎖此追隨者"
 L["Unlocks all follower and slots at once"] = "一次解鎖所有追隨者和空槽"
---Translation missing 
-L["Unsafe mission start"] = "Unsafe mission start"
+L["Unsafe mission start"] = "不安全的一鍵派出"
 L["Upgrading to |cff00ff00%d|r"] = "升級到|cff00ff00%d|r"
 L["URL Copy"] = "複製網址"
 L["Use at most this many champions"] = "至少使用這個數量的勇士"
@@ -2809,7 +2804,7 @@ L["Use this slot"] = "使用此空槽"
 L["Uses troops with the highest durability instead of the ones with the lowest"] = "使用最高耐久性的部隊，而不是最低的部隊"
 L["When no free followers are available shows empty follower"] = "沒有可用的追隨者時，顯示空欄位。"
 L["When we cant achieve the requested %1$s, we try to reach at least this one without (if possible) going over 100%%"] = "當我們無法實現請求的%1$s時, 我們嘗試至少達到這一目標, 而不 (如果可能) 超過100%%"
-L["Would start with "] = "會開始"
+L["Would start with "] = "將會派出 "
 L["You are wasting |cffff0000%d|cffffd200 point(s)!!!"] = "你浪費了|cffff0000%d|cffffd200 點數!!!"
 L[ [=[You need to close and restart World of Warcraft in order to update this version of OrderHallCommander.
 Simply reloading UI is not enough]=] ] = [=[您需要關閉並重新啟動魔獸世界才能更新此版本的OrderHallCommander。
@@ -2842,7 +2837,10 @@ This way you dont receive any error]=] ] = [=[設備和升級在這裡被列為�
 L[ [=[Equipment and upgrades are listed here as clickable buttons.
 Due to an issue with Blizzard Taint system, if you drag and drop an item from a bag, you receive an error.
 In order to assign equipment which are not listed (I updated the list often but sometimes Blizzard is faster), you can right click the item in the bag and the left click the follower.
-This way you dont receive any error]=] ] = "設備和升級在這裡列為可點擊的按鈕。 由於暴雪污染系統的問題，如果您從包中拖放物品，您會收到錯誤。 為了分配未列出的設備（我經常更新列表，但有時暴雪更快），您可以右鍵單擊包中的物品，然後左鍵單擊追隨者。 這樣你就不會收到任何錯誤"
+This way you dont receive any error]=] ] = [=[這裡列出的裝備和升級物品是可以點擊的按鈕。
+因為暴雪本身的問題，如果從背包將物品拖曳過來會發生錯誤。
+為了避免有些裝備不會列出 (我已經很常更新清單了，但有時暴雪的手腳更快)，可以使用右鍵點擊背包內的物品，然後用左鍵點擊追隨者。
+使用這種操作方式便不會發生錯誤。]=]
 L[ [=[For example, let's say a mission can reach 95%%, 130%% and 180%% success chance.
 If %1$s is set to 170%%, the 180%% one will be choosen.
 If %1$s is set to 200%% OHC will try to find the nearest to 100%% respecting %2$s setting
@@ -2855,21 +2853,23 @@ L["If instead you just want to always see the best available mission just set %1
 L[ [=[If you dont understand why OHC choosed a setup for a mission, you can request a full analysis.
 Analyze party will show all the possible combinations and how OHC evaluated them]=] ] = [=[如果你不明白OHC如何選擇一個任務的設置，你可以要求一個完整的分析。
 分析隊伍將顯示所有可能的組合, 以及OHC如何評估他們]=]
---Translation missing 
-L["Prefer high durability"] = "Prefer high durability"
+L["Prefer high durability"] = "高耐久度優先"
 L["Restart the tutorial"] = "重啟指南"
 L[ [=[Slots (non the follower in it but just the slot) can be banned.
 When you ban a slot, that slot will not be filled for that mission.
-Exploiting the fact that troops are always in the leftmost slot(s) you can achieve a nice degree of custom tailoring, reducing the overall number of followers used for a mission]=] ] = "插槽（不是其中的追隨者，而只是插槽）可以被禁止。 當你禁止一個插槽時，這個插槽不會被填滿。 總是在最左側的插槽使用部隊，您可以實現一個很好的定制裁剪，減少用於任務的追隨者總數"
+Exploiting the fact that troops are always in the leftmost slot(s) you can achieve a nice degree of custom tailoring, reducing the overall number of followers used for a mission]=] ] = [=[可以禁用欄位 (不放入追隨者，只有空的欄位)。
+禁用欄位時，任務的這個欄位不會放入追隨者。
+利用部隊總是從最左邊開始的原則，可以很方便的達到控制人員的效果，減少任務所需的追隨者數量。]=]
 L["Terminate the tutorial. You can resume it anytime clicking on the info icon in the side menu"] = "終止本指南。您可以隨時點擊側面選單中的訊息圖標來恢復"
 L["Thank you for reading this, enjoy %s"] = "感謝您的閱讀，享受%s"
---Translation missing 
-L["There are %d tutorial step you didnt read"] = "There are %d tutorial step you didnt read"
+L["There are %d tutorial step you didnt read"] = "還有 %d 個教學說明尚未閱讀"
 L[ [=[Usually OrderHallCOmmander tries to use troops with the lowest durability in order to let you enque new troops request as soon as possible.
 Checking %1$s reverse it and OrderHallCOmmander will choose for each mission troops with the highest possible durability]=] ] = "通常，OrderHallCOmmander嘗試使用最低耐久性的部隊，以便盡快請求新的部隊。 勾選%1$s反向操作，OrderHallCOmmander將為每個任務選擇盡可能高耐久度的部隊"
 L[ [=[Welcome to a new release of OrderHallCommander
 Please follow this short tutorial to discover all new functionalities.
-You will not regret it]=] ] = "歡迎來到OrderHallCommander的新版本請按照這個簡短的指南來發現所有新的功能。 你不會後悔的"
+You will not regret it]=] ] = [=[歡迎使用新版本的職業大廳指揮官
+請閱讀這個簡短的教學說明來認識所有新功能。
+保證不會後悔!]=]
 L[ [=[With %1$s you ask to always counter the Hazard kill troop.
 This means that OHC will try to counter it OR use a troop with just one durability left.
 The target for this switch is to avoid wasting durability point, NOT to avoid troops' death.]=] ] = "至於%1$s你要求總是反制危險殺死部隊。 這意味著OHC將試圖對付它，或者使用一個只有一個耐久度的部隊。 這種切換的目標是避免浪費耐久度，而不是避免部隊死亡。"
@@ -2880,7 +2880,10 @@ The target for this switch is to totally avoid killing troops, even it for this 
 這個轉變的目標是完全避免殺死部隊，即使這樣我們也不能填補隊伍]=]
 L[ [=[You can blacklist missions right clicking mission button.
 Since 1.5.1 you can start a mission witout passing from mission page shift-clicking the mission button.
-Be sure you liked the party because no confirmation is asked]=] ] = "您可以右鍵點擊任務按鈕將任務加入黑名單。 自1.5.1以來，您可以shift-點擊任務按鈕開始任務而無須轉到任務頁面。 確保你喜歡此隊伍，因為不經確認"
+Be sure you liked the party because no confirmation is asked]=] ] = [=[右鍵點擊任務可以加入忽略清單。
+從 1.5.1 版開始，使用 Shift-右鍵點擊可以直接派出任務，不用進入任務頁面。
+請先確定你喜歡任務的隊伍，因為不會有任何確認和詢問。
+]=]
 L["You can choose not to use a troop type clicking its icon"] = "您可以單擊其圖標選擇不使用的部隊類型"
 L[ [=[You can choose to limit how much champions are sent together.
 Right now OHC is not using more than %3$s champions in the same mission-

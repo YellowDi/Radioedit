@@ -1,20 +1,47 @@
-tag d5459e962892172dca938ef8a881504f69ac4cea 1.5.9
+tag 22b688d32b10fdb1ba016d953e0eaa07249809df 1.5.10
 Author:	Alar of Runetotem <alar@aspide.it>
-Date:	Sun Nov 19 19:47:07 2017 +0100
+Date:	Mon Dec 4 15:04:36 2017 +0100
 
-Feature: added more items to side bar
-Feature: removed from followerpage and moved to sidebar some items which
-doesnt need to be cast on a followe
+Feature: Added a second level sort criteria
+Fix: LeftSide Icon are now updates as soon as mission table appears
+Feature: Added itemid 140931 (Bandit wanted poster) to quick buttons
+Feature: For reputation rewards, your current reputation with the
+related faction is shown
 
-commit c038f5515b47e5ba750c5d3655c847ed4561452b
+commit d222df4428890ef350c759e4a6b1376d9cabc9af
 Author: Alar of Runetotem <alar@aspide.it>
-Date:   Sun Nov 19 19:46:04 2017 +0100
+Date:   Sun Dec 3 18:58:39 2017 +0100
 
-    Relnotes
+    Debug removed
 
-commit 16b820f1a0702045425b60b07a952e04291ea780
+commit d222df4428890ef350c759e4a6b1376d9cabc9af
 Author: Alar of Runetotem <alar@aspide.it>
-Date:   Sat Nov 4 00:23:53 2017 +0100
+Date:   Sun Dec 3 18:58:39 2017 +0100
 
-    Fix Lua error due to missing RefreshValue method
+    Debug removed
+
+commit c8fea310627d1324fd3c43624498c1a49bcad9b0
+Author: Alar of Runetotem <alar@aspide.it>
+Date:   Sun Dec 3 18:53:05 2017 +0100
+
+    Feature: Added a second level sort criteria
+
+commit 1e10486ea267fd4729391125cdcfc07b0d323c53
+Author: Alar of Runetotem <alar@aspide.it>
+Date:   Sun Dec 3 18:30:27 2017 +0100
+
+    Fix: LeftSide Icon are now updates as soon as mission table appears
+
+commit 5325b34ce0fd39c54ba069d9439f5e3164a28d8c
+Author: Alar of Runetotem <alar@aspide.it>
+Date:   Sun Dec 3 16:30:31 2017 +0100
+
+    Feature: For reputation rewards, your current reputation with the
+    related faction is shown
+
+commit ce7814c9b46f217a347f53b2553a330a965fc96c
+Author: Alar of Runetotem <alar@aspide.it>
+Date:   Sat Dec 2 22:05:44 2017 +0100
+
+    Fix: Added Bandit Wanted Poster shortcut
 

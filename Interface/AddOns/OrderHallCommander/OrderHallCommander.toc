@@ -12,8 +12,8 @@
 ## Notes-zhTW: 发送所有的追随者与点击多任务
 ## Notes-zhCN: 發送所有的追隨者與點擊多任務
 ## Author: Alar of Runetotem
-## Version: 1.5.9 70300
-## X-Revision: c038f55
+## Version: 1.5.10 70300
+## X-Revision: d222df4
 ## eMail: alar@aspide.it
 ## URL: http://wow.aspide.it
 ## OptionalDeps: Ace3,LibInit
@@ -28,7 +28,7 @@
 ## X-Category: Garrison
 ## X-License: GPL v3
 ## X-eMail: alar@aspide.it
-## X-Date: 2017-11-20T0:46:04Z
+## X-Date: 2017-12-03T23:58:39Z
 ## X-Embeds: LibInit
 embeds.xml
 forcelocale.lua

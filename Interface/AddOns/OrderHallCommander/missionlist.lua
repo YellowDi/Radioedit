@@ -95,6 +95,7 @@ end
 
 -- End Template - DO NOT MODIFY ANYTHING BEFORE THIS LINE
 --*BEGIN
+local _G=_G
 local XP_GAIN= XP_GAIN .. ' x %d'
 local pairs,wipe,tinsert,unpack=pairs,wipe,tinsert,unpack
 local UNCAPPED_PERC=PERCENTAGE_STRING
@@ -125,6 +126,7 @@ local missionIDS=setmetatable({},weak)
 local missionKEYS=setmetatable({},weak)
 local function nop() return 0 end
 local Current_Sorter
+local Second_Sorter
 local sortKeys={}
 local MAX=999999999
 local OHFButtons=OHFMissions.listScroll.buttons
@@ -202,6 +204,7 @@ function module:OnInitialized()
 	addon:AddBoolean("ELITEMODE",false,L["Elites mission mode"],L["Only consider elite missions"])
 --@end-debug@	]===]
 	addon:AddSelect("SORTMISSION","Garrison_SortMissions_Original",sorters,	L["Sort missions by:"],L["Changes the sort order of missions in Mission panel"])
+  addon:AddSelect("SORTMISSION2","Garrison_SortMissions_Original",sorters, L["and then by:"],L["Changes the second sort order of missions in Mission panel"])
 	addon:AddBoolean("IGNORELOW",false,L["Empty missions sorted as last"],L["Empty or 0% success mission are sorted as last. Does not apply to \"original\" method"])
 	addon:AddBoolean("NOWARN",false,L["Remove no champions warning"],L["Disables warning: "] .. GARRISON_PARTY_NOT_ENOUGH_CHAMPIONS)
 	addon:RegisterForMenu("mission",
@@ -209,6 +212,7 @@ function module:OnInitialized()
 		"ELITEMODE",
 --@end-debug@	]===]
 		"SORTMISSION",
+    "SORTMISSION2",
 		"IGNORELOW",
 		"NOWARN")
 	self:LoadButtons()
@@ -304,6 +308,14 @@ function module:RewardWarning(this)
 		if addon.allArtifactPower[this.itemID] then
 			tip:AddLine(artinfo,C.Artifact())
 		end
+		local factionID=addon.allReputationGain[this.itemID]
+		if factionID then
+		  local faction,_,level=GetFactionInfoByID(factionID)
+		  if level then
+		    level=_G['FACTION_STANDING_LABEL' .. level]
+		    tip:AddLine(FACTION_STANDING_CHANGED:format(C(level,"GREEN"),C(faction,"GREEN")),C.Orange())
+		  end
+    end		  
 		tip:AddLine(safeformat(L["%s for a wowhead link popup"],SHIFT_KEY_TEXT .. KEY_BUTTON1))
 		tip:Show()
 	end
@@ -434,6 +446,7 @@ function module:SortMissions()
   end
 	if Current_Sorter=="Garrison_SortMissions_Original" then return end
 	local f=sorters[Current_Sorter]
+	local f2=sorters[Second_Sorter]
 	for k=#OHFMissions.availableMissions,1,-1 do
 		local missionID=OHFMissions.availableMissions[k].missionID
 		local mission=addon:GetMissionData(missionID) -- we need the enriched version
@@ -443,7 +456,10 @@ function module:SortMissions()
 		else
 --@end-debug@			]===]
 			local rc,result =pcall(f,mission)
-			sortKeys[missionID]=rc and result or 0
+      local rc2,result2 =pcall(f2,mission)
+      
+			sortKeys[missionID]=format("%s|%s",rc and result or "0",rc2 and result2 or "0")
+		
 --[===[@debug@
       if not rc then addon:Print(C(result,"Orange")) end
 		end
@@ -476,6 +492,10 @@ function addon:Apply(flag,value)
 end
 function addon:ApplySORTMISSION(value)
   Current_Sorter=value
+  return self:ReloadMissions()
+end  
+function addon:ApplySORTMISSION2(value)
+  Second_Sorter=value
   return self:ReloadMissions()
 end  
 local PushRefresher,RunRefreshers,ListRefreshers do 
@@ -711,9 +731,9 @@ function module:InitialSetup(this)
 	addon:UpdateStop()
 	collectgarbage("restart")
   addon:MarkAsNew(OHF,addon:NumericVersion(),safeformat(L["%s, please review the tutorial\n(Click the icon to dismiss this message and start the tutorial)"],me .. ' ' .. addon.version),"ShowTutorial")
---[===[@alpha@
+--@alpha@
 	addon.version="1.6.0 Alpha"
---@end-alpha@]===]
+--@end-alpha@
 	local _,_,versiontype=addon.version:find("(Beta)")
 	if not versiontype then _,_,versiontype=addon.version:find("(Alpha)") end
 	if versiontype then
@@ -1285,12 +1305,13 @@ function module:AdjustMissionTooltip(this,...)
 		tip:AddLine(L["Better parties available in next future"],C:Green())
 		table.sort(bestTimesIndex)
 		local bestChance=0
+		local now=GetTime()
 		for i=1,#bestTimesIndex do
 			local key=bestTimesIndex[i]
 			local candidate=bestTimes[key]
-			if candidate.perc > bestChance then
+			if candidate.perc > bestChance and key > now then
 				bestChance=candidate.perc
-				tip:AddDoubleLine(SecondsToTime(key),GARRISON_MISSION_PERCENT_CHANCE:format(bestChance),C.Orange.r,C.Orange.g,C.Orange.b,addon:GetDifficultyColors(bestChance))
+				tip:AddDoubleLine(SecondsToTime(key-now),GARRISON_MISSION_PERCENT_CHANCE:format(bestChance),C.Orange.r,C.Orange.g,C.Orange.b,addon:GetDifficultyColors(bestChance))
 				for _,c in candidate:IterateFollowers() do
 					local busy=G.GetFollowerMissionTimeLeftSeconds(c) or 0
 					tip:AddDoubleLine(G.GetFollowerLink(c),SecondsToTime(busy),1,1,1,addon:GetDifficultyColors(busy/10))
