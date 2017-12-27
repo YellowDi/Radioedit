@@ -1,0 +1,16 @@
+## Interface: 70300
+## Title: A|cff99CCFFftermathhUI|r
+## Author: Aftermathh
+## Notes: Lightweight user interface.
+## Version: 2.00
+## SavedVariablesPerCharacter: AftermathhUIInstalled
+
+Core\Init.lua
+Libs\Init.xml
+Core\Colors.lua
+Config\Config.lua
+Config\Private.lua
+Medias\Medias.lua
+Core\Init.xml
+Developer\Init.xml
+Modules\Init.xml

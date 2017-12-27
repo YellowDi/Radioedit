@@ -1,0 +1,9 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<Include file="oUF\oUF.xml"/>
+	<Script file="oUF_Plugins\oUF_SpellRange.lua"/>
+	<Script file="oUF_Plugins\oUF_AuraWatch.lua"/>
+	<Script file="oUF_Plugins\oUF_RaidDebuffs.lua"/>
+	<Script file="oUF_Plugins\oUF_CombatFeedback.lua"/>
+	<Script file="oUF_Plugins\oUF_PVPSpecIcons.lua"/>
+	<Script file="oUF_Plugins\oUF_Trinkets.lua"/>
+</Ui>
