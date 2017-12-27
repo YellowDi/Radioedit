@@ -1,7 +1,0 @@
-﻿--------------------------
--- CharacterExpand.lua
--- Author: CN-阿曼尼-DeathKnight-仁者無敵:YY132359
--- Date: 2017/5/18
--- 展开收拢面板右侧
---------------------------
-PaperDollFrame.ExpandButton = CreateFrame("Button", nil, PaperDollFrame)PaperDollFrame.ExpandButton:SetSize(28, 28)PaperDollFrame.ExpandButton:SetPoint("BOTTOMLEFT", 302, 6)PaperDollFrame.ExpandButton:SetHighlightTexture("Interface\\BUTTONS\\UI-Common-MouseHilight")PaperDollFrame.ExpandButton:SetNormalTexture("Interface\\BUTTONS\\UI-SpellbookIcon-PrevPage-Up")PaperDollFrame.ExpandButton:SetScript("OnMouseUp", function(self, button)    if (CharacterFrame.Expanded) then        CharacterFrame_Collapse()        self:SetNormalTexture("Interface\\BUTTONS\\UI-SpellbookIcon-NextPage-Up")        self:SetPushedTexture("Interface\\BUTTONS\\UI-SpellbookIcon-NextPage-Down")    else        CharacterFrame_Expand()        self:SetNormalTexture("Interface\\BUTTONS\\UI-SpellbookIcon-PrevPage-Up")        self:SetPushedTexture("Interface\\BUTTONS\\UI-SpellbookIcon-PrevPage-Down")    end    self.Collapsed = not CharacterFrame.Expandedend)PaperDollFrame:HookScript("OnShow", function(self)    if (self.ExpandButton.Collapsed) then        CharacterFrame_Collapse()    endend)
