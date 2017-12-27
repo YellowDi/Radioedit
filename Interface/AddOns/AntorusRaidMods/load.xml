@@ -1,0 +1,27 @@
+﻿<Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<Script file="core\init.lua"/>
+	
+	<Script file="local\enUS.lua"/>	
+	<Script file="local\zhCN.lua"/>
+	<Script file="local\zhTW.lua"/>
+	
+	<Script file="core\api.lua"/>
+	<Script file="core\db.lua"/>
+	<Script file="core\gui.lua"/>
+	<Script file="core\moving.lua"/>
+	<Script file="core\core.lua"/>
+	
+	<!--Script file="test.lua"/-->
+	<Script file="Worldbreaker.lua"/>
+	<Script file="Felhounds.lua"/>
+	<Script file="HighCommand.lua"/>
+	<Script file="Hasabel.lua"/>
+	<Script file="Eonar.lua"/>
+	<Script file="Imonar.lua"/>
+	<Script file="Kingaroth.lua"/>
+	<Script file="Varimathras.lua"/>
+	<Script file="CovenofShivarra.lua"/>
+	<Script file="Aggramar.lua"/>
+	<Script file="Argus.lua"/>
+	<Script file="info.lua"/>	
+</Ui>
