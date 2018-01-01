@@ -39,5 +39,5 @@ OmniCC4Config = {
 	},
 	["groups"] = {
 	},
-	["version"] = "7.2.1",
+	["version"] = "7.3",
 }

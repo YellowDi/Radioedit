@@ -1,0 +1,2 @@
+
+CompactRaidCharDB = nil

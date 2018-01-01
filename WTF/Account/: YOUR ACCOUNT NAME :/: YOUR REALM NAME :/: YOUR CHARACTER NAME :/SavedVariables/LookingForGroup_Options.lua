@@ -6,9 +6,14 @@ LookingForGroup_OptionsCharacterDB = {
 	["profiles"] = {
 		["Default"] = {
 			["background_message"] = true,
+			["a_group_group"] = 131,
 			["background_enable_music"] = true,
+			["find_a_group_activities"] = {
+				"萨格拉斯之墓", -- [1]
+			},
 			["addon_meeting_stone"] = true,
-			["find_a_group_filter"] = "艾",
+			["a_group_category"] = 3,
+			["cr_map"] = true,
 		},
 	},
 }

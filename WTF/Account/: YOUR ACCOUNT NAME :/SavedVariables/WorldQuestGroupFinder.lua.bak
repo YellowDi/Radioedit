@@ -1,0 +1,5 @@
+
+WorldQuestGroupFinderConfig = {
+	["askZoning"] = false,
+	["notifyParty"] = false,
+}

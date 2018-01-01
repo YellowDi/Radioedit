@@ -1,0 +1,21 @@
+
+ParagonReputationDB = {
+	["bluecheck"] = true,
+	["b"] = 0.9,
+	["enable"] = false,
+	["greencheck"] = false,
+	["g"] = 0.5,
+	["yellowcheck"] = false,
+	["exalted"] = false,
+	["orangecheck"] = false,
+	["sound"] = true,
+	["total"] = false,
+	["r"] = 0,
+	["redcheck"] = false,
+	["y"] = 256,
+	["deficit"] = false,
+	["default"] = true,
+	["value"] = false,
+	["fade"] = 5,
+	["x"] = 0,
+}

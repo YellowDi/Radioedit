@@ -1,2 +1,0 @@
-
-BagnonFacade_Settings = nil
