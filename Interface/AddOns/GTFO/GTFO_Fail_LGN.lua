@@ -409,6 +409,20 @@ GTFO.SpellID["220324"] = {
   sound = 3;
 };
 
+GTFO.SpellID["241523"] = {
+  --desc = "Felfire Boulder";
+  sound = 3;
+};
+
+GTFO.SpellID["242880"] = {
+  --desc = "Agatha's Fury (Agatha)";
+  sound = 3;
+};
+
+GTFO.SpellID["241666"] = {
+  --desc = "Fel Rupture (Tugar Bloodtotem)";
+  sound = 3;
+};
 
 -- **********
 -- * Mardum *
@@ -2143,3 +2157,202 @@ GTFO.SpellID["246900"] = {
   sound = 3;
   applicationOnly = true;
 };
+
+
+-- *******************************
+-- * Antorus, the Burning Throne *
+-- *******************************
+
+GTFO.SpellID["252112"] = {
+  --desc = "Talon Strike (Legion Talon)";
+  sound = 3;
+};
+
+GTFO.SpellID["244532"] = {
+  --desc = "Fel Bombardment (Garothi Worldbreaker)";
+  sound = 3;
+};
+
+GTFO.SpellID["253543"] = {
+  --desc = "Infernal Bombardment (Legion Devastator)";
+  sound = 3;
+};
+
+GTFO.SpellID["254760"] = {
+  --desc = "Corrupting Maw (Shatug)";
+  sound = 3;
+  tankSound = 0;
+};
+
+GTFO.SpellID["254502"] = {
+  --desc = "Fearsome Leap (Imperator Deconix)";
+  applicationOnly = true;
+  sound = 3;
+};
+
+GTFO.SpellID["245121"] = {
+  --desc = "Entropic Blast (Entropic Mine)";
+  sound = 3;
+};
+
+GTFO.SpellID["244892"] = {
+  --desc = "Exploit Weakness (Admiral Svirax)";
+  sound = 3;
+  tankSound = 0;
+};
+
+GTFO.SpellID["243984"] = {
+  --desc = "Collapsing World (Portal Keeper Hasabel)";
+	soundFunction = function() -- Warn only if you get hit more than once
+		if (GTFO_FindEvent("CollapsingWorld")) then
+			return 3;
+		end
+		GTFO_AddEvent("CollapsingWorld", 1);
+		return 0;
+	end
+};
+
+GTFO.SpellID["244001"] = {
+  --desc = "Felstorm Barrage (Portal Keeper Hasabel)";
+  sound = 3;
+};
+
+GTFO.SpellID["249671"] = {
+  --desc = "Bombardment";
+  sound = 3;
+};
+
+GTFO.SpellID["247388"] = {
+  --desc = "Pulse Grenade (Imonar the Soulhunter)";
+  sound = 3;
+};
+
+GTFO.SpellID["247681"] = {
+  --desc = "Pulse Grenade (Imonar the Soulhunter)";
+  sound = 3;
+};
+
+GTFO.SpellID["247641"] = {
+  --desc = "Stasis Trap (Imonar the Soulhunter)";
+  applicationOnly = true;  
+  sound = 3;
+};
+
+GTFO.SpellID["247962"] = {
+  --desc = "Blastwire (Imonar the Soulhunter)";
+  sound = 3;
+};
+
+GTFO.SpellID["247716"] = {
+  --desc = "Charged Blasts (Imonar the Soulhunter)";
+  applicationOnly = true;  
+  sound = 3;
+  test = true;
+};
+
+GTFO.SpellID["254919"] = {
+  --desc = "Forging Strike (Kin'garoth)";
+  sound = 3;
+  tankSound = 0;
+};
+
+GTFO.SpellID["246634"] = {
+  --desc = "Apocalypse Blast (Kin'garoth)";
+  sound = 3;
+};
+
+GTFO.SpellID["257644"] = {
+  --desc = "Shadow Strike (Varimathras)";
+  sound = 3;
+  tankSound = 0;
+};
+
+GTFO.SpellID["244006"] = {
+  --desc = "Dark Eruption (Varimathras)";
+  sound = 3;
+};
+
+GTFO.SpellID["246374"] = {
+  --desc = "Shadow Blades (Asara, Mother of Night)";
+  sound = 3;
+};
+
+GTFO.SpellID["246209"] = {
+  --desc = "Punishing Flame (Dark Keeper Aedis)";
+  applicationOnly = true;  
+  sound = 3;
+};
+
+GTFO.SpellID["254022"] = {
+  --desc = "Corrupt Aegis (Aggramar)";
+  sound = 3;
+};
+
+GTFO.SpellID["246014"] = {
+  --desc = "Searing Tempest (Aggramar)";
+  sound = 3;
+  applicationOnly = true;  
+};
+
+GTFO.SpellID["244291"] = {
+  --desc = "Foe Breaker (Aggramar)";
+  sound = 3;
+  tankSound = 0;
+};
+
+GTFO.SpellID["244736"] = {
+  --desc = "Wake of Flame (Aggramar)";
+  sound = 3;
+  applicationOnly = true;  
+};
+
+GTFO.SpellID["245391"] = {
+  --desc = "Flare (Aggramar)";
+  sound = 3;
+};
+
+GTFO.SpellID["244686"] = {
+  --desc = "Meteor Swarm (Aggramar)";
+  sound = 3;
+};
+
+GTFO.SpellID["251815"] = {
+  --desc = "Edge of Obliteration (Argus the Unmaker)";
+  applicationOnly = true;
+  sound = 3;
+};
+
+GTFO.SpellID["248499"] = {
+  --desc = "Sweeping Scythe (Argus the Unmaker)";
+  sound = 3;
+  tankSound = 0;
+};
+
+GTFO.SpellID["257299"] = {
+  --desc = "Ember of Rage (Argus the Unmaker)";
+  applicationOnly = true;
+  sound = 3;
+};
+
+GTFO.SpellID["244601"] = {
+  --desc = "Supernova (Vulcanar)";
+  sound = 3;
+};
+
+GTFO.SpellID["244163"] = {
+  --desc = "Molten Flare (F'harg)";
+  sound = 3;
+};
+
+GTFO.SpellID["244071"] = {
+  --desc = "Weight of Darkness (Shatug)";
+  applicationOnly = true;
+  sound = 3;
+};
+
+GTFO.SpellID["250701"] = {
+  --desc = "Fel Swipe (Fel-Powered Purifier)";
+  sound = 3;
+  tankSound = 0;
+};
+

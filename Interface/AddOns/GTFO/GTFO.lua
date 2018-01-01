@@ -23,8 +23,8 @@ GTFO = {
 		TrivialDamagePercent = 2; -- Minimum % of HP lost required for an alert to be trivial
 		SoundOverrides = { }; -- Override table for GTFO sounds
 	};
-	Version = "4.43.6"; -- Version number (text format)
-	VersionNumber = 44306; -- Numeric version number for checking out-of-date clients
+	Version = "4.44.2"; -- Version number (text format)
+	VersionNumber = 44402; -- Numeric version number for checking out-of-date clients
 	DataLogging = nil; -- Indicate whether or not the addon needs to run the datalogging function (for hooking)
 	DataCode = "4"; -- Saved Variable versioning, change this value to force a reset to default
 	CanTank = nil; -- The active character is capable of tanking
@@ -383,6 +383,12 @@ function GTFO_OnEvent(self, event, ...)
 						--GTFO_DebugPrint("Won't alert "..SpellName.." ("..SpellID..") - Player activated ignore option: "..GTFO.SpellID[SpellID].category);
 						return;						
 					end
+				end
+
+				if (GTFO.SpellID[SpellID].spellType and not (GTFO.SpellID[SpellID].spellType == SpellType)) then
+					--GTFO_DebugPrint("Won't alert "..SpellName.." ("..SpellID..") - Wrong Spell Type");
+					-- Wrong spell type
+					return;
 				end
 
 				if (vehicle and not GTFO.SpellID[SpellID].vehicle) then

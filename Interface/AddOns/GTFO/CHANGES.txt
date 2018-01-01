@@ -1,25 +1,29 @@
 ------------------------------------------------------------------------
-r362 | Zensunim | 2017-11-10 00:48:20 -0600 (Fri, 10 Nov 2017) | 3 lines
+r380 | Zensunim | 2017-12-15 11:26:20 -0600 (Fri, 15 Dec 2017) | 3 lines
 Changed paths:
    M /trunk/GTFO.lua
    M /trunk/GTFO.toc
    M /trunk/GTFO_Fail_LGN.lua
    M /trunk/GTFO_Spells_LGN.lua
-   M /trunk/ReadMe.txt
 
-4.43.6
-* Added Legion spells for Argus
-* Added Legion spells for Tomb of Sargeras
+4.44.2
+* Added Legion spells for Antorus, The Burning Throne
+
 ------------------------------------------------------------------------
-r361 | Zensunim | 2017-10-10 22:44:55 -0500 (Tue, 10 Oct 2017) | 2 lines
+r379 | Zensunim | 2017-12-14 01:40:55 -0600 (Thu, 14 Dec 2017) | 1 line
 Changed paths:
    M /trunk/GTFO.lua
    M /trunk/GTFO.toc
    M /trunk/GTFO_Fail_LGN.lua
-   M /trunk/GTFO_Spells_LGN.lua
    M /trunk/ReadMe.txt
 
-* Added Legion spells for Argus
+* Added Legion spells for Antorus, The Burning Throne
+------------------------------------------------------------------------
+r378 | Zensunim | 2017-12-09 12:32:42 -0600 (Sat, 09 Dec 2017) | 1 line
+Changed paths:
+   M /trunk/GTFO_Fail_LGN.lua
+   M /trunk/GTFO_Spells_LGN.lua
 
+* Added Legion spells for Antorus, The Burning Throne
 ------------------------------------------------------------------------
 
