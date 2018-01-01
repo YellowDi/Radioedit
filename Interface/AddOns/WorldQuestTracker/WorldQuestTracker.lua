@@ -989,6 +989,10 @@ function WorldQuestTracker:OnInit()
 	end
 	
 	function WorldQuestTracker.IsInvasionPoint()
+		if (ff:IsShown()) then
+			return
+		end
+		
 		local mapFileName = GetMapInfo()
 		--> we are using where the map file name which always start with "InvasionPoint"
 		--> this makes easy to localize group between different languages on the group finder
@@ -1034,6 +1038,9 @@ function WorldQuestTracker:OnInit()
 			C_Timer.After (3, WorldQuestTracker.IsInvasionPoint)
 		else
 			WorldQuestTracker.IsInvasionPoint()
+			--> trigger once more since on some clientes MapInfo() is having a delay on update the correct map
+			C_Timer.After (1, WorldQuestTracker.IsInvasionPoint)
+			C_Timer.After (2, WorldQuestTracker.IsInvasionPoint)
 		end
 	end
 	
@@ -3776,7 +3783,14 @@ end
 		
 		--> if is an epic quest, converto to raid
 		local title, factionID, tagID, tagName, worldQuestType, rarity, isElite, tradeskillLineIndex = WorldQuestTracker.GetQuest_Info (questID)
-		if (rarity == LE_WORLD_QUEST_QUALITY_EPIC or questID == 0) then
+		if (rarity == LE_WORLD_QUEST_QUALITY_EPIC) then -- or questID == 0
+			--converto to raid if the quest is a world boss
+			C_Timer.After (2, function() ConvertToRaid(); end)
+		end
+		
+		local mapFileName = GetMapInfo()
+		if (mapFileName and mapFileName:find ("InvasionPoint")) then
+			--converto to raid if the group is for an invasion point
 			C_Timer.After (2, function() ConvertToRaid(); end)
 		end
 
@@ -4412,7 +4426,9 @@ else
 	
 	--> used on zone maps and the on the statusbar where there is more space for numbers
 	function WorldQuestTracker.ToK_FormatBigger (numero)
-		if (numero > 999999) then
+		if (numero > 999999999) then
+			return format ("%.0f", numero/1000000000) .. "B"
+		elseif (numero > 999999) then
 			return format ("%.0f", numero/1000000) .. "M"
 		elseif (numero > 99999) then
 			return floor (numero/1000) .. "K"
@@ -4858,6 +4874,18 @@ function WorldQuestTracker.RewardIsArtifactPower (itemLink)
 				end
 				if (n) then
 					n = n * 1000000
+					return true, n or 0
+				end
+				
+			elseif (power:find (THIRD_NUMBER)) then
+				local n = power:match (" %d+%.%d+ ")
+				n = tonumber (n)
+				if (not n) then
+					n = power:match (" %d+ ")
+					n = tonumber (n)
+				end
+				if (n) then
+					n = n * 1000000000
 					return true, n or 0
 				end
 			end
@@ -5500,16 +5528,14 @@ function WorldQuestTracker.CreateZoneWidget (index, name, parent) --~zone
 	button.highlight:Hide()
 	
 	button.IsTrackingGlow = supportFrame:CreateTexture(button:GetName() .. "IsTrackingGlow", "BACKGROUND", -6)
-	button.IsTrackingGlow:SetSize (44, 44)
 	button.IsTrackingGlow:SetPoint ("center", button, "center")
-	button.IsTrackingGlow:SetTexture ([[Interface\AddOns\WorldQuestTracker\media\glow_yellow_roundT]])
 	button.IsTrackingGlow:SetBlendMode ("ADD")
 	button.IsTrackingGlow:SetAlpha (1)
 	button.IsTrackingGlow:Hide()
 	button.IsTrackingGlow:SetDesaturated (nil)
 	--testing another texture
 	button.IsTrackingGlow:SetTexture ([[Interface\Calendar\EventNotificationGlow]])
-	button.IsTrackingGlow:SetSize (36, 36)
+	button.IsTrackingGlow:SetSize (31, 31)
 	
 	button.IsTrackingRareGlow = supportFrame:CreateTexture(button:GetName() .. "IsTrackingRareGlow", "BACKGROUND", -6)
 	button.IsTrackingRareGlow:SetSize (44*0.7, 44*0.7)
@@ -5517,7 +5543,7 @@ function WorldQuestTracker.CreateZoneWidget (index, name, parent) --~zone
 	button.IsTrackingRareGlow:SetTexture ([[Interface\AddOns\WorldQuestTracker\media\rare_dragon_TrackingT]])
 	--button.IsTrackingRareGlow:SetBlendMode ("ADD")
 	button.IsTrackingRareGlow:Hide()
-
+	
 	button.Shadow = supportFrame:CreateTexture(button:GetName() .. "Shadow", "BACKGROUND", -8)
 	button.Shadow:SetSize (24, 24)
 	button.Shadow:SetPoint ("center", button, "center")
@@ -6234,6 +6260,7 @@ function WorldQuestTracker.SetupWorldQuestButton (self, worldQuestType, rarity, 
 
 			-- items
 			local itemName, itemTexture, itemLevel, quantity, quality, isUsable, itemID, isArtifact, artifactPower, isStackable = WorldQuestTracker.GetQuestReward_Item (questID)
+			
 			if (itemName) then
 				if (isArtifact) then
 					local texture = WorldQuestTracker.GetArtifactPowerIcon (artifactPower, true) --
@@ -6260,7 +6287,10 @@ function WorldQuestTracker.SetupWorldQuestButton (self, worldQuestType, rarity, 
 					--end
 					
 					if (artifactPower >= 1000) then
-						if (artifactPower > 999999) then -- 1M
+						if (artifactPower > 999999999) then -- 1B
+							self.flagText:SetText (WorldQuestTracker.ToK_FormatBigger (artifactPower))
+							
+						elseif (artifactPower > 999999) then -- 1M
 							--self.flagText:SetText (WorldQuestTracker.ToK (artifactPower))
 							self.flagText:SetText (WorldQuestTracker.ToK_FormatBigger (artifactPower))
 						elseif (artifactPower > 9999) then
@@ -11612,16 +11642,19 @@ local create_worldmap_square = function (mapName, index)
 	
 	local trackingGlowBorder = button:CreateTexture (nil, "overlay", 1)
 	trackingGlowBorder:SetPoint ("center", button, "center")
-	trackingGlowBorder:SetTexture ([[Interface\AddOns\WorldQuestTracker\media\border_trackingT]])
-	trackingGlowBorder:SetSize (WORLDMAP_SQUARE_SIZE * 1.33, WORLDMAP_SQUARE_SIZE * 1.33)
-	trackingGlowBorder:Hide()
-	
 	trackingGlowBorder:SetTexture ([[Interface\AddOns\WorldQuestTracker\media\glow_yellow_squareT]])
 	trackingGlowBorder:SetBlendMode ("ADD")
-	--trackingGlowBorder:SetDesaturated (true)
 	trackingGlowBorder:SetSize (55, 55)
-	trackingGlowBorder:SetAlpha (.6)
+	trackingGlowBorder:SetAlpha (1)
 	trackingGlowBorder:SetDrawLayer ("BACKGROUND", -5)
+	trackingGlowBorder:Hide()
+	
+	local trackingGlowInside = button:CreateTexture (nil, "overlay", 1)
+	trackingGlowInside:SetPoint ("center", button, "center")
+	--trackingGlowInside:SetTexture ([[Interface\AddOns\WorldQuestTracker\media\border_trackingT]])
+	trackingGlowInside:SetColorTexture (1, 1, 1, .03)
+	trackingGlowInside:SetSize (WORLDMAP_SQUARE_SIZE * 0.8, WORLDMAP_SQUARE_SIZE * 0.8)
+	trackingGlowInside:Hide()
 	
 	local onStartTrackAnimation = DF:CreateAnimationHub (trackingGlowBorder, onStartClickAnimation)
 	WorldQuestTracker:CreateAnimation (onStartTrackAnimation, "Scale", 1, .12, .9, .9, 1.1, 1.1)
@@ -11800,6 +11833,7 @@ local create_worldmap_square = function (mapName, index)
 	criteriaIndicator:SetDrawLayer ("OVERLAY", 2)
 	newFlashTexture:SetDrawLayer ("OVERLAY", 7)
 	new:SetDrawLayer ("OVERLAY", 6)
+	trackingGlowInside:SetDrawLayer ("OVERLAY", 7)
 	
 	button.timeBlipRed:SetDrawLayer ("overlay", 2)
 	button.timeBlipOrange:SetDrawLayer ("overlay", 2)
@@ -11817,6 +11851,8 @@ local create_worldmap_square = function (mapName, index)
 	button.invasionBorder = invasionBorder
 	button.trackingBorder = trackingBorder
 	button.trackingGlowBorder = trackingGlowBorder
+	
+	button.trackingGlowInside = trackingGlowInside
 	
 	button.timeBlip = timeBlip
 	button.timeLeftText = timeLeftText
@@ -12317,7 +12353,7 @@ function WorldQuestTracker.UpdateWorldQuestsOnWorldMap (noCache, showFade, isQue
 							if (isCriteria) then
 								factionAmountForEachMap [mapId] = (factionAmountForEachMap [mapId] or 0) + 1
 							end
-						
+							
 							--local widget = widgets [taskIconIndex]
 							local widget = WorldQuestTracker.GetWorldMapWidget (configTable, showTimeLeftText)
 							
@@ -12399,8 +12435,10 @@ function WorldQuestTracker.UpdateWorldQuestsOnWorldMap (noCache, showFade, isQue
 									else
 										if (WorldQuestTracker.IsQuestBeingTracked (questID)) then
 											widget.trackingGlowBorder:Show()
+											widget.trackingGlowInside:Show()
 										else
 											--widget.trackingGlowBorder:Hide()
+											widget.trackingGlowInside:Hide()
 										end
 									end									
 									
@@ -12472,8 +12510,10 @@ function WorldQuestTracker.UpdateWorldQuestsOnWorldMap (noCache, showFade, isQue
 									else
 										if (WorldQuestTracker.IsQuestBeingTracked (questID)) then
 											widget.trackingGlowBorder:Show()
+											widget.trackingGlowInside:Show()
 										else
 											widget.trackingGlowBorder:Hide()
+											widget.trackingGlowInside:Hide()
 										end
 									end
 
@@ -12563,9 +12603,16 @@ function WorldQuestTracker.UpdateWorldQuestsOnWorldMap (noCache, showFade, isQue
 											--WorldQuestTracker.SetIconTexture (widget.texture, artifactIcon, false, false)
 											widget.isArtifact = true
 											if (artifactPower >= 1000) then
+												--if (artifactPower > 999999999) then
+												--	widget.amountText:SetText (WorldQuestTracker.ToK_FormatBigger (artifactPower))
+												
 												if (artifactPower > 999999) then
 													--widget.amountText:SetText (format ("%.1fM", artifactPower/1000000))
 													widget.amountText:SetText (WorldQuestTracker.ToK (artifactPower))
+													
+													local text = widget.amountText:GetText()
+													text = text:gsub ("%.0", "")
+													widget.amountText:SetText (text)
 													
 												elseif (artifactPower > 9999) then
 													--widget.amountText:SetText (format ("%.0fK", artifactPower/1000))

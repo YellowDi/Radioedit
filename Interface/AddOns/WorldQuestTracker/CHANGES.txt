@@ -1,7 +1,7 @@
-changeset:   257:5f650be8d10f
-tag:         v7.3.0.257-release
+changeset:   265:6a0d46ca8141
+tag:         v7.3.2.265-release
 user:        Tercio
-date:        Sun Oct 15 09:23:43 2017 -0200
-summary:     - Ticket #556: attempt to fix an issue started on latest update for portuguese localization.
+date:        Fri Dec 22 09:53:38 2017 -0200
+summary:     - Fixed the size of glow borders for tracked zone quests.
 
 
