@@ -1,0 +1,12 @@
+## Interface: 70300
+## Author: cqwrteur
+## Title: LookingForGroup Locale
+## Version: r191
+## Dependencies: LookingForGroup
+## LoadOnDemand: 1
+
+#@no-lib-strip@
+Libs\AceLocale-3.0\AceLocale-3.0.xml
+#@end-no-lib-strip@
+
+locale.xml

@@ -1,0 +1,12 @@
+## Interface: 70300
+## Author: cqwrteur
+## Title: LookingForGroup Hook
+## Version: r191
+## Dependencies: LookingForGroup
+## LoadOnDemand: 1
+
+#@no-lib-strip@
+Libs\AceHook-3.0\AceHook-3.0.xml
+#@end-no-lib-strip@
+
+Core.lua

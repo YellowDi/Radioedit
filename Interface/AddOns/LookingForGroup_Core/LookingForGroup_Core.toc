@@ -1,0 +1,8 @@
+## Interface: 70300
+## Author: cqwrteur
+## Title: LookingForGroup Core
+## Version: r191
+## Dependencies: LookingForGroup
+## LoadOnDemand: 1
+
+Core.lua

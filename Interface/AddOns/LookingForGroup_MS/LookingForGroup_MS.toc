@@ -1,0 +1,12 @@
+## Interface: 70300
+## Author: cqwrteur
+## Title: LookingForGroup Meeting Stone
+## Version: r191
+## Dependencies: LookingForGroup
+## LoadOnDemand: 1
+
+#@no-lib-strip@
+..\LookingForGroup_AV\Libs\AceSerializer-3.0\AceSerializer-3.0.xml
+#@end-no-lib-strip@
+
+Core.lua

@@ -1,0 +1,8 @@
+## Interface: 70300
+## Author: cqwrteur
+## Title: LookingForGroup Elite
+## Version: r191
+## Dependencies: LookingForGroup_Auto
+## LoadOnDemand: 1
+
+Core.lua
