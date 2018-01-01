@@ -1,4 +1,4 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local DT = E:GetModule('DataTexts')
 
 --Cache global variables
@@ -79,11 +79,10 @@ local function OnEnter(self)
 		local SpellPowerByAttackPower = GetOverrideSpellPowerByAP()
 		local OverrideAPBySpellPower = GetOverrideAPBySpellPower()
 		local damageBonus = BreakUpLargeNumbers(max((base+posBuff+negBuff), 0)/ATTACK_POWER_MAGIC_NUMBER);
-		local spellPower = 0;
 		if (OverrideAPBySpellPower ~= nil) then
 			local holySchool = 2;
 			-- Start at 2 to skip physical damage
-			spellPower = GetSpellBonusDamage(holySchool);
+			local spellPower = GetSpellBonusDamage(holySchool);
 			for i=(holySchool+1), MAX_SPELL_SCHOOLS do
 				spellPower = min(spellPower, GetSpellBonusDamage(i));
 			end

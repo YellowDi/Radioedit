@@ -1,4 +1,4 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local S = E:GetModule('Skins')
 local LBG = LibStub("LibButtonGlow-1.0", true)
 
@@ -6,50 +6,25 @@ local LBG = LibStub("LibButtonGlow-1.0", true)
 --Lua functions
 local _G = _G
 local unpack, select = unpack, select
-local ceil = ceil
 --WoW API / Variables
-local GetNumMissingLootItems = GetNumMissingLootItems
-local GetMissingLootItemInfo = GetMissingLootItemInfo
-local GetItemQualityColor = GetItemQualityColor
 local C_LootHistory_GetNumItems = C_LootHistory.GetNumItems
+local CreateFrame = CreateFrame
 local GetLootSlotInfo = GetLootSlotInfo
+local UnitIsDead = UnitIsDead
+local UnitIsFriend = UnitIsFriend
 local UnitName = UnitName
 local IsFishingLoot = IsFishingLoot
 local ITEM_QUALITY_COLORS = ITEM_QUALITY_COLORS
-local LOOTFRAME_NUMBUTTONS = LOOTFRAME_NUMBUTTONS
-local LOOT = LOOT
+local LOOT, ITEMS = LOOT, ITEMS
+local hooksecurefunc = hooksecurefunc
+--Global variables that we don't cache, list them here for mikk's FindGlobals script
+-- GLOBALS: LOOTFRAME_NUMBUTTONS, SquareButton_SetIcon
 
 local function LoadSkin()
 	if E.private.skins.blizzard.enable ~= true or E.private.skins.blizzard.loot ~= true then return end
-	-- Needs Review
-	--[[local frame = MissingLootFrame
-
-	frame:StripTextures()
-	frame:CreateBackdrop("Default")
-
-	S:HandleCloseButton(MissingLootFramePassButton)
-
-	local function SkinButton()
-		local numItems = GetNumMissingLootItems()
-
-		for i = 1, numItems do
-			local slot = _G["MissingLootFrameItem"..i]
-			local icon = slot.icon
-
-			S:HandleItemButton(slot, true)
-
-			local texture, name, count, quality = GetMissingLootItemInfo(i);
-			local color = (GetItemQualityColor(quality)) or (unpack(E.media.bordercolor))
-			icon:SetTexture(texture)
-			frame:SetBackdropBorderColor(color)
-		end
-
-		local numRows = ceil(numItems / 2);
-		MissingLootFrame:Height(numRows * 43 + 38 + MissingLootFrameLabel:GetHeight());
-	end
-	hooksecurefunc("MissingLootFrame_Show", SkinButton)]]
 
 	-- Loot history frame
+	local LootHistoryFrame = _G["LootHistoryFrame"]
 	LootHistoryFrame:StripTextures()
 	S:HandleCloseButton(LootHistoryFrame.CloseButton)
 	LootHistoryFrame:StripTextures()
@@ -87,6 +62,7 @@ local function LoadSkin()
 	hooksecurefunc("LootHistoryFrame_FullUpdate", UpdateLoots)
 
 	-- Master Loot
+	local MasterLooterFrame = _G["MasterLooterFrame"]
 	MasterLooterFrame:StripTextures()
 	MasterLooterFrame:SetTemplate()
 
@@ -122,34 +98,65 @@ local function LoadSkin()
 	end)
 
 	-- Bonus Roll Frame
+	local BonusRollFrame = _G["BonusRollFrame"]
 	BonusRollFrame:StripTextures()
 	BonusRollFrame:SetTemplate('Transparent')
 
-	BonusRollFrame.PromptFrame.Icon:SetTexCoord(unpack(E.TexCoords))
+	BonusRollFrame.SpecRing:SetTexture("")
+	BonusRollFrame.CurrentCountFrame.Text:FontTemplate()
 
+	BonusRollFrame.PromptFrame.Icon:SetTexCoord(unpack(E.TexCoords))
 	BonusRollFrame.PromptFrame.IconBackdrop = CreateFrame("Frame", nil, BonusRollFrame.PromptFrame)
 	BonusRollFrame.PromptFrame.IconBackdrop:SetFrameLevel(BonusRollFrame.PromptFrame.IconBackdrop:GetFrameLevel() - 1)
 	BonusRollFrame.PromptFrame.IconBackdrop:SetOutside(BonusRollFrame.PromptFrame.Icon)
 	BonusRollFrame.PromptFrame.IconBackdrop:SetTemplate()
 
-	BonusRollFrame.PromptFrame.Timer.Bar:SetColorTexture(1, 1, 1)
-	BonusRollFrame.PromptFrame.Timer.Bar:SetVertexColor(1, 1, 1)
+	BonusRollFrame.PromptFrame.Timer:SetStatusBarTexture(E.media.normTex)
+	BonusRollFrame.PromptFrame.Timer:SetStatusBarColor(unpack(E.media.rgbvaluecolor))
 
-	BonusRollFrame.SpecRing:SetTexture("")
-	BonusRollFrame.SpecIcon:SetPoint("TOPLEFT", BonusRollFrame, "TOPLEFT", 0, -3)
-	BonusRollFrame.SpecIcon:SetTexCoord(unpack(E.TexCoords))
+	BonusRollFrame.BlackBackgroundHoist.Background:Hide()
+	BonusRollFrame.BlackBackgroundHoist.b = CreateFrame("Frame", nil, BonusRollFrame)
+	BonusRollFrame.BlackBackgroundHoist.b:SetTemplate("Default")
+	BonusRollFrame.BlackBackgroundHoist.b:SetOutside(BonusRollFrame.PromptFrame.Timer)
 
 	BonusRollFrame.SpecIcon.b = CreateFrame("Frame", nil, BonusRollFrame)
-	BonusRollFrame.SpecIcon.b:SetFrameLevel(6)
 	BonusRollFrame.SpecIcon.b:SetTemplate("Default")
-	BonusRollFrame.SpecIcon.b:SetPoint("TOPLEFT", BonusRollFrame.SpecIcon, "TOPLEFT", 0, 0)
-	BonusRollFrame.SpecIcon.b:SetPoint("BOTTOMRIGHT", BonusRollFrame.SpecIcon, "BOTTOMRIGHT", 0, 0)
+	BonusRollFrame.SpecIcon.b:SetPoint("BOTTOMRIGHT", BonusRollFrame, -2, 2)
+	BonusRollFrame.SpecIcon.b:SetSize(BonusRollFrame.SpecIcon:GetSize())
+	BonusRollFrame.SpecIcon.b:SetFrameLevel(6)
 	BonusRollFrame.SpecIcon:SetParent(BonusRollFrame.SpecIcon.b)
+	BonusRollFrame.SpecIcon:SetTexCoord(unpack(E.TexCoords))
+	BonusRollFrame.SpecIcon:SetInside()
 
 	hooksecurefunc("BonusRollFrame_StartBonusRoll", function()
-		BonusRollFrame.SpecIcon.b:SetShown(BonusRollFrame.SpecIcon:IsShown() and BonusRollFrame.SpecIcon:GetTexture() ~= nil)
+		--keep the status bar a frame above but its increased 1 extra beacuse mera has a grid layer
+		local BonusRollFrameLevel = BonusRollFrame:GetFrameLevel();
+		BonusRollFrame.PromptFrame.Timer:SetFrameLevel(BonusRollFrameLevel+2);
+		if BonusRollFrame.BlackBackgroundHoist.b then
+			BonusRollFrame.BlackBackgroundHoist.b:SetFrameLevel(BonusRollFrameLevel+1);
+		end
+
+		--set currency icons position at bottom right (or left of the spec icon, on the bottom right)
+		BonusRollFrame.CurrentCountFrame:ClearAllPoints()
+		if BonusRollFrame.SpecIcon.b then
+			BonusRollFrame.SpecIcon.b:SetShown(BonusRollFrame.SpecIcon:IsShown() and BonusRollFrame.SpecIcon:GetTexture() ~= nil);
+			if BonusRollFrame.SpecIcon.b:IsShown() then
+				BonusRollFrame.CurrentCountFrame:SetPoint("RIGHT", BonusRollFrame.SpecIcon.b, "LEFT", -2, -2)
+			else
+				BonusRollFrame.CurrentCountFrame:SetPoint("BOTTOMRIGHT", BonusRollFrame, -2, 1)
+			end
+		else
+			BonusRollFrame.CurrentCountFrame:SetPoint("BOTTOMRIGHT", BonusRollFrame, -2, 1)
+		end
+
+		--skin currency icons
+		local ccf, pfifc = BonusRollFrame.CurrentCountFrame.Text, BonusRollFrame.PromptFrame.InfoFrame.Cost
+		local text1, text2 = ccf and ccf:GetText(), pfifc and pfifc:GetText()
+		if text1 and text1:find('|t') then ccf:SetText(text1:gsub('|T(.-):.-|t', '|T%1:16:16:0:0:64:64:5:59:5:59|t')) end
+		if text2 and text2:find('|t') then pfifc:SetText(text2:gsub('|T(.-):.-|t', '|T%1:16:16:0:0:64:64:5:59:5:59|t')) end
 	end)
 
+	local LootFrame = _G["LootFrame"]
 	LootFrame:StripTextures()
 	LootFrameInset:StripTextures()
 	LootFrame:Height(LootFrame:GetHeight() - 30)
@@ -198,7 +205,7 @@ local function LoadSkin()
 		local button = _G["LootButton"..index];
 		local slot = (numLootToShow * (LootFrame.page - 1)) + index;
 		if(button and button:IsShown()) then
-			local texture, item, quantity, quality, locked, isQuestItem, questId, isActive;
+			local texture, _, isQuestItem, questId, isActive;
 			if (LootFrame.AutoLootTable) then
 				local entry = LootFrame.AutoLootTable[slot];
 				if( entry.hide ) then
@@ -206,16 +213,12 @@ local function LoadSkin()
 					return;
 				else
 					texture = entry.texture;
-					item = entry.item;
-					quantity = entry.quantity;
-					quality = entry.quality;
-					locked = entry.locked;
 					isQuestItem = entry.isQuestItem;
 					questId = entry.questId;
 					isActive = entry.isActive;
 				end
 			else
-				texture, item, quantity, quality, locked, isQuestItem, questId, isActive = GetLootSlotInfo(slot);
+				texture, _, _, _, _, isQuestItem, questId, isActive = GetLootSlotInfo(slot);
 			end
 
 			if(texture) then

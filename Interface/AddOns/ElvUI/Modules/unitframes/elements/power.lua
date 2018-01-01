@@ -1,4 +1,4 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local UF = E:GetModule('UnitFrames');
 
 --Cache global variables
@@ -200,13 +200,13 @@ function UF:Configure_Power(frame)
 end
 
 local tokens = { [0] = "MANA", "RAGE", "FOCUS", "ENERGY", "RUNIC_POWER" }
-function UF:PostUpdatePower(unit, cur, min, max)
+function UF:PostUpdatePower(unit, _, _, max)
 	local parent = self.origParent or self:GetParent()
 
 	if parent.isForced then
 		local pType = random(0, 4)
 		local color = ElvUF['colors'].power[tokens[pType]]
-		min = random(1, max)
+		local min = random(1, max)
 		self:SetValue(min)
 
 		if not self.colorClass then

@@ -1,4 +1,4 @@
-﻿local E, L, V, P, G = unpack(select(2, ...)); --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+﻿local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 
 P.gridSize = 64
 P.farmSize = 340
@@ -98,6 +98,7 @@ P['general'] = {
 		['enable'] = true,
 		['position'] = 'RIGHTCHAT',
 		['textSize'] = 12,
+		["textOutline"] = "NONE",
 	},
 	['totems'] = {
 		['enable'] = true,
@@ -204,21 +205,26 @@ P['bags'] = {
 		["backdropSpacing"] = 4,
 		['showBackdrop'] = false,
 		['mouseover'] = false,
+		['visibility'] = "[petbattle] hide; show",
 	},
 };
 
 --NamePlate
 P["nameplates"] = {
 	["statusbar"] = "ElvUI Norm",
-	['font'] = 'Homespun',
-	['fontSize'] = 8,
-	['fontOutline'] = 'MONOCHROMEOUTLINE',
-	["durationFont"] = "Homespun",
-	["durationFontSize"] = 8,
-	["durationFontOutline"] = "MONOCHROMEOUTLINE",
-	["stackFont"] = "Homespun",
-	["stackFontSize"] = 8,
-	["stackFontOutline"] = "MONOCHROMEOUTLINE",
+	["font"] = "PT Sans Narrow",
+	["fontSize"] = 11,
+	["fontOutline"] = "OUTLINE",
+	["healthFont"] = "PT Sans Narrow",
+	["healthFontSize"] = 11,
+	["healthFontOutline"] = "OUTLINE",
+	["durationFont"] = "PT Sans Narrow",
+	["durationFontSize"] = 10,
+	["durationFontOutline"] = "OUTLINE",
+	["durationPosition"] = "CENTER",
+	["stackFont"] = "PT Sans Narrow",
+	["stackFontSize"] = 9,
+	["stackFontOutline"] = "OUTLINE",
 	['useTargetScale'] = true,
 	['targetScale'] = 1.15,
 	['nonTargetTransparency'] = 0.35,
@@ -323,6 +329,7 @@ P["nameplates"] = {
 				["castTimeFormat"] = "CURRENT",
 				["channelTimeFormat"] = "CURRENT",
 				["timeToHold"] = 0,
+				["iconPosition"] = "RIGHT",
 			},
 			['buffs'] = {
 				['enable'] = true,
@@ -386,6 +393,7 @@ P["nameplates"] = {
 				["castTimeFormat"] = "CURRENT",
 				["channelTimeFormat"] = "CURRENT",
 				["timeToHold"] = 0,
+				["iconPosition"] = "RIGHT",
 			},
 			['buffs'] = {
 				['enable'] = true,
@@ -451,6 +459,7 @@ P["nameplates"] = {
 				["castTimeFormat"] = "CURRENT",
 				["channelTimeFormat"] = "CURRENT",
 				["timeToHold"] = 0,
+				["iconPosition"] = "RIGHT",
 			},
 			['buffs'] = {
 				['enable'] = true,
@@ -515,6 +524,7 @@ P["nameplates"] = {
 				["castTimeFormat"] = "CURRENT",
 				["channelTimeFormat"] = "CURRENT",
 				["timeToHold"] = 0,
+				["iconPosition"] = "RIGHT",
 			},
 			['buffs'] = {
 				['enable'] = true,
@@ -577,6 +587,7 @@ P["nameplates"] = {
 				["castTimeFormat"] = "CURRENT",
 				["channelTimeFormat"] = "CURRENT",
 				["timeToHold"] = 0,
+				["iconPosition"] = "RIGHT",
 			},
 			['buffs'] = {
 				['enable'] = true,
@@ -644,6 +655,7 @@ P["nameplates"] = {
 				["castTimeFormat"] = "CURRENT",
 				["channelTimeFormat"] = "CURRENT",
 				["timeToHold"] = 0,
+				["iconPosition"] = "RIGHT",
 			},
 			['buffs'] = {
 				['enable'] = true,
@@ -753,10 +765,11 @@ P['chat'] = {
 	["customTimeColor"] = {r = 0.7, g = 0.7, b = 0.7},
 	["numScrollMessages"] = 3,
 	["autoClosePetBattleLog"] = true,
-
+	['socialQueueMessages'] = false,
 	['tabFont'] = 'PT Sans Narrow',
 	['tabFontSize'] = 12,
 	['tabFontOutline'] = 'NONE',
+	["copyChatLines"] = false,
 }
 
 --Datatexts
@@ -956,8 +969,6 @@ P['unitframe'] = {
 			['lowmana'] = 30,
 			['combatfade'] = false,
 			['healPrediction'] = true,
-			['restIcon'] = true,
-			["combatIcon"] = true,
 			['threatStyle'] = 'GLOW',
 			["smartAuraPosition"] = "DISABLED",
 			["colorOverride"] = "USE_DEFAULT",
@@ -1006,6 +1017,25 @@ P['unitframe'] = {
 				['text_format'] = '||cFFB04F4F[pvptimer][mouseover]||r',
 				['xOffset'] = 0,
 				['yOffset'] = 0,
+			},
+			["RestIcon"] = {
+				["enable"] = true,
+				["defaultColor"] = true,
+				["color"] = {r = 1, g = 1, b = 1, a = 1},
+				["anchorPoint"] = "TOPLEFT",
+				["xOffset"] = -3,
+				["yOffset"] = 6,
+				["size"] = 22,
+			},
+			["CombatIcon"] = {
+				["enable"] = true,
+				["defaultColor"] = true,
+				["color"] = {r = 1, g = 0.2, b = 0.2, a = 1},
+				["anchorPoint"] = "CENTER",
+				["xOffset"] = 0,
+				["yOffset"] = 0,
+				["size"] = 20,
+				["texture"] = "DEFAULT",
 			},
 			["pvpIcon"] = {
 				["enable"] = false,
@@ -1200,7 +1230,7 @@ P['unitframe'] = {
 				['sortMethod'] = 'TIME_REMAINING',
 				['sortDirection'] = 'DESCENDING',
 				['minDuration'] = 0,
-				['maxDuration'] = 300,
+				['maxDuration'] = 0,
 				['priority'] = 'Blacklist,Personal,nonPersonal', --Target Buffs
 				['xOffset'] = 0,
 				['yOffset'] = 0,
@@ -2188,6 +2218,7 @@ P['unitframe'] = {
 				["tank"] = true,
 				["healer"] = true,
 				["damager"] = true,
+				["combatHide"] = false,
 			},
 			['raidRoleIcons'] = {
 				['enable'] = true,
@@ -2372,6 +2403,7 @@ P['unitframe'] = {
 				["tank"] = true,
 				["healer"] = true,
 				["damager"] = true,
+				["combatHide"] = false,
 			},
 			['raidRoleIcons'] = {
 				['enable'] = true,
@@ -2522,6 +2554,7 @@ P['unitframe'] = {
 				["tank"] = true,
 				["healer"] = true,
 				["damager"] = true,
+				["combatHide"] = false,
 			},
 			['raidRoleIcons'] = {
 				['enable'] = true,
@@ -2870,6 +2903,7 @@ P["actionbar"] = {
 		['mouseover'] = false,
 		['buttonsPerRow'] = 11,
 		['alpha'] = 1,
+		['visibility'] = "show",
 	},
 
 	['globalFadeAlpha'] = 0,
@@ -2877,6 +2911,8 @@ P["actionbar"] = {
 	["hideCooldownBling"] = false,
 	["useDrawSwipeOnCharges"] = false,
 	["addNewSpells"] = false,
+	["rightClickSelfCast"] = false,
+	["desaturateOnCooldown"] = false,
 
 	['bar1'] = {
 		['enabled'] = true,
@@ -3030,6 +3066,7 @@ P["actionbar"] = {
 		['alpha'] = 1,
 		['inheritGlobalFade'] = false,
 		["usePositionOverride"] = true,
+		['visibility'] = "[vehicleui] hide; [petbattle] hide;show",
 	},
 	['extraActionButton'] = {
 		['alpha'] = 1,

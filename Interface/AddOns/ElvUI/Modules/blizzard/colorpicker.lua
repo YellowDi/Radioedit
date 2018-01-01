@@ -22,7 +22,6 @@ local CLASS, DEFAULT = CLASS, DEFAULT
 -- GLOBALS: ColorPPCopyColorSwatch, ColorPPBoxLabelA, ColorPPOldColorSwatch
 -- GLOBALS: CUSTOM_CLASS_COLORS
 
-local initialized = nil
 local colorBuffer = {}
 local editingText
 
@@ -94,6 +93,15 @@ local function UpdateColor(tbox)
 	editingText = nil
 end
 
+local function HandleUpdateLimiter(self, elapsed)
+	self.timeSinceUpdate = (self.timeSinceUpdate or 0) + elapsed
+	if self.timeSinceUpdate > 0.15 then
+		self.allowUpdate = true
+	else
+		self.allowUpdate = false
+	end
+end
+
 function B:EnhanceColorPicker()
 	if IsAddOnLoaded("ColorPickerPlus") then
 		return
@@ -123,23 +131,30 @@ function B:EnhanceColorPicker()
 		if ColorPickerFrame.hasOpacity then
 			ColorPPBoxA:Show()
 			ColorPPBoxLabelA:Show()
-			ColorPPBoxH:SetScript("OnTabPressed", function(self) ColorPPBoxA:SetFocus()  end)
+			ColorPPBoxH:SetScript("OnTabPressed", function(self) ColorPPBoxA:SetFocus() end)
 			UpdateAlphaText()
 			self:Width(405)
 		else
 			ColorPPBoxA:Hide()
 			ColorPPBoxLabelA:Hide()
-			ColorPPBoxH:SetScript("OnTabPressed", function(self) ColorPPBoxR:SetFocus()  end)
+			ColorPPBoxH:SetScript("OnTabPressed", function(self) ColorPPBoxR:SetFocus() end)
 			self:Width(345)
 		end
+		
+		--Set OnUpdate script to handle update limiter
+		self:SetScript("OnUpdate", HandleUpdateLimiter)
 	end)
 
 	--Memory Fix, Colorpicker will call the self.func() 100x per second, causing fps/memory issues,
-	--this little script will make you have to press ok for you to notice any changes.
-	ColorPickerFrame:SetScript('OnColorSelect', function(s, r, g, b)
+	--We overwrite the OnColorSelect script and set a limit on how often we allow a call to self.func
+	ColorPickerFrame:SetScript('OnColorSelect', function(self, r, g, b)
 		ColorSwatch:SetColorTexture(r, g, b)
 		if not editingText then
 			UpdateColorTexts(r, g, b)
+		end
+		if self.allowUpdate then
+			self.func()
+			self.timeSinceUpdate = 0
 		end
 	end)
 
@@ -316,11 +331,11 @@ function B:EnhanceColorPicker()
 		if i == 5 then
 			box:SetScript("OnEscapePressed", function(self)	self:ClearFocus() UpdateAlphaText() end)
 			box:SetScript("OnEnterPressed", function(self) self:ClearFocus() UpdateAlphaText() end)
-			box:SetScript("OnTextChanged", function(self) UpdateAlpha(self) end)
+			box:SetScript("OnTextChanged", UpdateAlpha)
 		else
 			box:SetScript("OnEscapePressed", function(self)	self:ClearFocus() UpdateColorTexts() end)
 			box:SetScript("OnEnterPressed", function(self) self:ClearFocus() UpdateColorTexts() end)
-			box:SetScript("OnTextChanged", function(self) UpdateColor(self) end)
+			box:SetScript("OnTextChanged", UpdateColor)
 		end
 
 		box:SetScript("OnEditFocusGained", function(self) self:SetCursorPosition(0) self:HighlightText() end)
@@ -338,9 +353,9 @@ function B:EnhanceColorPicker()
 
 	-- define the order of tab cursor movement
 	ColorPPBoxR:SetScript("OnTabPressed", function(self) ColorPPBoxG:SetFocus() end)
-	ColorPPBoxG:SetScript("OnTabPressed", function(self) ColorPPBoxB:SetFocus()  end)
-	ColorPPBoxB:SetScript("OnTabPressed", function(self) ColorPPBoxH:SetFocus()  end)
-	ColorPPBoxA:SetScript("OnTabPressed", function(self) ColorPPBoxR:SetFocus()  end)
+	ColorPPBoxG:SetScript("OnTabPressed", function(self) ColorPPBoxB:SetFocus() end)
+	ColorPPBoxB:SetScript("OnTabPressed", function(self) ColorPPBoxH:SetFocus() end)
+	ColorPPBoxA:SetScript("OnTabPressed", function(self) ColorPPBoxR:SetFocus() end)
 
 	-- make the color picker movable.
 	local mover = CreateFrame('Frame', nil, ColorPickerFrame)

@@ -1,12 +1,11 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local AB = E:GetModule('ActionBars');
 
 --Cache global variables
 --Lua functions
 local _G = _G
-local type = type
 local ceil = math.ceil;
-local format, lower, find = format, string.lower, string.find
+local format, find = format, string.find
 --WoW API / Variables
 local CreateFrame = CreateFrame
 local GetSpellInfo = GetSpellInfo
@@ -17,9 +16,7 @@ local GetShapeshiftFormInfo = GetShapeshiftFormInfo
 local CooldownFrame_Set = CooldownFrame_Set
 local InCombatLockdown = InCombatLockdown
 local RegisterStateDriver = RegisterStateDriver
-local UnregisterStateDriver = UnregisterStateDriver
 local GetBindingKey = GetBindingKey
-local C_PetBattlesIsInBattle = C_PetBattles.IsInBattle
 local NUM_STANCE_SLOTS = NUM_STANCE_SLOTS
 
 --Global variables that we don't cache, list them here for mikk's FindGlobals script
@@ -59,7 +56,7 @@ function AB:StyleShapeShift()
 
 		if i <= numForms then
 			texture, name, isActive, isCastable = GetShapeshiftFormInfo(i);
-			
+
 			if self.db.stanceBar.style == 'darkenInactive' then
 				_,_, texture = GetSpellInfo(name)
 			end
@@ -184,7 +181,7 @@ function AB:PositionAndSizeBarShapeShift()
 	local barHeight = (size * (numColumns * heightMult)) + ((buttonSpacing * (numColumns - 1)) * heightMult) + (buttonSpacing * (heightMult-1)) + ((self.db["stanceBar"].backdrop == true and (E.Border + backdropSpacing) or E.Spacing)*2)
 	bar:Width(barWidth);
 	bar:Height(barHeight);
-	
+
 	if self.db['stanceBar'].enabled then
 		bar:SetScale(1);
 		bar:SetAlpha(bar.db.alpha);
@@ -207,12 +204,12 @@ function AB:PositionAndSizeBarShapeShift()
 	else
 		horizontalGrowth = "LEFT";
 	end
-	
+
 	if(self.db['stanceBar'].inheritGlobalFade) then
 		bar:SetParent(self.fadeParent)
 	else
 		bar:SetParent(E.UIParent)
-	end	
+	end
 
 	local button, lastButton, lastColumnButton;
 	local firstButtonSpacing = (self.db["stanceBar"].backdrop == true and (E.Border + backdropSpacing) or E.Spacing)
@@ -283,12 +280,21 @@ function AB:PositionAndSizeBarShapeShift()
 end
 
 function AB:AdjustMaxStanceButtons(event)
-	if InCombatLockdown() then return; end
+	if InCombatLockdown() then
+		AB.NeedsAdjustMaxStanceButtons = event or true
+		self:RegisterEvent('PLAYER_REGEN_ENABLED')
+		return
+	end
+
+	local visibility = self.db.stanceBar.visibility;
+	if visibility and visibility:match('[\n\r]') then
+		visibility = visibility:gsub('[\n\r]','')
+	end
 
 	for i=1, #bar.buttons do
 		bar.buttons[i]:Hide()
 	end
-	local initialCreate = false;
+
 	local numButtons = GetNumShapeshiftForms()
 	for i = 1, NUM_STANCE_SLOTS do
 		if not bar.buttons[i] then
@@ -298,8 +304,7 @@ function AB:AdjustMaxStanceButtons(event)
 				MasqueGroup:AddButton(bar.buttons[i])
 			end
 			self:HookScript(bar.buttons[i], 'OnEnter', 'Button_OnEnter');
-			self:HookScript(bar.buttons[i], 'OnLeave', 'Button_OnLeave');			
-			initialCreate = true;
+			self:HookScript(bar.buttons[i], 'OnLeave', 'Button_OnLeave');
 		end
 
 		if ( i <= numButtons ) then
@@ -312,19 +317,12 @@ function AB:AdjustMaxStanceButtons(event)
 
 	self:PositionAndSizeBarShapeShift();
 
+	-- sometimes after combat lock down `event` may be true because of passing it back with `AB.NeedsAdjustMaxStanceButtons`
 	if event == 'UPDATE_SHAPESHIFT_FORMS' then
 		self:StyleShapeShift()
 	end
 
-	if not C_PetBattlesIsInBattle() or initialCreate then
-		if numButtons == 0 then
-			UnregisterStateDriver(bar, "show");
-			bar:Hide()
-		else
-			bar:Show()
-			RegisterStateDriver(bar, "show", '[petbattle] hide;show');
-		end
-	end
+	RegisterStateDriver(bar, "visibility", (numButtons == 0 and "hide") or visibility);
 end
 
 function AB:UpdateStanceBindings()
@@ -345,17 +343,9 @@ function AB:CreateBarShapeShift()
 	bar.backdrop:SetAllPoints();
 	bar:Point('TOPLEFT', E.UIParent, 'TOPLEFT', 4, -4);
 	bar.buttons = {};
-	bar:SetAttribute("_onstate-show", [[
-		if newstate == "hide" then
-			self:Hide();
-		else
-			self:Show();
-		end
-	]]);
 
 	self:HookScript(bar, 'OnEnter', 'Bar_OnEnter');
 	self:HookScript(bar, 'OnLeave', 'Bar_OnLeave');
-
 
 	self:RegisterEvent('UPDATE_SHAPESHIFT_FORMS', 'AdjustMaxStanceButtons');
 	self:RegisterEvent('UPDATE_SHAPESHIFT_COOLDOWN');

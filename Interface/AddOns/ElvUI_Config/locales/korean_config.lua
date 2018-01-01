@@ -102,6 +102,11 @@ L["TEXT_FORMAT_DESC"] = [=[글자가 표시되는 형식을 변경할 수 있습
 |cffceff00name:long|r : 최대 20글자
 
 표시하고 싶지 않으면 빈칸으로 두면 되며, 자세한 정보는 |cff2eb7e4www.tukui.org|r 에서 확인하세요.]=]
+L["NAMEPLATE_FRAMELEVEL_DESC"] = [=[If you set this to 1 then all plates triggered by this style filter will be above any of the non-triggered plates.
+
+If you set this to 2 in another style filter then all plates triggered by that filter will be above plates with frame level set to 1 and all non-triggered plates, and so on.
+
+NOTE: This setting will NOT fix the issue with clicking or mousing over nameplates that are overlapped. That issue is due to us not being able to manipulate the frame level of the clickable area for nameplates.]=]
 
 --ActionBars
 L["Action Paging"] = "페이지 자동전환 조건"
@@ -131,6 +136,7 @@ L["Color when the text is in the seconds format."] = "버튼에 배치된 행동
 L["Cooldown Text"] = "재사용 대기시간 설정"
 L["Darken Inactive"] = "킨 태세만 아이콘 표시"
 L["Days"] = "일 단위 색상"
+L["Desaturate On Cooldown"] = true
 L["Display bind names on action buttons."] = "버튼에 지정된 단축키를 표시할지 여부를 결정합니다."
 L["Display cooldown text on anything with the cooldown spiral."] = "재사용 대기시간을 가진 모든 것에 시간을 표시합니다."
 L["Display macro names on action buttons."] = "버튼에 배치된 매크로의 이름을 표시할지 여부를 결정합니다."
@@ -158,6 +164,7 @@ L["Out of Power"] = "자원 부족"
 L["Out of Range"] = "사정거리 밖"
 L["Restore Bar"] = "기본값으로 초기화"
 L["Restore the actionbars default settings"] = "이 행동단축바에 대한 모든 수치를 기본값으로 되돌립니다."
+L["RightClick Self-Cast"] = true
 L["Seconds"] = "초 단위 색상"
 L["Show Empty Buttons"] = true
 L["Shows a swipe animation when a spell is recharging but still has charges left."] = true
@@ -282,6 +289,7 @@ L["Your Auras First"] = "내가 걸은 효과 먼저"
 
 --Chat
 L["Above Chat"] = "채팅창 위에 배치"
+L["Adds an arrow infront of the chat lines to copy the entire line."] = true
 L["Adjust the height of your right chat panel."] = "우측 패널의 세로길이를 결정합니다."
 L["Adjust the width of your right chat panel."] = "우측 패널의 가로길이를 결정합니다."
 L["Alerts"] = "알림"
@@ -293,6 +301,7 @@ L["Below Chat"] = "채팅창 아래에 배치"
 L["Chat EditBox Position"] = "대화입력창 위치"
 L["Chat History"] = "이전 채팅내역 기억"
 L["Class Color Mentions"] = true
+L["Copy Chat Lines"] = true
 L["Custom Timestamp Color"] = true
 L["Display LFG Icons in group chat."] = "말한 사람에게 역할 아이콘이 설정되어 있는 경우 이름에 같이 표시할지 여부를 결정합니다."
 L["Display the hyperlink tooltip while hovering over a hyperlink."] = "각종 링크에 커서를 갖다 댄(마우스오버) 동안에 링크에 대한 툴팁을 표시합니다."
@@ -326,6 +335,7 @@ L["Panel Texture (Right)"] = "패널 텍스쳐 (오른쪽)"
 L["Panel Width"] = "패널 가로길이"
 L["Position of the Chat EditBox, if datatexts are disabled this will be forced to be above chat."] = "대화 입력창의 위치를 결정합니다. 만약 정보문자 항목에서 패널에 정보문자를 표시하지 않게 해놨다면 위치가 채팅창 위로 고정됩니다."
 L["Prevent the same messages from displaying in chat more than once within this set amount of seconds, set to zero to disable."] = "같은 내용의 메시지는 이 값만큼 정해진 시간 내에선 한번만 보여줍니다.|n|n0으로 설정하면 이 기능을 끕니다."
+L["Quick Join Messages"] = true
 L["Require holding the Alt key down to move cursor or cycle through messages in the editbox."] = true
 L["Right Only"] = "우측 배경만 표시"
 L["Right Panel Height"] = "우측 패널 세로길이"
@@ -336,6 +346,7 @@ L["Separate Panel Sizes"] = "좌우패널 크기 따로설정"
 L["Set the font outline."] = "글꼴의 외곽선을 결정합니다."
 L["Short Channels"] = "채널명 요약"
 L["Shorten the channel names in chat."] = "채팅창의 채널명을 간추려 표시합니다."
+L["Show clickable Quick Join messages inside of the chat."] = true
 L["Show Both"] = "둘 다 배경 표시"
 L["Spam Interval"] = "중복메시지 제한 기간"
 L["Sticky Chat"] = "채널 고정"
@@ -673,6 +684,7 @@ L["Hide When Empty"] = true
 L["Hide"] = "숨기기"
 L["How many seconds the castbar should stay visible after the cast failed or was interrupted."] = true
 L["Icon Base Height"] = true
+L["Icon Position"] = true
 L["If enabled then it checks if auras are missing instead of being present on the unit."] = true
 L["If enabled then it will require all auras to activate the filter. Otherwise it will only require any one of the auras to activate it."] = true
 L["If enabled then it will require all cooldowns to activate the filter. Otherwise it will only require any one of the cooldowns to activate it."] = true
@@ -681,10 +693,15 @@ L["If enabled then the filter will only activate if the level of the unit is equ
 L["If enabled then the filter will only activate if the level of the unit matches this value."] = true
 L["If enabled then the filter will only activate if the level of the unit matches your own."] = true
 L["If enabled then the filter will only activate if the unit is casting interruptible spells."] = true
+L["If enabled then the filter will only activate if the unit is casting not interruptible spells."] = true
 L["If enabled then the filter will only activate when the unit is in combat."] = true
 L["If enabled then the filter will only activate when the unit is out of combat."] = true
 L["If enabled then the filter will only activate when you are in combat."] = true
 L["If enabled then the filter will only activate when you are out of combat."] = true
+L["If enabled then the filter will only activate when you are targeting the unit."] = true
+L["If enabled then the filter will only activate when you are not targeting the unit."] = true
+L["If enabled then the filter will only activate when the unit is targeting you."] = true
+L["If enabled then the filter will only activate when the unit is not targeting you."] = true
 L["If enabled then you will no longer see nameplates that use the default Blizzard appearance."] = true
 L["If the aura is listed with a number then you need to use that to remove it from the list."] = true
 L["If this is enabled then the reaction check will use your reputation with the faction the unit belongs to."] = true
@@ -715,6 +732,8 @@ L["Name Only"] = true
 L["NamePlates"] = "이름표"
 L["Non-Target Transparency"] = true
 L["Not Targeted"] = true
+L["Is Targeting Player"] = true
+L["Is Not Targeting Player"] = true
 L["Off Cooldown"] = true
 L["On Cooldown"] = true
 L["Only load nameplates for units within this range."] = true
@@ -821,33 +840,22 @@ L["Profile"] = true
 L["Table"] = true
 
 --Skins
-L["Achievement Frame"] = "업적창"
 L["AddOn Manager"] = true
 L["Alert Frames"] = "알림 프레임"
 L["Archaeology Frame"] = "고고학 창"
-L["Auction Frame"] = "경매장"
-L["Barbershop Frame"] = "미용실"
 L["BG Map"] = "전장 맵"
 L["BG Score"] = "전장 점수판"
-L["Black Market AH"] = "암시장"
 L["Calendar Frame"] = "달력"
 L["Character Frame"] = "캐릭터 창"
 L["Contribution"] = true
-L["Death Recap"] = DEATH_RECAP
 L["Debug Tools"] = "오류 확인 창"
 L["Gossip Frame"] = "NPC 대화 창"
 L["Guild Control Frame"] = "길드 관리 창"
-L["Guild Frame"] = "길드창"
 L["Guild Registrar"] = "길드 등록"
 L["Help Frame"] = "도움말"
-L["Inspect Frame"] = "살펴보기 창"
 L["Item Upgrade"] = "아이템 강화 창"
-L["KeyBinding Frame"] = "단축키 설정 창"
 L["LF Guild Frame"] = "길드 찾기 창"
-L["LFG Frame"] = "파티 찾기 창"
 L["Loot Frames"] = "루팅 창"
-L["Loss Control"] = "제어손실 표시 창"
-L["Macro Frame"] = "매크로 창"
 L["Mail Frame"] = "우편함"
 L["Merchant Frame"] = "상인 창"
 L["Mirror Timers"] = true
@@ -862,17 +870,10 @@ L["Quest Frames"] = "퀘스트 창"
 L["Raid Frame"] = "공격대 프레임"
 L["Skins"] = "스킨"
 L["Socket Frame"] = "보석홈 UI"
-L["Spellbook"] = "마법책 프레임"
 L["Stable"] = "소환수 보관창"
 L["Tabard Frame"] = "휘장 프레임"
-L["Talent Frame"] = "특성 창"
 L["TalkingHead"] = true
-L["Taxi Frame"] = "그리폰/와이번 창"
-L["Time Manager"] = "시계 창"
-L["Trade Frame"] = "거래창"
-L["TradeSkill Frame"] = "전문기술 창"
 L["Trainer Frame"] = "기술전문가 창"
-L["Transmogrify Frame"] = "형상변환 창"
 
 --Tooltip
 L["Always Hide"] = "표시하지 않음"
@@ -988,9 +989,11 @@ L["Current"] = "현재값"
 L["Custom Dead Backdrop"] = true
 L["Custom Health Backdrop"] = "고정 배경색 사용"
 L["Custom Texts"] = "사용자지정 문자"
+L["Custom Texture"] = true
 L["Debuff Highlighting"] = "해제가능한 디버프 강조"
 L["Debuffs"] = "디버프"
 L["Decimal Threshold"] = "소수점표시 기준"
+L["Default Color"] = true
 L["Deficit"] = "부족"
 L["Delete a created filter, you cannot delete pre-existing filters, only custom ones."] = "생성된 필터를 제거합니다. 단, 추가로 생성한 필터만 제거가 가능합니다."
 L["Delete Filter"] = "필터 삭제"
@@ -1180,7 +1183,7 @@ L["Set the priority order of the spell, please note that prioritys are only used
 L["Set the type of auras to show when a unit is a foe."] = "해당 유닛이 적대적일 때 표시할 오라 형태를 결정합니다."
 L["Set the type of auras to show when a unit is friendly."] = "해당 유닛이 우호적일 때 표시할 오라 형태를 결정합니다."
 L["Sets the font instance's horizontal text alignment style."] = "문자의 가로 정렬 방법을 결정합니다."
-L["Show a incomming heal prediction bar on the unitframe. Also display a slightly different colored bar for incoming overheals."] = "생명력바에 예상 치유량을 표시합니다."
+L["Show an incoming heal prediction bar on the unitframe. Also display a slightly different colored bar for incoming overheals."] = "생명력바에 예상 치유량을 표시합니다."
 L["Show Aura From Other Players"] = "다른 유저가 걸어준 버프도 표시"
 L["Show Auras"] = "오라아이콘 표시"
 L["Show Dispellable Debuffs"] = true

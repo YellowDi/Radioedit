@@ -1,4 +1,4 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local B = E:NewModule('Blizzard', 'AceEvent-3.0', 'AceHook-3.0');
 E.Blizzard = B;
 
@@ -27,7 +27,7 @@ function B:Initialize()
 
 	E:CreateMover(LossOfControlFrame, 'LossControlMover', L["Loss Control Icon"])
 
-	CreateFrame("Frame"):SetScript("OnUpdate", function(self, elapsed)
+	CreateFrame("Frame"):SetScript("OnUpdate", function(self)
 		if LFRBrowseFrame.timeToClear then
 			LFRBrowseFrame.timeToClear = nil
 		end

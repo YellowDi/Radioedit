@@ -1,4 +1,4 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local AFKString = _G["AFK"]
 local AFK = E:NewModule('AFK', 'AceEvent-3.0', 'AceTimer-3.0');
 local CH = E:GetModule("Chat")
@@ -218,7 +218,7 @@ local function Chat_OnEvent(self, event, arg1, arg2, arg3, arg4, arg5, arg6, arg
 	if ( arg14 ) then	--isMobile
 		message = ChatFrame_GetMobileEmbeddedTexture(info.r, info.g, info.b)..message;
 	end
-	
+
 	--Escape any % characters, as it may otherwise cause an "invalid option in format" error in the next step
 	message = gsub(message, "%%", "%%%%");
 

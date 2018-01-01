@@ -1,4 +1,4 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local AB = E:GetModule('ActionBars');
 
 --Cache global variables
@@ -8,6 +8,7 @@ local assert = assert
 --WoW API / Variables
 local CreateFrame = CreateFrame
 local UpdateMicroButtonsParent = UpdateMicroButtonsParent
+local RegisterStateDriver = RegisterStateDriver
 
 --Global variables that we don't cache, list them here for mikk's FindGlobals script
 -- GLOBALS: ElvUI_MicroBar, MainMenuBarPerformanceBar, MainMenuMicroButton
@@ -67,9 +68,7 @@ function AB:MainMenuMicroButton_SetPushed()
 	MainMenuBarPerformanceBar:Point("TOPLEFT", MainMenuMicroButton, "TOPLEFT", 8, -37);
 end
 
-function AB:UpdateMicroButtonsParent(parent)
-	if parent ~= ElvUI_MicroBar then parent = ElvUI_MicroBar end
-
+function AB:UpdateMicroButtonsParent()
 	for i=1, #MICRO_BUTTONS do
 		_G[MICRO_BUTTONS[i]]:SetParent(ElvUI_MicroBar);
 	end
@@ -84,7 +83,14 @@ local __buttons = {}
 -- end
 
 function AB:UpdateMicroPositionDimensions()
-	if not ElvUI_MicroBar then return; end
+	if not ElvUI_MicroBar then return end
+
+	if InCombatLockdown() then
+		AB.NeedsUpdateMicroPositionDimensions = true
+		self:RegisterEvent('PLAYER_REGEN_ENABLED')
+		return
+	end
+
 	local numRows = 1
 	local prevButton = ElvUI_MicroBar
 	for i=1, (#MICRO_BUTTONS) do
@@ -114,17 +120,23 @@ function AB:UpdateMicroPositionDimensions()
 		ElvUI_MicroBar:SetAlpha(self.db.microbar.alpha)
 	end
 
-	AB.MicroWidth = ((_G["CharacterMicroButton"]:GetWidth() - 3) * self.db.microbar.buttonsPerRow)+1
-	AB.MicroHeight = ((_G["CharacterMicroButton"]:GetHeight() - 26) * numRows)-(numRows-1)
-	ElvUI_MicroBar:Width(AB.MicroWidth)
-	ElvUI_MicroBar:Height(AB.MicroHeight)
+	AB.MicroWidth = ((_G["CharacterMicroButton"]:GetWidth() - 3) * self.db.microbar.buttonsPerRow)-1
+	AB.MicroHeight = (((_G["CharacterMicroButton"]:GetHeight() - 26) * numRows)-numRows)-1
+	ElvUI_MicroBar:Size(AB.MicroWidth, AB.MicroHeight)
 
-	if self.db.microbar.enabled then
-		ElvUI_MicroBar:Show()
-		if ElvUI_MicroBar.mover then E:EnableMover(ElvUI_MicroBar.mover:GetName()) end
-	else
-		ElvUI_MicroBar:Hide()
-		if ElvUI_MicroBar.mover then E:DisableMover(ElvUI_MicroBar.mover:GetName()) end
+	local visibility = self.db.microbar.visibility
+	if visibility and visibility:match('[\n\r]') then
+		visibility = visibility:gsub('[\n\r]','')
+	end
+
+	RegisterStateDriver(ElvUI_MicroBar, "visibility", (self.db.microbar.enabled and visibility) or "hide");
+
+	if ElvUI_MicroBar.mover then
+		if self.db.microbar.enabled then
+			E:EnableMover(ElvUI_MicroBar.mover:GetName())
+		else
+			E:DisableMover(ElvUI_MicroBar.mover:GetName())
+		end
 	end
 end
 
@@ -135,7 +147,7 @@ function AB:UpdateMicroButtons()
 end
 
 function AB:SetupMicroBar()
-	local microBar = CreateFrame('Frame', 'ElvUI_MicroBar', E.UIParent)
+	local microBar = CreateFrame('Frame', 'ElvUI_MicroBar', E.UIParent, 'SecureHandlerStateTemplate')
 	microBar:Point('TOPLEFT', E.UIParent, 'TOPLEFT', 4, -48)
 
 	E.FrameLocks["ElvUI_MicroBar"] = true;

@@ -1,4 +1,4 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local UF = E:NewModule('UnitFrames', 'AceTimer-3.0', 'AceEvent-3.0', 'AceHook-3.0');
 local LSM = LibStub("LibSharedMedia-3.0");
 UF.LSM = LSM
@@ -32,7 +32,7 @@ local MAX_BOSS_FRAMES = MAX_BOSS_FRAMES
 --Global variables that we don't cache, list them here for mikk's FindGlobals script
 -- GLOBALS: UIParent, ElvCharacterDB, ElvUF_Parent, oUF_RaidDebuffs, CompactRaidFrameManager
 -- GLOBALS: PlayerFrame, RuneFrame, PetFrame, TargetFrame, ComboFrame, FocusFrame
--- GLOBALS: FocusFrameToT, TargetFrameToT, CompactUnitFrameProfiles
+-- GLOBALS: FocusFrameToT, TargetFrameToT, CompactUnitFrameProfiles, PartyMemberBackground
 
 
 local _, ns = ...
@@ -480,7 +480,7 @@ function UF:CreateAndUpdateUFGroup(group, numGroup)
 			self[unit]:SetID(i)
 		end
 
-		local frameName = E:StringTitle(group)
+		frameName = E:StringTitle(group)
 		frameName = frameName:gsub('t(arget)', 'T%1')
 		self[unit].Update = function()
 			UF["Update_"..E:StringTitle(frameName).."Frames"](self, self[unit], self.db['units'][group])
@@ -940,11 +940,13 @@ function UF:RegisterRaidDebuffIndicator()
 
 		local instance = E.global.unitframe.raidDebuffIndicator.instanceFilter
 		local other = E.global.unitframe.raidDebuffIndicator.otherFilter
+		instanceSpells = ((E.global.unitframe.aurafilters[instance] and E.global.unitframe.aurafilters[instance].spells) or E.global.unitframe.aurafilters.RaidDebuffs.spells)
+		otherSpells = ((E.global.unitframe.aurafilters[other] and E.global.unitframe.aurafilters[other].spells) or E.global.unitframe.aurafilters.CCDebuffs.spells)
 
 		if instanceType == "party" or instanceType == "raid" then
-			ORD:RegisterDebuffs(E.global.unitframe.aurafilters[instance].spells)
+			ORD:RegisterDebuffs(instanceSpells)
 		else
-			ORD:RegisterDebuffs(E.global.unitframe.aurafilters[other].spells)
+			ORD:RegisterDebuffs(otherSpells)
 		end
 	end
 end
@@ -1112,7 +1114,7 @@ function ElvUF:DisableBlizzard(unit)
 	end
 end
 
-function UF:ADDON_LOADED(event, addon)
+function UF:ADDON_LOADED(_, addon)
 	if addon ~= 'Blizzard_ArenaUI' then return; end
 	ElvUF:DisableBlizzard('arena')
 	self:UnregisterEvent("ADDON_LOADED");
@@ -1362,7 +1364,7 @@ function UF:Initialize()
 	ORD.ShowDispellableDebuff = true
 	ORD.FilterDispellableDebuff = true
 	ORD.MatchBySpellName = false
-	
+
 	self:UpdateRangeCheckSpells()
 end
 

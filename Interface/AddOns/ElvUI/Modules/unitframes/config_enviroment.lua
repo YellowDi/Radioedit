@@ -1,4 +1,4 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local UF = E:GetModule('UnitFrames');
 local _, ns = ...
 local ElvUF = ns.oUF
@@ -75,7 +75,7 @@ local function createConfigEnv()
 		_COLORS = ElvUF.colors
 	}, {
 		__index = _G,
-		__newindex = function(tbl, key, value) _G[key] = value end,
+		__newindex = function(_, key, value) _G[key] = value end,
 	})
 
 	overrideFuncs['namecolor'] = ElvUF.Tags.Methods['namecolor']

@@ -1,10 +1,9 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local mod = E:GetModule('DataBars');
 local LSM = LibStub("LibSharedMedia-3.0")
 
 --Cache global variables
 --Lua functions
-local _G = _G
 local format = format
 --WoW API / Variables
 local CanPrestige = CanPrestige

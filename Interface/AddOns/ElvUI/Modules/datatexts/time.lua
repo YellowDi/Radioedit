@@ -1,4 +1,4 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local DT = E:GetModule('DataTexts')
 
 --Cache global variables
@@ -126,7 +126,7 @@ local function OnEnter(self)
         DT.tooltip:AddLine(" ")
         DT.tooltip:AddLine(L["Saved Raid(s)"])
 
-        for pos,instance in pairs(lockedInstances["raids"]) do
+        for _,instance in pairs(lockedInstances["raids"]) do
             name, _, reset, difficultyId, _, extended, _, _, maxPlayers, _, numEncounters, encounterProgress = unpack(instance)
 
             local lockoutColor = extended and lockoutColorExtended or lockoutColorNormal
@@ -143,7 +143,7 @@ local function OnEnter(self)
         DT.tooltip:AddLine(" ")
         DT.tooltip:AddLine(L["Saved Dungeon(s)"])
 
-        for pos,instance in pairs(lockedInstances["dungeons"]) do
+        for _,instance in pairs(lockedInstances["dungeons"]) do
             name, _, reset, difficultyId, _, extended, _, _, maxPlayers, _, numEncounters, encounterProgress = unpack(instance)
 
             local lockoutColor = extended and lockoutColorExtended or lockoutColorNormal

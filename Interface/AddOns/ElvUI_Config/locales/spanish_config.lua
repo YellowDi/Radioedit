@@ -66,6 +66,11 @@ Formatos de Nombre:
 'name:long' - Nombre restringido a 20 caracteres
 
 Para desactivarlo dejar el campo en blanco, si necesitas más información visita http://www.tukui.org]=]
+L["NAMEPLATE_FRAMELEVEL_DESC"] = [=[If you set this to 1 then all plates triggered by this style filter will be above any of the non-triggered plates.
+
+If you set this to 2 in another style filter then all plates triggered by that filter will be above plates with frame level set to 1 and all non-triggered plates, and so on.
+
+NOTE: This setting will NOT fix the issue with clicking or mousing over nameplates that are overlapped. That issue is due to us not being able to manipulate the frame level of the clickable area for nameplates.]=]
 
 --ActionBars
 L["Action Paging"] = "Paginación"
@@ -95,6 +100,7 @@ L["Color when the text is in the seconds format."] = "Color del texto cuando ten
 L["Cooldown Text"] = "Texto de Reutilización"
 L["Darken Inactive"] = true
 L["Days"] = "Días"
+L["Desaturate On Cooldown"] = true
 L["Display bind names on action buttons."] = "Muestra las teclas asignadas en los botones."
 L["Display cooldown text on anything with the cooldown spiral."] = "Muestra el texto de reutilización sobre todo lo que tenga la espiral de reutilización."
 L["Display macro names on action buttons."] = "Muestra el nombre de las macros en los botones."
@@ -122,6 +128,7 @@ L["Out of Power"] = "Sin Poder"
 L["Out of Range"] = "Fuera de Rango"
 L["Restore Bar"] = "Restaurar Barra"
 L["Restore the actionbars default settings"] = "Restaura las barras de acción a los ajustes predeterminados."
+L["RightClick Self-Cast"] = true
 L["Seconds"] = "Segundos"
 L["Show Empty Buttons"] = true
 L["Shows a swipe animation when a spell is recharging but still has charges left."] = true
@@ -236,6 +243,7 @@ L["Your Auras First"] = "Tus Auras Primero"
 
 --Chat
 L["Above Chat"] = "Arriba del Chat"
+L["Adds an arrow infront of the chat lines to copy the entire line."] = true
 L["Adjust the height of your right chat panel."] = true
 L["Adjust the width of your right chat panel."] = true
 L["Alerts"] = true
@@ -247,6 +255,7 @@ L["Below Chat"] = "Debajo del Chat"
 L["Chat EditBox Position"] = "Posición del Cuadro de Edición del Chat"
 L["Chat History"] = "Historial de Chat"
 L["Class Color Mentions"] = true
+L["Copy Chat Lines"] = true
 L["Custom Timestamp Color"] = true
 L["Display LFG Icons in group chat."] = true
 L["Display the hyperlink tooltip while hovering over a hyperlink."] = "Muestra la descripción emergente del enlace cuando pasas el cursor sobre él."
@@ -282,6 +291,7 @@ L["Panel Texture (Right)"] = "Textura del Panel Derecho"
 L["Panel Width"] = "Anchura del Panel"
 L["Position of the Chat EditBox, if datatexts are disabled this will be forced to be above chat."] = "Posición del Cuadro de Edición del Chat. Si los textos de datos se deshabilitan éste se colocará arriba del chat."
 L["Prevent the same messages from displaying in chat more than once within this set amount of seconds, set to zero to disable."] = "Previene que los mismos mensajes se muestren más de una vez en el chat dentro de un cierto número de segundos. Establécelo a cero para desactivar."
+L["Quick Join Messages"] = true
 L["Require holding the Alt key down to move cursor or cycle through messages in the editbox."] = true
 L["Right Only"] = "Sólo el Derecho"
 L["Right Panel Height"] = true
@@ -292,6 +302,7 @@ L["Separate Panel Sizes"] = true
 L["Set the font outline."] = "Establece el contorno de fuente."
 L["Short Channels"] = "Recortar Canales"
 L["Shorten the channel names in chat."] = "Recorta los nombre de canal en el chat."
+L["Show clickable Quick Join messages inside of the chat."] = true
 L["Show Both"] = "Mostrar Ambos"
 L["Spam Interval"] = "Intervalo de Spam"
 L["Sticky Chat"] = "Chat Pegajoso"
@@ -624,6 +635,7 @@ L["Hide When Empty"] = true
 L["Hide"] = "Ocultar"
 L["How many seconds the castbar should stay visible after the cast failed or was interrupted."] = true
 L["Icon Base Height"] = true
+L["Icon Position"] = true
 L["If enabled then it checks if auras are missing instead of being present on the unit."] = true
 L["If enabled then it will require all auras to activate the filter. Otherwise it will only require any one of the auras to activate it."] = true
 L["If enabled then it will require all cooldowns to activate the filter. Otherwise it will only require any one of the cooldowns to activate it."] = true
@@ -632,10 +644,15 @@ L["If enabled then the filter will only activate if the level of the unit is equ
 L["If enabled then the filter will only activate if the level of the unit matches this value."] = true
 L["If enabled then the filter will only activate if the level of the unit matches your own."] = true
 L["If enabled then the filter will only activate if the unit is casting interruptible spells."] = true
+L["If enabled then the filter will only activate if the unit is casting not interruptible spells."] = true
 L["If enabled then the filter will only activate when the unit is in combat."] = true
 L["If enabled then the filter will only activate when the unit is out of combat."] = true
 L["If enabled then the filter will only activate when you are in combat."] = true
 L["If enabled then the filter will only activate when you are out of combat."] = true
+L["If enabled then the filter will only activate when you are targeting the unit."] = true
+L["If enabled then the filter will only activate when you are not targeting the unit."] = true
+L["If enabled then the filter will only activate when the unit is targeting you."] = true
+L["If enabled then the filter will only activate when the unit is not targeting you."] = true
 L["If enabled then you will no longer see nameplates that use the default Blizzard appearance."] = true
 L["If the aura is listed with a number then you need to use that to remove it from the list."] = true
 L["If this is enabled then the reaction check will use your reputation with the faction the unit belongs to."] = true
@@ -666,6 +683,8 @@ L["Name Only"] = true
 L["NamePlates"] = "Placas de Nombre"
 L["Non-Target Transparency"] = true
 L["Not Targeted"] = true
+L["Is Targeting Player"] = true
+L["Is Not Targeting Player"] = true
 L["Off Cooldown"] = true
 L["On Cooldown"] = true
 L["Only load nameplates for units within this range."] = true
@@ -772,33 +791,22 @@ L["Profile"] = true
 L["Table"] = true
 
 --Skins
-L["Achievement Frame"] = "Logros"
 L["AddOn Manager"] = true
 L["Alert Frames"] = "Alertas"
 L["Archaeology Frame"] = "Arqueología"
-L["Auction Frame"] = "Subastas"
-L["Barbershop Frame"] = "Barbería"
 L["BG Map"] = "Mapa de CB"
 L["BG Score"] = "Puntuación de CB"
-L["Black Market AH"] = "CS del Mercado Negro"
 L["Calendar Frame"] = "Calendario"
 L["Character Frame"] = "Personaje"
 L["Contribution"] = true
-L["Death Recap"] = true
 L["Debug Tools"] = "Herramientas de Depuración"
 L["Gossip Frame"] = "Actualidad"
 L["Guild Control Frame"] = "Control de Hermandad"
-L["Guild Frame"] = "Hermandad"
 L["Guild Registrar"] = "Registrar Hermandad"
 L["Help Frame"] = "Ayuda"
-L["Inspect Frame"] = "Inspección"
 L["Item Upgrade"] = "Mejora de Objeto"
-L["KeyBinding Frame"] = "Asignación de Teclas"
 L["LF Guild Frame"] = "Búsqueda de Hermandad"
-L["LFG Frame"] = "Búsqueda de Grupo"
 L["Loot Frames"] = "Despojo"
-L["Loss Control"] = "Pérdida de Control"
-L["Macro Frame"] = "Macros"
 L["Mail Frame"] = "Correo"
 L["Merchant Frame"] = "Mercader"
 L["Mirror Timers"] = true
@@ -813,17 +821,10 @@ L["Quest Frames"] = "Misión"
 L["Raid Frame"] = "Banda"
 L["Skins"] = "Cubiertas"
 L["Socket Frame"] = "Incrustación"
-L["Spellbook"] = "Libro de Hechizos"
 L["Stable"] = "Establo"
 L["Tabard Frame"] = "Tabardos"
-L["Talent Frame"] = "Talentos"
 L["TalkingHead"] = true
-L["Taxi Frame"] = "Viaje"
-L["Time Manager"] = "Administrador de Tiempo"
-L["Trade Frame"] = "Comercio"
-L["TradeSkill Frame"] = "Comercio de Habilidades"
 L["Trainer Frame"] = "Entrenador"
-L["Transmogrify Frame"] = "Transmogrificación"
 
 --Tooltip
 L["Always Hide"] = "Ocultar Siempre"
@@ -939,9 +940,11 @@ L["Current"] = "Actual"
 L["Custom Dead Backdrop"] = true
 L["Custom Health Backdrop"] = "Fondo de Salud Personalizado"
 L["Custom Texts"] = "Texto Personalizado"
+L["Custom Texture"] = true
 L["Debuff Highlighting"] = "Resaltado de Perjuicio"
 L["Debuffs"] = "Perjuicios"
 L["Decimal Threshold"] = true
+L["Default Color"] = true
 L["Deficit"] = "Déficit"
 L["Delete a created filter, you cannot delete pre-existing filters, only custom ones."] = "Borra el filtro creado, no puedes borrar filtro pre-existentes, sólo los personalizados."
 L["Delete Filter"] = "Borrar Filtro"
@@ -1131,7 +1134,7 @@ L["Set the priority order of the spell, please note that prioritys are only used
 L["Set the type of auras to show when a unit is a foe."] = "Establece el tipo de auras a mostrar cuando la unidad es enemiga."
 L["Set the type of auras to show when a unit is friendly."] = "Establece el tipo de auras a mostrar cuando la unidad es amistosa."
 L["Sets the font instance's horizontal text alignment style."] = "Establece la alineación horizontal del texto."
-L["Show a incomming heal prediction bar on the unitframe. Also display a slightly different colored bar for incoming overheals."] = "Muestra una barra de predicción de sanación en el marco de unidad. También muestra una barra ligeramente coloreada para sobresanaciones recibidas."
+L["Show an incoming heal prediction bar on the unitframe. Also display a slightly different colored bar for incoming overheals."] = "Muestra una barra de predicción de sanación en el marco de unidad. También muestra una barra ligeramente coloreada para sobresanaciones recibidas."
 L["Show Aura From Other Players"] = "Mostrar Auras de Otros Jugadores"
 L["Show Auras"] = "Mostrar Auras"
 L["Show Dispellable Debuffs"] = true

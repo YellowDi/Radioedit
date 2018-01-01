@@ -1,4 +1,4 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local S = E:GetModule('Skins')
 local TT = E:GetModule('Tooltip')
 
@@ -49,7 +49,7 @@ local function LoadSkin()
 	SkinTooltipProgressBar(WorldMapTaskTooltipStatusBar)
 
 	-- Color GameTooltip QuestRewards Progress Bars
-	local function QuestRewardsBarColor(tooltip, questID, style)
+	local function QuestRewardsBarColor(tooltip, questID)
 		if not tooltip or not questID then return end
 		local name, cur, max, sb, _ = tooltip.GetName and tooltip:GetName()
 		if name and name == 'WorldMapTooltip' then name = 'WorldMapTaskTooltip' end

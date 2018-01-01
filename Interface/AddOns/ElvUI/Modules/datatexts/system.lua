@@ -1,4 +1,4 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local DT = E:GetModule('DataTexts')
 
 --Cache global variables
@@ -90,7 +90,7 @@ local function UpdateCPU()
 	--Update the CPU usages of the addons
 	UpdateAddOnCPUUsage()
 	-- Load cpu usage in table
-	local addonCPU = 0
+	local addonCPU
 	local totalCPU = 0
 	for i = 1, #cpuTable do
 		addonCPU = GetAddOnCPUUsage(cpuTable[i][1])

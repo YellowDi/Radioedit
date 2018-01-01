@@ -1,4 +1,4 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local THREAT = E:NewModule('Threat', 'AceEvent-3.0');
 
 --Cache global variables
@@ -147,7 +147,7 @@ function THREAT:Initialize()
 	self.bar:CreateBackdrop('Default')
 
 	self.bar.text = self.bar:CreateFontString(nil, 'OVERLAY')
-	self.bar.text:FontTemplate(nil, self.db.textSize)
+	self.bar.text:FontTemplate(nil, self.db.textSize, self.db.textOutline)
 	self.bar.text:Point('CENTER', self.bar, 'CENTER')
 
 	self:UpdatePosition()

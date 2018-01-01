@@ -51,6 +51,8 @@ L["G"] = "公会"
 L["I"] = '副本'
 L["IL"] = '副本队长'
 L["Invalid Target"] = "无效的目标"
+L["is looking for members"] = "正在寻找队友"
+L["joined a group"] = "加入队伍"
 L["O"] = "干部"
 L["P"] = "队伍"
 L["PL"] = "队长"
@@ -70,7 +72,6 @@ L["In Bags:"] = "背包内:"
 --DataTexts
 L["(Hold Shift) Memory Usage"] = "(按住Shift) 内存占用"
 L["AP"] = "攻击强度"
-L["App"] = "App"
 L["Arena"] = "竞技场"
 L["AVD: "] = "免伤: "
 L["Avoidance Breakdown"] = "免伤统计"
@@ -88,7 +89,6 @@ L["DPS"] = "伤害输出"
 L["Earned:"] = "赚取:"
 L["Feet"] = "脚"
 L["Friends List"] = "好友列表"
-L["Friends"] = "好友" --Also in Skins
 L["Garrison"] = "要塞"
 L["Gold"] = "金"
 L["goldabbrev"] = "|cffffd700金|r"
@@ -103,10 +103,13 @@ L["lvl"] = "等级"
 L["Main Hand"] = "主手"
 L["Mission(s) Report:"] = "任务报告:"
 L["Mitigation By Level: "] = "等级减伤: "
+L["Mobile"] = true
+L["Mov. Speed:"] = STAT_MOVEMENT_SPEED
 L["Naval Mission(s) Report:"] = "海军任务报告:"
 L["No Guild"] = "没有公会"
 L["Offhand"] = "副手"
 L["Profit:"] = "利润:"
+L["Reset Counters: Hold Shift + Left Click"] = "重置计数器: 按住Shift + 左键点击"
 L["Reset Data: Hold Shift + Right Click"] = "重置数据: 按住 Shift + 右键点击"
 L["Saved Raid(s)"] = "已有进度的副本"
 L["Saved Dungeon(s)"] = "已有进度的地下城"
@@ -227,6 +230,7 @@ L["Remaining:"] = "剩余:"
 L["Rested:"] = "休息:"
 L["Toggle Chat Frame"] = "开关聊天框架"
 L["Toggle Configuration"] = "设置开关"
+L["AP:"] = "神器能量:" -- Artifact Power
 L["XP:"] = "经验:"
 L["You don't have permission to mark targets."] = "你没有标记目标的权限"
 
@@ -326,8 +330,8 @@ L["|cFFE30000Lua error recieved. You can view the error message when you exit co
 
 --Static Popups
 L["A setting you have changed will change an option for this character only. This setting that you have changed will be uneffected by changing user profiles. Changing this setting requires that you reload your User Interface."] = "你所做的改动只会影响到使用这个插件的本角色, 你需要重新加载界面才能使改动生效."
-L["Accepting this will reset your Filter Priority lists for all auras on NamePlates. Are you sure?"] = true
-L["Accepting this will reset your Filter Priority lists for all auras on UnitFrames. Are you sure?"] = true
+L["Accepting this will reset your Filter Priority lists for all auras on NamePlates. Are you sure?"] = "接受这个将重置姓名版中所有光环的过滤器优先级. 你确定吗？"
+L["Accepting this will reset your Filter Priority lists for all auras on UnitFrames. Are you sure?"] = "接受这个将重置单位框架中所有光环的过滤器优先级. 你确定吗？"
 L["Are you sure you want to apply this font to all ElvUI elements?"] = "确定要对所有ElvUI元素使用这个字体?"
 L["Are you sure you want to delete all your gray items?"] = "确定需要摧毁你的灰色物品?"
 L["Are you sure you want to disband the group?"] = "确定要解散队伍?"

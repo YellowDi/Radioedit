@@ -1,4 +1,4 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local UF = E:GetModule('UnitFrames');
 
 --Cache global variables
@@ -205,12 +205,12 @@ function UF:Configure_Castbar(frame)
 
 	--Adjust tick heights
 	castbar.tickHeight = castbar:GetHeight()
-	
+
 	if db.castbar.ticks then --Only player unitframe has this
 		--Set tick width and color
 		castbar.tickWidth = db.castbar.tickWidth
 		castbar.tickColor = db.castbar.tickColor
-		
+
 		for i = 1, #ticks do
 			ticks[i]:SetVertexColor(castbar.tickColor.r, castbar.tickColor.g, castbar.tickColor.b, castbar.tickColor.a)
 			ticks[i]:Width(castbar.tickWidth)

@@ -1,4 +1,4 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 
 --Locked Settings, These settings are stored for your character only regardless of profile options.
 
@@ -89,7 +89,7 @@ V['skins'] = {
 		["taxi"] = true,
 		["tooltip"] = true,
 		["quest"] = true,
-		["questChoice"] = false,
+		["questChoice"] = true,
 		["petition"] = true,
 		["dressingroom"] = true,
 		["pvp"] = true,
@@ -120,6 +120,7 @@ V['skins'] = {
 		["AdventureMap"] = true,
 		["Obliterum"] = true,
 		["Contribution"] = true,
+		["BlizzardOptions"] = true,
 	},
 }
 

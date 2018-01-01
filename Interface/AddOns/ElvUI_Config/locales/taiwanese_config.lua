@@ -66,6 +66,11 @@ L["TEXT_FORMAT_DESC"] = [=[請填入代碼以變更文字格式。
 'name:long' - 名稱上限為 20 個字元
 
 若要停用此功能，此欄位請留空。如需更多資訊，請至 http://www.tukui.org]=]
+L["NAMEPLATE_FRAMELEVEL_DESC"] = [=[If you set this to 1 then all plates triggered by this style filter will be above any of the non-triggered plates.
+
+If you set this to 2 in another style filter then all plates triggered by that filter will be above plates with frame level set to 1 and all non-triggered plates, and so on.
+
+NOTE: This setting will NOT fix the issue with clicking or mousing over nameplates that are overlapped. That issue is due to us not being able to manipulate the frame level of the clickable area for nameplates.]=]
 
 --ActionBars
 L["Action Paging"] = "快捷列翻頁"
@@ -95,6 +100,7 @@ L["Color when the text is in the seconds format."] = "以秒顯示的文字顏�
 L["Cooldown Text"] = "冷卻文字"
 L["Darken Inactive"] = "非啟用者變暗"
 L["Days"] = "天"
+L["Desaturate On Cooldown"] = true
 L["Display bind names on action buttons."] = "在快捷列按鈕上顯示快捷鍵名稱."
 L["Display cooldown text on anything with the cooldown spiral."] = "在任何冷卻動畫上顯示技能冷卻時間."
 L["Display macro names on action buttons."] = "在快捷列按鈕上顯示巨集名稱."
@@ -122,6 +128,7 @@ L["Out of Power"] = "施放能量不足"
 L["Out of Range"] = "超出施放範圍"
 L["Restore Bar"] = "還原快捷列"
 L["Restore the actionbars default settings"] = "恢復此快捷列的預設設定"
+L["RightClick Self-Cast"] = true
 L["Seconds"] = "秒"
 L["Show Empty Buttons"] = "顯示空白按鈕"
 L["Shows a swipe animation when a spell is recharging but still has charges left."] = "當法術仍有可使用次數並在充能時顯示一個倒數動畫"
@@ -236,6 +243,7 @@ L["Your Auras First"] = "自身光環優先"
 
 --Chat
 L["Above Chat"] = "對話框上方"
+L["Adds an arrow infront of the chat lines to copy the entire line."] = true
 L["Adjust the height of your right chat panel."] = "調整右側聊天框的高度"
 L["Adjust the width of your right chat panel."] = "調整右側聊天框的寬度"
 L["Alerts"] = "警示"
@@ -247,6 +255,7 @@ L["Below Chat"] = "對話框下方"
 L["Chat EditBox Position"] = "對話輸入框位置"
 L["Chat History"] = "對話記錄"
 L["Class Color Mentions"] = "使用職業上色"
+L["Copy Chat Lines"] = true
 L["Custom Timestamp Color"] = "自訂時間戳記顏色"
 L["Display LFG Icons in group chat."] = "在隊伍聊天中顯示預組圖示"
 L["Display the hyperlink tooltip while hovering over a hyperlink."] = "滑鼠懸停在超鏈接上時顯示鏈接提示框."
@@ -282,6 +291,7 @@ L["Panel Texture (Right)"] = "對話框材質(右)"
 L["Panel Width"] = "對話框寛度"
 L["Position of the Chat EditBox, if datatexts are disabled this will be forced to be above chat."] = "對話編輯框位置,如果底部的信息文字被禁用的話,將會強制顯示在對話框頂部."
 L["Prevent the same messages from displaying in chat more than once within this set amount of seconds, set to zero to disable."] = "單位時間(秒) 內屏蔽重複對話信息, 設定為0 禁用此功能."
+L["Quick Join Messages"] = true
 L["Require holding the Alt key down to move cursor or cycle through messages in the editbox."] = "開啟該選項使你在查看聊天歷史記錄時需要按住Alt+上下鍵,如果關閉則直接按上下鍵即可"
 L["Right Only"] = "僅顯示右框背景"
 L["Right Panel Height"] = "右面板高度"
@@ -292,6 +302,7 @@ L["Separate Panel Sizes"] = "分離框體大小"
 L["Set the font outline."] = "字體描邊設定."
 L["Short Channels"] = "隱藏頻道名稱"
 L["Shorten the channel names in chat."] = "在對話視窗中隱藏頻道名稱."
+L["Show clickable Quick Join messages inside of the chat."] = true
 L["Show Both"] = "全部顯示"
 L["Spam Interval"] = "洗頻訊息間隔"
 L["Sticky Chat"] = "記憶對話頻道"
@@ -625,6 +636,7 @@ L["Hide When Empty"] = "空白時隱藏"
 L["Hide"] = "隱藏"
 L["How many seconds the castbar should stay visible after the cast failed or was interrupted."] = "在施法失敗或被打斷時施法條保持可見的秒數"
 L["Icon Base Height"] = "圖示基礎高度"
+L["Icon Position"] = true
 L["If enabled then it checks if auras are missing instead of being present on the unit."] = "如果選中則將會檢查光環是否缺失而不是光環是否存在"
 L["If enabled then it will require all auras to activate the filter. Otherwise it will only require any one of the auras to activate it."] = "如果選中則要求滿足所有光環. 不啟用則只要求任一光環存在即可啟動."
 L["If enabled then it will require all cooldowns to activate the filter. Otherwise it will only require any one of the cooldowns to activate it."] = true
@@ -633,10 +645,15 @@ L["If enabled then the filter will only activate if the level of the unit is equ
 L["If enabled then the filter will only activate if the level of the unit matches this value."] = "如果選中則過濾器僅僅在單位等級符合該值的時候啟動"
 L["If enabled then the filter will only activate if the level of the unit matches your own."] = "如果選中則過濾器僅僅在單位等級符合你的等級的時候啟動"
 L["If enabled then the filter will only activate if the unit is casting interruptible spells."] = "如果選中則過濾器僅僅在單位施放可打斷技能的時候啟動"
+L["If enabled then the filter will only activate if the unit is casting not interruptible spells."] = true
 L["If enabled then the filter will only activate when the unit is in combat."] = "如果選中則過濾器僅僅在單位在戰鬥中的時候啟動"
 L["If enabled then the filter will only activate when the unit is out of combat."] = "如果選中則過濾器僅僅在單位不在戰鬥中的時候啟動"
 L["If enabled then the filter will only activate when you are in combat."] = "如果選中則過濾器僅僅在你在戰鬥中的時候啟動"
 L["If enabled then the filter will only activate when you are out of combat."] = "如果選中則過濾器僅僅在你不在戰鬥中的時候啟動"
+L["If enabled then the filter will only activate when you are targeting the unit."] = true
+L["If enabled then the filter will only activate when you are not targeting the unit."] = true
+L["If enabled then the filter will only activate when the unit is targeting you."] = true
+L["If enabled then the filter will only activate when the unit is not targeting you."] = true
 L["If enabled then you will no longer see nameplates that use the default Blizzard appearance."] = true
 L["If the aura is listed with a number then you need to use that to remove it from the list."] = "如果光環和一個數一起列出你需要用它來將其移出列表"
 L["If this is enabled then the reaction check will use your reputation with the faction the unit belongs to."] = true
@@ -667,6 +684,8 @@ L["Name Only"] = true
 L["NamePlates"] = "姓名板(血條)"
 L["Non-Target Transparency"] = "非目標透明度"
 L["Not Targeted"] = "非目標"
+L["Is Targeting Player"] = true
+L["Is Not Targeting Player"] = true
 L["Off Cooldown"] = true
 L["On Cooldown"] = true
 L["Only load nameplates for units within this range."] = "僅僅讀取在此範圍內的姓名板"
@@ -773,33 +792,22 @@ L["Profile"] = "配置文件"
 L["Table"] = "表"
 
 --Skins
-L["Achievement Frame"] = "成就"
 L["AddOn Manager"] = "插件管理"
 L["Alert Frames"] = "警報"
 L["Archaeology Frame"] = "考古學框架"
-L["Auction Frame"] = "拍賣"
-L["Barbershop Frame"] = "美容院"
 L["BG Map"] = "戰場地圖"
 L["BG Score"] = "戰場積分"
-L["Black Market AH"] = "黑市"
 L["Calendar Frame"] = "行事曆"
 L["Character Frame"] = "角色"
 L["Contribution"] = "捐獻"
-L["Death Recap"] = "死亡回放"
 L["Debug Tools"] = "除錯工具"
 L["Gossip Frame"] = "對話"
 L["Guild Control Frame"] = "公會控制"
-L["Guild Frame"] = "公會"
 L["Guild Registrar"] = "公會註冊"
 L["Help Frame"] = "幫助"
-L["Inspect Frame"] = "觀察"
 L["Item Upgrade"] = "裝備升級"
-L["KeyBinding Frame"] = "快捷鍵"
 L["LF Guild Frame"] = "尋求公會"
-L["LFG Frame"] = "地下城"
 L["Loot Frames"] = "拾取框架"
-L["Loss Control"] = "失去控制"
-L["Macro Frame"] = "巨集"
 L["Mail Frame"] = "信箱"
 L["Merchant Frame"] = "商人"
 L["Mirror Timers"] = "鏡像計時器"
@@ -814,17 +822,10 @@ L["Quest Frames"] = "任務"
 L["Raid Frame"] = "團隊框架"
 L["Skins"] = "美化外觀"
 L["Socket Frame"] = "珠寶插槽"
-L["Spellbook"] = "技能書"
 L["Stable"] = "獸欄"
 L["Tabard Frame"] = "外袍"
-L["Talent Frame"] = "天賦"
 L["TalkingHead"] = "特寫框體"
-L["Taxi Frame"] = "載具"
-L["Time Manager"] = "時間管理"
-L["Trade Frame"] = "交易"
-L["TradeSkill Frame"] = "專業技能"
 L["Trainer Frame"] = "訓練師"
-L["Transmogrify Frame"] = "塑型"
 
 --Tooltip
 L["Always Hide"] = "總是隱藏"
@@ -940,9 +941,11 @@ L["Current"] = "目前值"
 L["Custom Dead Backdrop"] = "自定義死亡背景"
 L["Custom Health Backdrop"] = "自訂生命條背景"
 L["Custom Texts"] = "自定義字體"
+L["Custom Texture"] = true
 L["Debuff Highlighting"] = "減益光環加亮顯示"
 L["Debuffs"] = "減益光環"
 L["Decimal Threshold"] = "小數閾值"
+L["Default Color"] = true
 L["Deficit"] = "虧損值"
 L["Delete a created filter, you cannot delete pre-existing filters, only custom ones."] = "刪除一個創造的過濾器, 你不能刪除內建的過濾器, 只能刪除你自已添加的."
 L["Delete Filter"] = "刪除過濾器"
@@ -1132,7 +1135,7 @@ L["Set the priority order of the spell, please note that prioritys are only used
 L["Set the type of auras to show when a unit is a foe."] = "當單位是敵對時設定光環顯示的類型."
 L["Set the type of auras to show when a unit is friendly."] = "當單位是友好時設定光環顯示的類型."
 L["Sets the font instance's horizontal text alignment style."] = "設定橫向字體的對齊方式."
-L["Show a incomming heal prediction bar on the unitframe. Also display a slightly different colored bar for incoming overheals."] = "在單位框架中顯示即將回复的的預測治療量, 過量治療則以不同顏色顯示. "
+L["Show an incoming heal prediction bar on the unitframe. Also display a slightly different colored bar for incoming overheals."] = "在單位框架中顯示即將回复的的預測治療量, 過量治療則以不同顏色顯示. "
 L["Show Aura From Other Players"] = "顯示其他玩家的光環"
 L["Show Auras"] = "顯示光環"
 L["Show Dispellable Debuffs"] = "顯示無法驅散的debuff"

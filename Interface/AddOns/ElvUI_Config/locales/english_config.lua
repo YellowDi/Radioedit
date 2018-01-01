@@ -66,6 +66,11 @@ Name Formats:
 'name:long' - Name restricted to 20 characters
 
 To disable leave the field blank, if you need more information visit http://www.tukui.org]=]
+L["NAMEPLATE_FRAMELEVEL_DESC"] = [=[If you set this to 1 then all plates triggered by this style filter will be above any of the non-triggered plates.
+
+If you set this to 2 in another style filter then all plates triggered by that filter will be above plates with frame level set to 1 and all non-triggered plates, and so on.
+
+NOTE: This setting will NOT fix the issue with clicking or mousing over nameplates that are overlapped. That issue is due to us not being able to manipulate the frame level of the clickable area for nameplates.]=]
 
 --ActionBars
 L["Action Paging"] = true
@@ -95,6 +100,7 @@ L["Color when the text is in the seconds format."] = true
 L["Cooldown Text"] = true
 L["Darken Inactive"] = true
 L["Days"] = true
+L["Desaturate On Cooldown"] = true
 L["Display bind names on action buttons."] = true
 L["Display cooldown text on anything with the cooldown spiral."] = true
 L["Display macro names on action buttons."] = true
@@ -122,6 +128,7 @@ L["Out of Power"] = true
 L["Out of Range"] = true
 L["Restore Bar"] = true
 L["Restore the actionbars default settings"] = true
+L["RightClick Self-Cast"] = true
 L["Seconds"] = true
 L["Show Empty Buttons"] = true
 L["Shows a swipe animation when a spell is recharging but still has charges left."] = true
@@ -234,6 +241,7 @@ L["Your Auras First"] = true
 
 --Chat
 L["Above Chat"] = true
+L["Adds an arrow infront of the chat lines to copy the entire line."] = true
 L["Adjust the height of your right chat panel."] = true
 L["Adjust the width of your right chat panel."] = true
 L["Alerts"] = true
@@ -245,6 +253,7 @@ L["Below Chat"] = true
 L["Chat EditBox Position"] = true
 L["Chat History"] = true
 L["Class Color Mentions"] = true
+L["Copy Chat Lines"] = true
 L["Custom Timestamp Color"] = true
 L["Display LFG Icons in group chat."] = true
 L["Display the hyperlink tooltip while hovering over a hyperlink."] = true
@@ -278,6 +287,7 @@ L["Panel Height"] = true
 L["Panel Texture (Left)"] = true
 L["Panel Texture (Right)"] = true
 L["Panel Width"] = true
+L["Quick Join Messages"] = true
 L["Position of the Chat EditBox, if datatexts are disabled this will be forced to be above chat."] = true
 L["Prevent the same messages from displaying in chat more than once within this set amount of seconds, set to zero to disable."] = true
 L["Require holding the Alt key down to move cursor or cycle through messages in the editbox."] = true
@@ -290,6 +300,7 @@ L["Separate Panel Sizes"] = true
 L["Set the font outline."] = true --Also used in UnitFrames section
 L["Short Channels"] = true
 L["Shorten the channel names in chat."] = true
+L["Show clickable Quick Join messages inside of the chat."] = true
 L["Show Both"] = true
 L["Spam Interval"] = true
 L["Sticky Chat"] = true
@@ -614,6 +625,7 @@ L["Hide When Empty"] = true
 L["Hide"] = true --Also used in DataTexts
 L["How many seconds the castbar should stay visible after the cast failed or was interrupted."] = true
 L["Icon Base Height"] = true
+L["Icon Position"] = true
 L["If enabled then it checks if auras are missing instead of being present on the unit."] = true
 L["If enabled then it will require all auras to activate the filter. Otherwise it will only require any one of the auras to activate it."] = true
 L["If enabled then it will require all cooldowns to activate the filter. Otherwise it will only require any one of the cooldowns to activate it."] = true
@@ -622,10 +634,15 @@ L["If enabled then the filter will only activate if the level of the unit is equ
 L["If enabled then the filter will only activate if the level of the unit matches this value."] = true
 L["If enabled then the filter will only activate if the level of the unit matches your own."] = true
 L["If enabled then the filter will only activate if the unit is casting interruptible spells."] = true
+L["If enabled then the filter will only activate if the unit is casting not interruptible spells."] = true
 L["If enabled then the filter will only activate when the unit is in combat."] = true
 L["If enabled then the filter will only activate when the unit is out of combat."] = true
 L["If enabled then the filter will only activate when you are in combat."] = true
 L["If enabled then the filter will only activate when you are out of combat."] = true
+L["If enabled then the filter will only activate when you are targeting the unit."] = true
+L["If enabled then the filter will only activate when you are not targeting the unit."] = true
+L["If enabled then the filter will only activate when the unit is targeting you."] = true
+L["If enabled then the filter will only activate when the unit is not targeting you."] = true
 L["If enabled then you will no longer see nameplates that use the default Blizzard appearance."] = true
 L["If the aura is listed with a number then you need to use that to remove it from the list."] = true
 L["If this is enabled then the reaction check will use your reputation with the faction the unit belongs to."] = true
@@ -656,6 +673,8 @@ L["Name Only"] = true
 L["NamePlates"] = true
 L["Non-Target Transparency"] = true
 L["Not Targeted"] = true
+L["Is Targeting Player"] = true
+L["Is Not Targeting Player"] = true
 L["Off Cooldown"] = true
 L["On Cooldown"] = true
 L["Only load nameplates for units within this range."] = true
@@ -762,33 +781,22 @@ L["Profile"] = true
 L["Table"] = true
 
 --Skins
-L["Achievement Frame"] = true
 L["AddOn Manager"] = true
 L["Alert Frames"] = true
 L["Archaeology Frame"] = true
-L["Auction Frame"] = true
-L["Barbershop Frame"] = true
 L["BG Map"] = true
 L["BG Score"] = true
-L["Black Market AH"] = true
 L["Calendar Frame"] = true
 L["Character Frame"] = true
 L["Contribution"] = true
-L["Death Recap"] = true
 L["Debug Tools"] = true
 L["Gossip Frame"] = true
 L["Guild Control Frame"] = true
-L["Guild Frame"] = true
 L["Guild Registrar"] = true
 L["Help Frame"] = true
-L["Inspect Frame"] = true
 L["Item Upgrade"] = true
-L["KeyBinding Frame"] = true
 L["LF Guild Frame"] = true
-L["LFG Frame"] = true
 L["Loot Frames"] = true
-L["Loss Control"] = true
-L["Macro Frame"] = true
 L["Mail Frame"] = true
 L["Merchant Frame"] = true
 L["Mirror Timers"] = true
@@ -803,17 +811,10 @@ L["Quest Frames"] = true
 L["Raid Frame"] = true
 L["Skins"] = true
 L["Socket Frame"] = true
-L["Spellbook"] = true
 L["Stable"] = true
 L["Tabard Frame"] = true
-L["Talent Frame"] = true
 L["TalkingHead"] = true
-L["Taxi Frame"] = true
-L["Time Manager"] = true
-L["Trade Frame"] = true
-L["TradeSkill Frame"] = true
 L["Trainer Frame"] = true
-L["Transmogrify Frame"] = true
 
 --Tooltip
 L["Always Hide"] = true
@@ -929,9 +930,11 @@ L["Current"] = true
 L["Custom Dead Backdrop"] = true
 L["Custom Health Backdrop"] = true
 L["Custom Texts"] = true
+L["Custom Texture"] = true
 L["Debuff Highlighting"] = true
 L["Debuffs"] = true
 L["Decimal Threshold"] = true
+L["Default Color"] = true
 L["Deficit"] = true
 L["Delete a created filter, you cannot delete pre-existing filters, only custom ones."] = true
 L["Delete Filter"] = true
@@ -1121,7 +1124,7 @@ L["Set the priority order of the spell, please note that prioritys are only used
 L["Set the type of auras to show when a unit is a foe."] = true
 L["Set the type of auras to show when a unit is friendly."] = true
 L["Sets the font instance's horizontal text alignment style."] = true
-L["Show a incomming heal prediction bar on the unitframe. Also display a slightly different colored bar for incoming overheals."] = true
+L["Show an incoming heal prediction bar on the unitframe. Also display a slightly different colored bar for incoming overheals."] = true
 L["Show Aura From Other Players"] = true
 L["Show Auras"] = true
 L["Show Dispellable Debuffs"] = true

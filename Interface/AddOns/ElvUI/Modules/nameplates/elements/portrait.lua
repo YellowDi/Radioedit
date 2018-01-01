@@ -1,4 +1,4 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local mod = E:GetModule('NamePlates')
 
 --Cache global variables
@@ -8,17 +8,6 @@ local UnitExists = UnitExists
 local UnitIsConnected = UnitIsConnected
 local UnitIsVisible = UnitIsVisible
 local SetPortraitTexture = SetPortraitTexture
-
-local attachTo = {
-	["TOPLEFT"] = "TOPRIGHT",
-	["TOP"] = "BOTTOM",
-	["TOPRIGHT"] = "TOPLEFT",
-	["LEFT"] = "RIGHT",
-	["RIGHT"] = "LEFT",
-	["BOTTOM"] = "TOP",
-	["BOTTOMLEFT"] = "BOTTOMRIGHT",
-	["BOTTOMRIGHT"] = "BOTTOMLEFT",
-}
 
 function mod:UpdateElement_Portrait(frame, trigger)
 	if not (self.db.units[frame.UnitType].portrait and (self.db.units[frame.UnitType].portrait.enable or trigger)) then
@@ -56,7 +45,7 @@ function mod:ConfigureElement_Portrait(frame, triggered)
 end
 
 function mod:ConstructElement_Portrait(frame)
-	local frame = CreateFrame("Frame", nil, frame)
+	frame = CreateFrame("Frame", nil, frame)
 	self:StyleFrame(frame)
 	frame.texture = frame:CreateTexture(nil, "OVERLAY")
 	frame.texture:SetAllPoints()
