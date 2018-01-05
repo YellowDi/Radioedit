@@ -69,6 +69,8 @@ if not L then return end
 --Translation missing 
 -- L["Always use when leader"] = ""
 --Translation missing 
+-- L["always_show_tooltip_howto"] = ""
+--Translation missing 
 -- L["Announce Awards"] = ""
 --Translation missing 
 -- L["Announce Considerations"] = ""
@@ -137,6 +139,8 @@ if not L then return end
 --Translation missing 
 -- L["Auto pass BoE"] = ""
 --Translation missing 
+-- L["Auto Pass Trinkets"] = ""
+--Translation missing 
 -- L["Auto Start"] = ""
 --Translation missing 
 -- L["auto_award_desc"] = ""
@@ -154,6 +158,8 @@ if not L then return end
 -- L["auto_pass_boe_desc"] = ""
 --Translation missing 
 -- L["auto_pass_desc"] = ""
+--Translation missing 
+-- L["auto_pass_trinket_desc"] = ""
 --Translation missing 
 -- L["auto_start_desc"] = ""
 --Translation missing 
