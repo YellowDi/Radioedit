@@ -50,7 +50,7 @@ private.RGB_MAGENTA = "|cFF00FFFF"
 private.RGB_NORMAL = "|r"
 private.TIMER_IDLE = 2.0 -- recheck delay for calling protected function in combat
 private.TIMER_RECHECK = 10.0 -- delay for slow non-event driven item lookup in bags
-private.LOAD_RETRY = 10 -- update cache cycles for items and spell
+private.LOAD_RETRY = 20 -- update cache cycles for items and spell
 private.PRINT_HEAD = "|cff7f7f7f%s|r [|cff00ffff%s|r]"
 private.BLACKLIST = {[90043] = true,} -- special blacklist
 private.MOUSE_LB = "\124TInterface\\TutorialFrame\\UI-Tutorial-Frame:12:12:0:0:512:512:10:65:228:283\124t" -- left mouse button

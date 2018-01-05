@@ -82,6 +82,23 @@ function NOP:ButtonSkin(button,skin) -- skin or restore button look
     button.isSkinned = nil
   end
 end
+function NOP:GetReputation(name)
+  local fID = NOP.T_REPS[name]; if not fID then return end
+  local _, _, level, _, top, value = GetFactionInfoByID(fID)
+  return level, top, value
+end
+function NOP:ButtonReputation(tooltip,func) -- add reputation into tooltip
+  if not (tooltip and tooltip.GetItem) then return end
+  if (func == "SetItemByID") and (OHC ~= nil) and OrderHallMissionFrame and OrderHallMissionFrame:IsVisible() then return end -- OHC have own tooltip for reward with reputation item
+  local name = tooltip:GetItem(); if not name then return end
+  local level, top, value = self:GetReputation(name); if not level then return end
+  if level < 8 then -- up to exalted
+    tooltip:AddLine(_G['FACTION_STANDING_LABEL' .. level] .. (" |cffca3c3c%.2f%%|r"):format((value/top) * 100.0))
+  else
+    tooltip:AddLine(_G['FACTION_STANDING_LABEL' .. level])
+  end
+  tooltip:Show()
+end
 function NOP:ButtonOnEnter(button) -- show tooltip
   if self:inCombat() then return; end
   if GetCVar("UberTooltips") == "1" then

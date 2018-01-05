@@ -1,4 +1,24 @@
 -- Revisions:
+--[[<p>08.26 28.12.2017</p>
+<ul>
+<li>Ability to filter items when reputation with Legion faction is Exalted. Filtering for other pre Legion reputation tokens are not implemented yet.</li>
+<li>Two new events hook for incoming items ITEM_PUSH and CHAT_MSG_LOOT.</li>
+<li>Caching patterns is now more patient to fetch items from server to local cache, it should take some time until all items are recognized and placed on button.</li>
+</ul>
+]]
+--[[<p>08.24 14.12.2017</p>
+<ul>
+<li>Added Carefully Hidden Muffin, Krokul Armor Set, Demon's Soulstone and Awoken Titan Essence.</li>
+<li>Now are shown standings for Legion reputation in tooltip for proper tokens. When there is installed Order Hall Commander add-on then in tooltip at mission table is NOP standing disabled.</li>
+<li>Legion reputation tokens optimized, now all using pattern matching.</li>
+</ul>
+]]
+--[[<p>08.22 04.12.2017</p>
+<ul>
+<li>Mana Crystal and Ancient Mana Crystal as items not pattern.</li>
+<li>Added Summon Grimtotem Warrior, Summoning Portal, Lucky Rabbit's Foot, Scream of the Dead</li>
+</ul>
+]]
 --[[<p>08.20 17.11.2017</p>
 <ul>
 <li>Final fix for picklocking? Now when item is possible to unlock then item starts to glow.</li>
@@ -24,7 +44,7 @@
 --[[<p>08.14 29.10.2017</p>
 <ul>
 <li>Verbose message when preload of items and spells does fail.</li>
-<li>Fix for armor Unsullied tokens. Developers decide to put type of armor inside string!.</li>
+<li>Fix for armor Unsullied tokens. Developers decide to put type of armor inside string!</li>
 <li>SpellLoad() rewritten if there is bad item to load it does at least load all remaining patterns.</li>
 <li>Option to hide items button in combat. Quest bar still is shown in combat because there could be items usable in combat.</li>
 </ul>

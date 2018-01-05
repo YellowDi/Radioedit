@@ -25,6 +25,8 @@ NOP.T_SPELL_BY_NAME = { -- [itemID] = {{count_to_use,priority},{"sub-Zone",...},
   [129097] = {{1,private.PRI_OPEN},nil,nil}, -- 30 Ancient Mana, Ancient Mana Gem
   [140401] = {{1,private.PRI_OPEN},nil,nil}, -- 75 Ancient Mana, Blue Or'ligai Egg
   [140236] = {{1,private.PRI_OPEN},nil,nil}, -- 100 Ancient Mana, 
+  [143733] = {{1,private.PRI_OPEN},nil,nil}, -- Ancient Mana Shards
+  [143734] = {{1,private.PRI_OPEN},nil,nil}, -- Ancient Mana Crystal Cluster
   [140240] = {{1,private.PRI_OPEN},nil,nil}, -- 150 Ancient Mana
   [140242] = {{1,private.PRI_OPEN},nil,nil}, -- 200 Ancient Mana
   [140239] = {{1,private.PRI_OPEN},nil,nil}, -- 300 Ancient Mana
@@ -48,14 +50,14 @@ NOP.T_SPELL_BY_USE_TEXT = { -- [spellID] = {{count_to_use,priotity},itemID,{"sub
   --[222950] = {{1,private.PRI_REST},140242,nil,nil}, -- 200 mana
   --[222945] = {{1,private.PRI_REST},140239,nil,nil}, -- 300 mana
 }
-NOP.T_RECIPES = { -- [ItemId] = {{count_to_use,priority}, "gsub regex" | tooltip-line-number,{"sub-Zone",...},{[mapID]=true,...}}, item tooltip template only text to 1st match is compared, that mean all items of same school would be looked up.
+NOP.T_RECIPES = { -- [ItemId] = {{count_to_use,priority}, "gsub regex" | tooltip-line-number,{"sub-Zone",...},{[mapID]=true,...}, factionID}, item tooltip template only text to 1st match is compared, that mean all items of same school would be looked up.
   [153135] = {{1,private.PRI_TOKEN},4,nil,nil}, -- Unsullied Cloth Robes, why Blizzard did put in type of armor?
   [153143] = {{1,private.PRI_TOKEN},4,nil,nil}, -- Unsullied Plate Breastplate, why Blizzard did put in type of armor?
   [152741] = {{1,private.PRI_TOKEN},4,nil,nil}, -- Unsullied Mail Chestguard, why Blizzard did put in type of armor?
   [153151] = {{1,private.PRI_TOKEN},4,nil,nil}, -- Unsullied Leather Tunic, why Blizzard did put in type of armor?
   [127799] = {{1,private.PRI_TOKEN},4,nil,nil}, -- Baleful Pendant, for another slots than armor.
   [139879] = {{1,private.PRI_OPEN},4,nil,nil}, -- Crate of Champion Equipment, <Right Click to Open>, again new text for open
-  [ 82800] = {{1,private.PRI_OPEN},1,nil}, -- Pet Cage
+  [ 82800] = {{1,private.PRI_OPEN},1,nil,nil}, -- Pet Cage
   [140744] = {{1,private.PRI_REST},"(.+:).*",nil,nil}, -- Treasure Map: Azsuna
   [122219] = {{1,private.PRI_OPEN},"(.+:).*",nil,nil}, -- Music Roll: Way of the Monk
   [122594] = {{1,private.PRI_OPEN},"(.+:).*",nil,{[private.FROSTWALL]=true,[private.LUNARFALL]=true}}, -- Rush Order: Tailoring Emporium, can be used only in garrison shown on button only in garrison.
@@ -74,104 +76,62 @@ NOP.T_RECIPES = { -- [ItemId] = {{count_to_use,priority}, "gsub regex" | tooltip
   [118427] = {{1,private.PRI_OPEN},3,nil,nil}, -- Autographed Hearthstone Card, 3rd line contains "Use: Adds this toy to your toy box."
   [127413] = {{1,private.PRI_OPEN},3,nil,nil}, -- Jeweled Arakkoa Effigy, 3rd line contains "Use: Pry out the eyes of the statue."
   [146748] = {{1,private.PRI_OPEN},3,nil,nil}, -- Highmountain Tribute open containers
-  [152958] = {{1,private.PRI_REP},1,nil}, -- Army of the Light Insignia
-  [152959] = {{1,private.PRI_REP},1,nil}, -- Argussian Reach Insignia
-  [139023] = {{1,private.PRI_REP},1,nil}, -- Court of Farondis Insignia 
-  [139021] = {{1,private.PRI_REP},1,nil}, -- Dreamweaver Insignia 
-  [139024] = {{1,private.PRI_REP},1,nil}, -- Highmountain Tribe Insignia 
-  [139026] = {{1,private.PRI_REP},1,nil}, -- Nightfallen Insignia 
-  [139020] = {{1,private.PRI_REP},1,nil}, -- Valarjar Insignia 
-  [141340] = {{1,private.PRI_REP},1,nil}, -- Court of Farondis Insignia BoA
-  [141339] = {{1,private.PRI_REP},1,nil}, -- Dreamweaver Insignia BoA
-  [141341] = {{1,private.PRI_REP},1,nil}, -- Highmountain Tribe Insignia BoA
-  [141343] = {{1,private.PRI_REP},1,nil}, -- Nightfallen Insignia BoA
-  [141338] = {{1,private.PRI_REP},1,nil}, -- Valarjar Insignia BoA
-  [141342] = {{1,private.PRI_REP},1,nil}, -- Wardens Insignia BoA
-  [141989] = {{1,private.PRI_REP},1,nil}, -- Greater Court of Farondis Insignia 
-  [141988] = {{1,private.PRI_REP},1,nil}, -- Greater Dreamweaver Insignia 
-  [141990] = {{1,private.PRI_REP},1,nil}, -- Greater Highmountain Tribe Insignia 
-  [141992] = {{1,private.PRI_REP},1,nil}, -- Greater Nightfallen Insignia 
-  [141987] = {{1,private.PRI_REP},1,nil}, -- Greater Valarjar Insignia 
-  [141991] = {{1,private.PRI_REP},1,nil}, -- Greater Wardens Insignia
-  [147727] = {{1,private.PRI_REP},1,nil}, -- Greater Legionfall Insignia
+  [152958] = {{1,private.PRI_REP},1,nil,nil,2165}, -- Army of the Light Insignia
+  [152955] = {{1,private.PRI_REP},1,nil,nil,2165}, -- Greater Army of the Light Insignia
+  [152959] = {{1,private.PRI_REP},1,nil,nil,2170}, -- Argussian Reach Insignia
+  [152961] = {{1,private.PRI_REP},1,nil,nil,2170}, -- Greater Argussian Reach Insignia
+  [141340] = {{1,private.PRI_REP},1,nil,nil,1900}, -- Court of Farondis Insignia
+  [141989] = {{1,private.PRI_REP},1,nil,nil,1900}, -- Greater Court of Farondis Insignia 
+  [139021] = {{1,private.PRI_REP},1,nil,nil,1883}, -- Dreamweaver Insignia 
+  [141988] = {{1,private.PRI_REP},1,nil,nil,1883}, -- Greater Dreamweaver Insignia 
+  [139024] = {{1,private.PRI_REP},1,nil,nil,1828}, -- Highmountain Tribe Insignia 
+  [141990] = {{1,private.PRI_REP},1,nil,nil,1828}, -- Greater Highmountain Tribe Insignia 
+  [146949] = {{1,private.PRI_REP},1,nil,nil,2045}, -- Legionfall Insignia
+  [147727] = {{1,private.PRI_REP},1,nil,nil,2045}, -- Greater Legionfall Insignia
+  [139026] = {{1,private.PRI_REP},1,nil,nil,1859}, -- Nightfallen Insignia 
+  [141992] = {{1,private.PRI_REP},1,nil,nil,1859}, -- Greater Nightfallen Insignia 
+  [139020] = {{1,private.PRI_REP},1,nil,nil,1948}, -- Valarjar Insignia 
+  [141987] = {{1,private.PRI_REP},1,nil,nil,1948}, -- Greater Valarjar Insignia 
+  [141342] = {{1,private.PRI_REP},1,nil,nil,1894}, -- Wardens Insignia
+  [141991] = {{1,private.PRI_REP},1,nil,nil,1894}, -- Greater Wardens Insignia
 }
 NOP.T_ITEMS = { -- [itemID] = {{count_to_use,priority},{"sub-Zone",...},{[mapID]=true,...},auraID}, table for opening/use item by itemID, is no possible to check any common text
+  [154879] = {{1,private.PRI_OPEN},nil,nil}, -- Awoken Titan Essence
+  [  2934] = {{3,private.PRI_OPEN},nil,nil}, -- Ruined Leather Scraps
   [  7973] = {{1,private.PRI_OPEN},nil,nil}, -- Big-Mouth Clam
-  [139786] = {{1,private.PRI_OPEN},nil,nil}, -- 25 mana
-  [143748] = {{1,private.PRI_OPEN},nil,nil}, -- Ancient Mana Crystal
-  [143849] = {{1,private.PRI_REST},nil,nil}, -- Summon Royal Guard
-  [140929] = {{1,private.PRI_REST},nil,nil}, -- Squire's Oath
-  [139177] = {{1,private.PRI_REST},nil,nil}, -- Shattered Soul
-  [132523] = {{1,private.PRI_REST},nil,nil}, -- Reaves Battery
-  [140922] = {{1,private.PRI_REST},nil,nil}, -- Imp Pact
-  [140932] = {{1,private.PRI_REST},nil,nil}, -- Earthen Mark
-  [139419] = {{1,private.PRI_REST},nil,nil}, -- Golden Banana
-  [147351] = {{1,private.PRI_REST},nil,nil}, -- Fel Armor Enhancement Token
-  [140924] = {{1,private.PRI_REST},nil,nil}, -- Ashtongue Beacon
-  [140925] = {{1,private.PRI_REST},nil,nil}, -- Enchanted Bark
-  [140926] = {{1,private.PRI_REST},nil,nil}, -- Bowmen's Orders
-  [140927] = {{1,private.PRI_REST},nil,nil}, -- Water Globe
-  [140933] = {{1,private.PRI_REST},nil,nil}, -- Runed Aspirant's Band
-  [128980] = {{1,private.PRI_OPEN},nil,nil}, -- Scroll of Forgotten Knowledge
-  [153114] = {{1,private.PRI_REST},nil,nil}, -- Nathrezim Tome of Manipulation
-  [151844] = {{1,private.PRI_REST},nil,nil}, -- Xenedar Armor Set
-  [152097] = {{1,private.PRI_REST},nil,nil}, -- Lightforged Bulwark
-  [140928] = {{1,private.PRI_REST},nil,nil}, -- Ox Initiate's Pledge
-  [151843] = {{1,private.PRI_REST},nil,nil}, -- Mac'Aree Armor Set
-  [152096] = {{1,private.PRI_REST},nil,nil}, -- Void-Purged Krokul
-  [152095] = {{1,private.PRI_REST},nil,nil}, -- Krokul Ridgestalker
-  [140760] = {{1,private.PRI_REST},nil,nil}, -- Libram of Truth
-  [151653] = {{10,private.PRI_REST},nil,nil}, -- Broken Isles Recipe Scrap
-  [ 94223] = {{1,private.PRI_REP},nil,nil}, -- Stolen Shado-Pan Insignia
-  [151423] = {{1,private.PRI_REST},nil,nil}, -- Stabilized Titan Essence
-  [150737] = {{1,private.PRI_OPEN},nil,nil}, -- Abundant Order Resources Cache
-  [142363] = {{1,private.PRI_REST},nil,nil}, -- Mark of Prey
-  [139591] = {{1,private.PRI_REST},nil,nil}, -- Stolen Tome of Artifact Lore
-  [139428] = {{1,private.PRI_REST},nil,nil}, -- A Master Plan
-  [140749] = {{1,private.PRI_REST},nil,nil}, -- Horn of Winter
-  [140767] = {{5,private.PRI_REST},nil,nil}, -- Pile of Bits and Bones
-  [128373] = {{1,private.PRI_OPEN},{private.SHIPYARD_HORDE,private.SHIPYARD_ALLIANCE},{[private.FROSTFIRE_RIDGE]=true,[private.SHADOWMOON_VALLEY]=true}}, -- Rush Order: Shipyard, special handling for sub-zone
-  [136806] = {{1,private.PRI_OPEN},nil,nil}, -- Glass of Arcwine
-  [147729] = {{1,private.PRI_OPEN},nil,nil}, -- Netherchunk
-  [136342] = {{100,private.PRI_OPEN},nil,nil},-- Obliterum Ash
-  [146757] = {{10,private.PRI_OPEN},nil,nil},-- Prepared Ingredients
-  [146949] = {{1,private.PRI_REP},nil,nil}, -- Legionfall Insignia
-  [146950] = {{1,private.PRI_REP},nil,nil}, -- Legionfall Insignia
-  [147350] = {{1,private.PRI_REST},nil,nil}, -- Invincible Armor Set
-  [147349] = {{1,private.PRI_REST},nil,nil}, -- Spiked Armor Set
-  [147348] = {{1,private.PRI_REST},nil,nil}, -- Bulky Armor Set
-  [147384] = {{1,private.PRI_REST},nil,nil}, -- Legionfall Recompense
-  [147860] = {{1,private.PRI_REST},nil,nil}, -- Empowered Elven Tome
-  [140327] = {{1,private.PRI_OPEN},nil,nil}, -- Kyrtos's Research Notes
-  [136269] = {{1,private.PRI_OPEN},nil,nil}, -- Kel'danath's Manaflask
-  [140448] = {{1,private.PRI_REST},nil,nil}, -- Lens of Qin'dera
-  [139025] = {{1,private.PRI_REP},nil,nil}, -- Wardens Insignia
-  [139028] = {{1,private.PRI_REST},nil,nil}, -- Disc of the Starcaller
-  [ 69838] = {{1,private.PRI_OPEN},nil,nil}, -- Chirping Box
-  [ 89125] = {{1,private.PRI_OPEN},nil,nil}, -- Sack of Pet Supplies
   [ 16885] = {{1,private.PRI_OPEN},nil,nil}, -- Heavy Junkbox
+  [ 25649] = {{5,private.PRI_OPEN},nil,nil}, -- Knothide Leather Scraps
+  [ 32971] = {{1,private.PRI_OPEN},nil,nil}, -- Water Bucket
+  [ 33567] = {{5,private.PRI_OPEN},nil,nil}, -- Borean Leather Scraps
+  [ 52977] = {{5,private.PRI_OPEN},nil,nil}, -- Savage Leather Scraps
+  [ 69838] = {{1,private.PRI_OPEN},nil,nil}, -- Chirping Box
+  [ 72162] = {{5,private.PRI_OPEN},nil,nil}, -- Sha-Touched Leather
   [ 78890] = {{1,private.PRI_OPEN},nil,nil}, -- Crystalline Geode
   [ 78891] = {{1,private.PRI_OPEN},nil,nil}, -- Elementium-Coated Geode
-  [ 98134] = {{1,private.PRI_OPEN},nil,nil}, -- Scenario Loot
-  [ 98546] = {{1,private.PRI_OPEN},nil,nil}, -- Scenario Loot
+  [ 89112] = {{10,private.PRI_REST},nil,nil}, -- Motes of Harmony
+  [ 89125] = {{1,private.PRI_OPEN},nil,nil}, -- Sack of Pet Supplies
+  [ 91085] = {{1,private.PRI_OPEN},nil,nil}, -- Pet Supplies
+  [ 91086] = {{1,private.PRI_OPEN},nil,nil}, -- Pet Supplies
   [ 93146] = {{1,private.PRI_OPEN},nil,nil}, -- Pet Supplies
   [ 93147] = {{1,private.PRI_OPEN},nil,nil}, -- Pet Supplies
   [ 93148] = {{1,private.PRI_OPEN},nil,nil}, -- Pet Supplies
   [ 93149] = {{1,private.PRI_OPEN},nil,nil}, -- Pet Supplies
   [ 94207] = {{1,private.PRI_OPEN},nil,nil}, -- Pet Supplies
-  [118697] = {{1,private.PRI_OPEN},nil,nil}, -- Pet Supplies
-  [ 98095] = {{1,private.PRI_OPEN},nil,nil}, -- Pet Supplies
-  [ 91085] = {{1,private.PRI_OPEN},nil,nil}, -- Pet Supplies
-  [ 91086] = {{1,private.PRI_OPEN},nil,nil}, -- Pet Supplies
-  [ 89112] = {{10,private.PRI_REST},nil,nil}, -- Motes of Harmony
-  [  2934] = {{3,private.PRI_OPEN},nil,nil}, -- Ruined Leather Scraps
-  [ 25649] = {{5,private.PRI_OPEN},nil,nil}, -- Knothide Leather Scraps
-  [ 33567] = {{5,private.PRI_OPEN},nil,nil}, -- Borean Leather Scraps
-  [ 52977] = {{5,private.PRI_OPEN},nil,nil}, -- Savage Leather Scraps
-  [ 72162] = {{5,private.PRI_OPEN},nil,nil}, -- Sha-Touched Leather
+  [ 94223] = {{1,private.PRI_REP},nil,nil}, -- Stolen Shado-Pan Insignia
   [ 97512] = {{10,private.PRI_OPEN},nil,nil}, -- Ghost Iron Nugget
   [ 97546] = {{10,private.PRI_OPEN},nil,nil}, -- Kyparite Fragment
-  [115504] = {{10,private.PRI_OPEN},nil,nil}, -- Fractured Temporal Crystal
+  [ 97619] = {{10,private.PRI_OPEN},nil,nil}, -- Torn Green Tea Leaf
+  [ 97620] = {{10,private.PRI_OPEN},nil,nil}, -- Rain Poppy Petal
+  [ 97621] = {{10,private.PRI_OPEN},nil,nil}, -- Silkweed Stem
+  [ 97622] = {{10,private.PRI_OPEN},nil,nil}, -- Snow Lily Petal
+  [ 97623] = {{10,private.PRI_OPEN},nil,nil}, -- Fool's Cap Spores
+  [ 98095] = {{1,private.PRI_OPEN},nil,nil}, -- Pet Supplies
+  [ 98134] = {{1,private.PRI_OPEN},nil,nil}, -- Scenario Loot
+  [ 98546] = {{1,private.PRI_OPEN},nil,nil}, -- Scenario Loot
+  [103641] = {{1,private.PRI_REST},nil,{[private.TIMELESS_ISLE]=true},147055}, -- Singing Crystal
+  [103642] = {{1,private.PRI_REST},nil,{[private.TIMELESS_ISLE]=true},147226}, -- Book of the Ages
+  [103643] = {{1,private.PRI_REST},nil,{[private.TIMELESS_ISLE]=true},147476}, -- Dew of Eternal Morning
+  [104287] = {{1,private.PRI_REST},nil,{[private.TIMELESS_ISLE]=true},148521}, -- Windfeather Plume
   [108294] = {{10,private.PRI_OPEN},nil,nil}, -- Silver Ore Nugget
   [108295] = {{10,private.PRI_OPEN},nil,nil}, -- Tin Ore Nugget
   [108296] = {{10,private.PRI_OPEN},nil,nil}, -- Gold Ore Nugget
@@ -188,56 +148,6 @@ NOP.T_ITEMS = { -- [itemID] = {{count_to_use,priority},{"sub-Zone",...},{[mapID]
   [108307] = {{10,private.PRI_OPEN},nil,nil}, -- Obsidium Ore Nugget
   [108308] = {{10,private.PRI_OPEN},nil,nil}, -- Elementium Ore Nugget
   [108309] = {{10,private.PRI_OPEN},nil,nil}, -- Pyrite Ore Nugget
-  [108391] = {{10,private.PRI_OPEN},nil,nil}, -- Titanium Ore Nugget
-  [109991] = {{10,private.PRI_OPEN},nil,nil}, -- True Iron Nugget
-  [109992] = {{10,private.PRI_OPEN},nil,nil}, -- Blackrock Fragment
-  [110610] = {{10,private.PRI_OPEN},nil,nil}, -- Raw Beast Hide Scraps
-  [112158] = {{10,private.PRI_OPEN},nil,nil}, -- Icy Dragonscale Fragment
-  [112177] = {{10,private.PRI_OPEN},nil,nil}, -- Nerubian Chitin Fragment
-  [112178] = {{10,private.PRI_OPEN},nil,nil}, -- Jormungar Scale Fragment
-  [112179] = {{10,private.PRI_OPEN},nil,nil}, -- Patch of Thick Clefthoof Leather
-  [112180] = {{10,private.PRI_OPEN},nil,nil}, -- Patch of Crystal Infused Leather
-  [112181] = {{10,private.PRI_OPEN},nil,nil}, -- Fel Scale Fragment
-  [112182] = {{10,private.PRI_OPEN},nil,nil}, -- Patch of Fel Hide
-  [112183] = {{10,private.PRI_OPEN},nil,nil}, -- Nether Dragonscale Fragment
-  [112184] = {{10,private.PRI_OPEN},nil,nil}, -- Cobra Scale Fragment
-  [112185] = {{10,private.PRI_OPEN},nil,nil}, -- Wind Scale Fragment
-  [111589] = {{5,private.PRI_OPEN},nil,nil}, [111595] = {{5,private.PRI_OPEN},nil,nil}, [111601] = {{5,private.PRI_OPEN},nil,nil}, -- Crescent Saberfish
-  [111659] = {{5,private.PRI_OPEN},nil,nil}, [111664] = {{5,private.PRI_OPEN},nil,nil}, [111671] = {{5,private.PRI_OPEN},nil,nil}, -- Abyssal Gulper Eel
-  [111652] = {{5,private.PRI_OPEN},nil,nil}, [111667] = {{5,private.PRI_OPEN},nil,nil}, [111674] = {{5,private.PRI_OPEN},nil,nil}, -- Blind Lake Sturgeon
-  [111662] = {{5,private.PRI_OPEN},nil,nil}, [111663] = {{5,private.PRI_OPEN},nil,nil}, [111670] = {{5,private.PRI_OPEN},nil,nil}, -- Blackwater Whiptail
-  [111658] = {{5,private.PRI_OPEN},nil,nil}, [111665] = {{5,private.PRI_OPEN},nil,nil}, [111672] = {{5,private.PRI_OPEN},nil,nil}, -- Sea Scorpion
-  [111651] = {{5,private.PRI_OPEN},nil,nil}, [111668] = {{5,private.PRI_OPEN},nil,nil}, [111675] = {{5,private.PRI_OPEN},nil,nil}, -- Fat Sleeper
-  [111656] = {{5,private.PRI_OPEN},nil,nil}, [111666] = {{5,private.PRI_OPEN},nil,nil}, [111673] = {{5,private.PRI_OPEN},nil,nil}, -- Fire Ammonite
-  [111650] = {{5,private.PRI_OPEN},nil,nil}, [111669] = {{5,private.PRI_OPEN},nil,nil}, [111676] = {{5,private.PRI_OPEN},nil,nil}, -- Jawless Skulker
-  [118267] = {{1,private.PRI_OPEN},nil,nil}, -- Ravenmother Offering
-  [120301] = {{1,private.PRI_OPEN},nil,nil}, [120302] = {{1,private.PRI_OPEN},nil,nil}, -- Create Armor Enhancement, Weapon Boost
-  [113992] = {{1,private.PRI_OPEN},nil,nil}, -- Scribe's Research Notes
-  [115981] = {{1,private.PRI_OPEN},nil,nil}, -- Abrogator Stone Cluster
-  [118897] = {{1,private.PRI_REST},{private.MINE_HORDE,private.MINE_ALLIANCE},nil,176049}, -- Miner's Coffee
-  [118903] = {{1,private.PRI_REST},{private.MINE_HORDE,private.MINE_ALLIANCE},nil,176061}, -- Preserved Mining Pick
-  [111356] = {{1,private.PRI_OPEN},nil,nil},
-  [111364] = {{1,private.PRI_OPEN},nil,nil},
-  [111387] = {{1,private.PRI_OPEN},nil,nil},
-  [111350] = {{1,private.PRI_OPEN},nil,nil},
-  [111349] = {{1,private.PRI_OPEN},nil,nil},
-  [111351] = {{1,private.PRI_OPEN},nil,nil},
-  [115357] = {{1,private.PRI_OPEN},nil,nil},
-  [109558] = {{1,private.PRI_OPEN},nil,nil}, -- Draenor 700 skills
-  [111923] = {{1,private.PRI_OPEN},nil,nil},
-  [115358] = {{1,private.PRI_OPEN},nil,nil},
-  [115356] = {{1,private.PRI_OPEN},nil,nil},
-  [115359] = {{1,private.PRI_OPEN},nil,nil},
-  [111921] = {{1,private.PRI_OPEN},nil,nil},
-  [111922] = {{1,private.PRI_OPEN},nil,nil},
-  [109586] = {{1,private.PRI_OPEN},nil,nil}, -- Draenor 700 skills
-  [120321] = {{1,private.PRI_OPEN},nil,nil}, -- Mystery Bag
-  [122535] = {{1,private.PRI_OPEN},nil,nil}, -- Traveler's Pet Supplies
-  [ 97619] = {{10,private.PRI_OPEN},nil,nil}, -- Torn Green Tea Leaf
-  [ 97620] = {{10,private.PRI_OPEN},nil,nil}, -- Rain Poppy Petal
-  [ 97621] = {{10,private.PRI_OPEN},nil,nil}, -- Silkweed Stem
-  [ 97622] = {{10,private.PRI_OPEN},nil,nil}, -- Snow Lily Petal
-  [ 97623] = {{10,private.PRI_OPEN},nil,nil}, -- Fool's Cap Spores
   [108318] = {{10,private.PRI_OPEN},nil,nil}, -- Mageroyal Petal
   [108319] = {{10,private.PRI_OPEN},nil,nil}, -- Earthroot Stem
   [108320] = {{10,private.PRI_OPEN},nil,nil}, -- Briarthorn Bramble
@@ -286,58 +196,170 @@ NOP.T_ITEMS = { -- [itemID] = {{count_to_use,priority},{"sub-Zone",...},{[mapID]
   [108363] = {{10,private.PRI_OPEN},nil,nil}, -- Heartblossom Petal
   [108364] = {{10,private.PRI_OPEN},nil,nil}, -- Twilight Jasmine Petal
   [108365] = {{10,private.PRI_OPEN},nil,nil}, -- Whiptail Stem
+  [108391] = {{10,private.PRI_OPEN},nil,nil}, -- Titanium Ore Nugget
+  [109558] = {{1,private.PRI_OPEN},nil,nil}, -- Draenor 700 skills
+  [109586] = {{1,private.PRI_OPEN},nil,nil}, -- Draenor 700 skills
   [109624] = {{10,private.PRI_OPEN},nil,nil}, -- Broken Frostweed Stem
   [109625] = {{10,private.PRI_OPEN},nil,nil}, -- Broken Fireweed Stem
   [109626] = {{10,private.PRI_OPEN},nil,nil}, -- Gorgrond Flytrap Ichor
   [109627] = {{10,private.PRI_OPEN},nil,nil}, -- Starflower Petal
   [109628] = {{10,private.PRI_OPEN},nil,nil}, -- Nagrand Arrowbloom Petal
   [109629] = {{10,private.PRI_OPEN},nil,nil}, -- Talador Orchid Petal
-  [115510] = {{300,private.PRI_OPEN},nil,nil}, -- Elemental Rune
-  [128490] = {{1,private.PRI_OPEN},nil,nil}, -- Blueprint: Oil Rig
-  [128446] = {{1,private.PRI_OPEN},nil,nil}, -- Saberstalker Teachings: Trailblazer
-  [122514] = {{1,private.PRI_OPEN},nil,nil}, -- Mission Completion Orders
-  [112087] = {{1,private.PRI_OPEN},nil,nil}, -- Obsidian Frostwolf Petroglyph
-  [128488] = {{1,private.PRI_OPEN},nil,nil}, -- Ship: The Awakener
-  [128225] = {{1,private.PRI_OPEN},nil,nil}, -- Empowered Apexis Fragment
+  [109991] = {{10,private.PRI_OPEN},nil,nil}, -- True Iron Nugget
+  [109992] = {{10,private.PRI_OPEN},nil,nil}, -- Blackrock Fragment
   [110508] = {{1,private.PRI_REST},nil,nil}, -- "Fragrant" Pheromone Fish
-  [ 32971] = {{1,private.PRI_OPEN},nil,nil}, -- Water Bucket
-  [128294] = {{1,private.PRI_OPEN},nil,nil}, -- Trade Agreement: Arakkoa Outcasts
+  [110610] = {{10,private.PRI_OPEN},nil,nil}, -- Raw Beast Hide Scraps
+  [111349] = {{1,private.PRI_OPEN},nil,nil},
+  [111350] = {{1,private.PRI_OPEN},nil,nil},
+  [111351] = {{1,private.PRI_OPEN},nil,nil},
+  [111356] = {{1,private.PRI_OPEN},nil,nil},
+  [111364] = {{1,private.PRI_OPEN},nil,nil},
+  [111387] = {{1,private.PRI_OPEN},nil,nil},
+  [111589] = {{5,private.PRI_OPEN},nil,nil}, [111595] = {{5,private.PRI_OPEN},nil,nil}, [111601] = {{5,private.PRI_OPEN},nil,nil}, -- Crescent Saberfish
+  [111650] = {{5,private.PRI_OPEN},nil,nil}, [111669] = {{5,private.PRI_OPEN},nil,nil}, [111676] = {{5,private.PRI_OPEN},nil,nil}, -- Jawless Skulker
+  [111651] = {{5,private.PRI_OPEN},nil,nil}, [111668] = {{5,private.PRI_OPEN},nil,nil}, [111675] = {{5,private.PRI_OPEN},nil,nil}, -- Fat Sleeper
+  [111652] = {{5,private.PRI_OPEN},nil,nil}, [111667] = {{5,private.PRI_OPEN},nil,nil}, [111674] = {{5,private.PRI_OPEN},nil,nil}, -- Blind Lake Sturgeon
+  [111656] = {{5,private.PRI_OPEN},nil,nil}, [111666] = {{5,private.PRI_OPEN},nil,nil}, [111673] = {{5,private.PRI_OPEN},nil,nil}, -- Fire Ammonite
+  [111658] = {{5,private.PRI_OPEN},nil,nil}, [111665] = {{5,private.PRI_OPEN},nil,nil}, [111672] = {{5,private.PRI_OPEN},nil,nil}, -- Sea Scorpion
+  [111659] = {{5,private.PRI_OPEN},nil,nil}, [111664] = {{5,private.PRI_OPEN},nil,nil}, [111671] = {{5,private.PRI_OPEN},nil,nil}, -- Abyssal Gulper Eel
+  [111662] = {{5,private.PRI_OPEN},nil,nil}, [111663] = {{5,private.PRI_OPEN},nil,nil}, [111670] = {{5,private.PRI_OPEN},nil,nil}, -- Blackwater Whiptail
+  [111921] = {{1,private.PRI_OPEN},nil,nil},
+  [111922] = {{1,private.PRI_OPEN},nil,nil},
+  [111923] = {{1,private.PRI_OPEN},nil,nil},
+  [112087] = {{1,private.PRI_OPEN},nil,nil}, -- Obsidian Frostwolf Petroglyph
+  [112158] = {{10,private.PRI_OPEN},nil,nil}, -- Icy Dragonscale Fragment
+  [112177] = {{10,private.PRI_OPEN},nil,nil}, -- Nerubian Chitin Fragment
+  [112178] = {{10,private.PRI_OPEN},nil,nil}, -- Jormungar Scale Fragment
+  [112179] = {{10,private.PRI_OPEN},nil,nil}, -- Patch of Thick Clefthoof Leather
+  [112180] = {{10,private.PRI_OPEN},nil,nil}, -- Patch of Crystal Infused Leather
+  [112181] = {{10,private.PRI_OPEN},nil,nil}, -- Fel Scale Fragment
+  [112182] = {{10,private.PRI_OPEN},nil,nil}, -- Patch of Fel Hide
+  [112183] = {{10,private.PRI_OPEN},nil,nil}, -- Nether Dragonscale Fragment
+  [112184] = {{10,private.PRI_OPEN},nil,nil}, -- Cobra Scale Fragment
+  [112185] = {{10,private.PRI_OPEN},nil,nil}, -- Wind Scale Fragment
+  [113992] = {{1,private.PRI_OPEN},nil,nil}, -- Scribe's Research Notes
   [114002] = {{1,private.PRI_OPEN},nil,nil}, -- Encoded Message
-  [103641] = {{1,private.PRI_REST},nil,{[private.TIMELESS_ISLE]=true},147055}, -- Singing Crystal
-  [103642] = {{1,private.PRI_REST},nil,{[private.TIMELESS_ISLE]=true},147226}, -- Book of the Ages
-  [103643] = {{1,private.PRI_REST},nil,{[private.TIMELESS_ISLE]=true},147476}, -- Dew of Eternal Morning
-  [104287] = {{1,private.PRI_REST},nil,{[private.TIMELESS_ISLE]=true},148521}, -- Windfeather Plume
+  [115356] = {{1,private.PRI_OPEN},nil,nil},
+  [115357] = {{1,private.PRI_OPEN},nil,nil},
+  [115358] = {{1,private.PRI_OPEN},nil,nil},
+  [115359] = {{1,private.PRI_OPEN},nil,nil},
+  [115504] = {{10,private.PRI_OPEN},nil,nil}, -- Fractured Temporal Crystal
+  [115510] = {{300,private.PRI_OPEN},nil,nil}, -- Elemental Rune
+  [115981] = {{1,private.PRI_OPEN},nil,nil}, -- Abrogator Stone Cluster
+  [118267] = {{1,private.PRI_OPEN},nil,nil}, -- Ravenmother Offering
+  [118697] = {{1,private.PRI_OPEN},nil,nil}, -- Pet Supplies
+  [118897] = {{1,private.PRI_REST},{private.MINE_HORDE,private.MINE_ALLIANCE},nil,176049}, -- Miner's Coffee
+  [118903] = {{1,private.PRI_REST},{private.MINE_HORDE,private.MINE_ALLIANCE},nil,176061}, -- Preserved Mining Pick
+  [120301] = {{1,private.PRI_OPEN},nil,nil}, [120302] = {{1,private.PRI_OPEN},nil,nil}, -- Create Armor Enhancement, Weapon Boost
+  [120321] = {{1,private.PRI_OPEN},nil,nil}, -- Mystery Bag
+  [122514] = {{1,private.PRI_OPEN},nil,nil}, -- Mission Completion Orders
+  [122535] = {{1,private.PRI_OPEN},nil,nil}, -- Traveler's Pet Supplies
   [122599] = {{1,private.PRI_OPEN},nil,nil}, -- Tome of Sorcerous Elements
   [122605] = {{1,private.PRI_OPEN},nil,nil}, -- Tome of the Stones
-  [140397] = {{1,private.PRI_OPEN},nil,nil,223670}, -- G'Hanir's Blossom
-  [140439] = {{1,private.PRI_OPEN},nil,nil,223722}, -- Sunblossom Pollen
-  [140260] = {{1,private.PRI_OPEN},nil,nil}, -- Arcane Remnant of Falanaar
-  [141870] = {{1,private.PRI_OPEN},nil,nil}, -- Arcane Tablet of Falanaar
-  [147418] = {{1,private.PRI_OPEN},nil,nil}, -- Arcane Remnant of Falanaar
-  [147416] = {{1,private.PRI_OPEN},nil,nil}, -- Arcane Tablet of Falanaar
-  [139010] = {{1,private.PRI_OPEN},nil,nil}, -- Petrified Silkweave
-  [139017] = {{1,private.PRI_OPEN},nil,nil}, -- Soothing Leystone Shard
+  [128225] = {{1,private.PRI_OPEN},nil,nil}, -- Empowered Apexis Fragment
+  [128294] = {{1,private.PRI_OPEN},nil,nil}, -- Trade Agreement: Arakkoa Outcasts
+  [128373] = {{1,private.PRI_OPEN},{private.SHIPYARD_HORDE,private.SHIPYARD_ALLIANCE},{[private.FROSTFIRE_RIDGE]=true,[private.SHADOWMOON_VALLEY]=true}}, -- Rush Order: Shipyard, special handling for sub-zone
+  [128446] = {{1,private.PRI_OPEN},nil,nil}, -- Saberstalker Teachings: Trailblazer
+  [128488] = {{1,private.PRI_OPEN},nil,nil}, -- Ship: The Awakener
+  [128490] = {{1,private.PRI_OPEN},nil,nil}, -- Blueprint: Oil Rig
+  [128980] = {{1,private.PRI_OPEN},nil,nil}, -- Scroll of Forgotten Knowledge
+  [132523] = {{1,private.PRI_REST},nil,nil}, -- Reaves Battery
+  [136269] = {{1,private.PRI_OPEN},nil,nil}, -- Kel'danath's Manaflask
+  [136342] = {{100,private.PRI_OPEN},nil,nil},-- Obliterum Ash
   [136412] = {{1,private.PRI_OPEN},nil,nil}, -- Heavy Armor Set
+  [136806] = {{1,private.PRI_OPEN},nil,nil}, -- Glass of Arcwine
   [137207] = {{1,private.PRI_OPEN},nil,nil}, -- Fortified Armor Set
   [137208] = {{1,private.PRI_OPEN},nil,nil}, -- Indestructible Armor Set
-  [142156] = {{1,private.PRI_OPEN},nil,nil}, -- Order Resources Cache
-  [140451] = {{1,private.PRI_OPEN},nil,nil}, -- Spellmask of Azsylla
-  [140329] = {{1,private.PRI_OPEN},nil,nil}, -- Infinite Stone
-  [139027] = {{1,private.PRI_OPEN},nil,nil}, -- Lenses of Spellseer Dellian
+  [138410] = {{1,private.PRI_REST},nil,nil}, -- Summoning Portal
+  [139010] = {{1,private.PRI_OPEN},nil,nil}, -- Petrified Silkweave
   [139011] = {{1,private.PRI_OPEN},nil,nil}, -- Berserking Helm of Ondry'el
-  [140450] = {{1,private.PRI_OPEN},nil,nil}, -- Berserking Helm of Taenna
-  [142447] = {{1,private.PRI_OPEN},nil,nil}, -- Torn Sack of Pet Supplies
-  [142156] = {{1,private.PRI_OPEN},nil,nil}, -- Order Resources Cache
-  [140326] = {{1,private.PRI_OPEN},nil,nil}, -- Enchanted Burial Urn
-  [140328] = {{1,private.PRI_OPEN},nil,nil}, -- Volatile Leyline Crystal
+  [139017] = {{1,private.PRI_OPEN},nil,nil}, -- Soothing Leystone Shard
   [139018] = {{1,private.PRI_OPEN},nil,nil}, -- Box of Calming Whispers
-  [140156] = {{1,private.PRI_OPEN},nil,nil}, -- Blessing of the Order
   [139019] = {{1,private.PRI_OPEN},nil,nil}, -- Spellmask of Alla'onus
+--  [139025] = {{1,private.PRI_REP},nil,nil}, -- Wardens Insignia
+  [139027] = {{1,private.PRI_OPEN},nil,nil}, -- Lenses of Spellseer Dellian
+  [139028] = {{1,private.PRI_REST},nil,nil}, -- Disc of the Starcaller
+  [139177] = {{1,private.PRI_REST},nil,nil}, -- Shattered Soul
+  [139419] = {{1,private.PRI_REST},nil,nil}, -- Golden Banana
+  [139428] = {{1,private.PRI_REST},nil,nil}, -- A Master Plan
+  [139591] = {{1,private.PRI_REST},nil,nil}, -- Stolen Tome of Artifact Lore
+  [139670] = {{1,private.PRI_REST},nil,nil}, -- Scream of the Dead
+  [139786] = {{1,private.PRI_OPEN},nil,nil}, -- 25 mana
+  [140156] = {{1,private.PRI_REST},nil,nil}, -- Blessing of the Order
+  [140260] = {{1,private.PRI_OPEN},nil,nil}, -- Arcane Remnant of Falanaar
+  [140326] = {{1,private.PRI_OPEN},nil,nil}, -- Enchanted Burial Urn
+  [140327] = {{1,private.PRI_OPEN},nil,nil}, -- Kyrtos's Research Notes
+  [140328] = {{1,private.PRI_OPEN},nil,nil}, -- Volatile Leyline Crystal
+  [140329] = {{1,private.PRI_OPEN},nil,nil}, -- Infinite Stone
+  [140397] = {{1,private.PRI_OPEN},nil,nil,223670}, -- G'Hanir's Blossom
+  [140439] = {{1,private.PRI_OPEN},nil,nil,223722}, -- Sunblossom Pollen
+  [140448] = {{1,private.PRI_REST},nil,nil}, -- Lens of Qin'dera
+  [140450] = {{1,private.PRI_OPEN},nil,nil}, -- Berserking Helm of Taenna
+  [140451] = {{1,private.PRI_OPEN},nil,nil}, -- Spellmask of Azsylla
+  [140749] = {{1,private.PRI_REST},nil,nil}, -- Horn of Winter
+  [140760] = {{1,private.PRI_REST},nil,nil}, -- Libram of Truth
+  [140767] = {{5,private.PRI_REST},nil,nil}, -- Pile of Bits and Bones
+  [140922] = {{1,private.PRI_REST},nil,nil}, -- Imp Pact
+  [140924] = {{1,private.PRI_REST},nil,nil}, -- Ashtongue Beacon
+  [140925] = {{1,private.PRI_REST},nil,nil}, -- Enchanted Bark
+  [140926] = {{1,private.PRI_REST},nil,nil}, -- Bowmen's Orders
+  [140927] = {{1,private.PRI_REST},nil,nil}, -- Water Globe
+  [140928] = {{1,private.PRI_REST},nil,nil}, -- Ox Initiate's Pledge
+  [140929] = {{1,private.PRI_REST},nil,nil}, -- Squire's Oath
+  [140932] = {{1,private.PRI_REST},nil,nil}, -- Earthen Mark
+  [140933] = {{1,private.PRI_REST},nil,nil}, -- Runed Aspirant's Band
+  [141870] = {{1,private.PRI_OPEN},nil,nil}, -- Arcane Tablet of Falanaar
+  [142156] = {{1,private.PRI_OPEN},nil,nil}, -- Order Resources Cache
+  [142156] = {{1,private.PRI_OPEN},nil,nil}, -- Order Resources Cache
+  [142363] = {{1,private.PRI_REST},nil,nil}, -- Mark of Prey
+  [142447] = {{1,private.PRI_OPEN},nil,nil}, -- Torn Sack of Pet Supplies
+  [143748] = {{1,private.PRI_OPEN},nil,nil}, -- Ancient Mana Crystal
+  [143849] = {{1,private.PRI_REST},nil,nil}, -- Summon Royal Guard
+  [143850] = {{1,private.PRI_REST},nil,nil}, -- Summon Grimtotem Warrior
+  [143852] = {{1,private.PRI_REST},nil,nil}, -- Lucky Rabbit's Foot
+  [146757] = {{10,private.PRI_OPEN},nil,nil},-- Prepared Ingredients
+--  [146935] = {{1,private.PRI_REP},nil,nil}, -- Valarjar Insignia
+--  [146936] = {{1,private.PRI_REP},nil,nil}, -- Dreamweaver Insignia
+--  [146937] = {{1,private.PRI_REP},nil,nil}, -- Court of Farondis Insignia
+--  [146938] = {{1,private.PRI_REP},nil,nil}, -- Highmountain Tribe Insignia
+--  [146939] = {{1,private.PRI_REP},nil,nil}, -- Wardens Insignia
+--  [146940] = {{1,private.PRI_REP},nil,nil}, -- Nightfallen Insignia
+--  [146941] = {{1,private.PRI_REP},nil,nil}, -- Valarjar Insignia
+--  [146942] = {{1,private.PRI_REP},nil,nil}, -- Dreamweaver Insignia
+--  [146943] = {{1,private.PRI_REP},nil,nil}, -- Court of Farondis Insignia
+--  [146944] = {{1,private.PRI_REP},nil,nil}, -- Highmountain Tribe Insignia
+--  [146945] = {{1,private.PRI_REP},nil,nil}, -- Wardens Insignia
+--  [146946] = {{1,private.PRI_REP},nil,nil}, -- Nightfallen Insignia
+--  [146949] = {{1,private.PRI_REP},nil,nil}, -- Legionfall Insignia
+--  [146950] = {{1,private.PRI_REP},nil,nil}, -- Legionfall Insignia
+  [147348] = {{1,private.PRI_REST},nil,nil}, -- Bulky Armor Set
+  [147349] = {{1,private.PRI_REST},nil,nil}, -- Spiked Armor Set
+  [147350] = {{1,private.PRI_REST},nil,nil}, -- Invincible Armor Set
+  [147351] = {{1,private.PRI_REST},nil,nil}, -- Fel Armor Enhancement Token
+  [147384] = {{1,private.PRI_REST},nil,nil}, -- Legionfall Recompense
+  [147416] = {{1,private.PRI_OPEN},nil,nil}, -- Arcane Tablet of Falanaar
+  [147418] = {{1,private.PRI_OPEN},nil,nil}, -- Arcane Remnant of Falanaar
+  [147729] = {{1,private.PRI_OPEN},nil,nil}, -- Netherchunk
+  [147860] = {{1,private.PRI_REST},nil,nil}, -- Empowered Elven Tome
+  [150737] = {{1,private.PRI_OPEN},nil,nil}, -- Abundant Order Resources Cache
+  [151423] = {{1,private.PRI_REST},nil,nil}, -- Stabilized Titan Essence
+  [151653] = {{10,private.PRI_OPEN},nil,nil}, -- Broken Isles Recipe Scrap
+  [151842] = {{1,private.PRI_REST},nil,nil}, -- Krokul Armor Set
+  [151843] = {{1,private.PRI_REST},nil,nil}, -- Mac'Aree Armor Set
+  [151844] = {{1,private.PRI_REST},nil,nil}, -- Xenedar Armor Set
+  [152095] = {{1,private.PRI_REST},nil,nil}, -- Krokul Ridgestalker
+  [152096] = {{1,private.PRI_REST},nil,nil}, -- Void-Purged Krokul
+  [152097] = {{1,private.PRI_REST},nil,nil}, -- Lightforged Bulwark
+--  [152960] = {{1,private.PRI_REP},nil,nil}, -- Argussian Reach Insignia
+  [152998] = {{1,private.PRI_OPEN},nil,nil}, -- Carefully Hidden Muffin
+  [153113] = {{1,private.PRI_REP},nil,{[1135] = true, [1170] = true, [1171] = true}}, -- Demon's Soulstone, usable on Argus maps
+  [153114] = {{1,private.PRI_REST},nil,nil}, -- Nathrezim Tome of Manipulation
 }
 NOP.T_SPELL_FIND = {} -- ["spell"] = {count_to_use,priority}
 NOP.T_RECIPES_FIND = {} --  [itemID] = {{count_to_use,priority},"pattern",{"sub-ZoneName","sub-ZoneName"},{[mapID]=true,[mapID]=true}} it will be filled with paterns
-NOP.T_OPEN = {} -- ["tooltip-string"] = {{count_to_use,priority},{"sub-ZoneName","sub-ZoneName"},{[mapID]=true,[mapID]=true}}, items by open-spell in tooltip
+NOP.T_OPEN = nil -- ["tooltip-string"] = {{count_to_use,priority},{"sub-ZoneName","sub-ZoneName"},{[mapID]=true,[mapID]=true}}, items by open-spell in tooltip
 NOP.T_BLACKLIST = {} -- [itemID] = true, items blacklisted from right-click
 NOP.T_BLACKLIST_Q = {} -- [itemID] = true, items blacklisted from right-click
 NOP.T_USE = {} -- [itemID] = {{count_to_use,priority},{"sub-zone",...},{[mapID]=true,...},aura,stamp,count_in_bags} /run foreach(NOP.T_USE,print)
 NOP.T_CHECK = {} -- already checked items [itemID] = true
+NOP.T_REPS = {} -- [item.name] = factionID, item names and factionID hash table to show them in tooltip

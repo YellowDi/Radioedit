@@ -3,12 +3,15 @@ local _
 local ADDON, private = ...
 local NOP = LibStub("AceAddon-3.0"):GetAddon(ADDON)
 function NOP:InitEvents()
-  self:RegisterEvent("PLAYER_LOGIN")
-  self:RegisterEvent("PLAYER_LEVEL_UP")
+  self:RegisterEvent("PLAYER_LOGIN") -- time to load-up data
+  self:RegisterEvent("PLAYER_LEVEL_UP") -- lock skill up and some items could be level locked as well
   self:RegisterEvent("SPELLS_CHANGED","PLAYER_LEVEL_UP")
-  self:RegisterEvent("BAG_UPDATE_DELAYED","BAG_UPDATE")
+  self:RegisterEvent("BAG_UPDATE_DELAYED","BAG_UPDATE") -- check bags
   self:RegisterEvent("UNIT_INVENTORY_CHANGED","BAG_UPDATE")
-  self:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED","LOOT_SPEC")
+  self:RegisterEvent("ITEM_PUSH","BAG_UPDATE")
+  self:RegisterEvent("CHAT_MSG_LOOT","BAG_UPDATE")
+  self:RegisterEvent("GET_ITEM_INFO_RECEIVED") -- when details about cached items are ready
+  self:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED","LOOT_SPEC") -- now patterns did change
   self:RegisterEvent("PLAYER_LOOT_SPEC_UPDATED","LOOT_SPEC")
   self:RegisterEvent("MINIMAP_ZONE_CHANGED","ZONE_CHANGED") -- old event, kept for compatibility
   self:RegisterEvent("ZONE_CHANGED","ZONE_CHANGED") -- change zone
@@ -63,13 +66,29 @@ function NOP:UI_ERROR_MESSAGE(event, msgType, msg, ...) -- handle lockpicking it
   --self.printt("Type",msgType,"Msg",private.RGB_RED .. msg .. "|r")
 end
 function NOP:LOOT_SPEC() -- after spec or loot spec switch I need update all paterns!
-  self.spellLoad = nil; self.spellLoadRetry = private.LOAD_RETRY; wipe(NOP.T_OPEN); self:SpellLoad() 
-  self.itemLoad = nil; self.itemLoadRetry = private.LOAD_RETRY; wipe(NOP.T_RECIPES_FIND); self:ItemLoad()
+  if self.spellLoad then
+    self.spellLoad = nil
+    self.spellLoadRetry = private.LOAD_RETRY
+    wipe(NOP.T_SPELL_FIND)
+    self:SpellLoad()
+  end
+  if self.itemLoad then
+    self.itemLoad = nil
+    self.itemLoadRetry = private.LOAD_RETRY
+    wipe(NOP.T_RECIPES_FIND)
+    self:ItemLoad()
+  end
   self:ItemShowNew()
 end
 function NOP:BAG_UPDATE() -- bags have changed
   self:ItemShowNew()
 end
+NOP.FACTION_TABLE = {} -- ["faction_name"] = factionID,
+local tooltip_functions = {
+  "SetBagItem", "SetItemByID", 
+-- "SetQuestCurrency", "SetQuestLogItem", "SetQuestLogSpecialItem", "SetSendMailItem", "SetTradePlayerItem", "SetTradeTargetItem"
+-- "SetCurrencyTokenByID", "SetGuildBankItem", "SetInboxItem", "SetInventoryItem",   
+}
 function NOP:PLAYER_LOGIN() -- player entering game
   if not NOP.DB["version"] or NOP.DB["version"] ~= private.NOP_VERSION then
     self.printt("|cFFFF0000" .. private.NOP_TITLE .. " " .. private.NOP_VERSION)
@@ -90,16 +109,32 @@ function NOP:PLAYER_LOGIN() -- player entering game
   if self.BF.hotkey then self.BF.hotkey:SetText(self:ButtonHotKey(key)) end
   if not self.timerZoneChanged then self.timerZoneChanged = self:ScheduleTimer("ZoneChanged",private.TIMER_IDLE) end
   self.backTimer = self:ScheduleRepeatingTimer("ItemTimer", private.TIMER_RECHECK) -- slow backing timer for complete rescan, sometime GetItemSpell get hang or new item is added post events are triggered
+  if not self.tooltipHooked then
+    self.tooltipHooked = true
+    if NOP.DB.ShowReputation then
+      local thook = {"SetBagItem", "SetItemByID"}
+      for _, func in pairs(thook) do
+        hooksecurefunc(GameTooltip, func, 
+          function(...)
+            local tooltip, arg1, arg2, arg3, arg4 = ...
+            if not tooltip then return end
+            if not tooltip:IsVisible( ) then return end
+            NOP:ButtonReputation(tooltip,func)
+          end
+        )
+      end
+    end
+  end
 end
 function NOP:ZONE_CHANGED() -- map change, all items tied to zone need update
   if not self.timerZoneChanged then self.timerZoneChanged = self:ScheduleTimer("ZoneChanged",private.TIMER_IDLE) end
 end
 function NOP:PLAYER_LEVEL_UP() -- may be there are items now usable
   self:PickLockUpdate() -- new level rising picklock level
-  wipe(NOP.T_CHECK) -- empty list
+  wipe(NOP.T_CHECK) -- empty already checked items
   self:ItemShowNew()
 end
-function NOP:QUEST_ACCEPTED()
+function NOP:QUEST_ACCEPTED() -- update quest bard buttons
   if not NOP.DB.quest then return end -- quest bar is disabled and hidden nothing to do
   self:QBQuestAccept()
 end
@@ -121,6 +156,10 @@ function NOP:ACTIONBAR_UPDATE_COOLDOWN() -- update cooldowns on quest bar and it
     self:ButtonOnUpdate(bt,start,duration)
   end
 end
-function NOP:GARRISON_LANDINGPAGE_SHIPMENTS()
+function NOP:GARRISON_LANDINGPAGE_SHIPMENTS() -- print notifications into chat
   self:CheckBuilding()
+end
+function NOP:GET_ITEM_INFO_RECEIVED() -- ItemLoad and SpellLoad need cached items from server
+  self:ItemLoad()
+  self:SpellLoad()
 end

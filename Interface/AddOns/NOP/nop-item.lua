@@ -69,8 +69,12 @@ function NOP:ItemGetPattern(itemID) -- looking for usable item via pattern in to
     local heading = _G[headingLine]:GetText() -- get line from tooltip
     if heading and heading ~= "" then
       for key, data in pairs(NOP.T_RECIPES_FIND) do
-        local c, pattern, z, m = unpack(data,1,4)
+        local c, pattern, z, m, faction = unpack(data,1,5)
         if strfind(heading,pattern,1,true) then
+          if faction and NOP.DB.SkipExalted then
+            local level, top, value = self:GetReputation(heading)
+            if level and level > 7 then return end -- already exalted with faction for this token
+          end
           return c[1], c[2], z, m
         end
       end
@@ -355,6 +359,5 @@ function NOP:ItemShowNew() -- check bags for usable item and place it on button
 end
 function NOP:ItemTimer() -- slow backpack recheck
   if self:inCombat() or not (self.spellLoad and self.itemLoad) then return end -- still loading or in combat
-  -- wipe(NOP.T_CHECK) -- invalidate cache
   self:ItemShowNew() -- find item to place on button
 end
