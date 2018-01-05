@@ -1,6 +1,5 @@
 local AS, ASL = unpack(AddOnSkins)
 local sort, pairs, gsub, strfind, strlower, strtrim = sort, pairs, gsub, strfind, strlower, strtrim
-local ACR, ACD = LibStub('AceConfigRegistry-3.0'), LibStub('AceConfigDialog-3.0')
 
 local DEVELOPER_STRING = ''
 local LINE_BREAK = '\n'
@@ -58,70 +57,8 @@ for _, devName in pairs(DEVELOPERS) do
 	DEVELOPER_STRING = DEVELOPER_STRING..devName..'    '
 end
 
-local Defaults, DebugString = nil, ''
-function AS:SetupProfile()
-	if not Defaults then
-		Defaults = {
-			profile = {
-			-- Embeds
-				['EmbedOoC'] = false,
-				['EmbedOoCDelay'] = 10,
-				['EmbedCoolLine'] = false,
-				['EmbedSexyCooldown'] = false,
-				['EmbedSystem'] = false,
-				['EmbedSystemDual'] = false,
-				['EmbedMain'] = 'Details',
-				['EmbedLeft'] = 'Details',
-				['EmbedRight'] = 'Details',
-				['EmbedRightChat'] = true,
-				['EmbedLeftWidth'] = 200,
-				['EmbedBelowTop'] = false,
-				['TransparentEmbed'] = false,
-				['EmbedIsHidden'] = false,
-				['EmbedFrameStrata'] = '3-MEDIUM',
-				['EmbedFrameLevel'] = 10,
-			-- Misc
-				['RecountBackdrop'] = true,
-				['SkadaBackdrop'] = true,
-				['OmenBackdrop'] = true,
-				['DetailsBackdrop'] = true,
-				['MiscFixes'] = true,
-				['DBMSkinHalf'] = false,
-				['DBMFont'] = 'Arial Narrow',
-				['DBMFontSize'] = 12,
-				['DBMFontFlag'] = 'OUTLINE',
-				['DBMRadarTrans'] = false,
-				['WeakAuraAuraBar'] = false,
-				['WeakAuraIconCooldown'] = false,
-				['SkinTemplate'] = 'Transparent',
-				['HideChatFrame'] = 'NONE',
-				['SkinDebug'] = false,
-				['LoginMsg'] = true,
-				['EmbedSystemMessage'] = true,
-				['ElvUISkinModule'] = false,
-				['ThinBorder'] = false,
-			},
-		}
-
-		for skin in pairs(AS.register) do
-			if Defaults.profile[skin] == nil then
-				if AS:CheckAddOn('ElvUI') and strfind(skin, 'Blizzard_') then
-					Defaults.profile[skin] = false
-				else
-					Defaults.profile[skin] = true
-				end
-			end
-		end
-	end
-
-	self.data = LibStub('AceDB-3.0'):New('AddOnSkinsDB', Defaults)
-
-	self.data.RegisterCallback(self, 'OnProfileChanged', 'SetupProfile')
-	self.data.RegisterCallback(self, 'OnProfileCopied', 'SetupProfile')
-	self.db = self.data.profile
-end
-
-function AS:GetOptions()
+local DebugString = ''
+function AS:BuildOptions()
 	local function GenerateOptionTable(skinName, order)
 		local text = strtrim(skinName:gsub('^Blizzard_(.+)','%1'):gsub('(%l)(%u%l)','%1 %2'))
 		local options = {
@@ -136,7 +73,7 @@ function AS:GetOptions()
 		return options
 	end
 
-	local Options = {
+	AS.Options = {
 		order = 101,
 		type = 'group',
 		name = AS.Title,
@@ -169,7 +106,7 @@ function AS:GetOptions()
 						type = 'select', dialogControl = 'LSM30_Font',
 						order = 1,
 						name = ASL['DBM|VEM Font'],
-						values = AceGUIWidgetLSMlists.font,
+						values = AS.LSM:HashTable('font'),
 					},
 					DBMFontSize = {
 						type = 'range',
@@ -215,41 +152,41 @@ function AS:GetOptions()
 					},
 					EmbedSystem = {
 						type = 'toggle',
-						name = ASL['Single Embed System'],
+						name = ASL['One Window Embed System'],
 						order = 2,
 						disabled = function() return AS:CheckOption('EmbedSystemDual') end,
 					},
 					EmbedMain = {
 						type = 'input',
 						width = 'full',
-						name = ASL['Embed for Main Panel'],
+						name = ASL['Embed for One Window'],
 						disabled = function() return not AS:CheckOption('EmbedSystem') end,
 						order = 3,
 					},
 					EmbedSystemDual = {
 						type = 'toggle',
-						name = ASL['Dual Embed System'],
+						name = ASL['Two Window Embed System'],
 						order = 4,
 						disabled = function() return AS:CheckOption('EmbedSystem') end,
 					},
 					EmbedLeft = {
 						type = 'input',
 						width = 'full',
-						name = ASL['Embed for Left Window'],
+						name = ASL["Window One Embed"],
 						disabled = function() return not AS:CheckOption('EmbedSystemDual') end,
 						order = 5,
 					},
 					EmbedRight = {
 						type = 'input',
 						width = 'full',
-						name = ASL['Embed for Right Window'],
+						name = ASL["Window Two Embed"],
 						disabled = function() return not AS:CheckOption('EmbedSystemDual') end,
 						order = 6,
 					},
 					EmbedLeftWidth = {
 						type = 'range',
 						order = 7,
-						name = ASL['Embed Left Window Width'],
+						name = ASL['Window One Width'],
 						min = 100,
 						max = 300,
 						step = 1,
@@ -486,63 +423,56 @@ function AS:GetOptions()
 	local order, blizzorder = 1, 1
 	for skinName, _ in AS:OrderedPairs(AS.register) do
 		if strfind(skinName, 'Blizzard_') then
-			Options.args.blizzard.args[skinName] = GenerateOptionTable(skinName, blizzorder)
+			AS.Options.args.blizzard.args[skinName] = GenerateOptionTable(skinName, blizzorder)
 			blizzorder = blizzorder + 1
 		else
-			Options.args.addons.args[skinName] = GenerateOptionTable(skinName, order)
+			AS.Options.args.addons.args[skinName] = GenerateOptionTable(skinName, order)
 			order = order + 1
 		end
 	end
 
 	if AS:CheckAddOn('ElvUI') then
-		Options.args.blizzard.args.description ={
+		AS.Options.args.blizzard.args.description ={
 			type = 'header',
-			name = ASL.OptionsPanel.ElvUIDesc,
+			name = ASL['Blizzard Skins'],
 			order = 0,
 		}
 
-		Options.args.misc.args.WeakAuraIconCooldown = {
+		AS.Options.args.misc.args.WeakAuraIconCooldown = {
 			type = 'toggle',
 			name = ASL['WeakAura Cooldowns'],
 			order = 1,
 			disabled = function() return not AS:CheckOption('WeakAuras', 'WeakAuras') end,
 		}
 
-		Options.args.misc.args.ElvUISkinModule = {
+		AS.Options.args.misc.args.ElvUISkinModule = {
 			type = 'toggle',
 			name = 'Use ElvUI Skin Styling',
 			order = 5,
 		}
-
-		hooksecurefunc(LibStub('AceConfigDialog-3.0-ElvUI'), 'CloseAll', function(self, appName)
-			if AS.NeedReload then
-				ElvUI[1]:StaticPopup_Show("PRIVATE_RL")
-			end
-		end)
 	end
 
 	if not AS:CheckAddOn('ElvUI') then
-		Options.args.misc.args.ThinBorder = {
+		AS.Options.args.misc.args.ThinBorder = {
 			name = 'Thin Border',
 			order = 1,
 			type = 'toggle',
 		}
 	end
+end
 
-	Options.args.profiles = LibStub('AceDBOptions-3.0'):GetOptionsTable(AS.data)
-	Options.args.profiles.order = -2
-	ACR:RegisterOptionsTable('AddOnSkinsProfiles', Options.args.profiles)
+function AS:GetOptions()
+	local Ace3OptionsPanel = AS:CheckAddOn('ElvUI') and ElvUI[1] or Enhanced_Config
+	Ace3OptionsPanel.Options.args.addonskins = AS.Options
 
-	if AS.EP then
-		local Ace3OptionsPanel = IsAddOnLoaded('ElvUI') and ElvUI[1] or Enhanced_Config
-		Ace3OptionsPanel.Options.args.addonskins = Options
-	end
+	AS.Options.args.profiles = LibStub('AceDBOptions-3.0'):GetOptionsTable(AS.data)
+	AS.Options.args.profiles.order = -2
 
-	ACR:RegisterOptionsTable('AddOnSkins', Options)
-	ACD:AddToBlizOptions('AddOnSkins', 'AddOnSkins', nil, 'addons')
-	for k, v in AS:OrderedPairs(Options.args) do
-		if k ~= 'addons' then
-			ACD:AddToBlizOptions('AddOnSkins', v.name, 'AddOnSkins', k)
-		end
+	if AS:CheckAddOn('ElvUI') then
+			hooksecurefunc(LibStub('AceConfigDialog-3.0-ElvUI'), 'CloseAll', function(self, appName)
+			if AS.NeedReload then
+				ElvUI[1]:StaticPopup_Show("PRIVATE_RL")
+			end
+		end)
 	end
 end

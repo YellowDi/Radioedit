@@ -7,6 +7,7 @@
 	<Script file="AdvancedIconSelector.lua"/>
 	<Script file="AffDots.lua"/>
 	<Script file="alDamageMeter.lua"/>
+	<Script file="AllTheThings.lua"/>
 	<Script file="Altoholic.lua"/>
 	<Script file="Analyst.lua"/>
 	<Script file="Arcanometer.lua"/>
@@ -38,7 +39,7 @@
 	<Script file="BugSack.lua"/>
 	<Script file="BulkOrder.lua"/>
 	<Script file="BuyEmAll.lua"/>
-	<Script file="Capping.lua"/>
+	<!--Script file="Capping.lua"/-->
 	<Script file="ChocolateBar.lua"/>
 	<Script file="ClassicQuestLog.lua"/>
 	<Script file="ClassOrderHallsComplete.lua"/>
@@ -59,6 +60,7 @@
 	<Script file="DKDots.lua"/>
 	<Script file="Dominos.lua"/>
 	<Script file="Dresser.lua"/>
+	<Script file="DressUp.lua"/>
 	<Script file="EasyMail.lua"/>
 	<Script file="Easy_Obliterate.lua"/>
 	<Script file="EavesDrop.lua"/>
@@ -75,8 +77,10 @@
 	<Script file="FlyoutButtonCustom.lua"/>
 	<Script file="Foglight.lua"/>
 	<Script file="GCGambler.lua"/>
+	<Script file="GlobalIgnoreList.lua"/>
 	<Script file="Grinder.lua"/>
 	<Script file="GryphonHeartItems.lua"/>
+	<Script file="Guild_Roster_Manager.lua"/>
 	<Script file="GuildMemberInfo_TradeSkills.lua"/>
 	<Script file="GupPet.lua"/>
 	<Script file="Hack.lua"/>
@@ -92,6 +96,7 @@
 	<Script file="KeepingTabs.lua"/>
 	<Script file="Keyed.lua"/>
 	<Script file="LegacyQuest.lua"/>
+	<Script file="Libraries.lua"/>
 	<Script file="Lightheaded.lua"/>
 	<Script file="LinkWrangler.lua"/>
 	<Script file="LootCouncilLite.lua"/>
@@ -99,6 +104,7 @@
 	<Script file="LuckyCharms2.lua"/>
 	<Script file="Ludwig.lua"/>
 	<Script file="MageNuggets.lua"/>
+	<Script file="MailCommander.lua"/>
 	<Script file="MasterLootManagerRemix.lua"/>
 	<Script file="MasterPlan.lua"/>
 	<Script file="MinimalArchaeology.lua"/>
@@ -122,7 +128,7 @@
 	<Script file="oRA3.lua"/>
 	<Script file="OrderHallCommander.lua"/>
 	<Script file="Outfitter.lua"/>
-	<Script file="Ovale.lua"/>
+	<!--Script file="Ovale.lua"/-->
 	<Script file="Overachiever.lua"/>
 	<Script file="Pawn.lua"/>
 	<Script file="PetBattleTeams.lua"/>

@@ -113,7 +113,7 @@ function AS:Auctionator(event)
 		}
 
 		for _, Button in pairs(Buttons) do
- 			AS:SkinButton(Button, true)
+			AS:SkinButton(Button, true)
 		end
 
 		local EditBoxes = {
@@ -130,7 +130,7 @@ function AS:Auctionator(event)
 		}
 
 		for _, EditBox in pairs(EditBoxes) do
- 			AS:SkinEditBox(EditBox)
+			AS:SkinEditBox(EditBox)
 		end
 
 		AS:SkinCheckBox(AuctionatorOption_Enable_Alt_CB)
@@ -147,6 +147,8 @@ function AS:Auctionator(event)
 		AS:SkinFrame(Atr_CheckActives_Frame, 'Default')
 
 		AS:SkinScrollBar(Atr_Hlist_ScrollFrameScrollBar)
+		Atr_Hlist_ScrollFrameScrollBar:SetPoint("TOPLEFT", Atr_Hlist_ScrollFrame, "TOPRIGHT", 4, -13)
+		Atr_Hlist_ScrollFrameScrollBar:SetPoint("BOTTOMLEFT", Atr_Hlist_ScrollFrame, "BOTTOMRIGHT", 4, 31)
 
 		Atr_FullScanButton:ClearAllPoints()
 		Atr_FullScanButton:SetPoint('TOPRIGHT', Auctionator1Button, 'BOTTOMRIGHT', 0, -2)
@@ -154,9 +156,23 @@ function AS:Auctionator(event)
 
 		Atr_HeadingsBar:SetHeight(19)
 
-		Atr_Hlist:SetWidth(196)
+		AS:CreateBackdrop(Atr_Hlist)
+		Atr_Hlist.Backdrop:SetPoint("TOPLEFT", -2, 0)
+		Atr_Hlist.Backdrop:SetPoint("BOTTOMRIGHT", 0, 2)
+		Atr_Hlist:SetWidth(195)
 		Atr_Hlist:ClearAllPoints()
 		Atr_Hlist:SetPoint('TOPLEFT', -195, -75)
+
+		hooksecurefunc("AuctionFrameTab_OnClick", function(self, button, down, index)
+			local index = self:GetID()
+			if index == 4 then
+				Atr_Hlist:SetPoint("TOPLEFT", -193, -67)
+			else
+				Atr_Hlist:SetHeight (337)
+				Atr_Hlist_ScrollFrame:SetHeight (337)
+				Atr_Hlist:SetPoint("TOPLEFT", -193, -75)
+			end
+		end)
 
 		Atr_SrchSListButton:SetWidth(196)
 		Atr_MngSListsButton:SetWidth(196)
@@ -173,7 +189,7 @@ function AS:Auctionator(event)
 
 		AS:StripTextures(Atr_SellControls_Tex)
 		AS:StyleButton(Atr_SellControls_Tex)
-		Atr_SellControls_Tex:SetTemplate('Default', true)
+		AS:SetTemplate(Atr_SellControls_Tex, 'Default')
 
 		AS:UnregisterSkinEvent('Auctionator', 'AUCTION_HOUSE_SHOW')
 

@@ -4,7 +4,7 @@ if not AS:CheckAddOn('Details') then return end
 
 local Details
 
-local wipe, pairs, tinsert, select, type = wipe, pairs, tinsert, select, type
+local wipe, tinsert, select, type = wipe, tinsert, select, type
 
 local _G = _G
 
@@ -54,11 +54,10 @@ function AS:EmbedDetailsWindow(window, width, height, point, relativeFrame, rela
 
 	window._ElvUIEmbed = true
 
-	local offsety = ofsy
 	if window.bars_grow_direction == 2 then
-		offsety = 2
+		ofsy = -2
 	else
-		offsety = 20
+		ofsy = -20
 	end
 
 	window:UngroupInstance()
@@ -100,7 +99,7 @@ function AS:EmbedDetailsWindow(window, width, height, point, relativeFrame, rela
 		window:SetSize(width, height - 20)
 	end
 
-	window.baseframe:SetPoint(point, relativeFrame, relativePoint, ofsx, -offsety)
+	window.baseframe:SetPoint(point, relativeFrame, relativePoint, ofsx, ofsy)
 	window:SaveMainWindowPosition()
 	window:RestoreMainWindowPosition()
 
@@ -172,8 +171,8 @@ function AS:Embed_Details()
 	end
 
 	if AS:CheckOption('EmbedSystemDual') then
-		if AS:CheckOption('EmbedRight') == 'Details' then NumberToEmbed = NumberToEmbed + 1 end
-		if AS:CheckOption('EmbedLeft') == 'Details' then NumberToEmbed = NumberToEmbed + 1 end
+		if strlower(AS:CheckOption('EmbedRight')) == 'details' then NumberToEmbed = NumberToEmbed + 1 end
+		if strlower(AS:CheckOption('EmbedLeft')) == 'details' then NumberToEmbed = NumberToEmbed + 1 end
 	end
 
 	if (Details:GetMaxInstancesAmount() < NumberToEmbed) then
@@ -182,8 +181,8 @@ function AS:Embed_Details()
 
 	local instances_amount = Details:GetNumInstancesAmount()
 
-	for i = instances_amount+1, NumberToEmbed do
-		local new_instance = Details:CreateInstance (i)
+	for i = instances_amount + 1, NumberToEmbed do
+		local new_instance = Details:CreateInstance(i)
 
 		if (type(new_instance) == "table") then
 			tinsert(AS.DetailsInstances, new_instance)
@@ -195,7 +194,7 @@ function AS:Embed_Details()
 	if NumberToEmbed == 1 then
 		local EmbedParent = _G.EmbedSystem_MainWindow
 		if AS:CheckOption('EmbedSystemDual') then
-			EmbedParent = AS:CheckOption('EmbedRight') == 'Details' and _G.EmbedSystem_RightWindow or _G.EmbedSystem_LeftWindow
+			EmbedParent = strlower(AS:CheckOption('EmbedRight')) == 'details' and _G.EmbedSystem_RightWindow or _G.EmbedSystem_LeftWindow
 		end
 		AS:EmbedDetailsWindow(AS.DetailsInstances[1], EmbedParent:GetWidth(), EmbedParent:GetHeight(), 'TOPLEFT', EmbedParent, 'TOPLEFT', 2, 0)
 
@@ -207,4 +206,3 @@ function AS:Embed_Details()
 		AS:EmbedDetailsWindow(AS.DetailsInstances[2], _G.EmbedSystem_RightWindow:GetWidth(), _G.EmbedSystem_RightWindow:GetHeight(), 'TOPRIGHT', _G.EmbedSystem_RightWindow, 'TOPRIGHT', -2, 0)
 	end
 end
-
