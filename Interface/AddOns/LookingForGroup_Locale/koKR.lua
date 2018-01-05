@@ -2,6 +2,10 @@ local L = LibStub("AceLocale-3.0"):NewLocale("LookingForGroup", "koKR")
 if not L then return end
 L["Armory"] = "전투정보실"
 L["Auto"] = "자동"
+--Translation missing 
+-- L["auto_report"] = ""
+--Translation missing 
+-- L["auto_report_desc"] = ""
 L["background_search"] = "백그라운드 검색"
 L["cr_realm_rand_hop"] = "무작위 서버 위상 변경"
 L["cr_realm_rand_hop_desc"] = [=[무작위 서버 위상으로 변경합니다. 미니맵 아이콘을 Ctrl/Shift + 오른쪽-클릭해도 똑같이 작동합니다.
@@ -23,7 +27,6 @@ L["find_recommended_desc"] = [=[보통 클릭 = 추천 활동만 표시
 어두운 클릭 = 다른 활동 표시
 클릭 안함 = 모든 활동 표시]=]
 L["Keywords"] = "키워드"
-L["Kick"] = "추방"
 L["Maximum length"] = "최대 길이"
 L["options"] = "부-애드온의 사용 전환"
 L["options_addons"] = "다른 파티 찾기 애드온의 형식을 사용해 파티를 만듭니다."
@@ -32,8 +35,6 @@ L["options_auto_pve_desc"] = [=[보통 클릭 = 'PVE' 키워드의 파티만 참
 어두운 클릭 = 'PVP' 키워드의 파티만 참여합니다
 클릭 안함 = 비활성화
 |c00ff0000경고! 이 옵션의 작동을 보증하지 않습니다! 이 옵션을 사용해도 당신에게 알림없이 pvp 서버와 파티를 맺습니다.|r]=]
-L["options_pug"] = "PUG"
-L["options_pug_dps"] = "PUG를 위한 최소 DPS 요구량을 입력하세요"
 L["options_window"] = "창 크기"
 L["Relist"] = "목록 새로고침"
 L["Results"] = "결과"

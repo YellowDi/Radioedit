@@ -363,6 +363,22 @@ LookingForGroup_Options:push("filter",{
 						end
 					end
 				},
+				auto_report =
+				{
+					name = L.auto_report,
+					desc = L.auto_report_desc,
+					type = "toggle",
+					get = function(info)
+						return not LookingForGroup_Options.db.profile.spam_filter_auto_report
+					end,
+					set = function(info,val)
+						if val then
+							LookingForGroup_Options.db.profile.spam_filter_auto_report = nil
+						else
+							LookingForGroup_Options.db.profile.spam_filter_auto_report = true
+						end
+					end
+				},
 				reset =
 				{
 					name = RESET,
@@ -373,6 +389,7 @@ LookingForGroup_Options:push("filter",{
 						profile.spam_filter_dk = nil
 						profile.spam_filter_solo = nil
 						profile.find_a_group_language = nil
+						profile.spam_filter_auto_report = nil
 					end,
 					width = "full"
 				}

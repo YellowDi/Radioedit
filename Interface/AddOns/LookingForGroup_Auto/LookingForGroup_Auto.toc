@@ -1,7 +1,7 @@
 ## Interface: 70300
 ## Author: cqwrteur
 ## Title: LookingForGroup Auto
-## Version: r191
+## Version: r215
 ## Dependencies: LookingForGroup
 ## SavedVariablesPerCharacter: LookingForGroup_AutoCharacterDB
 ## LoadOnDemand: 1

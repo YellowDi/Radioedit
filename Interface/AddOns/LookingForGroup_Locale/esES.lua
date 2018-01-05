@@ -5,6 +5,10 @@ if not L then return end
 --Translation missing 
 -- L["Auto"] = ""
 --Translation missing 
+-- L["auto_report"] = ""
+--Translation missing 
+-- L["auto_report_desc"] = ""
+--Translation missing 
 -- L["background_search"] = ""
 --Translation missing 
 -- L["cr_realm_rand_hop"] = ""
@@ -37,8 +41,6 @@ if not L then return end
 --Translation missing 
 -- L["Keywords"] = ""
 --Translation missing 
--- L["Kick"] = ""
---Translation missing 
 -- L["Maximum length"] = ""
 --Translation missing 
 -- L["options"] = ""
@@ -48,10 +50,6 @@ if not L then return end
 -- L["options_advanced_hardware"] = ""
 --Translation missing 
 -- L["options_auto_pve_desc"] = ""
---Translation missing 
--- L["options_pug"] = ""
---Translation missing 
--- L["options_pug_dps"] = ""
 --Translation missing 
 -- L["options_window"] = ""
 --Translation missing 

@@ -1,7 +1,7 @@
 ## Interface: 70300
 ## Author: cqwrteur
 ## Title: LookingForGroup Meeting Stone
-## Version: r191
+## Version: r215
 ## Dependencies: LookingForGroup
 ## LoadOnDemand: 1
 

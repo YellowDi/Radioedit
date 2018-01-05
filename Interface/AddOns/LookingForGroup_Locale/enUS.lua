@@ -2,6 +2,8 @@ local L = LibStub("AceLocale-3.0"):NewLocale("LookingForGroup", "enUS", true)
 
 L["Armory"] = true
 L["Auto"] = true
+L["auto_report"] = "Auto Report"
+L["auto_report_desc"] = "Automatically report spamming groups in LFG system"
 L["background_search"] = "Background Search"
 L["cr_realm_rand_hop"] = "Random Hop"
 L["cr_realm_rand_hop_desc"] = [=[Hop to a random realm. Ctrl/Shift + Right-click minimap icon would also do this.
@@ -24,7 +26,6 @@ L["find_recommended_desc"] = [=[Normal Click = Display recommended activities on
 Dark Click = Display other activities
 No Click = Display all activities]=]
 L["Keywords"] = true
-L["Kick"] = true
 L["Maximum length"] = true
 L["options"] = "Toggles of sub-addons"
 L["options_addons"] = "Creating groups using other LFG AddOns' format."
@@ -33,8 +34,6 @@ L["options_auto_pve_desc"] = [=[Normal Click = Only join groups with the keyword
 Dark Click = Only join groups with the keyword 'PVP'
 No click = Disable
 |c00ff0000Warning! This option is not guaranteed to work! It'll group you with pvp servers without telling you where you're going even if this option is used.|r]=]
-L["options_pug"] = "PUG"
-L["options_pug_dps"] = "Input minimum DPS requirement for PUGs"
 L["options_window"] = "Window Size"
 L["Relist"] = true
 L["Results"] = true

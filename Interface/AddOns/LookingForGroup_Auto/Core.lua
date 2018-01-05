@@ -13,6 +13,10 @@ end
 
 function LookingForGroup_Auto:OnEnable()
 	StaticPopupDialogs.LookingForGroup_HardwareAPIDialog = {button1=ACCEPT,button2=CANCEL,timeOut = 45}
+	local AceEvent = LibStub("AceEvent-3.0")
+	AceEvent.RegisterEvent(LookingForGroup_Auto,"ZONE_CHANGED_NEW_AREA",function()
+		wipe(LookingForGroup_Auto.db.profile)
+	end)
 end
 
 local function hardware_func(desc,func)
@@ -84,7 +88,9 @@ local function hardware_search(create,results)
 				if status == "applied" then
 					hardware_func(CANCEL_SIGN_UP,function()
 						C_LFGList.CancelApplication(groupID)
-						hardware_func(START_A_GROUP,create)
+						C_Timer.After(1,function()
+							hardware_func(START_A_GROUP,create)
+						end)
 					end)
 				elseif status ~= "invited" and status ~= "inviteaccepted" then
 					hardware_func(START_A_GROUP,create)
@@ -167,7 +173,7 @@ function LookingForGroup_Auto.accepted(create,search,secure,name,value)
 	end
 	if IsInGroup() then
 		if not C_LFGList.GetActiveEntryInfo() and UnitIsGroupLeader("player") then
-			hardware_api(START_A_GROUP,create,secure)
+			C_Timer.After(1.0,function() hardware_api(START_A_GROUP,create,secure) end)
 		end
 	else
 		if name and value then

@@ -3,6 +3,24 @@ local LookingForGroup = AceAddon:GetAddon("LookingForGroup")
 local LookingForGroup_Options = AceAddon:GetAddon("LookingForGroup_Options")
 local L = LibStub("AceLocale-3.0"):GetLocale("LookingForGroup")
 
+local function generate_class_table()
+	local tb = {}
+	local i = 1
+	local GetClassInfoByID = GetClassInfoByID
+	local RAID_CLASS_COLORS = RAID_CLASS_COLORS
+	local tconcat = table.concat
+	while true do
+		local loc,class = GetClassInfoByID(i)
+		if loc == nil then
+			break
+		end
+		tb[i] = tconcat{"|c",RAID_CLASS_COLORS[class].colorStr,loc,"|r"}
+		i = i + 1
+	end
+	return tb
+end
+
+
 LookingForGroup_Options:push("options",{
 	name = OPTIONS,
 	desc = L.options,
@@ -383,6 +401,24 @@ LookingForGroup_Options:push("options",{
 						end
 					end
 				},
+				class =
+				{
+					name = CLASS,
+					type = "select",
+					values = generate_class_table,
+					set = function(_,v)
+						local _,_,classid = UnitClass("player")
+						if v == classid then
+							LookingForGroup_Options.db.profile.addon_meeting_stone_class = nil
+						else
+							LookingForGroup_Options.db.profile.addon_meeting_stone_class = v
+						end
+					end,
+					get = function()
+						return LookingForGroup_Options.db.profile.addon_meeting_stone_class
+					end
+				},
+
 				hack =
 				{
 					name = "Hack",
@@ -485,22 +521,6 @@ LookingForGroup_Options:push("options",{
 						end
 					end,
 					width = "full",
-				},
-				kick =
-				{
-					name = L.Kick,
-					type = "toggle",
-					width = "full",
-					get = function()
-						return LookingForGroup.db.profile.wq_kick
-					end,
-					set = function(_,val)
-						if val then
-							LookingForGroup.db.profile.wq_kick = true
-						else
-							LookingForGroup.db.profile.wq_kick = nil
-						end
-					end
 				},
 				pve =
 				{
@@ -661,79 +681,6 @@ LookingForGroup_Options:push("options",{
 							st.width = val
 						end
 					end,
-				},
-			}
-		},
-		kick =
-		{
-			name = L.Kick,
-			desc = "LookingForGroup_Kicker",
-			type = "group",
-			args =
-			{
-				wq =
-				{
-					name = TRACKER_HEADER_WORLD_QUESTS,
-					type = "toggle",
-					get = function()
-						return LookingForGroup.db.profile.wq_kick
-					end,
-					set = function(_,val)
-						if val then
-							LookingForGroup.db.profile.wq_kick = true
-						else
-							LookingForGroup.db.profile.wq_kick = nil
-						end
-					end
-				},
-				lfr =
-				{
-					name = RAID_FINDER,
-					desc = CHAT_KICK.." DPS <= 600000",
-					type = "toggle",
-					get = function()
-						return not LookingForGroup.db.profile.lfr_kick
-					end,
-					set = function(_,val)
-						if val then
-							LookingForGroup.db.profile.lfr_kick = nil
-						else
-							LookingForGroup.db.profile.lfr_kick = true
-						end
-					end
-				},
-				pug =
-				{
-					name = L.options_pug,
-					type = "toggle",
-					get = function()
-						return LookingForGroup.db.profile.pug_kick
-					end,
-					set = function(_,val)
-						if not val then
-							LookingForGroup.db.profile.pug_kick = nil
-						end
-					end
-				},
-				pugdps =
-				{
-					name = L.options_pug,
-					desc = L.options_pug_dps,
-					type = "input",
-					pattern = "^[0-9]*$",
-					get = function()
-						local pk = LookingForGroup.db.profile.pug_kick
-						if pk then
-							return tostring(pk)
-						end
-					end,
-					set = function(_,v)
-						if v=="" then
-							LookingForGroup.db.profile.pug_kick = nil
-						else
-							LookingForGroup.db.profile.pug_kick = tonumber(v)
-						end
-					end
 				},
 			}
 		},

@@ -407,7 +407,6 @@ do_search=function()
 	if atvs and next(atvs) then
 		if ctg == 2 then
 			if 3 < #atvs then
-				profile.find_a_group_2xfilters = true
 				wipe(matches)
 				searchTerm.matches = matches
 			else
@@ -415,7 +414,6 @@ do_search=function()
 			end
 		else
 			if 1 < #atvs then
-				profile.find_a_group_2xfilters = true
 				wipe(matches)
 				searchTerm.matches = matches
 			else
@@ -437,12 +435,12 @@ do_search=function()
 	end
 	local filter = profile.find_a_group_filter
 	if filter then
-		if 3 < #filter then
+--[[		if 3 < #filter then
 			profile.find_a_group_2xfilters = true
-		else
+		else]]
 			filterTerm.matches = profile.find_a_group_filter
 			terms[2] = filterTerm
-		end
+--		end
 	end
 	if profile.find_a_group_mythic then
 		terms[#terms+1]={matches={GetRealmName()}}
@@ -1257,9 +1255,9 @@ LookingForGroup_Options:push("find",{
 									end
 									local dt
 									if profile.addon_meeting_stone_hack then
-										dt = table_concat({details,"(^1^Z^T^N1^SLookingForGroup^t^N",profile.addon_meeting_stone_mode or 1,"^N",profile.addon_meeting_stone_loot or 1,"^T^t^N",ilvl,"^T^t^T^t^N",max_player_level,"^N",max_player_level,req,"^Z^S",player,'-',realm,"^Z^S",t,"^Z^^)"})
+										dt = table_concat{details,"(^1^Z^T^N1^SLookingForGroup^t^N",profile.addon_meeting_stone_mode or 1,"^N",profile.addon_meeting_stone_loot or 1,"^T^t^N",ilvl,"^T^t^T^t^N",max_player_level,"^N",max_player_level,req,"^Z^S",player,'-',realm,"^Z^S",t,"^Z^^)"}
 									else
-										dt = table_concat({details,"(^1^Z^SLookingForGroup^N",profile.addon_meeting_stone_mode or 1,"^N",profile.addon_meeting_stone_loot or 1,"^N",select(3,UnitClass("player")),"^N",ilvl,"^N2147483647^",LookingForGroup_Options.ms_rating(activityID,profile),"^N",max_player_level,"^N",max_player_level,req,"^Z^S",player,'-',realm,"^Z^S",t,"^Z^^)"})
+										dt = table_concat{details,"(^1^Z^SLookingForGroup^N",profile.addon_meeting_stone_mode or 1,"^N",profile.addon_meeting_stone_loot or 1,"^N",profile.addon_meeting_stone_class or select(3,UnitClass("player")),"^N",ilvl,"^N2147483647^",LookingForGroup_Options.ms_rating(activityID,profile),"^N",max_player_level,"^N",max_player_level,req,"^Z^S",player,'-',realm,"^Z^S",t,"^Z^^)"}
 									end
 									funcListing(activityID,
 											title,

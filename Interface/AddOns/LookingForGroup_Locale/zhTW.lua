@@ -4,6 +4,10 @@ L["Armory"] = "英雄榜"
 --Translation missing 
 -- L["Auto"] = ""
 --Translation missing 
+-- L["auto_report"] = ""
+--Translation missing 
+-- L["auto_report_desc"] = ""
+--Translation missing 
 -- L["background_search"] = ""
 --Translation missing 
 -- L["cr_realm_rand_hop"] = ""
@@ -34,8 +38,6 @@ L["Cross Realm"] = "跨服"
 -- L["find_recommended_desc"] = ""
 --Translation missing 
 -- L["Keywords"] = ""
---Translation missing 
--- L["Kick"] = ""
 L["Maximum length"] = "最大長度"
 --Translation missing 
 -- L["options"] = ""
@@ -45,10 +47,6 @@ L["Maximum length"] = "最大長度"
 -- L["options_advanced_hardware"] = ""
 --Translation missing 
 -- L["options_auto_pve_desc"] = ""
---Translation missing 
--- L["options_pug"] = ""
---Translation missing 
--- L["options_pug_dps"] = ""
 --Translation missing 
 -- L["options_window"] = ""
 --Translation missing 

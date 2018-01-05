@@ -151,6 +151,11 @@ function LookingForGroup_SF:OnEnable()
 			ChatFrame_AddMessageEventFilter("CHAT_MSG_GUILD",guild_filter)
 		end
 	end
+	api("CHAT_MSG_SYSTEM",function(_,_,msg)
+		if msg == COMPLAINT_ADDED then
+			return true
+		end
+	end)
 	api("CHAT_MSG_WHISPER",msg_filter)
 	api("CHAT_MSG_SAY",msg_bubble_filter)
 	api("CHAT_MSG_DND",msg_bubble_filter)

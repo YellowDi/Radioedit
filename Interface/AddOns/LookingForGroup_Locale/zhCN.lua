@@ -2,6 +2,8 @@ local L = LibStub("AceLocale-3.0"):NewLocale("LookingForGroup", "zhCN")
 if not L then return end
 L["Armory"] = "英雄榜"
 L["Auto"] = "自动"
+L["auto_report"] = "自动举报"
+L["auto_report_desc"] = "自动举报游戏LFG系统里的垃圾信息队伍"
 L["background_search"] = "后台搜索"
 L["cr_realm_rand_hop"] = "随机跨服"
 L["cr_realm_rand_hop_desc"] = [=[跨到一个随机的服务器。Ctrl/Shift+右击小地图图标同样会干同样的事。
@@ -23,7 +25,6 @@ L["find_recommended_desc"] = [=[正常勾 = 只显示推荐的活动
 暗勾 = 显示其它活动
 无勾 = 显示全部活动]=]
 L["Keywords"] = "关键字"
-L["Kick"] = "踢"
 L["Maximum length"] = "最大长度"
 L["options"] = "子插件开关"
 L["options_addons"] = "用别的预创建队伍插件的格式创建队伍"
@@ -32,8 +33,6 @@ L["options_auto_pve_desc"] = [=[正常勾 = 只加入含有关键字'PVE'的队�
 暗勾 = 只加入含有关键字'PVP'的队伍
 无勾 = 关闭
  |c00ff0000警告! 该选项无法保证有效! 即使该选项打开，插件也会在你不知情的情况下，完全没有通知就组你到PVP服务器|r]=]
-L["options_pug"] = "野团"
-L["options_pug_dps"] = "输入野团所需的最小DPS"
 L["options_window"] = "窗口大小"
 L["Relist"] = "重新列出队伍"
 L["Results"] = "结果"

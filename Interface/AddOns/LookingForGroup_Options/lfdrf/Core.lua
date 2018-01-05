@@ -12,6 +12,7 @@ local selected_raids = {}
 local dungeons_tb = {}
 local lfr_tb = {}
 local selected_lfr_tb = {}
+local all_dg
 
 LookingForGroup_Options:push("lfdrf",
 {
@@ -67,7 +68,7 @@ LookingForGroup_Options:push("lfdrf",
 				end
 			end
 		},
-		lfr =
+		rf =
 		{
 			type = "multiselect",
 			name = RAID_FINDER,
@@ -78,7 +79,22 @@ LookingForGroup_Options:push("lfdrf",
 				for i = 1,GetNumRFDungeons() do
 					local id = GetRFDungeonInfo(i)
 					if IsLFGDungeonJoinable(id) then
-						lfr_tb[#lfr_tb + 1] = i
+						if all_dg then
+							lfr_tb[#lfr_tb + 1] = i
+						else
+							local numEncounters = GetLFGDungeonNumEncounters(id)
+							local j = 1
+							while j <= numEncounters do
+								local _, _, isKilled = GetLFGDungeonEncounterInfo(id, j)
+								if not isKilled then
+									break
+								end								
+								j = j + 1
+							end
+							if j <= numEncounters then
+								lfr_tb[#lfr_tb + 1] = i
+							end
+						end
 					end
 				end
 				return lfr_tb
@@ -108,31 +124,7 @@ LookingForGroup_Options:push("lfdrf",
 				end
 			end
 		},
-		lfr_multiple =
-		{
-			type = "execute",
-			name = MULTIPLE_DUNGEONS,
-			order = get_order(),
-			func = function()
-				local b
-				ClearAllLFGDungeons(3)
-				for k,v in pairs(selected_lfr_tb) do
-					if v then
-						if GetLFGMode(3,k) then
-							LeaveSingleLFG(3,k)
-						else
-							SetLFGDungeon(3,k)
-							b = true
-						end
-					end
-				end
-				if b then
-					JoinLFG(3)
-				end
-				wipe(selected_lfr_tb)
-			end
-		},
-		lfr_all =
+		rf_all =
 		{
 			type = "execute",
 			name = ALL,
@@ -144,11 +136,13 @@ LookingForGroup_Options:push("lfdrf",
 				end
 				for i=1,#lfr_tb do
 					local id = GetRFDungeonInfo(lfr_tb[i])
-					selected_lfr_tb[id] = true
+					if not GetLFGMode(3,id) then
+						selected_lfr_tb[id] = true
+					end
 				end
 			end
 		},
-		lfr_leaveall =
+		rf_leaveall =
 		{
 			type = "execute",
 			name = LEAVE_ALL_QUEUES,
@@ -163,7 +157,7 @@ LookingForGroup_Options:push("lfdrf",
 				wipe(selected_lfr_tb)
 			end
 		},
-		lfr_cancel =
+		rf_cancel =
 		{
 			type = "execute",
 			name = CANCEL,
@@ -171,6 +165,22 @@ LookingForGroup_Options:push("lfdrf",
 			func = function()
 				wipe(selected_lfr_tb)			
 			end
+		},
+		rf_sall =
+		{
+			type = "toggle",
+			name = ALL,
+			order = get_order(),
+			set = function(_,val)
+				if val then
+					all_dg = true
+				else
+					all_dg = nil
+				end
+			end,
+			get = function()
+				return all_dg
+			end,
 		},
 	}
 })

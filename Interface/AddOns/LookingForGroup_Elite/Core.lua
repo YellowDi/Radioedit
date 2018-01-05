@@ -36,7 +36,7 @@ function LookingForGroup_Elite:PLAYER_TARGET_CHANGED()
 						LookingForGroup.Search(function()
 							LookingForGroup_Auto.apply(create)
 						end,6,{{matches = {"#NPCID"..npc_id,name}}},0,0)
-					end,"elite",guid)
+					end,nil,"elite",guid)
 					self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 				end
 			end

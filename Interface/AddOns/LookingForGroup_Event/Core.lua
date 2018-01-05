@@ -11,7 +11,6 @@ end
 function LookingForGroup_Event:OnEnable()
 	if LookingForGroup.db.profile.enable_event then
 		self:RegisterEvent("LFG_LIST_APPLICANT_LIST_UPDATED")
-		self:RegisterEvent("LOADING_SCREEN_DISABLED")
 		self:RegisterEvent("ADDON_ACTION_BLOCKED")
 		self:RegisterEvent("LFG_LIST_ACTIVE_ENTRY_UPDATE")
 		self:RegisterEvent("LFG_LIST_APPLICANT_UPDATED")
@@ -52,33 +51,6 @@ function LookingForGroup_Event:ADDON_ACTION_BLOCKED(info,addon,method)
 	if addon == "LookingForGroup" and method == "Search()" then
 		LookingForGroup.db.profile.hardware = true
 		LookingForGroup:Print(MODE,HARDWARE)
-	end
-end
-
-function LookingForGroup_Event:LOADING_SCREEN_DISABLED()
-	local enable
-	local name, instanceType, difficulty, difficultyName, maxPlayers, playerDifficulty, isDynamicInstance, mapID, instanceGroupSize = GetInstanceInfo()
-
-	local profile = LookingForGroup.db.profile
-	local lfrk = not profile.lfr_kick
-	local pugk = profile.pug_kick
-	if lfrk and difficulty==17 then
-		enable = true
-	end
-	if pugk and (difficulty==14 or difficulty==15) then
-		enable = true
-	end
-	local status,LookingForGroup_Kicker = pcall(AceAddon.GetAddon,AceAddon,"LookingForGroup_Kicker")
-	if enable then
-		if status then
-			LookingForGroup_Kicker:OnEnable()
-		else
-			LookingForGroup_Kicker = LookingForGroup.GetAddon("LookingForGroup_Kicker")
-		end
-	else
-		if status then
-			LookingForGroup_Kicker:OnDisable()
-		end
 	end
 end
 

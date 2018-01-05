@@ -110,6 +110,7 @@ end
 local filter_realm = LookingForGroup.FilterRealm
 local issubstr = LookingForGroup_Options.issubstr
 local C_LFGList_GetActivityInfo = C_LFGList.GetActivityInfo
+local C_LFGList_ReportSearchResult = C_LFGList.ReportSearchResult
 
 function LookingForGroup_Options.FilterSearchResult(groupid)
 	local id, activityID, name, comment, voiceChat, iLvl, honorLevel,
@@ -136,22 +137,32 @@ function LookingForGroup_Options.FilterSearchResult(groupid)
 			return false
 		end
 	end
-	if options_profile.spam_filter_dk and numMembers < C_LFGList.GetSearchResultMemberCounts(id).DEATHKNIGHT*2.5 then
-		return false
+	if options_profile.spam_filter_dk and 8 < C_LFGList.GetSearchResultMemberCounts(id).DEATHKNIGHT then
+		return false,"lfglistname"
 	end
 	local profile = LookingForGroup.db.profile
 	local filters = profile.spam_filter_keywords
 	local maxlength = profile.spam_filter_maxlength
-	if maxlength and ( maxlength < name:len() or maxlength < comment:len() or maxlength < voiceChat:len() ) then
-		return false
+	if maxlength then
+		if maxlength < name:len() then
+			return false,"lfglistname"
+		elseif maxlength < comment:len() then
+			return false,"lfglistcomment"
+		elseif maxlength < voiceChat:len() then	
+			return false,"lfglistvoicechat"
+		end		
 	end
 	name = name:gsub(" ",""):lower()
 	comment = comment:gsub(" ",""):lower()
 	voiceChat = voiceChat:gsub(" ",""):lower()
 	for i=1,#filters do
 		local ele = filters[i]
-		if string_find(name,ele) or string_find(comment,ele) or string_find(voiceChat,ele) then
-			return false
+		if string_find(name,ele) then
+			return false,"lfglistname"
+		elseif string_find(comment,ele) then
+			return false,"lfglistcomment"
+		elseif string_find(voiceChat,ele) then
+			return false,"lfglistvoicechat"
 		end
 	end
 	return true
@@ -165,12 +176,16 @@ function LookingForGroup_Options.GetSearchResults()
 	local counts,groupsIDs = C_LFGList.GetSearchResults()
 	wipe(results_tb)
 	local fsr = LookingForGroup_Options.FilterSearchResult
-	local gold = LookingForGroup_Options.db.profile.find_a_group_gold
+	local profile = LookingForGroup_Options.db.profile
+	local gold = profile.find_a_group_gold
+	local auto_report = not profile.spam_filter_auto_report
 	for i=1,#groupsIDs do
 		local ele = groupsIDs[i]
-		local r = fsr(ele)
+		local r,rpt = fsr(ele)
 		if (r ~= nil) and ((r and not gold) or (not r and gold)) then
 			results_tb[#results_tb+1]=ele
+		elseif auto_report and not gold and rpt then
+			C_LFGList_ReportSearchResult(ele,rpt)
 		end
 	end
 	LookingForGroup_Options.SortSearchResults(results_tb)

@@ -2,55 +2,44 @@ local L = LibStub("AceLocale-3.0"):NewLocale("LookingForGroup", "ruRU")
 if not L then return end
 L["Armory"] = "Оружейная"
 L["Auto"] = "Авто"
+--Translation missing 
+-- L["auto_report"] = ""
+--Translation missing 
+-- L["auto_report_desc"] = ""
 L["background_search"] = "Фоновый поиск"
---Translation missing 
--- L["cr_realm_rand_hop"] = ""
---Translation missing 
--- L["cr_realm_rand_hop_desc"] = ""
+L["cr_realm_rand_hop"] = "Случайный прыжок"
+L["cr_realm_rand_hop_desc"] = [=[Прыжок в случайный мир. Ctrl/Shift + ПКМ на иконку на мини-карте также делает это. 
+Макрос: /lfg cr rand_hop]=]
 L["cr_realm_scan"] = "Сканировать свой серевер"
 L["cr_realm_scan_desc"] = "Сканировать Ваш текущий сервер. Щелчок правой кнопкой мыши по значку у миникарты чтобы сканировать."
 L["cr_scanningyourcurrentrealm"] = "Сканировать Ваш текущий сервер"
 L["Cross Realm"] = "Кросс-сервер"
---Translation missing 
--- L["find_f_advanced_2xfilters"] = ""
---Translation missing 
--- L["find_f_advanced_class"] = ""
---Translation missing 
--- L["find_f_advanced_complete"] = ""
---Translation missing 
--- L["find_f_advanced_gold"] = ""
---Translation missing 
--- L["find_f_advanced_language"] = ""
---Translation missing 
--- L["find_f_advanced_role"] = ""
---Translation missing 
--- L["find_f_encounters"] = ""
---Translation missing 
--- L["find_recommended_desc"] = ""
---Translation missing 
--- L["Keywords"] = ""
---Translation missing 
--- L["Kick"] = ""
---Translation missing 
--- L["Maximum length"] = ""
---Translation missing 
--- L["options"] = ""
---Translation missing 
--- L["options_addons"] = ""
---Translation missing 
--- L["options_advanced_hardware"] = ""
---Translation missing 
--- L["options_auto_pve_desc"] = ""
---Translation missing 
--- L["options_pug"] = ""
---Translation missing 
--- L["options_pug_dps"] = ""
+L["find_f_advanced_2xfilters"] = "Отфильтруйте ключевые слова после поиска. При необходимости этот переключатель будет автоматически выбран."
+L["find_f_advanced_class"] = "В группе доступна еще одна роль"
+L["find_f_advanced_complete"] = "Группа почти собрана"
+L["find_f_advanced_gold"] = "Поиск групп WTS/RMT"
+L["find_f_advanced_language"] = "Отображаются только определенные языки. Вы можете выбрать языки в [%s-%s]."
+L["find_f_advanced_role"] = "Согласно вашей роли. Например, если вы целитель, вы не увидите группы подземелий с целителем в результатах поиска."
+L["find_f_encounters"] = [=[Нормальное нажатие = Этот босс должен быть побежден
+Темное нажатие = Этот босс не должен быть побежден
+Нет нажатия = Не волнует, побежден ли этот босс или нет.]=]
+L["find_recommended_desc"] = [=[Нормальное нажатие = Показать только рекомендуемые действия
+Темное нажатие = Показать другие действия
+Нет нажатия = Показать все действия]=]
+L["Keywords"] = "Ключевые слова"
+L["Maximum length"] = "Максимальная длина"
+L["options"] = "Переключение суб-аддонов"
+L["options_addons"] = "Создание групп в формате других аддонов LFG."
+L["options_advanced_hardware"] = "Запустите LFG в защищенном режиме. При необходимости автоматически включается."
+L["options_auto_pve_desc"] = [=[Нормальное нажатие = Только объединение групп с ключевым словом 'PVE'
+Темное нажатие = Только объединяйте группы с ключевым словом 'PVP'
+Нет нажатия = Отключить
+|c00ff0000Внимание! Этот вариант не гарантирует вам безопасность! Он будет группировать вас с серверами pvp, не сообщая вам, куда перемещает вас, даже если этот параметр используется.|r]=]
 L["options_window"] = "Размер окна"
---Translation missing 
--- L["Relist"] = ""
-L["Results"] = "Результаты"
---Translation missing 
--- L["rf_mode_desc"] = ""
---Translation missing 
--- L["warning"] = ""
+L["Relist"] = "Повторно выставленный"
+L["Results"] = "Результат"
+L["rf_mode_desc"] = [=[Нормальное нажатие = Черный список серверов
+Темное нажатие = Белый список серверов
+Нет нажатия = Отключить]=]
+L["warning"] = "Эта информация генерируется сторонними аддонами и может быть легко подделана. Нет оснований доверять ей."
 
