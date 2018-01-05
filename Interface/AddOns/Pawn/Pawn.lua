@@ -1,13 +1,13 @@
 ﻿-- Pawn by Vger-Azjol-Nerub
 -- www.vgermods.com
--- © 2006-2017 Green Eclipse.  This mod is released under the Creative Commons Attribution-NonCommercial-NoDerivs 3.0 license.
+-- © 2006-2018 Green Eclipse.  This mod is released under the Creative Commons Attribution-NonCommercial-NoDerivs 3.0 license.
 -- See Readme.htm for more information.
 
 -- 
 -- Main non-UI code
 ------------------------------------------------------------
 
-PawnVersion = 2.0214
+PawnVersion = 2.0217
 
 -- Pawn requires this version of VgerCore:
 local PawnVgerCoreVersionRequired = 1.09
@@ -3881,6 +3881,7 @@ function PawnAddRelicUpgradesToTooltip(TooltipName, UpgradeInfo)
 			if PawnCommon.AlignNumbersRight then
 				local RightLine = _G[TooltipName .. "TextRight" .. i]
 				RightLine:SetText(format(PawnLocal.TooltipRelicUpgradeAnnotation, "", ArtifactUpgradeInfo.ItemLevelIncrease, ""))
+				RightLine:Show()
 			else
 				LeftLine:SetText(format(PawnLocal.TooltipRelicUpgradeAnnotation, tostring(ArtifactName) .. ":", ArtifactUpgradeInfo.ItemLevelIncrease, ""))
 			end
@@ -4721,6 +4722,10 @@ function PawnAddPluginScale(ProviderInternalName, ScaleInternalName, LocalizedNa
 	NewScale.LocalizedName = LocalizedName
 	NewScale.Header = PawnScaleProviders[ProviderInternalName].Name
 	NewScale.NormalizationFactor = NormalizationFactor
+	-- If the plugin supplied any stat values of 0, remove them now.
+	for StatName, Value in pairs(Values) do
+		if Value == 0 then Values[StatName] = nil end
+	end
 	NewScale.Values = Values
 	if not NewScale.PerCharacterOptions then NewScale.PerCharacterOptions = {} end
 	if not NewScale.PerCharacterOptions[PawnPlayerFullName] then NewScale.PerCharacterOptions[PawnPlayerFullName] = {} end
