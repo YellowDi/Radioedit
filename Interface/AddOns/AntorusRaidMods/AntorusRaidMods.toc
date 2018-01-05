@@ -1,0 +1,9 @@
+﻿## Interface: 70300
+## Title: |cffEE3A8CAntorus|r Raid Mods
+## Version: 1.21
+## Author: Paopao001
+## SavedVariables: ARM_DB
+## SavedVariablesPerCharacter: ARM_CDB
+
+libs\load_libs.xml
+load.xml
