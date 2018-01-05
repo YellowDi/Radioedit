@@ -4,6 +4,31 @@ local _, L = ...
 ----------------------------------
 L.compat = {
 ----------------------------------
+	['ConsolePort'] = function(self)
+		L.ToggleIgnoreFrame(ConsolePortMouseHandle, true)
+		L.ToggleIgnoreFrame(ConsolePortUIHandle.HintBar, true)
+
+		local WindowMixin = {}
+		function WindowMixin:OnShow()
+			L.config:SetParent(self)
+			L.config:ClearAllPoints()
+			L.config:SetPoint('TOPLEFT', 16, -16)
+			L.config:SetPoint('BOTTOMRIGHT', -16, 16)
+			L.config.logo:Hide()
+			L.config:Show()
+		end
+
+		function WindowMixin:OnHide()
+			L.config.logo:Show()
+		end
+
+		ConsolePortConfig:AddPanel({
+			name = _, 
+			header = _, 
+			mixin = WindowMixin,
+		})
+	end;
+----------------------------------
 	['Blitz'] = function(self)
 		local button, text = Blitz, BlitzText
 		if button and text then
@@ -16,10 +41,11 @@ L.compat = {
 			text:SetPoint('RIGHT', button, 'LEFT', 0, 1)
 			text:SetJustifyH('RIGHT')
 		end
-	end,
+	end;
+----------------------------------
 	['NomiCakes'] = function(self)
 		NomiCakesGossipButtonName = _ .. 'TitleButton'
-	end,
+	end;
 ----------------------------------
 	['!KalielsTracker'] = function(self)
 		local KTF = _G['!KalielsTrackerFrame']
@@ -38,18 +64,19 @@ L.compat = {
 			end
 			getmetatable(self).__index.SetAlpha(self, ...)
 		end
-	end,
+	end;
 ----------------------------------
 	['ls_Toasts'] = function(self)
 		local type = _G.type
+		-- hacky workaround to grab the toast frames
 		hooksecurefunc('CreateFrame', function(_, name)
 			if type(name) == 'string' and name:match('LSToast') then
 				L.ToggleIgnoreFrame(_G[name], true)
 			end
 		end)
-	end,
+	end;
 ----------------------------------
-	['DialogKey'] = function(self) -- because dummys can't figure out this is already baked in
+	['DialogKey'] = function(self) -- because dummies can't figure out this is already baked in
 		L.Set('enablenumbers', true)
-	end,
+	end;
 }

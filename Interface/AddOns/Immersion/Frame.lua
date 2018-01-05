@@ -115,6 +115,7 @@ frame.ADDON_LOADED = function(self, name)
 		logo:SetSize(64, 64)
 		logo:SetPoint('TOPRIGHT', 8, 24)
 		logo:SetBackdrop({bgFile = ('Interface\\AddOns\\%s\\Textures\\Logo'):format(_)})
+		L.config.logo = logo
 
 		-- Run functions for compatibility with other addons on load.
 		-- If the addon in question is already loaded, run the function and remove from list.
@@ -222,12 +223,14 @@ hooksecurefunc(text, 'SetNext', function(self, text)
 				self:SetVertexColor(1, 0.5, 0)
 			else
 				self:SetVertexColor(1, 1, 1)
-				model:SetRemainingTime(GetTime(), ( self.delays and self.delays[1]))
-				if model.asking and not self:IsSequence() then
-					model:Ask()
-				else
-					local yell = model.yelling and random(2) == 2
-					if yell then model:Yell() else model:Talk() end
+				if not L('disableanisequence') then
+					model:SetRemainingTime(GetTime(), ( self.delays and self.delays[1]))
+					if model.asking and not self:IsSequence() then
+						model:Ask()
+					else
+						local yell = model.yelling and random(2) == 2
+						if yell then model:Yell() else model:Talk() end
+					end
 				end
 			end
 		elseif model:IsPlayer() then
@@ -241,6 +244,14 @@ hooksecurefunc(text, 'SetNext', function(self, text)
 			counter:Show()
 			counter:SetText(self:GetProgress())
 		end
+
+		if self:GetNumRemaining() <= 1 then
+			frame:AddHint('SQUARE', RESET)
+		else
+			frame:AddHint('SQUARE', NEXT)
+		end
+	else
+		frame:RemoveHint('SQUARE')
 	end
 
 	if self:IsVisible() then
@@ -300,7 +311,7 @@ function L.ToggleIgnoreFrame(frame, ignore)
 	ignoreFrames[frame] = ignore
 end
 
-local function GetUIFrames()
+local function GetFadeFrames()
 	local frames = {}
 	for i, child in pairs({UIParent:GetChildren()}) do
 		if not child:IsForbidden() and not ignoreFrames[child] then
@@ -329,7 +340,7 @@ function frame:FadeIn(fadeTime, playAnimations, ignoreFrameFade)
 		end
 	end
 	if not ignoreFrameFade and L('hideui') and not self.fadeFrames then
-		local frames = GetUIFrames()
+		local frames = GetFadeFrames()
 		for frame in pairs(frames) do
 			L.UIFrameFadeOut(frame, fadeTime or 0.2, frame:GetAlpha(), 0, hideFrames[frame] and {
 				finishedFunc = frame.Hide,

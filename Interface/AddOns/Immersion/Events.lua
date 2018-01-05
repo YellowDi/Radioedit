@@ -31,6 +31,8 @@ end
 
 function NPC:QUEST_PROGRESS(...) -- special case, doesn't use QuestInfo
 	self:PlayIntro('QUEST_PROGRESS')
+	self:AddHint('CROSS', CONTINUE)
+	self:ToggleHintState('CROSS', IsQuestCompletable())
 	self:UpdateTalkingHead(GetTitleText(), GetProgressText(), IsQuestCompletable() and 'ActiveQuest' or 'IncompleteQuest')
 	local elements = self.TalkBox.Elements
 	local hasItems = elements:ShowProgress('Stone')
@@ -48,10 +50,11 @@ function NPC:QUEST_COMPLETE(...)
 	self:PlayIntro('QUEST_COMPLETE')
 	self:UpdateTalkingHead(GetTitleText(), GetRewardText(), 'ActiveQuest')
 	self:AddQuestInfo('QUEST_REWARD')
+	self:AddHint('CROSS', COMPLETE_QUEST)
 end
 
 function NPC:QUEST_ACCEPTED(...)
-	if self:IsGossipOnTheFly() then
+	if ( self:IsGossipOnTheFly() and self.lastEvent ~= 'QUEST_PROGRESS' ) then
 		return self:OnEvent('GOSSIP_ONTHEFLY')
 	end
 end
@@ -69,6 +72,7 @@ function NPC:QUEST_DETAIL(...)
 	self:PlayIntro('QUEST_DETAIL')
 	self:UpdateTalkingHead(GetTitleText(), GetQuestText(), 'AvailableQuest')
 	self:AddQuestInfo('QUEST_DETAIL')
+	self:AddHint('CROSS', ACCEPT)
 end
 
 

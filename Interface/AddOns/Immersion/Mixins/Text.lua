@@ -3,9 +3,11 @@ local Timer = CreateFrame('Frame')
 local GetTime = GetTime
 
 -- Borrowed fixes from Storyline :)
-local LINE_FEED_CODE = string.char(10)
-local CARRIAGE_RETURN_CODE = string.char(13)
-local WEIRD_LINE_BREAK = LINE_FEED_CODE .. CARRIAGE_RETURN_CODE .. LINE_FEED_CODE
+local LINE_FEED_REPLACE, LINE_BREAK_REPLACE
+do  local LINE_FEED, CARRIAGE_RETURN = string.char(10), string.char(13)
+	LINE_FEED_REPLACE = LINE_FEED .. '+'
+	LINE_BREAK_REPLACE = LINE_FEED .. CARRIAGE_RETURN .. LINE_FEED
+end
 
 local DELAY_DIVISOR -- set later as baseline divisor for (text length / time).
 local DELAY_PADDING = 2 -- static padding, feels more natural with a pause to breathe.
@@ -21,17 +23,25 @@ function Text:SetText(text)
 	self:StopTexts()
 	self.storedText = text
 	if text then
-		local strings, delays = {}, {}
-		local timeToFinish = 0
-		text = text:gsub(LINE_FEED_CODE .. '+', '\n'):gsub(WEIRD_LINE_BREAK, '\n')
-		for _, paragraph in ipairs({strsplit('\n', text)}) do
-			timeToFinish = timeToFinish + self:AddString(paragraph, strings, delays)
-		end
+		local timeToFinish, strings, delays = self:GenerateSpeech(text)
 		self.numTexts = #strings
 		self.timeToFinish = timeToFinish
 		self.timeStarted = GetTime()
 		self:QueueTexts(strings, delays)
 	end
+end
+
+function Text:ReplaceLinebreaks(text)
+	return text:gsub(LINE_FEED_REPLACE, '\n'):gsub(LINE_BREAK_REPLACE, '\n')
+end
+
+function Text:GenerateSpeech(text)
+	text = self:ReplaceLinebreaks(text)
+	local timeToFinish, strings, delays = 0, {}, {}
+	for _, paragraph in ipairs({strsplit('\n', text)}) do
+		timeToFinish = timeToFinish + self:AddString(paragraph, strings, delays)
+	end
+	return timeToFinish, strings, delays
 end
 
 function Text:CalculateDelay(length)
@@ -116,7 +126,7 @@ end
 function Text:GetCurrentProgress()
 	local delayCounter = self.delays and self.delays[1]
 	local fullDelay = self.currentDelay
-	if delayCounter and fullDelay then
+	if delayCounter and fullDelay and fullDelay > 0 then
 		return (1 - delayCounter / fullDelay)
 	end
 end
@@ -126,8 +136,6 @@ function Text:GetNumTexts() return self.numTexts or 0 end
 function Text:OnFinished()
 	self.strings = nil
 	self.delays = nil
---	self.timeToFinish = nil
---	self.timeStarted = nil
 end
 
 function Text:ForceNext()
@@ -247,11 +255,10 @@ function Timer:OnUpdate(elapsed)
 				if text.strings[1] then
 					text:SetNext(text.strings[1], text.delays[1])
 				else
-					self:OnTextFinished(text)
+					text:OnFinished()
 				end
 			end
 		else
-			text:OnFinished()
 			self:OnTextFinished(text)
 		end
 	end

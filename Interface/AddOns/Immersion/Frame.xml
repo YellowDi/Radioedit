@@ -310,6 +310,7 @@
 					<OnLoad>
 						self.Choices.Columns = {};
 						self.Extras.Columns = {};
+						self.Active = {};
 
 						self.parent = self:GetParent();
 						self.ignoreRegions = true;
@@ -329,7 +330,7 @@
 						self.tooltipFramePool = CreateFramePool("GameTooltip", self, "ImmersionItemTooltipTemplate", function(self, obj) obj:Hide(); end);
 						self.tooltipFramePool.creationFunc = function(framePool)
 							local index = #framePool.inactiveObjects + framePool.numActiveObjects + 1
-							return CreateFrame(framePool.frameType, "$parent"..framePool.frameType..index, framePool.parent, framePool.frameTemplate);
+							return CreateFrame(framePool.frameType, "Immersion"..framePool.frameType..index, framePool.parent, framePool.frameTemplate);
 						end;
 					</OnLoad>
 					<OnShow>
@@ -339,6 +340,7 @@
 					<OnHide>
 						self.parent.TalkBox:Undim();
 						self.tooltipFramePool:ReleaseAll();
+						wipe(self.Active);
 
 						-- Reset columns
 						for _, column in pairs(self.Choices.Columns) do

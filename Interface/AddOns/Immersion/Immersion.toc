@@ -1,9 +1,10 @@
 ## Interface: 70300
 ## Title: Immersion
 ## Notes: Immersive replacement for quest & gossip
-## Version: 0.5.1
+## Version: 0.5.3
 ## Author: Sebastian Lindfors
 ## SavedVariables: ImmersionSetup
+## OptionalDeps: ConsolePort
 
 # Locale
 Locale\Locale.xml
@@ -19,6 +20,9 @@ Libs\Animation.lua
 Extras.lua
 Config.lua
 
+# Compatibility scripts
+Compat.lua
+
 # Mixins
 Mixins\Scaler.lua
 Mixins\Titles.lua
@@ -28,9 +32,6 @@ Mixins\Button.lua
 Mixins\Tooltip.lua
 Mixins\Elements.lua
 
-# Compatibility scripts
-Compat.lua
-
 # Display layer
 Frame.xml
 Frame.lua
@@ -38,3 +39,4 @@ Frame.lua
 # Logic layer
 Logic.lua
 Events.lua
+Controller.lua

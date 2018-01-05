@@ -178,6 +178,7 @@ L.options = {
 							order = 6,
 							get = L.GetFromSV,
 							set = function(_, val) L.cfg.flipshortcuts = val end,
+							disabled = function() return ConsolePort end,
 						},
 						immersivemode = {
 							type = 'toggle',
@@ -186,6 +187,7 @@ L.options = {
 							order = 7,
 							get = L.GetFromSV,
 							set = function(_, val) L.cfg.immersivemode = val end,
+							disabled = function() return ConsolePort end,
 						},
 					},
 				},
@@ -254,6 +256,7 @@ L.options = {
 			type = 'group',
 			name = KEY_BINDINGS,
 			order = 2,
+			disabled = function() return ConsolePort end,
 			args = {
 				header = {
 					type = 'header',
@@ -383,6 +386,13 @@ L.options = {
 							get = L.GetFromSV,
 							set = function(_, val) L.cfg.disableglowani = val end,
 						},
+						boxlock = {
+							type = 'toggle',
+							name = LOCK,
+							get = L.GetFromSV,
+							set = function(_, val) L.cfg.boxlock = val end,
+							order = 2,
+						},
 						disableportrait = {
 							type = 'toggle',
 							name = L['Disable portrait border'],
@@ -394,10 +404,28 @@ L.options = {
 								L.frame.TalkBox.MainFrame.Model.PortraitBG:SetShown(not val)
 							end,
 						},
+						disableanisequence = {
+							type = 'toggle',
+							name = L['Disable model animations'],
+							order = 5,
+							get = L.GetFromSV,
+							set = function(_, val)
+								L.cfg.disableanisequence = val
+							end
+						},
+						disableboxhighlight = {
+							type = 'toggle',
+							name = L['Disable mouseover highlight'],
+							order = 6,
+							get = L.GetFromSV,
+							set = function(_, val)
+								L.cfg.disableboxhighlight = val
+							end,
+						},
 						resetposition = {
 							type = 'execute',
 							name = RESET_POSITION,
-							order = 4,
+							order = 7,
 							func = function(self)
 								L.Set('boxpoint', L.defaults.boxpoint)
 								L.Set('boxoffsetX', L.defaults.boxoffsetX)
@@ -409,13 +437,6 @@ L.options = {
 								t:ClearAllPoints()
 								t:SetPoint(L('boxpoint'), UIParent, L('boxoffsetX'), L('boxoffsetY'))
 							end,
-						},
-						boxlock = {
-							type = 'toggle',
-							name = LOCK,
-							get = L.GetFromSV,
-							set = function(_, val) L.cfg.boxlock = val end,
-							order = 2,
 						},
 					},
 				},

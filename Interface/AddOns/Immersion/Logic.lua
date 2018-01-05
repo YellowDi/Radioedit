@@ -20,6 +20,10 @@ function NPC:OnEvent(event, ...)
 	return event
 end
 
+function NPC:OnHide()
+	self:ClearImmersionFocus()
+end
+
 ----------------------------------
 -- Content handler (gossip & quest)
 ----------------------------------
@@ -59,8 +63,8 @@ function NPC:IsGossipAvailable()
 end
 
 function NPC:IsQuestAutoAccepted(questStartItemID)
-	-- Annoying concept to handle, but auto-accepted quests need to be treated differently 
-	-- from other quests, and different from eachother depending on the source of the quest. 
+	-- Auto-accepted quests need to be treated differently from other quests,
+	-- and different from eachother depending on the source of the quest. 
 	-- Handling here is prone to cause bugs/weird behaviour, update with caution.
 
 	local questID = GetQuestID()
@@ -118,12 +122,26 @@ function NPC:GetRemainingSpeechTime()
 	return self.TalkBox.TextFrame.Text:GetTimeRemaining()
 end
 
+function NPC:IsSpeechFinished()
+	return self.TalkBox.TextFrame.Text:IsFinished()
+end
+
 function NPC:IsGossipOnTheFly()
-	return -- no idea whether this works properly.
-		L('onthefly') and 
-		( self:GetRemainingSpeechTime() > 0 ) and
-		self.lastEvent ~= 'QUEST_DETAIL' and
-		not self:IsQuestAutoAccepted()
+	if L('onthefly') then
+		-- don't allow on-the-fly when there are
+		-- still gossip/greeting options to choose
+		if	GetNumGossipAvailableQuests() + 
+			GetNumGossipActiveQuests() +
+			GetNumGossipOptions() +
+			GetNumActiveQuests() +
+			GetNumAvailableQuests() > 0 then return end
+		-- confirm the talkbox and remaining dialogue
+		-- is available for playback
+		return	( not self:IsSpeechFinished() ) and 
+				( self:GetRemainingSpeechTime() > 0 ) and
+				( self.lastEvent ~= 'QUEST_DETAIL' ) and
+				( not self:IsQuestAutoAccepted() );
+	end
 end
 
 function NPC:ResetElements(event)
@@ -131,7 +149,7 @@ function NPC:ResetElements(event)
 	-- because it fires on auto-accepted quests.
 	-- E.g. QUEST_DETAIL is immediately followed by
 	-- QUEST_ACCEPTED, closing the elements frame.
-	if event == 'QUEST_ACCEPTED' then return end
+	if ( event == 'QUEST_ACCEPTED' or event == 'GOSSIP_ONTHEFLY' ) then return end
 	
 	self.Inspector:Hide()
 	self.TalkBox.Elements:Reset()
@@ -200,7 +218,7 @@ end
 function NPC:ShowItems()
 	local inspector = self.Inspector
 	local items, hasChoice, hasExtra = inspector.Items
-	local extras, choices = inspector.Extras, inspector.Choices
+	local active, extras, choices = inspector.Active, inspector.Extras, inspector.Choices
 	inspector:Show()
 	for id, item in ipairs(items) do
 		local tooltip = inspector.tooltipFramePool:Acquire()
@@ -211,9 +229,13 @@ function NPC:ShowItems()
 		hasChoice = hasChoice or item.type == 'choice'
 		hasExtra = hasExtra or item.type ~= 'choice'
 
+		-- Set up tooltip
 		tooltip:SetParent(column)
 		tooltip:SetOwner(column, "ANCHOR_NONE")
 		tooltip.owner = owner
+
+		active[id] = tooltip.Button
+		tooltip.Button:SetID(id)
 
 		-- Mixin the tooltip button functions
 		L.Mixin(tooltip.Button, L.TooltipMixin)
@@ -251,7 +273,12 @@ function NPC:ShowItems()
 	else
 		extras.Text:Hide()
 	end
+	------------------------------
+	inspector.Threshold = #active
 	inspector:AdjustToChildren()
+	if inspector.SetFocus then
+		inspector:SetFocus(1)
+	end
 end
 
 function NPC:UpdateItems()
@@ -270,21 +297,34 @@ function NPC:UpdateItems()
 		end
 	end
 	self.hasItems = #items > 0
+
+	if self.hasItems then
+		self:AddHint('CIRCLE', INSPECT)
+	else
+		self:RemoveHint('CIRCLE')
+	end
+
 	return items, #items
 end
 
 ----------------------------------
 -- Animation players
 ----------------------------------
-function NPC:PlayIntro(event, ignoreFrameFade)
+function NPC:PlayIntro(event, freeFloating)
 	local isShown = self:IsVisible()
 	local shouldAnimate = not isShown and not L('disableglowani')
+	if freeFloating then
+		self:ClearImmersionFocus()
+	else
+		self:SetImmersionFocus()
+		self:AddHint('TRIANGLE', GOODBYE)
+	end
 	self:Show()
 	if IsOptionFrameOpen() then
 		self:ForceClose()
 	else
 		self:EnableKeyboard(true)
-		self:FadeIn(nil, shouldAnimate, ignoreFrameFade)
+		self:FadeIn(nil, shouldAnimate, freeFloating)
 		local box = self.TalkBox
 		local x, y = L('boxoffsetX'), L('boxoffsetY')
 		box:ClearAllPoints()
@@ -366,6 +406,9 @@ function NPC:OnKeyDown(button)
 	if button == 'ESCAPE' then
 		self:ForceClose()
 		return
+	elseif self:ParseControllerCommand(button) then
+		self:SetPropagateKeyboardInput(false)
+		return
 	elseif button:match(L('inspect')) and self.hasItems then
 		self:SetPropagateKeyboardInput(false)
 		self:ShowItems()
@@ -391,8 +434,11 @@ function NPC:OnKeyDown(button)
 end
 
 function NPC:OnKeyUp(button)
-	if button:match(L('inspect')) and self.Inspector:IsVisible() then
-		self.Inspector:Hide()
+	local inspector = self.Inspector
+	if ( inspector.ShowFocusedTooltip and ( button:match(L('inspect')) or button:match('SHIFT') ) ) then
+		inspector:ShowFocusedTooltip(false)
+	elseif ( button:match(L('inspect')) and inspector:IsVisible() ) then
+		inspector:Hide()
 	end
 end
 
@@ -445,13 +491,15 @@ end
 
 function TalkBox:OnEnter()
 	-- Highlight the button when it can be clicked
-	if 	L('immersivemode') or ( ( ( self.lastEvent == 'QUEST_COMPLETE' ) and
-		not (self.Elements.itemChoice == 0 and GetNumQuestChoices() > 1) ) or
-		( self.lastEvent == 'QUEST_ACCEPTED' ) or
-		( self.lastEvent == 'QUEST_DETAIL' ) or
-		( self.lastEvent == 'ITEM_TEXT_READY' ) or
-		( self.lastEvent ~= 'GOSSIP_SHOW' and IsQuestCompletable() ) ) then
-		L.UIFrameFadeIn(self.Hilite, 0.15, self.Hilite:GetAlpha(), 1)
+	if not L('disableboxhighlight') then
+		if 	L('immersivemode') or ( ( ( self.lastEvent == 'QUEST_COMPLETE' ) and
+			not (self.Elements.itemChoice == 0 and GetNumQuestChoices() > 1) ) or
+			( self.lastEvent == 'QUEST_ACCEPTED' ) or
+			( self.lastEvent == 'QUEST_DETAIL' ) or
+			( self.lastEvent == 'ITEM_TEXT_READY' ) or
+			( self.lastEvent ~= 'GOSSIP_SHOW' and IsQuestCompletable() ) ) then
+			L.UIFrameFadeIn(self.Hilite, 0.15, self.Hilite:GetAlpha(), 1)
+		end
 	end
 end
 

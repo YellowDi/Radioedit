@@ -39,7 +39,9 @@ function Button:OnMouseWheel(delta)
 end
 
 function Button:OnDragStop()
-	self.Container:StopMoving()
+	if not L('titlelock') then
+		self.Container:StopMoving()
+	end
 end
 
 function Button:OnHide()
