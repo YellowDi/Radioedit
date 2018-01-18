@@ -1,38 +1,10 @@
-tag ef36855661aca72e69d7462da2d959e62a0d52ad v1.8.4
-Author:	Navv <navv1234@gmail.com>
-Date:	Thu Nov 2 21:10:27 2017 +0200
+lightweight tag e7abcb94f0ca50710e21c2b8726588fa6ba9c75a b1.8.7
+Author:	Dave Hendler <sollaires@gmail.com>
+Date:	Wed Jan 17 22:36:45 2018 -0800
 
-v1.8.4
-
-commit d70e6b6f90914ad9ccf442f16a95fda2154bf37f
-Author: Navv <navv1234@gmail.com>
-Date:   Thu Nov 2 21:10:16 2017 +0200
-
-    Update version
-
-commit d465eed53a26c10c89804d9d213bbe6159f37798
+commit e7abcb94f0ca50710e21c2b8726588fa6ba9c75a
 Author: Dave Hendler <sollaires@gmail.com>
-Date:   Wed Nov 1 14:15:37 2017 -0700
+Date:   Wed Jan 17 22:36:45 2018 -0800
 
-    Fix issue with items in BANK_CONTAINER
-    
-    The default BANK_CONTAINER behaves differently than the default
-    backpack, bags-on-character, and bags-in-bank.
-    
-    This change properly finds items in the default bank (not bags-in-bank)
-    and adjusts the results from EquipmentManager_UnpackLocation to work
-    properly with GetContainerItemInfo
-
-commit d465eed53a26c10c89804d9d213bbe6159f37798
-Author: Dave Hendler <sollaires@gmail.com>
-Date:   Wed Nov 1 14:15:37 2017 -0700
-
-    Fix issue with items in BANK_CONTAINER
-    
-    The default BANK_CONTAINER behaves differently than the default
-    backpack, bags-on-character, and bags-in-bank.
-    
-    This change properly finds items in the default bank (not bags-in-bank)
-    and adjusts the results from EquipmentManager_UnpackLocation to work
-    properly with GetContainerItemInfo
+    Add a README, also test out tagging
 
