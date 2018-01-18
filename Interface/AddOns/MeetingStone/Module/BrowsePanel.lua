@@ -1,7 +1,14 @@
-
+﻿
 BuildEnv(...)
 
 BrowsePanel = Addon:NewModule(CreateFrame('Frame'), 'BrowsePanel', 'AceEvent-3.0', 'AceTimer-3.0', 'AceSerializer-3.0', 'AceBucket-3.0')
+
+local filterOnOff = false 
+SlashCmdList["FilterSwitch"] = function(arg) 
+    filterOnOff = not filterOnOff 
+    print(filterOnOff and "Off" or "On") 
+end 
+_G.SLASH_FilterSwitch1 = "/fff"
 
 function BrowsePanel:OnInitialize()
     MainPanel:RegisterPanel(L['查找活动'], self, 5, 100)
@@ -23,7 +30,10 @@ function BrowsePanel:OnInitialize()
             return activity:BaseSortHandler()
         end)
         ActivityList:RegisterFilter(function(activity, ...)
-            return activity:Match(...)
+            return activity:Match(...) and (filterOnOff or 
+    (RAID_PROGRESSION_LIST[activity:GetActivityID()] and activity:GetItemLevel() > 940 or 
+    not RAID_PROGRESSION_LIST[activity:GetActivityID()] and (activity:GetItemLevel() > 920 or activity:GetNumMembers() > 1) and 
+    not (activity:GetItemLevel() < 910 and activity:GetNumMembers() == 4)))
         end)
         ActivityList:InitHeader{
             {
@@ -139,6 +149,18 @@ function BrowsePanel:OnInitialize()
                 key = 'ItemLeave',
                 text = L['要求'],
                 width = 60,
+				-- DONEY MOD begin 
+                sortHandler = function(activity) 
+                    if activity:IsArenaActivity() then 
+                        local pvpRating = activity:GetPvPRating() 
+                        return pvpRating 
+                    else 
+                        local itemLevel = activity:GetItemLevel() 
+                        return itemLevel 
+                    end 
+                end, 
+                -- DONEY MOD end 
+
                 textHandler = function(activity)
                     if activity:IsArenaActivity() then
                         local pvpRating = activity:GetPvPRating()
@@ -287,7 +309,7 @@ function BrowsePanel:OnInitialize()
         ActivityDropdown:SetDefaultValue(0)
         ActivityDropdown:SetDefaultText(L['请选择活动类型'])
         ActivityDropdown:SetCallback('OnSelectChanged', function(_, data, ...)
-            debug(data.value)
+            
             self:StartSet()
             self:UpdateModeDropdown(data.categoryId)
             self:UpdateBossFilter(data.activityId, data.customId)
