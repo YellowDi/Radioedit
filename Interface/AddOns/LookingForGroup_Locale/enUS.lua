@@ -36,6 +36,7 @@ No click = Disable
 |c00ff0000Warning! This option is not guaranteed to work! It'll group you with pvp servers without telling you where you're going even if this option is used.|r]=]
 L["options_window"] = "Window Size"
 L["Relist"] = true
+L["Repeat"] = true
 L["Results"] = true
 L["rf_mode_desc"] = [=[Normal Click = Realms Blacklist
 Dark Click = Realms Whitelist

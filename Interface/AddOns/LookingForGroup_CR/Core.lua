@@ -136,6 +136,9 @@ end
 
 local function hop()
 	local counts,results = C_LFGList.GetSearchResults()
+	if counts == 0 then
+		return
+	end
 	local string_match = string.match
 	local filter_realm = LookingForGroup.FilterRealm
 	local C_LFGList_GetSearchResultInfo = C_LFGList.GetSearchResultInfo
@@ -157,6 +160,9 @@ local function hop()
 					C_LFGList.ApplyToGroup(id,"",tank,healer,true)
 					if profile.cr_leave_party then
 						LookingForGroup_CR:ScheduleTimer(LeaveParty,10)
+					end
+					if profile.cr_scan_realm_after_hop then
+						LookingForGroup_CR:ScheduleTimer(LookingForGroup_CR.do_scan,10)
 					end
 					return
 				end
@@ -186,6 +192,9 @@ local function hop()
 		end
 		if profile.cr_leave_party then
 			LookingForGroup_CR:ScheduleTimer(LeaveParty,10)
+		end
+		if profile.cr_scan_realm_after_hop then
+			LookingForGroup_CR:ScheduleTimer(LookingForGroup_CR.do_scan,10)
 		end
 	end
 end

@@ -31,7 +31,7 @@ local healer_icon = "|TInterface\\LFGFrame\\UI-LFG-ICON-PORTRAITROLES:16:16:0:0:
 local damager_icon = "|TInterface\\LFGFrame\\UI-LFG-ICON-PORTRAITROLES:16:16:0:0:64:64:20:39:22:41|t"
 local name_ct = {}
 
-local function add_role_num(prefix,id,numMembers)
+local function add_role_num(prefix,id,numMembers,leader)
 	wipe(name_ct)
 	table_insert(name_ct,prefix)
 	table_insert(name_ct,"|cff00ffff")
@@ -55,6 +55,14 @@ local function add_role_num(prefix,id,numMembers)
 	table_insert(name_ct,"/")
 	table_insert(name_ct,damagers)
 	table_insert(name_ct,")|r")
+	if leader then
+		local realm = leader:match("-(.*)$")
+		if realm then
+			name_ct[#name_ct+1]="\n"
+			name_ct[#name_ct+1]=FRIENDS_LIST_REALM
+			name_ct[#name_ct+1]=realm
+		end
+	end
 	return table_concat(name_ct)
 end
 
@@ -72,7 +80,7 @@ function LookingForGroup_Core.GetSearchResultName(resultID)
 	local masummary,mdata = string_match(comment,'^(.*)%[LFG:(.*)%]$')
 	if masummary then
 		comment = masummary
-		local val = string_gsub(mdata,"##","\n")
+		local val = string_gsub(mdata,"#-","\n")
 		activityName = table_concat{activityName,"\n",val}
 	end
 	if activityID == 44 and string_find(name,"#AV#") then
@@ -103,17 +111,20 @@ end
 function LookingForGroup_Core.GetSearchResultInviteDialog(resultID)
 	local id, activityID, name, comment, _, _, _,
 			_, _, _, _,
-			_, leaderName, numMembers = C_LFGList_GetSearchResultInfo(resultID)
+			_, leaderName, numMembers, autoaccept = C_LFGList_GetSearchResultInfo(resultID)
 	local activityName, shortName, categoryID = C_LFGList_GetActivityInfo(activityID)
 	local summary,data = string_match(comment,'^(.*)%((^1^.+^^)%)$')
 	if activityID == 44 and string_find(name,"#AV#") then
 		name = string.sub(name,5)
 		activityName = GetMapNameByID(401)
 	end
-	if data and not string_find(data,"LookingForGroup") then
-		return activityName,add_role_num(nil,id,numMembers)
+	if not autoaccept then
+		leaderName = nil
 	end
-	return name,add_role_num(activityName..'\n',id,numMembers)
+	if data and not string_find(data,"LookingForGroup") then
+		return activityName,add_role_num(nil,id,numMembers,leaderName)
+	end
+	return name,add_role_num(activityName..'\n',id,numMembers,leaderName)
 end
 	
 local function convert_sec_to_xx_xx_xx(value)
@@ -186,7 +197,7 @@ function LookingForGroup_Core.GetSearchResultInfo(resultID)
 	local masummary,mdata = string_match(comment,'^(.*)%[LFG:(.*)%]$')
 	if masummary then
 		comment = masummary
-		concat_tb[#concat_tb+1] = string_gsub(mdata,"##","\n")
+		concat_tb[#concat_tb+1] = string_gsub(mdata,"#-","\n")
 		concat_tb[#concat_tb+1] = "\n"
 	end
 	if comment and (string_find(comment,"World Quest Tracker") or string_find(comment,"HandyNotes")) then
@@ -351,7 +362,7 @@ function LookingForGroup_Core.GetActiveEntryInfo()
 		local masummary,mdata = string_match(comment,'^(.*)%[LFG:(.*)%]$')
 		if masummary then
 			comment = masummary
-			local t = string_gsub(mdata,"##","\n")
+			local t = string_gsub(mdata,"#-","\n")
 			activityName = table_concat{activityName,"\n",t}
 		end
 		if data and not string_find(data,"LookingForGroup") then

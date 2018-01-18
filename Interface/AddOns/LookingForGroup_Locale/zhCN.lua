@@ -35,6 +35,7 @@ L["options_auto_pve_desc"] = [=[正常勾 = 只加入含有关键字'PVE'的队�
  |c00ff0000警告! 该选项无法保证有效! 即使该选项打开，插件也会在你不知情的情况下，完全没有通知就组你到PVP服务器|r]=]
 L["options_window"] = "窗口大小"
 L["Relist"] = "重新列出队伍"
+L["Repeat"] = "重复"
 L["Results"] = "结果"
 L["rf_mode_desc"] = [=[正常勾 = 服务器黑名单
 暗勾 = 服务器白名单

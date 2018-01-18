@@ -37,6 +37,8 @@ L["options_auto_pve_desc"] = [=[보통 클릭 = 'PVE' 키워드의 파티만 참
 |c00ff0000경고! 이 옵션의 작동을 보증하지 않습니다! 이 옵션을 사용해도 당신에게 알림없이 pvp 서버와 파티를 맺습니다.|r]=]
 L["options_window"] = "창 크기"
 L["Relist"] = "목록 새로고침"
+--Translation missing 
+-- L["Repeat"] = ""
 L["Results"] = "결과"
 L["rf_mode_desc"] = [=[보통 클릭 = 서버 차단 목록
 어두운 클릭 = 서버 허용 목록

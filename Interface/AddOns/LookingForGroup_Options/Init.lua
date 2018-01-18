@@ -125,47 +125,59 @@ function LookingForGroup_Options.FilterSearchResult(groupid)
 		comment = summary
 	end
 	if not filter_realm(leaderName) then
-		return
+		return -1
 	end
+	
+	local fullName, shortName, categoryID, groupID, itemLevel, filters, minLevel, maxPlayers, displayType, activityOrder = C_LFGList_GetActivityInfo(activityID)
+	local is_quest = activityID==458 or (categoryID==1 or categoryID ==6)
 	local options_profile = LookingForGroup_Options.db.profile
 	if options_profile.find_a_group_language and language_filter(name,comment,voiceChat) then
-		return
+		return -1
 	end
-	if options_profile.spam_filter_solo and numMembers == 1 then
-		local fullName, shortName, categoryID = C_LFGList_GetActivityInfo(activityID)
-		if (categoryID == 3 or categoryID == 9) then
-			return false
+	if not is_quest and not options_profile.spam_filter_dk then
+		local dk = C_LFGList.GetSearchResultMemberCounts(id).DEATHKNIGHT
+		if 8 < dk then
+			return 2
+		else
+			if 4 < maxPlayers and maxPlayers < dk * 2 then
+				return 2
+			end
 		end
-	end
-	if options_profile.spam_filter_dk and 8 < C_LFGList.GetSearchResultMemberCounts(id).DEATHKNIGHT then
-		return false,"lfglistname"
 	end
 	local profile = LookingForGroup.db.profile
 	local filters = profile.spam_filter_keywords
 	local maxlength = profile.spam_filter_maxlength
-	if maxlength then
+	if not is_quest and 0 <= maxlength then
 		if maxlength < name:len() then
-			return false,"lfglistname"
+			return 1
 		elseif maxlength < comment:len() then
-			return false,"lfglistcomment"
+			return 2
 		elseif maxlength < voiceChat:len() then	
-			return false,"lfglistvoicechat"
-		end		
+			return 3
+		end
 	end
+
 	name = name:gsub(" ",""):lower()
 	comment = comment:gsub(" ",""):lower()
 	voiceChat = voiceChat:gsub(" ",""):lower()
 	for i=1,#filters do
 		local ele = filters[i]
 		if string_find(name,ele) then
-			return false,"lfglistname"
+			return 1
 		elseif string_find(comment,ele) then
-			return false,"lfglistcomment"
+			return 2
 		elseif string_find(voiceChat,ele) then
-			return false,"lfglistvoicechat"
+			return 3
 		end
 	end
-	return true
+
+	if options_profile.spam_filter_solo and numMembers == 1 then
+		if categoryID == 3 or categoryID == 9 then
+			return -1
+		end
+	end
+
+	return 0
 end
 
 function LookingForGroup_Options.GetResultsTB()
@@ -177,19 +189,104 @@ function LookingForGroup_Options.GetSearchResults()
 	wipe(results_tb)
 	local fsr = LookingForGroup_Options.FilterSearchResult
 	local profile = LookingForGroup_Options.db.profile
-	local gold = profile.find_a_group_gold
+	local gold = profile.find_a_group_gold and {}
 	local auto_report = not profile.spam_filter_auto_report
+	local ngi = #groupsIDs
 	for i=1,#groupsIDs do
 		local ele = groupsIDs[i]
-		local r,rpt = fsr(ele)
-		if (r ~= nil) and ((r and not gold) or (not r and gold)) then
+		local rpt = fsr(ele)
+		if rpt == 0 then
 			results_tb[#results_tb+1]=ele
-		elseif auto_report and not gold and rpt then
-			C_LFGList_ReportSearchResult(ele,rpt)
+		else
+			if (0<rpt and gold) then
+				gold[#gold+1] = ele
+			elseif auto_report and not gold then
+				if rpt == 1 then
+					C_LFGList_ReportSearchResult(ele,"lfglistname")			
+				elseif rpt == 2 then
+					C_LFGList_ReportSearchResult(ele,"lfglistcomment")
+				elseif rpt == 3 then
+					C_LFGList_ReportSearchResult(ele,"lfglistvoicechat")
+				end
+			end
 		end
 	end
-	LookingForGroup_Options.SortSearchResults(results_tb)
-	return results_tb,#groupsIDs,counts
+	
+	if profile.spam_filter_repeat then
+		if gold then
+			LookingForGroup_Options.SortSearchResults(gold)
+			return gold,ngi,counts
+		else
+			LookingForGroup_Options.SortSearchResults(results_tb)
+			return results_tb,ngi,counts		
+		end
+	else
+		wipe(groupsIDs)
+		local tb = {}
+		local n = #results_tb
+		for i=1,n do
+			local id, activityID, name, comment, voiceChat, iLvl, honorLevel,
+				age, numBNetFriends, numCharFriends, numGuildMates,
+				isDelisted, leaderName, numMembers, autoaccept = C_LFGList_GetSearchResultInfo(results_tb[i])
+			if activityID ~= 458 then
+				local fullName, shortName, categoryID, groupID, itemLevel, filters, minLevel, maxPlayers, displayType, activityOrder = C_LFGList_GetActivityInfo(activityID)
+				if categoryID ~= 1 and categoryID ~= 6 then 
+					local summary,data = string_match(comment,'^(.*)%((^1^.+^^)%)$')
+					if summary then
+						comment = summary
+					end
+					if data and not issubstr(data,"LookingForGroup") then
+						name = ""
+						comment = summary
+					end
+					local key = name..comment..voiceChat
+					local hsk = groupsIDs[key]
+					if hsk then
+						hsk[#hsk+1] = id
+					else
+						groupsIDs[key] = {id}
+					end
+				else
+					tb[#tb+1]=id
+				end
+			else
+				tb[#tb+1]=id
+			end
+		end
+		if gold then
+			for k,v in pairs(groupsIDs) do
+				local nv = #v
+				if 1 < nv then
+					local i = 1
+					while i <= nv do
+						gold[#gold + 1] = v[i]
+						i = i + 1
+					end
+				end
+			end
+			LookingForGroup_Options.SortSearchResults(gold)
+			return gold,ngi,counts
+		else
+			for k,v in pairs(groupsIDs) do
+				local nv = #v
+				if nv < 2 then
+					local i = 1
+					while i <= nv do
+						tb[#tb + 1] = v[i]
+						i = i + 1
+					end
+				elseif auto_report then
+					local i = 1
+					while i <= nv do
+						C_LFGList_ReportSearchResult(v[i],"lfglistcomment")
+						i = i + 1
+					end
+				end
+			end
+			LookingForGroup_Options.SortSearchResults(tb)
+			return tb,ngi,counts
+		end
+	end
 end
 
 local function get_rating(i)

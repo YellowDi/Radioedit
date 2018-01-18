@@ -30,7 +30,7 @@ function LookingForGroup_Elite:PLAYER_TARGET_CHANGED()
 				local name = UnitName("target")
 				if name and UnitLevel("player") <= UnitLevel("target") then
 					local function create()
-						C_LFGList.CreateListing(16,name,0,0,"","LookingForGroup #NPCID"..npc_id,true,false)
+						C_LFGList.CreateListing(16,name,LookingForGroup.db.profile.auto_ilvl or 0,0,"","LookingForGroup #NPCID"..npc_id,true,false)
 					end
 					LookingForGroup_Auto.accepted(create,function()
 						LookingForGroup.Search(function()

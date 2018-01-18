@@ -1,7 +1,7 @@
 ## Interface: 70300
 ## Author: cqwrteur
 ## Title: LookingForGroup Invasion Point
-## Version: r215
+## Version: r285
 ## Dependencies: LookingForGroup_Auto
 ## LoadOnDemand: 1
 

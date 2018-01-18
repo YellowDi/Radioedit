@@ -28,14 +28,14 @@ LookingForGroup_Options:push("filter",{
 			order = get_order(),
 			set = function(_,val)
 				if val == "" then
-					LookingForGroup.db.profile.spam_filter_maxlength = nil
+					LookingForGroup.db.profile.spam_filter_maxlength = -1
 				else
 					LookingForGroup.db.profile.spam_filter_maxlength = tonumber(val)
 				end
 			end,
 			get = function()
 				local ml = LookingForGroup.db.profile.spam_filter_maxlength
-				if ml then
+				if 0 <= ml then
 					return tostring(LookingForGroup.db.profile.spam_filter_maxlength)
 				end
 			end,
@@ -323,13 +323,13 @@ LookingForGroup_Options:push("filter",{
 					type = "toggle",
 					set = function(_,val)
 						if val then
-							LookingForGroup_Options.db.profile.spam_filter_dk = true
-						else
 							LookingForGroup_Options.db.profile.spam_filter_dk = nil
+						else
+							LookingForGroup_Options.db.profile.spam_filter_dk = true
 						end
 					end,
 					get = function()
-						return LookingForGroup_Options.db.profile.spam_filter_dk
+						return not LookingForGroup_Options.db.profile.spam_filter_dk
 					end
 				},
 				solo = 
@@ -379,6 +379,21 @@ LookingForGroup_Options:push("filter",{
 						end
 					end
 				},
+				rpt =
+				{
+					name = L.Repeat,
+					type = "toggle",
+					get = function(info)
+						return not LookingForGroup_Options.db.profile.spam_filter_repeat
+					end,
+					set = function(info,val)
+						if val then
+							LookingForGroup_Options.db.profile.spam_filter_repeat = nil
+						else
+							LookingForGroup_Options.db.profile.spam_filter_repeat = true
+						end
+					end
+				},
 				reset =
 				{
 					name = RESET,
@@ -390,6 +405,7 @@ LookingForGroup_Options:push("filter",{
 						profile.spam_filter_solo = nil
 						profile.find_a_group_language = nil
 						profile.spam_filter_auto_report = nil
+						profile.spam_filter_repeat = nil
 					end,
 					width = "full"
 				}

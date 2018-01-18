@@ -55,6 +55,8 @@ if not L then return end
 --Translation missing 
 -- L["Relist"] = ""
 --Translation missing 
+-- L["Repeat"] = ""
+--Translation missing 
 -- L["Results"] = ""
 --Translation missing 
 -- L["rf_mode_desc"] = ""

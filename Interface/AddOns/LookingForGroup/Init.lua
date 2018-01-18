@@ -3,6 +3,7 @@ local LookingForGroup = AceAddon:NewAddon("LookingForGroup","AceEvent-3.0","AceC
 --------------------------------------------------------------------------------------
 
 function LookingForGroup:OnInitialize()
+	local china = GetCurrentRegion() == 5
 	self.db = LibStub("AceDB-3.0"):New("LookingForGroupDB",
 	{
 		profile =
@@ -15,10 +16,11 @@ function LookingForGroup:OnInitialize()
 			enable_hook = true,
 			enable_event = true,
 --			enable_qj = false,
-			enable_ms = GetCurrentRegion()==5 or nil,
+			enable_ms = china or nil,
 			enable_sf = true,
 			spam_filter_keywords = {},
-			realm_filters = {}
+			realm_filters = {},
+			spam_filter_maxlength = china and 50 or -1
 		}
 	})
 	self:RegisterChatCommand("LookingForGroup", "ChatCommand")

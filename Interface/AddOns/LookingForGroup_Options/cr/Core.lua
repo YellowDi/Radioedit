@@ -232,6 +232,21 @@ LookingForGroup_Options:push("cr",{
 						end
 					end
 				},
+				scafterhop = 
+				{
+					name = L.cr_realm_scan,
+					type = "toggle",
+					get = function(info)
+						return LookingForGroup.db.profile.cr_scan_realm_after_hop
+					end,
+					set = function(info,val)
+						if val then
+							LookingForGroup.db.profile.cr_scan_realm_after_hop = val
+						else
+							LookingForGroup.db.profile.cr_scan_realm_after_hop = nil
+						end
+					end
+				},
 				lp = 
 				{
 					name = PARTY_LEAVE,

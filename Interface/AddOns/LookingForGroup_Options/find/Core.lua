@@ -34,7 +34,6 @@ local function get_order()
 	return temp
 end
 
-local C_LFGList_Search = C_LFGList.Search
 local C_LFGList_GetActivityInfo = C_LFGList.GetActivityInfo
 local C_LFGList_GetAvailableCategories = C_LFGList.GetAvailableCategories
 local C_LFGList_GetAvailableActivityGroups = C_LFGList.GetAvailableActivityGroups
@@ -196,7 +195,7 @@ function LookingForGroup_Options.SetCategory(_,val)
 	profile.a_group_category = val
 	LookingForGroup_Options:RestoreDBVariable("a_group_group")
 	LookingForGroup_Options:RestoreDBVariable("a_group_activity")
-	LookingForGroup_Options.db.profile.find_a_group_activities = nil
+	wipe(LookingForGroup_Options.db.profile.find_a_group_activities)
 	wipe(encounters_tb)
 	wipe(profile.find_a_group_encounters)
 end
@@ -223,6 +222,7 @@ function LookingForGroup_Options.UpdateEditing()
 			profile.a_group_legacy = true
 		end
 		profile.a_group_category,profile.a_group_group,profile.a_group_activity = categoryID,groupID,activityID
+		profile.find_a_group_activities[1]=fullName or shortName
 		wipe(encounters_tb)
 		wipe(profile.find_a_group_encounters)
 	else
@@ -401,50 +401,68 @@ do_search=function()
 	if ctg == 0 then
 		return
 	end
+	local mn
+	if ctg == 2 then
+		mn = 3
+	else
+		mn = 1
+	end
 	wipe(terms)
 	terms[1] = searchTerm
 	local atvs = profile.find_a_group_activities
 	if atvs and next(atvs) then
-		if ctg == 2 then
-			if 3 < #atvs then
-				wipe(matches)
-				searchTerm.matches = matches
-			else
-				searchTerm.matches = atvs
-			end
+		if mn < #atvs then
+			wipe(matches)
+			searchTerm.matches = matches
+			profile.find_a_group_2xfilters = true
 		else
-			if 1 < #atvs then
-				wipe(matches)
-				searchTerm.matches = matches
-			else
-				searchTerm.matches = atvs
-			end
+			searchTerm.matches = atvs
 		end
 	else
-		local act = profile.a_group_activity
-		if act == 0 then
-			local grp = profile.a_group_group
-			wipe(matches)
-			if grp ~= 0 then
-				matches[1] = C_LFGList_GetActivityGroupInfo(grp)
-			end
-		else
-			matches[1] = C_LFGList_GetActivityInfo(act)
-		end
 		searchTerm.matches = matches
+	end
+	if profile.find_a_group_minus then
+		local mc = searchTerm.matches
+		local tb = {}
+		for i=1,#mc do
+			tb[i] = "-"..mc[i]
+		end
+		searchTerm.matches = tb
 	end
 	local filter = profile.find_a_group_filter
 	if filter then
---[[		if 3 < #filter then
+		if mn < #filter then
 			profile.find_a_group_2xfilters = true
-		else]]
+		elseif #filter ~= 0 then
 			filterTerm.matches = profile.find_a_group_filter
 			terms[2] = filterTerm
---		end
+		end
+	end
+	local realm = profile.find_a_group_realm and GetRealmName()
+	local lfg_profile = LookingForGroup.db.profile
+	local mode_rf = lfg_profile.mode_rf
+	if mode_rf == false then
+		local realm_filters = lfg_profile.realm_filters
+		local rm_tb = {realm}
+
+		for k,v in pairs(realm_filters) do
+			local p = #rm_tb + 1
+			if mn < p then
+				break
+			end
+			rm_tb[p]=k
+		end
+		if #rm_tb ~= 0 then
+			terms[#terms+1]={matches=rm_tb}
+		end
+	elseif realm then
+		terms[#terms+1]={matches={realm}}
 	end
 	if profile.find_a_group_mythic then
-		terms[#terms+1]={matches={GetRealmName()}}
-		terms[#terms+1]={matches={PLAYER_DIFFICULTY6,'M'}}
+		if not realm then
+			terms[#terms+1]={matches={GetRealmName()}}
+		end
+		terms[#terms+1]={matches={PLAYER_DIFFICULTY6}}
 	end
 	LookingForGroup_Options.Search(rc_args,get_search_result,ctg,terms,get_filters(),0)
 end
@@ -487,6 +505,8 @@ LookingForGroup_Options:push("find",{
 					set = function(info,val)
 						local profile = LookingForGroup_Options.db.profile
 						profile.a_group_group = val
+						local activit = profile.find_a_group_activities
+						activit[1]=C_LFGList_GetActivityGroupInfo(val)
 						LookingForGroup_Options:RestoreDBVariable("a_group_activity")
 						wipe(encounters_tb)
 						wipe(profile.find_a_group_encounters)
@@ -512,8 +532,8 @@ LookingForGroup_Options:push("find",{
 						else
 							val = tonumber(val)
 							local profile = LookingForGroup_Options.db.profile
-							
-							local _,_,cat,grp = C_LFGList_GetActivityInfo(val)
+							local cat,grp
+							activit[1],_,cat,grp = C_LFGList_GetActivityInfo(val)
 							if cat and grp then
 								profile.a_group_category = cat
 								profile.a_group_group = grp
@@ -535,7 +555,8 @@ LookingForGroup_Options:push("find",{
 					set = function(info,val)
 						local profile = LookingForGroup_Options.db.profile
 						profile.a_group_activity = val
-						_,_,profile.a_group_category,profile.a_group_group = C_LFGList_GetActivityInfo(val)
+						local activit = profile.find_a_group_activities
+						activit[1],_,profile.a_group_category,profile.a_group_group = C_LFGList_GetActivityInfo(val)
 						wipe(encounters_tb)
 						wipe(profile.find_a_group_encounters)
 						encounters_values()
@@ -562,8 +583,8 @@ LookingForGroup_Options:push("find",{
 						end
 						local atvs = profile.find_a_group_activities
 						if atvs then
-							for _,v in ipairs(atvs) do
-								if mtc == v then
+							for i=2,#atvs do
+								if mtc == atvs[i] then
 									return
 								end
 							end
@@ -581,17 +602,15 @@ LookingForGroup_Options:push("find",{
 					order = get_order(),
 					func = function()
 						local atvs = LookingForGroup_Options.db.profile.find_a_group_activities
-						if atvs then
-							local tb = {}
-							local i
-							for i = 1,#atvs do
-								if not activities_select_tb[i] then
-									table_insert(tb,atvs[i])
-								end
+						local tb = {atvs[1]}
+						local i
+						for i = 2,#atvs do
+							if not activities_select_tb[i] then
+								table_insert(tb,atvs[i])
 							end
-							LookingForGroup_Options.db.profile.find_a_group_activities = tb
-							wipe(activities_select_tb)
 						end
+						LookingForGroup_Options.db.profile.find_a_group_activities = tb
+						wipe(activities_select_tb)
 					end
 				},
 				activities =
@@ -628,7 +647,7 @@ LookingForGroup_Options:push("find",{
 						wipe(LookingForGroup_Options.db.profile.find_a_group_encounters)
 						wipe(activities_select_tb)
 						wipe(filters_select_sup)
-						LookingForGroup_Options.db.profile.find_a_group_activities = nil
+						wipe(LookingForGroup_Options.db.profile.find_a_group_activities)
 					end
 				},
 				recommanded =
@@ -922,7 +941,21 @@ LookingForGroup_Options:push("find",{
 								end
 							end
 						},
-						
+						realm =
+						{
+							name = GetRealmName,
+							type = "toggle",
+							get = function()
+								return LookingForGroup_Options.db.profile.find_a_group_realm
+							end,
+							set = function(_,val)
+								if val then
+									LookingForGroup_Options.db.profile.find_a_group_realm = true
+								else
+									LookingForGroup_Options.db.profile.find_a_group_realm = nil
+								end
+							end
+						},
 						new =
 						{
 							name = NEW,
@@ -954,7 +987,21 @@ LookingForGroup_Options:push("find",{
 								end
 							end
 						},
-						
+						minus = 
+						{
+							name = "-",
+							type = "toggle",
+							get = function()
+								return LookingForGroup_Options.db.profile.find_a_group_minus
+							end,
+							set = function(_,val)
+								if val then
+									LookingForGroup_Options.db.profile.find_a_group_minus = true
+								else
+									LookingForGroup_Options.db.profile.find_a_group_minus = nil
+								end
+							end
+						},
 						ilvl =
 						{
 							name = ITEM_LEVEL_ABBR,
@@ -1224,7 +1271,7 @@ LookingForGroup_Options:push("find",{
 										end
 									end
 									if #temp ~= 0 then
-										t = table_concat(temp,"##")
+										t = table_concat(temp,"#-")
 									end
 								end
 								if profile.addon_meeting_stone then
@@ -1247,17 +1294,37 @@ LookingForGroup_Options:push("find",{
 											details = title
 										end
 									end
+									local fullname,shortname = C_LFGList_GetActivityInfo(activityID)
+									local activityname = fullname or shortname
+									local tt = profile.addon_meeting_stone_title
 									if title == "" then
-										title = "LookingForGroup"
+										if tt then	
+											title = "集合石-"
+											if activityname then
+												title = title..activityname
+											end
+										else
+											title = "LookingForGroup"
+										end
 									end
-									if t == nil then
-										t = "LFG"
+									local version = profile.addon_meeting_stone_vers
+									if version == nil then
+										if tt then
+											version = "7308"
+										else
+											version = "LookingForGroup"
+										end
 									end
 									local dt
 									if profile.addon_meeting_stone_hack then
-										dt = table_concat{details,"(^1^Z^T^N1^SLookingForGroup^t^N",profile.addon_meeting_stone_mode or 1,"^N",profile.addon_meeting_stone_loot or 1,"^T^t^N",ilvl,"^T^t^T^t^N",max_player_level,"^N",max_player_level,req,"^Z^S",player,'-',realm,"^Z^S",t,"^Z^^)"}
+										dt = table_concat{details,"(^1^Z^T^N1^S",version,"^t^N",profile.addon_meeting_stone_mode or 1,"^N",profile.addon_meeting_stone_loot or 1,"^T^t^N",ilvl,"^T^t^T^t^N",max_player_level,"^N",max_player_level,req,"^Z^S",player,'-',realm,"^Z^S",t or "","^Z^^)"}
 									else
-										dt = table_concat{details,"(^1^Z^SLookingForGroup^N",profile.addon_meeting_stone_mode or 1,"^N",profile.addon_meeting_stone_loot or 1,"^N",profile.addon_meeting_stone_class or select(3,UnitClass("player")),"^N",ilvl,"^N2147483647^",LookingForGroup_Options.ms_rating(activityID,profile),"^N",max_player_level,"^N",max_player_level,req,"^Z^S",player,'-',realm,"^Z^S",t,"^Z^^)"}
+										if tt then
+											activityname = ""
+										else
+											activityname = "-"..activityname
+										end
+										dt = table_concat{details,"(^1^Z^S",version,"^N",profile.addon_meeting_stone_mode or 1,"^N",profile.addon_meeting_stone_loot or 1,"^N",profile.addon_meeting_stone_class or select(3,UnitClass("player")),"^N",ilvl,"^N2147483647^",LookingForGroup_Options.ms_rating(activityID,profile),"^N",max_player_level,"^N",max_player_level,req,"^Z^S",player,'-',realm,"^Z^S",activityname,t and "-" or "",t or "","^Z^^)"}
 									end
 									funcListing(activityID,
 											title,
@@ -1294,6 +1361,9 @@ LookingForGroup_Options:push("find",{
 										quest_id)
 								LookingForGroup_Options.set_requests()
 								AceConfigDialog:SelectGroup("LookingForGroup","requests")
+							end
+							if not LookingForGroup.db.profile.hardware then
+								do_search()
 							end
 						end
 					end

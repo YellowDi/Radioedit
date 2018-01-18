@@ -20,17 +20,21 @@ function LookingForGroup_Auto:OnEnable()
 end
 
 local function hardware_func(desc,func)
-	local dialog = StaticPopupDialogs.LookingForGroup_HardwareAPIDialog
-	dialog.text = desc
-	dialog.OnAccept = func
-	StaticPopup_Show("LookingForGroup_HardwareAPIDialog")
+	if func then
+		local dialog = StaticPopupDialogs.LookingForGroup_HardwareAPIDialog
+		dialog.text = desc
+		dialog.OnAccept = func
+		StaticPopup_Show("LookingForGroup_HardwareAPIDialog")
+	end
 end
 
-local function hardware_api(desc,func,secure)
-	if not secure and LookingForGroup.db.profile.hardware then
-		hardware_func(desc,func)
-	else
-		func()
+local function hardware_api(desc,func,secure,hardware)
+	if func then
+		if not secure and (hardware or LookingForGroup.db.profile.hardware) then
+			hardware_func(desc,func)
+		else
+			func()
+		end
 	end
 end
 
@@ -108,8 +112,13 @@ function LookingForGroup_Auto.apply(create)
 		hardware_api(START_A_GROUP,create)
 	else
 		local profile = LookingForGroup.db.profile
+		local auto_start_a_group = profile.auto_start_a_group
 		if profile.hardware then
-			hardware_search(create,results)
+			if auto_start_a_group == false then
+				hardware_search(nil,results)
+			else
+				hardware_search(create,results)
+			end
 			return
 		end
 		local _,tank,healer,dps = GetLFGRoles()
@@ -127,8 +136,20 @@ function LookingForGroup_Auto.apply(create)
 			if profile.auto_auto_accept then
 				C_Timer.After(0.5,function()
 					local applications = C_LFGList.GetApplications()
+					local mn = 0
+					local mt
 					for i = 1,#applications do
-						C_LFGList.AcceptInvite(applications[i])
+						local groupID, status, unknown, timeRemaining, role = C_LFGList.GetApplicationInfo(applications[i])
+						if status == "invited" then
+							local id, activityID, name, comment, voiceChat, iLvl, honorLevel, age, numBNetFriends, numCharFriends, numGuildMates, isDelisted, leaderName, numMembers, autoaccept = C_LFGList.GetSearchResultInfo(groupID)
+							if mn < numMembers then
+								mn = numMembers
+								mt = groupID
+							end
+						end
+					end
+					if mt then
+						C_LFGList.AcceptInvite(mt)
 					end
 				end)
 			end
@@ -136,7 +157,9 @@ function LookingForGroup_Auto.apply(create)
 				if not IsInGroup() then
 					local applications =  C_LFGList.GetApplications()
 					if applications == nil or #applications == 0 then
-						create()
+						if auto_start_a_group == nil then
+							create()
+						end
 					else
 						local C_LFGList_GetApplicationInfo = C_LFGList.GetApplicationInfo
 						local C_LFGList_CancelApplication = C_LFGList.CancelApplication
@@ -150,14 +173,16 @@ function LookingForGroup_Auto.apply(create)
 								C_LFGList_CancelApplication(groupID)
 							end
 						end
-						if not ok then
+						if auto_start_a_group == nil and not ok then
 							C_Timer.After(1,create)
 						end
 					end
 				end
 			end)
 		else
-			create()
+			if auto_start_a_group == nil then
+				create()
+			end
 		end
 	end
 end
@@ -179,10 +204,11 @@ function LookingForGroup_Auto.accepted(create,search,secure,name,value)
 		if name and value then
 			LookingForGroup_Auto.db.profile[name] = value
 		end
-		if LookingForGroup.db.profile.auto_start_a_group then
+		local profile = LookingForGroup.db.profile
+		if profile.auto_start_a_group then
 			hardware_api(START_A_GROUP,create,secure)
 		else
-			hardware_api(SEARCH,search,secure)
+			hardware_api(SEARCH,search,secure,profile.auto_find_a_group)
 		end
 	end
 end
@@ -201,7 +227,7 @@ function LookingForGroup_Auto.abandon(func)
 			C_LFGList.DeclineInvite(id)
 		end
 	end
-	if IsMounted() then
+	if IsFlying() then
 		LeaveParty()
 		StaticPopup_Hide("LookingForGroup_HardwareAPIDialog")
 		return true

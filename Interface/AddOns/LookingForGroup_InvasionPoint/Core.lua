@@ -23,9 +23,9 @@ function LookingForGroup_InvasionPoint.callback(secure)
 		local enfnm = mfn:gsub ("InvasionPoint", "")
 		local function create()
 			if scen then
-				C_LFGList.CreateListing(16,"Invasion Point: "..enfnm,0,0,"","LookingForGroup "..name,true,false)
+				C_LFGList.CreateListing(16,"Invasion Point: "..enfnm,LookingForGroup.db.profile.auto_ilvl or 0,0,"","LookingForGroup "..name,true,false)
 			else
-				C_LFGList.CreateListing(16,"Greater Invasion",0,0,"","LookingForGroup "..name,true,false)
+				C_LFGList.CreateListing(16,"Greater Invasion",LookingForGroup.db.profile.auto_ilvl or 0,0,"","LookingForGroup "..name,true,false)
 			end
 		end
 		LookingForGroup_Auto.accepted(create,function()

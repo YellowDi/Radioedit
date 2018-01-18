@@ -14,8 +14,19 @@ function LookingForGroup_Event:OnEnable()
 		self:RegisterEvent("ADDON_ACTION_BLOCKED")
 		self:RegisterEvent("LFG_LIST_ACTIVE_ENTRY_UPDATE")
 		self:RegisterEvent("LFG_LIST_APPLICANT_UPDATED")
+		self:RegisterEvent("LFG_LIST_APPLICATION_STATUS_UPDATED")
+		LFGListFrame:UnregisterEvent("LFG_LIST_ACTIVE_ENTRY_UPDATE")
+		LFGListFrame:UnregisterEvent("LFG_LIST_APPLICANT_LIST_UPDATED")
+		LFGListFrame:UnregisterEvent("LFG_LIST_ENTRY_EXPIRED_TOO_MANY_PLAYERS")
+		LFGListFrame:UnregisterEvent("LFG_LIST_ENTRY_EXPIRED_TIMEOUT")
+		LFGListFrame:UnregisterEvent("LFG_LIST_APPLICATION_STATUS_UPDATED")
 	else
 		self:UnregisterAllEvents()
+		LFGListFrame:RegisterEvent("LFG_LIST_ACTIVE_ENTRY_UPDATE")
+		LFGListFrame:RegisterEvent("LFG_LIST_APPLICANT_LIST_UPDATED")
+		LFGListFrame:RegisterEvent("LFG_LIST_ENTRY_EXPIRED_TOO_MANY_PLAYERS")
+		LFGListFrame:RegisterEvent("LFG_LIST_ENTRY_EXPIRED_TIMEOUT")
+		LFGListFrame:RegisterEvent("LFG_LIST_APPLICATION_STATUS_UPDATED")
 	end
 end
 
@@ -36,7 +47,11 @@ function LookingForGroup_Event:LFG_LIST_APPLICANT_LIST_UPDATED(event,hasNewPendi
 				end
 			end
 		elseif not InCombatLockdown() and ( hasNewPending and hasNewPendingWithData ) then
-			QueueStatusMinimapButton_SetGlowLock(QueueStatusMinimapButton, "lfglist-applicant", true, 1);
+			if LookingForGroup.db.profile.mute then
+				QueueStatusMinimapButton_SetGlowLock(QueueStatusMinimapButton, "lfglist-applicant", true, 1)
+			elseif UnitIsGroupLeader("player", LE_PARTY_CATEGORY_HOME) then
+				QueueStatusMinimapButton_SetGlowLock(QueueStatusMinimapButton, "lfglist-applicant", true)
+			end
 		end
 	end
 end
@@ -67,7 +82,7 @@ end
 
 local relisting_timer
 
-function LookingForGroup_Event:LFG_LIST_ACTIVE_ENTRY_UPDATE()
+function LookingForGroup_Event:LFG_LIST_ACTIVE_ENTRY_UPDATE(event,creatednew)
 	local active, _, _, _, _, _, _, expiration = C_LFGList.GetActiveEntryInfo()
 	if relisting_timer then
 		relisting_timer:Cancel()
@@ -79,5 +94,40 @@ function LookingForGroup_Event:LFG_LIST_ACTIVE_ENTRY_UPDATE()
 		else
 			relisting()
 		end
+	end
+	LFGListFrame_FixPanelValid(LFGListFrame)
+	if active then
+		LFGListFrame.EntryCreation.WorkingCover:Hide()
+	else
+		LFGListFrame_CheckPendingQuestIDSearch(LFGListFrame)
+	end
+	if creatednew and not LookingForGroup.db.profile.mute then
+		PlaySound(SOUNDKIT.PVP_ENTER_QUEUE)
+	end
+end
+
+local function handle_lfg_list_application_status_update(message,id)
+	local info = ChatTypeInfo["SYSTEM"]
+	local id, activityID, name, comment = C_LFGList.GetSearchResultInfo(id)
+	local summary,data = string.match(comment,'^(.*)%((^1^.+^^)%)$')
+	if activityID == 44 and string.find(name,"#AV#") then
+		name = string.sub(name,5)
+	end
+	if data and not string.find(data,"LookingForGroup") then
+		DEFAULT_CHAT_FRAME:AddMessage(string.format(message, summary), info.r, info.g, info.b)
+	else
+		DEFAULT_CHAT_FRAME:AddMessage(string.format(message, name), info.r, info.g, info.b)
+	end
+end
+
+function LookingForGroup_Event:LFG_LIST_APPLICATION_STATUS_UPDATED(event, id, newStatus, oldStatus)
+	if ( newStatus == "declined" ) then
+		handle_lfg_list_application_status_update(LFG_LIST_APP_DECLINED_MESSAGE,id)
+	elseif ( newStatus == "declined_full" ) then
+		handle_lfg_list_application_status_update(LFG_LIST_APP_DECLINED_FULL_MESSAGE,id)
+	elseif ( newStatus == "declined_delisted" ) then
+		handle_lfg_list_application_status_update(LFG_LIST_APP_DECLINED_DELISTED_MESSAGE,id)
+	elseif ( newStatus == "timedout" ) then
+		handle_lfg_list_application_status_update(LFG_LIST_APP_TIMED_OUT_MESSAGE,id)
 	end
 end

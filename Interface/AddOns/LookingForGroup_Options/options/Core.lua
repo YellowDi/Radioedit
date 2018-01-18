@@ -200,10 +200,26 @@ LookingForGroup_Options:push("options",{
 						end
 					end,
 				},
+				counts =
+				{
+					name = GROUPS,
+					order = 3,
+					type = "range",
+					step = 1,
+					min = 1,
+					max = 100,
+					get = function()
+						return LookingForGroup_Options.db.profile.background_counts
+					end,
+					set = function(info,val)
+						LookingForGroup_Options.db.profile.background_counts = val
+					end,
+					width = "full"
+				},
 				sr =
 				{
-					name = KBASE_SEARCH_RESULTS,
-					order = 3,
+					name = VOICE_MUSIC,
+					order = 4,
 					type = "input",
 					get = function(info)
 						return LookingForGroup_Options.db.profile.background_music
@@ -213,13 +229,14 @@ LookingForGroup_Options:push("options",{
 					end,
 					width = "full",
 				},
-				cancel = 
+				reset = 
 				{
 					name = RESET,
-					order = 4,
+					order = 5,
 					type = "execute",
 					func = function()
 						LookingForGroup_Options:RestoreDBVariable("background_music")
+						LookingForGroup_Options:RestoreDBVariable("background_counts")
 						LookingForGroup.db.profile.background_enable_music = nil
 						LookingForGroup.db.profile.background_message = nil
 					end
@@ -434,6 +451,40 @@ LookingForGroup_Options:push("options",{
 						return LookingForGroup_Options.db.profile.addon_meeting_stone_hack
 					end
 				},
+				
+				title =
+				{
+					name = LFG_LIST_TITLE,
+					type = "toggle",
+					set = function(_,v)
+						if v then
+							LookingForGroup_Options.db.profile.addon_meeting_stone_title = true
+						else
+							LookingForGroup_Options.db.profile.addon_meeting_stone_title = nil
+						end
+					end,
+					get = function()
+						return LookingForGroup_Options.db.profile.addon_meeting_stone_title
+					end
+				},
+				vers =
+				{
+					name = GAME_VERSION_LABEL,
+					type = "input",
+					get = function()
+						local req = LookingForGroup_Options.db.profile.addon_meeting_stone_vers
+						if req then
+							return req
+						end
+					end,
+					set = function(_,v)
+						if v=="" then
+							LookingForGroup_Options.db.profile.addon_meeting_stone_vers = nil
+						else
+							LookingForGroup_Options.db.profile.addon_meeting_stone_vers = v
+						end
+					end
+				},
 			},
 		},
 		auto = 
@@ -520,14 +571,12 @@ LookingForGroup_Options:push("options",{
 							LookingForGroup.db.profile.wq_leave_party = nil
 						end
 					end,
-					width = "full",
 				},
 				pve =
 				{
 					name = "PVE",
 					desc = L.options_auto_pve_desc,
 					type = "toggle",
-					width = "full",
 					get = function()
 						local pve = LookingForGroup.db.profile.auto_pve
 						if pve then
@@ -571,21 +620,73 @@ LookingForGroup_Options:push("options",{
 						end
 					end
 				},
+				fnd =
+				{
+					name = FIND_A_GROUP,
+					type = "toggle",
+					get = function(info)
+						return LookingForGroup.db.profile.auto_find_a_group
+					end,
+					set = function(info,val)
+						local profile = LookingForGroup.db.profile
+						if not profile.hardware then
+							if val then
+								LookingForGroup.db.profile.auto_find_a_group = true
+							else
+								LookingForGroup.db.profile.auto_find_a_group = nil
+							end
+						end
+					end,
+				},
 				start =
 				{
 					name = START_A_GROUP,
 					type = "toggle",
+					tristate = true,
 					get = function(info)
-						return LookingForGroup.db.profile.auto_start_a_group
+						local val = LookingForGroup.db.profile.auto_start_a_group
+						if val then
+							return true
+						elseif val == nil then
+							return false
+						end
 					end,
 					set = function(info,val)
 						if val then
-							LookingForGroup.db.profile.auto_start_a_group = val
-						else
+							LookingForGroup.db.profile.auto_start_a_group = true
+						elseif val == false then
 							LookingForGroup.db.profile.auto_start_a_group = nil
+						else
+							LookingForGroup.db.profile.auto_start_a_group = false
 						end
-					end
-				}
+					end,
+				},
+				ilvl =
+				{
+					name = ITEM_LEVEL_ABBR,
+					desc = LFG_LIST_ITEM_LEVEL_REQ,
+					type = "input",
+					get = function()
+						local ilv = LookingForGroup.db.profile.auto_ilvl
+						if ilv then
+							return tostring(ilv)
+						end
+					end,
+					set = function(_,val)
+						if val == "" then
+							LookingForGroup.db.profile.auto_ilvl = nil
+						else
+							local num = tonumber(val)
+							local average = GetAverageItemLevel() - 2
+							if num <= average then
+								LookingForGroup.db.profile.auto_ilvl = num
+							else
+								LookingForGroup.db.profile.auto_ilvl = math_floor(average)
+							end
+						end
+					end,
+					pattern = "^[0-9]*$"
+				},
 			}
 		},
 		window =

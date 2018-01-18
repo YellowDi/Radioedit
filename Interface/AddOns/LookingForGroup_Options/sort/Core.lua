@@ -136,19 +136,21 @@ LookingForGroup_Options:push("sort",
 			func = function()
 				local profile = LookingForGroup_Options.db.profile
 				local spkt = profile.sort
-				local cp = {}
-				local i
-				local n = #spkt
-				for i = 1,n do
-					if select_tb[i]~=true then
-						cp[#cp+1] = spkt[i]
+				if spkt then
+					local cp = {}
+					local i
+					local n = #spkt
+					for i = 1,n do
+						if select_tb[i]~=true then
+							cp[#cp+1] = spkt[i]
+						end
 					end
-				end
-				wipe(select_tb)
-				if #cp == 0 then
-					profile.sort = nil
-				else
-					profile.sort = cp
+					wipe(select_tb)
+					if #cp == 0 then
+						profile.sort = nil
+					else
+						profile.sort = cp
+					end
 				end
 			end
 		},

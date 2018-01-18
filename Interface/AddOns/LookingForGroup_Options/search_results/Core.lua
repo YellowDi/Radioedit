@@ -153,7 +153,7 @@ local function lfeedback(callback,category,terms,filters,preferredfilters,delay)
 				results_counter = results.."/"..p.."/"..counts
 			end
 		end
-		if 0 < results then
+		if LookingForGroup_Options.db.profile.background_counts <= results then
 			LookingForGroup_Options.Background_Notifing_Music()
 		else
 			LookingForGroup_Options.Background_NoSearchResult_StartMusic()

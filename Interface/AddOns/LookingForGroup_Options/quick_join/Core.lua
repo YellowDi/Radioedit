@@ -28,6 +28,8 @@ local function get_social()
 		local i
 		local fsr = LookingForGroup_Options.FilterSearchResult
 		local C_SocialQueue_GetGroupQueues = C_SocialQueue.GetGroupQueues
+		local C_LFGList_ReportSearchResult = C_LFGList.ReportSearchResult
+		local auto_report = not LookingForGroup_Options.db.profile.spam_filter_auto_report
 		local temp_sup = {}
 		for i = 1, #all_groups do
 			local ai = all_groups[i]
@@ -39,10 +41,19 @@ local function get_social()
 					if queue_data ~= nil then
 						local lfgListID = queue_data.lfgListID
 						if lfgListID ~= nil then
-							if fsr(lfgListID) then
+							local rpt = fsr(lfgListID)
+							if rpt == 0 then
 								table_insert(social_tb,ai)
 								if select_sup[ai] then
 									temp_sup[ai] = true
+								end
+							elseif auto_report then
+								if rpt == 1 then
+									C_LFGList_ReportSearchResult(ele,"lfglistname")			
+								elseif rpt == 2 then
+									C_LFGList_ReportSearchResult(ele,"lfglistcomment")
+								elseif rpt == 3 then
+									C_LFGList_ReportSearchResult(ele,"lfglistvoicechat")
 								end
 							end
 						else

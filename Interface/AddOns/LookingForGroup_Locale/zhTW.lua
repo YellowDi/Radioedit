@@ -52,6 +52,8 @@ L["Maximum length"] = "最大長度"
 --Translation missing 
 -- L["Relist"] = ""
 --Translation missing 
+-- L["Repeat"] = ""
+--Translation missing 
 -- L["Results"] = ""
 --Translation missing 
 -- L["rf_mode_desc"] = ""

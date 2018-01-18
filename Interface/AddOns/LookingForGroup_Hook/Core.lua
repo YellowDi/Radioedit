@@ -12,33 +12,19 @@ end
 function LookingForGroup_Hook:OnEnable()
 	if LookingForGroup.db.profile.enable_hook then
 		local function nullfun()end
-		self:RawHook("LFGListCategorySelection_StartFindGroup",true)
 		self:RawHook("LFGListFrame_BeginFindQuestGroup",true)
-		self:RawHook("LFGListEntryCreation_Show",true)
 		self:RawHook("QueueStatusDropDown_AddLFGListButtons",true)
-		self:RawHook("LFGListUtil_OpenBestWindow",true)
 		self:RawHook("QueueStatusDropDown_AddLFGListApplicationButtons",true)
 		self:RawHook("QueueStatusEntry_SetUpLFGListApplication",true)
 		self:RawHook("QueueStatusEntry_SetUpLFGListActiveEntry",true)
 		self:RawHook("ChatFrame_DisplayGMOTD",nullfun,true)
-		self:RawHook("LFGListSearchEntry_Update",nullfun,true)
 		self:RawHook("LFGListInviteDialog_Show",true)
---		self:RawHook("LFGListFrame_OnEvent",function(...) print(...); end,true)
---		LFGListFrame:UnregisterEvent("LFG_LIST_APPLICANT_LIST_UPDATED")
---		LFGListFrame:UnregisterEvent("LFG_LIST_APPLICANT_LIST_UPDATED")
---		LFGListFrame:UnregisterEvent("LFG_LIST_APPLICANT_UPDATED")
+		self:RawHook("LFGListUtil_OpenBestWindow",true)
+		self:RawHookScript(LFGListApplicationDialog.SignUpButton,"OnClick","LFGListApplicationDialog_SignUpButton_OnClick")
 		if LookingForGroup.db.profile.hook_quick_join then
 			self:RawHook(QuickJoinFrame,"Show",nullfun,true)
 		end
-		self:RawHookScript(LFGListFrame,"OnEvent",nullfun)
-		self:RawHookScript(LFGListApplicationDialog.SignUpButton,"OnClick","LFGListApplicationDialog_SignUpButton_OnClick")
-		self:RawHook("LFGListApplicationViewerUtil_GetButtonHeight",function(numApplicants)
-			if numApplicants == nil then
-				numApplicants = 0
-			end
-			return 20 * numApplicants + 6;
-		end,true)
---		self:RawHookScript(QuickJoinMixin,"OnEvent",function() print("here") ;end,true)
+		self:RawHook(UIErrorsFrame,"AddMessage",true)
 	else
 		self:UnhookAll()
 	end
@@ -55,29 +41,6 @@ function LookingForGroup_Hook:LFGListFrame_BeginFindQuestGroup(panel,questID)
 	AceConfigDialog:Open("LookingForGroup")
 end
 
-function LookingForGroup_Hook:LFGListCategorySelection_StartFindGroup(panel)
-	LoadAddOn("LookingForGroup_Options")
-	AceConfigDialog:SelectGroup("LookingForGroup","find","f")
-	AceConfigDialog:Open("LookingForGroup")
-end
-
-function LookingForGroup_Hook:LFGListEntryCreation_Show(_,_,category)
-	local option = LookingForGroup.GetAddon("LookingForGroup_Options")
-	PVEFrame:Hide()
-	option.SetCategory(_,category)
-	AceConfigDialog:SelectGroup("LookingForGroup","find","s")
-	AceConfigDialog:Open("LookingForGroup")
-end
-
-function LookingForGroup_Hook:LFGListUtil_OpenBestWindow()
-	local option = LookingForGroup.GetAddon("LookingForGroup_Options")
-	if option.option_table.args.requests == nil then
-		option.set_requests()
-	end
-	AceConfigDialog:SelectGroup("LookingForGroup","requests")
-	AceConfigDialog:Open("LookingForGroup")
-end
-
 function LookingForGroup_Hook:QueueStatusDropDown_AddLFGListApplicationButtons(info, resultID)
 	wipe(info)
 	info.text = LookingForGroup.GetAddon("LookingForGroup_Core").GetSearchResultName(resultID)
@@ -91,6 +54,19 @@ function LookingForGroup_Hook:QueueStatusDropDown_AddLFGListApplicationButtons(i
 	info.leftPadding = 10
 	info.disabled = IsInGroup() and not UnitIsGroupLeader("player")
 	UIDropDownMenu_AddButton(info)
+end
+
+function LookingForGroup_Hook:LFGListUtil_OpenBestWindow()
+	if AceConfigDialog.OpenFrames.LookingForGroup then
+		AceConfigDialog:Close("LookingForGroup")
+	else
+		local option = LookingForGroup.GetAddon("LookingForGroup_Options")
+		if option.option_table.args.requests == nil then
+			option.set_requests()
+		end
+		AceConfigDialog:SelectGroup("LookingForGroup","requests")
+		AceConfigDialog:Open("LookingForGroup")
+	end
 end
 
 function LookingForGroup_Hook:QueueStatusDropDown_AddLFGListButtons(info)
@@ -179,5 +155,8 @@ function LookingForGroup_Hook:LFGListApplicationDialog_SignUpButton_OnClick(obj)
 	StaticPopupSpecial_Hide(dialog);
 end
 
-function LookingForGroup_Hook:QuickJoinToastButton_OnShow(...)
+function LookingForGroup_Hook:AddMessage(frame,message,...)
+	if message ~= ERR_REPORT_SUBMITTED_SUCCESSFULLY then
+		self.hooks[frame].AddMessage(frame,message,...)
+	end
 end

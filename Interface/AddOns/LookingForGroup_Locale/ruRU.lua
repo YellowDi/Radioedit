@@ -2,10 +2,8 @@ local L = LibStub("AceLocale-3.0"):NewLocale("LookingForGroup", "ruRU")
 if not L then return end
 L["Armory"] = "Оружейная"
 L["Auto"] = "Авто"
---Translation missing 
--- L["auto_report"] = ""
---Translation missing 
--- L["auto_report_desc"] = ""
+L["auto_report"] = "Автоматический Отчет"
+L["auto_report_desc"] = "Автоматически сообщать о спам-группах в системе LFG"
 L["background_search"] = "Фоновый поиск"
 L["cr_realm_rand_hop"] = "Случайный прыжок"
 L["cr_realm_rand_hop_desc"] = [=[Прыжок в случайный мир. Ctrl/Shift + ПКМ на иконку на мини-карте также делает это. 
@@ -37,6 +35,7 @@ L["options_auto_pve_desc"] = [=[Нормальное нажатие = Тольк
 |c00ff0000Внимание! Этот вариант не гарантирует вам безопасность! Он будет группировать вас с серверами pvp, не сообщая вам, куда перемещает вас, даже если этот параметр используется.|r]=]
 L["options_window"] = "Размер окна"
 L["Relist"] = "Повторно выставленный"
+L["Repeat"] = "Повторение"
 L["Results"] = "Результат"
 L["rf_mode_desc"] = [=[Нормальное нажатие = Черный список серверов
 Темное нажатие = Белый список серверов

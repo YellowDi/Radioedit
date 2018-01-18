@@ -59,7 +59,7 @@ function LookingForGroup_WQ:QUEST_ACCEPTED(info,index,wq_id)
 				else
 					comment = ""
 				end
-				C_LFGList.CreateListing(activityID,"",0,0,"",comment,true,false,wq_id)
+				C_LFGList.CreateListing(activityID,"",profile.auto_ilvl or 0,0,"",comment,true,false,wq_id)
 			end
 			LookingForGroup_Auto.accepted(create,function()
 				local patterns = {{matches = {questName}}}
@@ -108,11 +108,11 @@ function LookingForGroup_WQ:LFG_LIST_ENTRY_EXPIRED_TOO_MANY_PLAYERS()
 			local dialog = StaticPopupDialogs.LookingForGroup_HardwareAPIDialog
 			dialog.text = START_A_GROUP
 			dialog.OnAccept = function()
-				C_LFGList.CreateListing(LFGListUtil_GetQuestCategoryData(wq),"",0,0,"","",true,false,wq)
+				C_LFGList.CreateListing(LFGListUtil_GetQuestCategoryData(wq),"",LookingForGroup.db.profile.auto_ilvl or 0,0,"","",true,false,wq)
 			end
 			StaticPopup_Show("LookingForGroup_HardwareAPIDialog")
 		else
-			C_LFGList.CreateListing(LFGListUtil_GetQuestCategoryData(wq),"",0,0,"","",true,false,wq)
+			C_LFGList.CreateListing(LFGListUtil_GetQuestCategoryData(wq),"",LookingForGroup.db.profile.auto_ilvl or 0,0,"","",true,false,wq)
 		end
 	end
 end
