@@ -1,6 +1,7 @@
 local _, Simulationcraft = ...
 
 Simulationcraft = LibStub("AceAddon-3.0"):NewAddon(Simulationcraft, "Simulationcraft", "AceConsole-3.0", "AceEvent-3.0")
+ItemUpgradeInfo = LibStub("LibItemUpgradeInfo-1.0")
 
 local OFFSET_ITEM_ID = 1
 local OFFSET_ENCHANT_ID = 2
@@ -495,11 +496,15 @@ function Simulationcraft:GetBagItemStrings()
           _, _, _, _, _, _, itemLink, _, _, itemId = GetContainerItemInfo(container, slot)
           if itemLink then
             local name, link, quality, iLevel, reqLevel, class, subclass, maxStack, equipSlot, texture, vendorPrice = GetItemInfo(itemLink)
+
+            -- get correct level for scaling gear
+            local level = ItemUpgradeInfo:GetUpgradedItemLevel(link) or 0
+
             -- find all equippable, non-artifact items
             if IsEquippableItem(itemLink) and quality ~= 6 then
               bagItems[#bagItems + 1] = {
                 string = GetItemStringFromItemLink(slotNum, itemLink, false),
-                name = name .. ' (' .. iLevel .. ')'
+                name = name .. ' (' .. level .. ')'
               }
             end
           end
@@ -513,6 +518,9 @@ end
 
 -- This is the workhorse function that constructs the profile
 function Simulationcraft:PrintSimcProfile(debugOutput, noBags)
+  -- addon metadata
+  local versionComment = '# SimC Addon ' .. GetAddOnMetadata('Simulationcraft', 'Version')
+
   -- Basic player info
   local playerName = UnitName('player')
   local _, playerClass = UnitClass('player')
@@ -580,7 +588,9 @@ function Simulationcraft:PrintSimcProfile(debugOutput, noBags)
   local playerCrucible = self:GetCrucibleString()
 
   -- Build the output string for the player (not including gear)
-  local simulationcraftProfile = player .. '\n'
+  local simulationcraftProfile = versionComment .. '\n'
+  simulationcraftProfile = simulationcraftProfile .. '\n'
+  simulationcraftProfile = simulationcraftProfile .. player .. '\n'
   simulationcraftProfile = simulationcraftProfile .. playerLevel .. '\n'
   simulationcraftProfile = simulationcraftProfile .. playerRace .. '\n'
   simulationcraftProfile = simulationcraftProfile .. playerRegion .. '\n'
