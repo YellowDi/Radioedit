@@ -1,47 +1,23 @@
-tag 22b688d32b10fdb1ba016d953e0eaa07249809df 1.5.10
+tag c1a0e3bc1cf5a739e2ce32936d1333340da5369a 1.5.13
 Author:	Alar of Runetotem <alar@aspide.it>
-Date:	Mon Dec 4 15:04:36 2017 +0100
+Date:	Mon Dec 11 15:11:18 2017 +0100
 
-Feature: Added a second level sort criteria
-Fix: LeftSide Icon are now updates as soon as mission table appears
-Feature: Added itemid 140931 (Bandit wanted poster) to quick buttons
-Feature: For reputation rewards, your current reputation with the
-related faction is shown
+Retagged as 1.5.13 cause packager failed
+Fix: lua error when both sorts were on "Original method" Thanks to Septh
+for noting it
+Feature: added Squires'Oath for paladins
 
-commit d222df4428890ef350c759e4a6b1376d9cabc9af
+commit cd8ebf6c0cc67b89780b9c2ee1b4d9a3571effaa
 Author: Alar of Runetotem <alar@aspide.it>
-Date:   Sun Dec 3 18:58:39 2017 +0100
+Date:   Mon Dec 11 15:00:46 2017 +0100
 
-    Debug removed
+    Fix: lua error when both sorts were on "Original method" Thanks to Septh
+    for noting it
+    Feature: added Squires'Oath for paladins
 
-commit d222df4428890ef350c759e4a6b1376d9cabc9af
+commit 9e7f665089c2785cfa734480121a2d53302ac01a
 Author: Alar of Runetotem <alar@aspide.it>
-Date:   Sun Dec 3 18:58:39 2017 +0100
+Date:   Mon Dec 11 12:35:34 2017 +0100
 
-    Debug removed
-
-commit c8fea310627d1324fd3c43624498c1a49bcad9b0
-Author: Alar of Runetotem <alar@aspide.it>
-Date:   Sun Dec 3 18:53:05 2017 +0100
-
-    Feature: Added a second level sort criteria
-
-commit 1e10486ea267fd4729391125cdcfc07b0d323c53
-Author: Alar of Runetotem <alar@aspide.it>
-Date:   Sun Dec 3 18:30:27 2017 +0100
-
-    Fix: LeftSide Icon are now updates as soon as mission table appears
-
-commit 5325b34ce0fd39c54ba069d9439f5e3164a28d8c
-Author: Alar of Runetotem <alar@aspide.it>
-Date:   Sun Dec 3 16:30:31 2017 +0100
-
-    Feature: For reputation rewards, your current reputation with the
-    related faction is shown
-
-commit ce7814c9b46f217a347f53b2553a330a965fc96c
-Author: Alar of Runetotem <alar@aspide.it>
-Date:   Sat Dec 2 22:05:44 2017 +0100
-
-    Fix: Added Bandit Wanted Poster shortcut
+    Fix: added Squires'Oath for paladins
 

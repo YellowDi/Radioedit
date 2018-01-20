@@ -156,7 +156,9 @@ local function IsIgnored(mission)
 	return addon:GetBoolean("ELITEMODE") and not addon:GetMissionData(mission.missionID,'elite')
 end
 local sorters={
-    Garrison_SortMissions_Original=nop,
+    Garrison_SortMissions_Original=function(mission)
+      return IsLow(mission)
+    end,
     Garrison_SortMissions_Chance=function(mission)
       return IsLow(mission)  .. format("%010d",MAX + GetPerc(mission,true))
     end,
@@ -207,6 +209,7 @@ function module:OnInitialized()
   addon:AddSelect("SORTMISSION2","Garrison_SortMissions_Original",sorters, L["and then by:"],L["Changes the second sort order of missions in Mission panel"])
 	addon:AddBoolean("IGNORELOW",false,L["Empty missions sorted as last"],L["Empty or 0% success mission are sorted as last. Does not apply to \"original\" method"])
 	addon:AddBoolean("NOWARN",false,L["Remove no champions warning"],L["Disables warning: "] .. GARRISON_PARTY_NOT_ENOUGH_CHAMPIONS)
+	addon:AddBoolean("NOBLACKLIST",false,L["Disable blacklisting"],format(L["%s no longer blacklist missions"],KEY_BUTTON2))
 	addon:RegisterForMenu("mission",
 --[===[@debug@
 		"ELITEMODE",
@@ -217,6 +220,7 @@ function module:OnInitialized()
 		"NOWARN")
 	self:LoadButtons()
 	Current_Sorter=addon:GetString("SORTMISSION")
+  Second_Sorter=addon:GetString("SORTMISSION2")
 	self:SecureHookScript(OHF,"OnShow","InitialSetup")
 		Dialog:Register("OHCUrlCopy", {
 			text = L["URL Copy"],
@@ -457,14 +461,21 @@ function module:SortMissions()
 --@end-debug@			]===]
 			local rc,result =pcall(f,mission)
       local rc2,result2 =pcall(f2,mission)
-      
-			sortKeys[missionID]=format("%s|%s",rc and result or "0",rc2 and result2 or "0")
-		
 --[===[@debug@
-      if not rc then addon:Print(C(result,"Orange")) end
+      if not rc then addon:Print(missionID,C(result,"Orange")) end
+      if not rc2 then addon:Print(missionID,C(result2,"Orange")) end
+--@end-debug@     ]===]
+      if not rc then result="" end
+      if not rc2 then result2="" end
+      sortKeys[missionID]=format("%s|%s",result,result2:sub(2))
+--[===[@debug@
+      sortKeys[missionID]=sortKeys[missionID] .. G.GetMissionName(missionID)
 		end
 --@end-debug@			]===]
 	end
+--[===[@debug@
+    --DevTools_Dump(sortKeys)
+--@end-debug@     ]===]
 	sort(OHFMissions.availableMissions,sortfuncAvailable)
 --[===[@debug@
   for i=1,#OHFMissions.availableMissions do
@@ -495,6 +506,7 @@ function addon:ApplySORTMISSION(value)
   return self:ReloadMissions()
 end  
 function addon:ApplySORTMISSION2(value)
+  addon:Print("SORTMISSION2")
   Second_Sorter=value
   return self:ReloadMissions()
 end  
@@ -510,7 +522,7 @@ local PushRefresher,RunRefreshers,ListRefreshers do
   function RunRefreshers()
   if next(Refreshers) and OHF:IsVisible() then
 --[===[@debug@      
-    addon:Print(debugstack(3,2,0))
+    addon:Print("Runrefresher called from",debugstack(3,2,0))
 --@end-debug@]===]
   else
     return
@@ -564,9 +576,6 @@ function addon:ReloadMissions()
   end
 end
 function addon:RedrawMissions()
---[===[@debug@
-  --addon:Print("RedrawMissions")
---@end-debug@  ]===]
   addon:RunRefreshers()
   addon:SortTroop()
   for i=1,#OHFButtons do
@@ -731,9 +740,9 @@ function module:InitialSetup(this)
 	addon:UpdateStop()
 	collectgarbage("restart")
   addon:MarkAsNew(OHF,addon:NumericVersion(),safeformat(L["%s, please review the tutorial\n(Click the icon to dismiss this message and start the tutorial)"],me .. ' ' .. addon.version),"ShowTutorial")
---@alpha@
-	addon.version="1.6.0 Alpha"
---@end-alpha@
+--[===[@alpha@
+	--addon.version="1.6.0 Alpha"
+--@end-alpha@]===]
 	local _,_,versiontype=addon.version:find("(Beta)")
 	if not versiontype then _,_,versiontype=addon.version:find("(Alpha)") end
 	if versiontype then
@@ -1373,7 +1382,7 @@ function module:RawMissionClick(this,button)
 		else
 			return addon:GetMissionpageModule():FillMissionPage(mission,key)
 		end
-	elseif button=="RightButton" then
+	elseif button=="RightButton" and not addon:GetBoolean("NOBLACKLIST") then
 		addon.db.profile.blacklist[mission.missionID]= not addon.db.profile.blacklist[mission.missionID]
 		GameTooltip:Hide()
 		missionIDS[this]=nil
