@@ -7,6 +7,7 @@ MasqueDB = {
 	["profileKeys"] = {
 		["Geronimo - 格瑞姆巴托"] = "Default",
 		["Mirvish - 主宰之剑"] = "Default",
+		["Agihax - 奥蕾莉亚"] = "Default",
 		["可憎少女呜呼 - 主宰之剑"] = "Default",
 		["Radioedit - 主宰之剑"] = "Default",
 		["Underdog - 主宰之剑"] = "Default",
@@ -15,14 +16,18 @@ MasqueDB = {
 		["Elenore - 主宰之剑"] = "Default",
 		["Ravenkwok - 主宰之剑"] = "Default",
 		["Zeoi - 主宰之剑"] = "Default",
-		["Mirvish - 奥蕾莉亚"] = "Default",
-		["Geronimo - 奥蕾莉亚"] = "Default",
-		["Radioedit - 格瑞姆巴托"] = "Default",
-		["Syllenaris - 奥蕾莉亚"] = "Default",
+		["Ataxa - 奥蕾莉亚"] = "Default",
+		["Radioedit - 奥蕾莉亚"] = "Default",
 		["Mirvish - 格瑞姆巴托"] = "Default",
 		["Underdog - 奥蕾莉亚"] = "Default",
+		["Mirvish - 奥蕾莉亚"] = "Default",
+		["Geronimo - 奥蕾莉亚"] = "Default",
+		["Syllenaris - 奥蕾莉亚"] = "Default",
+		["苍白的形容词 - 格瑞姆巴托"] = "Default",
+		["Marcie - 奥蕾莉亚"] = "Default",
+		["Radioedit - 格瑞姆巴托"] = "Default",
 		["Atax - 奥蕾莉亚"] = "Default",
-		["Radioedit - 奥蕾莉亚"] = "Default",
+		["可憎少女呜呼 - 格瑞姆巴托"] = "Default",
 	},
 	["profiles"] = {
 		["Default"] = {
@@ -415,6 +420,11 @@ MasqueDB = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
+				},
+				["WeakAuras_奥术飞弹！"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "WindShadow",
 				},
 				["WeakAuras_鱼人饲料"] = {
 					["Disabled"] = true,
@@ -842,6 +852,10 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
+				["TellMeWhen"] = {
+					["Inherit"] = false,
+					["SkinID"] = "WindShadow",
+				},
 				["WeakAuras_06_催眠气罐"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
@@ -1260,10 +1274,19 @@ MasqueDB = {
 					["Disabled"] = true,
 					["SkinID"] = "Zoomed",
 				},
+				["WeakAuras_奥术飞弹！_2"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "WindShadow",
+				},
 				["WeakAuras_11_物理易伤"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
+				},
+				["WeakAuras_冰冻之触冷却"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
 				},
 				["WeakAuras_08_黑暗裂隙"] = {
 					["Disabled"] = true,
@@ -1278,14 +1301,18 @@ MasqueDB = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 				},
-				["WeakAuras_rop_underlay_2"] = {
-					["Disabled"] = true,
+				["TellMeWhen_Group: 2"] = {
 					["Inherit"] = false,
+					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_mirror_image_fire_lge"] = {
+				["TrufiGCD_All Icons"] = {
+					["Inherit"] = false,
+					["SkinID"] = "WindShadow",
+				},
+				["WeakAuras_blast_wave_lge"] = {
 					["SkinID"] = "Masque: Shadow 3",
 				},
-				["WeakAuras_02_吞噬之球(史诗)"] = {
+				["WeakAuras_11_巨镰横扫/死亡之镰"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
@@ -1295,24 +1322,64 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
 				},
-				["WeakAuras_incanter's_flow_base_2"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-				},
 				["WeakAuras_11_初始化序列_2"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
 				},
-				["WeakAuras_11_天空之力_2"] = {
+				["WeakAuras_fire_blast_2_available"] = {
+					["Disabled"] = true,
+					["SkinID"] = "Zoomed",
+				},
+				["WeakAuras_11_物理易伤_2"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
 				},
-				["WeakAuras_11_冰霜易伤"] = {
+				["WeakAuras_erratic_metronome"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
+				},
+				["WeakAuras_rop_underlay_2"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_11_暗影易伤_2"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Aftermathh",
+				},
+				["WeakAuras_11_宇宙射线_2"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Aftermathh",
+				},
+				["WeakAuras_02_吞噬之球(史诗)"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "WindShadow",
+				},
+				["WeakAuras_living_bomb_cd"] = {
+					["Disabled"] = true,
+					["SkinID"] = "Zoomed",
+				},
+				["WeakAuras_incanter's_flow_base_2"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_comet_storm_available"] = {
+					["Disabled"] = true,
+					["SkinID"] = "Zoomed",
+				},
+				["WeakAuras_黑暗前途debuff_30"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_11_天空之力_2"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Aftermathh",
 				},
 				["WeakAuras_08_被标记的猎物_2"] = {
 					["Disabled"] = true,
@@ -1324,15 +1391,15 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_11_宇宙射线_2"] = {
+				["WeakAuras_11_巨镰横扫"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
 				},
-				["WeakAuras_11_宿命降临"] = {
+				["WeakAuras_04_烈焰之盾"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
-					["SkinID"] = "Aftermathh",
+					["SkinID"] = "WindShadow",
 				},
 				["WeakAuras_04_紫色传送门纳斯雷萨"] = {
 					["Disabled"] = true,
@@ -1348,44 +1415,6 @@ MasqueDB = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
-				},
-				["WeakAuras_11_物理易伤_2"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "Aftermathh",
-				},
-				["WeakAuras_11_暗影易伤_2"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "Aftermathh",
-				},
-				["WeakAuras_living_bomb_cd"] = {
-					["Disabled"] = true,
-					["SkinID"] = "Zoomed",
-				},
-				["WeakAuras_11_灵魂凋零_2"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "Aftermathh",
-				},
-				["WeakAuras_cauterize_notify_frost"] = {
-					["Disabled"] = true,
-					["SkinID"] = "Zoomed",
-				},
-				["WeakAuras_11_天空之赐_2"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "Aftermathh",
-				},
-				["WeakAuras_11_巨镰横扫"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "Aftermathh",
-				},
-				["WeakAuras_04_烈焰之盾"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "WindShadow",
 				},
 				["WeakAuras_frost_bomb"] = {
 					["Disabled"] = true,
@@ -1405,27 +1434,67 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
 				},
-				["WeakAuras_09_冰霜之球_2"] = {
+				["WeakAuras_cauterize_notify_frost"] = {
+					["Disabled"] = true,
+					["SkinID"] = "Zoomed",
+				},
+				["WeakAuras_印记可用"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Masque: Shadow 3",
+				},
+				["Bartender4_4"] = {
+					["Colors"] = {
+						["Normal"] = {
+							0.0509803921568627, -- [1]
+							0.0509803921568627, -- [2]
+							0.0509803921568627, -- [3]
+							1, -- [4]
+						},
+						["Checked"] = {
+							0, -- [1]
+							0.172549019607843, -- [2]
+							0.219607843137255, -- [3]
+							0.5, -- [4]
+						},
+					},
+					["Inherit"] = false,
+					["Backdrop"] = true,
+					["SkinID"] = "Aftermathh",
+				},
+				["WeakAuras_07_天启协议"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
 				},
-				["WeakAuras_09_宇宙之光"] = {
+				["WeakAuras_incanter's_flow_base_cane"] = {
 					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "WindShadow",
+					["SkinID"] = "Zoomed",
 				},
-				["WeakAuras_09_恐惧_2"] = {
+				["WeakAuras_flame_patch"] = {
 					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "Aftermathh",
+					["SkinID"] = "Zoomed",
 				},
 				["WeakAuras_09_火焰打击(仅tank)_2"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
 				},
-				["WeakAuras_11_宇宙重击_2"] = {
+				["WeakAuras_07_天启协议(小怪出现)"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Aftermathh",
+				},
+				["WeakAuras_燃烧可用"] = {
+					["Inherit"] = false,
+					["SkinID"] = "Masque: Shadow 3",
+				},
+				["WeakAuras_08_能量升级(仅tank)"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Aftermathh",
+				},
+				["WeakAuras_邪爪_-_debuff"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
@@ -1435,7 +1504,16 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
 				},
-				["WeakAuras_07_恶魔炸弹"] = {
+				["WeakAuras_11_宇宙重击_2"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Aftermathh",
+				},
+				["WeakAuras_rop_active_2"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_11_海洋之赐"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
@@ -1445,9 +1523,10 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_words_of_power"] = {
+				["WeakAuras_精力充沛可用"] = {
 					["Disabled"] = true,
-					["SkinID"] = "Zoomed",
+					["Inherit"] = false,
+					["SkinID"] = "Masque: Shadow 3",
 				},
 				["WeakAuras_arcane_orb_available"] = {
 					["Disabled"] = true,
@@ -1457,33 +1536,31 @@ MasqueDB = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 				},
-				["WeakAuras_06_充能轰炸_dot"] = {
+				["WeakAuras_words_of_power"] = {
 					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "Aftermathh",
+					["SkinID"] = "Zoomed",
 				},
-				["WeakAuras_08_能量升级(仅tank)"] = {
-					["Disabled"] = true,
+				["WeakAuras_时间扭曲准备完毕"] = {
 					["Inherit"] = false,
-					["SkinID"] = "Aftermathh",
-				},
-				["WeakAuras_blast_wave_lge"] = {
 					["SkinID"] = "Masque: Shadow 3",
+				},
+				["TellMeWhen_分组: 2"] = {
+					["Inherit"] = false,
+					["SkinID"] = "WindShadow",
 				},
 				["WeakAuras_07_天启协议(小怪)"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_07_程式启动_2"] = {
+				["WeakAuras_pet_defensive"] = {
 					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "Aftermathh",
+					["SkinID"] = "Zoomed",
 				},
-				["WeakAuras_邪爪_-_debuff"] = {
+				["WeakAuras_04_时空裂痕(仅tank)"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
-					["SkinID"] = "Aftermathh",
+					["SkinID"] = "WindShadow",
 				},
 				["WeakAuras_03_座舱空余"] = {
 					["Disabled"] = true,
@@ -1494,7 +1571,7 @@ MasqueDB = {
 					["Disabled"] = true,
 					["SkinID"] = "Zoomed",
 				},
-				["WeakAuras_07_破坏术_2"] = {
+				["WeakAuras_04_腐蚀烂泥_2"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
@@ -1508,10 +1585,10 @@ MasqueDB = {
 					["Disabled"] = true,
 					["SkinID"] = "Zoomed",
 				},
-				["WeakAuras_11_灵魂炸弹_团队大伤害"] = {
+				["WeakAuras_06_催眠毒气_2"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
-					["SkinID"] = "WindShadow",
+					["SkinID"] = "Aftermathh",
 				},
 				["WeakAuras_饰品1就绪"] = {
 					["Disabled"] = true,
@@ -1521,21 +1598,16 @@ MasqueDB = {
 				["WeakAuras_rop_cd_available_lge"] = {
 					["SkinID"] = "Masque: Shadow 3",
 				},
-				["WeakAuras_07_毁灭者dot_2"] = {
+				["WeakAuras_cauterize_notify_cane"] = {
 					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "Aftermathh",
+					["SkinID"] = "Zoomed",
 				},
 				["WeakAuras_frost_2t20"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_时间扭曲准备完毕"] = {
-					["Inherit"] = false,
-					["SkinID"] = "Masque: Shadow 3",
-				},
-				["WeakAuras_04_毒素精华_2"] = {
+				["WeakAuras_05_反馈-邪污足迹_2"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
@@ -1545,11 +1617,17 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_能量顾问冷却"] = {
+				["WeakAuras_04_毒素精华_2"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Aftermathh",
+				},
+				["WeakAuras_流星可用"] = {
+					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "Masque: Shadow 3",
 				},
-				["WeakAuras_04_腐蚀烂泥_2"] = {
+				["WeakAuras_聚焦恐惧烈焰_-_玩家"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
@@ -1572,44 +1650,42 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_06_霰弹爆破_2"] = {
+				["WeakAuras_tarnished_sentinel_medallion"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
-					["SkinID"] = "Aftermathh",
+					["SkinID"] = "WindShadow",
 				},
 				["WeakAuras_09_诺甘农的幽灵军团_2"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
 				},
-				["WeakAuras_孤寂寒冬"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "Masque: Shadow 3",
-				},
-				["WeakAuras_11_海天之力"] = {
+				["WeakAuras_02_烈焰之喉(仅tank)"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
 				},
-				["WeakAuras_窒息之影"] = {
+				["WeakAuras_obelisk_of_the_void"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
-					["SkinID"] = "Aftermathh",
+					["SkinID"] = "WindShadow",
+				},
+				["WeakAuras_冰冻之触可用"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
 				},
 				["WeakAuras_02_闷烧"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_05_痛苦_2"] = {
-					["Disabled"] = true,
+				["Bagnon_guildbank - items"] = {
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
 				},
 				["ElvUI_Consolidated Buffs"] = {
 					["Inherit"] = false,
-					["SkinID"] = "Masque: Shadow 1",
+					["SkinID"] = "WindShadow",
 				},
 				["WeakAuras_arcane:_evocation_buff"] = {
 					["Disabled"] = true,
@@ -1630,10 +1706,10 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_流星可用"] = {
+				["WeakAuras_02_黑暗重构"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
-					["SkinID"] = "Masque: Shadow 3",
+					["SkinID"] = "WindShadow",
 				},
 				["WeakAuras_blast_wave_2"] = {
 					["Disabled"] = true,
@@ -1659,12 +1735,12 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
 				},
-				["WeakAuras_聚焦恐惧烈焰_-_玩家"] = {
+				["WeakAuras_强化隐身"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
-					["SkinID"] = "Aftermathh",
+					["SkinID"] = "Masque: Shadow 3",
 				},
-				["WeakAuras_04_打断"] = {
+				["WeakAuras_04_强化传送门:拉恩科纳"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
@@ -1692,28 +1768,14 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_obelisk_of_the_void"] = {
+				["WeakAuras_02_腐烂(仅tank)"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["Bartender4_5"] = {
-					["Colors"] = {
-						["Normal"] = {
-							0.0509803921568627, -- [1]
-							0.0509803921568627, -- [2]
-							0.0509803921568627, -- [3]
-							1, -- [4]
-						},
-						["Checked"] = {
-							0, -- [1]
-							0.172549019607843, -- [2]
-							0.219607843137255, -- [3]
-							0.5, -- [4]
-						},
-					},
+				["WeakAuras_01_引力毁灭_2"] = {
+					["Disabled"] = true,
 					["Inherit"] = false,
-					["Backdrop"] = true,
 					["SkinID"] = "Aftermathh",
 				},
 				["WeakAuras_玛瑟里顿之力"] = {
@@ -1730,10 +1792,8 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_末日冲击"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "Aftermathh",
+				["WeakAuras_controlled_burn_lge"] = {
+					["SkinID"] = "Masque: Shadow 3",
 				},
 				["WeakAuras_water_jet_cast"] = {
 					["Disabled"] = true,
@@ -1744,21 +1804,24 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
 				},
-				["WeakAuras_冰冻之触可用"] = {
+				["WeakAuras_03_排除闯入者"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
+					["SkinID"] = "Aftermathh",
 				},
-				["WeakAuras_dragon's_breath_lge"] = {
-					["SkinID"] = "Masque: Shadow 3",
+				["WeakAuras_racial:_troll_buff"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "WindShadow",
 				},
 				["WeakAuras_冰川"] = {
 					["Inherit"] = false,
 					["SkinID"] = "Masque: Shadow 3",
 				},
-				["WeakAuras_04_饥饿幽影"] = {
+				["WeakAuras_美味增益鱼:dps"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
-					["SkinID"] = "WindShadow",
+					["SkinID"] = "Aftermathh",
 				},
 				["WeakAuras_02_被吞噬"] = {
 					["Disabled"] = true,
@@ -1769,7 +1832,7 @@ MasqueDB = {
 					["Disabled"] = true,
 					["SkinID"] = "Zoomed",
 				},
-				["WeakAuras_11_泰坦造物_2"] = {
+				["WeakAuras_06_撕裂(仅tank)_2"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
@@ -1779,15 +1842,15 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_06_撕裂(仅tank)_2"] = {
+				["WeakAuras_04_饥饿幽影"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
-					["SkinID"] = "Aftermathh",
+					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_04_强化传送门:拉恩科纳"] = {
+				["WeakAuras_02_暗影触痕"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
-					["SkinID"] = "Aftermathh",
+					["SkinID"] = "WindShadow",
 				},
 				["WeakAuras_mirror_image_cane_available"] = {
 					["Disabled"] = true,
@@ -1806,28 +1869,30 @@ MasqueDB = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 				},
-				["WeakAuras_04_邪丝缠缚_2"] = {
+				["WeakAuras_11_火焰易伤"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
-					["SkinID"] = "Aftermathh",
+					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_01_引力毁灭_2"] = {
+				["WeakAuras_11_海洋之力"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
-					["SkinID"] = "Aftermathh",
+					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_incanter's_flow_1_frost"] = {
-					["Disabled"] = true,
-					["SkinID"] = "Zoomed",
-				},
-				["WeakAuras_03_座舱空余_2"] = {
+				["WeakAuras_03_混乱脉冲"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
-					["SkinID"] = "Aftermathh",
+					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_frozen_touch_aailable"] = {
+				["WeakAuras_09_阿曼苏尔的诡诈_杀小怪"] = {
 					["Disabled"] = true,
-					["SkinID"] = "Zoomed",
+					["Inherit"] = false,
+					["SkinID"] = "WindShadow",
+				},
+				["WeakAuras_cast_on_you_(仅坦克)_-_airhorn_sound_active_(冷却)"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "WindShadow",
 				},
 				["WeakAuras_04_绿色传送门拉恩科纳"] = {
 					["Disabled"] = true,
@@ -1839,12 +1904,12 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "Masque: Shadow 3",
 				},
-				["WeakAuras_03_排除闯入者"] = {
+				["WeakAuras_08_哀难_2"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
 				},
-				["WeakAuras_11_海洋之赐_2"] = {
+				["WeakAuras_04_红色传送门(克索诺斯)"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
@@ -1854,15 +1919,15 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_04_酸性之网_2"] = {
+				["WeakAuras_聚焦恐惧烈焰_-_群组"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
 				},
-				["WeakAuras_04_毒素精华"] = {
+				["WeakAuras_11_海洋之赐_2"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
-					["SkinID"] = "WindShadow",
+					["SkinID"] = "Aftermathh",
 				},
 				["WeakAuras_flame_patch_lge"] = {
 					["SkinID"] = "Masque: Shadow 3",
@@ -1872,24 +1937,21 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "Masque: Shadow 3",
 				},
-				["WeakAuras_04_红色传送门(克索诺斯)"] = {
+				["WeakAuras_fire_blast_1_available"] = {
 					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "Aftermathh",
+					["SkinID"] = "Zoomed",
 				},
-				["WeakAuras_11_怒火余烬_2"] = {
-					["Disabled"] = true,
+				["TellMeWhen_分组: 1"] = {
 					["Inherit"] = false,
-					["SkinID"] = "Aftermathh",
+					["SkinID"] = "WindShadow",
 				},
 				["WeakAuras_incanter's_flow_4"] = {
 					["Disabled"] = true,
 					["SkinID"] = "Zoomed",
 				},
-				["WeakAuras_02_暗影触痕"] = {
+				["WeakAuras_mirror_image_fire_available_2"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
-					["SkinID"] = "WindShadow",
 				},
 				["WeakAuras_02_虹吸腐蚀_(史诗)"] = {
 					["Disabled"] = true,
@@ -1905,75 +1967,74 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_03_弱点攻击(仅tank)_2"] = {
+				["WeakAuras_薪火"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
-					["SkinID"] = "Aftermathh",
-				},
-				["WeakAuras_07_天启协议_"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "WindShadow",
+					["SkinID"] = "Masque: Shadow 3",
 				},
 				["WeakAuras_11_海洋之力_2"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
 				},
-				["WeakAuras_02_被吞噬_2"] = {
+				["WeakAuras_01_歼灭_2"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
 				},
-				["WeakAuras_薪火"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "Masque: Shadow 3",
-				},
-				["WeakAuras_04_欺骗幻境_2"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "Aftermathh",
-				},
-				["WeakAuras_11_诺甘农圆盘"] = {
+				["WeakAuras_11_灵魂炸弹"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
+				},
+				["WeakAuras_mirror_image_cane"] = {
+					["Disabled"] = true,
+					["SkinID"] = "Zoomed",
+				},
+				["WeakAuras_08_哀难"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "WindShadow",
+				},
+				["WeakAuras_唤醒可用"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Masque: Shadow 3",
 				},
 				["WeakAuras_01_错乱屠戮移除"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_02_黑暗重构_2"] = {
+				["WeakAuras_03_齐射"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
-					["SkinID"] = "Aftermathh",
+					["SkinID"] = "WindShadow",
 				},
 				["WeakAuras_02_炽燃残骸"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_02_荒芜凝视_2"] = {
+				["WeakAuras_10_能量提升"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
-					["SkinID"] = "Aftermathh",
+					["SkinID"] = "WindShadow",
 				},
 				["WeakAuras_rop_cd_cane_available_1"] = {
 					["Disabled"] = true,
 					["SkinID"] = "Zoomed",
 				},
-				["WeakAuras_流星可用_2"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-				},
-				["WeakAuras_03_恶魔冲锋"] = {
+				["WeakAuras_10_破敌者(仅tank)"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_08_哀难"] = {
+				["WeakAuras_ray_of_frost_available"] = {
+					["Disabled"] = true,
+					["SkinID"] = "Zoomed",
+				},
+				["WeakAuras_10_烈焰之迹"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
@@ -1983,25 +2044,26 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
 				},
-				["WeakAuras_镜像冷却"] = {
-					["Inherit"] = false,
-					["SkinID"] = "Masque: Shadow 3",
-				},
-				["WeakAuras_唤醒可用"] = {
+				["WeakAuras_11_坦克嘲讽_其他人帮助"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
-					["SkinID"] = "Masque: Shadow 3",
+					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_01_屠戮_2"] = {
+				["WeakAuras_04_克索诺斯之焰"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
-					["SkinID"] = "Aftermathh",
+					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_冰冻之触冷却"] = {
+				["TrufiGCD"] = {
+					["Inherit"] = false,
+					["SkinID"] = "WindShadow",
+				},
+				["WeakAuras_11_阿格拉玛的化身"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
+					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_ray_of_frost_available"] = {
+				["WeakAuras_pet_passive"] = {
 					["Disabled"] = true,
 					["SkinID"] = "Zoomed",
 				},
@@ -2010,10 +2072,9 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
 				},
-				["WeakAuras_11_阿格拉玛的化身"] = {
-					["Disabled"] = true,
+				["WeakAuras_咒术洪流一层"] = {
 					["Inherit"] = false,
-					["SkinID"] = "WindShadow",
+					["SkinID"] = "Masque: Shadow 3",
 				},
 				["WeakAuras_10_烈焰喷薄"] = {
 					["Disabled"] = true,
@@ -2029,10 +2090,8 @@ MasqueDB = {
 					["Disabled"] = true,
 					["SkinID"] = "Zoomed",
 				},
-				["WeakAuras_墨汁+吞噬"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "Aftermathh",
+				["WeakAuras_incanter's_flow_1_lge"] = {
+					["SkinID"] = "Masque: Shadow 3",
 				},
 				["WeakAuras_11_能量"] = {
 					["Disabled"] = true,
@@ -2054,39 +2113,41 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_pet_passive"] = {
+				["WeakAuras_水流喷射"] = {
 					["Disabled"] = true,
-					["SkinID"] = "Zoomed",
+					["Inherit"] = false,
+					["SkinID"] = "Masque: Shadow 3",
 				},
 				["Bartender4_StanceBar"] = {
 					["Inherit"] = false,
 					["SkinID"] = "Zoomed",
 				},
-				["WeakAuras_10_烈焰之迹"] = {
+				["Bagnon_voidstorage - items"] = {
+					["Inherit"] = false,
+					["SkinID"] = "Aftermathh",
+				},
+				["WeakAuras_09_火焰打击(仅tank)"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
-				},
-				["WeakAuras_living_bomb_available"] = {
-					["Disabled"] = true,
-					["SkinID"] = "Zoomed",
 				},
 				["WeakAuras_能量符文"] = {
 					["Inherit"] = false,
 					["SkinID"] = "Masque: Shadow 3",
 				},
-				["WeakAuras_08_能量"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "WindShadow",
-				},
-				["WeakAuras_icy_veins_overlay_sweep"] = {
-					["Disabled"] = true,
-					["SkinID"] = "Zoomed",
-				},
 				["WeakAuras_燃烬风暴冷却"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
+				},
+				["WeakAuras_末日之雹"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Aftermathh",
+				},
+				["WeakAuras_potion"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "WindShadow",
 				},
 				["WeakAuras_05_反馈-奥能积累"] = {
 					["Disabled"] = true,
@@ -2098,52 +2159,51 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
 				},
-				["Bagnon_voidstorage - items"] = {
-					["Inherit"] = false,
-					["SkinID"] = "Aftermathh",
-				},
-				["WeakAuras_09_冷凝之血_2"] = {
+				["WeakAuras_08_冥魂之拥"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
-					["SkinID"] = "Aftermathh",
+					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_咒术洪流一层"] = {
+				["WeakAuras_04_意识迷雾"] = {
+					["Disabled"] = true,
 					["Inherit"] = false,
-					["SkinID"] = "Masque: Shadow 3",
+					["SkinID"] = "WindShadow",
+				},
+				["WeakAuras_resonance"] = {
+					["Disabled"] = true,
+					["SkinID"] = "Zoomed",
 				},
 				["WeakAuras_cinderstorm_available"] = {
 					["Disabled"] = true,
 					["SkinID"] = "Zoomed",
 				},
-				["WeakAuras_萦绕的爆发"] = {
+				["WeakAuras_09_卡兹格罗斯之焰"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
-					["SkinID"] = "Aftermathh",
+					["SkinID"] = "WindShadow",
 				},
 				["WeakAuras_02_烧焦"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_ofcd:_time_warp_buff"] = {
+				["WeakAuras_rop_cd_2"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
-					["SkinID"] = "WindShadow",
+				},
+				["WeakAuras_气定神闲可用"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Masque: Shadow 3",
 				},
 				["WeakAuras_04_酸性之网"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_04_永燃烈焰"] = {
-					["Disabled"] = true,
+				["Bartender4_MicroMenu"] = {
 					["Inherit"] = false,
-					["SkinID"] = "WindShadow",
-				},
-				["WeakAuras_11_宇宙道标"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "WindShadow",
+					["SkinID"] = "Zoomed",
 				},
 				["WeakAuras_04_邪丝缠缚"] = {
 					["Disabled"] = true,
@@ -2159,9 +2219,10 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["Bartender4_MicroMenu"] = {
+				["WeakAuras_04_永燃烈焰"] = {
+					["Disabled"] = true,
 					["Inherit"] = false,
-					["SkinID"] = "Zoomed",
+					["SkinID"] = "WindShadow",
 				},
 				["WeakAuras_镜像"] = {
 					["Inherit"] = false,
@@ -2171,9 +2232,10 @@ MasqueDB = {
 					["Disabled"] = true,
 					["SkinID"] = "Zoomed",
 				},
-				["WeakAuras_combustion_cd_2_3"] = {
+				["WeakAuras_09_飞旋的军刀"] = {
+					["Disabled"] = true,
 					["Inherit"] = false,
-					["SkinID"] = "Masque: Shadow 3",
+					["SkinID"] = "WindShadow",
 				},
 				["WeakAuras_incanter's_flow_5"] = {
 					["Disabled"] = true,
@@ -2184,22 +2246,20 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_09_卡兹格罗斯之焰"] = {
+				["WeakAuras_11_天空之力"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_08_冥魂之拥"] = {
+				["WeakAuras_薪火_2"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
-					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_04_意识迷雾"] = {
+				["WeakAuras_dragon's_breath"] = {
 					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "WindShadow",
+					["SkinID"] = "Zoomed",
 				},
-				["WeakAuras_rop_overlay_sweep_frost"] = {
+				["WeakAuras_arcane_orb"] = {
 					["Disabled"] = true,
 					["SkinID"] = "Zoomed",
 				},
@@ -2208,29 +2268,29 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
 				},
-				["WeakAuras_dragon's_breath"] = {
+				["WeakAuras_06_撕裂(仅tank)"] = {
 					["Disabled"] = true,
-					["SkinID"] = "Zoomed",
+					["Inherit"] = false,
+					["SkinID"] = "WindShadow",
 				},
 				["WeakAuras_11_神圣易伤_2"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
 				},
-				["WeakAuras_08_烈焰折磨"] = {
+				["WeakAuras_07_程式启动"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_宝珠cd"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "Masque: Shadow 3",
-				},
-				["WeakAuras_11_天空之力"] = {
+				["WeakAuras_04_传送门"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
+				},
+				["Bagnon_voidstorage - bags"] = {
+					["Inherit"] = false,
+					["SkinID"] = "Aftermathh",
 				},
 				["WeakAuras_寒冰炸弹"] = {
 					["Disabled"] = true,
@@ -2241,30 +2301,32 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
 				},
-				["WeakAuras_黑冰箭冷却"] = {
+				["WeakAuras_07_净化协议dot"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
-					["SkinID"] = "Masque: Shadow 3",
+					["SkinID"] = "WindShadow",
 				},
 				["Bartender4_2"] = {
 					["Inherit"] = false,
 					["SkinID"] = "Zoomed",
 				},
-				["WeakAuras_闪回信标"] = {
+				["WeakAuras_黑冰箭冷却"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "Masque: Shadow 3",
 				},
-				["WeakAuras_meteor_lge"] = {
-					["SkinID"] = "Masque: Shadow 3",
+				["WeakAuras_frozen_touch"] = {
+					["Disabled"] = true,
+					["SkinID"] = "Zoomed",
 				},
 				["WeakAuras_水元素_2"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 				},
-				["WeakAuras_incanter's_flow_2_frost"] = {
+				["WeakAuras_06_催眠气罐_2"] = {
 					["Disabled"] = true,
-					["SkinID"] = "Zoomed",
+					["Inherit"] = false,
+					["SkinID"] = "Aftermathh",
 				},
 				["WeakAuras_11_灵魂引爆_2"] = {
 					["Disabled"] = true,
@@ -2276,11 +2338,16 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_rop_available"] = {
+				["WeakAuras_incanter's_flow_2_2"] = {
 					["Disabled"] = true,
-					["SkinID"] = "Zoomed",
+					["Inherit"] = false,
 				},
-				["WeakAuras_06_催眠气罐_2"] = {
+				["WeakAuras_02_腐烂(仅tank)_2"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Aftermathh",
+				},
+				["WeakAuras_05_反馈-燃烧的余烬_2"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
@@ -2290,12 +2357,7 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "Masque: Shadow 3",
 				},
-				["WeakAuras_05_反馈-燃烧的余烬_2"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "Aftermathh",
-				},
-				["WeakAuras_06_强化脉冲手雷"] = {
+				["WeakAuras_07_破坏术"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
@@ -2314,35 +2376,33 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
+				["WeakAuras_咒术洪流两层"] = {
+					["Inherit"] = false,
+					["SkinID"] = "Masque: Shadow 3",
+				},
+				["WeakAuras_09_冰霜之球"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "WindShadow",
+				},
 				["WeakAuras_02_点燃"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
-				},
-				["WeakAuras_arcane:_arcane_power_buff"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "WindShadow",
-				},
-				["WeakAuras_04_传送门"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "WindShadow",
 				},
 				["WeakAuras_热能真空"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "Masque: Shadow 3",
 				},
-				["WeakAuras_06_撕裂(仅tank)"] = {
+				["WeakAuras_04_红色传送门克索诺斯"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_09_诺甘农的幽灵军团时间"] = {
+				["WeakAuras_incanter's_flow_4_2"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
-					["SkinID"] = "WindShadow",
 				},
 				["WeakAuras_incanter's_flow_1"] = {
 					["Disabled"] = true,
@@ -2351,33 +2411,20 @@ MasqueDB = {
 				["WeakAuras_combustion_lge"] = {
 					["SkinID"] = "Masque: Shadow 3",
 				},
-				["WeakAuras_04_永燃之光"] = {
+				["WeakAuras_04_邪能风暴扫射"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_07_程式启动"] = {
-					["Disabled"] = true,
+				["TellMeWhen_Group: 3"] = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
-				},
-				["WeakAuras_咒术洪流三层"] = {
-					["Inherit"] = false,
-					["SkinID"] = "Masque: Shadow 3",
 				},
 				["WeakAuras_unstable_magic_2_3"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 				},
-				["WeakAuras_07_屠戮_2"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "Aftermathh",
-				},
-				["WeakAuras_烈焰之地"] = {
-					["SkinID"] = "Masque: Shadow 3",
-				},
-				["WeakAuras_05_传送门来临"] = {
+				["WeakAuras_03_震荡手雷_2"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
@@ -2392,7 +2439,21 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
 				},
-				["Bagnon_voidstorage - bags"] = {
+				["WeakAuras_05_传送门来临"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Aftermathh",
+				},
+				["WeakAuras_02_虹吸_2"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Aftermathh",
+				},
+				["WeakAuras_烈焰之地"] = {
+					["SkinID"] = "Masque: Shadow 3",
+				},
+				["WeakAuras_07_屠戮_2"] = {
+					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
 				},
@@ -2401,14 +2462,15 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
 				},
-				["WeakAuras_04_邪能风暴扫射"] = {
+				["WeakAuras_03_恶魔冲锋_2"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
-					["SkinID"] = "WindShadow",
+					["SkinID"] = "Aftermathh",
 				},
-				["WeakAuras_frozen_touch"] = {
+				["WeakAuras_11_能量提升"] = {
 					["Disabled"] = true,
-					["SkinID"] = "Zoomed",
+					["Inherit"] = false,
+					["SkinID"] = "Aftermathh",
 				},
 				["WeakAuras_icy_veins_underlay"] = {
 					["Disabled"] = true,
@@ -2427,12 +2489,12 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
 				},
-				["WeakAuras_吞噬巨口"] = {
+				["WeakAuras_frost:_icy_veins_buff"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
-					["SkinID"] = "Aftermathh",
+					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_03_恶魔冲锋_2"] = {
+				["WeakAuras_吞噬巨口"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
@@ -2442,7 +2504,7 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "Masque: Shadow 3",
 				},
-				["WeakAuras_04_红色传送门克索诺斯"] = {
+				["WeakAuras_饰品1冷却"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
@@ -2456,28 +2518,27 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "Masque: Shadow 3",
 				},
-				["WeakAuras_冰冷血脉可用"] = {
+				["WeakAuras_黑冰箭可用_2"] = {
 					["Disabled"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_极地寒风_2"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_controlled_burn_2_3"] = {
 					["Inherit"] = false,
 					["SkinID"] = "Masque: Shadow 3",
-				},
-				["WeakAuras_rop_underlay"] = {
-					["Disabled"] = true,
-					["SkinID"] = "Zoomed",
-				},
-				["WeakAuras_04_崩塌的世界_2"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "Aftermathh",
 				},
 				["WeakAuras_冰川0"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "Zoomed",
 				},
-				["WeakAuras_water_ele_notify"] = {
+				["WeakAuras_02_烈焰触痕"] = {
 					["Disabled"] = true,
-					["SkinID"] = "Zoomed",
+					["Inherit"] = false,
+					["SkinID"] = "WindShadow",
 				},
 				["WeakAuras_glacial_spike_ready"] = {
 					["Disabled"] = true,
@@ -2496,13 +2557,15 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_10_腐蚀盾牌"] = {
+				["WeakAuras_03_邪能护盾"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_incanter's_flow_base_lge"] = {
-					["SkinID"] = "Masque: Shadow 3",
+				["WeakAuras_04_崩塌的世界_2"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Aftermathh",
 				},
 				["WeakAuras_cinderstorm"] = {
 					["Disabled"] = true,
@@ -2518,22 +2581,21 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
 				},
-				["WeakAuras_11_宇宙之剑2"] = {
+				["WeakAuras_water_ele_notify"] = {
 					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "WindShadow",
+					["SkinID"] = "Zoomed",
 				},
 				["WeakAuras_01_根除_2"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
 				},
-				["WeakAuras_02_烈焰触痕"] = {
+				["WeakAuras_03_弱点攻击(仅tank)"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_饰品1冷却"] = {
+				["WeakAuras_10_腐蚀盾牌"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
@@ -2561,9 +2623,9 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
 				},
-				["WeakAuras_燃烧可用_2"] = {
+				["WeakAuras_erosion"] = {
 					["Disabled"] = true,
-					["Inherit"] = false,
+					["SkinID"] = "Zoomed",
 				},
 				["WeakAuras_05_反馈-奥术奇点"] = {
 					["Disabled"] = true,
@@ -2580,10 +2642,8 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
 				},
-				["WeakAuras_06_震晕"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "WindShadow",
+				["WeakAuras_combustion_active_lge"] = {
+					["SkinID"] = "Masque: Shadow 3",
 				},
 				["WeakAuras_incanter's_flow_base_frost"] = {
 					["Disabled"] = true,
@@ -2597,21 +2657,24 @@ MasqueDB = {
 				["WeakAuras_living_bomb_cd_lge"] = {
 					["SkinID"] = "Masque: Shadow 3",
 				},
-				["WeakAuras_erosion"] = {
+				["WeakAuras_断裂奇点"] = {
 					["Disabled"] = true,
-					["SkinID"] = "Zoomed",
+					["Inherit"] = false,
+					["SkinID"] = "Aftermathh",
 				},
-				["WeakAuras_artifact"] = {
+				["WeakAuras_06_震晕"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_combustion_active_lge"] = {
-					["SkinID"] = "Masque: Shadow 3",
-				},
-				["WeakAuras_incanter's_flow_4_frost"] = {
+				["WeakAuras_rop_underlay_cane"] = {
 					["Disabled"] = true,
 					["SkinID"] = "Zoomed",
+				},
+				["WeakAuras_06_催眠毒气"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "WindShadow",
 				},
 				["WeakAuras_10_烈焰之迹dot"] = {
 					["Disabled"] = true,
@@ -2623,57 +2686,55 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_01_屠戮_dot"] = {
+				["WeakAuras_末日之雨"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
-					["SkinID"] = "WindShadow",
+					["SkinID"] = "Aftermathh",
 				},
 				["WeakAuras_kindling"] = {
 					["Disabled"] = true,
 					["SkinID"] = "Zoomed",
 				},
-				["WeakAuras_水流cd"] = {
+				["WeakAuras_incanter's_flow_4_frost"] = {
+					["Disabled"] = true,
+					["SkinID"] = "Zoomed",
+				},
+				["WeakAuras_incanter's_flow_1_cane"] = {
+					["Disabled"] = true,
+					["SkinID"] = "Zoomed",
+				},
+				["WeakAuras_06_充能轰炸dot"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
+					["SkinID"] = "WindShadow",
+				},
+				["WeakAuras_fire_blast_1_available_lge"] = {
 					["SkinID"] = "Masque: Shadow 3",
-				},
-				["WeakAuras_combustion_active"] = {
-					["Disabled"] = true,
-					["SkinID"] = "Zoomed",
-				},
-				["WeakAuras_incanter's_flow_3_cane"] = {
-					["Disabled"] = true,
-					["SkinID"] = "Zoomed",
-				},
-				["WeakAuras_incanter's_flow_4_cane"] = {
-					["Disabled"] = true,
-					["SkinID"] = "Zoomed",
 				},
 				["WeakAuras_多头蛇射击"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
 				},
-				["WeakAuras_末日之雨"] = {
+				["WeakAuras_冰冷血脉冷却"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Masque: Shadow 3",
+				},
+				["WeakAuras_cinderstorm_available_lge"] = {
+					["SkinID"] = "Masque: Shadow 3",
+				},
+				["WeakAuras_02_燃烧腐蚀_2"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
-				},
-				["WeakAuras_living_bomb_cd_2"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-				},
-				["WeakAuras_07_毁灭者dot"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "WindShadow",
 				},
 				["WeakAuras_10_强化烈焰撕裂_2"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
 				},
-				["WeakAuras_incanter's_flow_2_cane"] = {
+				["WeakAuras_incanter's_flow_3_cane"] = {
 					["Disabled"] = true,
 					["SkinID"] = "Zoomed",
 				},
@@ -2682,15 +2743,15 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_10_灼热之焰"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "WindShadow",
-				},
-				["WeakAuras_02_燃烧腐蚀_2"] = {
+				["WeakAuras_多头蛇酸液"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
+				},
+				["WeakAuras_06_地狱火火箭"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "WindShadow",
 				},
 				["WeakAuras_03_小怪"] = {
 					["Disabled"] = true,
@@ -2701,10 +2762,8 @@ MasqueDB = {
 					["Disabled"] = true,
 					["SkinID"] = "Zoomed",
 				},
-				["WeakAuras_08_暗影折磨"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "WindShadow",
+				["WeakAuras_rop_active_lge"] = {
+					["SkinID"] = "Masque: Shadow 3",
 				},
 				["WeakAuras_02_吞噬之球"] = {
 					["Disabled"] = true,
@@ -2725,12 +2784,12 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
 				},
-				["WeakAuras_寒冰新星冷却"] = {
+				["WeakAuras_05_邪能之雨"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
-					["SkinID"] = "Masque: Shadow 3",
+					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_rop_underlay_cane"] = {
+				["WeakAuras_ice_nova_available"] = {
 					["Disabled"] = true,
 					["SkinID"] = "Zoomed",
 				},
@@ -2739,33 +2798,32 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
 				},
-				["WeakAuras_04_意识迷雾_2"] = {
+				["WeakAuras_06_睡眠"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
-					["SkinID"] = "Aftermathh",
+					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_09_宇宙之光_2"] = {
+				["WeakAuras_宝珠可用"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
-					["SkinID"] = "Aftermathh",
 				},
 				["WeakAuras_08_冰霜折磨_2"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
 				},
-				["WeakAuras_11_死亡之雾"] = {
+				["WeakAuras_05_反馈-邪污足迹"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_erosion_active"] = {
-					["Disabled"] = true,
-					["SkinID"] = "Zoomed",
-				},
-				["WeakAuras_blast_wave_available_2"] = {
+				["WeakAuras_combustion_cd_2"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
+				},
+				["WeakAuras_mirror_image_fire_available"] = {
+					["Disabled"] = true,
+					["SkinID"] = "Zoomed",
 				},
 				["WeakAuras_rop_cd_frost_2_available"] = {
 					["Disabled"] = true,
@@ -2776,9 +2834,10 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_mirror_image_fire_available"] = {
+				["WeakAuras_04_意识迷雾_2"] = {
 					["Disabled"] = true,
-					["SkinID"] = "Zoomed",
+					["Inherit"] = false,
+					["SkinID"] = "Aftermathh",
 				},
 				["WeakAuras_incanter's_flow_4_lge"] = {
 					["SkinID"] = "Masque: Shadow 3",
@@ -2788,25 +2847,25 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
 				},
-				["WeakAuras_06_睡眠"] = {
+				["WeakAuras_blast_wave_available_2"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
-					["SkinID"] = "WindShadow",
 				},
 				["WeakAuras_能量符文充能"] = {
 					["Inherit"] = false,
 					["SkinID"] = "Masque: Shadow 3",
 				},
-				["WeakAuras_宝珠可用"] = {
+				["WeakAuras_爆裂恐惧烈焰"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
+					["SkinID"] = "Aftermathh",
 				},
 				["WeakAuras_05_终极毁灭"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_05_反馈-邪污足迹"] = {
+				["WeakAuras_05_反馈-燃烧的余烬"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
@@ -2815,66 +2874,70 @@ MasqueDB = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 				},
-				["WeakAuras_05_反馈-燃烧的余烬"] = {
+				["WeakAuras_incanter's_flow_4_cane"] = {
+					["Disabled"] = true,
+					["SkinID"] = "Zoomed",
+				},
+				["WeakAuras_08_暗影折磨"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_combustion_cd_2"] = {
+				["WeakAuras_incanter's_flow_2_cane"] = {
+					["Disabled"] = true,
+					["SkinID"] = "Zoomed",
+				},
+				["WeakAuras_combustion_active"] = {
+					["Disabled"] = true,
+					["SkinID"] = "Zoomed",
+				},
+				["WeakAuras_erosion_active"] = {
+					["Disabled"] = true,
+					["SkinID"] = "Zoomed",
+				},
+				["WeakAuras_11_死亡之雾"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
+					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_爆裂恐惧烈焰"] = {
+				["WeakAuras_09_宇宙之光_2"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
 				},
-				["WeakAuras_ice_nova_available"] = {
-					["Disabled"] = true,
-					["SkinID"] = "Zoomed",
-				},
-				["WeakAuras_cinderstorm_available_lge"] = {
-					["SkinID"] = "Masque: Shadow 3",
-				},
-				["WeakAuras_冰冷血脉冷却"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "Masque: Shadow 3",
-				},
-				["WeakAuras_fire_blast_1_available_lge"] = {
-					["SkinID"] = "Masque: Shadow 3",
-				},
-				["WeakAuras_rop_active_lge"] = {
-					["SkinID"] = "Masque: Shadow 3",
-				},
-				["WeakAuras_05_邪能之雨"] = {
+				["WeakAuras_07_毁灭者dot"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_06_催眠毒气"] = {
+				["WeakAuras_10_灼热之焰"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
+				},
+				["WeakAuras_水流cd"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Masque: Shadow 3",
+				},
+				["WeakAuras_美味增益鱼:治疗"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Aftermathh",
+				},
+				["WeakAuras_寒冰新星冷却"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Masque: Shadow 3",
 				},
 				["WeakAuras_05_艾欧娜能量"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_incanter's_flow_1_cane"] = {
-					["Disabled"] = true,
-					["SkinID"] = "Zoomed",
-				},
-				["WeakAuras_06_地狱火火箭"] = {
+				["WeakAuras_living_bomb_cd_2"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
-					["SkinID"] = "WindShadow",
-				},
-				["WeakAuras_断裂奇点"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "Aftermathh",
 				},
 				["WeakAuras_05_邪能之雨_2"] = {
 					["Disabled"] = true,
@@ -2895,53 +2958,51 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
 				},
-				["WeakAuras_03_邪能护盾"] = {
+				["WeakAuras_01_屠戮_dot"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_多头蛇酸液"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "Aftermathh",
-				},
-				["WeakAuras_06_充能轰炸dot"] = {
+				["WeakAuras_11_宇宙之剑2"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_黑冰箭可用_2"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-				},
-				["WeakAuras_美味增益鱼:治疗"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "Aftermathh",
-				},
-				["WeakAuras_controlled_burn_2_3"] = {
-					["Inherit"] = false,
+				["WeakAuras_incanter's_flow_base_lge"] = {
 					["SkinID"] = "Masque: Shadow 3",
+				},
+				["WeakAuras_artifact"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "WindShadow",
+				},
+				["WeakAuras_rop_underlay"] = {
+					["Disabled"] = true,
+					["SkinID"] = "Zoomed",
+				},
+				["WeakAuras_燃烧可用_2"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
 				},
 				["WeakAuras_charm_of_the_rising_tide"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_11_能量提升"] = {
+				["WeakAuras_气定神闲"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
-					["SkinID"] = "Aftermathh",
+					["SkinID"] = "WindShadow",
 				},
 				["WeakAuras_02_虹吸腐蚀(史诗难度)"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
 				},
-				["WeakAuras_03_弱点攻击(仅tank)"] = {
+				["WeakAuras_冰冷血脉可用"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
-					["SkinID"] = "WindShadow",
+					["SkinID"] = "Masque: Shadow 3",
 				},
 				["WeakAuras_frost_bomb_debuff"] = {
 					["Disabled"] = true,
@@ -2951,9 +3012,9 @@ MasqueDB = {
 					["Disabled"] = true,
 					["SkinID"] = "Zoomed",
 				},
-				["WeakAuras_极地寒风_2"] = {
-					["Disabled"] = true,
+				["WeakAuras_咒术洪流三层"] = {
 					["Inherit"] = false,
+					["SkinID"] = "Masque: Shadow 3",
 				},
 				["WeakAuras_shimmer"] = {
 					["Disabled"] = true,
@@ -2964,7 +3025,7 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
 				},
-				["WeakAuras_frost:_icy_veins_buff"] = {
+				["WeakAuras_09_诺甘农的幽灵军团时间"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
@@ -2973,7 +3034,7 @@ MasqueDB = {
 					["Disabled"] = true,
 					["SkinID"] = "Zoomed",
 				},
-				["WeakAuras_07_净化协议dot"] = {
+				["WeakAuras_arcane:_arcane_power_buff"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
@@ -2988,87 +3049,89 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_02_虹吸_2"] = {
+				["WeakAuras_奥术飞弹x2"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
-					["SkinID"] = "Aftermathh",
+					["SkinID"] = "WindShadow",
 				},
 				["WeakAuras_06_震击之枪(仅tank)"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_03_震荡手雷_2"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "Aftermathh",
-				},
-				["WeakAuras_07_破坏术"] = {
+				["WeakAuras_06_强化脉冲手雷"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_incanter's_flow_4_2"] = {
+				["WeakAuras_闪回信标"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
+					["SkinID"] = "Masque: Shadow 3",
+				},
+				["WeakAuras_04_永燃之光"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "WindShadow",
 				},
 				["WeakAuras_nether_tempest"] = {
 					["Disabled"] = true,
 					["SkinID"] = "Zoomed",
 				},
-				["WeakAuras_咒术洪流两层"] = {
-					["Inherit"] = false,
-					["SkinID"] = "Masque: Shadow 3",
+				["WeakAuras_rop_available"] = {
+					["Disabled"] = true,
+					["SkinID"] = "Zoomed",
 				},
 				["WeakAuras_05_艾欧娜能量_2"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
 				},
-				["WeakAuras_09_冰霜之球"] = {
+				["WeakAuras_incanter's_flow_2_frost"] = {
+					["Disabled"] = true,
+					["SkinID"] = "Zoomed",
+				},
+				["WeakAuras_meteor_lge"] = {
+					["SkinID"] = "Masque: Shadow 3",
+				},
+				["WeakAuras_08_烈焰折磨"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_incanter's_flow_2_2"] = {
+				["WeakAuras_11_宇宙道标"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
-				},
-				["WeakAuras_02_腐烂(仅tank)_2"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "Aftermathh",
-				},
-				["WeakAuras_薪火_2"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
+					["SkinID"] = "WindShadow",
 				},
 				["WeakAuras_01_邪能轰炸(仅tank)"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
 				},
-				["WeakAuras_09_飞旋的军刀"] = {
+				["WeakAuras_ofcd:_time_warp_buff"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_rop_cd_2"] = {
+				["WeakAuras_宝珠cd"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
+					["SkinID"] = "Masque: Shadow 3",
 				},
 				["WeakAuras_01_天启引擎_2"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
 				},
-				["WeakAuras_resonance"] = {
+				["WeakAuras_rop_overlay_sweep_frost"] = {
 					["Disabled"] = true,
 					["SkinID"] = "Zoomed",
 				},
-				["WeakAuras_arcane_orb"] = {
+				["WeakAuras_09_冷凝之血_2"] = {
 					["Disabled"] = true,
-					["SkinID"] = "Zoomed",
+					["Inherit"] = false,
+					["SkinID"] = "Aftermathh",
 				},
 				["WeakAuras_07_毁灭者_2"] = {
 					["Disabled"] = true,
@@ -3080,10 +3143,9 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
 				},
-				["WeakAuras_末日之雹"] = {
-					["Disabled"] = true,
+				["WeakAuras_combustion_cd_2_3"] = {
 					["Inherit"] = false,
-					["SkinID"] = "Aftermathh",
+					["SkinID"] = "Masque: Shadow 3",
 				},
 				["WeakAuras_绝望_-_debuff"] = {
 					["Disabled"] = true,
@@ -3095,20 +3157,11 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_气定神闲可用"] = {
+				["WeakAuras_icy_veins_overlay_sweep"] = {
 					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "Masque: Shadow 3",
+					["SkinID"] = "Zoomed",
 				},
-				["WeakAuras_incanter's_flow_1_lge"] = {
-					["SkinID"] = "Masque: Shadow 3",
-				},
-				["WeakAuras_potion"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "WindShadow",
-				},
-				["WeakAuras_02_烧焦_2"] = {
+				["WeakAuras_萦绕的爆发"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
@@ -3117,79 +3170,40 @@ MasqueDB = {
 					["Disabled"] = true,
 					["SkinID"] = "Zoomed",
 				},
+				["WeakAuras_02_烧焦_2"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Aftermathh",
+				},
+				["WeakAuras_08_能量"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "WindShadow",
+				},
 				["WeakAuras_污染墨汁"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
 				},
-				["WeakAuras_04_克索诺斯之焰"] = {
+				["WeakAuras_living_bomb_available"] = {
 					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "WindShadow",
+					["SkinID"] = "Zoomed",
 				},
-				["WeakAuras_09_火焰打击(仅tank)"] = {
+				["WeakAuras_墨汁+吞噬"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
-					["SkinID"] = "WindShadow",
+					["SkinID"] = "Aftermathh",
 				},
 				["WeakAuras_thermal_void"] = {
 					["Disabled"] = true,
 					["SkinID"] = "Zoomed",
-				},
-				["WeakAuras_11_坦克嘲讽_其他人帮助"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "WindShadow",
-				},
-				["WeakAuras_水流喷射"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "Masque: Shadow 3",
-				},
-				["WeakAuras_10_破敌者(仅tank)"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "WindShadow",
-				},
-				["WeakAuras_04_饱足幽影"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "WindShadow",
-				},
-				["WeakAuras_10_能量提升"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "WindShadow",
-				},
-				["WeakAuras_03_齐射"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "WindShadow",
 				},
 				["WeakAuras_03_熵能爆裂"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["ElvUI_Debuffs"] = {
-					["Inherit"] = false,
-					["SkinID"] = "WindShadow",
-				},
-				["WeakAuras_mirror_image_cane"] = {
-					["Disabled"] = true,
-					["SkinID"] = "Zoomed",
-				},
-				["WeakAuras_11_灵魂炸弹"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "WindShadow",
-				},
-				["WeakAuras_聚焦恐惧烈焰_-_群组"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "Aftermathh",
-				},
-				["WeakAuras_08_哀难_2"] = {
+				["WeakAuras_01_屠戮_2"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
@@ -3197,55 +3211,102 @@ MasqueDB = {
 				["WeakAuras_blast_wave_available_lge"] = {
 					["SkinID"] = "Masque: Shadow 3",
 				},
-				["WeakAuras_mirror_image_fire_available_2"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-				},
-				["WeakAuras_09_阿曼苏尔的诡诈_杀小怪"] = {
+				["WeakAuras_04_饱足幽影"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_03_混乱脉冲"] = {
+				["WeakAuras_镜像冷却"] = {
+					["Inherit"] = false,
+					["SkinID"] = "Masque: Shadow 3",
+				},
+				["WeakAuras_03_恶魔冲锋"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_11_海洋之力"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "WindShadow",
-				},
-				["WeakAuras_01_歼灭_2"] = {
+				["WeakAuras_02_荒芜凝视_2"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
 				},
-				["WeakAuras_11_火焰易伤"] = {
+				["ElvUI_Debuffs"] = {
+					["Inherit"] = false,
+					["SkinID"] = "WindShadow",
+				},
+				["WeakAuras_02_黑暗重构_2"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Aftermathh",
+				},
+				["WeakAuras_11_诺甘农圆盘"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
+				},
+				["WeakAuras_流星可用_2"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_04_毒素精华"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "WindShadow",
+				},
+				["WeakAuras_07_天启协议_"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "WindShadow",
+				},
+				["WeakAuras_02_被吞噬_2"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Aftermathh",
+				},
+				["WeakAuras_04_欺骗幻境_2"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Aftermathh",
+				},
+				["WeakAuras_03_弱点攻击(仅tank)_2"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Aftermathh",
+				},
+				["WeakAuras_03_座舱空余_2"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Aftermathh",
+				},
+				["WeakAuras_frozen_touch_aailable"] = {
+					["Disabled"] = true,
+					["SkinID"] = "Zoomed",
+				},
+				["WeakAuras_引力榨取"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Aftermathh",
 				},
 				["WeakAuras_09_安曼苏尔的诡诈"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
 				},
-				["WeakAuras_美味增益鱼:dps"] = {
+				["WeakAuras_11_怒火余烬_2"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
 				},
-				["WeakAuras_racial:_troll_buff"] = {
+				["WeakAuras_04_酸性之网_2"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
-					["SkinID"] = "WindShadow",
+					["SkinID"] = "Aftermathh",
 				},
-				["WeakAuras_fire_blast_1_available"] = {
+				["WeakAuras_incanter's_flow_1_frost"] = {
 					["Disabled"] = true,
 					["SkinID"] = "Zoomed",
 				},
-				["WeakAuras_cast_on_you_(仅坦克)_-_airhorn_sound_active_(冷却)"] = {
+				["WeakAuras_02_燃烧腐蚀"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
@@ -3255,7 +3316,7 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
 				},
-				["WeakAuras_controlled_burn_lge"] = {
+				["WeakAuras_dragon's_breath_lge"] = {
 					["SkinID"] = "Masque: Shadow 3",
 				},
 				["WeakAuras_09_快速冻结"] = {
@@ -3263,159 +3324,7 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_02_腐烂(仅tank)"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "WindShadow",
-				},
-				["WeakAuras_强化隐身"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "Masque: Shadow 3",
-				},
-				["WeakAuras_02_黑暗重构"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "WindShadow",
-				},
-				["Bagnon_guildbank - items"] = {
-					["Inherit"] = false,
-					["SkinID"] = "Aftermathh",
-				},
-				["WeakAuras_引力榨取"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "Aftermathh",
-				},
-				["WeakAuras_08_毁灭回响池"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "WindShadow",
-				},
-				["WeakAuras_02_燃烧腐蚀"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "WindShadow",
-				},
-				["WeakAuras_tarnished_sentinel_medallion"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "WindShadow",
-				},
-				["WeakAuras_02_烈焰之喉(仅tank)"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "Aftermathh",
-				},
-				["WeakAuras_07_破坏_2"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "Aftermathh",
-				},
-				["WeakAuras_fire_blast_3_available_lge"] = {
-					["SkinID"] = "Masque: Shadow 3",
-				},
-				["WeakAuras_印记冷却"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "Masque: Shadow 3",
-				},
-				["WeakAuras_rop_timer"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "WindShadow",
-				},
-				["WeakAuras_05_反馈-邪污足迹_2"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "Aftermathh",
-				},
-				["WeakAuras_01_根除"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "WindShadow",
-				},
-				["WeakAuras_10_熔火残渣"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "WindShadow",
-				},
-				["WeakAuras_pet_defensive"] = {
-					["Disabled"] = true,
-					["SkinID"] = "Zoomed",
-				},
-				["WeakAuras_06_催眠毒气_2"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "Aftermathh",
-				},
-				["WeakAuras_04_时空裂痕(仅tank)"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "WindShadow",
-				},
-				["WeakAuras_cauterize_notify_cane"] = {
-					["Disabled"] = true,
-					["SkinID"] = "Zoomed",
-				},
-				["WeakAuras_rop_active_2"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-				},
-				["WeakAuras_rop_underlay_lge"] = {
-					["SkinID"] = "Masque: Shadow 3",
-				},
-				["WeakAuras_11_海洋之赐"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "WindShadow",
-				},
-				["WeakAuras_精力充沛可用"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "Masque: Shadow 3",
-				},
-				["WeakAuras_燃烧可用"] = {
-					["Inherit"] = false,
-					["SkinID"] = "Masque: Shadow 3",
-				},
-				["WeakAuras_glacial_spike"] = {
-					["Disabled"] = true,
-					["SkinID"] = "Zoomed",
-				},
-				["WeakAuras_昏暗隐匿"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "Aftermathh",
-				},
-				["WeakAuras_flame_patch"] = {
-					["Disabled"] = true,
-					["SkinID"] = "Zoomed",
-				},
-				["WeakAuras_charged_up_available"] = {
-					["Disabled"] = true,
-					["SkinID"] = "Zoomed",
-				},
-				["WeakAuras_冰川可用"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "Masque: Shadow 3",
-				},
-				["WeakAuras_07_天启协议(小怪出现)"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "Aftermathh",
-				},
-				["WeakAuras_印记可用"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "Masque: Shadow 3",
-				},
-				["WeakAuras_incanter's_flow_base_cane"] = {
-					["Disabled"] = true,
-					["SkinID"] = "Zoomed",
-				},
-				["Bartender4_4"] = {
+				["Bartender4_5"] = {
 					["Colors"] = {
 						["Normal"] = {
 							0.0509803921568627, -- [1]
@@ -3434,7 +3343,162 @@ MasqueDB = {
 					["Backdrop"] = true,
 					["SkinID"] = "Aftermathh",
 				},
-				["WeakAuras_07_天启协议"] = {
+				["WeakAuras_04_邪丝缠缚_2"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Aftermathh",
+				},
+				["WeakAuras_fire_blast_3_available_lge"] = {
+					["SkinID"] = "Masque: Shadow 3",
+				},
+				["WeakAuras_11_泰坦造物_2"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Aftermathh",
+				},
+				["WeakAuras_04_打断"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Aftermathh",
+				},
+				["WeakAuras_08_毁灭回响池"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "WindShadow",
+				},
+				["WeakAuras_rop_timer"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "WindShadow",
+				},
+				["WeakAuras_末日冲击"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Aftermathh",
+				},
+				["WeakAuras_窒息之影"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Aftermathh",
+				},
+				["WeakAuras_07_破坏_2"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Aftermathh",
+				},
+				["WeakAuras_10_熔火残渣"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "WindShadow",
+				},
+				["WeakAuras_印记冷却"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Masque: Shadow 3",
+				},
+				["WeakAuras_05_痛苦_2"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Aftermathh",
+				},
+				["WeakAuras_孤寂寒冬"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Masque: Shadow 3",
+				},
+				["WeakAuras_01_根除"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "WindShadow",
+				},
+				["WeakAuras_06_霰弹爆破_2"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Aftermathh",
+				},
+				["WeakAuras_11_海天之力"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Aftermathh",
+				},
+				["WeakAuras_06_充能轰炸_dot"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Aftermathh",
+				},
+				["WeakAuras_glacial_spike"] = {
+					["Disabled"] = true,
+					["SkinID"] = "Zoomed",
+				},
+				["WeakAuras_07_毁灭者dot_2"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Aftermathh",
+				},
+				["WeakAuras_能量顾问冷却"] = {
+					["Inherit"] = false,
+					["SkinID"] = "Masque: Shadow 3",
+				},
+				["WeakAuras_rop_underlay_lge"] = {
+					["SkinID"] = "Masque: Shadow 3",
+				},
+				["WeakAuras_07_破坏术_2"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Aftermathh",
+				},
+				["WeakAuras_冰川可用"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Masque: Shadow 3",
+				},
+				["WeakAuras_11_灵魂炸弹_团队大伤害"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "WindShadow",
+				},
+				["WeakAuras_charged_up_available"] = {
+					["Disabled"] = true,
+					["SkinID"] = "Zoomed",
+				},
+				["WeakAuras_昏暗隐匿"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Aftermathh",
+				},
+				["WeakAuras_07_程式启动_2"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Aftermathh",
+				},
+				["WeakAuras_09_冰霜之球_2"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Aftermathh",
+				},
+				["WeakAuras_09_恐惧_2"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Aftermathh",
+				},
+				["WeakAuras_09_宇宙之光"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "WindShadow",
+				},
+				["WeakAuras_07_恶魔炸弹"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "WindShadow",
+				},
+				["WeakAuras_lonely_winter"] = {
+					["Disabled"] = true,
+					["SkinID"] = "Zoomed",
+				},
+				["WeakAuras_incanter's_flow_2_lge"] = {
+					["SkinID"] = "Masque: Shadow 3",
+				},
+				["WeakAuras_09_卡兹格罗斯之焰_2"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
@@ -3452,40 +3516,20 @@ MasqueDB = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 				},
-				["WeakAuras_lonely_winter"] = {
-					["Disabled"] = true,
-					["SkinID"] = "Zoomed",
-				},
-				["WeakAuras_incanter's_flow_2_lge"] = {
-					["SkinID"] = "Masque: Shadow 3",
-				},
-				["WeakAuras_09_卡兹格罗斯之焰_2"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "Aftermathh",
-				},
-				["WeakAuras_黑暗前途debuff_30"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-				},
-				["WeakAuras_comet_storm_available"] = {
-					["Disabled"] = true,
-					["SkinID"] = "Zoomed",
-				},
-				["WeakAuras_11_自然易伤_2"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "Aftermathh",
-				},
-				["WeakAuras_combustion"] = {
-					["Disabled"] = true,
-					["Inherit"] = false,
-					["SkinID"] = "Zoomed",
-				},
-				["WeakAuras_erratic_metronome"] = {
+				["WeakAuras_11_冰霜易伤"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
+				},
+				["WeakAuras_11_天空之赐_2"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Aftermathh",
+				},
+				["WeakAuras_11_灵魂凋零_2"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Aftermathh",
 				},
 				["WeakAuras_11_生命的缚誓者之赐能量提升"] = {
 					["Disabled"] = true,
@@ -3497,9 +3541,31 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "Aftermathh",
 				},
-				["WeakAuras_fire_blast_2_available"] = {
+				["WeakAuras_11_自然易伤_2"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Aftermathh",
+				},
+				["WeakAuras_combustion"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Zoomed",
+				},
+				["WeakAuras_11_宿命降临"] = {
+					["Disabled"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Aftermathh",
+				},
+				["WeakAuras_rop_cd_frost_1_available"] = {
 					["Disabled"] = true,
 					["SkinID"] = "Zoomed",
+				},
+				["TellMeWhen_分组: 3"] = {
+					["Inherit"] = false,
+					["SkinID"] = "WindShadow",
+				},
+				["WeakAuras_mirror_image_fire_lge"] = {
+					["SkinID"] = "Masque: Shadow 3",
 				},
 				["WeakAuras_10_灼热风暴_2"] = {
 					["Disabled"] = true,
@@ -3511,14 +3577,15 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_11_巨镰横扫/死亡之镰"] = {
+				["WeakAuras_new"] = {
 					["Disabled"] = true,
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_rop_cd_frost_1_available"] = {
+				["WeakAuras_new_2"] = {
 					["Disabled"] = true,
-					["SkinID"] = "Zoomed",
+					["Inherit"] = false,
+					["SkinID"] = "WindShadow",
 				},
 				["WeakAuras_04_欺骗幻境"] = {
 					["Disabled"] = true,

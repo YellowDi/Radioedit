@@ -12,6 +12,51 @@ KIBDB = {
 			["ShowConfigButton"] = true,
 		},
 		["Quest Mobs"] = {
+			["TasksYOffset"] = 0,
+			["GroupQuestcolor"] = {
+				["r"] = 0.9,
+				["g"] = 0.4,
+				["b"] = 0.04,
+			},
+			["AreaQuestcolor"] = {
+				["r"] = 0.3,
+				["g"] = 0.3,
+				["b"] = 1,
+			},
+			["Alpha"] = 0.9,
+			["Scale"] = 1,
+			["ShowQuestTask"] = false,
+			["TextureVariant"] = 1,
+			["DisableInCombat"] = true,
+			["State"] = true,
+			["NormalQuestcolor"] = {
+				["r"] = 1,
+				["g"] = 0.1,
+				["b"] = 0.1,
+			},
+			["IconXOffset"] = 0,
+			["IconYOffset"] = 0,
+			["TasksXOffset"] = 0,
+			["DisableInInstance"] = true,
+			["TextSize"] = 8,
+			["ShowQuestTaskOnMouseOver"] = false,
+		},
+	},
+	["Character Key: 主宰之剑 | Zeoi"] = {
+		["ProfileKey"] = "主宰之剑 | Zeoi",
+	},
+	["Character Key: 格瑞姆巴托 | Elenore"] = {
+		["ProfileKey"] = "r2",
+	},
+	["奥蕾莉亚 | Syllenaris"] = {
+		["Kib_Config"] = {
+			["FontID"] = 1,
+			["UseOldMenu"] = true,
+			["UseAsGlobalFont"] = false,
+			["LanguageID"] = 11,
+			["ShowConfigButton"] = false,
+		},
+		["Quest Mobs"] = {
 			["Alpha"] = 0.9,
 			["GroupQuestcolor"] = {
 				["r"] = 0.9,
@@ -42,12 +87,6 @@ KIBDB = {
 			["ShowQuestTaskOnMouseOver"] = false,
 		},
 	},
-	["Character Key: 主宰之剑 | Zeoi"] = {
-		["ProfileKey"] = "主宰之剑 | Zeoi",
-	},
-	["Character Key: 格瑞姆巴托 | Elenore"] = {
-		["ProfileKey"] = "r2",
-	},
 	["奥蕾莉亚 | Mirvish"] = {
 		["Kib_Config"] = {
 			["ShowConfigButton"] = true,
@@ -57,7 +96,7 @@ KIBDB = {
 			["FontID"] = 1,
 		},
 		["Quest Mobs"] = {
-			["Alpha"] = 0.9,
+			["TasksYOffset"] = 0,
 			["GroupQuestcolor"] = {
 				["b"] = 0.04,
 				["g"] = 0.4,
@@ -68,10 +107,10 @@ KIBDB = {
 				["g"] = 0.3,
 				["r"] = 0.3,
 			},
-			["TextureVariant"] = 1,
+			["Alpha"] = 0.9,
 			["Scale"] = 1,
 			["ShowQuestTask"] = false,
-			["TasksYOffset"] = 0,
+			["TextureVariant"] = 1,
 			["DisableInInstance"] = true,
 			["State"] = true,
 			["NormalQuestcolor"] = {
@@ -96,7 +135,7 @@ KIBDB = {
 			["ShowConfigButton"] = true,
 		},
 		["Quest Mobs"] = {
-			["Alpha"] = 0.9,
+			["TasksYOffset"] = 0,
 			["GroupQuestcolor"] = {
 				["r"] = 0.9,
 				["g"] = 0.4,
@@ -107,10 +146,10 @@ KIBDB = {
 				["g"] = 0.3,
 				["b"] = 1,
 			},
-			["TextureVariant"] = 1,
+			["Alpha"] = 0.9,
 			["Scale"] = 1,
 			["ShowQuestTask"] = false,
-			["TasksYOffset"] = 0,
+			["TextureVariant"] = 1,
 			["DisableInCombat"] = true,
 			["State"] = true,
 			["NormalQuestcolor"] = {
@@ -138,7 +177,7 @@ KIBDB = {
 			["FontID"] = 1,
 		},
 		["Quest Mobs"] = {
-			["TasksYOffset"] = 0,
+			["TextureVariant"] = 1,
 			["GroupQuestcolor"] = {
 				["b"] = 0.04,
 				["g"] = 0.4,
@@ -149,10 +188,10 @@ KIBDB = {
 				["g"] = 0.3,
 				["r"] = 0.3,
 			},
-			["Alpha"] = 0.9,
+			["TasksYOffset"] = 0,
 			["Scale"] = 1,
 			["ShowQuestTask"] = false,
-			["TextureVariant"] = 1,
+			["Alpha"] = 0.9,
 			["DisableInInstance"] = true,
 			["State"] = true,
 			["NormalQuestcolor"] = {
@@ -180,7 +219,7 @@ KIBDB = {
 			["FontID"] = 1,
 		},
 		["Quest Mobs"] = {
-			["TextureVariant"] = 1,
+			["Alpha"] = 0.9,
 			["GroupQuestcolor"] = {
 				["b"] = 0.04,
 				["g"] = 0.4,
@@ -191,10 +230,10 @@ KIBDB = {
 				["g"] = 0.3,
 				["r"] = 0.3,
 			},
-			["TasksYOffset"] = 0,
+			["TextureVariant"] = 1,
 			["Scale"] = 1,
 			["ShowQuestTask"] = false,
-			["Alpha"] = 0.9,
+			["TasksYOffset"] = 0,
 			["DisableInInstance"] = true,
 			["State"] = true,
 			["NormalQuestcolor"] = {
@@ -219,7 +258,7 @@ KIBDB = {
 			["FontID"] = 1,
 		},
 		["Quest Mobs"] = {
-			["TextureVariant"] = 1,
+			["Alpha"] = 0.9,
 			["GroupQuestcolor"] = {
 				["b"] = 0.04,
 				["g"] = 0.4,
@@ -230,10 +269,10 @@ KIBDB = {
 				["g"] = 0.3,
 				["r"] = 0.3,
 			},
-			["TasksYOffset"] = 0,
+			["TextureVariant"] = 1,
 			["Scale"] = 1,
 			["ShowQuestTask"] = false,
-			["Alpha"] = 0.9,
+			["TasksYOffset"] = 0,
 			["DisableInInstance"] = true,
 			["State"] = true,
 			["NormalQuestcolor"] = {
@@ -251,14 +290,14 @@ KIBDB = {
 	},
 	["主宰之剑 | Underdog"] = {
 		["Kib_Config"] = {
-			["ShowConfigButton"] = true,
+			["ShowConfigButton"] = false,
 			["UseOldMenu"] = true,
 			["UseAsGlobalFont"] = false,
 			["LanguageID"] = 11,
 			["FontID"] = 1,
 		},
 		["Quest Mobs"] = {
-			["Alpha"] = 0.9,
+			["TasksYOffset"] = 0,
 			["GroupQuestcolor"] = {
 				["b"] = 0.04,
 				["g"] = 0.4,
@@ -269,10 +308,10 @@ KIBDB = {
 				["g"] = 0.3,
 				["r"] = 0.3,
 			},
-			["TextureVariant"] = 1,
+			["Alpha"] = 0.9,
 			["Scale"] = 1,
 			["ShowQuestTask"] = false,
-			["TasksYOffset"] = 0,
+			["TextureVariant"] = 1,
 			["DisableInInstance"] = true,
 			["State"] = true,
 			["NormalQuestcolor"] = {
@@ -291,6 +330,45 @@ KIBDB = {
 	["Character Key: 格瑞姆巴托 | Radioedit"] = {
 		["ProfileKey"] = "格瑞姆巴托 | Radioedit",
 	},
+	["格瑞姆巴托 | 蒙特拉贡"] = {
+		["Kib_Config"] = {
+			["ShowConfigButton"] = true,
+			["UseOldMenu"] = true,
+			["UseAsGlobalFont"] = false,
+			["LanguageID"] = 11,
+			["FontID"] = 1,
+		},
+		["Quest Mobs"] = {
+			["TextureVariant"] = 1,
+			["GroupQuestcolor"] = {
+				["b"] = 0.04,
+				["g"] = 0.4,
+				["r"] = 0.9,
+			},
+			["AreaQuestcolor"] = {
+				["b"] = 1,
+				["g"] = 0.3,
+				["r"] = 0.3,
+			},
+			["TasksYOffset"] = 0,
+			["Scale"] = 1,
+			["ShowQuestTask"] = false,
+			["Alpha"] = 0.9,
+			["DisableInInstance"] = true,
+			["State"] = true,
+			["NormalQuestcolor"] = {
+				["b"] = 0.1,
+				["g"] = 0.1,
+				["r"] = 1,
+			},
+			["TasksXOffset"] = 0,
+			["IconYOffset"] = 0,
+			["IconXOffset"] = 0,
+			["DisableInCombat"] = true,
+			["TextSize"] = 8,
+			["ShowQuestTaskOnMouseOver"] = false,
+		},
+	},
 	["Character Key: 格瑞姆巴托 | Geronimo"] = {
 		["ProfileKey"] = "格瑞姆巴托 | Geronimo",
 	},
@@ -303,7 +381,7 @@ KIBDB = {
 			["ShowConfigButton"] = true,
 		},
 		["Quest Mobs"] = {
-			["Alpha"] = 0.9,
+			["TasksYOffset"] = 0,
 			["GroupQuestcolor"] = {
 				["r"] = 0.9,
 				["g"] = 0.4,
@@ -314,10 +392,10 @@ KIBDB = {
 				["g"] = 0.3,
 				["b"] = 1,
 			},
-			["TextureVariant"] = 1,
+			["Alpha"] = 0.9,
 			["Scale"] = 1,
 			["ShowQuestTask"] = false,
-			["TasksYOffset"] = 0,
+			["TextureVariant"] = 1,
 			["DisableInCombat"] = true,
 			["State"] = true,
 			["NormalQuestcolor"] = {
@@ -333,44 +411,8 @@ KIBDB = {
 			["ShowQuestTaskOnMouseOver"] = false,
 		},
 	},
-	["格瑞姆巴托 | 蒙特拉贡"] = {
-		["Kib_Config"] = {
-			["ShowConfigButton"] = true,
-			["UseOldMenu"] = true,
-			["UseAsGlobalFont"] = false,
-			["LanguageID"] = 11,
-			["FontID"] = 1,
-		},
-		["Quest Mobs"] = {
-			["TasksYOffset"] = 0,
-			["GroupQuestcolor"] = {
-				["b"] = 0.04,
-				["g"] = 0.4,
-				["r"] = 0.9,
-			},
-			["AreaQuestcolor"] = {
-				["b"] = 1,
-				["g"] = 0.3,
-				["r"] = 0.3,
-			},
-			["Alpha"] = 0.9,
-			["Scale"] = 1,
-			["ShowQuestTask"] = false,
-			["TextureVariant"] = 1,
-			["DisableInInstance"] = true,
-			["State"] = true,
-			["NormalQuestcolor"] = {
-				["b"] = 0.1,
-				["g"] = 0.1,
-				["r"] = 1,
-			},
-			["TasksXOffset"] = 0,
-			["IconYOffset"] = 0,
-			["IconXOffset"] = 0,
-			["DisableInCombat"] = true,
-			["TextSize"] = 8,
-			["ShowQuestTaskOnMouseOver"] = false,
-		},
+	["Character Key: 奥蕾莉亚 | Syllenaris"] = {
+		["ProfileKey"] = "奥蕾莉亚 | Syllenaris",
 	},
 	["Character Key: 奥蕾莉亚 | Mirvish"] = {
 		["ProfileKey"] = "奥蕾莉亚 | Mirvish",
@@ -393,7 +435,7 @@ KIBDB = {
 			["FontID"] = 1,
 		},
 		["Quest Mobs"] = {
-			["Alpha"] = 0.9,
+			["TasksYOffset"] = 0,
 			["GroupQuestcolor"] = {
 				["b"] = 0.04,
 				["g"] = 0.4,
@@ -404,10 +446,10 @@ KIBDB = {
 				["g"] = 0.3,
 				["r"] = 0.3,
 			},
-			["TextureVariant"] = 1,
+			["Alpha"] = 0.9,
 			["Scale"] = 1,
 			["ShowQuestTask"] = false,
-			["TasksYOffset"] = 0,
+			["TextureVariant"] = 1,
 			["DisableInInstance"] = true,
 			["State"] = true,
 			["NormalQuestcolor"] = {
@@ -432,7 +474,7 @@ KIBDB = {
 			["FontID"] = 1,
 		},
 		["Quest Mobs"] = {
-			["TextureVariant"] = 1,
+			["Alpha"] = 0.9,
 			["GroupQuestcolor"] = {
 				["b"] = 0.04,
 				["g"] = 0.4,
@@ -443,10 +485,10 @@ KIBDB = {
 				["g"] = 0.3,
 				["r"] = 0.3,
 			},
-			["TasksYOffset"] = 0,
+			["TextureVariant"] = 1,
 			["Scale"] = 1,
 			["ShowQuestTask"] = false,
-			["Alpha"] = 0.9,
+			["TasksYOffset"] = 0,
 			["DisableInInstance"] = true,
 			["State"] = true,
 			["NormalQuestcolor"] = {

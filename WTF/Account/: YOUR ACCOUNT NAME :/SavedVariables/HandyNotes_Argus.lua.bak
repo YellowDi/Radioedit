@@ -1,26 +1,31 @@
 
-HandyNotesArgusDB = {
+HandyNotes_ArgusDB = {
 	["profileKeys"] = {
-		["Radioedit - 格瑞姆巴托"] = "Default",
-		["Zeoi - 主宰之剑"] = "Default",
-		["Mirvish - 奥蕾莉亚"] = "Default",
-		["Geronimo - 奥蕾莉亚"] = "Default",
-		["Underdog - 主宰之剑"] = "Default",
-		["Elenore - 格瑞姆巴托"] = "Default",
-		["蒙特拉贡 - 格瑞姆巴托"] = "Default",
-		["Geronimo - 格瑞姆巴托"] = "Default",
-		["Mirvish - 格瑞姆巴托"] = "Default",
-		["Ravenkwok - 主宰之剑"] = "Default",
+		["Radioedit - 格瑞姆巴托"] = "Radioedit - 格瑞姆巴托",
+		["Geronimo - 奥蕾莉亚"] = "Geronimo - 奥蕾莉亚",
+		["Underdog - 主宰之剑"] = "Underdog - 主宰之剑",
+		["Elenore - 格瑞姆巴托"] = "Elenore - 格瑞姆巴托",
+		["Mirvish - 格瑞姆巴托"] = "Mirvish - 格瑞姆巴托",
+		["Geronimo - 格瑞姆巴托"] = "Geronimo - 格瑞姆巴托",
+		["Atax - 奥蕾莉亚"] = "Atax - 奥蕾莉亚",
+		["Agihax - 奥蕾莉亚"] = "Agihax - 奥蕾莉亚",
 	},
 	["profiles"] = {
-		["Default"] = {
-			["pet_ma"] = false,
-			["treasure_aw"] = false,
-			["pet_kr"] = false,
-			["treasure_kr"] = false,
-			["portal_aw"] = true,
-			["pet_aw"] = false,
-			["treasure_ma"] = false,
+		["Radioedit - 格瑞姆巴托"] = {
+		},
+		["Geronimo - 奥蕾莉亚"] = {
+		},
+		["Underdog - 主宰之剑"] = {
+		},
+		["Elenore - 格瑞姆巴托"] = {
+		},
+		["Mirvish - 格瑞姆巴托"] = {
+		},
+		["Geronimo - 格瑞姆巴托"] = {
+		},
+		["Atax - 奥蕾莉亚"] = {
+		},
+		["Agihax - 奥蕾莉亚"] = {
 		},
 	},
 }

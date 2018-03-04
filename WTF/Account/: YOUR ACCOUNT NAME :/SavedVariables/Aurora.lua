@@ -1,0 +1,93 @@
+
+AuroraConfig = {
+	["enableFont"] = true,
+	["chatBubbles"] = true,
+	["acknowledgedSplashScreen"] = true,
+	["customClassColors"] = {
+		["HUNTER"] = {
+			["b"] = 0.45,
+			["colorStr"] = "ffabd473",
+			["g"] = 0.83,
+			["r"] = 0.67,
+		},
+		["WARRIOR"] = {
+			["b"] = 0.43,
+			["colorStr"] = "ffc79c6e",
+			["g"] = 0.61,
+			["r"] = 0.78,
+		},
+		["SHAMAN"] = {
+			["b"] = 0.87,
+			["colorStr"] = "ff0070de",
+			["g"] = 0.44,
+			["r"] = 0,
+		},
+		["MAGE"] = {
+			["b"] = 0.92,
+			["colorStr"] = "ff3fc7eb",
+			["g"] = 0.78,
+			["r"] = 0.25,
+		},
+		["PRIEST"] = {
+			["b"] = 1,
+			["colorStr"] = "ffffffff",
+			["g"] = 1,
+			["r"] = 1,
+		},
+		["ROGUE"] = {
+			["b"] = 0.41,
+			["colorStr"] = "fffff569",
+			["g"] = 0.96,
+			["r"] = 1,
+		},
+		["WARLOCK"] = {
+			["b"] = 0.93,
+			["colorStr"] = "ff8788ee",
+			["g"] = 0.53,
+			["r"] = 0.53,
+		},
+		["DEMONHUNTER"] = {
+			["b"] = 0.79,
+			["colorStr"] = "ffa330c9",
+			["g"] = 0.19,
+			["r"] = 0.64,
+		},
+		["DEATHKNIGHT"] = {
+			["b"] = 0.23,
+			["colorStr"] = "ffc41f3b",
+			["g"] = 0.12,
+			["r"] = 0.77,
+		},
+		["DRUID"] = {
+			["b"] = 0.04,
+			["colorStr"] = "ffff7d0a",
+			["g"] = 0.49,
+			["r"] = 1,
+		},
+		["MONK"] = {
+			["b"] = 0.59,
+			["colorStr"] = "ff00ff96",
+			["g"] = 1,
+			["r"] = 0,
+		},
+		["PALADIN"] = {
+			["b"] = 0.73,
+			["colorStr"] = "fff58cba",
+			["g"] = 0.55,
+			["r"] = 0.96,
+		},
+	},
+	["bags"] = true,
+	["alpha"] = 0.5,
+	["mainmenubar"] = false,
+	["loot"] = true,
+	["customColour"] = {
+		["r"] = 1,
+		["g"] = 1,
+		["b"] = 1,
+	},
+	["useCustomColour"] = false,
+	["chatBubbleNames"] = true,
+	["buttonsHaveGradient"] = true,
+	["tooltips"] = true,
+}

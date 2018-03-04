@@ -1,0 +1,12 @@
+
+QuakeAssistDB = {
+	["scale"] = 100,
+	["lock"] = 1,
+	["voice"] = 1,
+	["position"] = {
+		["xOffset"] = -478.204956054688,
+		["relativePoint"] = "RIGHT",
+		["point"] = "RIGHT",
+		["yOffset"] = 99.4871063232422,
+	},
+}

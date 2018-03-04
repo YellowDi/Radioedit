@@ -6,9 +6,9 @@ PawnCommon = {
 	["ShowItemID"] = false,
 	["ShowRelicUpgrades"] = true,
 	["ShowValuesForUpgradesOnly"] = false,
-	["LastVersion"] = 2.0214,
 	["Digits"] = 1,
-	["Debug"] = false,
+	["LastVersion"] = 2.0218,
+	["ShowEnchanted"] = true,
 	["ColorTooltipBorder"] = false,
 	["ShowTooltipIcons"] = true,
 	["Scales"] = {
@@ -69,6 +69,9 @@ PawnCommon = {
 		["\"MrRobot\":PRIEST1"] = {
 			["IconTexturePath"] = 135940,
 			["PerCharacterOptions"] = {
+				["Ataxa-奥蕾莉亚"] = {
+					["Visible"] = true,
+				},
 				["Elenore-主宰之剑"] = {
 					["Visible"] = true,
 				},
@@ -87,9 +90,6 @@ PawnCommon = {
 		["\"MrRobot\":PRIEST3"] = {
 			["IconTexturePath"] = 136207,
 			["PerCharacterOptions"] = {
-				["Radioedit-格瑞姆巴托"] = {
-					["Visible"] = true,
-				},
 			},
 			["Color"] = "ffffff",
 			["ClassID"] = 5,
@@ -105,16 +105,13 @@ PawnCommon = {
 		["\"MrRobot\":MAGE3"] = {
 			["IconTexturePath"] = 135846,
 			["PerCharacterOptions"] = {
-				["可憎少女呜呼-主宰之剑"] = {
-					["Visible"] = true,
-				},
 				["Radioedit-奥蕾莉亚"] = {
 					["Visible"] = true,
 				},
-				["Capslock-格瑞姆巴托"] = {
+				["可憎少女呜呼-主宰之剑"] = {
 					["Visible"] = true,
 				},
-				["Elenore-格瑞姆巴托"] = {
+				["Capslock-格瑞姆巴托"] = {
 					["Visible"] = true,
 				},
 			},
@@ -132,9 +129,6 @@ PawnCommon = {
 		["\"MrRobot\":MAGE2"] = {
 			["IconTexturePath"] = 135810,
 			["PerCharacterOptions"] = {
-				["Elenore-格瑞姆巴托"] = {
-					["Visible"] = true,
-				},
 			},
 			["Color"] = "3fc7eb",
 			["ClassID"] = 8,
@@ -191,79 +185,6 @@ PawnCommon = {
 			["Provider"] = "MrRobot",
 			["SpecID"] = 1,
 			["UnenchantedColor"] = "00bf70",
-		},
-		["Elenore"] = {
-			["IconTexturePath"] = 135932,
-			["Values"] = {
-				["Intellect"] = 19.53,
-				["IsFist"] = -1000000,
-				["Is2HMace"] = -1000000,
-				["IsWarglaive"] = -1000000,
-				["CritRating"] = 21.26,
-				["HasteRating"] = 19.99,
-				["MasteryRating"] = 18.25,
-				["Versatility"] = 21.39,
-				["IsPolearm"] = -1000000,
-				["IsGun"] = -1000000,
-				["Is2HAxe"] = -1000000,
-				["IsAxe"] = -1000000,
-				["IsBow"] = -1000000,
-				["IsMail"] = -1000000,
-				["IsPlate"] = -1000000,
-				["IsLeather"] = -1000000,
-				["IsOffHand"] = -1000000,
-				["IsMace"] = -1000000,
-				["Is2HSword"] = -1000000,
-				["IsCrossbow"] = -1000000,
-				["IsShield"] = -1000000,
-			},
-			["Color"] = "3fc7eb",
-			["ClassID"] = 8,
-			["NormalizationFactor"] = 1,
-			["UpgradesFollowSpecialization"] = true,
-			["SpecID"] = 1,
-			["Role"] = "DAMAGER",
-			["PerCharacterOptions"] = {
-				["Elenore-格瑞姆巴托"] = {
-					["Visible"] = true,
-				},
-			},
-		},
-		["Elenore-Arcane"] = {
-			["IconTexturePath"] = 135932,
-			["PerCharacterOptions"] = {
-				["Elenore-格瑞姆巴托"] = {
-					["Visible"] = true,
-				},
-			},
-			["Color"] = "3fc7eb",
-			["ClassID"] = 8,
-			["Role"] = "DAMAGER",
-			["UpgradesFollowSpecialization"] = true,
-			["SpecID"] = 1,
-			["Values"] = {
-				["IsOffHand"] = -1000000,
-				["IsFist"] = -1000000,
-				["Is2HMace"] = -1000000,
-				["IsWarglaive"] = -1000000,
-				["CritRating"] = 26.33,
-				["HasteRating"] = 25.63,
-				["MasteryRating"] = 21.9,
-				["IsCrossbow"] = -1000000,
-				["IsPolearm"] = -1000000,
-				["IsGun"] = -1000000,
-				["Is2HAxe"] = -1000000,
-				["IsShield"] = -1000000,
-				["IsBow"] = -1000000,
-				["IsMail"] = -1000000,
-				["IsPlate"] = -1000000,
-				["IsLeather"] = -1000000,
-				["Intellect"] = 20.34,
-				["IsMace"] = -1000000,
-				["Is2HSword"] = -1000000,
-				["Versatility"] = 29.56,
-				["IsAxe"] = -1000000,
-			},
 		},
 		["\"MrRobot\":DEMONHUNTER1"] = {
 			["IconTexturePath"] = 1247264,
@@ -340,9 +261,6 @@ PawnCommon = {
 		["\"MrRobot\":DRUID1"] = {
 			["IconTexturePath"] = 136096,
 			["PerCharacterOptions"] = {
-				["Geronimo-奥蕾莉亚"] = {
-					["Visible"] = true,
-				},
 				["Zeoi-主宰之剑"] = {
 					["Visible"] = true,
 				},
@@ -361,9 +279,6 @@ PawnCommon = {
 		["\"MrRobot\":PALADIN1"] = {
 			["IconTexturePath"] = 135920,
 			["PerCharacterOptions"] = {
-				["Syllenaris-奥蕾莉亚"] = {
-					["Visible"] = true,
-				},
 			},
 			["Color"] = "f58cba",
 			["ClassID"] = 2,
@@ -382,6 +297,9 @@ PawnCommon = {
 				["Underdog-白银之手"] = {
 					["Visible"] = true,
 				},
+				["Syllenaris-奥蕾莉亚"] = {
+					["Visible"] = true,
+				},
 			},
 			["Color"] = "f58cba",
 			["ClassID"] = 2,
@@ -397,9 +315,6 @@ PawnCommon = {
 		["\"MrRobot\":WARRIOR1"] = {
 			["IconTexturePath"] = 132355,
 			["PerCharacterOptions"] = {
-				["Ravenkwok-主宰之剑"] = {
-					["Visible"] = true,
-				},
 			},
 			["Color"] = "c79c6e",
 			["ClassID"] = 1,
@@ -427,36 +342,6 @@ PawnCommon = {
 			["SpecID"] = 2,
 			["UnenchantedColor"] = "6566b2",
 		},
-		["\"MrRobot\":DRUID2"] = {
-			["IconTexturePath"] = 132115,
-			["PerCharacterOptions"] = {
-			},
-			["Color"] = "ff7d0a",
-			["ClassID"] = 11,
-			["LocalizedName"] = "德鲁伊: 野性",
-			["DoNotShow1HUpgrades"] = true,
-			["Role"] = "DAMAGER",
-			["DoNotShow2HUpgrades"] = false,
-			["UpgradesFollowSpecialization"] = true,
-			["Provider"] = "MrRobot",
-			["SpecID"] = 2,
-			["UnenchantedColor"] = "bf5d07",
-		},
-		["\"MrRobot\":SHAMAN3"] = {
-			["IconTexturePath"] = 136052,
-			["PerCharacterOptions"] = {
-			},
-			["Color"] = "0070de",
-			["ClassID"] = 7,
-			["LocalizedName"] = "萨满祭司: 恢复",
-			["DoNotShow1HUpgrades"] = false,
-			["Role"] = "HEALER",
-			["DoNotShow2HUpgrades"] = false,
-			["UpgradesFollowSpecialization"] = true,
-			["Provider"] = "MrRobot",
-			["SpecID"] = 3,
-			["UnenchantedColor"] = "0054a6",
-		},
 		["\"MrRobot\":PALADIN2"] = {
 			["IconTexturePath"] = 236264,
 			["PerCharacterOptions"] = {
@@ -471,6 +356,39 @@ PawnCommon = {
 			["Provider"] = "MrRobot",
 			["SpecID"] = 2,
 			["UnenchantedColor"] = "b7698b",
+		},
+		["\"MrRobot\":DEMONHUNTER2"] = {
+			["IconTexturePath"] = 1247265,
+			["PerCharacterOptions"] = {
+				["可憎少女呜呼-格瑞姆巴托"] = {
+					["Visible"] = true,
+				},
+			},
+			["Color"] = "a330c9",
+			["ClassID"] = 12,
+			["LocalizedName"] = "恶魔猎手: 复仇",
+			["DoNotShow1HUpgrades"] = false,
+			["Role"] = "TANK",
+			["DoNotShow2HUpgrades"] = true,
+			["UpgradesFollowSpecialization"] = true,
+			["Provider"] = "MrRobot",
+			["SpecID"] = 2,
+			["UnenchantedColor"] = "7a2496",
+		},
+		["\"MrRobot\":DRUID2"] = {
+			["IconTexturePath"] = 132115,
+			["PerCharacterOptions"] = {
+			},
+			["Color"] = "ff7d0a",
+			["ClassID"] = 11,
+			["LocalizedName"] = "德鲁伊: 野性",
+			["DoNotShow1HUpgrades"] = true,
+			["Role"] = "DAMAGER",
+			["DoNotShow2HUpgrades"] = false,
+			["UpgradesFollowSpecialization"] = true,
+			["Provider"] = "MrRobot",
+			["SpecID"] = 2,
+			["UnenchantedColor"] = "bf5d07",
 		},
 		["\"MrRobot\":MAGE1"] = {
 			["IconTexturePath"] = 135932,
@@ -496,9 +414,6 @@ PawnCommon = {
 		["\"MrRobot\":HUNTER1"] = {
 			["IconTexturePath"] = 461112,
 			["PerCharacterOptions"] = {
-				["Atax-奥蕾莉亚"] = {
-					["Visible"] = true,
-				},
 				["长大不会游泳-主宰之剑"] = {
 					["Visible"] = true,
 				},
@@ -532,6 +447,9 @@ PawnCommon = {
 		["\"MrRobot\":HUNTER2"] = {
 			["IconTexturePath"] = 236179,
 			["PerCharacterOptions"] = {
+				["Atax-奥蕾莉亚"] = {
+					["Visible"] = true,
+				},
 			},
 			["Color"] = "abd473",
 			["ClassID"] = 3,
@@ -547,6 +465,9 @@ PawnCommon = {
 		["\"MrRobot\":WARRIOR2"] = {
 			["IconTexturePath"] = 132347,
 			["PerCharacterOptions"] = {
+				["Ravenkwok-主宰之剑"] = {
+					["Visible"] = true,
+				},
 			},
 			["Color"] = "c79c6e",
 			["ClassID"] = 1,
@@ -613,6 +534,9 @@ PawnCommon = {
 		["\"MrRobot\":DEATHKNIGHT1"] = {
 			["IconTexturePath"] = 135770,
 			["PerCharacterOptions"] = {
+				["Agihax-奥蕾莉亚"] = {
+					["Visible"] = true,
+				},
 			},
 			["Color"] = "ff4d6b",
 			["ClassID"] = 6,
@@ -625,24 +549,27 @@ PawnCommon = {
 			["SpecID"] = 1,
 			["UnenchantedColor"] = "bf3950",
 		},
-		["\"MrRobot\":DEMONHUNTER2"] = {
-			["IconTexturePath"] = 1247265,
+		["\"MrRobot\":SHAMAN3"] = {
+			["IconTexturePath"] = 136052,
 			["PerCharacterOptions"] = {
 			},
-			["Color"] = "a330c9",
-			["ClassID"] = 12,
-			["LocalizedName"] = "恶魔猎手: 复仇",
+			["Color"] = "0070de",
+			["ClassID"] = 7,
+			["LocalizedName"] = "萨满祭司: 恢复",
 			["DoNotShow1HUpgrades"] = false,
-			["Role"] = "TANK",
-			["DoNotShow2HUpgrades"] = true,
+			["Role"] = "HEALER",
+			["DoNotShow2HUpgrades"] = false,
 			["UpgradesFollowSpecialization"] = true,
 			["Provider"] = "MrRobot",
-			["SpecID"] = 2,
-			["UnenchantedColor"] = "7a2496",
+			["SpecID"] = 3,
+			["UnenchantedColor"] = "0054a6",
 		},
 		["\"MrRobot\":DRUID3"] = {
 			["IconTexturePath"] = 132276,
 			["PerCharacterOptions"] = {
+				["Geronimo-奥蕾莉亚"] = {
+					["Visible"] = true,
+				},
 			},
 			["Color"] = "ff7d0a",
 			["ClassID"] = 11,
@@ -659,6 +586,9 @@ PawnCommon = {
 			["IconTexturePath"] = 237542,
 			["PerCharacterOptions"] = {
 				["Underdog-奥蕾莉亚"] = {
+					["Visible"] = true,
+				},
+				["Radioedit-格瑞姆巴托"] = {
 					["Visible"] = true,
 				},
 			},
@@ -716,6 +646,6 @@ PawnCommon = {
 	["ButtonPosition"] = 2,
 	["IgnoreGemsWhileLeveling"] = true,
 	["ShowQuestUpgradeAdvisor"] = true,
-	["ShowEnchanted"] = true,
+	["Debug"] = false,
 	["ShownGettingStarted"] = true,
 }

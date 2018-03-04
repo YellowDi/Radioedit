@@ -1,5 +1,6 @@
 
 OmniCC4Config = {
+	["version"] = "7.3.1",
 	["groupSettings"] = {
 		["base"] = {
 			["styles"] = {
@@ -23,7 +24,7 @@ OmniCC4Config = {
 				},
 			},
 			["effect"] = "pulse",
-			["fontFace"] = "Fonts\\ARKai_C.ttf",
+			["fontFace"] = "Interface\\AddOns\\ElvUI\\media\\fonts\\Homespun.ttf",
 			["minDuration"] = 2.00000002980232,
 			["mmSSDuration"] = 0,
 			["spiralOpacity"] = 1.00999997742474,
@@ -39,5 +40,4 @@ OmniCC4Config = {
 	},
 	["groups"] = {
 	},
-	["version"] = "7.3",
 }

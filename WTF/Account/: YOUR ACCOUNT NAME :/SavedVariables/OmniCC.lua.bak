@@ -1,8 +1,5 @@
 
 OmniCC4Config = {
-	["groups"] = {
-	},
-	["version"] = "7.3",
 	["groupSettings"] = {
 		["base"] = {
 			["styles"] = {
@@ -37,7 +34,10 @@ OmniCC4Config = {
 			["anchor"] = "CENTER",
 			["mmSSDuration"] = 0,
 			["minDuration"] = 2.00000002980232,
-			["fontFace"] = "Fonts\\ARKai_C.ttf",
+			["fontFace"] = "Interface\\AddOns\\ElvUI\\media\\fonts\\Homespun.ttf",
 		},
 	},
+	["groups"] = {
+	},
+	["version"] = "7.3.1",
 }

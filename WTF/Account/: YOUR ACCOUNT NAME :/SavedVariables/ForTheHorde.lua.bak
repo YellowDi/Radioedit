@@ -1,0 +1,9 @@
+
+FTH_BL = 1
+FTH_TW = 1
+FTH_H = 1
+FTH_AH = 1
+FTH_DOF = 1
+FTH_DOM = 1
+FTH_NW = 1
+FTH_SND_OVERRIDE = nil

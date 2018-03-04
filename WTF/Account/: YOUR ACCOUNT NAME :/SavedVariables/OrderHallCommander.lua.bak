@@ -7,10 +7,16 @@ dbOHC = {
 		["Zeoi - 主宰之剑"] = {
 			["firstun"] = false,
 		},
+		["Geronimo - 格瑞姆巴托"] = {
+			["firstun"] = false,
+		},
+		["Radioedit - 格瑞姆巴托"] = {
+			["firstun"] = false,
+		},
 		["Mirvish - 主宰之剑"] = {
 			["firstun"] = false,
 		},
-		["Geronimo - 格瑞姆巴托"] = {
+		["Geronimo - 奥蕾莉亚"] = {
 			["firstun"] = false,
 		},
 		["蒙特拉贡 - 格瑞姆巴托"] = {
@@ -31,13 +37,13 @@ dbOHC = {
 		["Marcie - 奥蕾莉亚"] = {
 			["firstun"] = false,
 		},
-		["Radioedit - 格瑞姆巴托"] = {
+		["苍白的形容词 - 格瑞姆巴托"] = {
 			["firstun"] = false,
 		},
 		["Atax - 奥蕾莉亚"] = {
 			["firstun"] = false,
 		},
-		["Geronimo - 奥蕾莉亚"] = {
+		["可憎少女呜呼 - 格瑞姆巴托"] = {
 			["firstun"] = false,
 		},
 	},
@@ -51,17 +57,19 @@ dbOHC = {
 	["profileKeys"] = {
 		["Ravenkwok - 主宰之剑"] = "Default",
 		["Zeoi - 主宰之剑"] = "Default",
-		["Mirvish - 主宰之剑"] = "Default",
 		["Geronimo - 格瑞姆巴托"] = "Default",
+		["Radioedit - 格瑞姆巴托"] = "Default",
+		["Mirvish - 主宰之剑"] = "Default",
+		["Geronimo - 奥蕾莉亚"] = "Default",
 		["蒙特拉贡 - 格瑞姆巴托"] = "Default",
 		["Syllenaris - 奥蕾莉亚"] = "Default",
 		["Radioedit - 主宰之剑"] = "Default",
 		["Underdog - 主宰之剑"] = "Default",
 		["Elenore - 格瑞姆巴托"] = "Default",
 		["Marcie - 奥蕾莉亚"] = "Default",
-		["Radioedit - 格瑞姆巴托"] = "Default",
+		["苍白的形容词 - 格瑞姆巴托"] = "Default",
 		["Atax - 奥蕾莉亚"] = "Default",
-		["Geronimo - 奥蕾莉亚"] = "Default",
+		["可憎少女呜呼 - 格瑞姆巴托"] = "Default",
 	},
 	["profiles"] = {
 		["Default"] = {
@@ -71,13 +79,14 @@ dbOHC = {
 				["SORTMISSION"] = "Garrison_SortMissions_Chance",
 				["NEVERKILLTROOPS"] = false,
 				["MAXCHAMP"] = 3,
+				["NOBLACKLIST"] = false,
 				["MOVEPANEL"] = true,
 				["MAXIMIZEXP"] = false,
 				["USEALLY"] = false,
 				["SAVETROOPS"] = false,
 				["IGNOREINACTIVE"] = true,
 				["MAKEITVERYQUICK"] = false,
-				["BONUS"] = true,
+				["BONUS"] = false,
 				["SORTMISSION2"] = "Garrison_SortMissions_Original",
 				["BONUSCHANCE"] = 100,
 				["MINCHANCE"] = 5,
@@ -87,8 +96,8 @@ dbOHC = {
 				["MAKEITQUICK"] = false,
 				["SPARE"] = false,
 				["TROOPALERT"] = true,
-				["IGNOREBUSY"] = false,
-				["BASECHANCE"] = 5,
+				["IGNOREBUSY"] = true,
+				["BASECHANCE"] = 0,
 			},
 			["showmenu"] = false,
 		},
