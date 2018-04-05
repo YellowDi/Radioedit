@@ -38,6 +38,7 @@ L["Purchase Bags"] = true
 L["Purchase"] = "Comprar"
 L["Reagent Bank"] = true
 L["Reset Position"] = "Redefinir Posição"
+L["Right Click the bag icon to assign a type of item to this bag."] = true
 L["Show/Hide Reagents"] = true
 L["Sort Tab"] = "Aba de Organização"
 L["Temporary Move"] = "Mover Temporariamente"
@@ -136,7 +137,6 @@ L["|cffFFFFFFShift + Left Click:|r Show Talent Specialization UI"] = true
 
 --DebugTools
 L["%s: %s tried to call the protected function '%s'."] = "%s: %s tentou chamar a função protegida '%s'."
-L["No locals to dump"] = "Sem locais para despejar"
 
 --Distributor
 L["%s is attempting to share his filters with you. Would you like to accept the request?"] = "%s está tentando compartilhar os filtros dele com você. Gostaria de aceitar o pedido?"
@@ -321,7 +321,7 @@ L["Confused.. Try Again!"] = "Confuso... Tente novamente!"
 L["No gray items to delete."] = "Nenhum item cinzento para destruir."
 L["The spell '%s' has been added to the Blacklist unitframe aura filter."] = 'O feitiço "%s" foi adicionado à Lista Negra dos filtros das auras de unidades.'
 L["This setting caused a conflicting anchor point, where '%s' would be attached to itself. Please check your anchor points. Setting '%s' to be attached to '%s'."] = true
-L["Vendored gray items for:"] = "Vendeu os itens cinzentos por:"
+L["Vendored gray items for: %s"] = "Vendeu os itens cinzentos por: %s"
 L["You don't have enough money to repair."] = "Você não tem dinheiro suficiente para reparar."
 L["You must be at a vendor."] = "Tem de estar num vendedor."
 L["Your items have been repaired for: "] = "Seus itens foram reparadas por: "

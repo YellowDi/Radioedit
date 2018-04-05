@@ -38,6 +38,7 @@ L["Purchase Bags"] = "購買背包"
 L["Purchase"] = "購買銀行欄位"
 L["Reagent Bank"] = "材料銀行"
 L["Reset Position"] = "重設位置"
+L["Right Click the bag icon to assign a type of item to this bag."] = true
 L["Show/Hide Reagents"] = "顯示/隱藏材料"
 L["Sort Tab"] = "選項排列" --Not used, yet?
 L["Temporary Move"] = "移動背包"
@@ -136,7 +137,6 @@ L["|cffFFFFFFShift + Left Click:|r Show Talent Specialization UI"] = "|cffFFFFFF
 
 --DebugTools
 L["%s: %s tried to call the protected function '%s'."] = "%s: %s 嘗試調用保護函數'%s'."
-L["No locals to dump"] = "沒有本地檔案"
 
 --Distributor
 L["%s is attempting to share his filters with you. Would you like to accept the request?"] = "%s 試圖與你分享過濾器設定. 你是否接受?"
@@ -321,7 +321,7 @@ L["Confused.. Try Again!"] = "請再試一次！"
 L["No gray items to delete."] = "沒有可刪除的灰色物品."
 L["The spell '%s' has been added to the Blacklist unitframe aura filter."] = "法術'%s'已經被添加到單位框架的光環過濾器中."
 L["This setting caused a conflicting anchor point, where '%s' would be attached to itself. Please check your anchor points. Setting '%s' to be attached to '%s'."] = "此設定造成了錨點衝突, '%s' 框架會依附於自己, 請檢查你的錨點. 將 '%s' 依附於 '%s'."
-L["Vendored gray items for:"] = "已售出灰色物品，共得："
+L["Vendored gray items for: %s"] = "已售出灰色物品，共得： %s"
 L["You don't have enough money to repair."] = "沒有足夠的資金來修復."
 L["You must be at a vendor."] = "你必須與商人對話."
 L["Your items have been repaired for: "] = "裝備已修復，共支出："

@@ -77,6 +77,7 @@ function E:UpdateBlizzardFonts()
 		SetFont(SystemFont_Med3,                    NORMAL, self.db.general.fontSize*1.1)
 		SetFont(SystemFont_OutlineThick_Huge2,      NORMAL, 20, MONOCHROME.."THICKOUTLINE")
 		SetFont(SystemFont_Outline_Small,           NUMBER, self.db.general.fontSize, "OUTLINE")
+		SetFont(SystemFont_Shadow_Huge3,            NORMAL, 22, nil, SHADOWCOLOR, BIGOFFSET) -- FlightMap
 		SetFont(SystemFont_Shadow_Large,            NORMAL, 15)
 		SetFont(SystemFont_Shadow_Med1,             NORMAL, self.db.general.fontSize)
 		SetFont(SystemFont_Shadow_Med3,             NORMAL, self.db.general.fontSize*1.1)
@@ -131,5 +132,11 @@ function E:UpdateBlizzardFonts()
 		SetFont(Game13FontShadow,					NORMAL, 14)									 -- InspectPvpFrame
 		SetFont(NumberFontNormalSmall,				NORMAL, 11, "OUTLINE")						 -- Calendar, EncounterJournal
 		SetFont(GameFont_Gigantic,				NORMAL, 32, nil, SHADOWCOLOR, BIGOFFSET);		 -- Used at the install steps
+		-- 7.3.5
+		SetFont(Game16Font,							NORMAL, 16);								 -- Added in 7.3.5 used for ?
+		SetFont(Game46Font,							NORMAL, 46);								 -- Added in 7.3.5 used for ?
+		SetFont(DestinyFontMed,						NORMAL, 14);								 -- Added in 7.3.5 used for ?
+		SetFont(Fancy12Font,						NORMAL, 12);								 -- Added in 7.3.5 used for ?
+		SetFont(Fancy14Font,						NORMAL, 14);								 -- Added in 7.3.5 used for ?
 	end
 end

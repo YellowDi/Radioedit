@@ -67,17 +67,23 @@ E.Options.args.general = {
 					order = 6,
 					name = L["Vendor Grays"],
 					desc = L["Automatically vendor gray items when visiting a vendor."],
-					type = 'toggle',
+					type = "toggle",
+				},
+				vendorGraysDetails = {
+					order = 7,
+					name = L["Vendor Gray Detailed Report"],
+					desc = L["Displays a detailed report of every item sold when enabled."],
+					type = "toggle",
 				},
 				autoRoll = {
-					order = 7,
+					order = 8,
 					name = L["Auto Greed/DE"],
 					desc = L["Automatically select greed or disenchant (when available) on green quality items. This will only work if you are the max level."],
 					type = 'toggle',
 					disabled = function() return not E.private.general.lootRoll end
 				},
 				loot = {
-					order = 8,
+					order = 9,
 					type = "toggle",
 					name = L["Loot"],
 					desc = L["Enable/Disable the loot frame."],
@@ -85,7 +91,7 @@ E.Options.args.general = {
 					set = function(info, value) E.private.general.loot = value; E:StaticPopup_Show("PRIVATE_RL") end
 				},
 				lootRoll = {
-					order = 9,
+					order = 10,
 					type = "toggle",
 					name = L["Loot Roll"],
 					desc = L["Enable/Disable the loot roll frame."],
@@ -135,7 +141,6 @@ E.Options.args.general = {
 					desc = L["When you go AFK display the AFK screen."],
 					get = function(info) return E.db.general.afk end,
 					set = function(info, value) E.db.general.afk = value; E:GetModule('AFK'):Toggle() end
-
 				},
 				enhancedPvpMessages = {
 					order = 17,
@@ -151,8 +156,16 @@ E.Options.args.general = {
 					get = function(info) return E.global.general.disableTutorialButtons end,
 					set = function(info, value) E.global.general.disableTutorialButtons = value; E:StaticPopup_Show("GLOBAL_RL") end,
 				},
-				autoScale = {
+				showMissingTalentAlert = {
 					order = 19,
+					type = "toggle",
+					name = L["Missing Talent Alert"],
+					desc = L["Show an alert frame if you have unspend talent points."],
+					get = function(info) return E.global.general.showMissingTalentAlert end,
+					set = function(info, value) E.global.general.showMissingTalentAlert = value; E:StaticPopup_Show("GLOBAL_RL") end,
+				},
+				autoScale = {
+					order = 20,
 					name = L["Auto Scale"],
 					desc = L["Automatically scale the User Interface based on your screen resolution"],
 					type = "toggle",
@@ -160,7 +173,7 @@ E.Options.args.general = {
 					set = function(info, value) E.global.general[ info[#info] ] = value; E:StaticPopup_Show("GLOBAL_RL") end
 				},
 				raidUtility = {
-					order = 20,
+					order = 21,
 					type = "toggle",
 					name = RAID_CONTROL,
 					desc = L["Enables the ElvUI Raid Control panel."],
@@ -168,36 +181,21 @@ E.Options.args.general = {
 					set = function(info, value) E.private.general.raidUtility = value; E:StaticPopup_Show("PRIVATE_RL") end
 				},
 				minUiScale = {
-					order = 21,
+					order = 22,
 					type = "range",
 					name = L["Lowest Allowed UI Scale"],
-					min = 0.32, max = 0.64, step = 0.01,
+					softMin = 0.20, softMax = 0.64, step = 0.01,
 					get = function(info) return E.global.general.minUiScale end,
 					set = function(info, value) E.global.general.minUiScale = value; E:StaticPopup_Show("GLOBAL_RL") end
 				},
 				talkingHeadFrameScale = {
-					order = 22,
+					order = 23,
 					type = "range",
 					name = L["Talking Head Scale"],
 					isPercent = true,
 					min = 0.5, max = 2, step = 0.01,
 					get = function(info) return E.db.general.talkingHeadFrameScale end,
 					set = function(info, value) E.db.general.talkingHeadFrameScale = value; B:ScaleTalkingHeadFrame() end,
-				},
-				numberPrefixStyle = {
-					order = 23,
-					type = "select",
-					name = L["Unit Prefix Style"],
-					desc = L["The unit prefixes you want to use when values are shortened in ElvUI. This is mostly used on UnitFrames."],
-					get = function(info) return E.db.general.numberPrefixStyle end,
-					set = function(info, value) E.db.general.numberPrefixStyle = value; E:StaticPopup_Show("CONFIG_RL") end,
-					values = {
-						["METRIC"] = "Metric (k, M, G)",
-						["ENGLISH"] = "English (K, M, B)",
-						["CHINESE"] = "Chinese (W, Y)",
-						["KOREAN"] = "Korean (천, 만, 억)",
-						["GERMAN"] = "German (Tsd, Mio, Mrd)"
-					},
 				},
 				commandBarSetting = {
 					order = 24,
@@ -211,6 +209,30 @@ E.Options.args.general = {
 						["ENABLED"] = L["Enable"],
 						["ENABLED_RESIZEPARENT"] = L["Enable + Adjust Movers"],
 					},
+				},
+				numberPrefixStyle = {
+					order = 25,
+					type = "select",
+					name = L["Unit Prefix Style"],
+					desc = L["The unit prefixes you want to use when values are shortened in ElvUI. This is mostly used on UnitFrames."],
+					get = function(info) return E.db.general.numberPrefixStyle end,
+					set = function(info, value) E.db.general.numberPrefixStyle = value; E:StaticPopup_Show("CONFIG_RL") end,
+					values = {
+						["METRIC"] = "Metric (k, M, G)",
+						["ENGLISH"] = "English (K, M, B)",
+						["CHINESE"] = "Chinese (W, Y)",
+						["KOREAN"] = "Korean (천, 만, 억)",
+						["GERMAN"] = "German (Tsd, Mio, Mrd)"
+					},
+				},
+				decimalLength = {
+					order = 26,
+					type = "range",
+					name = L["Decimal Length"],
+					desc = L["Controls the amount of decimals used in values displayed on elements like NamePlates and UnitFrames."],
+					min = 0, max = 4, step = 1,
+					get = function(info) return E.db.general.decimalLength end,
+					set = function(info, value) E.db.general.decimalLength = value; E:StaticPopup_Show("GLOBAL_RL") end,
 				},
 			},
 		},
@@ -590,6 +612,14 @@ E.Options.args.general = {
 						["MONOCHROMEOUTLINE"] = "MONOCROMEOUTLINE",
 						["THICKOUTLINE"] = "THICKOUTLINE",
 					},
+				},
+				name = {
+					order = 6,
+					type = "toggle",
+					name = L["Chat Bubble Names"],
+					desc = L["Display the name of the unit on the chat bubble. This will not work if backdrop is disabled or when you are in an instance."],
+					get = function(info) return E.private.general.chatBubbleName end,
+					set = function(info, value) E.private.general.chatBubbleName = value; E:StaticPopup_Show("PRIVATE_RL") end,
 				},
 			},
 		},

@@ -11,8 +11,9 @@ P['general'] = {
 	["interruptAnnounce"] = "NONE",
 	["autoRepair"] = "NONE",
 	['autoRoll'] = false,
-	['vendorGrays'] = false,
 	['autoAcceptInvite'] = false,
+	["vendorGrays"] = false,
+	["vendorGraysDetails"] = false,
 	['bottomPanel'] = true,
 	['hideErrorFrame'] = true,
 	['enhancedPvpMessages'] = true,
@@ -21,6 +22,7 @@ P['general'] = {
 	["talkingHeadFrameScale"] = 0.9,
 	['afk'] = true,
 	["numberPrefixStyle"] = "ENGLISH",
+	["decimalLength"] = 1,
 
 	["fontSize"] = 12,
 	["font"] = "PT Sans Narrow",
@@ -253,6 +255,12 @@ P["nameplates"] = {
 		["neutral"] = { r = 218/255, g = 197/255, b = 92/255 },
 		["bad"] = { r = 0.78, g = 0.25, b = 0.25 },
 		["offline"] = {r = 0.3, g = 0.3, b = 0.3},
+	},
+	['healPrediction'] = {
+		['personal'] = {r = 0, g = 1, b = 0.5, a = 0.25},
+		['others'] = {r = 0, g = 1, b = 0, a = 0.25},
+		['absorbs'] = {r = 1, g = 1, b = 0, a = 0.25},
+		['healAbsorbs'] = {r = 1, g = 0, b = 0, a = 0.25},
 	},
 	['threat'] = {
 		["goodColor"] = {r = 75/255,  g = 175/255, b = 76/255},
@@ -694,7 +702,6 @@ P["nameplates"] = {
 --Auras
 P['auras'] = {
 	['font'] = 'Homespun',
-	['fontSize'] = 10,
 	['fontOutline'] = 'MONOCHROMEOUTLINE',
 	['countYOffset'] = 0,
 	['countXOffset'] = 0,
@@ -711,6 +718,8 @@ P['auras'] = {
 		['sortDir'] = '-',
 		['seperateOwn'] = 1,
 		['size'] = 32,
+		["countFontsize"] = 10,
+		["durationFontSize"] = 10,
 	},
 	['debuffs'] = {
 		['growthDirection'] = 'LEFT_DOWN',
@@ -722,6 +731,8 @@ P['auras'] = {
 		['sortDir'] = '-',
 		['seperateOwn'] = 1,
 		['size'] = 32,
+		["countFontsize"] = 10,
+		["durationFontSize"] = 10,
 	},
 }
 
@@ -770,6 +781,7 @@ P['chat'] = {
 	['tabFontSize'] = 12,
 	['tabFontOutline'] = 'NONE',
 	["copyChatLines"] = false,
+	['useBTagName'] = false,
 }
 
 --Datatexts
@@ -817,6 +829,23 @@ P['datatexts'] = {
 	--Time Datatext
 	['localtime'] = true,
 	['time24'] = false,
+	--Friends
+	['friends'] = {
+		--status
+		['hideAFK'] = false,
+		['hideDND'] = false,
+		--clients
+		['hideWoW'] = false,
+		['hideD3'] = false,
+		['hideWTCG'] = false, --Hearthstone
+		['hideHero'] = false, --Heros of the Storm
+		['hidePro'] = false, --Overwatch
+		['hideS1'] = false,
+		['hideS2'] = false,
+		['hideDST2'] = false,
+		['hideBSAp'] = false, --Mobile
+		['hideApp'] = false, --Launcher
+	},
 
 	--Enabled/Disabled Panels
 	['minimapPanels'] = true,
@@ -958,6 +987,12 @@ P['unitframe'] = {
 			},
 			['WARLOCK'] = {r = 148/255, g = 130/255, b = 201/255}
 		},
+		["debuffHighlight"] = {
+			["Magic"] = {r = 0.2, g = 0.6, b = 1, a = 0.45},
+			["Curse"] = {r = 0.6, g = 0, b = 1, a = 0.45},
+			["Disease"] = {r = 0.6, g = 0.4, b = 0, a = 0.45},
+			["Poison"] = {r = 0, g = 0.6, b = 0, a = 0.45},
+		},
 	},
 
 	['units'] = {
@@ -1026,6 +1061,7 @@ P['unitframe'] = {
 				["xOffset"] = -3,
 				["yOffset"] = 6,
 				["size"] = 22,
+				["texture"] = "DEFAULT",
 			},
 			["CombatIcon"] = {
 				["enable"] = true,
@@ -1110,12 +1146,14 @@ P['unitframe'] = {
 				['enable'] = true,
 				['fill'] = 'fill',
 				['height'] = 10,
+				['autoHide'] = false,
+				["additionalPowerText"] = true,
 				['detachFromFrame'] = false,
 				['detachedWidth'] = 250,
-				['autoHide'] = false,
 				["parent"] = "FRAME",
 				["verticalOrientation"] = false,
-				["additionalPowerText"] = true,
+				["orientation"] = 'HORIZONTAL',
+				["spacing"] = 5,
 				["strataAndLevel"] = {
 					["useCustomStrata"] = false,
 					["frameStrata"] = "LOW",
@@ -1137,6 +1175,7 @@ P['unitframe'] = {
 				['sort'] = 'TIME_REMAINING',
 				["uniformThreshold"] = 0,
 				["yOffset"] = 0,
+				["spacing"] = 0,
 			},
 			['raidicon'] = {
 				['enable'] = true,
@@ -1280,6 +1319,7 @@ P['unitframe'] = {
 				['sort'] = 'TIME_REMAINING',
 				["uniformThreshold"] = 0,
 				["yOffset"] = 0,
+				["spacing"] = 0,
 			},
 			['raidicon'] = {
 				['enable'] = true,
@@ -1579,6 +1619,7 @@ P['unitframe'] = {
 				['sort'] = 'TIME_REMAINING',
 				["uniformThreshold"] = 0,
 				["yOffset"] = 0,
+				["spacing"] = 0,
 			},
 			['raidicon'] = {
 				['enable'] = true,

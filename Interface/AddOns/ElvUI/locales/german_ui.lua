@@ -38,6 +38,7 @@ L["Purchase Bags"] = "Taschen kaufen"
 L["Purchase"] = "Kaufen"
 L["Reagent Bank"] = "Reagenzien Bank"
 L["Reset Position"] = "Position zurücksetzen"
+L["Right Click the bag icon to assign a type of item to this bag."] = "Rechts Klicke auf das Taschensymbol um einen Gegenstandstyp zuzuweisen."
 L["Show/Hide Reagents"] = "Reagenzien anzeigen/ausblenden"
 L["Sort Tab"] = "Tab sortieren" --Not used, yet?
 L["Temporary Move"] = "Temporäres Bewegen"
@@ -136,7 +137,6 @@ L["|cffFFFFFFShift + Left Click:|r Show Talent Specialization UI"] = "|cffFFFFFF
 
 --DebugTools
 L["%s: %s tried to call the protected function '%s'."] = "%s: %s versucht die geschützte Funktion aufrufen '%s'."
-L["No locals to dump"] = "Keine Lokalisierung zum verwerfen"
 
 --Distributor
 L["%s is attempting to share his filters with you. Would you like to accept the request?"] = "%s möchte seine Filter Einstellungen mit dir teilen. Möchtest du die Anfrage annehmen?"
@@ -321,7 +321,7 @@ L["Confused.. Try Again!"] = "Verwirrt.. Versuche es erneut!"
 L["No gray items to delete."] = "Es sind keine grauen Gegenstände zum Löschen vorhanden."
 L["The spell '%s' has been added to the Blacklist unitframe aura filter."] = "Der Zauber '%s' wurde zur schwarzen Liste der Einheitenfenster hinzugefügt."
 L["This setting caused a conflicting anchor point, where '%s' would be attached to itself. Please check your anchor points. Setting '%s' to be attached to '%s'."] = "Diese Einstellungen haben einen Konflikt mit einem Ankerpunkt, wo '%s' an sich selbst angehaftet sein soll. Bitte kontrolliere deine Ankerpunkte. Einstellung '%s' angehaftet an '%s'."
-L["Vendored gray items for:"] = "Graue Gegenstände verkauft für:"
+L["Vendored gray items for: %s"] = "Graue Gegenstände verkauft für: %s"
 L["You don't have enough money to repair."] = "Du hast nicht genügend Gold für die Reparatur."
 L["You must be at a vendor."] = "Du musst bei einem Händler sein."
 L["Your items have been repaired for: "] = "Deine Gegenstände wurden repariert für: "

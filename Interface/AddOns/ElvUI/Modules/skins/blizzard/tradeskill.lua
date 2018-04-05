@@ -4,7 +4,7 @@ local S = E:GetModule('Skins')
 --Cache global variables
 --Lua functions
 local _G = _G
-local unpack = unpack
+local ipairs, unpack = ipairs, unpack
 --WoW API / Variables
 local C_Timer_After = C_Timer.After
 local CreateFrame = CreateFrame
@@ -26,9 +26,7 @@ local function LoadSkin()
 	TradeSkillFrame.RankFrame:SetStatusBarTexture(E["media"].normTex)
 	TradeSkillFrame.RankFrame.RankText:FontTemplate()
 	E:RegisterStatusBar(TradeSkillFrame.RankFrame)
-	TradeSkillFrame.FilterButton:StripTextures(true)
-	TradeSkillFrame.FilterButton:CreateBackdrop('Default', true)
-	TradeSkillFrame.FilterButton.backdrop:SetAllPoints()
+	S:HandleButton(TradeSkillFrame.FilterButton)
 	TradeSkillFrame.LinkToButton:GetNormalTexture():SetTexCoord(0.25, 0.7, 0.37, 0.75)
 	TradeSkillFrame.LinkToButton:GetPushedTexture():SetTexCoord(0.25, 0.7, 0.45, 0.8)
 	TradeSkillFrame.LinkToButton:GetHighlightTexture():Kill()
@@ -103,6 +101,38 @@ local function LoadSkin()
 			Count:SetDrawLayer("OVERLAY")
 
 			Button.NameFrame:Kill()
+		end
+	end)
+
+	local function SkinRecipeList(self, _, tradeSkillInfo)
+		-- +/- Buttons
+		if tradeSkillInfo.collapsed then
+			self:SetNormalTexture("Interface\\AddOns\\ElvUI\\media\\textures\\PlusButton")
+		else
+			self:SetNormalTexture("Interface\\AddOns\\ElvUI\\media\\textures\\MinusButton")
+		end
+
+		-- Skillbar
+		if tradeSkillInfo.hasProgressBar then
+			self.SubSkillRankBar.BorderMid:Hide()
+			self.SubSkillRankBar.BorderLeft:Hide()
+			self.SubSkillRankBar.BorderRight:Hide()
+
+			if not self.SubSkillRankBar.backdrop then
+				self.SubSkillRankBar:CreateBackdrop("Default")
+				self.SubSkillRankBar.backdrop:SetAllPoints()
+				self.SubSkillRankBar:SetStatusBarTexture(E["media"].normTex)
+				E:RegisterStatusBar(self.SubSkillRankBar)
+			end
+		end
+	end
+
+	hooksecurefunc(TradeSkillFrame.RecipeList, "Refresh", function()
+		for i, tradeSkillButton in ipairs(TradeSkillFrame.RecipeList.buttons) do
+			if not tradeSkillButton.headerIsHooked then
+				hooksecurefunc(tradeSkillButton, "SetUpHeader", SkinRecipeList)
+				tradeSkillButton.headerIsHooked = true
+			end
 		end
 	end)
 

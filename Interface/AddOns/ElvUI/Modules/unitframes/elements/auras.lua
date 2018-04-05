@@ -190,6 +190,8 @@ function UF:Configure_Auras(frame, auraType)
 			db.debuffs.attachTo = "FRAME"
 			frame.Debuffs.attachTo = frame
 		end
+		db.buffs.attachTo = "DEBUFFS"
+		frame.Buffs.attachTo = frame.Debuffs
 		frame.Buffs.PostUpdate = nil
 		frame.Debuffs.PostUpdate = UF.UpdateBuffsHeaderPosition
 	elseif position == "DEBUFFS_ON_BUFFS" then
@@ -198,6 +200,8 @@ function UF:Configure_Auras(frame, auraType)
 			db.buffs.attachTo = "FRAME"
 			frame.Buffs.attachTo = frame
 		end
+		db.debuffs.attachTo = "BUFFS"
+		frame.Debuffs.attachTo = frame.Buffs
 		frame.Buffs.PostUpdate = UF.UpdateDebuffsHeaderPosition
 		frame.Debuffs.PostUpdate = nil
 	elseif position == "FLUID_BUFFS_ON_DEBUFFS" then
@@ -206,6 +210,8 @@ function UF:Configure_Auras(frame, auraType)
 			db.debuffs.attachTo = "FRAME"
 			frame.Debuffs.attachTo = frame
 		end
+		db.buffs.attachTo = "DEBUFFS"
+		frame.Buffs.attachTo = frame.Debuffs
 		frame.Buffs.PostUpdate = UF.UpdateBuffsHeight
 		frame.Debuffs.PostUpdate = UF.UpdateBuffsPositionAndDebuffHeight
 	elseif position == "FLUID_DEBUFFS_ON_BUFFS" then
@@ -214,6 +220,8 @@ function UF:Configure_Auras(frame, auraType)
 			db.buffs.attachTo = "FRAME"
 			frame.Buffs.attachTo = frame
 		end
+		db.debuffs.attachTo = "BUFFS"
+		frame.Debuffs.attachTo = frame.Buffs
 		frame.Buffs.PostUpdate = UF.UpdateDebuffsPositionAndBuffHeight
 		frame.Debuffs.PostUpdate = UF.UpdateDebuffsHeight
 	else
@@ -448,7 +456,7 @@ function UF:UpdateAuraTimer(elapsed)
 	end
 end
 
-function UF:AuraFilter(unit, button, name, _, _, _, dispelType, duration, expiration, caster, isStealable, _, spellID, _, isBossDebuff, casterIsPlayer)
+function UF:AuraFilter(unit, button, name, _, _, _, debuffType, duration, expiration, caster, isStealable, _, spellID, _, isBossDebuff, casterIsPlayer)
 	local db = self:GetParent().db
 	if not db or not db[self.type] then return true; end
 
@@ -463,7 +471,7 @@ function UF:AuraFilter(unit, button, name, _, _, _, dispelType, duration, expira
 	button.isPlayer = isPlayer
 	button.isFriend = isFriend
 	button.isStealable = isStealable
-	button.dtype = dispelType
+	button.dtype = debuffType
 	button.duration = duration
 	button.expiration = expiration
 	button.name = name
@@ -476,7 +484,7 @@ function UF:AuraFilter(unit, button, name, _, _, _, dispelType, duration, expira
 
 	if db.priority ~= '' then
 		isUnit = unit and caster and UnitIsUnit(unit, caster)
-		canDispell = (self.type == 'buffs' and isStealable) or (self.type == 'debuffs' and dispelType and E:IsDispellableByMe(dispelType))
+		canDispell = (self.type == 'buffs' and isStealable) or (self.type == 'debuffs' and debuffType and E:IsDispellableByMe(debuffType))
 		filterCheck, spellPriority = UF:CheckFilter(name, caster, spellID, isFriend, isPlayer, isUnit, isBossDebuff, allowDuration, noDuration, canDispell, casterIsPlayer, strsplit(",", db.priority))
 		if spellPriority then button.priority = spellPriority end -- this is the only difference from auarbars code
 	else

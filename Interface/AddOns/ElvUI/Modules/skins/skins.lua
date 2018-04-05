@@ -12,9 +12,10 @@ local SetDesaturation = SetDesaturation
 local hooksecurefunc = hooksecurefunc
 local IsAddOnLoaded = IsAddOnLoaded
 local GetCVarBool = GetCVarBool
+local ITEM_QUALITY_COLORS = ITEM_QUALITY_COLORS
 
 --Global variables that we don't cache, list them here for mikk's FindGlobals script
--- GLOBALS: SquareButton_SetIcon, ScriptErrorsFrame
+-- GLOBALS: SquareButton_SetIcon, ScriptErrorsFrame, HybridScrollFrame_GetOffset
 
 E.Skins = S
 S.addonsToLoad = {}
@@ -35,6 +36,17 @@ function S:SetOriginalBackdrop()
 	self:SetBackdropBorderColor(unpack(E["media"].bordercolor))
 end
 
+-- function to handle the recap button script
+function S:UpdateRecapButton()
+	-- when UpdateRecapButton runs and enables the button, it unsets OnEnter
+	-- we need to reset it with ours. blizzard will replace it when the button
+	-- is disabled. so, we don't have to worry about anything else.
+	if self and self.button4 and self.button4:IsEnabled() then
+		self.button4:SetScript("OnEnter", S.SetModifiedBackdrop)
+		self.button4:SetScript("OnLeave", S.SetOriginalBackdrop)
+	end
+end
+
 S.PVPHonorXPBarFrames = {}
 S.PVPHonorXPBarSkinned = false
 function S:SkinPVPHonorXPBar(frame)
@@ -49,6 +61,9 @@ function S:SkinPVPHonorXPBar(frame)
 
 		if XPBar.Bar and not XPBar.Bar.backdrop then
 			XPBar.Bar:CreateBackdrop("Default")
+			if XPBar.Bar.Background then
+				XPBar.Bar.Background:SetInside(XPBar.Bar.backdrop)
+			end
 			if XPBar.Bar.Spark then
 				XPBar.Bar.Spark:SetAlpha(0)
 			end
@@ -90,28 +105,37 @@ function S:SkinPVPHonorXPBar(frame)
 end
 
 function S:StatusBarColorGradient(bar, value, max, backdrop)
-    local current = (not max and value) or (value and max and max ~= 0 and value/max)
-    if not (bar and current) then return end
-    local r, g, b = E:ColorGradient(current, 0.8,0,0, 0.8,0.8,0, 0,0.8,0)
-    local bg = backdrop or bar.backdrop
-    if bg then bg:SetBackdropColor(r*0.25, g*0.25, b*0.25) end
-    bar:SetStatusBarColor(r, g, b)
+	local current = (not max and value) or (value and max and max ~= 0 and value/max)
+	if not (bar and current) then return end
+	local r, g, b = E:ColorGradient(current, 0.8,0,0, 0.8,0.8,0, 0,0.8,0)
+	local bg = backdrop or bar.backdrop
+	if bg then bg:SetBackdropColor(r*0.25, g*0.25, b*0.25) end
+	bar:SetStatusBarColor(r, g, b)
 end
 
 function S:HandleButton(f, strip)
 	assert(f, "doesn't exist!")
+
 	if f.Left then f.Left:SetAlpha(0) end
 	if f.Middle then f.Middle:SetAlpha(0) end
 	if f.Right then f.Right:SetAlpha(0) end
+
+	if f.TopLeft then f.TopLeft:SetAlpha(0) end
+	if f.TopMiddle then f.TopMiddle:SetAlpha(0) end
+	if f.TopRight then f.TopRight:SetAlpha(0) end
+	if f.MiddleLeft then f.MiddleLeft:SetAlpha(0) end
+	if f.MiddleMiddle then f.MiddleMiddle:SetAlpha(0) end
+	if f.MiddleRight then f.MiddleRight:SetAlpha(0) end
+	if f.BottomLeft then f.BottomLeft:SetAlpha(0) end
+	if f.BottomMiddle then f.BottomMiddle:SetAlpha(0) end
+	if f.BottomRight then f.BottomRight:SetAlpha(0) end
+
 	if f.LeftSeparator then f.LeftSeparator:SetAlpha(0) end
 	if f.RightSeparator then f.RightSeparator:SetAlpha(0) end
 
 	if f.SetNormalTexture then f:SetNormalTexture("") end
-
 	if f.SetHighlightTexture then f:SetHighlightTexture("") end
-
 	if f.SetPushedTexture then f:SetPushedTexture("") end
-
 	if f.SetDisabledTexture then f:SetDisabledTexture("") end
 
 	if strip then f:StripTextures() end
@@ -339,30 +363,33 @@ end
 function S:HandleMaxMinFrame(frame)
 	assert(frame, "does not exist.")
 
+	frame:StripTextures()
+
 	for _, name in next, {"MaximizeButton", "MinimizeButton"} do
-		if frame then frame:StripTextures() end
-
 		local button = frame[name]
-		button:SetSize(16, 16)
-		button:ClearAllPoints()
-		button:SetPoint("CENTER")
+		if button then
+			button:SetSize(18, 18)
+			button:ClearAllPoints()
+			button:SetPoint("CENTER")
 
-		button:SetNormalTexture("Interface\\AddOns\\ElvUI\\media\\textures\\vehicleexit")
-		button:SetPushedTexture("Interface\\AddOns\\ElvUI\\media\\textures\\vehicleexit")
-		button:SetHighlightTexture("Interface\\AddOns\\ElvUI\\media\\textures\\vehicleexit")
+			button:SetNormalTexture("Interface\\AddOns\\ElvUI\\media\\textures\\vehicleexit")
+			button:SetPushedTexture("Interface\\AddOns\\ElvUI\\media\\textures\\vehicleexit")
+			button:SetHighlightTexture("Interface\\AddOns\\ElvUI\\media\\textures\\vehicleexit")
 
-		if not button.backdrop then
-			button:CreateBackdrop("Default", true)
-			button.backdrop:Point("TOPLEFT", button, 1, -1)
-			button.backdrop:Point("BOTTOMRIGHT", button, -1, 1)
-			button:HookScript('OnEnter', S.SetModifiedBackdrop)
-			button:HookScript('OnLeave', S.SetOriginalBackdrop)
-		end
+			if not button.backdrop then
+				button:CreateBackdrop("Default", true)
+				button.backdrop:Point("TOPLEFT", button, 1, -1)
+				button.backdrop:Point("BOTTOMRIGHT", button, -1, 1)
+				button:HookScript('OnEnter', S.SetModifiedBackdrop)
+				button:HookScript('OnLeave', S.SetOriginalBackdrop)
+				button:SetHitRectInsets(1, 1, 1, 1)
+			end
 
-		if name == "MaximizeButton" then
-			button:GetNormalTexture():SetTexCoord(1, 1, 1, -1.2246467991474e-016, 1.1102230246252e-016, 1, 0, -1.144237745222e-017)
-			button:GetPushedTexture():SetTexCoord(1, 1, 1, -1.2246467991474e-016, 1.1102230246252e-016, 1, 0, -1.144237745222e-017)
-			button:GetHighlightTexture():SetTexCoord(1, 1, 1, -1.2246467991474e-016, 1.1102230246252e-016, 1, 0, -1.144237745222e-017)
+			if name == "MaximizeButton" then
+				button:GetNormalTexture():SetTexCoord(1, 1, 1, -1.2246467991474e-016, 1.1102230246252e-016, 1, 0, -1.144237745222e-017)
+				button:GetPushedTexture():SetTexCoord(1, 1, 1, -1.2246467991474e-016, 1.1102230246252e-016, 1, 0, -1.144237745222e-017)
+				button:GetHighlightTexture():SetTexCoord(1, 1, 1, -1.2246467991474e-016, 1.1102230246252e-016, 1, 0, -1.144237745222e-017)
+			end
 		end
 	end
 end
@@ -547,6 +574,7 @@ function S:HandleCloseButton(f, point, text)
 		f.backdrop:Point('BOTTOMRIGHT', -8, 8)
 		f:HookScript('OnEnter', S.SetModifiedBackdrop)
 		f:HookScript('OnLeave', S.SetOriginalBackdrop)
+		f:SetHitRectInsets(6, 6, 7, 7)
 	end
 	if not text then text = 'x' end
 	if not f.text then
@@ -595,38 +623,55 @@ function S:HandleSliderFrame(frame)
 end
 
 function S:HandleFollowerPage(follower, hasItems, hasEquipment)
-	local abilities = follower.followerTab.AbilitiesFrame.Abilities
-	if follower.numAbilitiesStyled == nil then
-		follower.numAbilitiesStyled = 1
+	local followerTab = follower and follower.followerTab
+	local abilityFrame = followerTab.AbilitiesFrame
+	if not abilityFrame then return end
+
+	local abilities = abilityFrame.Abilities
+	if abilities then
+		for i = 1, #abilities do
+			local iconButton = abilities[i].IconButton
+			local icon = iconButton and iconButton.Icon
+			if icon and not iconButton.backdrop then
+				S:HandleIcon(icon, iconButton)
+				icon:SetDrawLayer("BORDER", 0)
+				if iconButton.Border then
+					iconButton.Border:SetTexture(nil)
+				end
+			end
+		end
 	end
-	local numAbilitiesStyled = follower.numAbilitiesStyled
-	local ability = abilities[numAbilitiesStyled]
-	while ability do
-		local icon = ability.IconButton.Icon
-		S:HandleIcon(icon, ability.IconButton)
-		icon:SetDrawLayer("BORDER", 0)
-		numAbilitiesStyled = numAbilitiesStyled + 1
-		ability = abilities[numAbilitiesStyled]
+
+	local combatAllySpells = abilityFrame.CombatAllySpell
+	if combatAllySpells then
+		for i = 1, #combatAllySpells do
+			local icon = combatAllySpells[i].iconTexture
+			if icon and not combatAllySpells[i].backdrop then
+				S:HandleIcon(icon, combatAllySpells[i])
+			end
+		end
 	end
-	follower.numAbilitiesStyled = numAbilitiesStyled
 
 	if hasItems then
-		local weapon = follower.followerTab.ItemWeapon
-		local armor = follower.followerTab.ItemArmor
-		if not weapon.backdrop then
+		local weapon = followerTab.ItemWeapon
+		if weapon and not weapon.backdrop then
 			S:HandleIcon(weapon.Icon, weapon)
-			weapon.Border:SetTexture(nil)
-			weapon.backdrop:SetFrameLevel(weapon:GetFrameLevel())
+			if weapon.Border then
+				weapon.Border:SetTexture(nil)
+			end
 		end
-		if not armor.backdrop then
+
+		local armor = followerTab.ItemArmor
+		if armor and not armor.backdrop then
 			S:HandleIcon(armor.Icon, armor)
-			armor.Border:SetTexture(nil)
-			armor.backdrop:SetFrameLevel(armor:GetFrameLevel())
+			if armor.Border then
+				armor.Border:SetTexture(nil)
+			end
 		end
 	end
 
-	local xpbar = follower.followerTab.XPBar
-	if not xpbar.backdrop then
+	local xpbar = followerTab.XPBar
+	if xpbar and not xpbar.backdrop then
 		xpbar:StripTextures()
 		xpbar:SetStatusBarTexture(E["media"].normTex)
 		xpbar:CreateBackdrop("Transparent")
@@ -634,22 +679,50 @@ function S:HandleFollowerPage(follower, hasItems, hasEquipment)
 
 	-- only OrderHall
 	if hasEquipment then
-		local btn
-		local equipment = follower.followerTab.AbilitiesFrame.Equipment
-		if not equipment.backdrop then
+		local equipment = abilityFrame.Equipment
+		if equipment then
 			for i = 1, #equipment do
-				btn = equipment[i]
-				btn.Border:SetTexture(nil)
-				btn.BG:SetTexture(nil)
-				btn.Icon:SetTexCoord(unpack(E.TexCoords))
-				if not btn.backdop then
-					btn:CreateBackdrop("Default")
-					btn.backdrop:SetPoint("TOPLEFT", btn.Icon, "TOPLEFT", -2, 2)
-					btn.backdrop:SetPoint("BOTTOMRIGHT", btn.Icon, "BOTTOMRIGHT", 2, -2)
+				-- fix borders being off
+				equipment[i]:SetScale(1)
+
+				-- handle its styling
+				if not equipment[i].template then
+					equipment[i]:SetTemplate('Default')
+					equipment[i]:SetSize(48, 48)
+					if equipment[i].BG then
+						equipment[i].BG:SetTexture(nil)
+					end
+					if equipment[i].Border then
+						equipment[i].Border:SetTexture(nil)
+					end
+					if equipment[i].Icon then
+						equipment[i].Icon:SetTexCoord(unpack(E.TexCoords))
+						equipment[i].Icon:SetInside(equipment[i])
+					end
+					if equipment[i].EquipGlow then
+						equipment[i].EquipGlow:SetSize(78, 78)
+					end
+					if equipment[i].ValidSpellHighlight then
+						equipment[i].ValidSpellHighlight:SetSize(78, 78)
+					end
+				end
+
+				-- handle the placement slightly to move them apart a bit
+				if equipment[i]:IsShown() then
+					local point, anchor, secondaryPoint, _, y = equipment[i]:GetPoint();
+					if anchor and abilityFrame.EquipmentSlotsLabel then
+						local totalWidth = equipment[i]:GetWidth() * #equipment
+						if anchor ~= abilityFrame.EquipmentSlotsLabel then
+							equipment[i]:SetPoint(point, anchor, secondaryPoint, E.Border*4, y);
+						elseif followerTab.isLandingPage then
+							equipment[i]:SetPoint("TOPLEFT", abilityFrame.EquipmentSlotsLabel, "BOTTOM", -totalWidth/2, 0);
+						else
+							equipment[i]:SetPoint("TOPLEFT", abilityFrame.EquipmentSlotsLabel, "BOTTOM", -totalWidth/2, -20);
+						end
+					end
 				end
 			end
 		end
-		btn = nil
 	end
 end
 
@@ -674,6 +747,122 @@ function S:HandleShipFollowerPage(followerTab)
 		if followerTab.isLandingPage then
 			icon:SetTexCoord(unpack(E.TexCoords))
 		end
+	end
+end
+
+S.FollowerListUpdateDataFrames = {}
+function S:HandleFollowerListOnUpdateData(frame)
+	if (frame == 'GarrisonLandingPageFollowerList') and (E.private.skins.blizzard.orderhall ~= true or E.private.skins.blizzard.garrison ~= true) then
+		return -- Only hook this frame if both Garrison and Orderhall skins are enabled because it's shared.
+	end
+
+	if S.FollowerListUpdateDataFrames[frame] then return end
+	S.FollowerListUpdateDataFrames[frame] = true -- make sure we don't double hook `GarrisonLandingPageFollowerList`
+
+	hooksecurefunc(_G[frame], "UpdateData", function(Frame)
+		local followersList = Frame.followersList
+		local ScrollFrame = Frame.listScroll
+		local offset = HybridScrollFrame_GetOffset(ScrollFrame)
+		local Buttons = ScrollFrame.buttons
+		local numFollowers = #followersList
+		local numButtons = #Buttons
+
+		for i = 1, numButtons do
+			local button = Buttons[i]
+			local index = offset + i -- adjust index
+
+			if button then
+				if (index <= numFollowers) and not button.template then
+					button:SetTemplate()
+
+					if button.Category then
+						button.Category:ClearAllPoints()
+						button.Category:SetPoint("TOP", button, "TOP", 0, -4)
+					end
+
+					if button.Follower then
+						button.Follower.Name:SetWordWrap(false)
+						button.Follower.BG:Hide()
+						button.Follower.Selection:SetTexture("")
+						button.Follower.AbilitiesBG:SetTexture("")
+						button.Follower.BusyFrame:SetAllPoints()
+
+						local hl = button.Follower:GetHighlightTexture()
+						hl:SetColorTexture(0.9, 0.8, 0.1, 0.3)
+						hl:ClearAllPoints()
+						hl:SetPoint("TOPLEFT", 1, -1)
+						hl:SetPoint("BOTTOMRIGHT", -1, 1)
+
+						if button.Follower.Counters then
+							for y = 1, #button.Follower.Counters do
+								local counter = button.Follower.Counters[y]
+								if counter and not counter.template then
+									counter:SetTemplate()
+									if counter.Border then
+										counter.Border:SetTexture(nil)
+									end
+									if counter.Icon then
+										counter.Icon:SetTexCoord(unpack(E.TexCoords))
+										counter.Icon:SetInside()
+									end
+								end
+							end
+						end
+
+						if button.Follower.PortraitFrame then
+							S:HandleGarrisonPortrait(button.Follower.PortraitFrame)
+							button.Follower.PortraitFrame:ClearAllPoints()
+							button.Follower.PortraitFrame:SetPoint("TOPLEFT", 3, -3)
+						end
+					end
+				end
+
+				if button.Follower then
+					if button.Follower.Selection then
+						if button.Follower.Selection:IsShown() then
+							button.Follower:SetBackdropColor(0.9, 0.8, 0.1, 0.3)
+						else
+							button.Follower:SetBackdropColor(0, 0, 0, .25)
+						end
+					end
+
+					if button.Follower.PortraitFrame and button.Follower.PortraitFrame.quality then
+						local color = ITEM_QUALITY_COLORS[button.Follower.PortraitFrame.quality]
+						if color and button.Follower.PortraitFrame.backdrop then
+							button.Follower.PortraitFrame.backdrop:SetBackdropBorderColor(color.r, color.g, color.b)
+						end
+					end
+				end
+			end
+		end
+	end)
+end
+
+-- Shared Template on LandingPage/Orderhall-/Garrison-FollowerList
+function S:HandleGarrisonPortrait(portrait)
+	if not portrait.Portrait then return end
+
+	local size = portrait.Portrait:GetSize() + 2
+	portrait:SetSize(size, size)
+
+	portrait.Portrait:SetTexCoord(unpack(E.TexCoords))
+	portrait.Portrait:ClearAllPoints()
+	portrait.Portrait:SetPoint("TOPLEFT", 1, -1)
+
+	portrait.PortraitRing:Hide()
+	portrait.PortraitRingQuality:SetTexture("")
+	portrait.PortraitRingCover:SetTexture("")
+	portrait.LevelBorder:SetAlpha(0)
+
+	portrait.Level:ClearAllPoints()
+	portrait.Level:SetPoint("BOTTOM")
+	portrait.Level:FontTemplate(nil, 12, "OUTLINE")
+
+	if not portrait.backdrop then
+		portrait:CreateBackdrop("Default")
+		portrait.backdrop:SetPoint("TOPLEFT", portrait, "TOPLEFT", -1, 1)
+		portrait.backdrop:SetPoint("BOTTOMRIGHT", portrait, "BOTTOMRIGHT", 1, -1)
+		portrait.backdrop:SetFrameLevel(portrait:GetFrameLevel())
 	end
 end
 

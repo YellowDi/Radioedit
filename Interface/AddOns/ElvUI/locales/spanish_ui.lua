@@ -38,6 +38,7 @@ L["Purchase Bags"] = "Comprar Bolsas"
 L["Purchase"] = "Comprar"
 L["Reagent Bank"] = "Banco de Componentes"
 L["Reset Position"] = "Reestablecer Posición"
+L["Right Click the bag icon to assign a type of item to this bag."] = true
 L["Show/Hide Reagents"] = "Mostrar/Ocultar Componentes"
 L["Sort Tab"] = "Ordenar Pestaña"
 L["Temporary Move"] = "Movimiento Temporal"
@@ -136,7 +137,6 @@ L["|cffFFFFFFShift + Left Click:|r Show Talent Specialization UI"] = "|cffFFFFFF
 
 --DebugTools
 L["%s: %s tried to call the protected function '%s'."] = "%s: %s intentó llamar a la función protegida '%s'."
-L["No locals to dump"] = "No hay locales para volcar"
 
 --Distributor
 L["%s is attempting to share his filters with you. Would you like to accept the request?"] = "%s quiere compartir sus filtros contigo. ¿Aceptas la petición?"
@@ -321,7 +321,7 @@ L["Confused.. Try Again!"] = "Confundido... ¡Intenta de Nuevo!"
 L["No gray items to delete."] = "No hay objetos grises para eliminar."
 L["The spell '%s' has been added to the Blacklist unitframe aura filter."] = "El hechizo '%s' ha sido añadido a la Lista Negra del filtro de auras del marco de unidad."
 L["This setting caused a conflicting anchor point, where '%s' would be attached to itself. Please check your anchor points. Setting '%s' to be attached to '%s'."] = "Esta opción causó un punto de fijación en conflicto, donde '%s' estaría adjunto a sí mismo. Por favor comprueba tus puntos de fijación. Opción '%s' a ser fijado a '%s'"
-L["Vendored gray items for:"] = "Objetos grises vendidos por:"
+L["Vendored gray items for: %s"] = "Objetos grises vendidos por: %s"
 L["You don't have enough money to repair."] = "No tienes suficiente dinero para reparaciones."
 L["You must be at a vendor."] = "Debes estar cerca de un vendedor."
 L["Your items have been repaired for: "] = "Tus objetos han sido reparados por:"

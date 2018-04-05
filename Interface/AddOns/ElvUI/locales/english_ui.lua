@@ -38,6 +38,7 @@ L["Purchase Bags"] = true
 L["Purchase"] = true
 L["Reagent Bank"] = true
 L["Reset Position"] = true
+L["Right Click the bag icon to assign a type of item to this bag."] = true
 L["Show/Hide Reagents"] = true
 L["Sort Tab"] = true --Not used, yet?
 L["Temporary Move"] = true
@@ -136,7 +137,6 @@ L["|cffFFFFFFShift + Left Click:|r Show Talent Specialization UI"] = true
 
 --DebugTools
 L["%s: %s tried to call the protected function '%s'."] = true
-L["No locals to dump"] = true
 
 --Distributor
 L["%s is attempting to share his filters with you. Would you like to accept the request?"] = true
@@ -182,7 +182,6 @@ L["Layout"] = true
 L["Lock"] = true
 L["Low Resolution"] = true
 L["low"] = true
-L["Movers unlocked. Move them now and click Lock when you are done."] = true
 L["Nudge"] = true
 L["Physical DPS"] = true
 L["Please click the button below so you can setup variables and ReloadUI."] = true
@@ -322,7 +321,7 @@ L["Confused.. Try Again!"] = true
 L["No gray items to delete."] = true
 L["The spell '%s' has been added to the Blacklist unitframe aura filter."] = true
 L["This setting caused a conflicting anchor point, where '%s' would be attached to itself. Please check your anchor points. Setting '%s' to be attached to '%s'."] = true
-L["Vendored gray items for:"] = true
+L["Vendored gray items for: %s"] = true
 L["You don't have enough money to repair."] = true
 L["You must be at a vendor."] = true
 L["Your items have been repaired for: "] = true

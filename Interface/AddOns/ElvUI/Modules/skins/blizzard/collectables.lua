@@ -243,6 +243,7 @@ local function LoadSkin()
 	S:HandleNextPrevButton(ToyBox.PagingFrame.PrevPageButton)
 	SquareButton_SetIcon(ToyBox.PagingFrame.PrevPageButton, 'LEFT')
 	ToyBox.progressBar:StripTextures()
+	S:HandleCloseButton(ToyBox.favoriteHelpBox.CloseButton)
 
 	local function TextColorModified(self, r, g, b)
 		if(r == 0.33 and g == 0.27 and b == 0.2) then
@@ -267,7 +268,6 @@ local function LoadSkin()
 		E:RegisterCooldown(button.cooldown)
 	end
 
-
 	--Heirlooms
 	S:HandleButton(HeirloomsJournalFilterButton)
 	HeirloomsJournalFilterButton:Point("TOPRIGHT", HeirloomsJournal, "TOPRIGHT", -15, -34)
@@ -278,6 +278,7 @@ local function LoadSkin()
 	SquareButton_SetIcon(HeirloomsJournal.PagingFrame.PrevPageButton, 'LEFT')
 	HeirloomsJournal.progressBar:StripTextures()
 	S:HandleDropDownBox(HeirloomsJournalClassDropDown)
+	S:HandleCloseButton(HeirloomsJournal.UpgradeLevelHelpBox.CloseButton)
 
 	hooksecurefunc(HeirloomsJournal, "LayoutCurrentPage", function()
 		for i=1, #HeirloomsJournal.heirloomHeaderFrames do
@@ -362,9 +363,11 @@ local function LoadSkin()
 	WardrobeCollectionFrame.SetsCollectionFrame:SetTemplate("Transparent")
 	WardrobeCollectionFrame.SetsCollectionFrame.LeftInset:StripTextures()
 	WardrobeCollectionFrame.SetsCollectionFrame.DetailsFrame.Name:FontTemplate(nil, 16)
+	WardrobeCollectionFrame.SetsCollectionFrame.DetailsFrame.LongName:FontTemplate(nil, 16)
 	S:HandleButton(WardrobeCollectionFrame.SetsCollectionFrame.DetailsFrame.VariantSetsButton)
 	S:HandleScrollBar(WardrobeCollectionFrame.SetsCollectionFrame.ScrollFrame.scrollBar)
 	S:HandleCloseButton(WardrobeCollectionFrame.SetsTabHelpBox.CloseButton)
+	S:HandleCloseButton(WardrobeCollectionFrame.ItemsCollectionFrame.HelpBox.CloseButton)
 
 	--Skin set buttons
 	for i = 1, #WardrobeCollectionFrame.SetsCollectionFrame.ScrollFrame.buttons do

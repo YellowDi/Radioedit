@@ -38,6 +38,7 @@ L["Purchase Bags"] = "가방 슬롯 구입"
 L["Purchase"] = "구입"
 L["Reagent Bank"] = REAGENT_BANK
 L["Reset Position"] = "위치 초기화"
+L["Right Click the bag icon to assign a type of item to this bag."] = true
 L["Show/Hide Reagents"] = "재료은행 표시"
 L["Sort Tab"] = "탭 정렬" --Not used, yet?
 L["Temporary Move"] = "임시 이동"
@@ -136,7 +137,6 @@ L["|cffFFFFFFShift + Left Click:|r Show Talent Specialization UI"] = true
 
 --DebugTools
 L["%s: %s tried to call the protected function '%s'."] = "%s: %s 기능이 사용할 수 없는 %s 함수를 사용하려 합니다."
-L["No locals to dump"] = true --Currently not used
 
 --Distributor
 L["%s is attempting to share his filters with you. Would you like to accept the request?"] = "%s 유저가 필터설정을 전송하려 합니다. 받으시겠습니까?"
@@ -321,7 +321,7 @@ L["Confused.. Try Again!"] = "작업에 혼선이 있었습니다. 다시 시도
 L["No gray items to delete."] = "잡동사니가 없습니다."
 L["The spell '%s' has been added to the Blacklist unitframe aura filter."] = "%s 주문이 차단 목록에 등록되었습니다."
 L["This setting caused a conflicting anchor point, where '%s' would be attached to itself. Please check your anchor points. Setting '%s' to be attached to '%s'."] = true
-L["Vendored gray items for:"] = "모든 잡동사니를 팔았습니다:"
+L["Vendored gray items for: %s"] = "모든 잡동사니를 팔았습니다: %s"
 L["You don't have enough money to repair."] = "수리 비용이 부족합니다."
 L["You must be at a vendor."] = "상인을 만나야 가능합니다."
 L["Your items have been repaired for: "] = "자동으로 수리하고 비용을 지불했습니다:"

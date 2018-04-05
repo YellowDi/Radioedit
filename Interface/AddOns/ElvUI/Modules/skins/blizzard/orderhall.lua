@@ -19,7 +19,7 @@ local function LoadSkin()
 	-- CommandBar
 	local OrderHallCommandBar = _G["OrderHallCommandBar"]
 	OrderHallCommandBar:StripTextures()
-	OrderHallCommandBar:SetTemplate("Transparent")
+	OrderHallCommandBar:CreateBackdrop("Transparent")
 	OrderHallCommandBar.ClassIcon:SetTexture("Interface\\TargetingFrame\\UI-Classes-Circles")
 	OrderHallCommandBar.ClassIcon:SetSize(46, 20)
 	OrderHallCommandBar.CurrencyIcon:SetAtlas("legionmission-icon-currency", false)
@@ -68,6 +68,10 @@ local function LoadSkin()
 	FollowerTab.XPBar:StripTextures()
 	FollowerTab.XPBar:SetStatusBarTexture(E["media"].normTex)
 	FollowerTab.XPBar:CreateBackdrop()
+
+	-- Orderhall Portraits
+	S:HandleFollowerListOnUpdateData('OrderHallMissionFrameFollowers')
+	S:HandleFollowerListOnUpdateData('GarrisonLandingPageFollowerList') -- this also applies to garrison landing page
 
 	-- Missions
 	local MissionTab = OrderHallMissionFrame.MissionTab
