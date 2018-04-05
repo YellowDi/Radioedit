@@ -2,6 +2,7 @@ local _, Simulationcraft = ...
 
 Simulationcraft = LibStub("AceAddon-3.0"):NewAddon(Simulationcraft, "Simulationcraft", "AceConsole-3.0", "AceEvent-3.0")
 ItemUpgradeInfo = LibStub("LibItemUpgradeInfo-1.0")
+LibRealmInfo = LibStub("LibRealmInfo")
 
 local OFFSET_ITEM_ID = 1
 local OFFSET_ENCHANT_ID = 2
@@ -80,6 +81,21 @@ local function GetItemSplit(itemLink)
   return itemSplit
 end
 
+-- char size for utf8 strings
+local function chsize(char)
+  if not char then
+      return 0
+  elseif char > 240 then
+      return 4
+  elseif char > 225 then
+      return 3
+  elseif char > 192 then
+      return 2
+  else
+      return 1
+  end
+end
+
 -- SimC tokenize function
 local function tokenize(str)
   str = str or ""
@@ -90,15 +106,21 @@ local function tokenize(str)
   -- keep stuff we want, dumpster everything else
   local s = ""
   for i=1,str:len() do
+    local b = str:byte(i)
     -- keep digits 0-9
-    if str:byte(i) >= 48 and str:byte(i) <= 57 then
+    if b >= 48 and b <= 57 then
       s = s .. str:sub(i,i)
       -- keep lowercase letters
-    elseif str:byte(i) >= 97 and str:byte(i) <= 122 then
+    elseif b >= 97 and b <= 122 then
       s = s .. str:sub(i,i)
       -- keep %, +, ., _
-    elseif str:byte(i)==37 or str:byte(i)==43 or str:byte(i)==46 or str:byte(i)==95 then
+    elseif b == 37 or b == 43 or b == 46 or b == 95 then
       s = s .. str:sub(i,i)
+      -- save all multibyte chars
+    elseif chsize(b) > 1 then
+      local offset = chsize(b) - 1
+      s = s .. str:sub(i, i + offset)
+      i = i + offset
     end
   end
   -- strip trailing spaces
@@ -522,11 +544,19 @@ function Simulationcraft:PrintSimcProfile(debugOutput, noBags)
   local versionComment = '# SimC Addon ' .. GetAddOnMetadata('Simulationcraft', 'Version')
 
   -- Basic player info
+  local _, realmName, _, _, _, _, region, _, _, realmLatinName, _ = LibRealmInfo:GetRealmInfoByUnit('player')
+
   local playerName = UnitName('player')
   local _, playerClass = UnitClass('player')
   local playerLevel = UnitLevel('player')
-  local playerRealm = GetRealmName()
-  local playerRegion = regionString[GetCurrentRegion()]
+
+  -- Try Latin name for Russian servers first, then realm name from LibRealmInfo, then Realm Name from the game
+  -- Latin name for Russian servers as most APIs use the latin name, not the cyrillic name
+  local playerRealm = realmLatinName or realmName or GetRealmName()
+
+  -- Try region from LibRealmInfo first, then use default API
+  -- Default API can be wrong for region-switching players
+  local playerRegion = region or regionString[GetCurrentRegion()]
 
   -- Race info
   local _, playerRace = UnitRace('player')
@@ -643,4 +673,7 @@ function Simulationcraft:PrintSimcProfile(debugOutput, noBags)
   SimcCopyFrameScrollText:Show()
   SimcCopyFrameScrollText:SetText(simulationcraftProfile)
   SimcCopyFrameScrollText:HighlightText()
+  SimcCopyFrameScrollText:SetScript("OnEscapePressed", function(self)
+    SimcCopyFrame:Hide()
+  end)
 end
