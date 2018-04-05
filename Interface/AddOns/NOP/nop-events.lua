@@ -1,6 +1,34 @@
 --[[ Event handlers ]]
 local _
-local ADDON, private = ...
+-- [[
+local assert = _G.assert
+local LibStub = _G.LibStub; assert(LibStub ~= nil,'LibStub')
+local CreateFrame = _G.CreateFrame; assert(CreateFrame ~= nil,'CreateFrame')
+local ERR_CANT_DO_THAT_RIGHT_NOW = _G.ERR_CANT_DO_THAT_RIGHT_NOW; assert(ERR_CANT_DO_THAT_RIGHT_NOW ~= nil,'ERR_CANT_DO_THAT_RIGHT_NOW')
+local ERR_ITEM_COOLDOWN = _G.ERR_ITEM_COOLDOWN; assert(ERR_ITEM_COOLDOWN ~= nil,'ERR_ITEM_COOLDOWN')
+local ERR_ITEM_LOCKED = _G.ERR_ITEM_LOCKED; assert(ERR_ITEM_LOCKED ~= nil,'ERR_ITEM_LOCKED')
+local ERR_ITEM_NOT_FOUND = _G.ERR_ITEM_NOT_FOUND; assert(ERR_ITEM_NOT_FOUND ~= nil,'ERR_ITEM_NOT_FOUND')
+local ERR_NO_ITEMS_WHILE_SHAPESHIFTED = _G.ERR_NO_ITEMS_WHILE_SHAPESHIFTED; assert(ERR_NO_ITEMS_WHILE_SHAPESHIFTED ~= nil,'ERR_NO_ITEMS_WHILE_SHAPESHIFTED')
+local ERR_SPELL_FAILED_ANOTHER_IN_PROGRESS = _G.ERR_SPELL_FAILED_ANOTHER_IN_PROGRESS; assert(ERR_SPELL_FAILED_ANOTHER_IN_PROGRESS ~= nil,'ERR_SPELL_FAILED_ANOTHER_IN_PROGRESS')
+local format = _G.format; assert(format ~= nil,'format')
+local GameTooltip = _G.GameTooltip; assert(GameTooltip ~= nil,'GameTooltip')
+local GetBindingKey = _G.GetBindingKey; assert(GetBindingKey ~= nil,'GetBindingKey')
+local GetItemCooldown = _G.GetItemCooldown; assert(GetItemCooldown ~= nil,'GetItemCooldown')
+local hooksecurefunc = _G.hooksecurefunc; assert(hooksecurefunc ~= nil,'hooksecurefunc')
+local INTERRUPTED = _G.INTERRUPTED; assert(INTERRUPTED ~= nil,'INTERRUPTED')
+local ipairs = _G.ipairs; assert(ipairs ~= nil,'ipairs')
+local pairs = _G.pairs; assert(pairs ~= nil,'pairs')
+local RegisterStateDriver = _G.RegisterStateDriver; assert(RegisterStateDriver ~= nil,'RegisterStateDriver')
+local SPELL_FAILED_BAD_TARGETS = _G.SPELL_FAILED_BAD_TARGETS; assert(SPELL_FAILED_BAD_TARGETS ~= nil,'SPELL_FAILED_BAD_TARGETS')
+local SPELL_FAILED_ITEM_NOT_READY = _G.SPELL_FAILED_ITEM_NOT_READY; assert(SPELL_FAILED_ITEM_NOT_READY ~= nil,'SPELL_FAILED_ITEM_NOT_READY')
+local SPELL_FAILED_MOVING = _G.SPELL_FAILED_MOVING; assert(SPELL_FAILED_MOVING ~= nil,'SPELL_FAILED_MOVING')
+local SPELL_FAILED_NOT_MOUNTED = _G.SPELL_FAILED_NOT_MOUNTED; assert(SPELL_FAILED_NOT_MOUNTED ~= nil,'SPELL_FAILED_NOT_MOUNTED')
+local string = _G.string; assert(string ~= nil,'string')
+local UIErrorsFrame = _G.UIErrorsFrame; assert(UIErrorsFrame ~= nil,'UIErrorsFrame')
+local UIParent = _G.UIParent; assert(UIParent ~= nil,'UIParent')
+local wipe = _G.wipe; assert(wipe ~= nil,'wipe')
+-- ]]
+local ADDON, P = ...
 local NOP = LibStub("AceAddon-3.0"):GetAddon(ADDON)
 function NOP:InitEvents()
   self:RegisterEvent("PLAYER_LOGIN") -- time to load-up data
@@ -43,7 +71,7 @@ function NOP:UI_ERROR_MESSAGE(event, msgType, msg, ...) -- handle lockpicking it
     UIErrorsFrame:Clear()
     local bt = self.BF
     if bt and self:ItemToPicklock(bt.itemID) then
-      bt.mtext = format(private.MACRO_PICKLOCK,self.pickLockSpell,bt.bagID,bt.slotID)
+      bt.mtext = format(P.MACRO_PICKLOCK,self.pickLockSpell,bt.bagID,bt.slotID)
       bt:SetAttribute("type1", "macro")
       bt:SetAttribute("macrotext1", bt.mtext)
     end
@@ -63,18 +91,15 @@ function NOP:UI_ERROR_MESSAGE(event, msgType, msg, ...) -- handle lockpicking it
     self:BlacklistItem(false,self.BF.itemID)
     return
   end
-  --self.printt("Type",msgType,"Msg",private.RGB_RED .. msg .. "|r")
+  --self.printt("Type",msgType,"Msg",P.RGB_RED .. msg .. "|r")
 end
 function NOP:LOOT_SPEC() -- after spec or loot spec switch I need update all paterns!
   if self.spellLoad then
     self.spellLoad = nil
-    self.spellLoadRetry = private.LOAD_RETRY
     wipe(NOP.T_SPELL_FIND)
     self:SpellLoad()
   end
   if self.itemLoad then
-    self.itemLoad = nil
-    self.itemLoadRetry = private.LOAD_RETRY
     wipe(NOP.T_RECIPES_FIND)
     self:ItemLoad()
   end
@@ -90,9 +115,9 @@ local tooltip_functions = {
 -- "SetCurrencyTokenByID", "SetGuildBankItem", "SetInboxItem", "SetInventoryItem",   
 }
 function NOP:PLAYER_LOGIN() -- player entering game
-  if not NOP.DB["version"] or NOP.DB["version"] ~= private.NOP_VERSION then
-    self.printt("|cFFFF0000" .. private.NOP_TITLE .. " " .. private.NOP_VERSION)
-    NOP.DB["version"] = private.NOP_VERSION
+  if not NOP.DB["version"] or NOP.DB["version"] ~= P.NOP_VERSION then
+    self.printt("|cFFFF0000" .. P.NOP_TITLE .. " " .. P.NOP_VERSION)
+    NOP.DB["version"] = P.NOP_VERSION
   end
   self.frameHiderB = CreateFrame("Frame", ADDON .. "_HiderB", UIParent, "SecureHandlerStateTemplate") -- State hide buttons in vehicle, petbattles and or combat
   self.frameHiderB:SetAllPoints(UIParent)
@@ -102,13 +127,13 @@ function NOP:PLAYER_LOGIN() -- player entering game
   RegisterStateDriver(self.frameHiderQ, "visibility", "[petbattle] [vehicleui] hide; show")
   self:ButtonLoad() -- create button
   self:QBAnchor() -- create quest bar
-  self.itemLoadRetry = private.LOAD_RETRY; self:ItemLoad() -- create item patterns
-  self.spellLoadRetry = private.LOAD_RETRY; self:SpellLoad() -- create spell patterns
+  self:ItemLoad() -- create item patterns
+  self:SpellLoad() -- create spell patterns
   self:PickLockUpdate() -- picklock skills
-  local key = GetBindingKey("CLICK " .. private.BUTTON_FRAME .. ":LeftButton")
+  local key = GetBindingKey("CLICK " .. P.BUTTON_FRAME .. ":LeftButton")
   if self.BF.hotkey then self.BF.hotkey:SetText(self:ButtonHotKey(key)) end
-  if not self.timerZoneChanged then self.timerZoneChanged = self:ScheduleTimer("ZoneChanged",private.TIMER_IDLE) end
-  self.backTimer = self:ScheduleRepeatingTimer("ItemTimer", private.TIMER_RECHECK) -- slow backing timer for complete rescan, sometime GetItemSpell get hang or new item is added post events are triggered
+  if not self.timerZoneChanged then self.timerZoneChanged = self:ScheduleTimer("ZoneChanged",P.TIMER_IDLE) end
+  self.backTimer = self:ScheduleRepeatingTimer("ItemTimer", P.TIMER_RECHECK) -- slow backing timer for complete rescan, sometime GetItemSpell get hang or new item is added post events are triggered
   if not self.tooltipHooked then
     self.tooltipHooked = true
     if NOP.DB.ShowReputation then
@@ -127,7 +152,7 @@ function NOP:PLAYER_LOGIN() -- player entering game
   end
 end
 function NOP:ZONE_CHANGED() -- map change, all items tied to zone need update
-  if not self.timerZoneChanged then self.timerZoneChanged = self:ScheduleTimer("ZoneChanged",private.TIMER_IDLE) end
+  if not self.timerZoneChanged then self.timerZoneChanged = self:ScheduleTimer("ZoneChanged",P.TIMER_IDLE) end
 end
 function NOP:PLAYER_LEVEL_UP() -- may be there are items now usable
   self:PickLockUpdate() -- new level rising picklock level
@@ -160,6 +185,10 @@ function NOP:GARRISON_LANDINGPAGE_SHIPMENTS() -- print notifications into chat
   self:CheckBuilding()
 end
 function NOP:GET_ITEM_INFO_RECEIVED() -- ItemLoad and SpellLoad need cached items from server
-  self:ItemLoad()
-  self:SpellLoad()
+  if not self.timerItemLoad then
+    self.timerItemLoad = self:ScheduleTimer("ItemLoad", P.TIMER_IDLE)
+  end
+  if not self.timerSpellLoad then
+    self.timerSpellLoad = self:ScheduleTimer("SpellLoad", P.TIMER_IDLE)
+  end
 end

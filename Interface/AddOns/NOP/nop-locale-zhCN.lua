@@ -1,6 +1,10 @@
-﻿-- Chinese Traditional localization file for zhCN. by 图图
+﻿-- Chinese Traditional localization file for zhCN. by 图图 and Google translator
+local _
+-- [[
+local assert = _G.assert
+local LibStub = _G.LibStub; assert(LibStub ~= nil,'LibStub')
+-- ]]
 local ADDON = ...
-local _ ;
 local AceLocale = LibStub:GetLibrary("AceLocale-3.0");
 local L = AceLocale:NewLocale(ADDON, "zhCN");
 if not L then return end
@@ -28,8 +32,8 @@ L["|cFFFF0000Error loading tooltip for spell |r "] = "|cFFFF0000法术错误载�
 L["|cFFFF0000Error loading tooltip for spellID %d"] = "|cFFFF0000%d 法术ID错误载入提示"
 L["TOGGLE"] = "切换"
 L["Skin Button"] = "美化按钮"
-L["Masque Enable"] = true
-L["Need UI reload or relogin to activate."] = true
+L["Masque Enable"] = "Masque 啟用"
+L["Need UI reload or relogin to activate."] = "需要UI重新加載或重新登錄才能激活。"
 L["Lock Button"] = "锁定按钮"
 L["Lock button in place to disbale drag."] = "锁定按钮来禁用拖动。"
 L["Glow Button"] = "闪光按钮"
@@ -59,18 +63,18 @@ L["Swap"] = "交换"
 L["Swap location of numbers for count and cooldown timer"] = "交换数字计数和冷却时间的位置"
 L["AutoQuest"]  = "自动任务"
 L["Auto accept or hand out quests from AutoQuestPopupTracker!"] = "自动接受或交出任务从AutoQuestPopupTracker！"
-L["Strata"] = true
-L["Set strata for items button to HIGH, place it over normal windows."] = true
-L["Herald"] = true
-L["Announce completed work orders, artifact points etc.."] = true
-L["Skip on Error"] = true
-L["Temporary blacklist item when click produce error message"] = true
-L["HIDE_IN_COMBAT"] = "Hide in combat"
-L["HIDE_IN_COMBAT_HELP"] = "Hide items button when in combat"
-L["SHOW_REPUTATION"] = "Show reputation"
-L["SHOW_REPUTATION_HELP"] = "Show Legion reputation standing in tooltip for reputation token items. Activate/Deactivate need game client reload."
-L["SKIL_EXALTED"] = "Skip exalted"
-L["SKIL_EXALTED_HELP"] = "Don't use Legion reputation tokens when already exalted."
+L["Strata"] = "地層"
+L["Set strata for items button to HIGH, place it over normal windows."] = "將項目的地層按鈕設置為高，將其放在普通窗口上。"
+L["Herald"] = "先鋒"
+L["Announce completed work orders, artifact points etc.."] = "宣布完成的工單，工件點等。"
+L["Skip on Error"] = "跳過錯誤"
+L["Temporary blacklist item when click produce error message"] = "臨時黑名單項目點擊時產生錯誤信息"
+L["HIDE_IN_COMBAT"] = "隱藏在戰鬥中"
+L["HIDE_IN_COMBAT_HELP"] = "在戰鬥中隱藏物品按鈕"
+L["SHOW_REPUTATION"] = "顯示聲望"
+L["SHOW_REPUTATION_HELP"] = "顯示軍團的聲望站在工具提示信譽標記項目。激活/取消激活需要遊戲客戶端重新加載。"
+L["SKIL_EXALTED"] = "跳過崇高"
+L["SKIL_EXALTED_HELP"] = "已經崇高的時候不要使用軍團聲望代幣。"
 L["Buttons per row"] = "每行几个按钮"
 L["Number of buttons placed in one row"] = "放置在一行的按钮数"
 L["Spacing"] = "间距"
@@ -91,13 +95,13 @@ L["Quest"] = "任务"
 L["Quest not found for this item."] = "找不到此物品的任務。"
 L["Items cache update run |cFF00FF00%d."] = "物品快取更新執行|cFF00FF00%d。"
 L["Spells cache update run |cFF00FF00%d."] = "法術快取更新執行|cFF00FF00%d。"
-L["TOGO_ANNOUNCE"] = "%s: %d done %d to go!"
-L["REWARD_ANNOUNCE"] = "Paragon reward for %s is ready!"
-L["SHIPYARD_ANNOUNCE"] = "Shipyard have %d/%d ships!"
-L["ARTIFACT_ANNOUNCE"] = "Artifact have %d traits ready!"
-L["ARCHAELOGY_ANNOUNCE"] = "Archaeology %s is ready!"
-L["TALENT_ANNOUNCE"] = "%s is ready!"
-L["RESTARTED_LOOKUP"] = "Temporary blacklist cleared, restarting lookup!"
+L["TOGO_ANNOUNCE"] = "%s: %d 完成%d去！"
+L["REWARD_ANNOUNCE"] = "%s的百麗宮獎勵已經準備就緒！"
+L["SHIPYARD_ANNOUNCE"] = "造船廠有%d/%d艘船！"
+L["ARTIFACT_ANNOUNCE"] = "%s有%d個特質！"
+L["ARCHAELOGY_ANNOUNCE"] = "Archaeology %s 準備好了！"
+L["TALENT_ANNOUNCE"] = "%s 準備好了！"
+L["RESTARTED_LOOKUP"] = "臨時黑名單被清除，重新開始查找！"
 
 L["CONSOLE_USAGE"] = [=[ [reset|skin|lock|clear|list|unlist|skip|glow|zone|quest|show]
 reset  - 將會重置物品位置到螢幕中間

@@ -1,4 +1,54 @@
 -- Revisions:
+--[[<p>08.40 04.04.2018</p>
+<p><ul>
+<li>Some MIA clams items returns back and Strange Ball of Energy.</li>
+<li>Items with Learning spell on it reinstated back.</li>
+<li>Only left text in tooltip is comared to red.</li>
+<li>Removed Stabilized Titan Essence now it is vendor trash.</li>
+<li>When faction is exalted and there is paragong reward pending then standing is shown as Exalted+.</li>
+</ul><hr></p>
+]]
+--[[<p>08.38 22.03.2018</p>
+<p><ul>
+<li>Herald option now obey setting for artifact as well.</li>
+</ul><hr></p>
+]]
+--[[<p>08.36 16.03.2018</p>
+<p><ul>
+<li>When reputation tokens aren't disabled on exalted, these will not be placed if paragon reward is pending.</li>
+<li>All declarations rewriten to use LINT and strict locak check. Found 3 variables refered before use.</li>
+<li>Hope it will fix Garrison mine buff problem, quest bar hotkey bind and reputation rewards.</li>
+<li>Added Illusion: items and Badge of Honor.</li>
+</ul><hr></p>
+]]
+--[[<p>08.34 21.02.2018</p>
+<p><ul>
+<li>Workaround for bug in WoW API function C_Reputation.GetFactionParagonInfo() it returns empty values in certain dungeon.</li>
+<li>References to WoWBox removed not needit anymore it is in mainsteream.</li>
+</ul><hr></p>
+]]
+--[[<p>08.32 01.02.2018</p>
+<p><ul>
+<li>If <b>/nop unlist #itemID</b> remove item from blacklist then rescan is started.</li>
+<li>Clash with MogIT addon fixed.</li>
+</ul><hr></p>
+]]
+--[[<p>08.30 29.01.2018</p>
+<p><ul>
+<li>Thanks to LibArtifactData now addon can notify about all artifacts seen in bags or bank when there are unsped points or free traits.</li>
+<li>Some German translations corrected, thanks to Salty.</li>
+</ul><hr></p>
+]]
+--[[<p>08.28 21.01.2018</p>
+<p><ul>
+<li>Updated Chinese Traditional localization thanks to BNSSNB.</li>
+<li>Diagnostic message tied to pick-locking now printed only in verbose mode.</li>
+<li>Red text in tooltips is now searched on both sides of tooltip.</li>
+<li>When exalted is reached by using token then is validate right after and removed from button.</li>
+<li>Added announce for A new trait is available at the Netherlight Crucible.</li>
+<li>Rest of locale translated by Google translator if you don't like it, please, supply own translation and I will merge it into code. Even for English localization suggestions are welcomed is not my native language as well.</li>
+</ul><hr></p>
+]]
 --[[<p>08.26 28.12.2017</p>
 <ul>
 <li>Ability to filter items when reputation with Legion faction is Exalted. Filtering for other pre Legion reputation tokens are not implemented yet.</li>

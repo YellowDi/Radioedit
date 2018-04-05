@@ -1,6 +1,26 @@
 --[[ Slash handler and key-binding header ]]
 local _
-local ADDON, private = ...
+-- [[
+local assert = _G.assert
+local LibStub = _G.LibStub; assert(LibStub ~= nil,'LibStub')
+local BACKPACK_CONTAINER = _G.BACKPACK_CONTAINER; assert(BACKPACK_CONTAINER ~= nil,'BACKPACK_CONTAINER')
+local format = _G.format; assert(format ~= nil,'format')
+local GetAddOnMemoryUsage = _G.GetAddOnMemoryUsage; assert(GetAddOnMemoryUsage ~= nil,'GetAddOnMemoryUsage')
+local GetContainerItemID = _G.GetContainerItemID; assert(GetContainerItemID ~= nil,'GetContainerItemID')
+local GetContainerItemLink = _G.GetContainerItemLink; assert(GetContainerItemLink ~= nil,'GetContainerItemLink')
+local GetContainerNumSlots = _G.GetContainerNumSlots; assert(GetContainerNumSlots ~= nil,'GetContainerNumSlots')
+local GetItemInfo = _G.GetItemInfo; assert(GetItemInfo ~= nil,'GetItemInfo')
+local GetSpellInfo = _G.GetSpellInfo; assert(GetSpellInfo ~= nil,'GetSpellInfo')
+local GetTime = _G.GetTime; assert(GetTime ~= nil,'GetTime')
+local issecurevariable = _G.issecurevariable; assert(issecurevariable ~= nil,'issecurevariable')
+local math = _G.math; assert(math ~= nil,'math')
+local NUM_BAG_SLOTS = _G.NUM_BAG_SLOTS; assert(NUM_BAG_SLOTS ~= nil,'NUM_BAG_SLOTS')
+local pairs = _G.pairs; assert(pairs ~= nil,'pairs')
+local string = _G.string; assert(string ~= nil,'string')
+local tonumber = _G.tonumber; assert(tonumber ~= nil,'tonumber')
+local UpdateAddOnMemoryUsage = _G.UpdateAddOnMemoryUsage; assert(UpdateAddOnMemoryUsage ~= nil,'UpdateAddOnMemoryUsage')
+-- ]]
+local ADDON, P = ...
 local NOP = LibStub("AceAddon-3.0"):GetAddon(ADDON)
 NOP.slash_handler = function(msg, editbox) -- /nop handler
   local line = msg:lower()
@@ -137,7 +157,7 @@ NOP.slash_handler = function(msg, editbox) -- /nop handler
   end
   if cmd == "list" then
     if (NOP.DB["T_BLACKLIST"] ~= nil and NOP.DB.T_BLACKLIST[0]) or (NOP.DB["T_BLACKLIST_Q"] ~= nil and NOP.DB.T_BLACKLIST_Q[0])then
-      NOP.printt(private.L["BLACKLISTED_ITEMS"])
+      NOP.printt(P.L["BLACKLISTED_ITEMS"])
       NOP.printt("--Button--")
       for itemID,count in pairs(NOP.DB.T_BLACKLIST) do
         if itemID and itemID > 0 then
@@ -161,15 +181,15 @@ NOP.slash_handler = function(msg, editbox) -- /nop handler
         end
       end
     else
-      NOP.printt(private.L["BLACKLIST_EMPTY"])
+      NOP.printt(P.L["BLACKLIST_EMPTY"])
     end
     return
   end
   if cmd == "unlist" then
     local id = tonumber(arg)
     if id then
-      if NOP.DB["T_BLACKLIST"] ~= nil and NOP.DB.T_BLACKLIST[id] then NOP.DB.T_BLACKLIST[id] = nil; NOP.printt("Removed ItemID:",id) end
-      if NOP.DB["T_BLACKLIST_Q"] ~= nil and NOP.DB.T_BLACKLIST_Q[id] then NOP.DB.T_BLACKLIST_Q[id] = nil; NOP.printt("Removed ItemID:",id) end
+      if NOP.DB["T_BLACKLIST"] ~= nil and NOP.DB.T_BLACKLIST[id] then NOP.DB.T_BLACKLIST[id] = nil; NOP.T_CHECK[id] = nil; NOP:ItemShowNew() end
+      if NOP.DB["T_BLACKLIST_Q"] ~= nil and NOP.DB.T_BLACKLIST_Q[id] then NOP.DB.T_BLACKLIST_Q[id] = nil; NOP:QBUpdate() end
     end
     return
   end
@@ -178,12 +198,12 @@ NOP.slash_handler = function(msg, editbox) -- /nop handler
     NOP:ItemShowNew()
     return
   end
-  local usage = {string.split("\n", private.L["NOP_USE"] .. private.CONSOLE_CMD .. private.CONSOLE_USAGE)}
+  local usage = {string.split("\n", P.L["NOP_USE"] .. P.CONSOLE_CMD .. P.CONSOLE_USAGE)}
   for _,line in pairs(usage) do 
     NOP.printt(line)
   end
 end
-SLASH_NOP_SWITCH1 = private.CONSOLE_CMD
-SlashCmdList["NOP_SWITCH"] = NOP.slash_handler
+_G.SLASH_NOP_SWITCH1 = P.CONSOLE_CMD
+_G.SlashCmdList["NOP_SWITCH"] = NOP.slash_handler
 _G.BINDING_HEADER_NEWOPENABLES = ADDON -- add category to bindings to be able bind button to hotkey in default Blizzard interface
-_G["BINDING_NAME_CLICK " .. private.BUTTON_FRAME .. ":LeftButton"] = _G.USABLE_ITEMS
+_G["BINDING_NAME_CLICK " .. P.BUTTON_FRAME .. ":LeftButton"] = _G.USABLE_ITEMS

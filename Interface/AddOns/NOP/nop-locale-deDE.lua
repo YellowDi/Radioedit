@@ -1,6 +1,10 @@
--- German localization file for deDE by Ragnar_F
+-- German localization file for deDE by Ragnar_F and Google translator, announce corrections by Salty
+local _
+-- [[
+local assert = _G.assert
+local LibStub = _G.LibStub; assert(LibStub ~= nil,'LibStub')
+-- ]]
 local ADDON = ...
-local _ ;
 local AceLocale = LibStub:GetLibrary("AceLocale-3.0");
 local L = AceLocale:NewLocale(ADDON, "deDE");
 if not L then return; end
@@ -28,8 +32,8 @@ L["|cFFFF0000Error loading tooltip for spell |r "] = "|cFFFF0000Fehler beim Lade
 L["|cFFFF0000Error loading tooltip for spellID %d"] = "|cFFFF0000Fehler beim Laden des Tooltips für Zauber-ID %d"
 L["TOGGLE"] = "Optionen"
 L["Skin Button"] = "Schaltfläche mit Skin versehen"
-L["Masque Enable"] = true
-L["Need UI reload or relogin to activate."] = true
+L["Masque Enable"] = "Masque Aktivieren"
+L["Need UI reload or relogin to activate."] = "Sie müssen die UI neu laden oder neu anmelden, um sie zu aktivieren."
 L["Lock Button"] = "Schaltfläche sperren"
 L["Lock button in place to disbale drag."] = "Schaltfläche auf aktueller Position sperren, um Ziehen zu deaktivieren."
 L["Glow Button"] = "Schaltfläche aufleuchten lassen"
@@ -59,12 +63,12 @@ L["Swap"] = "Tauschen"
 L["Swap location of numbers for count and cooldown timer"] = "Position von Anzahl und Abklingzeit tauschen"
 L["AutoQuest"]  = "Automatische Suche"
 L["Auto accept or hand out quests from AutoQuestPopupTracker!"] = "Automatische Annahme oder Abgabe von Quests aus AutoQuestPopupTracker"
-L["Strata"] = true
-L["Set strata for items button to HIGH, place it over normal windows."] = true
-L["Herald"] = true
-L["Announce completed work orders, artifact points etc.."] = true
-L["Skip on Error"] = true
-L["Temporary blacklist item when click produce error message"] = true
+L["Strata"] = "Schichten"
+L["Set strata for items button to HIGH, place it over normal windows."] = "Setze die Schichten für die Items auf HIGH, lege sie über normale Fenster."
+L["Herald"] = "Herold"
+L["Announce completed work orders, artifact points etc.."] = "Melden Sie abgeschlossene Arbeitsaufträge, Artefaktpunkte usw. an."
+L["Skip on Error"] = "Überspringen bei Fehler"
+L["Temporary blacklist item when click produce error message"] = "Temporärer Blacklist-Eintrag, wenn Sie auf eine Fehlermeldung klicken"
 L["HIDE_IN_COMBAT"] = "Hide in combat"
 L["HIDE_IN_COMBAT_HELP"] = "Hide items button when in combat"
 L["SHOW_REPUTATION"] = "Show reputation"
@@ -91,13 +95,13 @@ L["Quest"] = "Quest"
 L["Quest not found for this item."] = "Quest für diesen Gegenstand nicht gefunden."
 L["Items cache update run |cFF00FF00%d."] = "Cache-Aktualisierung von Gegenständen |cFF00FF00%d."
 L["Spells cache update run |cFF00FF00%d."] = "Cache-Aktualisierung von Zaubern |cFF00FF00%d."
-L["TOGO_ANNOUNCE"] = "%s: %d done %d to go!"
-L["REWARD_ANNOUNCE"] = "Paragon reward for %s is ready!"
-L["SHIPYARD_ANNOUNCE"] = "Shipyard have %d/%d ships!"
-L["ARTIFACT_ANNOUNCE"] = "Artifact have %d traits ready!"
-L["ARCHAELOGY_ANNOUNCE"] = "Archaeology %s is ready!"
-L["TALENT_ANNOUNCE"] = "%s is ready!"
-L["RESTARTED_LOOKUP"] = "Temporary blacklist cleared, restarting lookup!"
+L["TOGO_ANNOUNCE"] = "%s: %d fertig, %d startbereit!"
+L["REWARD_ANNOUNCE"] = "Paragon-Belohnung für %s ist bereit!"
+L["SHIPYARD_ANNOUNCE"] = "Werft hat %d/%d Schiffe!"
+L["ARTIFACT_ANNOUNCE"] = "%s hat %d unverteilte(n) Talentpunkt(e)!"
+L["ARCHAELOGY_ANNOUNCE"] = "Archäologie %s ist fertig!"
+L["TALENT_ANNOUNCE"] = "%s ist fertig!"
+L["RESTARTED_LOOKUP"] = "Temporäre Blacklist gelöscht, Neustart der Suche!"
 
 L["CONSOLE_USAGE"] = [=[ [reset|skin|lock|clear|list|unlist|skip|glow|zone|quest|show]
 reset  - setzt die Schaltfläche auf die Mitte des Bildschirms zurück

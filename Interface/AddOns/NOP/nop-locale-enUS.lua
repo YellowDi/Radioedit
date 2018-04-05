@@ -1,6 +1,10 @@
 -- English localization file for enUS and enGB.
+local _
+-- [[
+local assert = _G.assert
+local LibStub = _G.LibStub; assert(LibStub ~= nil,'LibStub')
+-- ]]
 local ADDON = ...
-local _ ;
 local AceLocale = LibStub:GetLibrary("AceLocale-3.0");
 local L = AceLocale:NewLocale(ADDON, "enUS", true, false); -- default translation, not silent load
 if not L then return; end
@@ -94,7 +98,7 @@ L["Spells cache update run |cFF00FF00%d."] = true
 L["TOGO_ANNOUNCE"] = "%s: %d done %d to go!"
 L["REWARD_ANNOUNCE"] = "Paragon reward for %s is ready!"
 L["SHIPYARD_ANNOUNCE"] = "Shipyard have %d/%d ships!"
-L["ARTIFACT_ANNOUNCE"] = "Artifact have %d traits ready!"
+L["ARTIFACT_ANNOUNCE"] = "%s have %d traits ready!"
 L["ARCHAELOGY_ANNOUNCE"] = "Archaeology %s is ready!"
 L["TALENT_ANNOUNCE"] = "%s is ready!"
 L["RESTARTED_LOOKUP"] = "Temporary blacklist cleared, restarting lookup!"

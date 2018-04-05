@@ -1,7 +1,7 @@
 ## Interface: 70300
 ## Title: New |cffffff88Openables|r
 ## Author: PeknaMrcha alias EduardCurse alias Edik
-## Version: 08.26 28.12.2017
+## Version: 08.40 04.04.2018
 ## Notes: Popup Button and keybind for opening or using items in your bags. Adopted idea by Driizt@BB_EU. Quest Button Bar idea and code by Nickenyfiken and ZidayaXis
 ## SavedVariables: NewOpenablesProfile
 
@@ -18,6 +18,7 @@ AceTimer-3.0\AceTimer-3.0.xml
 AceLocale-3.0\AceLocale-3.0.xml
 LibBabble-SubZone-3.0\lib.xml
 LibQuestItem-1.0\lib.xml
+LibArtifactData-1.0\LibArtifactData-1.0.lua 
 
 nop-locale-enUS.lua
 nop-locale-deDE.lua

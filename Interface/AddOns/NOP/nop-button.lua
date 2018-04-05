@@ -1,6 +1,30 @@
 --[[ Button functions ]]
 local _
-local ADDON, private = ...
+-- [[ global variables and functions as local
+local assert = _G.assert
+local BROWSE_NO_RESULTS = _G.BROWSE_NO_RESULTS; assert(BROWSE_NO_RESULTS ~= nil,'BROWSE_NO_RESULTS')
+local CreateFrame = _G.CreateFrame; assert(CreateFrame ~= nil,'CreateFrame')
+local GameTooltip = _G.GameTooltip; assert(GameTooltip ~= nil,'GameTooltip')
+local GameTooltip_SetDefaultAnchor = _G.GameTooltip_SetDefaultAnchor; assert(GameTooltip_SetDefaultAnchor ~= nil,'GameTooltip_SetDefaultAnchor')
+local GetCVar = _G.GetCVar; assert(GetCVar ~= nil,'GetCVar')
+local GetItemCooldown = _G.GetItemCooldown; assert(GetItemCooldown ~= nil,'GetItemCooldown')
+local GetItemInfo = _G.GetItemInfo; assert(GetItemInfo ~= nil,'GetItemInfo')
+local GetMouseFocus = _G.GetMouseFocus; assert(GetMouseFocus ~= nil,'GetMouseFocus')
+local GetScreenWidth = _G.GetScreenWidth; assert(GetScreenWidth ~= nil,'GetScreenWidth')
+local GetTime = _G.GetTime; assert(GetTime ~= nil,'GetTime')
+local IsAltKeyDown = _G.IsAltKeyDown; assert(IsAltKeyDown ~= nil,'IsAltKeyDown')
+local IsControlKeyDown = _G.IsControlKeyDown; assert(IsControlKeyDown ~= nil,'IsControlKeyDown')
+local LibStub = _G.LibStub; assert(LibStub ~= nil,'LibStub')
+local math = _G.math; assert(math ~= nil,'math')
+local string = _G.string; assert(string ~= nil,'string')
+local STRING_SCHOOL_UNKNOWN = _G.STRING_SCHOOL_UNKNOWN; assert(STRING_SCHOOL_UNKNOWN ~= nil,'STRING_SCHOOL_UNKNOWN')
+local tinsert = _G.tinsert; assert(tinsert ~= nil,'tinsert')
+local tremove = _G.tremove; assert(tremove ~= nil,'tremove')
+local type = _G.type; assert(type ~= nil,'type')
+local UIParent = _G.UIParent; assert(UIParent ~= nil,'UIParent')
+local unpack = _G.unpack; assert(unpack ~= nil,'unpack')
+-- ]]
+local ADDON, P = ...
 local NOP = LibStub("AceAddon-3.0"):GetAddon(ADDON)
 local function SetOutside(obj, anchor, xOffset, yOffset)
   xOffset = xOffset or 1
@@ -82,20 +106,17 @@ function NOP:ButtonSkin(button,skin) -- skin or restore button look
     button.isSkinned = nil
   end
 end
-function NOP:GetReputation(name)
-  local fID = NOP.T_REPS[name]; if not fID then return end
-  local _, _, level, _, top, value = GetFactionInfoByID(fID)
-  return level, top, value
-end
 function NOP:ButtonReputation(tooltip,func) -- add reputation into tooltip
   if not (tooltip and tooltip.GetItem) then return end
+  local OHC = _G.OHC -- reference to order hall commander addon
+  local OrderHallMissionFrame = _G.OrderHallMissionFrame -- Order Hall Mission frame
   if (func == "SetItemByID") and (OHC ~= nil) and OrderHallMissionFrame and OrderHallMissionFrame:IsVisible() then return end -- OHC have own tooltip for reward with reputation item
   local name = tooltip:GetItem(); if not name then return end
-  local level, top, value = self:GetReputation(name); if not level then return end
+  local level, top, value, reward = self:GetReputation(name); if not level then return end
   if level < 8 then -- up to exalted
     tooltip:AddLine(_G['FACTION_STANDING_LABEL' .. level] .. (" |cffca3c3c%.2f%%|r"):format((value/top) * 100.0))
   else
-    tooltip:AddLine(_G['FACTION_STANDING_LABEL' .. level])
+    tooltip:AddLine(_G['FACTION_STANDING_LABEL' .. level] .. (reward and "+" or ''))
   end
   tooltip:Show()
 end
@@ -116,11 +137,11 @@ function NOP:ButtonOnEnter(button) -- show tooltip
     GameTooltip:SetText(BROWSE_NO_RESULTS)
   end
   GameTooltip:AddLine(" ")
-  GameTooltip:AddLine(private.MOUSE_LB .. private.CLICK_OPEN_MSG,0,1,0)
-  GameTooltip:AddLine(private.MOUSE_RB .. private.CLICK_SKIP_MSG,0,1,0)
-  GameTooltip:AddLine(private.MOUSE_RB .. private.CLICK_BLACKLIST_MSG)
+  GameTooltip:AddLine(P.MOUSE_LB .. P.CLICK_OPEN_MSG,0,1,0)
+  GameTooltip:AddLine(P.MOUSE_RB .. P.CLICK_SKIP_MSG,0,1,0)
+  GameTooltip:AddLine(P.MOUSE_RB .. P.CLICK_BLACKLIST_MSG)
   if not NOP.DB.lockButton then 
-    GameTooltip:AddLine(private.MOUSE_LB .. private.CLICK_DRAG_MSG)
+    GameTooltip:AddLine(P.MOUSE_LB .. P.CLICK_DRAG_MSG)
   end
   GameTooltip:SetClampedToScreen(true) -- tooltip must stay at screen
   GameTooltip:Show()
@@ -131,11 +152,12 @@ function NOP:ButtonOnLeave(button) -- hide tooltip
 end
 function NOP:ButtonPostClick(button) -- post click on button
   if button then
+    self.BF.clickON = nil
     if (button == 'RightButton') then
       self:BlacklistItem(IsControlKeyDown(),self.BF.itemID)
+      self.BF.itemID = nil
     end
-    if WoWBox then WoWBox.itemClick = nil end
-    if not self.timerItemShowNew then self.timerItemShowNew = self:ScheduleTimer("ItemShowNew", private.TIMER_IDLE / 3) end -- back to timer
+    if not self.timerItemShowNew then self.timerItemShowNew = self:ScheduleTimer("ItemShowNew", P.TIMER_IDLE / 3) end -- back to timer
   end
 end
 function NOP:ButtonOnDragStart(button) -- start moving
@@ -149,27 +171,27 @@ function NOP:ButtonOnDragStop(button) -- stop moving and save new position
 end
 function NOP:ButtonReset() -- reset button to default position
   if self:inCombat() then
-    if not self.timerButtonReset then self.timerButtonReset = self:ScheduleTimer("ButtonReset", private.TIMER_IDLE) end
+    if not self.timerButtonReset then self.timerButtonReset = self:ScheduleTimer("ButtonReset", P.TIMER_IDLE) end
     return
   end
   self.timerButtonReset = nil
-  self.DB["iconSize"] = private.DEFAULT_ICON_SIZE -- default size
+  self.DB["iconSize"] = P.DEFAULT_ICON_SIZE -- default size
   self.DB["lockButton"] = false -- unlock
   self.DB["button"] = {"CENTER", nil, "CENTER", 0, 0}
   self:ButtonSize()
   self:ButtonMove()
   self:QBUpdate()
-  self.printt(private.L["BUTTON_RESET"])
+  self.printt(P.L["BUTTON_RESET"])
 end
 function NOP:ButtonSize() -- resize button
   if self:inCombat() then
-    if not self.timerButtonSize then self.timerButtonSize = self:ScheduleTimer("ButtonSize", private.TIMER_IDLE) end
+    if not self.timerButtonSize then self.timerButtonSize = self:ScheduleTimer("ButtonSize", P.TIMER_IDLE) end
     return
   end
   self.timerButtonSize = nil
   if not self.BF then return end
-  local iconSize = NOP.DB.iconSize or private.DEFAULT_ICON_SIZE
-  if WoWBox and WoWBox.scaleDown then iconSize = math.floor(iconSize * 0.75) end
+  local iconSize = NOP.DB.iconSize or P.DEFAULT_ICON_SIZE
+  if not (GetScreenWidth() > 1500) then iconSize = math.floor(iconSize * 0.75) end
   self.BF:SetWidth(iconSize)
   self.BF:SetHeight(iconSize)
   if NOP.DB.qb_sticky then self:QBAnchorSize(); self:QBUpdate(); end -- Quest Bar is locked to Item Button
@@ -177,11 +199,11 @@ end
 function NOP:ButtonSave() -- save button position after move
   if not self.BF then return end
   local point, relativeTo, relativePoint, xOfs, yOfs = self.BF:GetPoint()
-  NOP.DB.button = {point or "CENTER", "UIParent", relativePoint or "CENTER", xOfs or 0, yOfs or 0}
+  NOP.DB.button = {point or "CENTER", relativeTo.GetName and relativeTo:GetName() or "UIParent", relativePoint or "CENTER", xOfs, yOfs}
 end
 function NOP:ButtonMove() -- move button from UI config
   if self:inCombat() then
-    if not self.timerButtonMove then self.timerButtonMove = self:ScheduleTimer("ButtonMove", private.TIMER_IDLE) end
+    if not self.timerButtonMove then self.timerButtonMove = self:ScheduleTimer("ButtonMove", P.TIMER_IDLE) end
     return
   end
   self.timerButtonMove = nil
@@ -219,12 +241,12 @@ function NOP:ButtonBackdrop(bt) -- create backdrop for button
 end
 function NOP:ButtonLoad() -- create button, restore his position
   if self:inCombat() then
-    if not self.timerButtonLoad then self.timerButtonLoad = self:ScheduleTimer("ButtonLoad", private.TIMER_IDLE) end
+    if not self.timerButtonLoad then self.timerButtonLoad = self:ScheduleTimer("ButtonLoad", P.TIMER_IDLE) end
     return
   end
   self.timerButtonLoad = nil
   if not self.BF then -- new button
-    self.BF = CreateFrame("Button", private.BUTTON_FRAME, self.frameHiderB, "SecureActionButtonTemplate, ActionButtonTemplate")
+    self.BF = CreateFrame("Button", P.BUTTON_FRAME, self.frameHiderB, "SecureActionButtonTemplate, ActionButtonTemplate")
     local bt = self.BF
     if bt:IsVisible() or bt:IsShown() then bt:Hide() end
     bt:SetFrameStrata(NOP.DB.strata and "HIGH" or "MEDIUM")
@@ -237,7 +259,7 @@ function NOP:ButtonLoad() -- create button, restore his position
     bt:SetScript("PostClick",   function(self,button) NOP:ButtonPostClick(button) end)
     bt:SetScript("OnDragStart", function(self) NOP:ButtonOnDragStart(self) end)
     bt:SetScript("OnDragStop",  function(self) NOP:ButtonOnDragStop(self) end)
-    bt.icon:SetTexture(private.DEFAULT_ICON)
+    bt.icon:SetTexture(P.DEFAULT_ICON)
     self:ButtonStore(bt)
     bt.timer = bt:CreateFontString(nil,"OVERLAY","GameFontWhite")
     local timer = bt.timer
@@ -282,13 +304,13 @@ function NOP:ButtonCount(count) -- update counter on button
 end
 function NOP:ButtonShow() -- display button
   if self:inCombat() then
-    if not self.timerButtonShow then self.timerButtonShow = self:ScheduleTimer("ButtonShow", private.TIMER_IDLE) end -- start combat timer
+    if not self.timerButtonShow then self.timerButtonShow = self:ScheduleTimer("ButtonShow", P.TIMER_IDLE) end -- start combat timer
     return
   end
   self.timerButtonShow = nil
   local bt = self.BF
   self:ButtonCount(bt.itemCount)
-  bt.icon:SetTexture(bt.itemTexture or private.DEFAULT_ICON)
+  bt.icon:SetTexture(bt.itemTexture or P.DEFAULT_ICON)
   if (GetMouseFocus() == bt) then self:ButtonOnEnter(bt) end -- update tooltip if mouse is over button
   bt:SetAttribute("type1", "macro") -- "type1" Unmodified left click.
   bt:SetAttribute("macrotext1", bt.mtext)
@@ -296,14 +318,15 @@ function NOP:ButtonShow() -- display button
   -- self:printt("ButtonShow:","macro text",self:CompressText(bt.mtext))
   if not (bt:IsVisible() or bt:IsShown()) then bt:Show() end
   if NOP.DB.glowButton and bt.isGlow then
-      self.ActionButton_ShowOverlayGlow(bt)
-    else
-      self.ActionButton_HideOverlayGlow(bt)
-    end
+    self.ActionButton_ShowOverlayGlow(bt)
+  else
+    self.ActionButton_HideOverlayGlow(bt)
+  end
+  self.BF.clickON = true -- signals to other addon about new item on button
 end
 function NOP:ButtonHide() -- hide button
   if self:inCombat() then
-    if not self.timerButtonHide then self.timerButtonHide = self:ScheduleTimer("ButtonHide", private.TIMER_IDLE) end -- start combat timer
+    if not self.timerButtonHide then self.timerButtonHide = self:ScheduleTimer("ButtonHide", P.TIMER_IDLE) end -- start combat timer
     return
   end
   self.timerButtonHide = nil
@@ -312,10 +335,10 @@ function NOP:ButtonHide() -- hide button
   bt.bagID = nil
   bt.itemID = nil
   bt.isGlow = nil
-  bt.mtext = private.MACRO_INACTIVE
+  bt.mtext = P.MACRO_INACTIVE
   bt.itemTexture = nil
-  bt.icon:SetTexture(private.DEFAULT_ICON)
-  bt:SetAttribute("macrotext1", private.MACRO_INACTIVE)
+  bt.icon:SetTexture(P.DEFAULT_ICON)
+  bt:SetAttribute("macrotext1", P.MACRO_INACTIVE)
   self:ButtonCount(bt.itemCount)
   self.ActionButton_HideOverlayGlow(bt)
   if NOP.DB.visible then  -- show fake button, instead hide.
@@ -353,7 +376,6 @@ function NOP:ButtonOnUpdate(bt,start,duration) -- setup timer on button
     -- self.printt("start",start,"duration",duration)
     local expire = start + duration
     if bt.expire == nil or bt.expire < expire then
-      if bt.expire == nil and WoWBox then WoWBox:ItemCD(duration) end
       bt.expire = expire
       bt:SetScript("OnUpdate",nil)
       bt:SetScript("OnUpdate", function(self,elapsed)
