@@ -1,7 +1,7 @@
-changeset:   267:85b0dc5238d4
-tag:         v7.3.2.267-release
+changeset:   279:a47619685b64
+tag:         v7.3.5.279-release
 user:        Tercio
-date:        Fri Jan 12 11:54:18 2018 -0200
-summary:     - Fixed all pet battles icons which was showing an interrogation mark.
+date:        Fri Mar 30 12:58:57 2018 -0300
+summary:     - Added option to change the size of the text on the quest tracker.
 
 

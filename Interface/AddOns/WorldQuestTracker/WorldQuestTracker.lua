@@ -253,7 +253,8 @@ local default_config = {
 		tracker_only_currentmap = false,
 		tracker_scale = 1,
 		tracker_show_time = false,
-		use_quest_summary = false,
+		tracker_textsize = 12,
+		use_quest_summary = true,
 		zone_only_tracked = false,
 		bar_anchor = "bottom",
 		use_old_icons = false,
@@ -2340,7 +2341,9 @@ function WorldQuestTracker.UpdateRareIcons (index, mapID)
 					
 					--widget.Texture:SetTexture ([[Interface\Scenarios\ScenarioIcon-Boss]])
 					widget.TextureCustom:SetTexture ([[Interface\MINIMAP\ObjectIconsAtlas]])
-					widget.TextureCustom:SetTexCoord (423/512, 447/512, 344/512, 367/512)
+					--widget.TextureCustom:SetTexCoord (423/512, 447/512, 344/512, 367/512) --pre 7.3.5
+					widget.TextureCustom:SetTexCoord (413/512, 438/512, 204/512, 228/512) --fix by @HyperAktiveBonusBanane at curse forge, the coords was wrong, the star icon wasn't showing up
+					
 					widget.TextureCustom:SetSize (16, 16)
 					widget.TextureCustom:Show()
 					
@@ -6719,6 +6722,7 @@ hooksecurefunc ("ToggleWorldMap", function (self)
 					end
 				else
 					WorldQuestTracker.db.profile [option] = value
+					
 					if (option == "bar_anchor") then
 						WorldQuestTracker:SetStatusBarAnchor()
 					
@@ -6728,6 +6732,10 @@ hooksecurefunc ("ToggleWorldMap", function (self)
 						else
 							WorldQuestTracker.UpdateZoneWidgets()
 						end
+						
+					elseif (option == "tracker_textsize") then
+						WorldQuestTracker.RefreshTrackerWidgets()
+						
 					end
 				end
 				
@@ -7951,7 +7959,7 @@ hooksecurefunc ("ToggleWorldMap", function (self)
 				
 				local IconSize = 14
 				
-				--all tracker options
+				--all tracker options ~tracker config
 				GameCooltip:AddLine (L["S_MAPBAR_OPTIONSMENU_TRACKERCONFIG"])
 				GameCooltip:AddIcon ([[Interface\AddOns\WorldQuestTracker\media\ArrowGridT]], 1, 1, IconSize, IconSize, 944/1024, 993/1024, 272/1024, 324/1024)
 				
@@ -7984,6 +7992,17 @@ hooksecurefunc ("ToggleWorldMap", function (self)
 				GameCooltip:AddLine ("$div", nil, 2, nil, -5, -11)
 				--
 				
+				GameCooltip:AddLine ("Small Text Size", "", 2)
+				GameCooltip:AddMenu (2, options_on_click, "tracker_textsize", 12)
+				GameCooltip:AddLine ("Medium Text Size", "", 2)
+				GameCooltip:AddMenu (2, options_on_click, "tracker_textsize", 13)
+				GameCooltip:AddLine ("Large Text Size", "", 2)
+				GameCooltip:AddMenu (2, options_on_click, "tracker_textsize", 14)
+				
+				--
+				GameCooltip:AddLine ("$div", nil, 2, nil, -5, -11)
+				--
+				
 				-- tracker movable
 				--automatic
 				GameCooltip:AddLine (L["S_MAPBAR_OPTIONSMENU_TRACKERMOVABLE_AUTO"], "", 2)
@@ -8001,7 +8020,7 @@ hooksecurefunc ("ToggleWorldMap", function (self)
 					GameCooltip:AddIcon ([[Interface\BUTTONS\UI-AutoCastableOverlay]], 2, 1, 16, 16, .4, .6, .4, .6)
 				end
 				GameCooltip:AddMenu (2, options_on_click, "tracker_is_movable", true)
-				
+				--locked
 				if (WorldQuestTracker.db.profile.tracker_is_movable) then
 					GameCooltip:AddLine (L["S_MAPBAR_OPTIONSMENU_TRACKERMOVABLE_LOCKED"], "", 2)
 				else
@@ -8013,6 +8032,15 @@ hooksecurefunc ("ToggleWorldMap", function (self)
 					GameCooltip:AddIcon ([[Interface\BUTTONS\UI-AutoCastableOverlay]], 2, 1, 16, 16, .4, .6, .4, .6)
 				end
 				GameCooltip:AddMenu (2, options_on_click, "tracker_is_locked", not WorldQuestTracker.db.profile.tracker_is_locked)
+				--reset pos
+				GameCooltip:AddLine ("Reset Position", "", 2)
+				GameCooltip:AddMenu (2, function()
+					options_on_click (_, _, "tracker_is_movable", false)
+					C_Timer.After (0.5, function()
+						options_on_click (_, _, "tracker_is_movable", true)
+						LibWindow.SavePosition (WorldQuestTrackerScreenPanel)
+					end)
+				end)
 				
 				--				
 				GameCooltip:AddLine ("$div", nil, 2, nil, -5, -11)
@@ -8868,9 +8896,6 @@ hooksecurefunc ("ToggleWorldMap", function (self)
 					--print (xp, xpForNextPoint)
 				end
 
-				local str = "|TInterface\\AddOns\\WorldQuestTracker\\media\\icon_artifactpower_blueT:0|t"
-				GameCooltip:AddLine (format (L["S_APOWER_DOWNVALUE"], str), "", 1, "white", _, 10)
-				
 				GameCooltip:AddLine ("", "", 1, "green", _, 10)
 				GameCooltip:AddLine (format (L["S_MAPBAR_RESOURCES_TOOLTIP_TRACKALL"], L["S_QUESTTYPE_ARTIFACTPOWER"]), "", 1, "green", _, 10)
 				GameCooltip:SetOption ("LeftTextHeight", 22)
@@ -8878,9 +8903,7 @@ hooksecurefunc ("ToggleWorldMap", function (self)
 				GameCooltip:Show(self)
 				
 				CooltipOnTop_WhenFullScreen()
-				
---WQT_QUEST_NAMES_AND_ICONS [WQT_QUESTTYPE_GOLD].icon
---WQT_QUEST_NAMES_AND_ICONS [WQT_QUESTTYPE_RESOURCE].icon
+
 			end)
 			
 			local resource_IconsOnLeave = function (self)
@@ -8913,7 +8936,6 @@ hooksecurefunc ("ToggleWorldMap", function (self)
 			
 		else
 			WorldQuestTracker.HideWorldQuestsOnWorldMap()
-			--print ("eh pra hidar...")
 			
 			--is zone map?
 			if (WorldQuestTracker.ZoneHaveWorldQuest (WorldMapFrame.mapID)) then
@@ -9250,10 +9272,10 @@ hooksecurefunc ("ToggleWorldMap", function (self)
 end)
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
---> zone summary
+--> zone summary  ~summaryframe
 
 local ZoneSumaryFrame = CreateFrame ("frame", "WorldQuestTrackerZoneSummaryFrame", worldFramePOIs)
-ZoneSumaryFrame:SetPoint ("bottomleft", WorldMapScrollFrame, "bottomleft", 0, 19)
+ZoneSumaryFrame:SetPoint ("bottomleft", WorldMapScrollFrame, "bottomleft", 0, 110)
 ZoneSumaryFrame:SetSize (1, 1)
 
 ZoneSumaryFrame.WidgetHeight = 18
@@ -9298,13 +9320,10 @@ local GetOrCreateZoneSummaryWidget = function (index)
 	button:SetPoint ("bottomleft", ZoneSumaryFrame, "bottomleft", 0, ((index-1)* (ZoneSumaryFrame.WidgetHeight + 1)) -2)
 	button:SetSize (ZoneSumaryFrame.WidgetWidth, ZoneSumaryFrame.WidgetHeight)
 	button:SetFrameLevel (worldFramePOIs:GetFrameLevel()+1)
-	--button:SetBackdrop (ZoneSumaryFrame.WidgetBackdrop)
-	--button:SetBackdropColor (unpack (ZoneSumaryFrame.WidgetBackdropColor))
 	
 	local buttonIcon = WorldQuestTracker.CreateZoneWidget (index, "WorldQuestTrackerZoneSummaryFrame_WidgetIcon", button)
 	buttonIcon:SetPoint ("left", button, "left", 2, 0)
 	buttonIcon:SetSize (ZoneSumaryFrame.IconSize, ZoneSumaryFrame.IconSize)
-	--buttonIcon:SetFrameStrata ("DIALOG")
 	buttonIcon:SetFrameLevel (worldFramePOIs:GetFrameLevel()+2)
 	button.Icon = buttonIcon
 	
@@ -9376,10 +9395,10 @@ local GetOrCreateZoneSummaryWidget = function (index)
 	--
 	
 	button.OnTracker = button:CreateTexture (nil, "overlay")
-	button.OnTracker:SetPoint ("left", buttonIcon, "right", 65, 0)
+	button.OnTracker:SetPoint ("left", buttonIcon, "right", 63, 0)
 	button.OnTracker:SetTexture ([[Interface\AddOns\WorldQuestTracker\media\ArrowFrozen]])
-	button.OnTracker:SetAlpha (.75)
-	button.OnTracker:SetSize (16, 16)
+	button.OnTracker:SetAlpha (.65)
+	button.OnTracker:SetSize (14, 14)
 	button.OnTracker:SetTexCoord (.15, .8, .15, .80)
 	
 	--
@@ -9512,6 +9531,7 @@ function WorldQuestTracker.SetupZoneSummaryButton (summaryWidget, zoneWidget)
 	summaryWidget:Show()
 end
 
+-- ~summary
 function WorldQuestTracker.CanShowZoneSummaryFrame()
 	return WorldQuestTracker.db.profile.use_quest_summary and WorldQuestTracker.ZoneHaveWorldQuest() and not WorldMapFrame_InWindowedMode()
 end
@@ -9548,6 +9568,7 @@ function WorldQuestTracker.UpdateZoneSummaryFrame()
 		index = index + 1
 	end
 	
+	--attach the header to the last widget
 	if (LastWidget) then
 		ZoneSumaryFrame.Header:Show()
 		ZoneSumaryFrame.Header:SetPoint ("bottomleft", LastWidget, "topleft", 20, 0)
@@ -10629,8 +10650,8 @@ function WorldQuestTracker.RefreshTrackerWidgets()
 					widget.ArrowDistance:Show()
 					widget.RightBackground:Show()
 					widget:SetAlpha (TRACKER_FRAME_ALPHA_INMAP)
-					widget.Title.textsize = TRACKER_TITLE_TEXT_SIZE_INMAP
-					widget.Zone.textsize = TRACKER_TITLE_TEXT_SIZE_INMAP
+					widget.Title.textsize = WorldQuestTracker.db.profile.tracker_textsize --TRACKER_TITLE_TEXT_SIZE_INMAP
+					widget.Zone.textsize = WorldQuestTracker.db.profile.tracker_textsize --TRACKER_TITLE_TEXT_SIZE_INMAP
 					needSortByDistance = needSortByDistance + 1
 					
 					if (WorldQuestTracker.db.profile.show_yards_distance) then
