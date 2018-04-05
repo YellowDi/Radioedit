@@ -454,11 +454,6 @@ function WeakAuras.ActivateEvent(id, triggernum, data, state)
         state.expirationTime = arg2;
         changed = true;
       end
-      local autoHide = data.automaticAutoHide and (arg1 > 0.01);
-      if (state.autoHide ~= autoHide) then
-        state.autoHide = autoHide;
-        changed = true;
-      end
       if (state.value or state.total) then
         changed = true;
       end
@@ -507,7 +502,7 @@ function WeakAuras.ActivateEvent(id, triggernum, data, state)
     state.additionalProgress = nil;
   end
 
-  state.changed = changed;
+  state.changed = state.changed or changed;
 
   return changed;
 end
@@ -833,8 +828,12 @@ function GenericTrigger.Add(data, region)
               end
 
               for index, event in ipairs(trigger_events) do
-                frame:RegisterEvent(event);
-                aceEvents:RegisterMessage(event, HandleEvent, frame)
+                if (event == "FRAME_UPDATE") then
+                  register_for_frame_updates = true;
+                else
+                  frame:RegisterEvent(event);
+                  aceEvents:RegisterMessage(event, HandleEvent, frame)
+                end
               end
             end
           end
@@ -2158,8 +2157,8 @@ do
     elseif (event == "BigWigs_StopBar") then
       local addon, text = ...
       if(bars[text]) then
-        WeakAuras.ScanEvents("BigWigs_StopBar", text);
         bars[text] = nil;
+        WeakAuras.ScanEvents("BigWigs_StopBar", text);
       end
     elseif (event == "BigWigs_StopBars"
       or event == "BigWigs_OnBossDisable"
@@ -2810,6 +2809,9 @@ function GenericTrigger.GetTriggerConditions(data, triggernum)
             if (v.conditionTest) then
               result[v.name].test = v.conditionTest;
             end
+            if (v.operator_types_without_equal) then
+              result[v.name].operator_types_without_equal = true;
+            end
           end
         end
       end
@@ -2857,7 +2859,7 @@ function GenericTrigger.CreateFallbackState(data, triggernum, state)
       state.duration = arg1;
       state.resort = state.expirationTime ~= arg2;
       state.expirationTime = arg2;
-      state.autoHide = arg1 > 0.01 and data.automaticAutoHide;
+      state.autoHide = nil;
       state.value = nil;
       state.total = nil;
       state.inverse = inverse;

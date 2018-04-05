@@ -10,6 +10,8 @@ local L = WeakAuras.L
 	L["%i Matches"] = "%i Correspondances"
 	--Translation missing 
 	-- L["%s Color"] = ""
+	--Translation missing 
+	-- L["%s total auras"] = ""
 	L["1 Match"] = "1 Correspondance"
 	L["1. Text"] = "1. Texte"
 	L["1. Text Settings"] = "1. Paramètres du Texte"
@@ -22,7 +24,6 @@ local L = WeakAuras.L
 	L["A 64x64 pixels icon"] = "Une icône de 64x64 pixels."
 	L["A group that dynamically controls the positioning of its children"] = "Un groupe qui contrôle dynamiquement le positionnement de ses enfants"
 	L["Actions"] = "Actions"
-	L["Activate when the given aura(s) |cFFFF0000can't|r be found"] = "Activer quand l'aura |cFFFF0000ne peut|r être trouvée"
 	--Translation missing 
 	-- L["Add a new display"] = ""
 	--Translation missing 
@@ -43,7 +44,6 @@ local L = WeakAuras.L
 	L["Alpha"] = "Alpha"
 	L["Anchor"] = "Ancrage"
 	L["Anchor Point"] = "Point d'ancrage"
-	L["anchored to"] = "accrocher à"
 	L["Anchored To"] = "Accrocher à"
 	--Translation missing 
 	-- L["And "] = ""
@@ -78,6 +78,8 @@ Si la durée de l'animation est définie à |cFF00CC0010%|r, et le déclencheur 
 	-- L["Auto-cloning enabled"] = ""
 	L["Automatic Icon"] = "Icône automatique"
 	L["Backdrop Color"] = "Couleur de Fond"
+	--Translation missing 
+	-- L["Backdrop in Front"] = ""
 	L["Backdrop Style"] = "Style de Fond"
 	L["Background"] = "Arrière-plan"
 	L["Background Color"] = "Couleur de fond"
@@ -87,7 +89,6 @@ Si la durée de l'animation est définie à |cFF00CC0010%|r, et le déclencheur 
 	L["Bar Alpha"] = "Alpha de la Barre"
 	L["Bar Color"] = "Couleur de barre"
 	L["Bar Color Settings"] = "Réglages Couleur de Barre"
-	L["Bar in Front"] = "Barre devant"
 	L["Bar Texture"] = "Texture de barre"
 	L["Big Icon"] = "Grande icône"
 	L["Blend Mode"] = "Mode du fusion"
@@ -95,6 +96,8 @@ Si la durée de l'animation est définie à |cFF00CC0010%|r, et le déclencheur 
 	L["Blue Sparkle Orb"] = "Orbe pétillant bleu"
 	L["Border"] = "Bordure"
 	L["Border Color"] = "Couleur de Bordure"
+	--Translation missing 
+	-- L["Border in Front"] = ""
 	L["Border Inset"] = "Encart Fond"
 	L["Border Offset"] = "Décalage Bordure"
 	L["Border Settings"] = "Réglages de Bordure"
@@ -106,7 +109,6 @@ Si la durée de l'animation est définie à |cFF00CC0010%|r, et le déclencheur 
 	L["Button Glow"] = "Bouton en surbrillance"
 	--Translation missing 
 	-- L["Can be a name or a UID (e.g., party1). A name only works on friendly players in your group."] = ""
-	L["Can be a name or a UID (e.g., party1). Only works on friendly players in your group."] = "Peut être un nom ou un UID (par ex. party1). Fonctionne uniquement pour les joueurs amicaux de votre groupe."
 	L["Cancel"] = "Annuler"
 	L["Channel Number"] = "Numéro de canal"
 	L["Chat Message"] = "Message dans le chat"
@@ -208,12 +210,10 @@ UNIT_POWER, UNIT_AURA PLAYER_TARGET_CHANGED
 	L["Duration (s)"] = "Durée (s)"
 	L["Duration Info"] = "Info de durée"
 	L["Dynamic Group"] = "Groupe Dynamique"
-	L["Dynamic information"] = "Information dynamique"
 	--Translation missing 
 	-- L["Dynamic Information"] = ""
 	--Translation missing 
 	-- L["Dynamic information from first active trigger"] = ""
-	L["Dynamic information from first Active Trigger"] = "Information dynamique du premier Déclencheur activé"
 	L["Dynamic information from Trigger %i"] = "Information dynamique du Déclencheur %i"
 	L["Dynamic text tooltip"] = [=[Il y a plusieurs codes spéciaux disponibles pour rendre ce texte dynamique :
 
@@ -233,7 +233,6 @@ UNIT_POWER, UNIT_AURA PLAYER_TARGET_CHANGED
 	-- L["Expand"] = ""
 	L["Expand all loaded displays"] = "Agrandir tous graphiques chargés"
 	L["Expand all non-loaded displays"] = "Agrandir tous graphiques non-chargés"
-	L["Expand Text Editor"] = "Agrandir éditeur de texte"
 	--Translation missing 
 	-- L["Expansion is disabled because this group has no children"] = ""
 	--Translation missing 
@@ -255,8 +254,6 @@ UNIT_POWER, UNIT_AURA PLAYER_TARGET_CHANGED
 	L["Foreground Texture"] = "Texture premier-plan"
 	L["Frame"] = "Cadre"
 	L["Frame Strata"] = "Strate du cadre"
-	--Translation missing 
-	-- L["frame's"] = ""
 	L["From Template"] = "D'après un modèle"
 	--Translation missing 
 	-- L["Full Scan"] = ""
@@ -310,6 +307,8 @@ Si le nombre entré est decimal (ex. 0.5), une fraction (ex. 1/2), ou un pourcen
 	L["Import a display from an encoded string"] = "Importer un graphique d'un texte encodé"
 	L["Inverse"] = "Inverser"
 	L["Justify"] = "Justification"
+	--Translation missing 
+	-- L["Keep Aspect Ratio"] = ""
 	L["Leaf"] = "Feuille"
 	L["Left 2 HUD position"] = "Position ATH Gauche 2"
 	L["Left HUD position"] = "Position ATH Gauche"
@@ -410,7 +409,6 @@ Seule une unique valeur peut être choisie]=]
 	--Translation missing 
 	-- L["Repeat every"] = ""
 	L["Required for Activation"] = "Requis pour l'activation"
-	L["Required For Activation"] = "Requis pour l'activation"
 	L["Right 2 HUD position"] = "Position ATH Droite 2"
 	L["Right HUD position"] = "Position ATH Droite"
 	L["Right Text"] = "Texte de droite"
@@ -442,7 +440,6 @@ Seule une unique valeur peut être choisie]=]
 	L["Show model of unit "] = "Montrer le modèle de l'unité"
 	--Translation missing 
 	-- L["Show On"] = ""
-	L["Show players that are |cFFFF0000not affected"] = "Montrer les joueurs |cFFFF0000non-affectés"
 	--Translation missing 
 	-- L["Show this group's children"] = ""
 	L["Shows a 3D model from the game files"] = "Montre un modèle 3D tiré du jeu"
@@ -471,12 +468,6 @@ Seule une unique valeur peut être choisie]=]
 	L["Spark Texture"] = "Texture Étincelle"
 	L["Specific Unit"] = "Unité spécifique"
 	L["Spell ID"] = "ID de sort"
-	L["Spell ID dialog"] = [=[Vous avez spécifié une aura par |cFFFF0000ID de sort|r.
-
-Par défaut, |cFF8800FFWeakAuras|r ne peut distinguer entre des auras de même nom mais d'|cFFFF0000ID de sort|r différents.
-Cependant, si l'option Scan Complet est activée, |cFF8800FFWeakAuras|r peut chercher des |cFFFF0000ID de sorts|r spécifiques.
-
-Voulez-vous activer le Scan Complet pour chercher cet |cFFFF0000ID de sort|r ?]=]
 	L["Stack Count"] = "Nombre de Piles"
 	L["Stack Info"] = "Info de Piles"
 	L["Stacks"] = "Piles"
@@ -519,10 +510,7 @@ Voulez-vous activer le Scan Complet pour chercher cet |cFFFF0000ID de sort|r ?]=
 	--Translation missing 
 	-- L["To Personal Ressource Display's"] = ""
 	--Translation missing 
-	-- L["to Personal Ressource Display's"] = ""
-	--Translation missing 
 	-- L["To Screen's"] = ""
-	L["to screen's"] = "à l'écran..."
 	L["Toggle the visibility of all loaded displays"] = "Change la visibilité de tous les graphiques chargés"
 	L["Toggle the visibility of all non-loaded displays"] = "Change la visibilité de tous les graphiques non-chargés"
 	--Translation missing 
@@ -549,7 +537,6 @@ Voulez-vous activer le Scan Complet pour chercher cet |cFFFF0000ID de sort|r ?]=
 	L["Use Full Scan (High CPU)"] = "Utiliser Scan Complet (CPU élevé)"
 	--Translation missing 
 	-- L["Use SetTransform (will change behaviour in 7.3)"] = ""
-	L["Use SetTransform api"] = "Utiliser l'api SetTransform"
 	L["Use tooltip \"size\" instead of stacks"] = "Utiliser la \"taille\" de l'infobulle plutôt que la pile"
 	--Translation missing 
 	-- L["Used in auras:"] = ""
@@ -559,7 +546,6 @@ Voulez-vous activer le Scan Complet pour chercher cet |cFFFF0000ID de sort|r ?]=
 	L["Vertical Bar"] = "Barre verticale"
 	--Translation missing 
 	-- L["View"] = ""
-	L["WeakAurasOptions"] = "Options WeakAuras"
 	L["Width"] = "Largeur"
 	L["X Offset"] = "Décalage X"
 	L["X Rotation"] = "Rotation X"

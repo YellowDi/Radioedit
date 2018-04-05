@@ -391,6 +391,7 @@ function WeakAuras.ActivateAuraEnvironment(id, cloneId, state)
       current_aura_env = aura_environments[id];
       current_aura_env.cloneId = cloneId;
       current_aura_env.state = state;
+      current_aura_env.region = WeakAuras.GetRegion(id, cloneId);
       -- Push the new environment onto the stack
       tinsert(aura_env_stack, current_aura_env);
     else
@@ -399,6 +400,7 @@ function WeakAuras.ActivateAuraEnvironment(id, cloneId, state)
       current_aura_env = aura_environments[id];
       current_aura_env.cloneId = cloneId;
       current_aura_env.state = state;
+      current_aura_env.region = WeakAuras.GetRegion(id, cloneId);
       -- Push the new environment onto the stack
       tinsert(aura_env_stack, current_aura_env);
       -- Run the init function if supplied
@@ -707,7 +709,7 @@ local function CreateCheckCondition(ret, condition, conditionNumber, allConditio
     local stateVariableCheck = "state." .. variable .. "~= nil and ";
     if (test) then
       if (value) then
-        check = string.format(test, value);
+        check = string.format(test, value, op or "");
       end
     elseif (type == "number" and op) then
       check = stateCheck .. stateVariableCheck .. "state." .. variable .. op .. value;
@@ -3598,11 +3600,14 @@ end
 
 function WeakAuras.GetDynamicIconCache(name)
   if (db.dynamicIconCache[name]) then
+    local fallback = nil;
     for spellId, icon in pairs(db.dynamicIconCache[name]) do
+      fallback = icon;
       if (IsSpellKnown(spellId)) then -- TODO save this information?
         return db.dynamicIconCache[name][spellId];
       end
     end
+    return fallback;
   end
 
   if WeakAuras.spellCache then

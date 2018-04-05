@@ -2,9 +2,11 @@ local WeakAuras = WeakAuras;
 local L = WeakAuras.L;
 
 local LSM = LibStub("LibSharedMedia-3.0");
-local LBR = LibStub("LibBabble-Race-3.0"):GetLookupTable()
+local LibBabbleRace = LibStub("LibBabble-Race-3.0");
+local LBR_Locale = LibBabbleRace:GetUnstrictLookupTable()
+local LBR_Base = LibBabbleRace:GetBaseLookupTable();
 
--- luacheck: globals MANA RAGE FOCUS ENERGY COMBO_POINTS RUNIC_POWER SOUL_SHARDS LUNAR_POWER HOLY_POWER MAELSTROM CHI INSANITY ARCANE_CHARGES FURY PAIN
+-- luacheck: globals POWER_TYPE_MANA POWER_TYPE_RED_POWER POWER_TYPE_FOCUS POWER_TYPE_ENERGY POWER_TYPE_COMBO_POINTS POWER_TYPE_RUNIC_POWER SOUL_SHARDS_POWER POWER_TYPE_LUNAR_POWER POWER_TYPE_HOLY_POWER POWER_TYPE_MAELSTROM POWER_TYPE_CHI POWER_TYPE_INSANITY POWER_TYPE_ARCANE_CHARGES POWER_TYPE_FURY_DEMONHUNTER POWER_TYPE_PAIN
 
 local wipe, tinsert = wipe, tinsert
 local GetNumShapeshiftForms, GetShapeshiftFormInfo = GetNumShapeshiftForms, GetShapeshiftFormInfo
@@ -173,20 +175,30 @@ do
   end
 end
 
+local function LBR(key)
+  return LBR_Locale[key] or LBR_Base[key];
+end
+
 WeakAuras.race_types = {
-  Pandaren = LBR["Pandaren"],
-  Worgen = LBR["Worgen"],
-  Draenei = LBR["Draenei"],
-  Dwarf = LBR["Dwarf"],
-  Gnome = LBR["Gnome"],
-  Human = LBR["Human"],
-  NightElf = LBR["Night Elf"],
-  Goblin = LBR["Goblin"],
-  BloodElf = LBR["Blood Elf"],
-  Orc = LBR["Orc"],
-  Tauren = LBR["Tauren"],
-  Troll = LBR["Troll"],
-  Scourge = LBR["Undead"]
+  Pandaren = LBR("Pandaren"),
+  Worgen = LBR("Worgen"),
+  Draenei = LBR("Draenei"),
+  Dwarf = LBR("Dwarf"),
+  Gnome = LBR("Gnome"),
+  Human = LBR("Human"),
+  NightElf = LBR("Night Elf"),
+  Goblin = LBR("Goblin"),
+  BloodElf = LBR("Blood Elf"),
+  Orc = LBR("Orc"),
+  Tauren = LBR("Tauren"),
+  Troll = LBR("Troll"),
+  Scourge = LBR("Undead"),
+  LightforgedDraenei = LBR("Lightforged Draenei"),
+  VoidElf = LBR("Void Elf"),
+  HighmountainTauren = LBR("Highmountain Tauren"),
+  Nightborne = LBR("Nightborne"),
+  DarkIronDwarf = LBR("Dark Iron Dwarf"),
+  ZandalariTroll = LBR("Zandalari Troll")
 }
 
 WeakAuras.faction_group = {
@@ -368,39 +380,39 @@ WeakAuras.subevent_suffix_types = {
 }
 
 WeakAuras.power_types = {
-  [0] = MANA,
-  [1] = RAGE,
-  [2] = FOCUS,
-  [3] = ENERGY,
+  [0] = POWER_TYPE_MANA,
+  [1] = POWER_TYPE_RED_POWER,
+  [2] = POWER_TYPE_FOCUS,
+  [3] = POWER_TYPE_ENERGY,
   [4] = COMBO_POINTS,
   [6] = RUNIC_POWER,
-  [7] = SOUL_SHARDS,
-  [8] = LUNAR_POWER,
+  [7] = SOUL_SHARDS_POWER,
+  [8] = POWER_TYPE_LUNAR_POWER,
   [9] = HOLY_POWER,
-  [11] = MAELSTROM,
+  [11] = POWER_TYPE_MAELSTROM,
   [12] = CHI,
-  [13] = INSANITY,
-  [16] = ARCANE_CHARGES,
-  [17] = FURY,
-  [18] = PAIN
+  [13] = POWER_TYPE_INSANITY,
+  [16] = POWER_TYPE_ARCANE_CHARGES,
+  [17] = POWER_TYPE_FURY_DEMONHUNTER,
+  [18] = POWER_TYPE_PAIN
 }
 
 WeakAuras.power_types_with_stagger = {
-  [0] = MANA,
-  [1] = RAGE,
-  [2] = FOCUS,
-  [3] = ENERGY,
+  [0] = POWER_TYPE_MANA,
+  [1] = POWER_TYPE_RED_POWER,
+  [2] = POWER_TYPE_FOCUS,
+  [3] = POWER_TYPE_ENERGY,
   [4] = COMBO_POINTS,
   [6] = RUNIC_POWER,
-  [7] = SOUL_SHARDS,
-  [8] = LUNAR_POWER,
+  [7] = SOUL_SHARDS_POWER,
+  [8] = POWER_TYPE_LUNAR_POWER,
   [9] = HOLY_POWER,
-  [11] = MAELSTROM,
+  [11] = POWER_TYPE_MAELSTROM,
   [12] = CHI,
-  [13] = INSANITY,
-  [16] = ARCANE_CHARGES,
-  [17] = FURY,
-  [18] = PAIN,
+  [13] = POWER_TYPE_INSANITY,
+  [16] = POWER_TYPE_ARCANE_CHARGES,
+  [17] = POWER_TYPE_FURY_DEMONHUNTER,
+  [18] = POWER_TYPE_PAIN,
   [99] = L["Stagger"]
 }
 
@@ -1007,6 +1019,11 @@ WeakAuras.operator_types = {
 WeakAuras.equality_operator_types = {
   ["=="] = L["="],
   ["~="] = L["!="]
+}
+
+WeakAuras.operator_types_without_equal = {
+  [">="] = L[">="],
+  ["<="] = L["<="]
 }
 
 WeakAuras.string_operator_types = {

@@ -65,20 +65,15 @@ L["<="] = "<="
 L["="] = "="
 L[">"] = ">"
 L[">="] = ">="
---Translation missing 
--- L["1. Text Color"] = ""
---Translation missing 
--- L["1. Text Size"] = ""
+L["1. Text Color"] = "1. Color del texto"
+L["1. Text Size"] = "1. Tamaño del texto"
 L["10 Man Raid"] = "Banda de 10 Jugadores"
---Translation missing 
--- L["2. Text Color"] = ""
---Translation missing 
--- L["2. Text Size"] = ""
---Translation missing 
--- L["20 Man Raid"] = ""
+L["2. Text Color"] = "2. Color del texto"
+L["2. Text Size"] = "2. Tamaño del texto"
+L["20 Man Raid"] = "Banda de 20 jugadores"
 L["25 Man Raid"] = "Banda de 25 Jugadores"
-L["40 Man Raid"] = "Banda de 40 Jugadores"
-L["5 Man Dungeon"] = "Mazmorra de 5 Jugadores"
+L["40 Man Raid"] = "Banda de 40 jugadores"
+L["5 Man Dungeon"] = "Mazmorra de 5 jugadores"
 L["Absorb"] = "Absorción"
 --Translation missing 
 -- L["Absorb Display"] = ""
@@ -87,30 +82,22 @@ L["Action Usable"] = "Acción Utilizable"
 --Translation missing 
 -- L["Active"] = ""
 --Translation missing 
--- L["Active For"] = ""
---Translation missing 
 -- L["Additional Trigger Replacements"] = ""
 L["Affected"] = "Afectado"
 L["Aggro"] = "Amenaza"
---Translation missing 
--- L["Alert Type"] = ""
+L["Alert Type"] = "Tipo de alerta"
 L["Alive"] = "Vivo"
 L["All Triggers"] = "Todos los Disparadores"
 L["Alliance"] = "Alianza"
---Translation missing 
--- L["Allow partial matches"] = ""
+L["Allow partial matches"] = "Permitir coincidencias parciales"
 L["Alternate Power"] = "Energía Alternativa"
---Translation missing 
--- L["Always"] = ""
+L["Always"] = "Siempre"
 L["Always active trigger"] = "Siempre activar disparador"
 L["Ambience"] = "Ambiente"
 L["Amount"] = "Cantidad"
---Translation missing 
--- L["And Talent selected"] = ""
---Translation missing 
--- L["Anticlockwise"] = ""
---Translation missing 
--- L["Any"] = ""
+L["And Talent selected"] = "y talento seleccionado"
+L["Anticlockwise"] = "Sentido antihorario"
+L["Any"] = "Cualquiera"
 L["Any Triggers"] = "Cualquier Disparador"
 L["Arena"] = "Arena"
 L["Ascending"] = "Ascendente"
@@ -172,6 +159,8 @@ L["Bounce with Decay"] = "Rebotar con Amortiguación"
 L["Buff"] = "Beneficio"
 --Translation missing 
 -- L["Buffed/Debuffed"] = ""
+--Translation missing 
+-- L["Can be used for e.g. checking if \"boss1target\" is the same as \"player\"."] = ""
 L["Cast"] = "Lanzar Hechizo"
 L["Cast Failed"] = "Hechizo - Fallido"
 L["Cast Start"] = "Hechizo - Empezar"
@@ -200,7 +189,6 @@ L["Chat Message"] = "Mensaje de Chat"
 -- L["Chest"] = ""
 L["Children:"] = "Hijos:"
 L["Circle"] = "Círculo"
-L["Circular"] = "Circular"
 --Translation missing 
 -- L["Clamp"] = ""
 L["Class"] = "Clase"
@@ -268,12 +256,13 @@ L["Dialog"] = "Diálogo"
 L["Disease"] = "Enfermedad"
 L["Dispel"] = "Disipar"
 L["Dispel Failed"] = "Disipar Fallido"
+--Translation missing 
+-- L["Distance"] = ""
 L["Dodge"] = "Esquivar"
 L["Done"] = "Finalizado"
 L["Down"] = "Abajo"
 L["Drain"] = "Drenar"
 L["Drowning"] = "Ahogar"
-L["Dungeon Difficulty"] = "Dificultad de la Mazmorra"
 L["Durability Damage"] = "Daño a la Durabilidad"
 L["Durability Damage All"] = "Daño a la Durabilidad Total"
 --Translation missing 
@@ -298,6 +287,8 @@ L["Environmental"] = "Ambiental"
 -- L["Equipment Slot"] = ""
 --Translation missing 
 -- L["Equipped"] = ""
+--Translation missing 
+-- L["Error not receiving display information from %s"] = ""
 L["Evade"] = "Evadir"
 L["Event"] = "Evento"
 L["Event(s)"] = "Evento(s)"
@@ -418,8 +409,6 @@ L["Item"] = "Objeto"
 L["Item Count"] = "Contar los Objetos"
 L["Item Equipped"] = "Objeto Equipado"
 --Translation missing 
--- L["Item Set"] = ""
---Translation missing 
 -- L["Item Set Equipped"] = ""
 --Translation missing 
 -- L["Item Set Id"] = ""
@@ -444,6 +433,8 @@ L["Main Hand"] = "Mano Principal"
 --Translation missing 
 -- L["Make sure you can trust the person who sent it!"] = ""
 --Translation missing 
+-- L["Malformed WeakAuras link"] = ""
+--Translation missing 
 -- L["Manual Rotation"] = ""
 --Translation missing 
 -- L["Marked First"] = ""
@@ -453,11 +444,15 @@ L["Master"] = "Maestro"
 L["Matches (Pattern)"] = "Corresponde (Patrón)"
 --Translation missing 
 -- L["Maximum"] = ""
+--Translation missing 
+-- L["Maximum Estimate"] = ""
 L["Message"] = "Mensaje"
 L["Message Type"] = "Tipo de Mensaje"
 L["Message type:"] = "Tipo de Mensaje:"
 --Translation missing 
 -- L["Minimum"] = ""
+--Translation missing 
+-- L["Minimum Estimate"] = ""
 --Translation missing 
 -- L["Mirror"] = ""
 L["Miss"] = "Fallo"
@@ -502,17 +497,15 @@ L["Normal"] = "Normal"
 -- L["Not in Group"] = ""
 --Translation missing 
 -- L["Not on Cooldown"] = ""
---Translation missing 
--- L["Not on cooldown"] = ""
 L["Not On Threat Table"] = "No Está En La Tabla De Amenaza"
+--Translation missing 
+-- L["Note, that cross realm transmission is not possible"] = ""
 L["Number"] = "Número"
 L["Number Affected"] = "Dependiente de números"
 L["Off Hand"] = "Mano Secundaria"
 L["Officer"] = "Oficial"
 --Translation missing 
 -- L["Older set IDs can be found on websites such as wowhead.com/item-sets"] = ""
---Translation missing 
--- L["On cooldown"] = ""
 --Translation missing 
 -- L["On Cooldown"] = ""
 --Translation missing 
@@ -537,8 +530,6 @@ L["Paused"] = "Pausado"
 L["Periodic Spell"] = "Hechizo Periódico"
 --Translation missing 
 -- L["Personal Resource Display"] = ""
---Translation missing 
--- L["Personal Ressource Display"] = ""
 L["Pet"] = "Mascota"
 L["Pet Behavior"] = "Comportamiento de mascota"
 L["Pet Spell"] = "Habilidad de mascota"
@@ -574,6 +565,8 @@ L["Raid"] = "Banda"
 L["Raid Warning"] = "Alerta de Banda"
 L["Range"] = "Rango"
 --Translation missing 
+-- L["Range Check"] = ""
+--Translation missing 
 -- L["Ready Check"] = ""
 L["Realm"] = "Reino"
 L["Receiving display information"] = "Recibiendo información de aura de %s..."
@@ -588,6 +581,8 @@ L["Remaining Time"] = "Tiempo Restante"
 -- L["Repeat"] = ""
 L["Requested display does not exist"] = "El aura requerida no existe"
 L["Requested display not authorized"] = "El aura requerida no está autorizada"
+--Translation missing 
+-- L["Requesting display information from %s ..."] = ""
 L["Require Valid Target"] = "Requiere Objetivo Válido"
 L["Resist"] = "Resistir"
 L["Resisted"] = "Resistido"
@@ -701,6 +696,10 @@ L["Spiral In And Out"] = "Espiral de Dentro a Fuera"
 -- L["Square"] = ""
 L["Stacks"] = "Acumulaciones"
 --Translation missing 
+-- L["Stacks Text Color"] = ""
+--Translation missing 
+-- L["Stacks Text Size"] = ""
+--Translation missing 
 -- L["Stagger"] = ""
 L["Stance/Form/Aura"] = "Impostura/Forma/Aura"
 --Translation missing 
@@ -757,6 +756,8 @@ L["Unit"] = "Unidad"
 L["Unit Characteristics"] = "Características de la unidad"
 L["Unit Destroyed"] = "Unidad Destruida"
 L["Unit Died"] = "Unit Muerta"
+--Translation missing 
+-- L["Unit is Unit"] = ""
 L["Up"] = "Arriba"
 --Translation missing 
 -- L["Values/Remaining Time above this value are displayed as full progress."] = ""

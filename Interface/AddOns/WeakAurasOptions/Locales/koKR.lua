@@ -10,6 +10,8 @@ local L = WeakAuras.L
 	L["%i Matches"] = "%i개 일치"
 	--Translation missing 
 	-- L["%s Color"] = ""
+	--Translation missing 
+	-- L["%s total auras"] = ""
 	L["1 Match"] = "1개 일치"
 	L["1. Text"] = "1. 문자"
 	L["1. Text Settings"] = "1. 문자 설정"
@@ -22,7 +24,6 @@ local L = WeakAuras.L
 	L["A 64x64 pixels icon"] = "64x64 픽셀 아이콘"
 	L["A group that dynamically controls the positioning of its children"] = "포함된 개체들의 배열을 유동적으로 조절하는 그룹"
 	L["Actions"] = "동작"
-	L["Activate when the given aura(s) |cFFFF0000can't|r be found"] = "주어진 효과가 |cFFFF0000없을 때|r 활성화"
 	L["Add a new display"] = "새로운 디스플레이 추가"
 	--Translation missing 
 	-- L["Add Condition"] = ""
@@ -41,7 +42,6 @@ local L = WeakAuras.L
 	L["Alpha"] = "투명도"
 	L["Anchor"] = "고정시키기"
 	L["Anchor Point"] = "고정 지점"
-	L["anchored to"] = "다음에 고정:"
 	L["Anchored To"] = "다음에 고정:"
 	--Translation missing 
 	-- L["And "] = ""
@@ -74,6 +74,8 @@ local L = WeakAuras.L
 	L["Auto-cloning enabled"] = "자동 복제 활성화"
 	L["Automatic Icon"] = "자동 아이콘"
 	L["Backdrop Color"] = "배경 색상"
+	--Translation missing 
+	-- L["Backdrop in Front"] = ""
 	L["Backdrop Style"] = "배경 스타일"
 	L["Background"] = "배경"
 	L["Background Color"] = "배경 색상"
@@ -83,7 +85,6 @@ local L = WeakAuras.L
 	L["Bar Alpha"] = "바 투명도"
 	L["Bar Color"] = "바 색상"
 	L["Bar Color Settings"] = "바 색상 설정"
-	L["Bar in Front"] = "바를 테두리 앞으로"
 	L["Bar Texture"] = "바 텍스쳐"
 	L["Big Icon"] = "큰 아이콘"
 	L["Blend Mode"] = "혼합 모드"
@@ -91,6 +92,8 @@ local L = WeakAuras.L
 	L["Blue Sparkle Orb"] = "푸른 불꽃 구슬"
 	L["Border"] = "테두리"
 	L["Border Color"] = "테두리 색상"
+	--Translation missing 
+	-- L["Border in Front"] = ""
 	L["Border Inset"] = "테두리 삽입"
 	L["Border Offset"] = "테두리 위치"
 	L["Border Settings"] = "테두리 설정"
@@ -100,7 +103,6 @@ local L = WeakAuras.L
 	L["Bracket Matching"] = "괄호 맞춤"
 	L["Button Glow"] = "버튼 반짝임"
 	L["Can be a name or a UID (e.g., party1). A name only works on friendly players in your group."] = "이름 또는 UID (예. party1)를 사용할 수 있습니다. 이름은 같은 파티에 속해 있는 우호적 플레이어에게만 작동합니다."
-	L["Can be a name or a UID (e.g., party1). Only works on friendly players in your group."] = "이름이나 유닛ID (예. party1) 가능. 그룹에 있는 아군 플레이어만 작동합니다."
 	L["Cancel"] = "취소"
 	L["Channel Number"] = "채널 번호"
 	L["Chat Message"] = "대화 메시지"
@@ -168,8 +170,7 @@ UNIT_POWER, UNIT_AURA PLAYER_TARGET_CHANGED]=]
 	L["Desaturate"] = "흑백"
 	--Translation missing 
 	-- L["Differences"] = ""
-	--Translation missing 
-	-- L["Disable Import"] = ""
+	L["Disable Import"] = "가져오기 비활성화"
 	L["Disabled"] = "비활성화됨"
 	L["Discrete Rotation"] = "90도 단위 회전"
 	L["Display"] = "디스플레이"
@@ -188,10 +189,8 @@ UNIT_POWER, UNIT_AURA PLAYER_TARGET_CHANGED]=]
 	L["Duration (s)"] = "지속시간 (초)"
 	L["Duration Info"] = "지속시간 정보"
 	L["Dynamic Group"] = "유동적 그룹"
-	L["Dynamic information"] = "유동적 정보"
 	L["Dynamic Information"] = "유동적 정보"
 	L["Dynamic information from first active trigger"] = "첫번째 활성화된 활성 조건의 유동적 정보"
-	L["Dynamic information from first Active Trigger"] = "첫번째 활성화된 활성 조건의 유동적 정보"
 	L["Dynamic information from Trigger %i"] = "활성 조건 %i의 유동적 정보"
 	L["Dynamic text tooltip"] = [=[이 문자를 유동적으로 만들 수 있는 특별 코드들입니다:
 
@@ -210,7 +209,6 @@ UNIT_POWER, UNIT_AURA PLAYER_TARGET_CHANGED]=]
 	L["Expand"] = "확장"
 	L["Expand all loaded displays"] = "불러온 모든 디스플레이 확장"
 	L["Expand all non-loaded displays"] = "불러오지 않은 모드 디스플레이 확장"
-	L["Expand Text Editor"] = "문자 편집창 확장"
 	L["Expansion is disabled because this group has no children"] = "이 그룹에 자식이 없어 확장이 비활성되었습니다"
 	L["Export to Lua table..."] = "Lua table로 내보내기..."
 	L["Export to string..."] = "문자열로 내보내기..."
@@ -229,7 +227,6 @@ UNIT_POWER, UNIT_AURA PLAYER_TARGET_CHANGED]=]
 	L["Foreground Texture"] = "전경 텍스쳐"
 	L["Frame"] = "프레임"
 	L["Frame Strata"] = "프레임 우선순위"
-	L["frame's"] = "프레임의"
 	L["From Template"] = "견본으로부터"
 	L["Full Scan"] = "전체 검사"
 	L["General Text Settings"] = "일반 문자 설정"
@@ -269,8 +266,7 @@ UNIT_POWER, UNIT_AURA PLAYER_TARGET_CHANGED]=]
 	L["Icon Inset"] = "아이템 축소"
 	--Translation missing 
 	-- L["If"] = ""
-	--Translation missing 
-	-- L["If this option is enabled, you are no longer able to import auras."] = ""
+	L["If this option is enabled, you are no longer able to import auras."] = "이 옵션이 활성화된 상태에서는 외부 문자열에서 디스플레이를 가져올 수 없습니다."
 	--Translation missing 
 	-- L["If Trigger %s"] = ""
 	L["Ignored"] = "무시됨"
@@ -278,6 +274,8 @@ UNIT_POWER, UNIT_AURA PLAYER_TARGET_CHANGED]=]
 	L["Import a display from an encoded string"] = "암호화된 문자열에서 디스플레이 가져오기"
 	L["Inverse"] = "반대로"
 	L["Justify"] = "정렬"
+	--Translation missing 
+	-- L["Keep Aspect Ratio"] = ""
 	L["Leaf"] = "잎"
 	L["Left 2 HUD position"] = "좌측 2 HUD 위치"
 	L["Left HUD position"] = "좌측 HUD 위치"
@@ -367,7 +365,6 @@ UNIT_POWER, UNIT_AURA PLAYER_TARGET_CHANGED]=]
 	--Translation missing 
 	-- L["Repeat every"] = ""
 	L["Required for Activation"] = "활성화에 필요"
-	L["Required For Activation"] = "활성화에 필요"
 	L["Right 2 HUD position"] = "우측 2 HUD 위치"
 	L["Right HUD position"] = "우측 HUD 위치"
 	L["Right Text"] = "오른쪽 문자"
@@ -394,7 +391,6 @@ UNIT_POWER, UNIT_AURA PLAYER_TARGET_CHANGED]=]
 	L["Show model of unit "] = "유닛의 모델 표시"
 	--Translation missing 
 	-- L["Show On"] = ""
-	L["Show players that are |cFFFF0000not affected"] = "|cFFFF0000영향받지 않은|r 플레이어 표시"
 	L["Show this group's children"] = "이 그룹의 자식 표시"
 	L["Shows a 3D model from the game files"] = "게임 데이터의 3D 모델을 표시합니다"
 	L["Shows a custom texture"] = "사용자 설정 텍스쳐 표시"
@@ -422,12 +418,6 @@ UNIT_POWER, UNIT_AURA PLAYER_TARGET_CHANGED]=]
 	L["Spark Texture"] = "섬광 텍스쳐"
 	L["Specific Unit"] = "특정 유닛"
 	L["Spell ID"] = "주문 ID"
-	L["Spell ID dialog"] = [=[|cFFFF0000주문 ID|r로 효과를 선택했습니다.
-
-기본적으로 |cFF8800FFWeakAuras|r는 이름이 같지만 |cFFFF0000주문 ID|r가 다른 효과를 구별할 수 없습니다.
-하지만 전체 스캔 옵션을 사용하면 |cFF8800FFWeakAuras|r는 특정 |cFFFF0000주문 ID|r를 검색할 수 있습니다.
-
-이 |cFFFF0000주문 ID|r로 구별하기 위해 전체 스캔 옵션을 사용할까요?]=]
 	L["Stack Count"] = "중첩 횟수"
 	L["Stack Info"] = "중첩 정보"
 	L["Stacks"] = "중첩"
@@ -464,9 +454,7 @@ UNIT_POWER, UNIT_AURA PLAYER_TARGET_CHANGED]=]
 	L["To Frame's"] = "프레임의 다음 지점:"
 	L["to group's"] = "그룹 기준"
 	L["To Personal Ressource Display's"] = "개인 자원 표시의 다음 지점:"
-	L["to Personal Ressource Display's"] = "개인 자원 표시의 다음 지점:"
 	L["To Screen's"] = "화면의 다음 지점:"
-	L["to screen's"] = "화면 기준"
 	L["Toggle the visibility of all loaded displays"] = "불러온 모든 디스플레이 표시 전환"
 	L["Toggle the visibility of all non-loaded displays"] = "불러오지 않은 모든 디스플레이 표시 토글"
 	L["Toggle the visibility of this display"] = "이 디스플레이의 표시 전환"
@@ -488,7 +476,6 @@ UNIT_POWER, UNIT_AURA PLAYER_TARGET_CHANGED]=]
 	L["Update Custom Text On..."] = "사용자 설정 문자 갱신 중..."
 	L["Use Full Scan (High CPU)"] = "전체 스캔 사용 (높은 CPU 사용률)"
 	L["Use SetTransform (will change behaviour in 7.3)"] = "SetTransform 사용 (7.3에서 작동 변경)"
-	L["Use SetTransform api"] = "SetTransform api 사용"
 	L["Use tooltip \"size\" instead of stacks"] = "중첩 대신 툴팁 \"크기\" 사용"
 	--Translation missing 
 	-- L["Used in auras:"] = ""
@@ -497,7 +484,6 @@ UNIT_POWER, UNIT_AURA PLAYER_TARGET_CHANGED]=]
 	L["Vertical Align"] = "수직 정렬"
 	L["Vertical Bar"] = "수직 바"
 	L["View"] = "보기"
-	L["WeakAurasOptions"] = "WeakAuras옵션"
 	L["Width"] = "너비"
 	L["X Offset"] = "X 좌표"
 	L["X Rotation"] = "X 회전"

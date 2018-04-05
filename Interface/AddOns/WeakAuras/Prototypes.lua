@@ -22,6 +22,20 @@ function WeakAuras.IsSpellInRange(spellId, unit)
 end
 
 local HBD = LibStub("HereBeDragons-1.0")
+local LibRangeCheck = LibStub("LibRangeCheck-2.0")
+
+function WeakAuras.GetRange(unit)
+  return LibRangeCheck:GetRange(unit);
+end
+
+function WeakAuras.CheckRange(unit, range, operator)
+  local min, max = LibRangeCheck:GetRange(unit);
+  if (operator == "<=") then
+    return max <= range;
+  else
+    return min <= range;
+  end
+end
 
 WeakAuras.encounter_table = {
   -- The Emerald Nightmare
@@ -899,6 +913,9 @@ WeakAuras.event_prototypes = {
         "UNIT_FACTION"
       };
       AddUnitChangeEvents(trigger.unit, result);
+      if trigger.unitisunit then
+        AddUnitChangeEvents(trigger.unitisunit, result);
+      end
       return result;
     end,
     force_events = "UNIT_LEVEL",
@@ -908,9 +925,10 @@ WeakAuras.event_prototypes = {
       local ret = [=[
         local unit = [[%s]];
         local concernedUnit = [[%s]];
+        local extraUnit = [[%s]];
       ]=];
 
-      return ret:format(trigger.unit, trigger.unit);
+      return ret:format(trigger.unit, trigger.unit, trigger.unitisunit or "");
     end,
     statesParameter = "one",
     args = {
@@ -922,6 +940,16 @@ WeakAuras.event_prototypes = {
         init = "arg",
         values = "actual_unit_types_with_specific",
         test = "(event ~= 'UNIT_LEVEL' and event ~= 'UNIT_FACTION') or UnitIsUnit(unit, '%s' or '')"
+      },
+      {
+        name = "unitisunit",
+        display = L["Unit is Unit"],
+        type = "unit",
+        init = "UnitIsUnit(concernedUnit, extraUnit)",
+        values = "actual_unit_types_with_specific",
+        test = "unitisunit",
+        conditionType = "bool",
+        desc = function() return L["Can be used for e.g. checking if \"boss1target\" is the same as \"player\"."] end
       },
       {
         name = "name",
@@ -1131,6 +1159,9 @@ WeakAuras.event_prototypes = {
         tinsert(result, "UNIT_SPELLCAST_START");
         tinsert(result, "UNIT_SPELLCAST_STOP");
         tinsert(result, "UNIT_SPELLCAST_FAILED");
+      end
+      if (trigger.use_powertype and trigger.powertype == 99) then
+        tinsert(result, "UNIT_ABSORB_AMOUNT_CHANGED");
       end
       return result;
     end,
@@ -1692,9 +1723,15 @@ WeakAuras.event_prototypes = {
         conditionType = "number"
       },
       {
+        enable = function(trigger)
+          return trigger.subeventSuffix and (trigger.subeventSuffix == "_ENERGIZE")
+        end
+      }, -- unknown argument for _ENERGIZE ignored
+      {
         name = "powerType",
         display = L["Power Type"],
-        type = "select", init = "arg",
+        type = "select",
+        init = "arg",
         values = "power_types",
         store = true,
         enable = function(trigger)
@@ -2009,7 +2046,8 @@ WeakAuras.event_prototypes = {
       "ITEM_COOLDOWN_READY",
       "ITEM_COOLDOWN_CHANGED",
       "ITEM_COOLDOWN_STARTED",
-      "COOLDOWN_REMAINING_CHECK"
+      "COOLDOWN_REMAINING_CHECK",
+      "ITEM_INFO_UPDATED"
     },
     force_events = "ITEM_COOLDOWN_FORCE",
     name = L["Cooldown Progress (Item)"],
@@ -2088,7 +2126,7 @@ WeakAuras.event_prototypes = {
       end
     end,
     iconFunc = function(trigger)
-      local _, _, _, _, _, _, _, _, _, icon = GetItemInfo(trigger.itemName or 0);
+      local _, _, _, _, icon = GetItemInfoInstant(trigger.itemName or 0);
       return icon;
     end,
     hasItemID = true,
@@ -2189,7 +2227,8 @@ WeakAuras.event_prototypes = {
   ["Cooldown Ready (Item)"] = {
     type = "event",
     events = {
-      "ITEM_COOLDOWN_READY"
+      "ITEM_COOLDOWN_READY",
+      "ITEM_INFO_UPDATED"
     },
     name = L["Cooldown Ready (Item)"],
     init = function(trigger)
@@ -2215,7 +2254,7 @@ WeakAuras.event_prototypes = {
       end
     end,
     iconFunc = function(trigger)
-      local _, _, _, _, _, _, _, _, _, icon = GetItemInfo(trigger.itemName or 0);
+      local _, _, _, _, icon = GetItemInfoInstant(trigger.itemName or 0);
       return icon;
     end,
     hasItemID = true
@@ -3492,7 +3531,8 @@ WeakAuras.event_prototypes = {
     events = {
       "UNIT_INVENTORY_CHANGED",
       "PLAYER_EQUIPMENT_CHANGED",
-      "WA_DELAYED_PLAYER_ENTERING_WORLD"
+      "WA_DELAYED_PLAYER_ENTERING_WORLD",
+      "ITEM_INFO_UPDATED"
     },
     force_events = "UNIT_INVENTORY_CHANGED",
     name = L["Item Equipped"],
@@ -3537,8 +3577,8 @@ WeakAuras.event_prototypes = {
     end,
     iconFunc = function(trigger)
       if not trigger.use_inverse then
-        local texture = select(10, GetItemInfo(trigger.itemName));
-        return texture;
+        local _, _, _, _, icon = GetItemInfoInstant(trigger.itemName or 0);
+        return icon;
       else
         return nil;
       end
@@ -4104,7 +4144,80 @@ WeakAuras.event_prototypes = {
       }
     },
     automaticrequired = true
-  }
+  },
+
+  ["Range Check"] = {
+    type = "status",
+    events = {
+      "FRAME_UPDATE",
+    },
+    name = L["Range Check"],
+    init = function(trigger)
+      trigger.unit = trigger.unit or "target";
+      local ret = [=[
+          local unit = [[%s]];
+          local min, max = WeakAuras.GetRange(unit);
+          min = min or 0;
+          max = max or 999;
+          local triggerResult = true;
+      ]=]
+      if (trigger.use_range) then
+        trigger.range = trigger.range or 8;
+        if (trigger.range_operator == "<=") then
+          ret = ret .. "triggerResult = max <= " .. tostring(trigger.range) .. "\n";
+        else
+          ret = ret .. "triggerResult = min >= " .. tostring(trigger.range).. "\n";
+        end
+      end
+      return ret:format(trigger.unit);
+    end,
+    statesParameter = "one",
+    args = {
+      {
+        name = "unit",
+        required = true,
+        display = L["Unit"],
+        type = "unit",
+        init = "unit",
+        values = "actual_unit_types_with_specific",
+        test = "true",
+        store = true
+      },
+      {
+        hidden = true,
+        name = "minRange",
+        display = L["Minimum Estimate"],
+        type = "number",
+        init = "min",
+        store = true,
+        test = "true"
+      },
+      {
+        hidden = true,
+        name = "maxRange",
+        display = L["Maximum Estimate"],
+        type = "number",
+        init = "max",
+        store = true,
+        test = "true"
+      },
+      {
+        name = "range",
+        display = L["Distance"],
+        type = "number",
+        operator_types_without_equal = true,
+        test = "triggerResult",
+        conditionType = "number",
+        conditionTest = "state and state.show and WeakAuras.CheckRange(state.unit, %s, '%s')",
+      },
+      {
+        hidden = true,
+        test = "UnitExists(unit)"
+      }
+    },
+    automaticrequired = true
+  },
+
 };
 
 WeakAuras.dynamic_texts = {

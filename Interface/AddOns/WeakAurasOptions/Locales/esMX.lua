@@ -10,6 +10,8 @@ local L = WeakAuras.L
 	L["%i Matches"] = "%i coincidencias"
 	--Translation missing 
 	-- L["%s Color"] = ""
+	--Translation missing 
+	-- L["%s total auras"] = ""
 	L["1 Match"] = "1 Coincidencia"
 	L["1. Text"] = "1. Texto"
 	L["1. Text Settings"] = "1. Preferencias del texto"
@@ -22,7 +24,6 @@ local L = WeakAuras.L
 	L["A 64x64 pixels icon"] = "Un icono de 64x64 píxeles"
 	L["A group that dynamically controls the positioning of its children"] = "Un grupo que controla de manera dinámica la posición de sus dependientes"
 	L["Actions"] = "Acciones"
-	L["Activate when the given aura(s) |cFFFF0000can't|r be found"] = "Activar cuando el/las aura(s) |cFFFF0000no|r se haya(n) encontrado"
 	L["Add a new display"] = "Agregar una nueva aura"
 	--Translation missing 
 	-- L["Add Condition"] = ""
@@ -41,7 +42,6 @@ local L = WeakAuras.L
 	L["Alpha"] = "Transparencia"
 	L["Anchor"] = "Anchor"
 	L["Anchor Point"] = "Punto de anclaje"
-	L["anchored to"] = "Anclado a"
 	L["Anchored To"] = "Anclado a"
 	--Translation missing 
 	-- L["And "] = ""
@@ -72,6 +72,8 @@ Si la duración de la animación es |cFF00CC0010%|r, y el disparador del aura es
 	L["Auto-cloning enabled"] = "Auto-clonación activada"
 	L["Automatic Icon"] = "Icono automático"
 	L["Backdrop Color"] = "Color de fondo"
+	--Translation missing 
+	-- L["Backdrop in Front"] = ""
 	L["Backdrop Style"] = "Estilo de fondo"
 	L["Background"] = "Fondo"
 	L["Background Color"] = "Color de fondo"
@@ -81,7 +83,6 @@ Si la duración de la animación es |cFF00CC0010%|r, y el disparador del aura es
 	L["Bar Alpha"] = "Transparencia de la barra"
 	L["Bar Color"] = "Color de la barra"
 	L["Bar Color Settings"] = "Propiedades del color de la barra"
-	L["Bar in Front"] = "Barra hacia adelante"
 	L["Bar Texture"] = "Textura de la barra"
 	L["Big Icon"] = "Icono grande"
 	L["Blend Mode"] = "Modo de mezcla"
@@ -89,6 +90,8 @@ Si la duración de la animación es |cFF00CC0010%|r, y el disparador del aura es
 	L["Blue Sparkle Orb"] = "Orbe del destello azul"
 	L["Border"] = "Borde"
 	L["Border Color"] = "Color del borde"
+	--Translation missing 
+	-- L["Border in Front"] = ""
 	L["Border Inset"] = "Borde del recuadro"
 	L["Border Offset"] = "Desplazamiento del borde"
 	L["Border Settings"] = "Configuración de los bordes"
@@ -100,7 +103,6 @@ Si la duración de la animación es |cFF00CC0010%|r, y el disparador del aura es
 	L["Button Glow"] = "Resplandor del botón"
 	--Translation missing 
 	-- L["Can be a name or a UID (e.g., party1). A name only works on friendly players in your group."] = ""
-	L["Can be a name or a UID (e.g., party1). Only works on friendly players in your group."] = "Puede ser un nombre o un identificador de unidad(Por ejemplo: party1). Solo funciona con personajes amistosos en tu grupo."
 	L["Cancel"] = "Cancelar"
 	L["Channel Number"] = "Número de canal"
 	L["Chat Message"] = "Mensaje de chat"
@@ -181,10 +183,8 @@ UNIT_POWER, UNIT_AURA PLAYER_TARGET_CHANGED]=]
 	L["Duration (s)"] = "Duración"
 	L["Duration Info"] = "Información sobre la duración"
 	L["Dynamic Group"] = "Grupo dinámico"
-	L["Dynamic information"] = "Información dinámica"
 	L["Dynamic Information"] = "Información dinámica"
 	L["Dynamic information from first active trigger"] = "Información dinámica del primer desencadenador activo"
-	L["Dynamic information from first Active Trigger"] = "Información dinámica del primer desencadenador activo"
 	L["Dynamic information from Trigger %i"] = "Información dinámica del desencadenador %i"
 	L["Dynamic text tooltip"] = "Descripción emergente dinámica"
 	L["Enabled"] = "Activado"
@@ -196,7 +196,6 @@ UNIT_POWER, UNIT_AURA PLAYER_TARGET_CHANGED]=]
 	L["Expand"] = "Expandir"
 	L["Expand all loaded displays"] = "Expandir todas las auras cargadas"
 	L["Expand all non-loaded displays"] = "Expandir todas las auras sin cargar"
-	L["Expand Text Editor"] = "Expand Text Editor"
 	L["Expansion is disabled because this group has no children"] = "No se puede expandir ya que este grupo no posee dependientes"
 	L["Export to Lua table..."] = "Exportar a tabla de Lua...."
 	L["Export to string..."] = "Exportar al hilo..."
@@ -215,7 +214,6 @@ UNIT_POWER, UNIT_AURA PLAYER_TARGET_CHANGED]=]
 	L["Foreground Texture"] = "Textural frontal"
 	L["Frame"] = "Macro"
 	L["Frame Strata"] = "Importancia del macro"
-	L["frame's"] = "Macro"
 	L["From Template"] = "Desde la plantilla"
 	L["Full Scan"] = "Escaneo completo"
 	L["General Text Settings"] = "Preferencias generales de texto"
@@ -266,6 +264,8 @@ Con |cFF00CC00>= 0|r se activará siempre.]=]
 	L["Import a display from an encoded string"] = "Importar un aura desde un texto cifrado"
 	L["Inverse"] = "Invertido"
 	L["Justify"] = "Justificar"
+	--Translation missing 
+	-- L["Keep Aspect Ratio"] = ""
 	L["Leaf"] = "Hoja"
 	L["Left 2 HUD position"] = "Posición izquierda 2 de visualización frontal (HUD)"
 	L["Left HUD position"] = "Posición izquierda de visualización frontal (HUD)"
@@ -354,7 +354,6 @@ Sólo un valor coincidente puede ser escogido.]=]
 	--Translation missing 
 	-- L["Repeat every"] = ""
 	L["Required for Activation"] = "Necesario para la activación"
-	L["Required For Activation"] = "Necesario para la activación"
 	L["Right 2 HUD position"] = "Posición derecha 2 de visualización (HUD)"
 	L["Right HUD position"] = "Posición derecha de visualización (HUD)"
 	L["Right Text"] = "Texto derecho"
@@ -382,7 +381,6 @@ Sólo un valor coincidente puede ser escogido.]=]
 	L["Show model of unit "] = "Mostrar el modelo de la unidad"
 	--Translation missing 
 	-- L["Show On"] = ""
-	L["Show players that are |cFFFF0000not affected"] = "Mostrar jugadores |cFFFF0000no afectados"
 	L["Show this group's children"] = "Mostrar los dependientes de este grupo"
 	L["Shows a 3D model from the game files"] = "Muestra un modelo 3D de los archivos del juego"
 	L["Shows a custom texture"] = "Muestra una textura personalizada"
@@ -410,7 +408,6 @@ Sólo un valor coincidente puede ser escogido.]=]
 	L["Spark Texture"] = "Textura de la chispa"
 	L["Specific Unit"] = "Unidad específica"
 	L["Spell ID"] = "ID de hechizo"
-	L["Spell ID dialog"] = "Diálogo de ID de hechizo"
 	L["Stack Count"] = "Contador de acumulaciones"
 	L["Stack Info"] = "Información de acumulaciones"
 	L["Stacks"] = "Acumulaciones"
@@ -448,9 +445,7 @@ Sólo un valor coincidente puede ser escogido.]=]
 	L["To Frame's"] = "Al macro"
 	L["to group's"] = "Al grupo"
 	L["To Personal Ressource Display's"] = "A los recursos personales de aura"
-	L["to Personal Ressource Display's"] = "A los recursos personales de aura"
 	L["To Screen's"] = "A la pantalla"
-	L["to screen's"] = "A la pantalla"
 	L["Toggle the visibility of all loaded displays"] = "Alterar la visibilidad de todas las auras cargadas"
 	L["Toggle the visibility of all non-loaded displays"] = "Alterar la visibilidad de todas las auras no cargadas"
 	L["Toggle the visibility of this display"] = "Alterar la visibilidad de esta aura"
@@ -473,7 +468,6 @@ Sólo un valor coincidente puede ser escogido.]=]
 	L["Use Full Scan (High CPU)"] = "Escaneo Total (carga el procesador)"
 	--Translation missing 
 	-- L["Use SetTransform (will change behaviour in 7.3)"] = ""
-	L["Use SetTransform api"] = "API SetTransform "
 	L["Use tooltip \"size\" instead of stacks"] = "Utilizar \"tamaño\" en vez de acumulaciones"
 	--Translation missing 
 	-- L["Used in auras:"] = ""
@@ -482,7 +476,6 @@ Sólo un valor coincidente puede ser escogido.]=]
 	L["Vertical Align"] = "Alineación vertical"
 	L["Vertical Bar"] = "Barra vertical"
 	L["View"] = "Visualización"
-	L["WeakAurasOptions"] = "Opciones de Weak Auras"
 	L["Width"] = "Ancho"
 	L["X Offset"] = "Posición de X"
 	L["X Rotation"] = "Rotación de X"
