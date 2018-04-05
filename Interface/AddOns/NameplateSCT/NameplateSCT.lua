@@ -660,13 +660,13 @@ function NameplateSCT:DamageEvent(guid, spellID, amount, school, crit)
 
     if (icon ~= "only") then
         -- truncate
-        if (self.db.global.truncate and amount >= 100000000 and self.db.global.truncateLetter) then
-            text = string.format("%.2f亿", amount / 100000000);
-        elseif (self.db.global.truncate and amount >= 10000) then
-            text = string.format("%.2f", amount / 10000);
+        if (self.db.global.truncate and amount >= 1000000 and self.db.global.truncateLetter) then
+            text = string.format("%.1fM", amount / 1000000);
+        elseif (self.db.global.truncate and amount >= 1000) then
+            text = string.format("%.0f", amount / 1000);
 
             if (self.db.global.truncateLetter) then
-                text = text.."万";
+                text = text.."k";
             end
         else
             if (self.db.global.commaSeperate) then
