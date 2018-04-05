@@ -177,6 +177,7 @@ local data={
 	},
 	PRIEST={
 	 139376, -- Healing Well
+	 140156, -- Blessing of the order
 	},
 	ROGUE={
 	 139428, -- A Master Plan 
@@ -185,6 +186,7 @@ local data={
 	SHAMAN={
 	 143850, -- Summon Grimtotem Warrior
 	 139418, -- Healing Stream Totem
+	 140932, -- Earthen Mark
 	},
 	WARLOCK={
 	 138412, -- Iresoul's Healthstone

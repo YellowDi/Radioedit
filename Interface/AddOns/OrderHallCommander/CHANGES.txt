@@ -1,23 +1,18 @@
-tag c1a0e3bc1cf5a739e2ce32936d1333340da5369a 1.5.13
+tag a6093813bec903fa13250c0432fe965e0c34b08c 1.5.14
 Author:	Alar of Runetotem <alar@aspide.it>
-Date:	Mon Dec 11 15:11:18 2017 +0100
+Date:	Fri Feb 16 19:41:36 2018 +0100
 
-Retagged as 1.5.13 cause packager failed
-Fix: lua error when both sorts were on "Original method" Thanks to Septh
-for noting it
-Feature: added Squires'Oath for paladins
+Added a couple of enhancement items
 
-commit cd8ebf6c0cc67b89780b9c2ee1b4d9a3571effaa
+commit dd040db24a68429143e88c55ec3858ec65462f57
 Author: Alar of Runetotem <alar@aspide.it>
-Date:   Mon Dec 11 15:00:46 2017 +0100
+Date:   Fri Feb 16 19:01:02 2018 +0100
 
-    Fix: lua error when both sorts were on "Original method" Thanks to Septh
-    for noting it
-    Feature: added Squires'Oath for paladins
+    Added Blessing of the order
 
-commit 9e7f665089c2785cfa734480121a2d53302ac01a
+commit d3ba92ad3d5fe9af2ee5ce9d1f7368b049379a8e
 Author: Alar of Runetotem <alar@aspide.it>
-Date:   Mon Dec 11 12:35:34 2017 +0100
+Date:   Tue Dec 12 16:45:42 2017 +0100
 
-    Fix: added Squires'Oath for paladins
+    Feature: added Earthen Mark for Shamans
 

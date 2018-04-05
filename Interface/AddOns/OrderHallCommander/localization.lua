@@ -183,323 +183,221 @@ Note that %2$s overrides it.]=] ] = true
 
 L=l:NewLocale(me,"ptBR")
 if (L) then
---Translation missing 
-L["%1$d%% lower than %2$d%%. Lower %s"] = "%1$d%% lower than %2$d%%. Lower %s"
---Translation missing 
-L["%s for a wowhead link popup"] = "%s for a wowhead link popup"
---Translation missing 
-L["%s start the mission without even opening the mission page. No question asked"] = "%s start the mission without even opening the mission page. No question asked"
---Translation missing 
-L["%s starts missions"] = "%s starts missions"
---Translation missing 
-L["%s to actually start mission"] = "%s to actually start mission"
---Translation missing 
-L["%s to blacklist"] = "%s to blacklist"
---Translation missing 
-L["%s to remove from blacklist"] = "%s to remove from blacklist"
---Translation missing 
+L["%1$d%% lower than %2$d%%. Lower %s"] = "%1$d%% mais baixo que %2$d%%. Mais Baixo %s"
+L["%s for a wowhead link popup"] = "%s para o pop-up de link do wowhead"
+L["%s start the mission without even opening the mission page. No question asked"] = "%s iniciar a missão sem sequer abrir a página da missão. Nenhuma pergunta foi feita."
+L["%s starts missions"] = "%s inicia missões."
+L["%s to actually start mission"] = "%s para realmente iniciar a missão"
+L["%s to blacklist"] = "%s para a lista negra"
+L["%s to remove from blacklist"] = "%s para remover da lista negra"
 L[ [=[%s, please review the tutorial
-(Click the icon to dismiss this message and start the tutorial)]=] ] = [=[%s, please review the tutorial
-(Click the icon to dismiss this message and start the tutorial)]=]
---Translation missing 
-L["%s, please review the tutorial\\n(Click the icon to dismiss this message)"] = "%s, please review the tutorial\\n(Click the icon to dismiss this message)"
---Translation missing 
-L["Allow to start a mission directly from the mission list page (no single mission page shown)"] = "Allow to start a mission directly from the mission list page (no single mission page shown)"
-L["Always counter increased resource cost"] = "Sempre contra o aumento do custo de recursos"
-L["Always counter increased time"] = "Sempre contra o aumento do tempo"
-L["Always counter kill troops (ignored if we can only use troops with just 1 durability left)"] = "Sempre counter kill tropas (ignorado se podemos apenas usar tropas com apenas 1 durabilidade à esquerda)"
---Translation missing 
-L["Always counter no bonus loot threat"] = "Always counter no bonus loot threat"
---Translation missing 
-L["Artifact shown value is the base value without considering knowledge multiplier"] = "Artifact shown value is the base value without considering knowledge multiplier"
---Translation missing 
-L["Attempting %s"] = "Attempting %s"
---Translation missing 
-L["Base Chance"] = "Base Chance"
-L["Better parties available in next future"] = "Festas melhores disponíveis no próximo futuro"
---Translation missing 
-L["Blacklisted"] = "Blacklisted"
---Translation missing 
-L["Blacklisted missions are ignored in Mission Control"] = "Blacklisted missions are ignored in Mission Control"
---Translation missing 
-L["Bonus Chance"] = "Bonus Chance"
+(Click the icon to dismiss this message and start the tutorial)]=] ] = [=[%s, Por Favor, reveja o tutorial
+(Clique no ícone para descartar esta mensagem e iniciar o tutorial)]=]
+L["%s, please review the tutorial\\n(Click the icon to dismiss this message)"] = "%s, Por Favor reveja o tutorial\\n(Clique no ícone para descartar esta mensagem)"
+L["Allow to start a mission directly from the mission list page (no single mission page shown)"] = "Permitir iniciar uma missão diretamente da página da lista de missão (nenhuma página de missão única mostrada)"
+L["Always counter increased resource cost"] = "Sempre contornar o aumento do custo dos recursos"
+L["Always counter increased time"] = "Sempre contornar o aumento do tempo"
+L["Always counter kill troops (ignored if we can only use troops with just 1 durability left)"] = "Sempre evitar matança de tropas (ignorado se só pudermos usar tropas com apenas 1 de durabilidade)"
+L["Always counter no bonus loot threat"] = "Sempre contornar ameaça sem bônus de saque"
+L["Artifact shown value is the base value without considering knowledge multiplier"] = "O valor mostrado do artefato é o valor base sem considerar o multiplicador de conhecimento"
+L["Attempting %s"] = "Tentativa %s"
+L["Base Chance"] = "Chance Base"
+L["Better parties available in next future"] = "Melhores festas disponíveis no futuro próximo."
+L["Blacklisted"] = "Na Lista Negra"
+L["Blacklisted missions are ignored in Mission Control"] = "As missões da lista negra são ignoradas no controle de missão"
+L["Bonus Chance"] = "Chance de Bônus"
 L["Building Final report"] = "Relatório final do edifício"
---Translation missing 
-L["but using troops with just one durability left"] = "but using troops with just one durability left"
-L["Capped %1$s. Spend at least %2$d of them"] = "Capped% 1 $ s. Gaste pelo menos% 2 $ d deles"
+L["but using troops with just one durability left"] = "mas usando tropas com apenas 1 de durabilidade"
+L["Capped %1$s. Spend at least %2$d of them"] = "Lotado de %1$s. Gaste pelo menos %2$d deles."
 L["Changes the sort order of missions in Mission panel"] = "Altera a ordem de classificação das missões no painel da Missão"
---Translation missing 
-L["Combat ally is proposed for missions so you can consider unassigning him"] = "Combat ally is proposed for missions so you can consider unassigning him"
+L["Combat ally is proposed for missions so you can consider unassigning him"] = "O aliado de combate é proposto para missões, então você pode considerar desatribui-lo."
 L["Complete all missions without confirmation"] = "Complete todas as missões sem confirmação"
-L["Configuration for mission party builder"] = "Configuração para o construtor de parte da missão"
---Translation missing 
-L["Cost reduced"] = "Cost reduced"
---Translation missing 
-L["Could not fulfill mission, aborting"] = "Could not fulfill mission, aborting"
---Translation missing 
-L["Counter kill Troops"] = "Counter kill Troops"
---Translation missing 
-L["Customization options (non mission related)"] = "Customization options (non mission related)"
---Translation missing 
-L["Disables warning: "] = "Disables warning: "
---Translation missing 
-L["Dont use this slot"] = "Dont use this slot"
---Translation missing 
-L["Don't use troops"] = "Don't use troops"
+L["Configuration for mission party builder"] = "Configuração para missão do construtor de facção"
+L["Cost reduced"] = "Custo reduzido"
+L["Could not fulfill mission, aborting"] = "Não foi possível cumprir a missão, abortar"
+L["Counter kill Troops"] = "Contornar morte das tropas"
+L["Customization options (non mission related)"] = "Opções de personalização (não relacionadas à missão)"
+L["Disables warning: "] = "Desativar o aviso:"
+L["Dont use this slot"] = "Não use este espaço."
+L["Don't use troops"] = "Não use tropas"
 L["Duration reduced"] = "Duração reduzida"
 L["Duration Time"] = "Tempo de duração"
---Translation missing 
-L["Elite: Prefer overcap"] = "Elite: Prefer overcap"
---Translation missing 
-L["Elites mission mode"] = "Elites mission mode"
---Translation missing 
-L["Empty missions sorted as last"] = "Empty missions sorted as last"
---Translation missing 
-L["Empty or 0% success mission are sorted as last. Does not apply to \"original\" method"] = "Empty or 0% success mission are sorted as last. Does not apply to \"original\" method"
---Translation missing 
-L["Equipped by following champions:"] = "Equipped by following champions:"
+L["Elite: Prefer overcap"] = "Elite: Prefira sobrecapacidade"
+L["Elites mission mode"] = "Modo de missão Elites"
+L["Empty missions sorted as last"] = "Missões vazias classificadas como últimas"
+L["Empty or 0% success mission are sorted as last. Does not apply to \"original\" method"] = "A missão vazio ou 0% de sucesso está classificada como a última. Não se aplica ao método \"original\""
+L["Equipped by following champions:"] = "Equipado pelos seguintes campeões:"
 L["Expiration Time"] = "Data de validade"
-L["Favours leveling follower for xp missions"] = "Favors leveling follower para missões xp"
---Translation missing 
-L["For elite missions, tries hard to not go under 100% even at cost of overcapping"] = "For elite missions, tries hard to not go under 100% even at cost of overcapping"
+L["Favours leveling follower for xp missions"] = "Favorecer seguindo upando em missões de XP"
+L["For elite missions, tries hard to not go under 100% even at cost of overcapping"] = "Para missões de elite, tentar não ultrapassar 100% mesmo ao custo da sobrecapacidade"
 L["General"] = "Geral"
-L["Global approx. xp reward"] = "Global aprox. Recompensa xp"
---Translation missing 
-L["Global approx. xp reward per hour"] = "Global approx. xp reward per hour"
+L["Global approx. xp reward"] = "Recompensa Global Aproximada de XP"
+L["Global approx. xp reward per hour"] = "Recompensa Global Aproximada de XP por Hora"
 L["HallComander Quick Mission Completion"] = "Conclusão Rápida da Missão HallComander"
---Translation missing 
-L["If %1$s is lower than this, then we try to achieve at least %2$s without going over 100%%. Ignored for elite missions."] = "If %1$s is lower than this, then we try to achieve at least %2$s without going over 100%%. Ignored for elite missions."
---Translation missing 
-L["If not checked, inactive followers are used as last chance"] = "If not checked, inactive followers are used as last chance"
---Translation missing 
+L["If %1$s is lower than this, then we try to achieve at least %2$s without going over 100%%. Ignored for elite missions."] = "Se %1$s for menor do que isso, então tentaremos alcançar pelo menos %2$s sem ultrapassar 100%%. Ignorado para missões de elite."
+L["If not checked, inactive followers are used as last chance"] = "Se não for Marcado, os seguidores inativos são usados como última chance"
 L[ [=[If you %s, you will lose them
-Click on %s to abort]=] ] = [=[If you %s, you will lose them
-Click on %s to abort]=]
---Translation missing 
-L["Ignore busy followers"] = "Ignore busy followers"
---Translation missing 
-L["Ignore inactive followers"] = "Ignore inactive followers"
+Click on %s to abort]=] ] = [=[Se você for %s, você vai perder
+Clique em %s para abortar]=]
+L["Ignore busy followers"] = "Ignore os seguidores ocupados"
+L["Ignore inactive followers"] = "Ignore os seguidores inactivos"
 L["Keep cost low"] = "Mantenha o custo baixo"
---Translation missing 
-L["Keep extra bonus"] = "Keep extra bonus"
+L["Keep extra bonus"] = "Mantenha o bônus extra"
 L["Keep time short"] = "Mantenha o tempo curto"
 L["Keep time VERY short"] = "Mantenha o tempo MUITO curto"
---Translation missing 
 L[ [=[Launch the first filled mission with at least one locked follower.
-Keep %s pressed to actually launch, a simple click will only print mission name with its followers list]=] ] = [=[Launch the first filled mission with at least one locked follower.
-Keep %s pressed to actually launch, a simple click will only print mission name with its followers list]=]
---Translation missing 
+Keep %s pressed to actually launch, a simple click will only print mission name with its followers list]=] ] = [=[Inicie a primeira missão preenchida com pelo menos um seguidor bloqueado.
+Mantenha %s pressionado para realmente iniciar, um simples clique apenas imprimirá o nome da missão com sua lista de seguidores]=]
 L[ [=[Launch the first filled mission with at least one locked follower.
-Keep SHIFT pressed to actually launch, a simple click will only print mission name with its followers list]=] ] = [=[Launch the first filled mission with at least one locked follower.
-Keep SHIFT pressed to actually launch, a simple click will only print mission name with its followers list]=]
+Keep SHIFT pressed to actually launch, a simple click will only print mission name with its followers list]=] ] = [=[Inicie a primeira missão preenchida com pelo menos um seguidor bloqueado.
+Mantenha SHIFT pressionado para realmente iniciar, um simples clique apenas imprimirá o nome da missão com sua lista de seguidores]=]
 L["Level"] = "Nível"
---Translation missing 
-L["Lock all"] = "Lock all"
---Translation missing 
-L["Lock this follower"] = "Lock this follower"
---Translation missing 
-L["Locked follower are only used in this mission"] = "Locked follower are only used in this mission"
-L["Make Order Hall Mission Panel movable"] = "Faça a encomenda Hall Missão Painel móvel"
---Translation missing 
-L["Makes sure that no troops will be killed"] = "Makes sure that no troops will be killed"
---Translation missing 
-L["Max champions"] = "Max champions"
+L["Lock all"] = "Bloquear tudo"
+L["Lock this follower"] = "Bloqueie esse seguidor"
+L["Locked follower are only used in this mission"] = "O seguidor bloqueado só é usado nesta missão"
+L["Make Order Hall Mission Panel movable"] = "Faça o Painel da Missão do Salão móvel"
+L["Makes sure that no troops will be killed"] = "Certifique-se de que as tropas não serão mortas"
+L["Max champions"] = "Campeões máximos"
 L["Maximize xp gain"] = "Maximize o ganho de xp"
---Translation missing 
-L["Mission duration reduced"] = "Mission duration reduced"
---Translation missing 
-L["Mission was capped due to total chance less than"] = "Mission was capped due to total chance less than"
+L["Mission duration reduced"] = "Duração da missão reduzida"
+L["Mission was capped due to total chance less than"] = "A missão foi limitada devido a chance total de menos de"
 L["Missions"] = "Missões"
---Translation missing 
-L["Never kill Troops"] = "Never kill Troops"
+L["Never kill Troops"] = "Nunca mate tropas"
 L["No follower gained xp"] = "Nenhum seguidor ganhou xp"
---Translation missing 
-L["No suitable missions. Have you reserved at least one follower?"] = "No suitable missions. Have you reserved at least one follower?"
---Translation missing 
-L["Not blacklisted"] = "Not blacklisted"
+L["No suitable missions. Have you reserved at least one follower?"] = "Nenhuma missão adequada. Você reservou pelo menos um seguidor?"
+L["Not blacklisted"] = "Não listado na lista negra"
 L["Nothing to report"] = "Nada a declarar"
 L["Notifies you when you have troops ready to be collected"] = "Notifica você quando você tem tropas prontas para serem coletadas"
 L["Only accept missions with time improved"] = "Aceitar apenas missões com o tempo melhorado"
---Translation missing 
-L["Only consider elite missions"] = "Only consider elite missions"
---Translation missing 
-L["Only need %s instead of %s to start a mission from mission list"] = "Only need %s instead of %s to start a mission from mission list"
---Translation missing 
-L["Only use champions even if troops are available"] = "Only use champions even if troops are available"
---Translation missing 
-L["Open configuration"] = "Open configuration"
---Translation missing 
+L["Only consider elite missions"] = "Apenas considere missões de elite"
+L["Only need %s instead of %s to start a mission from mission list"] = "Só precisa %s em vez de %s para iniciar uma missão da lista de missões."
+L["Only use champions even if troops are available"] = "Use apenas campeões, mesmo que as tropas estejam disponíveis"
+L["Open configuration"] = "Abrir configuração"
 L[ [=[OrderHallCommander overrides GarrisonCommander for Order Hall Management.
  You can revert to GarrisonCommander simply disabling OrderhallCommander.
-If instead you like OrderHallCommander remember to add it to Curse client and keep it updated]=] ] = [=[OrderHallCommander overrides GarrisonCommander for Order Hall Management.
- You can revert to GarrisonCommander simply disabling OrderhallCommander.
-If instead you like OrderHallCommander remember to add it to Curse client and keep it updated]=]
+If instead you like OrderHallCommander remember to add it to Curse client and keep it updated]=] ] = [=[OrderHallCommander substitui GarrisonCommander pela Order Hall Management.
+Você pode reverter para GarrisonCommander simplesmente desabilitando o  OrderhallCommander.
+Se ao invés disso você gostar de OrderHallCommander, lembre-se de adicioná-lo ao cliente Curse e mantê-lo atualizado]=]
 L["Original method"] = "Método original"
 L["Position is not saved on logout"] = "A posição não é salva no logout"
---Translation missing 
-L["Prefer high durability"] = "Prefer high durability"
---Translation missing 
-L["Quick start first mission"] = "Quick start first mission"
---Translation missing 
-L["Remove no champions warning"] = "Remove no champions warning"
---Translation missing 
-L["Restart tutorial from beginning"] = "Restart tutorial from beginning"
---Translation missing 
-L["Resume tutorial"] = "Resume tutorial"
-L["Resurrect troops effect"] = "Resurrect efeito tropas"
+L["Prefer high durability"] = "Preferir alta durabilidade"
+L["Quick start first mission"] = "Primeira missão de início rápido"
+L["Remove no champions warning"] = "Não remova nenhum aviso de campeão"
+L["Restart tutorial from beginning"] = "Reinicie o tutorial desde o início"
+L["Resume tutorial"] = "Retomar tutorial"
+L["Resurrect troops effect"] = "Ressuscitar o efeito das tropas"
 L["Reward type"] = "Tipo de recompensa"
---Translation missing 
-L["Sets all switches to a very permissive setup. Very similar to 1.4.4"] = "Sets all switches to a very permissive setup. Very similar to 1.4.4"
---Translation missing 
-L["Show tutorial"] = "Show tutorial"
+L["Sets all switches to a very permissive setup. Very similar to 1.4.4"] = "Define todos os switches para uma configuração muito permissiva. Muito parecido com 1.4.4"
+L["Show tutorial"] = "Mostrar tutorial"
 L["Show/hide OrderHallCommander mission menu"] = "Mostrar / ocultar o menu da missão OrderHallCommander"
 L["Sort missions by:"] = "Classifique missões por:"
---Translation missing 
-L["Started with "] = "Started with "
+L["Started with "] = "Começou com"
 L["Success Chance"] = "Chance de sucesso"
 L["Troop ready alert"] = "Alerta de tropas"
---Translation missing 
-L["Unable to fill missions, raise \"%s\""] = "Unable to fill missions, raise \"%s\""
---Translation missing 
-L["Unable to fill missions. Check your switches"] = "Unable to fill missions. Check your switches"
---Translation missing 
-L["Unable to start mission, aborting"] = "Unable to start mission, aborting"
---Translation missing 
-L["Unlock all"] = "Unlock all"
---Translation missing 
-L["Unlock this follower"] = "Unlock this follower"
---Translation missing 
-L["Unlocks all follower and slots at once"] = "Unlocks all follower and slots at once"
---Translation missing 
-L["Unsafe mission start"] = "Unsafe mission start"
+L["Unable to fill missions, raise \"%s\""] = "Não é possível preencher missões, aumentar \"%s\""
+L["Unable to fill missions. Check your switches"] = "Incapaz de preencher missões. Verifique os seus switches"
+L["Unable to start mission, aborting"] = "Não foi possível iniciar a missão, abortar"
+L["Unlock all"] = "Desbloquear tudo"
+L["Unlock this follower"] = "Desbloqueie esse seguidor"
+L["Unlocks all follower and slots at once"] = "Desbloqueia todos os seguidores e slots ao mesmo tempo"
+L["Unsafe mission start"] = "Começar missão insegura"
 L["Upgrading to |cff00ff00%d|r"] = "Atualizando para | cff00ff00% d | r"
---Translation missing 
-L["URL Copy"] = "URL Copy"
---Translation missing 
-L["Use at most this many champions"] = "Use at most this many champions"
---Translation missing 
-L["Use combat ally"] = "Use combat ally"
---Translation missing 
-L["Use this slot"] = "Use this slot"
---Translation missing 
-L["Uses troops with the highest durability instead of the ones with the lowest"] = "Uses troops with the highest durability instead of the ones with the lowest"
---Translation missing 
-L["When no free followers are available shows empty follower"] = "When no free followers are available shows empty follower"
---Translation missing 
-L["When we cant achieve the requested %1$s, we try to reach at least this one without (if possible) going over 100%%"] = "When we cant achieve the requested %1$s, we try to reach at least this one without (if possible) going over 100%%"
---Translation missing 
-L["Would start with "] = "Would start with "
-L["You are wasting |cffff0000%d|cffffd200 point(s)!!!"] = "Você está desperdiçando | cffff0000% d | cffffd200 point (s) !!!"
---Translation missing 
+L["URL Copy"] = "Copia de URL"
+L["Use at most this many champions"] = "Use ao máximo esses muitos campeões"
+L["Use combat ally"] = "Use aliado de combate"
+L["Use this slot"] = "Use este slot"
+L["Uses troops with the highest durability instead of the ones with the lowest"] = "Usa tropas com maior durabilidade em vez das mais baixas"
+L["When no free followers are available shows empty follower"] = "Quando nenhum seguidor gratuito está disponível, mostra o seguidor vazio"
+L["When we cant achieve the requested %1$s, we try to reach at least this one without (if possible) going over 100%%"] = "Quando não podemos alcançar o %1$s solicitado, tentamos alcançar pelo menos esse (se possível) passar de 100%"
+L["Would start with "] = "Começaria com"
+L["You are wasting |cffff0000%d|cffffd200 point(s)!!!"] = "Você está desperdiçando | cffff0000% d | cffffd200 ponto(s) !!!"
 L[ [=[You need to close and restart World of Warcraft in order to update this version of OrderHallCommander.
-Simply reloading UI is not enough]=] ] = [=[You need to close and restart World of Warcraft in order to update this version of OrderHallCommander.
-Simply reloading UI is not enough]=]
---Translation missing 
-L["You now need to press both %s and %s to start mission"] = "You now need to press both %s and %s to start mission"
+Simply reloading UI is not enough]=] ] = [=[Você precisa fechar e reiniciar o World of Warcraft para atualizar esta versão do OrderHallCommander.
+Recarregar UI não é suficiente]=]
+L["You now need to press both %s and %s to start mission"] = "Agora você precisa pressionar %s e %s para iniciar a missão"
 
 -- Tutorial
---Translation missing 
 L[ [=[%1$s and %2$s switches work together to customize how you want your mission filled
 
-The value you set for %1$s (right now %3$s%%) is the minimum acceptable chance for attempting to achieve bonus while the value to set for %2$s (right now %4$s%%) is the chance you want achieve when you are forfaiting bonus (due to not enough powerful followers)]=] ] = [=[%1$s and %2$s switches work together to customize how you want your mission filled
+The value you set for %1$s (right now %3$s%%) is the minimum acceptable chance for attempting to achieve bonus while the value to set for %2$s (right now %4$s%%) is the chance you want achieve when you are forfaiting bonus (due to not enough powerful followers)]=] ] = [=[%1$s e %2$s trabalham em conjunto para personalizar a forma como deseja que a sua missão seja preenchida.
 
-The value you set for %1$s (right now %3$s%%) is the minimum acceptable chance for attempting to achieve bonus while the value to set for %2$s (right now %4$s%%) is the chance you want achieve when you are forfaiting bonus (due to not enough powerful followers)]=]
---Translation missing 
+O valor que você definiu para %1$s (agora %3$s%%) é a chance mínima aceitável para tentar obter bônus.
+Enquanto o valor a ser definido para %2$s (agora $4$s%%) é a chance que você deseja alcançar quando você esta sem bônus (devido a você não ter seguidores poderosos suficientes)]=]
 L[ [=[A requested window is not open
-Tutorial will resume as soon as possible]=] ] = [=[A requested window is not open
-Tutorial will resume as soon as possible]=]
---Translation missing 
+Tutorial will resume as soon as possible]=] ] = [=[Uma janela solicitada não está aberta
+O tutorial retomará o mais rápido possível]=]
 L[ [=[Clicking a party button will assign its followers to the current mission.
 Use it to verify OHC calculated chance with Blizzard one.
-If they differs please take a screenshot and open a ticket :).]=] ] = [=[Clicking a party button will assign its followers to the current mission.
-Use it to verify OHC calculated chance with Blizzard one.
-If they differs please take a screenshot and open a ticket :).]=]
---Translation missing 
+If they differs please take a screenshot and open a ticket :).]=] ] = [=[Ao clicar no botão festa, os seus seguidores atribuirão a missão atual.
+Use-o para verificar a chance calculada da OHC com a Blizzard.
+Se eles diferirem, pegue uma captura de tela e abra um ticket :).]=]
 L[ [=[Equipment and upgrades are listed here as clickable buttons.
 Due to an issue with Blizzard Taint system, drag and drop from bags raise an error.
 if you drag and drop an item from a bag, you receive an error.
 In order to assign equipments which are not listed (I update the list often but sometimes Blizzard is faster), you can right click the item in the bag and the left click the follower.
-This way you dont receive any error]=] ] = [=[Equipment and upgrades are listed here as clickable buttons.
-Due to an issue with Blizzard Taint system, drag and drop from bags raise an error.
-if you drag and drop an item from a bag, you receive an error.
-In order to assign equipments which are not listed (I update the list often but sometimes Blizzard is faster), you can right click the item in the bag and the left click the follower.
-This way you dont receive any error]=]
---Translation missing 
+This way you dont receive any error]=] ] = [=[Os equipamento e as Melhorias estão listadas aqui como botões clicáveis.
+Devido a um problema com o sistema de arrastar e soltar da Blizzardt.
+Se você arrastar e soltar um item de uma bolsa, você receberá um erro.
+Para atribuir equipamentos que não estão listados (atualizo a lista com freqüência, mas às vezes o Blizzard é mais rápida), você pode clicar com o botão direito do mouse no item na bolsa e clicar no seguidor em seguida. Desta forma, você não recebe nenhum erro]=]
 L[ [=[Equipment and upgrades are listed here as clickable buttons.
 Due to an issue with Blizzard Taint system, if you drag and drop an item from a bag, you receive an error.
 In order to assign equipment which are not listed (I updated the list often but sometimes Blizzard is faster), you can right click the item in the bag and the left click the follower.
-This way you dont receive any error]=] ] = [=[Equipment and upgrades are listed here as clickable buttons.
-Due to an issue with Blizzard Taint system, if you drag and drop an item from a bag, you receive an error.
-In order to assign equipment which are not listed (I updated the list often but sometimes Blizzard is faster), you can right click the item in the bag and the left click the follower.
-This way you dont receive any error]=]
---Translation missing 
+This way you dont receive any error]=] ] = [=[O equipamento e as melhorias estão listadas aqui como botões clicáveis.
+Devido a um problema com o sistema Blizzard Taint, se você arrastar e soltar um item de uma bolsa, você receberá um erro.
+Para atribuir equipamentos que não estão listados (eu atualizei a lista com frequência, mas às vezes o Blizzard é mais rápido), você pode clicar com o botão direito do mouse no item na bolsa e clicar no seguidor.
+Desta forma, você não receberá nenhum erro.]=]
 L[ [=[For example, let's say a mission can reach 95%%, 130%% and 180%% success chance.
 If %1$s is set to 170%%, the 180%% one will be choosen.
 If %1$s is set to 200%% OHC will try to find the nearest to 100%% respecting %2$s setting
-If for example %2$s is set to 100%%, then the 130%% one will be choosen, but if %2$s is set to 90%% then the 95%% one will be choosen]=] ] = [=[For example, let's say a mission can reach 95%%, 130%% and 180%% success chance.
-If %1$s is set to 170%%, the 180%% one will be choosen.
-If %1$s is set to 200%% OHC will try to find the nearest to 100%% respecting %2$s setting
-If for example %2$s is set to 100%%, then the 130%% one will be choosen, but if %2$s is set to 90%% then the 95%% one will be choosen]=]
---Translation missing 
-L["If instead you just want to always see the best available mission just set %1$s to 100%% and %2$s to 0%%"] = "If instead you just want to always see the best available mission just set %1$s to 100%% and %2$s to 0%%"
---Translation missing 
+If for example %2$s is set to 100%%, then the 130%% one will be choosen, but if %2$s is set to 90%% then the 95%% one will be choosen]=] ] = [=[Por exemplo, digamos que uma missão pode atingir chances de sucesso de 95%%, 130%% e 180%%.
+Se %1$s estiver definido para 170%%, o 180%% será escolhido.
+Se %1$s estiver configurado para 200%%, o OHC tentará encontrar a configuração mais próxima de 100%% respeitando %2$s.
+Se, por exemplo, %2$s estiver definido para 100%%, então o 130%% será escolhido, mas se %2$s estiver definido para 90%%, então o 95%% um será escolhido]=]
+L["If instead you just want to always see the best available mission just set %1$s to 100%% and %2$s to 0%%"] = "Se em vez disso você quiser sempre ver a melhor missão disponível, basta definir %1$s para 100 %% e %2$s para 0%%"
 L[ [=[If you dont understand why OHC choosed a setup for a mission, you can request a full analysis.
-Analyze party will show all the possible combinations and how OHC evaluated them]=] ] = [=[If you dont understand why OHC choosed a setup for a mission, you can request a full analysis.
-Analyze party will show all the possible combinations and how OHC evaluated them]=]
---Translation missing 
-L["Prefer high durability"] = "Prefer high durability"
---Translation missing 
-L["Restart the tutorial"] = "Restart the tutorial"
---Translation missing 
+Analyze party will show all the possible combinations and how OHC evaluated them]=] ] = [=[Se você não entender por que OHC escolheu uma configuração para uma missão, você pode solicitar uma análise completa.
+A parte de análise mostrará todas as combinações possíveis e como a OHC as avaliou]=]
+L["Prefer high durability"] = "Preferir alta durabilidade"
+L["Restart the tutorial"] = "Reinicie o tutorial"
 L[ [=[Slots (non the follower in it but just the slot) can be banned.
 When you ban a slot, that slot will not be filled for that mission.
-Exploiting the fact that troops are always in the leftmost slot(s) you can achieve a nice degree of custom tailoring, reducing the overall number of followers used for a mission]=] ] = [=[Slots (non the follower in it but just the slot) can be banned.
-When you ban a slot, that slot will not be filled for that mission.
-Exploiting the fact that troops are always in the leftmost slot(s) you can achieve a nice degree of custom tailoring, reducing the overall number of followers used for a mission]=]
---Translation missing 
-L["Terminate the tutorial. You can resume it anytime clicking on the info icon in the side menu"] = "Terminate the tutorial. You can resume it anytime clicking on the info icon in the side menu"
---Translation missing 
-L["Thank you for reading this, enjoy %s"] = "Thank you for reading this, enjoy %s"
---Translation missing 
-L["There are %d tutorial step you didnt read"] = "There are %d tutorial step you didnt read"
---Translation missing 
+Exploiting the fact that troops are always in the leftmost slot(s) you can achieve a nice degree of custom tailoring, reducing the overall number of followers used for a mission]=] ] = [=[Slots (não o seguidor, mas apenas o slot) podem ser banidos.
+Quando você proíbe um slot, esse slot não será preenchido para essa missão.
+Explorando o fato de que as tropas estão sempre no (s) slot (s) mais à esquerda, você pode alcançar um bom grau de alfaiataria personalizada, reduzindo o número total de seguidores usados para uma missão]=]
+L["Terminate the tutorial. You can resume it anytime clicking on the info icon in the side menu"] = "Terminar o tutorial. Você pode retomá-lo clicando no ícone de informações no menu lateral"
+L["Thank you for reading this, enjoy %s"] = "Obrigado por ler isso, aproveite %s"
+L["There are %d tutorial step you didnt read"] = "Existe(m) %d passo(s) no tutorial que você não leu"
 L[ [=[Usually OrderHallCOmmander tries to use troops with the lowest durability in order to let you enque new troops request as soon as possible.
-Checking %1$s reverse it and OrderHallCOmmander will choose for each mission troops with the highest possible durability]=] ] = [=[Usually OrderHallCOmmander tries to use troops with the lowest durability in order to let you enque new troops request as soon as possible.
-Checking %1$s reverse it and OrderHallCOmmander will choose for each mission troops with the highest possible durability]=]
---Translation missing 
+Checking %1$s reverse it and OrderHallCOmmander will choose for each mission troops with the highest possible durability]=] ] = [=[Normalmente, OrderHallCOmmander tenta usar tropas com a menor durabilidade para permitir que as tropas novas sejam solicitadas o mais rápido possível.
+Marcando %1$s inverter e OrderHallCOmmander escolherá para cada missão tropas com a maior durabilidade possível]=]
 L[ [=[Welcome to a new release of OrderHallCommander
 Please follow this short tutorial to discover all new functionalities.
-You will not regret it]=] ] = [=[Welcome to a new release of OrderHallCommander
-Please follow this short tutorial to discover all new functionalities.
-You will not regret it]=]
---Translation missing 
+You will not regret it]=] ] = [=[Bem-vindo a uma nova versão do OrderHallCommander
+Siga este breve tutorial para descobrir todas as novas funcionalidades.
+Você não vai se arrepender]=]
 L[ [=[With %1$s you ask to always counter the Hazard kill troop.
 This means that OHC will try to counter it OR use a troop with just one durability left.
-The target for this switch is to avoid wasting durability point, NOT to avoid troops' death.]=] ] = [=[With %1$s you ask to always counter the Hazard kill troop.
-This means that OHC will try to counter it OR use a troop with just one durability left.
-The target for this switch is to avoid wasting durability point, NOT to avoid troops' death.]=]
---Translation missing 
+The target for this switch is to avoid wasting durability point, NOT to avoid troops' death.]=] ] = [=[Com %1$s, você pede para sempre contornar a Tropa de perigosidade.
+Isso significa que a OHC tentará neutraliza-lo OU usar uma tropa com apenas uma durabilidade.
+O alvo para este Switch é evitar perder o ponto de durabilidade, NÃO para evitar a morte das tropas.]=]
 L[ [=[With %2$s you ask to never let a troop die.
 This not only implies %1$s and %3$s, but force OHC to never send to mission a troop which will die.
-The target for this switch is to totally avoid killing troops, even it for this we cant fill the party]=] ] = [=[With %2$s you ask to never let a troop die.
-This not only implies %1$s and %3$s, but force OHC to never send to mission a troop which will die.
-The target for this switch is to totally avoid killing troops, even it for this we cant fill the party]=]
---Translation missing 
+The target for this switch is to totally avoid killing troops, even it for this we cant fill the party]=] ] = [=[Com %2$s você pede para nunca deixar uma tropa morrer.
+Isso não implica apenas %1$s e %3$s, mas force OHC para nunca enviar para missão uma tropa que irá morrer.
+O objetivo dessa mudança é evitar totalmente matar tropas, mesmo assim não podemos completar a tarefa]=]
 L[ [=[You can blacklist missions right clicking mission button.
 Since 1.5.1 you can start a mission witout passing from mission page shift-clicking the mission button.
-Be sure you liked the party because no confirmation is asked]=] ] = [=[You can blacklist missions right clicking mission button.
-Since 1.5.1 you can start a mission witout passing from mission page shift-clicking the mission button.
-Be sure you liked the party because no confirmation is asked]=]
---Translation missing 
-L["You can choose not to use a troop type clicking its icon"] = "You can choose not to use a troop type clicking its icon"
---Translation missing 
+Be sure you liked the party because no confirmation is asked]=] ] = [=[Você pode criar uma lista negra das missões clicando no botão da missão.
+Desde 1.5.1 você pode iniciar uma missão sem passar da página da missão clicando no botão missão.
+Certifique-se de que gostou do grupo porque não é feita nenhuma confirmação]=]
+L["You can choose not to use a troop type clicking its icon"] = "Você pode optar por não usar um tipo de tropa clicando em seu ícone"
 L[ [=[You can choose to limit how much champions are sent together.
 Right now OHC is not using more than %3$s champions in the same mission-
 
-Note that %2$s overrides it.]=] ] = [=[You can choose to limit how much champions are sent together.
-Right now OHC is not using more than %3$s champions in the same mission-
+Note that %2$s overrides it.]=] ] = [=[Você pode escolher limitar a quantidade de campeões enviados.
+Agora, a OHC não está usando campeões de mais de $3$ na mesma missão
 
-Note that %2$s overrides it.]=]
+Observe que %2$s o substitui.]=]
 
 return
 end
@@ -1898,7 +1796,7 @@ L["%s for a wowhead link popup"] = "%s чтобы показать ссылку 
 L["%s start the mission without even opening the mission page. No question asked"] = "%s начать задание, ничего не спрашивая"
 L["%s starts missions"] = "%s начинает задания"
 L["%s to actually start mission"] = "%s чтобы действительно начать задание"
-L["%s to blacklist"] = "%s в чёрный список"
+L["%s to blacklist"] = "%s в черный список"
 L["%s to remove from blacklist"] = "%s для удаления из чёрного списка"
 L[ [=[%s, please review the tutorial
 (Click the icon to dismiss this message and start the tutorial)]=] ] = [=[%s, пожалуйста, пройдите обучение
@@ -1913,7 +1811,7 @@ L["Artifact shown value is the base value without considering knowledge multipli
 L["Attempting %s"] = "Пытаемся %s"
 L["Base Chance"] = "Базовый шанс"
 L["Better parties available in next future"] = "Лучшая группа будет доступна скоро"
-L["Blacklisted"] = "В чёрном списке"
+L["Blacklisted"] = "В черном списке"
 L["Blacklisted missions are ignored in Mission Control"] = "Задания из чёрного списка игнорируются на тактической карте"
 L["Bonus Chance"] = "Бонусный бросок"
 L["Building Final report"] = "Готовим отчёт"
@@ -1927,7 +1825,7 @@ L["Cost reduced"] = "Стоимость уменьшена"
 L["Could not fulfill mission, aborting"] = "Не удалось выполнить задание, прерывание"
 L["Counter kill Troops"] = "Парировать смерть отрядов"
 L["Customization options (non mission related)"] = "Вариативные настройки (не касающиеся заданий)"
-L["Disables warning: "] = "Отключает предупреждение: "
+L["Disables warning: "] = "Отключает предупреждение:"
 L["Dont use this slot"] = "Не использовать этот слот"
 L["Don't use troops"] = "Не использовать отряды"
 L["Duration reduced"] = "Время уменьшено"
@@ -1935,7 +1833,7 @@ L["Duration Time"] = "Продолжительность"
 L["Elite: Prefer overcap"] = "Элитный: предпочесть избыточный шанс успеха "
 L["Elites mission mode"] = "Режим элитных заданий"
 L["Empty missions sorted as last"] = "Задания без группы в конец списка"
-L["Empty or 0% success mission are sorted as last. Does not apply to \"original\" method"] = "Задания без группы и с 0% успеха в конец списка. Кроме \"обычного\" метода"
+L["Empty or 0% success mission are sorted as last. Does not apply to \"original\" method"] = "Задание без группы и с 0% успеха в конец списка. Кроме \"обычного\" метода"
 L["Equipped by following champions:"] = "Надето на следующих защитниках:"
 L["Expiration Time"] = [=[Время окончания срока действия
 ]=]
@@ -1955,7 +1853,7 @@ L["Ignore inactive followers"] = "Игнорировать резерв"
 L["Keep cost low"] = "Снижать цену"
 L["Keep extra bonus"] = "Бонусная добыча"
 L["Keep time short"] = "Уменьшать время наполовину"
-L["Keep time VERY short"] = "Уменьшать время"
+L["Keep time VERY short"] = "Уменьшить время"
 L[ [=[Launch the first filled mission with at least one locked follower.
 Keep %s pressed to actually launch, a simple click will only print mission name with its followers list]=] ] = "Начать первое заполненное задание с одним назначенным защитником. Удерживайте %s, чтобы начать, простое нажатие только напишет название и список защитников"
 L[ [=[Launch the first filled mission with at least one locked follower.
@@ -1973,7 +1871,7 @@ L["Mission was capped due to total chance less than"] = "Задание огра
 L["Missions"] = "Задания"
 L["Never kill Troops"] = "Не убивать отряды"
 L["No follower gained xp"] = "Защитники не получили опыт"
-L["No suitable missions. Have you reserved at least one follower?"] = "Нет подходящих миссий. Вы зарезервировали хотя бы одного защитника?"
+L["No suitable missions. Have you reserved at least one follower?"] = "Нет подходящих заданий. Вы зарезервировали хотя бы одного защитника?"
 L["Not blacklisted"] = "Не в чёрном списке"
 L["Nothing to report"] = "Без отчёта"
 L["Notifies you when you have troops ready to be collected"] = "Уведомлять, когда есть готовые отряды"
@@ -2029,7 +1927,7 @@ L["You now need to press both %s and %s to start mission"] = "Необходим
 -- Tutorial
 L[ [=[%1$s and %2$s switches work together to customize how you want your mission filled
 
-The value you set for %1$s (right now %3$s%%) is the minimum acceptable chance for attempting to achieve bonus while the value to set for %2$s (right now %4$s%%) is the chance you want achieve when you are forfaiting bonus (due to not enough powerful followers)]=] ] = "Настройки %1$s и %2$s вместе определяют, как выполнять задания. Значение %1$s (сейчас равно %3$s%%) является минимальным желаемым шансом получить бонус, а значение %2$s (сейчас равно %4$s%%) соответствует шансу без бонуса (из-за недостаточного количества сильных защитников)."
+The value you set for %1$s (right now %3$s%%) is the minimum acceptable chance for attempting to achieve bonus while the value to set for %2$s (right now %4$s%%) is the chance you want achieve when you are forfaiting bonus (due to not enough powerful followers)]=] ] = "Настройки %1$s и %2$s вместе определяют, как выполнять задания. Значение %1$s (сейчас равно %3$s%%) является минимальным желаемым шансом получить бонус, а значение %2$s (сейчас равно %4$s%%) соответствует шансу без бонуса (из-за недостаточного количества сильных соратников)."
 L[ [=[A requested window is not open
 Tutorial will resume as soon as possible]=] ] = [=[Запрошенное окно не открыто.
 Обучение продолжится, когда будет возможно.]=]
@@ -2061,7 +1959,7 @@ L["If instead you just want to always see the best available mission just set %1
 L[ [=[If you dont understand why OHC choosed a setup for a mission, you can request a full analysis.
 Analyze party will show all the possible combinations and how OHC evaluated them]=] ] = [=[Если вы не понимаете, почему OHC выбрал такую группу для задания, то запросите полный анализ.
 Анализ группы покажет все возможные комбинации и метод их подбора]=]
-L["Prefer high durability"] = "Предпочесть войска с большим количеством единиц здоровья"
+L["Prefer high durability"] = "Предпочесть помощников с большим количеством здоровья "
 L["Restart the tutorial"] = "Перезапустить сборник инструкций."
 L[ [=[Slots (non the follower in it but just the slot) can be banned.
 When you ban a slot, that slot will not be filled for that mission.
@@ -2785,7 +2683,7 @@ L["Reward type"] = "獎勵類型"
 L["Sets all switches to a very permissive setup. Very similar to 1.4.4"] = "所有設定都更改為非常寬鬆的設定，和 1.44 版非常相似。"
 L["Show tutorial"] = "顯示指南"
 L["Show/hide OrderHallCommander mission menu"] = "顯示/隱藏大廳指揮官任務選單"
-L["Sort missions by:"] = "排列任務根據："
+L["Sort missions by:"] = "任務排序依據："
 L["Started with "] = "已經派出 "
 L["Success Chance"] = "成功機率"
 L["Troop ready alert"] = "部隊整備提醒"
