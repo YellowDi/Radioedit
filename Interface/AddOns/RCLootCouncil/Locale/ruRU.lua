@@ -32,7 +32,7 @@ L["Accept Whispers"] = "Принимать Личные сообщения"
 -- L["active_desc"] = ""
 L["Add Item"] = "Добавить Предмет"
 L["Add Note"] = "Добавить Заметку"
-L["Add ranks"] = "Добавить ранги"
+L["Add ranks"] = "Добавить ранг"
 --Translation missing 
 -- L["Add rolls"] = ""
 --Translation missing 
@@ -143,7 +143,7 @@ L["auto_award_to_desc"] = "Игроки для автоматического р
 -- L["auto_start_desc"] = ""
 --Translation missing 
 -- L["Autoloot all BoE"] = ""
-L["Autoloot BoE"] = "Автосбор ПпН-предметов"
+L["Autoloot BoE"] = "Автосбор БОЕ-предметов"
 --Translation missing 
 -- L["autoloot_BoE_desc"] = ""
 --Translation missing 
@@ -219,8 +219,6 @@ L["Changing LootMethod to Master Looting"] = "Разделение добычи 
 --Translation missing 
 -- L["chat version String"] = ""
 --Translation missing 
--- L["chat_commands"] = ""
---Translation missing 
 -- L["chat_commands_add"] = ""
 --Translation missing 
 -- L["chat_commands_award"] = ""
@@ -295,8 +293,8 @@ L["current_council_desc"] = "Нажмите, чтобы удалить опре�
 -- L["Data Received"] = ""
 --Translation missing 
 -- L["Date"] = ""
-L["days and x months"] = "%s и %d месяцев."
-L["days, x months, y years"] = "%s, %d месяцев и %d лет."
+L["days and x months"] = "%s и %d месяцев"
+L["days, x months, y years"] = "%s, %d месяцев и %d лет"
 --Translation missing 
 -- L["Delete Skin"] = ""
 --Translation missing 
@@ -655,6 +653,8 @@ L["Self Vote"] = "Своё голосование"
 -- L["Skins"] = ""
 --Translation missing 
 -- L["skins_description"] = ""
+--Translation missing 
+-- L["Socket"] = ""
 L["Something went wrong :'("] = "Что-то пошло не так :'("
 --Translation missing 
 -- L["Something went wrong during syncing, please try again."] = ""
@@ -802,7 +802,7 @@ L["winners"] = "выигравшие"
 L["x days"] = "%d дней"
 --Translation missing 
 -- L["x out of x have voted"] = ""
-L["You are not allowed to see the Voting Frame right now."] = "Вы не можете видеть окно голования прямо сейчас."
+L["You are not allowed to see the Voting Frame right now."] = "Вы не можете видеть окно голосования прямо сейчас."
 L["You can only auto award items with a quality lower than 'quality' to yourself due to Blizaard restrictions"] = "Вы можете автоматически передавать себе только те предметы, качество которых ниже, чем %s , из-за ограничений, установленных разработчиками игры."
 L["You cannot initiate a test while in a group without being the MasterLooter."] = "Вы не можете запустить тестовый режим в группе, не являясь ответственным за распределение добычи."
 L["You cannot start an empty session."] = "Вы не можете начать \"пустую\" сессию распределения добычи."

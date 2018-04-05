@@ -42,16 +42,15 @@ L["alt_click_looting_desc"] = "Aktiviert das Plündern mit Alt-Klick, das heißt
 L["Alternatively, flag the loot as award later."] = "Alternativ, Markiere die Beute zur späteren Vergabe."
 L["Always use RCLootCouncil when I'm Master Looter"] = "Benutze immer RCLootCouncil, wenn ich Plündermeister bin"
 L["Always use when leader"] = "Immer benutzen, wenn ich Anführer bin"
---Translation missing 
--- L["always_show_tooltip_howto"] = ""
+L["always_show_tooltip_howto"] = "Tooltip durch Doppelklick ein-/ausschalten"
 L["Announce Awards"] = "Vergaben ankündigen"
 L["Announce Considerations"] = "Betrachtungen ankündigen"
 L["announce_&i_desc"] = "|cfffcd400 &i|r: Link zum Gegenstand. "
 L["announce_&l_desc"] = "|cfffcd400 &l|r: Gegenstandsstufe. "
-L["announce_&n_desc"] = "|cfffcd400 &n|r: Beim Erhalt rollen. "
-L["announce_&p_desc"] = "|cfffcd400 &p|r: Spieler, der den Loot bekommen hat. "
+L["announce_&n_desc"] = "|cfffcd400 &n|r: Beim Erhalt würfeln. "
+L["announce_&p_desc"] = "|cfffcd400 &p|r: Name des Spielers, der die Beute bekommen hat. "
 L["announce_&r_desc"] = "|cfffcd400 &r|r: Begründung."
-L["announce_&s_desc"] = "|cfffcd400 &s|r: Session ID."
+L["announce_&s_desc"] = "|cfffcd400 &s|r: Sitzungs-ID."
 L["announce_&t_desc"] = "|cfffcd400 &t|r: Gegenstandstyp."
 L["announce_awards_desc"] = "Aktiviert die Ankündigung von Vergaben im Chat."
 L["announce_awards_desc2"] = [=[Wähle, in welchen Kanal/Kanälen du ankündigen willst, zusammen mit dem Text.
@@ -80,8 +79,7 @@ L["Auto extracted from whisper"] = "Aus einer Flüsternachricht automatisch extr
 L["Auto Open"] = "Automatisch öffnen"
 L["Auto Pass"] = "Automatisches Passen"
 L["Auto pass BoE"] = "Auf BoE automatisch passen"
---Translation missing 
--- L["Auto Pass Trinkets"] = ""
+L["Auto Pass Trinkets"] = "Auf Schmuckstücke automatisch passen"
 L["Auto Start"] = "Automatisch starten"
 L["auto_award_desc"] = "Aktiviert die automatische Vergabe."
 L["auto_award_to_desc"] = "Der Spieler, dem automatisch Gegenstände gegeben werden. Eine Auswahlliste mit Schlachtzugsmitgliedern wird angezeigt, wenn du in einem Schlachtzug bist."
@@ -91,8 +89,7 @@ L["auto_loot_desc"] = "Aktiviert automatisches Plündern für alle anlegbaren Ge
 L["auto_open_desc"] = "Aktivieren, um das Abstimmungsfenster automatisch zu öffnen, falls es verfügbar ist. Das Abstimmungsfenster kann anderenfalls mit \"/rc open\" geöffnet werden. Hinweis: Dies erfordert die Erlaubnis des Plündermeisters."
 L["auto_pass_boe_desc"] = "Deaktivieren, um niemals auf beim Anlegen gebundene Gegenstände automatisch zu passen."
 L["auto_pass_desc"] = "Aktivieren, um automatisch auf Gegenstände zu passen, die deine Klasse nicht benutzen kann."
---Translation missing 
--- L["auto_pass_trinket_desc"] = ""
+L["auto_pass_trinket_desc"] = "Auswählen, um automatisch auf Schmuckstücke zu passen, die laut Dungeonjournal nicht für Deine Klasse geeignet sind"
 L["auto_start_desc"] = "Aktiviert den automatischen Start, das heißt, dass eine Sitzung mit allen geeigneten Gegenständen gestartet wird. Deaktivieren, um eine editierbare Liste von Gegenständen vor dem Start einer Sitzung zu zeigen."
 L["Autoloot all BoE"] = "Auto-Loot BoE"
 L["Autoloot BoE"] = "BoE automatisch plündern"
@@ -139,37 +136,24 @@ L["Cannot autoaward:"] = "Konnte nicht automatische vergeben werden:"
 L["Cannot give 'item' to 'player' due to Blizzard limitations. Gave it to you for distribution."] = "%s kann nicht an %s vergeben werden, aufgrund von Einschränkungen seitens Blizzard. Es wurde dir zur Verteilung gegeben."
 L["Change Award"] = "Zuteilung ändern "
 L["Change Response"] = "Antwort ändern"
-L["Changing loot threshold to enable Auto Awarding"] = "Die Plündermethode verändert sich, um automatische Vergabe zu aktivieren"
+L["Changing loot threshold to enable Auto Awarding"] = "Die Plünderschwelle verändert sich, um automatische Vergabe zu aktivieren"
 L["Changing LootMethod to Master Looting"] = "Die Plündermethode wird auf Plündermeister geändert"
 L["channel_desc"] = "Der Kanal, in den die Nachricht gesendet wird."
 L["chat tVersion string"] = "|cFF87CEFARCLootCouncil |cFFFFFFFFVersion |cFFFFA500 %s - %s"
 L["chat version String"] = "|cFF87CEFARCLootCouncil |cFFFFFFFFVersion |cFFFFA500 %s"
-L["chat_commands"] = [=[
-- config       – Öffnet die Einstellungen.
-- council      – Öffnet das Rat-Interface.
-- history       –  Öffnet den Beuteverlauf (altern. 'h' oder 'his').
-- version      –  Öffnet den Versionsprüfer (altern. 'v' oder 'ver').
-- open         –  Öffnet das Abstimmungsfenster.
-- reset         –  Setzt die Fensterpositionen des Addons zurück.
-- test (#)      –  Simuliert eine Plündersitzung mit # Gegenständen, 1, wenn ausgelassen.
-- whisper     –  Zeigt Hilfe zu /whisper-Befehlen an.
-- add [item]  –  Fügt einen Gegenstand zum Sitzungsfenster hinzu.
-- award        –  Startet eine Sitzung mit Gegenständen, die in deinen Inventar geplündert wurden.
-- winners      –  Zeigt die Gewinner von vergebenen Gegenständen, die in deinen Inventar geplündert wurden.
+L["chat_commands_add"] = "Gegenstand zur Sitzung hinzufügen"
+L["chat_commands_award"] = [=[Sitzung mit geplünderten Gegenständen aus dem Inventar starten
 ]=]
-L["chat_commands_add"] = "- add [item] - Gegenstand zur Session hinzufügen"
-L["chat_commands_award"] = [=[- award - Session mit gelooteten Gegenständen aus dem Inventar starten
-]=]
-L["chat_commands_config"] = "- config - Optionsmenü öffnen"
-L["chat_commands_council"] = "- council - Konzilmenü öffnen"
-L["chat_commands_history"] = "- history - Vergabeverlauf öffnen (alt. 'h' oder 'his')"
-L["chat_commands_open"] = "- open - Das Abstimmungsmenü öffnen"
-L["chat_commands_reset"] = "- reset - Die Position des Addonfensters zurücksetzen"
-L["chat_commands_sync"] = "- sync - Das Synchronisationsfenster öffnen"
-L["chat_commands_test"] = "- test (#) - Simuliere eine Vergabesitzung mit # Gegenständen, 1 zum Auslassen "
-L["chat_commands_version"] = "- version - Den Versionscheck öffnen (alt. 'v' oder 'ver')"
-L["chat_commands_whisper"] = "- whisper - Bietet Unterstützung für Flüsterkommandos"
-L["chat_commands_winners"] = "- winners - Zeigt die Gewinner von zugeteilten Gegenständen an, die sich in Deinem Inventar befinden"
+L["chat_commands_config"] = "Optionsmenü öffnen"
+L["chat_commands_council"] = "Konzilmenü öffnen"
+L["chat_commands_history"] = "Vergabeverlauf öffnen (alt. 'h' oder 'his')"
+L["chat_commands_open"] = "Das Abstimmungsfenster öffnen"
+L["chat_commands_reset"] = "Die Position des Addonfensters zurücksetzen"
+L["chat_commands_sync"] = "Das Synchronisationsfenster öffnen"
+L["chat_commands_test"] = "Simuliere eine Vergabesitzung mit # Gegenständen, 1 zum Auslassen "
+L["chat_commands_version"] = "Den Versionscheck öffnen (alt. 'v' oder 'ver')"
+L["chat_commands_whisper"] = "Bietet Unterstützung für Flüsterkommandos"
+L["chat_commands_winners"] = "Zeigt die Gewinner von zugeteilten Gegenständen an, die sich in Deinem Inventar befinden"
 L["Check this to loot the items and distribute them later."] = "Aktiviere dies, um die Gegenstände zu plündern und sie später zu verteilen."
 L["Check to append the realmname of a player from another realm"] = "Hake diese Option an, damit der Realmname eines Spielers hinzugefügt wird, falls dieser Spieler auf einem anderen Realm spielt."
 L["Check to have all frames minimize when entering combat"] = "Aktivieren, um alle Fenster bei Kampfbeitritt zu minimieren"
@@ -248,11 +232,11 @@ L["ignore_options_desc"] = "Steuere, welche Gegenstände RCLootCouncil ignoriere
 L["import_desc"] = "Daten hier einfügen. Es werden nur die ersten 2500 Zeichen angezeigt, damit das Spiel stabil bleibt."
 L["Item"] = "Gegenstand"
 L["'Item' is added to the award later list."] = "%s wurde der \"Später vergeben\"-Liste hinzugefügt."
-L["Item quality is below the loot threshold"] = "Die Gegenstandsqualität liegt unterhalb der Looteinstellung"
+L["Item quality is below the loot threshold"] = "Die Gegenstandsqualität liegt unterhalb der Plünderschwelle"
 L["Item received and added from 'player'"] = "Gegenstand erhalten und von %s hinzugefügt."
 L["Item was awarded to"] = "Gegenstand wurde vergeben an"
 L["Item(s) replaced:"] = "Ersetzte(r) Gegenstand/-ände:"
-L["item_in_bags_low_trade_time_remaining_reminder"] = "Die folgenden \"Gebunden beim Aufheben\"-Gegenstände in Deinem Inventar sind in Deiner \"Später vergeben\"-Liste und Du hast weniger als %s Zeit, um sie noch zu handeln. Um diese Erinnerung nicht wieder anzeigen zu lassen, gib den Gegenstand ab, nutze '/rc remove [index]' um diesen Gegenstand von der Liste zu entfernen, '/rc clear' um die \"Später vergeben\"-Liste zu leeren oder ziehe den Gegenstand an, damit er nicht mehr gehandelt werden kann."
+L["item_in_bags_low_trade_time_remaining_reminder"] = "Die folgenden beim Aufheben gebundenen Gegenstände in Deinem Inventar sind in Deiner \"Später vergeben\"-Liste und Du hast weniger als %s Zeit, um sie noch zu handeln. Um diese Erinnerung nicht wieder anzeigen zu lassen, gib den Gegenstand ab, nutze '/rc remove [index]' um diesen Gegenstand von der Liste zu entfernen, '/rc clear' um die \"Später vergeben\"-Liste zu leeren oder ziehe den Gegenstand an, damit er nicht mehr gehandelt werden kann."
 L["Items stored in the loot master's bag for award later cannot be awarded later."] = "Gegenstände aus der \"Später vergeben\"-Liste im Inventar des Plündermeisters können nicht später vergeben werden."
 L["Items under consideration:"] = "Gegenstände unter Betrachtung:"
 L["Latest item(s) won"] = "Kürzliche gewonne Gegenstände"
@@ -331,7 +315,7 @@ L["'player' can't receive 'type'"] = "%s kann %s nicht empfangen – Version sti
 L["'player' declined your sync request"] = "%s hat deine Synchronisierungsanfrage abgelehnt"
 L["'player' has asked you to reroll"] = "%s bittet dich erneut zu würfeln"
 L["'player' has ended the session"] = "%s hat die Sitzung beendet."
-L["'player' has rolled 'roll' for: 'item'"] = "%s hat %d für %s gerollt."
+L["'player' has rolled 'roll' for: 'item'"] = "%s hat %d für %s gewürfelt."
 L["'player' hasn't opened the sync window"] = "%s hat das Synchronisierungsfenster nicht geöffnet (/rc sync)"
 L["Player is not in the group"] = "Spieler ist nicht in der Gruppe."
 L["Player is not in this instance or his inventory is full"] = "Spieler ist nicht in der Instanz oder hat ein volles Inventar."
@@ -388,8 +372,8 @@ L["send_history_desc"] = "Sendet Daten an alle Schlachtzugsmitglieder, unabhäng
 L["Sending 'type' to 'player'..."] = "Sende %s an %s..."
 L["Sent whisper help to 'player'"] = "Sende Hilfe zur Flüsterfunktion an %s"
 L["session_error"] = "Etwas ist schief gelaufen – Bitte starte die Sitzung erneut"
-L["session_help_from_bag"] = "Nach der Session kannst Du '/rc winners' benutzen, um zu sehen, wem Du die Gegenstände geben solltest."
-L["session_help_not_direct"] = "Gegenstände dieser Session werden nicht direkt an die Empfänger verteilt, sie müssen gehandelt werden."
+L["session_help_from_bag"] = "Nach der Sitzung kannst Du '/rc winners' benutzen, um zu sehen, wem Du die Gegenstände geben solltest."
+L["session_help_not_direct"] = "Gegenstände dieser Sitzung werden nicht direkt an die Empfänger verteilt, sie müssen gehandelt werden."
 L["Set the text for button i's response."] = "Stelle den Text für Antwort des Buttons %d ein"
 L["Set the text on button 'number'"] = "Stelle die Beschriftung des Buttons %i ein."
 L["Set the whisper keys for button i."] = "Lege die Flüsterschlüssel für Button %d fest."
@@ -400,10 +384,11 @@ L["silent_auto_pass_desc"] = "Aktivieren, um Nachrichten aufgrund \"automatische
 L["Simple BBCode output."] = "Einfache BBCode-Ausgabe."
 L["Skins"] = "Optiken"
 L["skins_description"] = "Wähle eine der Standardoptiken aus oder erstelle deine eigene. Beachte, dass diese Optionen rein ästhetisch sind. Öffne den Versionsprüfer, um das Ergebnis sofort zu sehen (/rc version)."
+L["Socket"] = "Sockel"
 L["Something went wrong :'("] = "Irgendwas ist schief gelaufen :'("
 L["Something went wrong during syncing, please try again."] = "Während der Synchronisierung ist ein Fehler aufgetreten. Bitte versuche es erneut."
 L["Sort Items"] = "Gegenstände sortieren"
-L["sort_items_desc"] = "Sortiere Session nach Gegenstandstyp und -level."
+L["sort_items_desc"] = "Sortiere Session nach Gegenstandstyp und -stufe."
 L["Standard .csv output."] = "Standard"
 L["Status texts"] = "Statustexte"
 L["Store in bag and award later"] = "In der Tasche lagern und später verteilen"

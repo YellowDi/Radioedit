@@ -1,3 +1,32 @@
+### v2.7.7
+---
+###### Bugfixes
+* *Fixed a `ZERO` bug introduced with v2.7.6.*
+
+
+### v2.7.6
+---
+* **Tokens and trinkets**
+* Every eligible trinket and tier token is now registered according to specs and classes, and can be autopassed.
+* The Voting Frame now shows trinkets' intended receiver role and/or main stat.
+
+
+* **Item bonuses**
+* Item bonuses are now displayed in the Voting-, Loot- and Session frame.
+* The bonuses registered are Sockets, Leech, Avoidance, Speed and Indestructible.
+
+
+###### Bugfixes
+* *No longer asks for usage in pvp instances.*
+* *Fixed an error with syncing in some locales (#318).*
+* *Item names in the loot history are now sorted correctly.*
+* *Changing roles mid raid wouldn't always be registered properly.*
+
+
+###### Dev
+* `:CustomChatCmd()` is now deprecated, use `:ModuleChatCmd()` instead.
+
+
 ### v2.7.5
 ---
 * It's now (again) possible to see the voting frame while not in the instance.
@@ -75,6 +104,7 @@ Note: This version partially breaks backwards compatibility. All council members
    * *The only exception to this is in LFG groups.*
    * This also requires everyone in the group to use v2.7 or newer.
 * Do note it's still not possible to automatically give out items without using Master Loot due to WoW restrictions.
+
 
 * **Announcements**
 * Added a few more keyword replacements for announcement options.

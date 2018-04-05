@@ -251,8 +251,6 @@ if not L then return end
 --Translation missing 
 -- L["chat version String"] = ""
 --Translation missing 
--- L["chat_commands"] = ""
---Translation missing 
 -- L["chat_commands_add"] = ""
 --Translation missing 
 -- L["chat_commands_award"] = ""
@@ -714,6 +712,8 @@ if not L then return end
 -- L["Skins"] = ""
 --Translation missing 
 -- L["skins_description"] = ""
+--Translation missing 
+-- L["Socket"] = ""
 --Translation missing 
 -- L["Something went wrong :'("] = ""
 --Translation missing 

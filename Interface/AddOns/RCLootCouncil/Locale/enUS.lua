@@ -135,32 +135,18 @@ L["channel_desc"] = "Select a channel to announce awards to."
 L["channel_desc"] = "The channel to send the message to."
 L["chat tVersion string"] = "|cFF87CEFARCLootCouncil |cFFFFFFFFversion |cFFFFA500 %s - %s"
 L["chat version String"] = "|cFF87CEFARCLootCouncil |cFFFFFFFFversion |cFFFFA500 %s"
-L["chat_commands"] = [=[
-- config    - Open the options interface
-- council   - Open the council interface
-- history   - Open the Loot History (alt. 'h' or 'his')
-- version   - Open the Version Checker (alt. 'v' or 'ver')
-- open      - Open the voting frame
-- reset     - Resets the addon's frames' positions
-- test (#)  - Emulate a loot session with # items, 1 if omitted
-- whisper   - Displays help to whisper commands
-- add [item]- Add an item to the session frame
-- award     - Start a session with items looted to your inventory
-- winners   - Display the winners of awarded items looted to your inventory
-- sync      - Open the synchronizer view
-]=]
-L["chat_commands_config"]  = "- config    - Open the options interface"
-L["chat_commands_council"] = "- council   - Open the council interface"
-L["chat_commands_history"] = "- history   - Open the Loot History (alt. 'h' or 'his')"
-L["chat_commands_version"] = "- version   - Open the Version Checker (alt. 'v' or 'ver')"
-L["chat_commands_open"]    = "- open      - Open the voting frame"
-L["chat_commands_reset"]   = "- reset     - Resets the addon's frames' positions"
-L["chat_commands_test"]    = "- test (#)  - Emulate a loot session with # items, 1 if omitted"
-L["chat_commands_whisper"] = "- whisper   - Displays help to whisper commands"
-L["chat_commands_add"]     = "- add [item]- Add an item to the session frame"
-L["chat_commands_award"]   = "- award     - Start a session with items looted to your inventory"
-L["chat_commands_winners"] = "- winners   - Display the winners of awarded items looted to your inventory"
-L["chat_commands_sync"]    = "- sync      - Open the synchronizer view"
+L["chat_commands_config"]  = "Open the options interface"
+L["chat_commands_council"] = "Open the council interface"
+L["chat_commands_history"] = "Open the Loot History (alt. 'h' or 'his')"
+L["chat_commands_version"] = "Open the Version Checker (alt. 'v' or 'ver')"
+L["chat_commands_open"]    = "Open the voting frame"
+L["chat_commands_reset"]   = "Resets the addon's frames' positions"
+L["chat_commands_test"]    = "Emulate a loot session with # items, 1 if omitted"
+L["chat_commands_whisper"] = "Displays help to whisper commands"
+L["chat_commands_add"]     = "Add an item to the session frame"
+L["chat_commands_award"]   = "Start a session with items looted to your inventory"
+L["chat_commands_winners"] = "Display the winners of awarded items looted to your inventory"
+L["chat_commands_sync"]    = "Open the synchronizer view"
 L["Check this to loot the items and distribute them later."] = true
 L["Check to append the realmname of a player from another realm"] = true
 L["Check to have all frames minimize when entering combat"] = true
@@ -382,6 +368,7 @@ L["Skins"] = true
 L["skins_description"] = "Select one of the default skins or create your own. Note this is purely aesthetic. Open the version checker to see the results right away ('/rc version')."
 L["Something went wrong :'("] = true
 L["Something went wrong during syncing, please try again."] = true
+L["Socket"] = true
 L["Sort Items"] = true
 L["sort_items_desc"] = "Sort sessions by item type and item level."
 L["Standard .csv output."] = true

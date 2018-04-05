@@ -165,17 +165,6 @@ L["Changing LootMethod to Master Looting"] = "Le système de butin a été chang
 L["channel_desc"] = "Le canal dans lequel sera envoyé le message."
 L["chat tVersion string"] = "|cFF87CEFARCLootCouncil |cFFFFFFFFversion |cFFFFA500 %s - %s"
 L["chat version String"] = "|cFF87CEFARCLootCouncil |cFFFFFFFFversion |cFFFFA500 %s"
-L["chat_commands"] = [=[- config    - Ouvre les paramètres de l'interface
-- council   - Ouvre l'interface du conseil
-- history   - Ouvre l'historique du butin (autrement 'h' ou 'his')
-- version   - Ouvre le vérificateur de version (autrement 'v' ou 'ver')
-- open      - Ouvre la fenêtre de vote
-- reset     - Réinitialise la position des fenêtres de l'add-on
-- test (#)  - Simule une session de butin comportant # objets, 1 si le nombre n'est pas spécifié
-- whisper   - Affiche une aide pour les commandes de chuchotement
-- add [item]- Ajoute un objet à la fenêtre de la session
-- award     - Lance une session avec les objets récupérés se trouvant dans votre inventaire
-- winners   - Affiche les vainqueurs à qui ont été attribués les objets récupérés se trouvant dans votre inventaire]=]
 --Translation missing 
 -- L["chat_commands_add"] = ""
 --Translation missing 
@@ -488,6 +477,8 @@ L["silent_auto_pass_desc"] = "Cocher pour masquer les messages liés à la fonct
 L["Simple BBCode output."] = "Exporter en BBCode simple."
 L["Skins"] = "Apparences"
 L["skins_description"] = "Sélectionnez une des apparences par défaut ou créez en une vous-même. Ces options sont purement esthétiques. Ouvrez le vérificateur de version pour immédiatement voir les changements (\"/rc version\")."
+--Translation missing 
+-- L["Socket"] = ""
 L["Something went wrong :'("] = "Une erreur s'est produite :'("
 --Translation missing 
 -- L["Something went wrong during syncing, please try again."] = ""

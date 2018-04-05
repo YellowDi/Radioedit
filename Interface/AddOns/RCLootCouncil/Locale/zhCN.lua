@@ -40,8 +40,7 @@ L["alt_click_looting_desc"] = "启用Alt+左键分配。使用Alt+左键点击�
 L["Alternatively, flag the loot as award later."] = "另外，标记该物品为稍后分配。"
 L["Always use RCLootCouncil when I'm Master Looter"] = "当拥有分配权时，总是使用RCLootCouncil"
 L["Always use when leader"] = "当为队长时，总是使用"
---Translation missing 
--- L["always_show_tooltip_howto"] = ""
+L["always_show_tooltip_howto"] = "双击切换是否总显示tooltip"
 L["Announce Awards"] = "通告分配"
 L["Announce Considerations"] = "通告考虑的物品"
 L["announce_&i_desc"] = "|cfffcd400 &i|r: 物品链接。"
@@ -79,8 +78,7 @@ L["Auto extracted from whisper"] = "自动从密语中提取"
 L["Auto Open"] = "自动打开"
 L["Auto Pass"] = "自动放弃"
 L["Auto pass BoE"] = "自动放弃装绑"
---Translation missing 
--- L["Auto Pass Trinkets"] = ""
+L["Auto Pass Trinkets"] = "自动放弃饰品"
 L["Auto Start"] = "自动开始"
 L["auto_award_desc"] = "启用自动分配。"
 L["auto_award_to_desc"] = "接受自动分配物品的玩家。当在团队中时，会有一个可选择团队成员的列表。"
@@ -90,8 +88,7 @@ L["auto_loot_desc"] = "开启自动拾取所有可装备的物品。"
 L["auto_open_desc"] = "勾选以自动打开投票界面。非勾选状态下，也可通过输入 /rc open 手动开启。注意：需要战利品分配者的许可。"
 L["auto_pass_boe_desc"] = "取消勾选以禁用自动放弃装绑。"
 L["auto_pass_desc"] = "勾选以自动放弃当前职业无法使用的物品。"
---Translation missing 
--- L["auto_pass_trinket_desc"] = ""
+L["auto_pass_trinket_desc"] = "选中以自动放弃地下城手册中不属于你的职业的饰品"
 L["auto_start_desc"] = "启用自动开始，开始分配所有符合条件的物品。取消勾选则会在开始分配物品前显示选择要分配物品的列表。"
 L["Autoloot all BoE"] = "自动拾取所有装绑"
 L["Autoloot BoE"] = "自动拾取装绑"
@@ -142,30 +139,18 @@ L["Changing LootMethod to Master Looting"] = "拾取方式更改为队长分配"
 L["channel_desc"] = "要发送消息的频道。"
 L["chat tVersion string"] = "|cFF87CEFARCLootCouncil |cFFFFFFFF版本 |cFFFFA500 %s - %s"
 L["chat version String"] = "|cFF87CEFARCLootCouncil |cFFFFFFFF版本 |cFFFFA500 %s"
-L["chat_commands"] = [=[- config    - 开启配置界面
-- council   - 开启议会界面
-- history   - 开启拾取历史 (也可以用 'h' 或 'his')
-- version   - 检查更新 (也可以用 'v' 或 'ver')
-- open      - 开启投票界面
-- reset     - 重置界面位置
-- test (#)  - 模拟分配 # 个物品，缺省为 1
-- whisper   - 显示密语命令帮助
-- add [物品]- 添加一件物品到分配界面
-- award     - 开始分配你之前稍后分配的物品
-- winners   - 显示稍后分配物品的获胜者
-- sync      - 显示设置同步器]=]
-L["chat_commands_add"] = "- add [item]- 将一个物品加入分配"
-L["chat_commands_award"] = "- award     - 开始分配你之前稍后分配的物品。"
-L["chat_commands_config"] = "- config    - 打开设置界面"
-L["chat_commands_council"] = "- council   - 打开议会界面"
-L["chat_commands_history"] = "- history   - 打开历史界面(简称： 'h' 或者 'his')"
-L["chat_commands_open"] = "- open      - 打开投票界面"
-L["chat_commands_reset"] = "- reset     - 重置界面位置"
-L["chat_commands_sync"] = "- sync      - 打开设置同步器"
-L["chat_commands_test"] = "- test (#)  - 模拟有#个物品的分配进程。如果省略默认为一个物品"
-L["chat_commands_version"] = "- version   - 打开版本检查器 (简称： 'v' 或者 'ver')"
-L["chat_commands_whisper"] = "- whisper   - 显示密语帮助"
-L["chat_commands_winners"] = "- winners   - 显示稍后分配的物品的获胜者。"
+L["chat_commands_add"] = "将一个物品加入分配"
+L["chat_commands_award"] = "开始分配你之前稍后分配的物品。"
+L["chat_commands_config"] = "打开设置界面"
+L["chat_commands_council"] = "打开议会界面"
+L["chat_commands_history"] = "打开历史界面(简称： 'h' 或者 'his')"
+L["chat_commands_open"] = "打开投票界面"
+L["chat_commands_reset"] = "重置界面位置"
+L["chat_commands_sync"] = "打开设置同步器"
+L["chat_commands_test"] = "模拟有#个物品的分配进程。如果省略默认为一个物品"
+L["chat_commands_version"] = "打开版本检查器 (简称： 'v' 或者 'ver')"
+L["chat_commands_whisper"] = "显示密语帮助"
+L["chat_commands_winners"] = "显示稍后分配的物品的获胜者。"
 L["Check this to loot the items and distribute them later."] = "勾选此项将拾取这些物品并稍后分配。"
 L["Check to append the realmname of a player from another realm"] = "勾选以显示来自其他服务器玩家的服务器名"
 L["Check to have all frames minimize when entering combat"] = "勾选此项将使所有窗口在进入战斗时最小化"
@@ -397,6 +382,8 @@ L["silent_auto_pass_desc"] = "勾选以隐藏自动放弃信息"
 L["Simple BBCode output."] = "简单BBCode导出。"
 L["Skins"] = "皮肤"
 L["skins_description"] = "选择一个默认皮肤或自己创建一个。注意这只有装饰效果。打开版本检查查看效果 ('/rc version')。"
+--Translation missing 
+-- L["Socket"] = ""
 L["Something went wrong :'("] = "出现了一些问题"
 L["Something went wrong during syncing, please try again."] = "同步出现错误，请重试。"
 L["Sort Items"] = "物品排序"

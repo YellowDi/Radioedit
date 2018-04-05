@@ -210,8 +210,6 @@ L["Autoloot BoE"] = "Saque automático para itens Vinculados ao Equipar"
 --Translation missing 
 -- L["chat version String"] = ""
 --Translation missing 
--- L["chat_commands"] = ""
---Translation missing 
 -- L["chat_commands_add"] = ""
 --Translation missing 
 -- L["chat_commands_award"] = ""
@@ -673,6 +671,8 @@ L["Autoloot BoE"] = "Saque automático para itens Vinculados ao Equipar"
 -- L["Skins"] = ""
 --Translation missing 
 -- L["skins_description"] = ""
+--Translation missing 
+-- L["Socket"] = ""
 --Translation missing 
 -- L["Something went wrong :'("] = ""
 --Translation missing 
