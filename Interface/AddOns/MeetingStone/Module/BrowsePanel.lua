@@ -1,20 +1,11 @@
-﻿
+
 BuildEnv(...)
 
 BrowsePanel = Addon:NewModule(CreateFrame('Frame'), 'BrowsePanel', 'AceEvent-3.0', 'AceTimer-3.0', 'AceSerializer-3.0', 'AceBucket-3.0')
 
-local filterOnOff = false 
-SlashCmdList["FilterSwitch"] = function(arg) 
-    filterOnOff = not filterOnOff 
-    print(filterOnOff and "Off" or "On") 
-end 
-_G.SLASH_FilterSwitch1 = "/fff"
-
 function BrowsePanel:OnInitialize()
     MainPanel:RegisterPanel(L['查找活动'], self, 5, 100)
 
-    self.activityHash = {}
-    self.activityList = {}
     self.bossFilter = {}
 
     local ActivityList = GUI:GetClass('DataGridView'):New(self) do
@@ -25,15 +16,12 @@ function BrowsePanel:OnInitialize()
         ActivityList:SetItemClass(Addon:GetClass('BrowseItem'))
         ActivityList:SetSelectMode('RADIO')
         ActivityList:SetScrollStep(9)
-        ActivityList:SetItemList(self.activityList)
+        ActivityList:SetItemList(LfgService:GetActivityList())
         ActivityList:SetSortHandler(function(activity)
             return activity:BaseSortHandler()
         end)
         ActivityList:RegisterFilter(function(activity, ...)
-            return activity:Match(...) and (filterOnOff or 
-    (RAID_PROGRESSION_LIST[activity:GetActivityID()] and activity:GetItemLevel() > 940 or 
-    not RAID_PROGRESSION_LIST[activity:GetActivityID()] and (activity:GetItemLevel() > 920 or activity:GetNumMembers() > 1) and 
-    not (activity:GetItemLevel() < 910 and activity:GetNumMembers() == 4)))
+            return activity:Match(...)
         end)
         ActivityList:InitHeader{
             {
@@ -125,6 +113,9 @@ function BrowsePanel:OnInitialize()
                 formatHandler = function(grid, activity)
                     grid:SetActivity(activity)
                 end,
+                sortHandler = function(activity)
+                    return activity:GetMaxMembers() - activity:GetNumMembers()
+                end
             },
             {
                 key = 'Level',
@@ -143,24 +134,15 @@ function BrowsePanel:OnInitialize()
                         local color = activity:IsUnusable() and GRAY_FONT_COLOR or activity:IsLevelValid() and GREEN_FONT_COLOR or RED_FONT_COLOR
                         return text, color.r, color.g, color.b
                     end
+                end,
+                sortHandler = function(activity)
+                    return 0xFFFF - activity:GetMinLevel()
                 end
             },
             {
                 key = 'ItemLeave',
                 text = L['要求'],
                 width = 60,
-				-- DONEY MOD begin 
-                sortHandler = function(activity) 
-                    if activity:IsArenaActivity() then 
-                        local pvpRating = activity:GetPvPRating() 
-                        return pvpRating 
-                    else 
-                        local itemLevel = activity:GetItemLevel() 
-                        return itemLevel 
-                    end 
-                end, 
-                -- DONEY MOD end 
-
                 textHandler = function(activity)
                     if activity:IsArenaActivity() then
                         local pvpRating = activity:GetPvPRating()
@@ -179,6 +161,9 @@ function BrowsePanel:OnInitialize()
                             return itemLevel, color.r, color.g, color.b
                         end
                     end
+                end,
+                sortHandler = function(activity)
+                    return 0xFFFF - activity:GetItemLevel()
                 end
             },
             {
@@ -214,6 +199,8 @@ function BrowsePanel:OnInitialize()
         end)
         ActivityList:SetCallback('OnSelectChanged', function(_, _, activity)
             self:UpdateSignUpButton(activity)
+
+
         end)
         ActivityList:SetCallback('OnRefresh', function(ActivityList)
             local shownCount = ActivityList:GetShownCount()
@@ -222,7 +209,7 @@ function BrowsePanel:OnInitialize()
             else
                 self.NoResultBlocker:SetPoint('TOP')
             end
-            self.ActivityTotals:SetFormattedText(L['活动总数：%d/%d'], ActivityList:GetItemCount(), #self.activityList)
+            self.ActivityTotals:SetFormattedText(L['活动总数：%d/%d'], ActivityList:GetItemCount(), LfgService:GetActivityCount())
         end)
         ActivityList:SetCallback('OnItemEnter', function(_, _, activity)
             MainPanel:OpenActivityTooltip(activity)
@@ -319,7 +306,13 @@ function BrowsePanel:OnInitialize()
     end
 
     local function RefreshFilter()
-        self.ActivityList:SetFilterText(self.SearchInput:GetText():lower(), self.bossFilter, Profile:GetSetting('spamWord'))
+        self.ActivityList:SetFilterText(
+            self.SearchInput:GetText():lower(),
+            self.bossFilter,
+            Profile:GetSetting('spamWord'),
+            Profile:GetSetting('spamLengthEnabled') and Profile:GetSetting('spamLength') or nil,
+            Profile:GetSetting('spamChar')
+        )
     end
 
     local ModeLabel = self:CreateFontString(nil, 'ARTWORK', 'GameFontHighlight') do
@@ -587,12 +580,24 @@ function BrowsePanel:OnInitialize()
         IconSummary:SetScript('OnLeave', GameTooltip_Hide)
     end
 
-    local SpamWord = GUI:GetClass('CheckBox'):New(self) do
-        SpamWord:SetPoint('BOTTOMRIGHT', MainPanel, -230, 5)
-        SpamWord:SetText(L['关键字过滤'])
-        SpamWord:SetScript('OnClick', function(SpamWord)
-            Profile:SetSetting('spamWord', not not SpamWord:GetChecked())
-            RefreshFilter()
+    -- local SpamWord = GUI:GetClass('CheckBox'):New(self) do
+    --     SpamWord:SetPoint('BOTTOMRIGHT', MainPanel, -230, 5)
+    --     SpamWord:SetText(L['关键字过滤'])
+    --     SpamWord:SetScript('OnClick', function(SpamWord)
+    --         Profile:SetSetting('spamWord', not not SpamWord:GetChecked())
+    --         RefreshFilter()
+    --     end)
+    -- end
+
+    local FilterButton = CreateFrame('Button', nil, self) do
+        FilterButton:SetNormalFontObject('GameFontNormalSmall')
+        FilterButton:SetHighlightFontObject('GameFontHighlightSmall')
+        FilterButton:SetSize(70, 22)
+        FilterButton:SetPoint('BOTTOMRIGHT', MainPanel, -140, 3)
+        FilterButton:SetText(L['过滤器'])
+        FilterButton:RegisterForClicks('anyUp')
+        FilterButton:SetScript('OnClick', function()
+            self:OnFilterButtonClicked()
         end)
     end
 
@@ -674,24 +679,23 @@ function BrowsePanel:OnInitialize()
     self.AdvFilterPanel = AdvFilterPanel
     self.BossFilter = BossFilter
     self.AdvButton = AdvButton
-    self.SpamWord = SpamWord
+    -- self.SpamWord = SpamWord
+    self.FilterButton = FilterButton
     self.SearchProfileDropdown = SearchProfileDropdown
     self.DeleteButton = DeleteButton
 
-    self.RefreshFilterHandler = RefreshFilter
-
     self:RegisterEvent('LFG_LIST_AVAILABILITY_UPDATE')
-    self:RegisterEvent('LFG_LIST_SEARCH_RESULTS_RECEIVED')
-    self:RegisterEvent('LFG_LIST_SEARCH_FAILED', 'LFG_LIST_SEARCH_RESULTS_RECEIVED')
 
-    self:RegisterBucketEvent('LFG_LIST_SEARCH_RESULT_UPDATED', 0.1, 'LFG_LIST_SEARCH_RESULT_UPDATED_BUCKET')
-    -- self:RegisterEvent('LFG_LIST_SEARCH_RESULT_UPDATED')
-    self:RegisterEvent('LFG_LIST_APPLICATION_STATUS_UPDATED', 'LFG_LIST_SEARCH_RESULT_UPDATED')
+    self:RegisterMessage('MEETINGSTONE_ACTIVITIES_RESULT_RECEIVED')
+    self:RegisterMessage('MEETINGSTONE_ACTIVITIES_RESULT_UPDATED')
+
     self:RegisterMessage('MEETINGSTONE_SEARCH_PROFILE_UPDATE')
 
     self:RegisterMessage('MEETINGSTONE_SETTING_CHANGED_packedPvp', 'LFG_LIST_AVAILABILITY_UPDATE')
 
-    self:RegisterMessage('MEETINGSTONE_SPAMWORD_STATUS_UPDATE', 'OnToggleSpamWord')
+    self:RegisterMessage('MEETINGSTONE_SETTING_CHANGED_spamWord', RefreshFilter)
+    self:RegisterMessage('MEETINGSTONE_SETTING_CHANGED_spamLengthEnabled', RefreshFilter)
+    self:RegisterMessage('MEETINGSTONE_SETTING_CHANGED_spamLength', RefreshFilter)
     self:RegisterMessage('MEETINGSTONE_SPAMWORD_UPDATE', RefreshFilter)
 
     self:RegisterMessage('MEETINGSTONE_OPEN')
@@ -730,15 +734,7 @@ function BrowsePanel:LFG_LIST_AVAILABILITY_UPDATE()
     -- self:Refresh()
 end
 
-function BrowsePanel:LFG_LIST_SEARCH_RESULT_UPDATED(_, id)
-    self:UpdateActivity(id)
-    self.ActivityList:Refresh()
-end
-
-function BrowsePanel:LFG_LIST_SEARCH_RESULT_UPDATED_BUCKET(results)
-    for id in ipairs(results) do
-        self:UpdateActivity(id)
-    end
+function BrowsePanel:MEETINGSTONE_ACTIVITIES_RESULT_UPDATED()
     self.ActivityList:Refresh()
 end
 
@@ -747,83 +743,12 @@ function BrowsePanel:MEETINGSTONE_SEARCH_PROFILE_UPDATE()
     self.SearchProfileDropdown:SetValue(nil)
 end
 
-function BrowsePanel:RemoveActivity(id)
-    tDeleteItem(self.activityList, self.activityHash[id])
-    self.activityHash[id] = nil
-end
-
-function BrowsePanel:UpdateActivity(id)
-    if not self.activityHash[id] then
-        self:CacheActivity(id)
-        self:SendMessage('MEETINGSTONE_ACTIVITIES_COUNT_UPDATED', #self.activityList)
-    else
-        self.activityHash[id]:Update(true)
-    end
-end
-
-function BrowsePanel:IterateActivities()
-    return pairs(self.activityList)
-end
-
-function BrowsePanel:CacheActivity(id)
-    local _id, activityId, title, comment = C_LFGList.GetSearchResultInfo(id)
-    if not _id then
-        return
-    elseif not activityId then
-        return
-    end
-
-    local activityItem = self.ActivityDropdown:GetItem()
-    local activity = Activity:New(id)
-
-    if not activity:Update() then
-        return
-    end
-
-    if activityItem then
-        -- if activityItem.activityId and not ACTIVITY_CUSTOM_DATA.A[activityItem.activityId] then
-        --     if activityItem.activityId ~= activity:GetActivityID() or activityItem.customId ~= activity:GetCustomID() then
-        --         return
-        --     end
-        -- end
-        if activity:IsSoloActivity() and activityItem.customId ~= activity:GetCustomID() then
-            return
-        end
-    end
-    if activity:HasInvalidContent() then
-        return
-    end
-    if not activity:IsValidCustomActivity() then
-        return
-    end
-
-    tinsert(self.activityList, activity)
-    self.activityHash[id] = activity
-end
-
-function BrowsePanel:LFG_LIST_SEARCH_RESULTS_RECEIVED(event)
+function BrowsePanel:MEETINGSTONE_ACTIVITIES_RESULT_RECEIVED(event, isFailed)
     self.lastReceived = time()
     self.SearchingBlocker:Hide()
 
-    wipe(self.activityList)
-    wipe(self.activityHash)
+    local resultCount = LfgService:GetActivityCount()
 
-    local applications = C_LFGList.GetApplications()
-
-    for _, id in ipairs(applications) do
-        self:CacheActivity(id)
-    end
-
-    local _, resultList = C_LFGList.GetSearchResults()
-    for _, id in ipairs(resultList) do
-        self:CacheActivity(id)
-    end
-
-    local resultCount = #self.activityList
-
-    self:SendMessage('MEETINGSTONE_ACTIVITIES_COUNT_UPDATED', resultCount)
-
-    local isFailed = event == 'LFG_LIST_SEARCH_FAILED'
     self.NoResultBlocker:SetShown(resultCount == 0)
     self.NoResultBlocker.Label:SetText(isFailed and [[|TInterface\DialogFrame\UI-Dialog-Icon-AlertNew:30|t  ]] .. LFG_LIST_SEARCH_FAILED or LFG_LIST_NO_RESULTS_FOUND)
     self.NoResultBlocker.Button:SetShown(not isFailed)
@@ -946,6 +871,38 @@ function BrowsePanel:OnRefreshTimer()
     self.RefreshButton:Enable()
 end
 
+function BrowsePanel:OnFilterButtonClicked()
+    GUI:ToggleMenu(self.FilterButton, {
+        {
+            text = L['关键字过滤'],
+            checkable = true,
+            isNotRadio = true,
+            keepShownOnClick = true,
+            checked = function()
+                return Profile:GetSetting('spamWord')
+            end,
+            func = function(_, _, _, checked)
+                Profile:SetSetting('spamWord', checked)
+            end,
+        },
+        {
+            text = L['活动说明字数过滤'],
+            checkable = true,
+            isNotRadio = true,
+            keepShownOnClick = true,
+            checked = function()
+                return Profile:GetSetting('spamLengthEnabled')
+            end,
+            func = function(_, _, _, checked)
+                Profile:SetSetting('spamLengthEnabled', checked)
+            end
+        },
+        {
+            text = CANCEL
+        }
+    })
+end
+
 function BrowsePanel:ToggleActivityMenu(anchor, activity)
     local usable, reason = self:CheckSignUpStatus(activity)
 
@@ -1047,13 +1004,6 @@ function BrowsePanel:UpdateModeDropdown(categoryId)
     self.ModeDropdown:SetMenuTable(ACTIVITY_MODE_MENUTABLES_WITHALL[categoryId])
     self.ModeDropdown:SetValue(nil)
     self.LootDropdown:SetValue(nil)
-end
-
-function BrowsePanel:OnToggleSpamWord(_, enable, onUser)
-    if onUser or self.SpamWord:GetChecked() ~= enable then
-        self.SpamWord:SetChecked(enable)
-        self.RefreshFilterHandler()
-    end
 end
 
 local function tooltipMore(tip, data)
