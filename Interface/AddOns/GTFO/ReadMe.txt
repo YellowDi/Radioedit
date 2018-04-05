@@ -1294,3 +1294,5 @@ Change Log:
 4.44.2
 * Added Legion spells for Antorus, The Burning Throne
 
+4.44.3
+* Added Legion spells for Antorus, The Burning Throne

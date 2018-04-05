@@ -2356,3 +2356,15 @@ GTFO.SpellID["250701"] = {
   tankSound = 0;
 };
 
+GTFO.SpellID["248321"] = {
+  --desc = "Conflagration (Imonar)";
+  applicationOnly = true;
+  sound = 3;
+};
+
+GTFO.SpellID["247932"] = {
+  --desc = "Shrapnel Blast (Imonar)";
+  applicationOnly = true;
+  sound = 3;
+};
+

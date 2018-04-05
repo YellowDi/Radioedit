@@ -1949,3 +1949,8 @@ GTFO.SpellID["248795"] = {
   sound = 1;
 };
 
+GTFO.SpellID["253020"] = {
+  --desc = "Storm of Darkness (Asara, Mother of Night)";
+  sound = 1;
+};
+
