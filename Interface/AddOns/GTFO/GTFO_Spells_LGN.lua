@@ -1954,3 +1954,16 @@ GTFO.SpellID["253020"] = {
   sound = 1;
 };
 
+GTFO.SpellID["253538"] = {
+  --desc = "Fulimating Pulse (Noura, Mother of Flames)";
+  soundFunction = function() -- Prevent Fulminating Burst
+    GTFO_AddEvent("Fulminating", 3);
+    return 0;
+  end
+};
+
+GTFO.SpellID["245916"] = {
+  --desc = "Molten Remnants (Aggramar)";
+  sound = 1;
+};
+
