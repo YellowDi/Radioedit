@@ -122,10 +122,15 @@ function NOP:ButtonReputation(tooltip,func) -- add reputation into tooltip
 end
 function NOP:ButtonOnEnter(button) -- show tooltip
   if self:inCombat() then return; end
-  if GetCVar("UberTooltips") == "1" then
-    GameTooltip_SetDefaultAnchor(GameTooltip,  UIParent)
+  if not _G.ElvUI then -- with ElvUI installed this is not neccessary
+    if GetCVar("UberTooltips") == "1" then
+      GameTooltip_SetDefaultAnchor(GameTooltip, UIParent)
+    else
+      GameTooltip:SetOwner(button, "ANCHOR_RIGHT")
+    end
   else
-    GameTooltip:SetOwner(button, "ANCHOR_RIGHT")
+    local gto = GameTooltip:GetOwner()
+    if not gto then GameTooltip_SetDefaultAnchor(GameTooltip, UIParent) end
   end
   if button.bagID ~= nil and button.slotID ~= nil then
     GameTooltip:SetBagItem(button.bagID,button.slotID)
@@ -199,7 +204,7 @@ end
 function NOP:ButtonSave() -- save button position after move
   if not self.BF then return end
   local point, relativeTo, relativePoint, xOfs, yOfs = self.BF:GetPoint()
-  NOP.DB.button = {point or "CENTER", relativeTo.GetName and relativeTo:GetName() or "UIParent", relativePoint or "CENTER", xOfs, yOfs}
+  NOP.DB.button = {point or "CENTER", relativeTo and relativeTo.GetName and relativeTo:GetName() or "UIParent", relativePoint or "CENTER", xOfs, yOfs}
 end
 function NOP:ButtonMove() -- move button from UI config
   if self:inCombat() then
@@ -209,7 +214,13 @@ function NOP:ButtonMove() -- move button from UI config
   self.timerButtonMove = nil
   self.BF:SetClampedToScreen(true)
   self.BF:ClearAllPoints()
-  self.BF:SetPoint(NOP.DB.button[1] or "CENTER", self.frameHiderB, NOP.DB.button[3] or "CENTER", NOP.DB.button[4] or 0, NOP.DB.button[5] or 0)
+  local frame = NOP.DB.button[2] or "none"
+  if _G[frame] then frame = _G[frame] else frame = nil end -- test if can find frame by name in saved LUA variables
+  if not frame then
+    if NOP.DB.HideInCombat then frame = self.frameHiderB else frame = UIParent end -- restore frame anchor via requested state
+  end
+  if not NOP.DB.HideInCombat and frame == self.frameHiderB then frame = UIParent end -- if hide in combat is disabled then can't be anchored to hider
+  self.BF:SetPoint(NOP.DB.button[1] or "CENTER", frame, NOP.DB.button[3] or "CENTER", NOP.DB.button[4] or 0, NOP.DB.button[5] or 0)
   self:ButtonSave()
 end
 function NOP:ButtonStore(button) -- save default properties

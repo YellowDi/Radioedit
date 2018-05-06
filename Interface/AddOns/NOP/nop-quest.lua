@@ -35,13 +35,19 @@ function NOP:QBAnchorMove() -- move anchor for quest bar
   if NOP.DB.qb_sticky then
     self.QB:SetAllPoints(P.BUTTON_FRAME)
   else
-    self.QB:SetPoint(NOP.DB.qb[1] or "CENTER", self.frameHiderQ, NOP.DB.qb[3] or "CENTER", NOP.DB.qb[4] or 0, NOP.DB.qb[5] or 0)
+    local frame = NOP.DB.qb[2] or "none"
+    if _G[frame] then frame = _G[frame] else frame = nil end -- test if can find frame by name in saved LUA variables
+    if not frame then
+      if NOP.DB.HideInCombat then frame = self.frameHiderQ else frame = UIParent end -- restore frame anchor via requested state
+    end
+    if not NOP.DB.HideInCombat and frame == self.frameHiderQ then frame = UIParent end -- if hide in combat is disabled then can't be anchored to hider
+    self.QB:SetPoint(NOP.DB.qb[1] or "CENTER", frame, NOP.DB.qb[3] or "CENTER", NOP.DB.qb[4] or 0, NOP.DB.qb[5] or 0)
   end
 end
 function NOP:QBAnchorSave() -- save Anchor pos after button position change
   if not self.QB then return end
   local point, relativeTo, relativePoint, xOfs, yOfs = self.QB:GetPoint()
-  NOP.DB.qb = {point or "CENTER", relativeTo.GetName and relativeTo:GetName() or "UIParent", relativePoint or "CENTER", xOfs or 0, yOfs or 0}
+  NOP.DB.qb = {point or "CENTER", relativeTo and relativeTo.GetName and relativeTo:GetName() or "UIParent", relativePoint or "CENTER", xOfs or 0, yOfs or 0}
 end
 function NOP:QBAnchorSize() -- resize quest bar anchor to current icon size
   if not self.QB then return end
@@ -105,10 +111,15 @@ function NOP:QBButton(i, p) -- create new quest bar button
 end
 function NOP:QBOnEnter(bt) -- build and show tooltip
   if self:inCombat() then return end
-  if GetCVar("UberTooltips") == "1" then
-    GameTooltip_SetDefaultAnchor(GameTooltip, bt)
+  if not _G.ElvUI then -- with ElvUI installed this is not neccessary
+    if GetCVar("UberTooltips") == "1" then
+      GameTooltip_SetDefaultAnchor(GameTooltip, bt)
+    else
+      GameTooltip:SetOwner(bt, "ANCHOR_RIGHT")
+    end
   else
-    GameTooltip:SetOwner(bt, "ANCHOR_RIGHT")
+    local gto = GameTooltip:GetOwner()
+    if not gto then GameTooltip_SetDefaultAnchor(GameTooltip,  UIParent) end
   end
   GameTooltip:SetHyperlink(bt:GetAttribute("item1")) -- fill up tooltip
   local text = NOP.LQI.questItemText[bt.itemID] -- fetch quest
