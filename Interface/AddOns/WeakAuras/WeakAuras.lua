@@ -1,21 +1,23 @@
+local internalVersion = 3;
+
 -- Lua APIs
 local tinsert, tconcat, tremove, tContains, wipe = table.insert, table.concat, table.remove, tContains, wipe
 local fmt, tostring, select, pairs, next, type = string.format, tostring, select, pairs, next, type
 local loadstring, assert, error = loadstring, assert, error
-local setmetatable, getmetatable = setmetatable, getmetatable
+local setmetatable = setmetatable
 local coroutine =  coroutine
 local _G = _G
 
 -- WoW APIs
-local GetTalentInfo, GetPvpTalentInfo, IsAddOnLoaded, InCombatLockdown = GetTalentInfo, GetPvpTalentInfo, IsAddOnLoaded, InCombatLockdown
-local LoadAddOn, setfenv, UnitName, GetRealmName, UnitGroupRolesAssigned, UnitRace, UnitFactionGroup, IsInRaid
-  = LoadAddOn, setfenv, UnitName, GetRealmName, UnitGroupRolesAssigned, UnitRace, UnitFactionGroup, IsInRaid
+local GetTalentInfo, IsAddOnLoaded, InCombatLockdown = GetTalentInfo, IsAddOnLoaded, InCombatLockdown
+local LoadAddOn, setfenv, UnitName, GetRealmName, UnitRace, UnitFactionGroup, IsInRaid
+  = LoadAddOn, setfenv, UnitName, GetRealmName, UnitRace, UnitFactionGroup, IsInRaid
 local UnitClass, UnitExists, UnitGUID, UnitAffectingCombat, GetInstanceInfo, IsInInstance
   = UnitClass, UnitExists, UnitGUID, UnitAffectingCombat, GetInstanceInfo, IsInInstance
-local GetNumGroupMembers, UnitIsUnit, GetRaidRosterInfo, GetSpecialization, GetSpecializationRole, UnitInVehicle, UnitHasVehicleUI, GetSpellInfo
-  = GetNumGroupMembers, UnitIsUnit, GetRaidRosterInfo, GetSpecialization, GetSpecializationRole, UnitInVehicle, UnitHasVehicleUI, GetSpellInfo
-local SendChatMessage, GetChannelName, UnitInBattleground, UnitInRaid, UnitInParty, PlaySoundFile, PlaySound, GetTime, GetSpellLink, GetItemInfo
-  = SendChatMessage, GetChannelName, UnitInBattleground, UnitInRaid, UnitInParty, PlaySoundFile, PlaySound, GetTime, GetSpellLink, GetItemInfo
+local UnitIsUnit, GetRaidRosterInfo, GetSpecialization, UnitInVehicle, UnitHasVehicleUI, GetSpellInfo
+  = UnitIsUnit, GetRaidRosterInfo, GetSpecialization, UnitInVehicle, UnitHasVehicleUI, GetSpellInfo
+local SendChatMessage, GetChannelName, UnitInBattleground, UnitInRaid, UnitInParty, GetTime, GetSpellLink, GetItemInfo
+  = SendChatMessage, GetChannelName, UnitInBattleground, UnitInRaid, UnitInParty, GetTime, GetSpellLink, GetItemInfo
 local CreateFrame, IsShiftKeyDown, GetScreenWidth, GetScreenHeight, GetCursorPosition, random, UpdateAddOnCPUUsage, GetFrameCPUUsage, debugprofilestop
   = CreateFrame, IsShiftKeyDown, GetScreenWidth, GetScreenHeight, GetCursorPosition, random, UpdateAddOnCPUUsage, GetFrameCPUUsage, debugprofilestop
 local debugstack, IsSpellKnown = debugstack, IsSpellKnown
@@ -23,6 +25,8 @@ local debugstack, IsSpellKnown = debugstack, IsSpellKnown
 local ADDON_NAME = "WeakAuras"
 local WeakAuras = WeakAuras
 local versionString = WeakAuras.versionString
+local prettyPrint = WeakAuras.prettyPrint
+
 WeakAurasTimers = setmetatable({}, {__tostring=function() return "WeakAuras" end})
 LibStub("AceTimer-3.0"):Embed(WeakAurasTimers)
 
@@ -34,30 +38,35 @@ function WeakAurasTimers:ScheduleTimerFixed(func, delay, ...)
 end
 
 local LDB = LibStub:GetLibrary("LibDataBroker-1.1")
-local HBD = LibStub("HereBeDragons-1.0")
+-- TODO 8.0 - Use for user data upgrades? local HBD = LibStub("HereBeDragons-2.0")
 
 local timer = WeakAurasTimers
 WeakAuras.timer = timer
 
 local L = WeakAuras.L
 
--- luacheck: globals NamePlateDriverFrame CombatText_AddMessage COMBAT_TEXT_SCROLL_FUNCTION
--- luacheck: globals Lerp Saturate KuiNameplatesPlayerAnchor KuiNameplatesCore ElvUIPlayerNamePlateAnchor GTFO
+-- luacheck: globals NamePlateDriverFrame CombatText_AddMessage COMBAT_TEXT_SCROLL_FUNCTION C_Map
+-- luacheck: globals Lerp Saturate KuiNameplatesPlayerAnchor KuiNameplatesCore ElvUIPlayerNamePlateAnchor GTFO C_SpecializationInfo
 
 local queueshowooc;
+
+function WeakAuras.InternalVersion()
+  return internalVersion;
+end
 
 function WeakAuras.LoadOptions(msg)
   if not(IsAddOnLoaded("WeakAurasOptions")) then
     if InCombatLockdown() then
       -- inform the user and queue ooc
-      print("|cff9900FF".."WeakAuras Options"..FONT_COLOR_CODE_CLOSE.." will finish loading after combat.")
+      prettyPrint(L["Options will finish loading after combat ends."])
       queueshowooc = msg or "";
       WeakAuras.frames["Addon Initialization Handler"]:RegisterEvent("PLAYER_REGEN_ENABLED")
       return false;
     else
       local loaded, reason = LoadAddOn("WeakAurasOptions");
       if not(loaded) then
-        print("|cff9900FF".."WeakAuras Options"..FONT_COLOR_CODE_CLOSE.." could not be loaded: "..RED_FONT_COLOR_CODE.._G["ADDON_"..reason]);
+        reason = string.lower("|cffff2020" .. _G["ADDON_" .. reason] .. "|r.")
+        print(WeakAuras.printPrefix .. "Options could not be loaded, the addon is " .. reason);
         return false;
       end
     end
@@ -73,8 +82,26 @@ end
 
 SLASH_WEAKAURAS1, SLASH_WEAKAURAS2 = "/weakauras", "/wa";
 function SlashCmdList.WEAKAURAS(msg)
+  if (msg) then
+    if (msg == "pstart") then
+      WeakAuras.StartProfile();
+      return;
+    elseif (msg == "pstop") then
+      WeakAuras.StopProfile();
+      return;
+    elseif(msg == "pprint") then
+      WeakAuras.PrintProfile();
+      return;
+    end
+  end
   WeakAuras.OpenOptions(msg);
 end
+
+BINDING_HEADER_WEAKAURAS = ADDON_NAME
+BINDING_NAME_WEAKAURASTOGGLE = L["Toggle Options Window"]
+BINDING_NAME_WEAKAURASSTARTPROFILING = L["Start Profiling"]
+BINDING_NAME_WEAKAURASSTOPPROFILING = L["Stop Profiling"]
+BINDING_NAME_WEAKAURASPRINTPROFILING = L["Print Profiling Results"]
 
 -- An alias for WeakAurasSaved, the SavedVariables
 -- Noteable properties:
@@ -410,7 +437,7 @@ function WeakAuras.ActivateAuraEnvironment(id, cloneId, state)
         local func = WeakAuras.customActionsFunctions[id]["init"];
         if func then
           current_aura_env.id = id;
-          func();
+          xpcall(func, geterrorhandler());
         end
       end
     end
@@ -431,6 +458,8 @@ local exec_env = setmetatable({}, { __index =
       return forbidden
     elseif overrideFunctions[k] then
       return overrideFunctions[k]
+    elseif WeakAuras.helperFunctions[k] then
+      return WeakAuras.helperFunctions[k]
     else
       return _G[k]
     end
@@ -767,7 +796,8 @@ local function GetBaseProperty(data, property, start)
     return GetBaseProperty(data[string.sub(property, start, next - 1)], property, next + 1);
   end
 
-  return data[string.sub(property, start)]
+  local key = string.sub(property, start);
+  return data[key] or data[tonumber(key)];
 end
 
 local function CreateDeactivateCondition(ret, condition, conditionNumber, data, properties, usedProperties, debug)
@@ -996,11 +1026,10 @@ WeakAuras.talent_types_specific = {}
 WeakAuras.pvp_talent_types_specific = {}
 function WeakAuras.CreateTalentCache()
   local _, player_class = UnitClass("player")
+
   WeakAuras.talent_types_specific[player_class] = WeakAuras.talent_types_specific[player_class] or {};
-  WeakAuras.pvp_talent_types_specific[player_class] = WeakAuras.pvp_talent_types_specific[player_class] or {};
   local spec = GetSpecialization()
   WeakAuras.talent_types_specific[player_class][spec] = WeakAuras.talent_types_specific[player_class][spec] or {};
-  WeakAuras.pvp_talent_types_specific[player_class][spec] = WeakAuras.pvp_talent_types_specific[player_class][spec] or {};
 
   for tier = 1, MAX_TALENT_TIERS do
     for column = 1, NUM_TALENT_COLUMNS do
@@ -1013,15 +1042,38 @@ function WeakAuras.CreateTalentCache()
       end
     end
   end
+end
 
-  for tier = 1, MAX_PVP_TALENT_TIERS do
-    for column = 1, MAX_PVP_TALENT_COLUMNS do
-      local _, talentName, talentIcon = GetPvpTalentInfo(tier, column, 1);
-      local talentId = (tier-1)*3+column
-      if (talentName and talentIcon) then
-        WeakAuras.pvp_talent_types_specific[player_class][spec][talentId] = "|T"..talentIcon..":0|t "..talentName
-      end
+local pvpTalentsInitialized = false;
+function WeakAuras.CreatePvPTalentCache()
+  if (pvpTalentsInitialized) then return end;
+  local _, player_class = UnitClass("player")
+  local spec = GetSpecialization()
+
+  WeakAuras.pvp_talent_types_specific[player_class] = WeakAuras.pvp_talent_types_specific[player_class] or {};
+  WeakAuras.pvp_talent_types_specific[player_class][spec] = WeakAuras.pvp_talent_types_specific[player_class][spec] or {};
+
+  local function formatTalent(talentId)
+    local _, name, icon = GetPvpTalentInfoByID(talentId);
+    return "|T"..icon..":0|t "..name
+  end
+
+  local slotInfo = C_SpecializationInfo.GetPvpTalentSlotInfo(2);
+  if (slotInfo) then
+
+    WeakAuras.pvp_talent_types_specific[player_class][spec] = {
+      formatTalent(3589),
+      formatTalent(3588),
+      formatTalent(3587),
+      nil
+    };
+
+    local pvpSpecTalents = slotInfo.availableTalentIDs;
+    for i, talentId in ipairs(pvpSpecTalents) do
+      WeakAuras.pvp_talent_types_specific[player_class][spec][i + 3] = formatTalent(talentId);
     end
+
+    pvpTalentsInitialized = true;
   end
 end
 
@@ -1036,6 +1088,7 @@ loadedFrame:RegisterEvent("PLAYER_ENTERING_WORLD");
 loadedFrame:RegisterEvent("LOADING_SCREEN_ENABLED");
 loadedFrame:RegisterEvent("LOADING_SCREEN_DISABLED");
 loadedFrame:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED");
+loadedFrame:RegisterEvent("PLAYER_PVP_TALENT_UPDATE");
 loadedFrame:SetScript("OnEvent", function(self, event, addon)
   if(event == "ADDON_LOADED") then
     if(addon == ADDON_NAME) then
@@ -1091,6 +1144,8 @@ loadedFrame:SetScript("OnEvent", function(self, event, addon)
     timer:ScheduleTimer(function() squelch_actions = false; end, db.login_squelch_time);      -- No sounds while loading
     WeakAuras.CreateTalentCache() -- It seems that GetTalentInfo might give info about whatever class was previously being played, until PLAYER_ENTERING_WORLD
     WeakAuras.UpdateCurrentInstanceType();
+  elseif(event == "PLAYER_PVP_TALENT_UPDATE") then
+    WeakAuras.CreatePvPTalentCache();
   elseif(event == "LOADING_SCREEN_ENABLED") then
     in_loading_screen = true;
   elseif(event == "LOADING_SCREEN_DISABLED") then
@@ -1190,6 +1245,7 @@ end
 
 -- encounter stuff
 function WeakAuras.StoreBossGUIDs()
+  WeakAuras.StartProfileSystem("boss_guids")
   if (WeakAuras.CurrentEncounter and WeakAuras.CurrentEncounter.boss_guids) then
     for i = 1, 5 do
       if (UnitExists ("boss" .. i)) then
@@ -1201,6 +1257,7 @@ function WeakAuras.StoreBossGUIDs()
     end
     db.CurrentEncounter = WeakAuras.CurrentEncounter
   end
+  WeakAuras.StopProfileSystem("boss_guids")
 end
 
 function WeakAuras.CheckForPreviousEncounter()
@@ -1305,30 +1362,12 @@ function WeakAuras.ScanForLoads(self, event, arg1)
     WeakAuras.DestroyEncounterTable()
   end
 
-  local player, realm, spec, role, zone = UnitName("player"), GetRealmName(), GetSpecialization(), UnitGroupRolesAssigned("player"), GetRealZoneText();
-  local zoneId = HBD:GetPlayerZone();
+  local player, realm, spec, zone = UnitName("player"), GetRealmName(), GetSpecialization(), GetRealZoneText();
+  local zoneId = C_Map.GetBestMapForUnit("player")
   local _, race = UnitRace("player")
   local faction = UnitFactionGroup("player")
 
-  if role == "NONE" then
-    if IsInRaid() then
-      for i=1,GetNumGroupMembers() do
-        if UnitIsUnit(WeakAuras.raidUnits[i],"player") then
-          local _, _, _, _, _, _, _, _, _, raid_role, _, spec_role = GetRaidRosterInfo(i)
-          if raid_role and raid_role == "MAINTANK" then role = "TANK" end
-          if role == "NONE" then
-            if spec and spec > 0 then
-              local tmprole = GetSpecializationRole(spec)
-              if type(tmprole) == "string" then
-                role = tmprole
-              end
-            end
-          end
-          break;
-        end
-      end
-    end
-  end
+  local role = select(5, GetSpecializationInfo(GetSpecialization()));
 
   local _, class = UnitClass("player");
   -- 0:none 1:5N 2:5H 3:10N 4:25N 5:10H 6:25H 7:LFR 8:5CH 9:40N
@@ -1393,6 +1432,9 @@ function WeakAuras.ScanForLoads(self, event, arg1)
       difficulty = "mythic"
     elseif difficultyIndex == 24 then
       size = "party"
+      difficulty = "timewalking"
+    elseif difficultyIndex == 33 then
+      size = "flexible"
       difficulty = "timewalking"
     end
   else
@@ -1509,7 +1551,11 @@ loadFrame:RegisterEvent("GROUP_LEFT");
 loadFrame:RegisterEvent("UPDATE_OVERRIDE_ACTIONBAR")
 
 function WeakAuras.RegisterLoadEvents()
-  loadFrame:SetScript("OnEvent", WeakAuras.ScanForLoads);
+  loadFrame:SetScript("OnEvent", function(...)
+    WeakAuras.StartProfileSystem("load");
+    WeakAuras.ScanForLoads(...)
+    WeakAuras.StopProfileSystem("load");
+  end);
 end
 
 function WeakAuras.ReloadAll()
@@ -1752,6 +1798,8 @@ function WeakAuras.Rename(data, newid)
   if (WeakAuras.mouseFrame) then
     WeakAuras.mouseFrame:rename(oldid, newid);
   end
+
+  WeakAuras.ProfileRenameAura(oldid, newid);
 end
 
 function WeakAuras.Convert(data, newType)
@@ -1973,262 +2021,285 @@ end
 
 -- Takes as input a table of display data and attempts to update it to be compatible with the current version
 function WeakAuras.Modernize(data)
-  -- Add trigger count
-  if not data.numTriggers then
-    data.numTriggers = 1 + (data.additional_triggers and #data.additional_triggers or 0)
+  if (not data.internalVersion) then
+    data.internalVersion = 1;
   end
 
-  local load = data.load;
-
-  if (not load.ingroup) then
-    load.ingroup = {};
-    if (load.use_ingroup == true) then
-      load.ingroup.single = nil;
-      load.ingroup.multi = {
-        ["group"] = true,
-        ["raid"] = true
-      };
-      load.use_ingroup = false;
-    elseif (load.use_ingroup == false) then
-        load.ingroup.single = "solo";
-      load.ingroup.multi = {};
-      load.use_ingroup = true;
+  -- Version 2 was introduced April 2018 in Legion
+  if (data.internalVersion < 2) then
+    -- Add trigger count
+    if not data.numTriggers then
+      data.numTriggers = 1 + (data.additional_triggers and #data.additional_triggers or 0)
     end
-  end
+
+    local load = data.load;
+
+    if (not load.ingroup) then
+      load.ingroup = {};
+      if (load.use_ingroup == true) then
+        load.ingroup.single = nil;
+        load.ingroup.multi = {
+          ["group"] = true,
+          ["raid"] = true
+        };
+        load.use_ingroup = false;
+      elseif (load.use_ingroup == false) then
+          load.ingroup.single = "solo";
+        load.ingroup.multi = {};
+        load.use_ingroup = true;
+      end
+    end
 
 
-  -- Convert load options into single/multi format
-  for index, prototype in pairs(WeakAuras.load_prototype.args) do
-    local protoname = prototype.name;
-    if(prototype.type == "multiselect") then
-      if(not load[protoname] or type(load[protoname]) ~= "table") then
-        local value = load[protoname];
-        load[protoname] = {};
-        if(value) then
-          load[protoname].single = value;
+    -- Convert load options into single/multi format
+    for index, prototype in pairs(WeakAuras.load_prototype.args) do
+      local protoname = prototype.name;
+      if(prototype.type == "multiselect") then
+        if(not load[protoname] or type(load[protoname]) ~= "table") then
+          local value = load[protoname];
+          load[protoname] = {};
+          if(value) then
+            load[protoname].single = value;
+          end
+        end
+        load[protoname].multi = load[protoname].multi or {};
+      elseif(load[protoname] and type(load[protoname]) == "table") then
+        load[protoname] = nil;
+      end
+    end
+
+    -- upgrade from singleselecting talents to multi select, see ticket 52
+    if (type(load.talent) == "number") then
+      local talent = load.talent;
+      load.talent = {};
+      load.talent.single = talent;
+      load.talent.multi = {}
+    end
+
+
+    --upgrade to support custom trigger combination logic
+    if (data.disjunctive == true) then
+      data.disjunctive = "any";
+    end
+    if(data.disjunctive == false) then
+      data.disjunctive = "all";
+    end
+
+    -- Change English-language class tokens to locale-agnostic versions
+    local class_agnosticize = {
+      ["Death Knight"] = "DEATHKNIGHT",
+      ["Druid"] = "DRUID",
+      ["Hunter"] = "HUNTER",
+      ["Mage"] = "MAGE",
+      ["Monk"] = "MONK",
+      ["Paladin"] = "PALADIN",
+      ["Priest"] = "PRIEST",
+      ["Rogue"] = "ROGUE",
+      ["Shaman"] = "SHAMAN",
+      ["Warlock"] = "WARLOCK",
+      ["Warrior"] = "WARRIOR"
+    };
+
+    if(load.class.single) then
+      load.class.single = class_agnosticize[load.class.single] or load.class.single;
+    end
+
+    if(load.class.multi) then
+      for i,v in pairs(load.class.multi) do
+        if(class_agnosticize[i]) then
+          load.class.multi[class_agnosticize[i]] = true;
+          load.class.multi[i] = nil;
         end
       end
-      load[protoname].multi = load[protoname].multi or {};
-    elseif(load[protoname] and type(load[protoname]) == "table") then
-      load[protoname] = nil;
     end
+
+    -- Add dynamic text info to Progress Bars
+    -- Also convert custom displayText to new displayText
+    if(data.regionType == "aurabar") then
+      data.displayTextLeft = data.displayTextLeft or (not data.auto and data.displayText) or "%n";
+      data.displayTextRight = data.displayTextRight or "%p";
+
+      if (data.barInFront ~= nil) then
+        data.borderInFront = not data.barInFront;
+        data.backdropInFront = not data.barInFront;
+        data.barInFront = nil;
+      end
+    end
+
+    if(data.regionType == "icon") then
+      if (data.cooldownTextEnabled == nil) then
+        data.cooldownTextEnabled = true;
+      end
+      if (data.displayStacks) then
+        data.text1Enabled = true;
+        data.text1 = data.displayStacks;
+        data.displayStacks = nil;
+        data.text1Color = data.textColor;
+        data.textColor = nil;
+        data.text1Point = data.stacksPoint;
+        data.stacksPoint = nil;
+        data.text1Containment = data.stacksContainment;
+        data.stacksContainment = nil;
+        data.text1Font = data.font;
+        data.font = nil;
+        data.text1FontSize = data.fontSize;
+        data.fontSize = nil;
+        data.text1FontFlags = data.fontFlags;
+        data.fontFlags = nil;
+
+        data.text2Enabled = false;
+        data.text2 = "%p";
+        data.text2Color = {1, 1, 1, 1};
+        data.text2Point = "CENTER";
+        data.text2Containment = "INSIDE";
+        data.text2Font = "Friz Quadrata TT";
+        data.text2FontSize = 24;
+        data.text2FontFlags = "OUTLINE";
+      end
+    end
+
+    -- Upgrade some old variables
+    if data.regionType == "aurabar" then
+      -- "border" changed to "borderEdge"
+      if data.border and type(data.border) ~= "boolean" then
+        data.borderEdge = data.border;
+        data.border = data.borderEdge ~= "None";
+      end
+      -- Multiple text settings
+      if data.textColor then
+        if not data.timerColor then
+          data.timerColor = {};
+          data.timerColor[1] = data.textColor[1];
+          data.timerColor[2] = data.textColor[2];
+          data.timerColor[3] = data.textColor[3];
+          data.timerColor[4] = data.textColor[4];
+        end
+        if not data.stacksColor then
+          data.stacksColor = {};
+          data.stacksColor[1] = data.textColor[1];
+          data.stacksColor[2] = data.textColor[2];
+          data.stacksColor[3] = data.textColor[3];
+          data.stacksColor[4] = data.textColor[4];
+        end
+      end
+      -- Multiple text settings
+      if data.font then
+        if not data.textFont then
+          data.textFont = data.font;
+        end
+        if not data.timerFont then
+          data.timerFont = data.font;
+        end
+        if not data.stacksFont then
+          data.stacksFont = data.font;
+        end
+
+        data.font = nil;
+      end
+      -- Multiple text settings
+      if data.fontSize then
+        if not data.textSize then
+          data.textSize = data.fontSize;
+        end
+        if not data.timerSize then
+          data.timerSize = data.fontSize;
+        end
+        if not data.stacksSize then
+          data.stacksSize = data.fontSize;
+        end
+
+        data.fontSize = nil;
+      end
+
+      -- fontFlags (outline)
+      if not data.fontFlags then
+        data.fontFlags = "OUTLINE";
+      end
+    end
+
+    if data.regionType == "text" then
+      if (type(data.outline) == "boolean") then
+        data.outline = data.outline and "OUTLINE" or "None";
+      end
+    end
+
+    if data.regionType == "model" then
+      if (data.api == nil) then
+        data.api = false;
+      end
+    end
+
+    if (data.regionType == "progresstexture") then
+      if (not data.version or data.version < 2) then
+        if (data.orientation == "CLOCKWISE") then
+          if (data.inverse) then
+            data.startAngle, data.endAngle = 360 - data.endAngle, 360 - data.startAngle;
+            data.orientation = (data.orientation == "CLOCKWISE") and "ANTICLOCKWISE" or "CLOCKWISE";
+          end
+        elseif (data.orientation == "ANTICLOCKWISE") then
+          data.startAngle, data.endAngle = 360 - data.endAngle, 360 - data.startAngle;
+          if (data.inverse) then
+            data.orientation = (data.orientation == "CLOCKWISE") and "ANTICLOCKWISE" or "CLOCKWISE";
+          end
+        end
+        data.version = 2;
+      end
+    end
+
+    if (not data.activeTriggerMode) then
+      data.activeTriggerMode = 0;
+    end
+
+    if (data.sort == "hybrid") then
+      if (not data.hybridPosition) then
+        data.hybridPosition = "hybridLast";
+      end
+      if (not data.hybridSortMode) then
+        data.hybridSortMode = "descending";
+      end
+    end
+
+    if (data.conditions) then
+      for conditionIndex, condition in ipairs(data.conditions) do
+        if (not condition.check) then
+          condition.check = {
+            ["trigger"] = condition.trigger,
+            ["variable"] = condition.condition,
+            ["op"] = condition.op,
+            ["value"] = condition.value
+          };
+          condition.trigger = nil;
+          condition.condition = nil;
+          condition.op = nil;
+          condition.value = nil;
+        end
+      end
+    end
+    ModernizeAnimations(data.animation and data.animation.start);
+    ModernizeAnimations(data.animation and data.animation.main);
+    ModernizeAnimations(data.animation and data.animation.finish);
+  end -- ENd of V1 => V2
+
+  -- Version 3 was introduced April 2018 in Legion
+  if (data.internalVersion < 3) then
+    if (data.parent) then
+      local parentData = WeakAuras.GetData(data.parent);
+      if(parentData and parentData.regionType == "dynamicgroup") then
+        -- Version 3 allowed for offsets for dynamic groups, before that they were ignored
+        -- Thus reset them in the V2 to V3 upgrade
+        data.xOffset = 0;
+        data.yOffset = 0;
+      end
+    end
+
   end
 
-  -- upgrade from singleselecting talents to multi select, see ticket 52
-  if (type(load.talent) == "number") then
-    local talent = load.talent;
-    load.talent = {};
-    load.talent.single = talent;
-    load.talent.multi = {}
-  end
-
-
-  --upgrade to support custom trigger combination logic
-  if (data.disjunctive == true) then
-    data.disjunctive = "any";
-  end
-  if(data.disjunctive == false) then
-    data.disjunctive = "all";
-  end
 
   for _, triggerSystem in pairs(triggerSystems) do
     triggerSystem.Modernize(data);
   end
 
-  -- Change English-language class tokens to locale-agnostic versions
-  local class_agnosticize = {
-    ["Death Knight"] = "DEATHKNIGHT",
-    ["Druid"] = "DRUID",
-    ["Hunter"] = "HUNTER",
-    ["Mage"] = "MAGE",
-    ["Monk"] = "MONK",
-    ["Paladin"] = "PALADIN",
-    ["Priest"] = "PRIEST",
-    ["Rogue"] = "ROGUE",
-    ["Shaman"] = "SHAMAN",
-    ["Warlock"] = "WARLOCK",
-    ["Warrior"] = "WARRIOR"
-  };
-
-  if(load.class.single) then
-    load.class.single = class_agnosticize[load.class.single] or load.class.single;
-  end
-
-  if(load.class.multi) then
-    for i,v in pairs(load.class.multi) do
-      if(class_agnosticize[i]) then
-        load.class.multi[class_agnosticize[i]] = true;
-        load.class.multi[i] = nil;
-      end
-    end
-  end
-
-  -- Add dynamic text info to Progress Bars
-  -- Also convert custom displayText to new displayText
-  if(data.regionType == "aurabar") then
-    data.displayTextLeft = data.displayTextLeft or (not data.auto and data.displayText) or "%n";
-    data.displayTextRight = data.displayTextRight or "%p";
-
-    if (data.barInFront ~= nil) then
-      data.borderInFront = not data.barInFront;
-      data.backdropInFront = not data.barInFront;
-      data.barInFront = nil;
-    end
-  end
-
-  if(data.regionType == "icon") then
-    if (data.cooldownTextEnabled == nil) then
-      data.cooldownTextEnabled = true;
-    end
-    if (data.displayStacks) then
-      data.text1Enabled = true;
-      data.text1 = data.displayStacks;
-      data.displayStacks = nil;
-      data.text1Color = data.textColor;
-      data.textColor = nil;
-      data.text1Point = data.stacksPoint;
-      data.stacksPoint = nil;
-      data.text1Containment = data.stacksContainment;
-      data.stacksContainment = nil;
-      data.text1Font = data.font;
-      data.font = nil;
-      data.text1FontSize = data.fontSize;
-      data.fontSize = nil;
-      data.text1FontFlags = data.fontFlags;
-      data.fontFlags = nil;
-
-      data.text2Enabled = false;
-      data.text2 = "%p";
-      data.text2Color = {1, 1, 1, 1};
-      data.text2Point = "CENTER";
-      data.text2Containment = "INSIDE";
-      data.text2Font = "Friz Quadrata TT";
-      data.text2FontSize = 24;
-      data.text2FontFlags = "OUTLINE";
-    end
-  end
-
-  -- Upgrade some old variables
-  if data.regionType == "aurabar" then
-    -- "border" changed to "borderEdge"
-    if data.border and type(data.border) ~= "boolean" then
-      data.borderEdge = data.border;
-      data.border = data.borderEdge ~= "None";
-    end
-    -- Multiple text settings
-    if data.textColor then
-      if not data.timerColor then
-        data.timerColor = {};
-        data.timerColor[1] = data.textColor[1];
-        data.timerColor[2] = data.textColor[2];
-        data.timerColor[3] = data.textColor[3];
-        data.timerColor[4] = data.textColor[4];
-      end
-      if not data.stacksColor then
-        data.stacksColor = {};
-        data.stacksColor[1] = data.textColor[1];
-        data.stacksColor[2] = data.textColor[2];
-        data.stacksColor[3] = data.textColor[3];
-        data.stacksColor[4] = data.textColor[4];
-      end
-    end
-    -- Multiple text settings
-    if data.font then
-      if not data.textFont then
-        data.textFont = data.font;
-      end
-      if not data.timerFont then
-        data.timerFont = data.font;
-      end
-      if not data.stacksFont then
-        data.stacksFont = data.font;
-      end
-
-      data.font = nil;
-    end
-    -- Multiple text settings
-    if data.fontSize then
-      if not data.textSize then
-        data.textSize = data.fontSize;
-      end
-      if not data.timerSize then
-        data.timerSize = data.fontSize;
-      end
-      if not data.stacksSize then
-        data.stacksSize = data.fontSize;
-      end
-
-      data.fontSize = nil;
-    end
-
-    -- fontFlags (outline)
-    if not data.fontFlags then
-      data.fontFlags = "OUTLINE";
-    end
-  end
-
-  if data.regionType == "text" then
-    if (type(data.outline) == "boolean") then
-      data.outline = data.outline and "OUTLINE" or "None";
-    end
-  end
-
-  if data.regionType == "model" then
-    if (data.api == nil) then
-      data.api = false;
-    end
-  end
-
-  if (data.regionType == "progresstexture") then
-    if (not data.version or data.version < 2) then
-      if (data.orientation == "CLOCKWISE") then
-        if (data.inverse) then
-          data.startAngle, data.endAngle = 360 - data.endAngle, 360 - data.startAngle;
-          data.orientation = (data.orientation == "CLOCKWISE") and "ANTICLOCKWISE" or "CLOCKWISE";
-        end
-      elseif (data.orientation == "ANTICLOCKWISE") then
-        data.startAngle, data.endAngle = 360 - data.endAngle, 360 - data.startAngle;
-        if (data.inverse) then
-          data.orientation = (data.orientation == "CLOCKWISE") and "ANTICLOCKWISE" or "CLOCKWISE";
-        end
-      end
-      data.version = 2;
-    end
-  end
-
-  if (not data.activeTriggerMode) then
-    data.activeTriggerMode = 0;
-  end
-
-  if (data.sort == "hybrid") then
-    if (not data.hybridPosition) then
-      data.hybridPosition = "hybridLast";
-    end
-    if (not data.hybridSortMode) then
-      data.hybridSortMode = "descending";
-    end
-  end
-
-  if (data.conditions) then
-    for conditionIndex, condition in ipairs(data.conditions) do
-      if (not condition.check) then
-        condition.check = {
-          ["trigger"] = condition.trigger,
-          ["variable"] = condition.condition,
-          ["op"] = condition.op,
-          ["value"] = condition.value
-        };
-        condition.trigger = nil;
-        condition.condition = nil;
-        condition.op = nil;
-        condition.value = nil;
-      end
-    end
-  end
-
-  ModernizeAnimations(data.animation and data.animation.start);
-  ModernizeAnimations(data.animation and data.animation.main);
-  ModernizeAnimations(data.animation and data.animation.finish);
+  data.internalVersion = internalVersion;
 end
 
 function WeakAuras.SyncParentChildRelationships(silent)
@@ -2365,6 +2436,10 @@ function WeakAuras.pAdd(data)
   elseif (data.controlledChildren) then
     WeakAuras.SetRegion(data);
   else
+    if (data.activeTriggerMode >= data.numTriggers) then
+      data.activeTriggerMode = WeakAuras.trigger_modes.first_active;
+    end
+
     for _, triggerSystem in pairs(triggerSystems) do
       triggerSystem.Add(data);
     end
@@ -2406,9 +2481,7 @@ function WeakAuras.pAdd(data)
       timers[id] = nil;
     end
 
-    if (data.activeTriggerMode >= data.numTriggers) then
-      data.activeTriggerMode = WeakAuras.trigger_modes.first_active;
-    end
+
     triggerState[id] = {};
     triggerState[id].disjunctive = data.disjunctive or "all";
     triggerState[id].numTriggers = data.numTriggers;
@@ -2447,9 +2520,26 @@ function WeakAuras.SetRegion(data, cloneId)
       local region;
       if(cloneId) then
         region = clones[id][cloneId];
+        if (not region or region.regionType ~= data.regionType) then
+          if (region) then
+            clonePool[region.regionType] = clonePool[region.regionType] or {};
+            tinsert(clonePool[region.regionType], region);
+            region:Hide();
+          end
+          if(clonePool[data.regionType] and clonePool[data.regionType][1]) then
+            clones[id][cloneId] = tremove(clonePool[data.regionType]);
+          else
+            local clone = regionTypes[data.regionType].create(frame, data);
+            clone.regionType = data.regionType;
+            clone:Hide();
+            clones[id][cloneId] = clone;
+          end
+          region = clones[id][cloneId];
+        end
       else
         if((not regions[id]) or (not regions[id].region) or regions[id].regionType ~= regionType) then
           region = regionTypes[regionType].create(frame, data);
+          region.regionType = regionType;
           region.toShow = true;
           regions[id] = {
             regionType = regionType,
@@ -2458,9 +2548,9 @@ function WeakAuras.SetRegion(data, cloneId)
         else
           region = regions[id].region;
         end
-        region.id = id;
-        region.cloneId = "";
       end
+      region.id = id;
+      region.cloneId = cloneId or "";
       WeakAuras.validate(data, regionTypes[regionType].default);
 
       local parent = frame;
@@ -2510,17 +2600,8 @@ function WeakAuras.EnsureClone(id, cloneId)
   clones[id] = clones[id] or {};
   if not(clones[id][cloneId]) then
     local data = WeakAuras.GetData(id);
-    if(clonePool[data.regionType] and clonePool[data.regionType][1]) then
-      clones[id][cloneId] = tremove(clonePool[data.regionType]);
-    else
-      local clone = regionTypes[data.regionType].create(frame, data);
-      clone:Hide();
-      clones[id][cloneId] = clone;
-    end
     WeakAuras.SetRegion(data, cloneId);
     clones[id][cloneId].justCreated = true;
-    clones[id][cloneId].id = id;
-    clones[id][cloneId].cloneId = cloneId;
   end
   return clones[id][cloneId];
 end
@@ -2644,7 +2725,7 @@ function WeakAuras.PerformActions(data, type, region)
     local func = WeakAuras.customActionsFunctions[data.id][type]
     if func then
       WeakAuras.ActivateAuraEnvironment(region.id, region.cloneId, region.state);
-      func();
+      xpcall(func, geterrorhandler());
       WeakAuras.ActivateAuraEnvironment(nil);
     end
   end
@@ -2689,6 +2770,7 @@ end
 local updatingAnimations;
 local last_update = GetTime();
 function WeakAuras.UpdateAnimations()
+  WeakAuras.StartProfileSystem("animations");
   for groupId, groupRegion in pairs(pending_controls) do
     pending_controls[groupId] = nil;
     groupRegion:DoControlChildren();
@@ -2698,6 +2780,7 @@ function WeakAuras.UpdateAnimations()
   last_update = time;
   local num = 0;
   for id, anim in pairs(animations) do
+    WeakAuras.StartProfileAura(anim.name);
     num = num + 1;
     local finished = false;
     if(anim.duration_type == "seconds") then
@@ -2744,31 +2827,46 @@ function WeakAuras.UpdateAnimations()
     WeakAuras.ActivateAuraEnvironment(anim.name, anim.cloneId, anim.region.state);
     if(anim.translateFunc) then
       if (anim.region.SetOffsetAnim) then
-        anim.region:SetOffsetAnim(anim.translateFunc(progress, 0, 0, anim.dX, anim.dY))
+        local ok, x, y = xpcall(anim.translateFunc, geterrorhandler(), progress, 0, 0, anim.dX, anim.dY);
+        anim.region:SetOffsetAnim(x, y);
       else
         anim.region:ClearAllPoints();
-        anim.region:SetPoint(anim.selfPoint, anim.anchor, anim.anchorPoint, anim.translateFunc(progress, anim.startX, anim.startY, anim.dX, anim.dY));
+        local ok, x, y = xpcall(anim.translateFunc, geterrorhandler(), progress, anim.startX, anim.startY, anim.dX, anim.dY);
+        if (ok) then
+          anim.region:SetPoint(anim.selfPoint, anim.anchor, anim.anchorPoint, x, y);
+        end
       end
     end
     if(anim.alphaFunc) then
-      anim.region:SetAlpha(anim.alphaFunc(progress, anim.startAlpha, anim.dAlpha));
+      local ok, alpha = xpcall(anim.alphaFunc, geterrorhandler(), progress, anim.startAlpha, anim.dAlpha);
+      if (ok) then
+        anim.region:SetAlpha(alpha);
+      end
     end
     if(anim.scaleFunc) then
-      local scaleX, scaleY = anim.scaleFunc(progress, 1, 1, anim.scaleX, anim.scaleY);
-      if(anim.region.Scale) then
-        anim.region:Scale(scaleX, scaleY);
-      else
-        anim.region:SetWidth(anim.startWidth * scaleX);
-        anim.region:SetHeight(anim.startHeight * scaleY);
+      local ok, scaleX, scaleY = xpcall(anim.scaleFunc, geterrorhandler(), progress, 1, 1, anim.scaleX, anim.scaleY);
+      if (ok) then
+        if(anim.region.Scale) then
+          anim.region:Scale(scaleX, scaleY);
+        else
+          anim.region:SetWidth(anim.startWidth * scaleX);
+          anim.region:SetHeight(anim.startHeight * scaleY);
+        end
       end
     end
     if(anim.rotateFunc and anim.region.Rotate) then
-      anim.region:Rotate(anim.rotateFunc(progress, anim.startRotation, anim.rotate));
+      local ok, rotate = xpcall(anim.rotateFunc, geterrorhandler(), progress, anim.startRotation, anim.rotate);
+      if (ok) then
+        anim.region:Rotate(rotate);
+      end
     end
     if(anim.colorFunc and anim.region.ColorAnim) then
       local startR, startG, startB, startA = anim.region:GetColor();
       startR, startG, startB, startA = startR or 1, startG or 1, startB or 1, startA or 1;
-      anim.region:ColorAnim(anim.colorFunc(progress, startR, startG, startB, startA, anim.colorR, anim.colorG, anim.colorB, anim.colorA));
+      local ok, r, g, b, a = xpcall(anim.colorFunc, geterrorhandler(), progress, startR, startG, startB, startA, anim.colorR, anim.colorG, anim.colorB, anim.colorA);
+      if (ok) then
+        anim.region:ColorAnim(r, g, b, a);
+      end
     end
     WeakAuras.ActivateAuraEnvironment(nil);
     if(finished) then
@@ -2808,6 +2906,7 @@ function WeakAuras.UpdateAnimations()
         anim.onFinished();
       end
     end
+    WeakAuras.StopProfileAura(anim.name);
   end
   -- XXX: I tried to have animations only update if there are actually animation data to animate upon.
   -- This caused all start animations to break, and I couldn't figure out why.
@@ -2820,6 +2919,8 @@ function WeakAuras.UpdateAnimations()
   updatingAnimations = nil;
   end
   ]]--
+
+  WeakAuras.StopProfileSystem("animations");
 end
 
 function WeakAuras.Animate(namespace, data, type, anim, region, inverse, onFinished, loop, cloneId)
@@ -3293,31 +3394,23 @@ end
 function WeakAuras.GetAuraTooltipInfo(unit, index, filter)
   local tooltip = WeakAuras.GetHiddenTooltip();
   tooltip:SetUnitAura(unit, index, filter);
-  local debuffTypeLine, tooltipTextLine = select(11, tooltip:GetRegions())
+  local tooltipTextLine = select(5, tooltip:GetRegions())
+
   local tooltipText = tooltipTextLine and tooltipTextLine:GetObjectType() == "FontString" and tooltipTextLine:GetText() or "";
-  local debuffType = debuffTypeLine and debuffTypeLine:GetObjectType() == "FontString" and debuffTypeLine:GetText() or "";
+  local debuffType = "none";
   local found = false;
-  for i,v in pairs(WeakAuras.debuff_class_types) do
-    if(v == debuffType) then
-      found = true;
-      debuffType = i;
-      break;
-    end
-  end
-  if not(found) then
-    debuffType = "none";
-  end
-  local tooltipSize,_;
+  local tooltipSize = {};
   if(tooltipText) then
-    local n2
-    _, _, tooltipSize, n2 = tooltipText:find("(%d+),(%d%d%d)")  -- Blizzard likes american digit grouping, e.g. "9123="9,123"   /mikk
-    if tooltipSize then
-      tooltipSize = tooltipSize..n2
-    else
-      _, _, tooltipSize = tooltipText:find("(%d+)")
+    for t in tooltipText:gmatch("(%d[%d%.,]*)") do
+      tinsert(tooltipSize, tonumber(t));
     end
   end
-  return tooltipText, debuffType, tonumber(tooltipSize) or 0;
+
+  if (#tooltipSize) then
+    return tooltipText, debuffType, unpack(tooltipSize);
+  else
+    return tooltipText, debuffType, 0;
+  end
 end
 
 local function tooltip_draw()
@@ -3443,15 +3536,19 @@ do
   local updateRegions = {};
 
   local function DoCustomTextUpdates()
+    WeakAuras.StartProfileSystem("custom text - every frame update");
     for region, _ in pairs(updateRegions) do
       if(region.UpdateCustomText) then
         if(region:IsVisible()) then
+          WeakAuras.StartProfileAura(region.id);
           region.UpdateCustomText();
+          WeakAuras.StopProfileAura(region.id);
         end
       else
         updateRegions[region] = nil;
       end
     end
+    WeakAuras.StopProfileSystem("custom text - every frame update");
   end
 
   function WeakAuras.InitCustomTextUpdates()
@@ -3603,7 +3700,7 @@ function WeakAuras.GetDynamicIconCache(name)
     local fallback = nil;
     for spellId, icon in pairs(db.dynamicIconCache[name]) do
       fallback = icon;
-      if (IsSpellKnown(spellId)) then -- TODO save this information?
+      if (type(spellId) == "number" and IsSpellKnown(spellId)) then -- TODO save this information?
         return db.dynamicIconCache[name][spellId];
       end
     end
@@ -3763,14 +3860,17 @@ local function evaluateTriggerStateTriggers(id)
   local result = false;
   WeakAuras.ActivateAuraEnvironment(id);
 
-  if((triggerState[id].disjunctive == "any" and triggerState[id].triggerCount > 0)
-    or (triggerState[id].disjunctive == "all" and triggerState[id].triggerCount == triggerState[id].numTriggers)
-    or (triggerState[id].disjunctive == "custom"
-    and triggerState[id].triggerLogicFunc
-    and triggerState[id].triggerLogicFunc(triggerState[id].triggers))
-    ) then
+  if (triggerState[id].disjunctive == "any" and triggerState[id].triggerCount > 0) then
     result = true;
+  elseif(triggerState[id].disjunctive == "all" and triggerState[id].triggerCount == triggerState[id].numTriggers) then
+    result = true;
+  else
+    if (triggerState[id].disjunctive == "custom" and triggerState[id].triggerLogicFunc) then
+      local ok, returnValue = xpcall(triggerState[id].triggerLogicFunc, geterrorhandler(), triggerState[id].triggers);
+      result = ok and returnValue;
+    end
   end
+
   WeakAuras.ActivateAuraEnvironment(nil);
   return result;
 end
@@ -3884,7 +3984,7 @@ function WeakAuras.UpdatedTriggerState(id)
   for cloneId, state in pairs(activeTriggerState) do
     local region = WeakAuras.GetRegion(id, cloneId);
     if (checkConditions[id]) then
-      checkConditions[id](region, not state.show);
+      checkConditions[id](region, not show or not state.show);
     end
   end
 
@@ -3929,7 +4029,8 @@ local function ReplaceValuePlaceHolders(textStr, region, customFunc)
   local value;
   if (textStr == "%c" and customFunc) then
     WeakAuras.ActivateAuraEnvironment(region.id, region.cloneId, region.state);
-    value = customFunc(region.expirationTime, region.duration, regionValues.progress, regionValues.duration, regionValues.name, regionValues.icon, regionValues.stacks);
+    local _;
+    _, value = xpcall(customFunc, geterrorhandler(), region.expirationTime, region.duration, regionValues.progress, regionValues.duration, regionValues.name, regionValues.icon, regionValues.stacks);
     WeakAuras.ActivateAuraEnvironment(nil);
     value = value or "";
   else
@@ -4326,6 +4427,7 @@ local function ensurePRDFrame()
   end
 
   personalRessourceDisplayFrame.eventHandler = function(self, event, nameplate)
+    WeakAuras.StartProfileSystem("prd");
     if (event == "NAME_PLATE_UNIT_ADDED") then
       if (UnitIsUnit(nameplate, "player")) then
         local frame = C_NamePlate.GetNamePlateForUnit("player");
@@ -4350,6 +4452,7 @@ local function ensurePRDFrame()
         personalRessourceDisplayFrame:Hide();
       end
     end
+    WeakAuras.StopProfileSystem("prd");
   end
 
   personalRessourceDisplayFrame.expand = function(self, id)
@@ -4498,4 +4601,160 @@ function WeakAuras.AnchorFrame(data, region, parent)
   else
     region:SetFrameStrata(WeakAuras.frame_strata_types[data.frameStrata]);
   end
+end
+
+local profileData = {};
+profileData.systems = {};
+profileData.auras = {};
+
+local function StartProfile(map, id)
+  if (not map[id]) then
+    map[id] = {};
+    map[id].count = 1;
+    map[id].start = debugprofilestop();
+    map[id].elapsed = 0;
+    return;
+  end
+
+  if (map[id].count == 0) then
+    map[id].count = 1;
+    map[id].start = debugprofilestop();
+  else
+    map[id].count = map[id].count + 1;
+  end
+end
+
+local function StopProfile(map, id)
+  map[id].count = map[id].count - 1;
+  if (map[id].count == 0) then
+    map[id].elapsed = map[id].elapsed + debugprofilestop() - map[id].start;
+  end
+end
+
+local function StartProfileSystem(system)
+  StartProfile(profileData.systems, "wa");
+  StartProfile(profileData.systems, system);
+end
+
+local function StartProfileAura(id)
+  StartProfile(profileData.auras, id);
+end
+
+local function StopProfileSystem(system)
+  StopProfile(profileData.systems, "wa");
+  StopProfile(profileData.systems, system);
+end
+
+local function StopProfileAura(id)
+  StopProfile(profileData.auras, id);
+end
+
+function WeakAuras.ProfileRenameAura(oldid, id)
+  profileData.auras[id] = profileData.auras[id];
+  profileData.auras[oldid] = nil;
+end
+
+function WeakAuras.StartProfile()
+  prettyPrint(L["Profiling started."])
+  if (profileData.systems.time and profileData.systems.time.count == 1) then
+    prettyPrint(L["Profiling already started."]);
+    return;
+  end
+
+  profileData.systems = {};
+  profileData.auras = {};
+  profileData.systems.time = {};
+  profileData.systems.time.start = debugprofilestop();
+  profileData.systems.time.count = 1;
+
+  WeakAuras.StartProfileSystem = StartProfileSystem;
+  WeakAuras.StartProfileAura = StartProfileAura;
+  WeakAuras.StopProfileSystem = StopProfileSystem;
+  WeakAuras.StopProfileAura = StopProfileAura;
+end
+
+local function doNothing()
+end
+
+function WeakAuras.StopProfile()
+  prettyPrint(L["Profiling stopped."])
+  if (not profileData.systems.time or not profileData.systems.time.count == 1) then
+    prettyPrint(L["Profiling not running."]);
+    return;
+  end
+
+  profileData.systems.time.elapsed = debugprofilestop() - profileData.systems.time.start;
+  profileData.systems.time.count = 0;
+
+  WeakAuras.StartProfileSystem = doNothing;
+  WeakAuras.StartProfileAura = doNothing;
+  WeakAuras.StopProfileSystem = doNothing;
+  WeakAuras.StopProfileAura = doNothing;
+end
+
+local function PrintOneProfile(name, map, total)
+  if (map.count ~= 0) then
+    print(name, " ERROR: count is not zero:", map.count);
+  end
+  local percent = "";
+  if (total) then
+    percent = ", " .. string.format("%.2f", 100 * map.elapsed / total) .. "%";
+  end
+  print(name, " ", string.format("%.2f", map.elapsed), " ms", percent);
+end
+
+local function SortProfileMap(map)
+  local result = {};
+  for k, v in pairs(map) do
+    tinsert(result, k);
+  end
+
+  sort(result, function(a, b)
+    return map[a].elapsed > map[b].elapsed;
+  end);
+
+  return result;
+end
+
+local function TotalProfileTime(map)
+  local total = 0;
+  for k, v in pairs(map) do
+    total = total + v.elapsed;
+  end
+  return total;
+end
+
+function WeakAuras.PrintProfile()
+  if (not profileData.systems.time) then
+    prettyPrint(L["No Profiling information saved."]);
+    return;
+  end
+
+  if (profileData.systems.time.count == 1) then
+    prettyPrint(L["Profiling still running, stop before trying to print."]);
+    return;
+  end
+
+  print("--------------------------------");
+  prettyPrint(L["EXPERIMENTAL Profiling Data:"]);
+  PrintOneProfile("Total Time:    ", profileData.systems.time);
+  PrintOneProfile("Time inside WA:", profileData.systems.wa);
+  print("% Time spent inside WA:", string.format("%.2f", 100 * profileData.systems.wa.elapsed / profileData.systems.time.elapsed));
+  print("");
+  print("Systems:");
+
+  for i, k in ipairs(SortProfileMap(profileData.systems)) do
+    if (k ~= "time" and k~= "wa") then
+      PrintOneProfile(k, profileData.systems[k], profileData.systems.wa.elapsed);
+    end
+  end
+
+  print("");
+  print("Auras:");
+  local total = TotalProfileTime(profileData.auras);
+  print("Total Time attributed to auras: ", total);
+  for i, k in ipairs(SortProfileMap(profileData.auras)) do
+    PrintOneProfile(k, profileData.auras[k], total);
+  end
+  print("--------------------------------");
 end

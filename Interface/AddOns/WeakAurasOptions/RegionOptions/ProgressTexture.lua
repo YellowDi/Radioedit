@@ -5,7 +5,7 @@ local function createOptions(id, data)
     foregroundTexture = {
       type = "input",
       name = L["Foreground Texture"],
-      order = 0
+      order = 1
     },
     backgroundTexture = {
       type = "input",
@@ -248,16 +248,39 @@ local function createOptions(id, data)
       order = 55.2,
       values = WeakAuras.texture_wrap_types
     },
+    slanted = {
+      type = "toggle",
+      name = L["Slanted"],
+      order = 55.3,
+      hidden = function() return data.orientation == "CLOCKWISE" or data.orientation == "ANTICLOCKWISE"; end
+    },
+    slant = {
+      type = "range",
+      name = L["Slant Amount"],
+      order = 55.4,
+      min = 0,
+      max = 1,
+      bigStep = 0.1,
+      hidden = function() return not data.slanted or data.orientation == "CLOCKWISE" or data.orientation == "ANTICLOCKWISE" end
+    },
+    slantFirst = {
+      type = "toggle",
+      name = L["Inverse Slant"],
+      order = 55.5,
+      hidden = function() return not data.slanted or data.orientation == "CLOCKWISE" or data.orientation == "ANTICLOCKWISE" end
+    },
+    slantMode = {
+      type = "select",
+      name = L["Slant Mode"],
+      order = 55.6,
+      hidden = function() return not data.slanted or data.orientation == "CLOCKWISE" or data.orientation == "ANTICLOCKWISE" end,
+      values = WeakAuras.slant_mode
+    },
     spacer = {
       type = "header",
       name = "",
       order = 56
     },
-    spacer2 = {
-      type = "header",
-      name = "",
-      order = 59
-    }
   };
   options = WeakAuras.regionPrototype.AddAdjustedDurationOptions(options, data, 57);
 
@@ -293,9 +316,10 @@ local function createOptions(id, data)
     end
   end
 
-  options = WeakAuras.AddPositionOptions(options, id, data);
-
-  return options;
+  return {
+    progresstexture = options,
+    position = WeakAuras.PositionOptions(id, data),
+  };
 end
 
 -- Credit to CommanderSirow for taking the time to properly craft the ApplyTransform function
@@ -382,6 +406,23 @@ local function createThumbnail(parent)
 
   local foreground = region:CreateTexture(nil, "ART");
   borderframe.foreground = foreground;
+
+  local OrgSetTexture = foreground.SetTexture;
+  -- WORKAROUND, setting the same texture with a different wrap mode does not change the wrap mode
+  foreground.SetTexture = function(self, texture, horWrapMode, verWrapMode)
+    if (GetAtlasInfo(texture)) then
+      self:SetAtlas(texture);
+    else
+      local needToClear = (self.horWrapMode and self.horWrapMode ~= horWrapMode) or (self.verWrapMode and self.verWrapMode ~= verWrapMode);
+      self.horWrapMode = horWrapMode;
+      self.verWrapMode = verWrapMode;
+      if (needToClear) then
+        OrgSetTexture(self, nil);
+      end
+      OrgSetTexture(self, texture, horWrapMode, verWrapMode);
+    end
+  end
+  background.SetTexture = foreground.SetTexture;
 
   borderframe.backgroundSpinner = WeakAuras.createSpinner(region, "BACKGROUND", 1);
   borderframe.foregroundSpinner = WeakAuras.createSpinner(region, "ARTWORK", 1);

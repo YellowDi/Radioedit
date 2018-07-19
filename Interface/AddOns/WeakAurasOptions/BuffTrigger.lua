@@ -2,6 +2,7 @@ local L = WeakAuras.L;
 
 local operator_types = WeakAuras.operator_types;
 local debuff_types = WeakAuras.debuff_types;
+local tooltip_count = WeakAuras.tooltip_count;
 local unit_types = WeakAuras.unit_types;
 local actual_unit_types_with_specific = WeakAuras.actual_unit_types_with_specific;
 local group_aura_name_info_types = WeakAuras.group_aura_name_info_types;
@@ -784,6 +785,14 @@ function WeakAuras.GetBuffTriggerOptions(data, trigger)
       hidden = function() return not (trigger.type == "aura" and trigger.fullscan) end,
       order = 55
     },
+    subcountCount = {
+      type = "select",
+      values = tooltip_count,
+      width = "double",
+      name = L["Use nth value from tooltip:"],
+      hidden = function() return not (trigger.type == "aura" and trigger.fullscan and trigger.subcount) end,
+      order = 55.5
+    },
     useRem = {
       type = "toggle",
       name = L["Remaining Time"],
@@ -875,6 +884,9 @@ function WeakAuras.GetBuffTriggerOptions(data, trigger)
       values = WeakAuras.bufftrigger_progress_behavior_types,
       order = 71,
       get = function()
+        if (not trigger.showOn or not WeakAuras.bufftrigger_progress_behavior_types[trigger.showOn]) then
+          trigger.showOn = "showOnActive";
+        end
         return trigger.showOn or "showOnActive";
       end,
       hidden = function() return not (trigger.type == "aura" and not(trigger.unit ~= "group" and trigger.autoclone) and trigger.unit ~= "multi" and not(trigger.unit == "group" and not trigger.groupclone)); end

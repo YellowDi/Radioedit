@@ -5,162 +5,70 @@ end
 local L = WeakAuras.L
 
 -- WeakAuras/Templates
-	L[" (Channeling)"] = "(Canalizando)"
-	L[" (Healing received increase)"] = "(Curación recibida incrementada)"
-	L["- Any"] = "- Cualquiera"
-	L["- Holy Word: Chastise"] = "- Palabra sagrada: condena"
-	L["- Holy Word: Sanctify"] = "- Palabra sagrada: santificar"
-	L["- Holy Word: Serenity"] = "- Palabra sagrada: serenidad"
-	L["(Pet)"] = "(Mascota)"
-	L["(Water Elemental)"] = "(Elemental de agua)"
-	--Translation missing 
-	-- L["Ability Charges"] = ""
-	--Translation missing 
-	-- L["Absorb Shield"] = ""
-	--Translation missing 
-	-- L["Add Triggers"] = ""
+	--[[Translation missing --]]
+	L["Ability Charges"] = "Ability Charges"
+	--[[Translation missing --]]
+	L["Add Triggers"] = "Add Triggers"
 	L["Always Active"] = "Siempre activo"
-	--Translation missing 
-	-- L["Back"] = ""
-	--Translation missing 
-	-- L["Bleed"] = ""
-	--Translation missing 
-	-- L["Bloodlust/Heroism"] = ""
-	--Translation missing 
-	-- L["Buff"] = ""
-	--Translation missing 
-	-- L["buff"] = ""
-	--Translation missing 
-	-- L["Buffs"] = ""
-	--Translation missing 
-	-- L["Cancel"] = ""
-	--Translation missing 
-	-- L["Cast"] = ""
-	--Translation missing 
-	-- L["Concordance of the Legionfall"] = ""
-	--Translation missing 
-	-- L["cooldown"] = ""
-	--Translation missing 
-	-- L["Cooldowns"] = ""
-	--Translation missing 
-	-- L["Crimson Vial Item Count"] = ""
-	--Translation missing 
-	-- L["Damage Trinkets"] = ""
-	--Translation missing 
-	-- L["Death Knight 2P Bonus - "] = ""
-	--Translation missing 
-	-- L["Death Knight Unholy 4P Bonus - "] = ""
-	--Translation missing 
-	-- L["debuff"] = ""
-	--Translation missing 
-	-- L["Debuffs"] = ""
-	--Translation missing 
-	-- L["Discipline Priest"] = ""
-	--Translation missing 
-	-- L["Druid"] = ""
-	--Translation missing 
-	-- L["Effuse"] = ""
-	--Translation missing 
-	-- L["Enchants"] = ""
-	--Translation missing 
-	-- L["Enveloping Mist"] = ""
-	--Translation missing 
-	-- L["Essence Font"] = ""
-	--Translation missing 
-	-- L["General"] = ""
-	--Translation missing 
-	-- L["Healer Trinkets"] = ""
-	--Translation missing 
-	-- L["Health"] = ""
-	--Translation missing 
-	-- L["Holy Priest"] = ""
-	--Translation missing 
-	-- L["Keeps existing triggers intact"] = ""
-	--Translation missing 
-	-- L["Legendaries"] = ""
-	--Translation missing 
-	-- L["Monk"] = ""
-	--Translation missing 
-	-- L["Monk Windwalker 4P Bonus - "] = ""
-	--Translation missing 
-	-- L["Netherlight Crucible"] = ""
-	L["Nimble Brew Item Count"] = "Contador de objetos - Brebaje Avezado"
-	--Translation missing 
-	-- L["Paladin"] = ""
-	--Translation missing 
-	-- L["Paladin Protection 2P Bonus - "] = ""
-	--Translation missing 
-	-- L["Paladin Retribution 2P Bonus - "] = ""
-	--Translation missing 
-	-- L["Pantheon Trinkets"] = ""
+	--[[Translation missing --]]
+	L["Azerite Traits"] = "Azerite Traits"
+	--[[Translation missing --]]
+	L["Back"] = "Back"
+	--[[Translation missing --]]
+	L["Bloodlust/Heroism"] = "Bloodlust/Heroism"
+	--[[Translation missing --]]
+	L["buff"] = "buff"
+	--[[Translation missing --]]
+	L["Buff"] = "Buff"
+	--[[Translation missing --]]
+	L["Buffs"] = "Buffs"
+	--[[Translation missing --]]
+	L["Cancel"] = "Cancel"
+	--[[Translation missing --]]
+	L["Cast"] = "Cast"
+	--[[Translation missing --]]
+	L["cooldown"] = "cooldown"
+	--[[Translation missing --]]
+	L["Cooldowns"] = "Cooldowns"
+	--[[Translation missing --]]
+	L["Damage Trinkets"] = "Damage Trinkets"
+	--[[Translation missing --]]
+	L["Debuffs"] = "Debuffs"
+	--[[Translation missing --]]
+	L["Enchants"] = "Enchants"
+	--[[Translation missing --]]
+	L["General"] = "General"
+	--[[Translation missing --]]
+	L["Healer Trinkets"] = "Healer Trinkets"
+	--[[Translation missing --]]
+	L["Health"] = "Health"
+	--[[Translation missing --]]
+	L["Keeps existing triggers intact"] = "Keeps existing triggers intact"
 	L["Pet alive"] = "Mascota viva"
 	L["Pet Behavior"] = "Comportamiento de mascota"
-	--Translation missing 
-	-- L["PVP Set"] = ""
-	--Translation missing 
-	-- L["PvP Talents"] = ""
-	--Translation missing 
-	-- L["PVP Trinkets"] = ""
-	--Translation missing 
-	-- L["Renewing Mist"] = ""
-	--Translation missing 
-	-- L["Replace all existing triggers"] = ""
-	--Translation missing 
-	-- L["Replace Triggers"] = ""
-	--Translation missing 
-	-- L["Resources"] = ""
-	--Translation missing 
-	-- L["Resources and Shapeshift Form"] = ""
-	--Translation missing 
-	-- L["Rogue Assassination/Outlaw 4P Bonus - "] = ""
-	--Translation missing 
-	-- L["Rogue Subtlety 4P Bonus - "] = ""
-	--Translation missing 
-	-- L["Rooted"] = ""
-	--Translation missing 
-	-- L["Runes"] = ""
-	--Translation missing 
-	-- L["Secondary Effect"] = ""
-	--Translation missing 
-	-- L["Set Bonus"] = ""
-	--Translation missing 
-	-- L["Shaman"] = ""
-	--Translation missing 
-	-- L["Shaman Elemental 4P Bonus - "] = ""
-	--Translation missing 
-	-- L["Shaman Enhancement 2P Bonus - "] = ""
-	--Translation missing 
-	-- L["Shapeshift Form"] = ""
-	--Translation missing 
-	-- L["Slowed"] = ""
-	--Translation missing 
-	-- L["Stagger"] = ""
-	--Translation missing 
-	-- L["Stun"] = ""
-	--Translation missing 
-	-- L["T19 2P Bonus - "] = ""
-	--Translation missing 
-	-- L["T19 4P Bonus - "] = ""
-	--Translation missing 
-	-- L["T20 2P Bonus - "] = ""
-	--Translation missing 
-	-- L["T20 4P Bonus - "] = ""
-	--Translation missing 
-	-- L["T21 2P Bonus - "] = ""
-	--Translation missing 
-	-- L["T21 4P Bonus - "] = ""
-	--Translation missing 
-	-- L["Tank Trinkets"] = ""
-	L["Totem"] = "Tótem"
+	--[[Translation missing --]]
+	L["PvP Talents"] = "PvP Talents"
+	--[[Translation missing --]]
+	L["PVP Trinkets"] = "PVP Trinkets"
+	--[[Translation missing --]]
+	L["Replace all existing triggers"] = "Replace all existing triggers"
+	--[[Translation missing --]]
+	L["Replace Triggers"] = "Replace Triggers"
+	--[[Translation missing --]]
+	L["Resources"] = "Resources"
+	--[[Translation missing --]]
+	L["Resources and Shapeshift Form"] = "Resources and Shapeshift Form"
+	--[[Translation missing --]]
+	L["Runes"] = "Runes"
+	--[[Translation missing --]]
+	L["Shapeshift Form"] = "Shapeshift Form"
+	--[[Translation missing --]]
+	L["Stagger"] = "Stagger"
+	--[[Translation missing --]]
+	L["Tank Trinkets"] = "Tank Trinkets"
 	L["Totems"] = "Tótems"
-	--Translation missing 
-	-- L["Unknown Item"] = ""
-	--Translation missing 
-	-- L["Unknown Spell"] = ""
-	--Translation missing 
-	-- L["Vivify"] = ""
-	--Translation missing 
-	-- L["Warlock Affliction 4P/Demonology 2P Bonus - "] = ""
-	--Translation missing 
-	-- L["Warrior 2P Bonus - "] = ""
+	--[[Translation missing --]]
+	L["Unknown Item"] = "Unknown Item"
+	--[[Translation missing --]]
+	L["Unknown Spell"] = "Unknown Spell"
 

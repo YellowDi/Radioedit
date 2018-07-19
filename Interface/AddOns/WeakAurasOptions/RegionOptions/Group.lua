@@ -492,32 +492,34 @@ local function createOptions(id, data)
         WeakAuras.ResetMoverSizer();
       end
     },
-    border_header = {
-      type = "header",
-      name = L["Border Settings"],
-      order = 46.0
+    scale = {
+      type = "range",
+      name = L["Group Scale"],
+      order = 45,
+      min = 0.05,
+      softMax = 2,
+      bigStep = 0.05,
+      get = function()
+        return data.scale or 1
+      end,
+      set = function(info, v)
+        data.scale = data.scale or 1
+        local change = 1 - (v/data.scale)
+        data.xOffset = data.xOffset/(1-change)
+        data.yOffset = data.yOffset/(1-change)
+        data.scale = v
+        WeakAuras.Add(data);
+        WeakAuras.SetThumbnail(data);
+        WeakAuras.ResetMoverSizer();
+      end
     },
-    spacer = {
-      type = "header",
-      name = "",
-      order = 50
-    }
   };
 
-  -- Positioning options
-  options = WeakAuras.AddPositionOptions(options, id, data);
-
-  -- Border options
-  options = WeakAuras.AddBorderOptions(options, id, data);
-
-  -- Remove some poition options
-  options.width = nil;
-  options.height = nil;
-  options.selfPoint.disabled = true;
-  options.selfPoint.values = {["BOTTOMLEFT"] = "Anchor Point"};
-
-  -- Return options
-  return options;
+  return {
+    group = options,
+    position = WeakAuras.PositionOptions(id, data, true, true),
+    border = WeakAuras.BorderOptions(id, data);
+  };
 end
 
 -- Create preview thumbnail
