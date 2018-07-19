@@ -44,6 +44,117 @@ GTFO.SpellID["264973"] = {
   sound = 3;
 };
 
+GTFO.SpellID["276899"] = {
+  --desc = "Tempest Strike (Lord Stormsong)";
+  sound = 3;
+};
+
+GTFO.SpellID["276914"] = {
+  --desc = "Wrath of Storms";
+  sound = 3;
+};
+
+GTFO.SpellID["215705"] = {
+  --desc = "Gasp of Unmaking (Azshj'thul the Drowned)";
+  sound = 3;
+  tankSound = 0;
+};
+
+GTFO.SpellID["270662"] = {
+  --desc = "Boulder (Demolisher)";
+  sound = 3;
+};
+
+GTFO.SpellID["271437"] = {
+  --desc = "Sapper Charge";
+  sound = 3;
+};
+
+GTFO.SpellID["276973"] = {
+  --desc = "Meteor (Champion Lockjaw)";
+  sound = 3;
+};
+
+GTFO.SpellID["276763"] = {
+  --desc = "Lava Storm (Yarsel'ghun)";
+  sound = 3;
+};
+
+GTFO.SpellID["244787"] = {
+  --desc = "Wide Swipe (Crazed Bone Snapper)";
+  sound = 3;
+};
+
+GTFO.SpellID["265481"] = {
+  --desc = "Big Knock Back";
+  sound = 3;
+};
+
+GTFO.SpellID["276262"] = {
+  --desc = "Lightning Storm (Lady Rash'iss)";
+  sound = 3;
+};
+
+GTFO.SpellID["264465"] = {
+  --desc = "Barrel Aged (Barman Bill)";
+  sound = 3;
+};
+
+GTFO.SpellID["264403"] = {
+  --desc = "Hoppy Finish (Barman Bill)";
+  applicationOnly = true;
+  sound = 3;
+};
+
+GTFO.SpellID["266288"] = {
+  --desc = "Gnash (Vicious Vicejaw)";
+  sound = 3;
+};
+
+GTFO.SpellID["270460"] = {
+  --desc = "Stone Eruption (Goldenvein)";
+  sound = 3;
+};
+
+GTFO.SpellID["257351"] = {
+  --desc = "Thorned Burst (Rindlewoe)";
+  applicationOnly = true;
+  sound = 3;
+};
+
+GTFO.SpellID["277044"] = {
+  --desc = "Tidal Force (Kvaldir Dreadbringer)";
+  sound = 3;
+};
+
+GTFO.SpellID["271713"] = {
+  --desc = "Elemental Slam (Unbound Azerite)";
+  sound = 3;
+  tankSound = 0;
+};
+
+GTFO.SpellID["266288"] = {
+  --desc = "Gnash (Mudsnout Thornback)";
+  sound = 3;
+};
+
+GTFO.SpellID["244882"] = {
+  --desc = "Cracking Blow (Guuru the Mountain-Breaker)";
+  sound = 3;
+};
+
+GTFO.SpellID["277347"] = {
+  --desc = "Whirling Venom (Shipwrecked Strongarm)";
+  sound = 3;
+  applicationOnly = true;
+};
+
+GTFO.SpellID["275823"] = {
+  --desc = "Ground Spike (Duster)";
+  sound = 3;
+};
+
+
 -- ***********************
 -- * Shrine of the Storm *
 -- ***********************

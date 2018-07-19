@@ -424,6 +424,31 @@ GTFO.SpellID["241666"] = {
   sound = 3;
 };
 
+-- *******************
+-- * Brawler's Guild *
+-- *******************
+
+GTFO.SpellID["229420"] = {
+  --desc = "Devour (Hippo)";
+  sound = 3;
+};
+
+GTFO.SpellID["229926"] = {
+  --desc = "Path of Despair";
+  applicationOnly = true;
+  sound = 3;
+};
+
+GTFO.SpellID["228988"] = {
+  --desc = "Burning Ground";
+  sound = 3;
+};
+
+GTFO.SpellID["229126"] = {
+  --desc = "Peck (Slippy)";
+  sound = 3;
+};
+
 -- **********
 -- * Mardum *
 -- **********

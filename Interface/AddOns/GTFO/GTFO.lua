@@ -23,8 +23,8 @@ GTFO = {
 		TrivialDamagePercent = 2; -- Minimum % of HP lost required for an alert to be trivial
 		SoundOverrides = { }; -- Override table for GTFO sounds
 	};
-	Version = "4.45.2"; -- Version number (text format)
-	VersionNumber = 44502; -- Numeric version number for checking out-of-date clients
+	Version = "4.46"; -- Version number (text format)
+	VersionNumber = 44600; -- Numeric version number for checking out-of-date clients
 	DataLogging = nil; -- Indicate whether or not the addon needs to run the datalogging function (for hooking)
 	DataCode = "4"; -- Saved Variable versioning, change this value to force a reset to default
 	CanTank = nil; -- The active character is capable of tanking
@@ -126,11 +126,7 @@ end
 
 function GTFO_OnEvent(self, event, ...)
 	if (event == "VARIABLES_LOADED") then
-		if (GTFO.BetaMode) then
-			C_ChatInfo.RegisterAddonMessagePrefix("GTFO");
-		else
-			RegisterAddonMessagePrefix("GTFO");
-		end
+		C_ChatInfo.RegisterAddonMessagePrefix("GTFO");
 		if (GTFOData.DataCode ~= GTFO.DataCode) then
 			GTFO_SetDefaults();
 			GTFO_ChatPrint(string.format(GTFOLocal.Loading_NewDatabase, GTFO.Version));
@@ -241,12 +237,7 @@ function GTFO_OnEvent(self, event, ...)
 			end
 		end
 
-		local timestamp, eventType, hideCaster, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags, misc1, misc2, misc3, misc4, misc5, misc6, misc7; 
-		if (GTFO.BetaMode) then
-			timestamp, eventType, hideCaster, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags, misc1, misc2, misc3, misc4, misc5, misc6, misc7 = CombatLogGetCurrentEventInfo(); 
-		else
-			timestamp, eventType, hideCaster, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags, misc1, misc2, misc3, misc4, misc5, misc6, misc7 = ...; 
-		end
+		local timestamp, eventType, hideCaster, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags, misc1, misc2, misc3, misc4, misc5, misc6, misc7 = CombatLogGetCurrentEventInfo(); 
 		
 		local SpellType = tostring(eventType);
 		local vehicle = nil;
@@ -1301,11 +1292,7 @@ function GTFO_SendUpdate(sMethod)
 	GTFO.IgnoreUpdateTime = currentTime + GTFO.IgnoreUpdateTimeAmount;
 
 	--GTFO_DebugPrint("Sending version info to "..sMethod);
-	if (GTFO.BetaMode) then
-		C_ChatInfo.SendAddonMessage("GTFO","V:"..GTFO.VersionNumber,sMethod)
-	else
-		SendAddonMessage("GTFO","V:"..GTFO.VersionNumber,sMethod)
-	end
+	C_ChatInfo.SendAddonMessage("GTFO","V:"..GTFO.VersionNumber,sMethod)
 end
 
 function GTFO_SendUpdateRequest()
@@ -1323,22 +1310,12 @@ function GTFO_SendUpdateRequest()
 		raidmembers = 0
 	end
 	
-	if (GTFO.BetaMode) then
-		if (IsInGroup(LE_PARTY_CATEGORY_INSTANCE)) then
-			C_ChatInfo.SendAddonMessage("GTFO","U:INSTANCE_CHAT","INSTANCE_CHAT");
-		elseif (raidmembers > 0) then
-			C_ChatInfo.SendAddonMessage("GTFO","U:RAID","RAID");
-		elseif (partymembers > 0) then
-			C_ChatInfo.SendAddonMessage("GTFO","U:PARTY","PARTY");
-		end
-	else
-		if (IsInGroup(LE_PARTY_CATEGORY_INSTANCE)) then
-			SendAddonMessage("GTFO","U:INSTANCE_CHAT","INSTANCE_CHAT");
-		elseif (raidmembers > 0) then
-			SendAddonMessage("GTFO","U:RAID","RAID");
-		elseif (partymembers > 0) then
-			SendAddonMessage("GTFO","U:PARTY","PARTY");
-		end
+	if (IsInGroup(LE_PARTY_CATEGORY_INSTANCE)) then
+		C_ChatInfo.SendAddonMessage("GTFO","U:INSTANCE_CHAT","INSTANCE_CHAT");
+	elseif (raidmembers > 0) then
+		C_ChatInfo.SendAddonMessage("GTFO","U:RAID","RAID");
+	elseif (partymembers > 0) then
+		C_ChatInfo.SendAddonMessage("GTFO","U:PARTY","PARTY");
 	end
 end
 
@@ -1637,36 +1614,18 @@ function GTFO_DisplayConfigPopupMessage()
 end
 
 function GTFO_HasBuff(target, iSpellID)
-	if (GTFO.BetaMode) then
-		if (GTFO_GetBuffSpellIndex(target, iSpellID)) then
-			return true;
-		else
-			return nil;
-		end
+	if (GTFO_GetBuffSpellIndex(target, iSpellID)) then
+		return true;
 	else
-		local spellName = GetSpellInfo(tonumber(iSpellID));
-		if (spellName and UnitBuff(target, spellName)) then
-			return true;
-		else
-			return nil;
-		end
+		return nil;
 	end
 end
 
 function GTFO_HasDebuff(target, iSpellID)
-	if (GTFO.BetaMode) then
-		if (GTFO_GetDebuffSpellIndex(target, iSpellID)) then
-			return true;
-		else
-			return nil;
-		end
+	if (GTFO_GetDebuffSpellIndex(target, iSpellID)) then
+		return true;
 	else
-		local spellName = GetSpellInfo(tonumber(iSpellID));
-		if (spellName and UnitDebuff(target, spellName)) then
-			return true;
-		else
-			return nil;
-		end
+		return nil;
 	end
 end
 
@@ -1674,13 +1633,9 @@ function GTFO_DebuffStackCount(target, iSpellID)
 	local spellName = GetSpellInfo(tonumber(iSpellID));
 	if (spellName) then
 		local debuffInfo;
-		if (GTFO.BetaMode) then
-			local debuffIndex = GTFO_GetDebuffSpellIndex(target, iSpellID);
-			if (debuffIndex) then
-				debuffInfo = select(3, UnitDebuff(target, debuffIndex));
-			end
-		else
-			debuffInfo = select(4, UnitDebuff(target, spellName));
+		local debuffIndex = GTFO_GetDebuffSpellIndex(target, iSpellID);
+		if (debuffIndex) then
+			debuffInfo = select(3, UnitDebuff(target, debuffIndex));
 		end
 		if (debuffInfo) then
 			return tonumber(debuffInfo);
