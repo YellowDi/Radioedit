@@ -380,7 +380,7 @@
 						</Anchors>
 					</Frame>
 					<Frame parentKey="Elements" useParentLevel="true">
-						<Size x="570" y="0"/>
+						<Size x="570" y="1"/>
 						<Anchors>
 							<Anchor point="TOP" relativeKey="$parent" relativePoint="BOTTOM" x="0" y="8"/>
 						</Anchors>
@@ -487,11 +487,6 @@
 													</Layer>
 												</Layers>
 												<Scripts>
-													<OnLoad>
-														-- Hacks to get this to display a little more nicely
-														self.Name:SetPoint("LEFT", self.NameFrame, 24, 0);
-														self.Name:SetWidth(81);
-													</OnLoad>
 													<OnEnter>
 														if (self.tooltip) then
 															GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
@@ -786,7 +781,7 @@
 					<Frame parentKey="PortraitFrame" setAllPoints="true">
 						<Layers>
 							<Layer level="OVERLAY">
-								<Texture parentKey="Portrait" hidden="false" alpha="1" alphaMode="BLEND" atlas="TalkingHeads-PortraitFrame" useAtlasSize="true">
+								<Texture parentKey="Portrait" hidden="false" alpha="1" alphaMode="BLEND" atlas="TalkingHeads-Alliance-PortraitFrame" useAtlasSize="true">
 									<Anchors>
 										<Anchor point="TOPLEFT" x="5" y="-6"/>
 									</Anchors>
@@ -874,7 +869,9 @@
 								</Anchors>
 								<Scripts>
 									<OnClick>
-										self:GetParent():GetParent():GetParent():ForceClose();
+										local mainframe = self:GetParent():GetParent():GetParent();
+										mainframe:ClearToasts();
+										mainframe:ForceClose();
 									</OnClick>
 								</Scripts>
 							</Button>
@@ -1104,7 +1101,7 @@
 		</Frames>
 	</Frame>
 
-
+<!--
 	<Button name="ImmersionToast" parent="UIParent" hidden="true" frameStrata="LOW" alpha="0">
 		<Size x="235" y="25"/>
 		<Anchors>
@@ -1117,7 +1114,7 @@
 						<Texture parentKey="IconBorder">
 							<Size x="88" y="88"/>
 							<Anchors>
-								<Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMLEFT" x="0" y="-20"/>
+								<Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMLEFT" x="12" y="-16"/>
 							</Anchors>
 						</Texture>
 						<FontString parentKey="Title" inherits="GameFontNormalMed2" justifyH="LEFT">
@@ -1289,14 +1286,12 @@
 
 				self.IconPool = CreateTexturePool(self, 'BACKGROUND');
 
-				-- Store on main for brevity in Lua
 				self.Text = self.Content.Text;
 				self.Subtitle = self.Content.Subtitle;
 				self.ToastType = self.Content.ToastType;
 				self.CacheType = self.Content.CacheType;
 				self.IconBorder = self.Header.IconBorder;
 
-				-- Set portrait frame textures (horizontally flipped "Artifacts-PerkRing-GoldMedal")
 				local iconBorder, iconBorderSheen = self.IconBorder, self.Header.IconBorderSheen;
 				local texture, _, _, left, right, top, bottom = GetAtlasInfo("Artifacts-PerkRing-GoldMedal");
 				iconBorder:SetTexture(texture);
@@ -1304,7 +1299,6 @@
 				iconBorderSheen:SetTexture(texture);
 				iconBorderSheen:SetTexCoord(right, left, top, bottom);
 
-				-- Change the color slightly to fit the portrait
 				self.Header.Background:SetVertexColor(1, 0.8, 1);
 
 				self:SetHitRectInsets(-50, 0, -25, -25);
@@ -1316,4 +1310,5 @@
 			</OnLoad>
 		</Scripts>
 	</Button>
+-->
 </Ui>

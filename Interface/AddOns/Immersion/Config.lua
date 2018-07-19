@@ -62,6 +62,7 @@ L.defaults = {
 	scale = 1,
 	strata = 'MEDIUM',
 	hideui = false,
+--	theme = 'DEFAULT',
 
 	titlescale = 1,
 	titleoffset = 500,
@@ -96,16 +97,23 @@ local stratas = {
 }
 
 local modifiers = {
-	SHIFT = SHIFT_KEY_TEXT,
-	CTRL = CTRL_KEY_TEXT,
-	ALT = ALT_KEY_TEXT,
-	NOMOD = NONE,
+	SHIFT 	= SHIFT_KEY_TEXT,
+	CTRL 	= CTRL_KEY_TEXT,
+	ALT 	= ALT_KEY_TEXT,
+	NOMOD 	= NONE,
 }
+--[[
+local themes = {
+	DEFAULT 	= DEFAULT;
+	ALLIANCE 	= ALLIANCE_CHEER;
+	HORDE 		= HORDE_CHEER;
+	NEUTRAL		= BUG_CATEGORY8;
+}]]
 
 local titleanis = {
-	[0] = OFF,
-	[1] = SPELL_CAST_TIME_INSTANT,
-	[5] = FAST,
+	[0]  = OFF,
+	[1]  = SPELL_CAST_TIME_INSTANT,
+	[5]  = FAST,
 	[10] = SLOW,
 }
 
@@ -117,6 +125,28 @@ L.options = {
 			name = GENERAL,
 			order = 1,
 			args = {
+				framelock = {
+					type = 'group',
+					name = LOCK_FOCUS_FRAME,
+					inline = true,
+					order = 0,
+					args = {
+						boxlock = {
+							type = 'toggle',
+							name = MODEL .. ' / ' .. LOCALE_TEXT_LABEL,
+							get = L.GetFromSV,
+							set = function(_, val) L.cfg.boxlock = val end,
+							order = 0,
+						},
+						titlelock = {
+							type = 'toggle',
+							name = QUESTS_LABEL .. ' / ' .. GOSSIP_OPTIONS,
+							get = L.GetFromSV,
+							set = function(_, val) L.cfg.titlelock = val end,
+							order = 1,
+						},
+					},
+				},
 				text = {
 					type = 'group',
 					name = L['Behavior'],
@@ -245,18 +275,10 @@ L.options = {
 							get = L.GetFromSV,
 							set = function(_, val) L.cfg.onthefly = val end,
 						},
-						ontheflyalways = {
-							type = 'toggle',
-							name = ALWAYS,
-							order = 1,
-							get = L.GetFromSV,
-							set = function(_, val) L.cfg.ontheflyalways = val end,
-							disabled = function() return not L('onthefly') end,
-						},
 						ontheflydesc = {
 							type = 'description',
 							fontSize = 'medium',
-							order = 2,
+							order = 1,
 							name = L["The quest/gossip text doesn't vanish when you stop interacting with the NPC or when accepting a new quest. Instead, it vanishes at the end of the text sequence. This allows you to maintain your immersive experience when speed leveling."],
 						},
 					},
@@ -297,7 +319,7 @@ L.options = {
 				accept = {
 					type = 'keybinding',
 					name = ACCEPT,
-					desc = L.GetListString(ACCEPT, NEXT, CONTINUE, COMPLETE_QUEST),
+					desc = L.GetListString(ACCEPT, NEXT, CONTINUE, COMPLETE_QUEST, SPELL_CAST_TIME_INSTANT .. ': ' .. modifiers[L('inspect')]),
 					get = L.GetFromSV,
 					set = function(_, val) L.cfg.accept = L.ValidateKey(val) end,
 					order = 1,
@@ -417,13 +439,6 @@ L.options = {
 							get = L.GetFromSV,
 							set = function(_, val) L.cfg.disableglowani = val end,
 						},
-						boxlock = {
-							type = 'toggle',
-							name = LOCK,
-							get = L.GetFromSV,
-							set = function(_, val) L.cfg.boxlock = val end,
-							order = 2,
-						},
 						disableportrait = {
 							type = 'toggle',
 							name = L['Disable portrait border'],
@@ -483,13 +498,6 @@ L.options = {
 							get = L.GetFromSV,
 							set = function(_, val) L.cfg.gossipatcursor = val end,
 							order = 0,
-						},
-						titlelock = {
-							type = 'toggle',
-							name = LOCK,
-							get = L.GetFromSV,
-							set = function(_, val) L.cfg.titlelock = val end,
-							order = 1,
 						},
 						titlescale = {
 							type = 'range',

@@ -35,11 +35,14 @@ function Model:SetUnit(unit)
 		self:SetPosition(0, 0, .25)
 		self.unit = 'ether'
 	else
+		local mt = getmetatable(self).__index
+		local creatureID = tonumber(unit)
+		local applyModelFunction = creatureID and mt.SetCreature or mt.SetUnit 
 		self:SetCamDistanceScale(1)
 		self:SetPortraitZoom(.85)
 		self:SetPosition(0, 0, 0)
-		getmetatable(self).__index.SetUnit(self, unit)
-		self.unit = unit
+		applyModelFunction(self, creatureID or unit)
+		self.unit = creatureID and 'npc' or unit
 	end
 end
 

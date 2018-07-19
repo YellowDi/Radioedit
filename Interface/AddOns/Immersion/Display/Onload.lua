@@ -264,8 +264,8 @@ end
 
 function text:OnFinishedCallback()
 	-- remove the last playback line, because the text played until completion.
-	if L('onthefly') and not L('ontheflyalways') and not self:IsForceFinishedFlagged() then
-		ImmersionToast:PopToastForText(self.storedText)
+	if L('onthefly') and not self:IsForceFinishedFlagged() then
+		frame:RemoveToastByText(self.storedText)
 	end
 end
 
