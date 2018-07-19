@@ -1,5 +1,5 @@
 --
--- $Id: BugGrabber.lua 221 2017-08-30 01:13:38Z funkydude $
+-- $Id: BugGrabber.lua 226 2018-07-18 10:01:44Z funkydude $
 --
 -- The BugSack and !BugGrabber team is:
 -- Current Developer: Funkydude
@@ -561,21 +561,28 @@ function frame:PLAYER_LOGIN()
 	if not callbacks then setupCallbacks() end
 	real_seterrorhandler(grabError)
 end
-local badAddons = {}
-function frame:ADDON_ACTION_FORBIDDEN(event, addonName, addonFunc)
-	local name = addonName or "<name>"
-	if not badAddons[name] then
-		badAddons[name] = true
-		grabError(L.ADDON_CALL_PROTECTED:format(event, name or "<name>", addonFunc or "<func>"))
+do
+	local badAddons = {}
+	function frame:ADDON_ACTION_FORBIDDEN(event, addonName, addonFunc)
+		local name = addonName or "<name>"
+		if not badAddons[name] then
+			badAddons[name] = true
+			grabError(L.ADDON_CALL_PROTECTED:format(event, name or "<name>", addonFunc or "<func>"))
+		end
 	end
 end
-frame.ADDON_ACTION_BLOCKED = frame.ADDON_ACTION_FORBIDDEN -- XXX Unused?
+frame.ADDON_ACTION_BLOCKED = frame.ADDON_ACTION_FORBIDDEN
+function frame:LUA_WARNING(_, _, warningMessage)
+	grabError(warningMessage)
+end
 frame:SetScript("OnEvent", function(self, event, ...) self[event](self, event, ...) end)
 frame:RegisterEvent("ADDON_LOADED")
 frame:RegisterEvent("PLAYER_LOGIN")
 frame:RegisterEvent("ADDON_ACTION_BLOCKED")
 frame:RegisterEvent("ADDON_ACTION_FORBIDDEN")
+frame:RegisterEvent("LUA_WARNING")
 
+UIParent:UnregisterEvent("LUA_WARNING")
 real_seterrorhandler(grabError)
 function seterrorhandler() --[[ noop ]] end
 
