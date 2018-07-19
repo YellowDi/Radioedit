@@ -77,7 +77,7 @@ C.otherfiltertype = "whitelist"		-- 他人施放/show aura cast by other
 
 C.WhiteList = {
 	--[166646]=	true,	-- 御風而行(test)
-
+	
 	-- BUFF
 	-- Mythic+
 	[209859]= true,		-- 激勵/Bloster
@@ -95,15 +95,15 @@ C.WhiteList = {
 	[255422]= true,		-- 自然易傷
 	[255418]= true,		-- 物理易傷
 	[255433]= true,		-- 秘法易傷
-
-	-- DEBUFF
+	
+	-- DEBUFF	
 	-- 種族
 	[25046]	= true,		-- 奧流之術/Arcane Torrent
 	-- 法師
 	[118]	= true,		-- 變形術/Polymorph
 	-- 薩滿
 	[51514]	= true,		-- 妖術/Hex
-	[64695]	= true,		-- 地縛圖騰/Earthgrab
+	[64695]	= true,		-- 地縛圖騰/Earthgrab	
 	[118905]= true,		-- 電容/Static Charge
 	-- 獵人
 	[217832]= true,		-- 禁錮/Imprison
@@ -127,7 +127,7 @@ C.WhiteList = {
 	[115750]= true,		-- 盲目之光/Blinding Light
 	[183218]= true,		-- 封阻之手/Hand of Hindrance
 	-- 武僧
-	[115078]= true,		-- 點穴/Paralysis
+	[115078]= true,		-- 點穴/Paralysis	
 	[119381]= true,		-- 掃葉腿/Leg Sweep
 	-- 德魯伊
 	[339]	= true,		-- 糾纏根鬚/Entangling Roots
