@@ -2491,6 +2491,7 @@ local function GetUnitSettings(unit, name)
 							order = 2,
 							type = "toggle",
 							name = L["Show With Target"],
+							desc = L["When using Static Position, this option also requires the target to be attackable."],
 							get = function(info) return E.db.nameplates.units[unit].visibility.showWithTarget end,
 							set = function(info, value) E.db.nameplates.units[unit].visibility.showWithTarget = value; NP:ConfigureAll() end,
 							disabled = function() return E.db.nameplates.units[unit].visibility.showAlways end,
@@ -2732,12 +2733,12 @@ E.Options.args.nameplate = {
 			func = function() ACD:SelectGroup("ElvUI", "nameplate", "generalGroup", "fontGroup") end,
 			disabled = function() return not E.NamePlates; end,
 		},
-		classBarShortcut = {
+		cooldownShortcut = {
 			order = 7,
 			type = "execute",
-			name = L["Classbar"],
+			name = L["Cooldowns"],
 			buttonElvUI = true,
-			func = function() ACD:SelectGroup("ElvUI", "nameplate", "generalGroup", "classBarGroup") end,
+			func = function() ACD:SelectGroup("ElvUI", "cooldown", "nameplates") end,
 			disabled = function() return not E.NamePlates; end,
 		},
 		spacer2 = {
@@ -2745,8 +2746,16 @@ E.Options.args.nameplate = {
 			type = "description",
 			name = " ",
 		},
-		threatShortcut = {
+		classBarShortcut = {
 			order = 9,
+			type = "execute",
+			name = L["Classbar"],
+			buttonElvUI = true,
+			func = function() ACD:SelectGroup("ElvUI", "nameplate", "generalGroup", "classBarGroup") end,
+			disabled = function() return not E.NamePlates; end,
+		},
+		threatShortcut = {
+			order = 10,
 			type = "execute",
 			name = L["Threat"],
 			buttonElvUI = true,
@@ -2754,19 +2763,11 @@ E.Options.args.nameplate = {
 			disabled = function() return not E.NamePlates; end,
 		},
 		castBarShortcut = {
-			order = 10,
+			order = 11,
 			type = "execute",
 			name = L["Cast Bar"],
 			buttonElvUI = true,
 			func = function() ACD:SelectGroup("ElvUI", "nameplate", "generalGroup", "castGroup") end,
-			disabled = function() return not E.NamePlates; end,
-		},
-		reactionShortcut = {
-			order = 11,
-			type = "execute",
-			name = L["Reaction Colors"],
-			buttonElvUI = true,
-			func = function() ACD:SelectGroup("ElvUI", "nameplate", "generalGroup", "reactions") end,
 			disabled = function() return not E.NamePlates; end,
 		},
 		spacer3 = {
@@ -2774,8 +2775,16 @@ E.Options.args.nameplate = {
 			type = "description",
 			name = " ",
 		},
-		healPredictionShortcut = {
+		reactionShortcut = {
 			order = 13,
+			type = "execute",
+			name = L["Reaction Colors"],
+			buttonElvUI = true,
+			func = function() ACD:SelectGroup("ElvUI", "nameplate", "generalGroup", "reactions") end,
+			disabled = function() return not E.NamePlates; end,
+		},
+		healPredictionShortcut = {
+			order = 14,
 			type = "execute",
 			name = L["Heal Prediction"],
 			buttonElvUI = true,
@@ -2783,19 +2792,11 @@ E.Options.args.nameplate = {
 			disabled = function() return not E.NamePlates; end,
 		},
 		playerShortcut = {
-			order = 14,
+			order = 15,
 			type = "execute",
 			name = L["Player Frame"],
 			buttonElvUI = true,
 			func = function() ACD:SelectGroup("ElvUI", "nameplate", "playerGroup") end,
-			disabled = function() return not E.NamePlates; end,
-		},
-		healerShortcut = {
-			order = 15,
-			type = "execute",
-			name = L["Healer Frames"],
-			buttonElvUI = true,
-			func = function() ACD:SelectGroup("ElvUI", "nameplate", "healerGroup") end,
 			disabled = function() return not E.NamePlates; end,
 		},
 		spacer4 = {
@@ -2803,8 +2804,16 @@ E.Options.args.nameplate = {
 			type = "description",
 			name = " ",
 		},
-		friendlyPlayerShortcut = {
+		healerShortcut = {
 			order = 17,
+			type = "execute",
+			name = L["Healer Frames"],
+			buttonElvUI = true,
+			func = function() ACD:SelectGroup("ElvUI", "nameplate", "healerGroup") end,
+			disabled = function() return not E.NamePlates; end,
+		},
+		friendlyPlayerShortcut = {
+			order = 18,
 			type = "execute",
 			name = L["Friendly Player Frames"],
 			buttonElvUI = true,
@@ -2812,19 +2821,11 @@ E.Options.args.nameplate = {
 			disabled = function() return not E.NamePlates; end,
 		},
 		enemyPlayerShortcut = {
-			order = 18,
+			order = 19,
 			type = "execute",
 			name = L["Enemy Player Frames"],
 			buttonElvUI = true,
 			func = function() ACD:SelectGroup("ElvUI", "nameplate", "enemyPlayerGroup") end,
-			disabled = function() return not E.NamePlates; end,
-		},
-		friendlyNPCShortcut = {
-			order = 19,
-			type = "execute",
-			name = L["Friendly NPC Frames"],
-			buttonElvUI = true,
-			func = function() ACD:SelectGroup("ElvUI", "nameplate", "friendlyNPCGroup") end,
 			disabled = function() return not E.NamePlates; end,
 		},
 		spacer5 = {
@@ -2832,8 +2833,16 @@ E.Options.args.nameplate = {
 			type = "description",
 			name = " ",
 		},
-		enemyNPCShortcut = {
+		friendlyNPCShortcut = {
 			order = 21,
+			type = "execute",
+			name = L["Friendly NPC Frames"],
+			buttonElvUI = true,
+			func = function() ACD:SelectGroup("ElvUI", "nameplate", "friendlyNPCGroup") end,
+			disabled = function() return not E.NamePlates; end,
+		},
+		enemyNPCShortcut = {
+			order = 22,
 			type = "execute",
 			name = L["Enemy NPC Frames"],
 			buttonElvUI = true,
@@ -2841,7 +2850,7 @@ E.Options.args.nameplate = {
 			disabled = function() return not E.NamePlates; end,
 		},
 		filtersShortcut = {
-			order = 22,
+			order = 23,
 			type = "execute",
 			name = L["Style Filter"],
 			buttonElvUI = true,
@@ -2849,7 +2858,7 @@ E.Options.args.nameplate = {
 			disabled = function() return not E.NamePlates; end,
 		},
 		generalGroup = {
-			order = 23,
+			order = 24,
 			type = "group",
 			name = L["General Options"],
 			childGroups = "tab",
@@ -2976,8 +2985,14 @@ E.Options.args.nameplate = {
 								E:StaticPopup_Show("RESET_NP_AF") --reset nameplate aurafilters
 							end,
 						},
-						targetedNamePlate = {
+						nameColoredGlow = {
 							order = 13,
+							type = "toggle",
+							name = L["Name Colored Glow"],
+							desc = L["Use the Name Color of the unit for the Name Glow."],
+						},
+						targetedNamePlate = {
+							order = 14,
 							type = "group",
 							guiInline = true,
 							name = L["Targeted Nameplate"],
@@ -3056,7 +3071,7 @@ E.Options.args.nameplate = {
 							},
 						},
 						clickThrough = {
-							order = 14,
+							order = 15,
 							type = "group",
 							guiInline = true,
 							name = L["Click Through"],
@@ -3159,55 +3174,9 @@ E.Options.args.nameplate = {
 								},
 							}
 						},
-						duration = {
-							type = "group",
-							order = 5,
-							name = L["Duration"],
-							guiInline = true,
-							args = {
-								durationFont = {
-									type = "select", dialogControl = 'LSM30_Font',
-									order = 1,
-									name = L["Font"],
-									values = AceGUIWidgetLSMlists.font,
-									set = function(info, value) E.db.nameplates[ info[#info] ] = value; NP:UpdatePlateFonts() end,
-								},
-								durationFontSize = {
-									order = 2,
-									name = FONT_SIZE,
-									type = "range",
-									min = 4, max = 20, step = 1,
-									set = function(info, value) E.db.nameplates[ info[#info] ] = value; NP:UpdatePlateFonts() end,
-								},
-								durationFontOutline = {
-									order = 3,
-									name = L["Font Outline"],
-									desc = L["Set the font outline."],
-									type = "select",
-									values = {
-										['NONE'] = NONE,
-										['OUTLINE'] = 'OUTLINE',
-										['MONOCHROMEOUTLINE'] = 'MONOCROMEOUTLINE',
-										['THICKOUTLINE'] = 'THICKOUTLINE',
-									},
-									set = function(info, value) E.db.nameplates[ info[#info] ] = value; NP:UpdatePlateFonts() end,
-								},
-								durationPosition = {
-									order = 4,
-									name = L["Position"],
-									type = "select",
-									values = {
-										["CENTER"] = L["Center"],
-										["TOPLEFT"] = "TOPLEFT",
-										["BOTTOMLEFT"] = "BOTTOMLEFT",
-										["TOPRIGHT"] = "TOPRIGHT",
-									},
-								},
-							}
-						},
 						stacks = {
 							type = "group",
-							order = 6,
+							order = 5,
 							name = L["Stack Counter"],
 							guiInline = true,
 							args = {
@@ -3240,10 +3209,36 @@ E.Options.args.nameplate = {
 								},
 							}
 						},
+						duration = {
+							type = "group",
+							order = 6,
+							name = L["Duration"],
+							guiInline = true,
+							args = {
+								cooldownShortcut = {
+									order = 1,
+									type = "execute",
+									name = L["Cooldowns"],
+									buttonElvUI = true,
+									func = function() ACD:SelectGroup("ElvUI", "cooldown", "nameplates") end,
+								},
+								durationPosition = {
+									order = 2,
+									name = L["Position"],
+									type = "select",
+									values = {
+										["CENTER"] = L["Center"],
+										["TOPLEFT"] = "TOPLEFT",
+										["BOTTOMLEFT"] = "BOTTOMLEFT",
+										["TOPRIGHT"] = "TOPRIGHT",
+									},
+								},
+							}
+						},
 					},
 				},
 				classBarGroup = {
-					order = 125,
+					order = 130,
 					type = "group",
 					name = L["Classbar"],
 					get = function(info) return E.db.nameplates.classbar[ info[#info] ] end,

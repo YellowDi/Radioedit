@@ -155,7 +155,7 @@ E.Options.args.auras = {
 				fadeThreshold = {
 					type = 'range',
 					name = L["Fade Threshold"],
-					desc = L["Threshold before text changes red, goes into decimal form, and the icon will fade. Set to -1 to disable."],
+					desc = L["Threshold before the icon will fade out and back in. Set to -1 to disable."],
 					min = -1, max = 30, step = 1,
 					order = 1,
 				},
@@ -227,7 +227,7 @@ E.Options.args.auras = {
 			},
 		},
 		buffs = {
-			order = 10,
+			order = 15,
 			type = 'group',
 			name = L["Buffs"],
 			get = function(info) return E.db.auras.buffs[ info[#info] ] end,

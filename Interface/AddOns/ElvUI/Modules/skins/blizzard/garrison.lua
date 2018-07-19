@@ -15,39 +15,31 @@ local function LoadSkin()
 	if E.private.skins.blizzard.enable ~= true then return end
 
 	if E.private.skins.blizzard.orderhall or E.private.skins.blizzard.garrison then
+
 		--These hooks affect both Garrison and OrderHall, so make sure they are set even if Garrison skin is disabled
-		hooksecurefunc("GarrisonMissionButton_SetRewards", function(self, _, numRewards)
-			if self.numRewardsStyled == nil then
-				self.numRewardsStyled = 0
-			end
-			while self.numRewardsStyled < numRewards do
-				self.numRewardsStyled = self.numRewardsStyled + 1
-				local reward = self.Rewards[self.numRewardsStyled]
-				reward:GetRegions():Hide()
+		hooksecurefunc("GarrisonMissionButton_SetRewards", function(self)
+			--Set border color according to rarity of item
+			local firstRegion, r, g, b
+			for _, reward in pairs(self.Rewards) do
+				firstRegion = reward.GetRegions and reward:GetRegions()
+				if firstRegion then firstRegion:Hide() end
+
+				if reward.IconBorder then
+					reward.IconBorder:SetTexture(nil)
+				end
+
+				if reward.IconBorder and reward.IconBorder:IsShown() then
+					r, g, b = reward.IconBorder:GetVertexColor()
+				else
+					r, g, b = unpack(E["media"].bordercolor)
+				end
 
 				if not reward.border then
 					reward.border = CreateFrame("Frame", nil, reward)
 					S:HandleIcon(reward.Icon, reward.border)
 				end
 
-				if reward.IconBorder then
-					reward.IconBorder:SetTexture()
-				end
-			end
-
-			--Set border color according to rarity of item
-			for _, reward in pairs(self.Rewards) do
-				if reward.border and reward.border.backdrop then
-					local r, g, b
-					if reward.IconBorder:IsShown() then
-						--This is an item, use the color set by WoW
-						r, g, b = reward.IconBorder:GetVertexColor()
-					else
-						--This is a currency, use the default ElvUI border color
-						r, g, b = unpack(E["media"].bordercolor)
-					end
-					reward.border.backdrop:SetBackdropBorderColor(r, g, b)
-				end
+				reward.border.backdrop:SetBackdropBorderColor(r, g, b)
 			end
 		end)
 
@@ -88,17 +80,16 @@ local function LoadSkin()
 				local button = buttons[i];
 				local index = offset + i; -- adjust index
 				if ( index <= numItems ) then
-					local item = items[index];
-					local index = 1;
-					for id, reward in pairs(item.rewards) do
-						local Reward = button.Rewards[index];
+					local idx, item = 1, items[index];
+					for _, reward in pairs(item.rewards) do
+						local Reward = button.Rewards[idx];
 						if (reward.itemID) then
 							local r, g, b = Reward.IconBorder:GetVertexColor()
 							Reward.border.backdrop:SetBackdropBorderColor(r,g,b)
 						else
 							Reward.border.backdrop:SetBackdropBorderColor(unpack(E["media"].bordercolor))
 						end
-						index = index + 1;
+						idx = idx + 1;
 					end
 				end
 			end
@@ -113,8 +104,10 @@ local function LoadSkin()
 	GarrisonBuildingFrame.TitleText:Show()
 	GarrisonBuildingFrame:CreateBackdrop("Transparent")
 	S:HandleCloseButton(GarrisonBuildingFrame.CloseButton, GarrisonBuildingFrame.backdrop)
-	GarrisonBuildingFrame.BuildingLevelTooltip:StripTextures()
-	GarrisonBuildingFrame.BuildingLevelTooltip:SetTemplate('Transparent')
+	if E.private.skins.blizzard.tooltip then
+		GarrisonBuildingFrame.BuildingLevelTooltip:StripTextures()
+		GarrisonBuildingFrame.BuildingLevelTooltip:SetTemplate('Transparent')
+	end
 
 	-- Follower List
 	local FollowerList = GarrisonBuildingFrame.FollowerList
@@ -148,7 +141,7 @@ local function LoadSkin()
 
 	do
 		local reagentIndex = 1
-		hooksecurefunc("GarrisonCapacitiveDisplayFrame_Update", function(self)
+		hooksecurefunc("GarrisonCapacitiveDisplayFrame_Update", function()
 			local reagents = CapacitiveDisplay.Reagents
 			local reagent = reagents[reagentIndex]
 			while reagent do
@@ -254,6 +247,7 @@ local function LoadSkin()
 	-- Landing page: Follower list
 	FollowerList = GarrisonLandingPage.FollowerList
 	FollowerList.FollowerHeaderBar:Hide()
+	FollowerList.FollowerScrollFrame:Hide()
 	S:HandleEditBox(FollowerList.SearchBox)
 	scrollFrame = FollowerList.listScroll
 	S:HandleScrollBar(scrollFrame.scrollBar)
@@ -325,6 +319,11 @@ local function LoadSkin()
 	FollowerList.MaterialFrame.Icon:SetAtlas("ShipMission_CurrencyIcon-Oil", false) --Re-add the material icon
 	-- HandleShipFollowerPage(FollowerList.followerTab)
 
+
+	--LandingPage Tutorial
+	S:HandleCloseButton(GarrisonLandingPageTutorialBox.CloseButton)
+
+	if E.private.skins.blizzard.tooltip ~= true then return end
 	-- ShipYard: Mission Tooltip
 	local tooltip = GarrisonShipyardMapMissionTooltip
 	local reward = tooltip.ItemTooltip
@@ -349,13 +348,10 @@ local function LoadSkin()
 	S:HookScript(GarrisonMissionMechanicTooltip, "OnShow", function(self)
 		self:SetTemplate("Transparent")
 	end)
-
-	--LandingPage Tutorial
-	S:HandleCloseButton(GarrisonLandingPageTutorialBox.CloseButton)
 end
 
 local function SkinTooltip()
-	if E.private.skins.blizzard.enable ~= true or E.private.skins.blizzard.garrison ~= true then return end
+	if E.private.skins.blizzard.enable ~= true or E.private.skins.blizzard.garrison ~= true or E.private.skins.blizzard.tooltip ~= true then return end
 
 	local function SkinFollowerTooltip(frame)
 		for i = 1, 9 do

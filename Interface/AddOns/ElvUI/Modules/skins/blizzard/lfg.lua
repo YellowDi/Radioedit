@@ -179,16 +179,16 @@ local function LoadSkin()
 	end)
 
 	LFDQueueFrameRoleButtonLeader.leadIcon = LFDQueueFrameRoleButtonLeader:CreateTexture(nil, 'BACKGROUND')
-	LFDQueueFrameRoleButtonLeader.leadIcon:SetTexture([[Interface\GroupFrame\UI-Group-LeaderIcon]])
-	LFDQueueFrameRoleButtonLeader.leadIcon:Point(LFDQueueFrameRoleButtonLeader:GetNormalTexture():GetPoint())
+	LFDQueueFrameRoleButtonLeader.leadIcon:SetTexture("Interface\\AddOns\\ElvUI\\media\\textures\\leader")
+	LFDQueueFrameRoleButtonLeader.leadIcon:Point(LFDQueueFrameRoleButtonLeader:GetNormalTexture():GetPoint(), -10, 5)
 	LFDQueueFrameRoleButtonLeader.leadIcon:Size(50)
-	LFDQueueFrameRoleButtonLeader.leadIcon:SetAlpha(0.4)
+	LFDQueueFrameRoleButtonLeader.leadIcon:SetAlpha(0.6)
 
 	RaidFinderQueueFrameRoleButtonLeader.leadIcon = RaidFinderQueueFrameRoleButtonLeader:CreateTexture(nil, 'BACKGROUND')
-	RaidFinderQueueFrameRoleButtonLeader.leadIcon:SetTexture([[Interface\GroupFrame\UI-Group-LeaderIcon]])
-	RaidFinderQueueFrameRoleButtonLeader.leadIcon:Point(RaidFinderQueueFrameRoleButtonLeader:GetNormalTexture():GetPoint())
+	RaidFinderQueueFrameRoleButtonLeader.leadIcon:SetTexture("Interface\\AddOns\\ElvUI\\media\\textures\\leader")
+	RaidFinderQueueFrameRoleButtonLeader.leadIcon:Point(RaidFinderQueueFrameRoleButtonLeader:GetNormalTexture():GetPoint(), -10, 5)
 	RaidFinderQueueFrameRoleButtonLeader.leadIcon:Size(50)
-	RaidFinderQueueFrameRoleButtonLeader.leadIcon:SetAlpha(0.4)
+	RaidFinderQueueFrameRoleButtonLeader.leadIcon:SetAlpha(0.6)
 
 	hooksecurefunc('LFG_DisableRoleButton', function(button)
 		if button.checkButton:GetChecked() then
@@ -226,7 +226,7 @@ local function LoadSkin()
 		bu.icon:SetTexCoord(unpack(E.TexCoords))
 		bu.icon:Point("LEFT", bu, "LEFT")
 		bu.icon:SetDrawLayer("OVERLAY")
-		bu.icon:Size(40)
+		bu.icon:Size(45)
 		bu.icon:ClearAllPoints()
 		bu.icon:Point("LEFT", 10, 0)
 		bu.border = CreateFrame("Frame", nil, bu)
@@ -490,7 +490,7 @@ local function LoadSkin()
 	LFGListFrame.EntryCreation.CancelButton:Point("BOTTOMLEFT", -1, 3)
 	LFGListFrame.EntryCreation.ListGroupButton:ClearAllPoints()
 	LFGListFrame.EntryCreation.ListGroupButton:Point("BOTTOMRIGHT", -6, 3)
-	S:HandleEditBox(LFGListEntryCreationDescription)
+	S:HandleEditBox(LFGListFrame.EntryCreation.Description)
 
 	S:HandleEditBox(LFGListFrame.EntryCreation.Name)
 	S:HandleEditBox(LFGListFrame.EntryCreation.ItemLevel.EditBox)
@@ -564,23 +564,9 @@ local function LoadSkin()
 	LFGListFrame.SearchPanel.RefreshButton:Size(24)
 	LFGListFrame.SearchPanel.RefreshButton.Icon:SetPoint("CENTER")
 
-	local function handleLFGListCancelDeclineButton(button)
-		S:HandleButton(button)
-		if button.Icon then
-			button.Icon:Hide()
-		end
-		if not button.text then
-			button.text = button:CreateFontString(nil, 'OVERLAY')
-			button.text:SetFont([[Interface\AddOns\ElvUI\media\fonts\PT_Sans_Narrow.ttf]], 16, 'OUTLINE')
-			button.text:SetText('x')
-			button.text:SetJustifyH('CENTER')
-			button.text:Point('CENTER', button, 'CENTER')
-		end
-	end
-
 	hooksecurefunc("LFGListApplicationViewer_UpdateApplicant", function(button)
 		if not button.DeclineButton.template then
-			handleLFGListCancelDeclineButton(button.DeclineButton)
+			S:HandleButton(button.DeclineButton, nil, true)
 		end
 		if not button.InviteButton.template then
 			S:HandleButton(button.InviteButton)
@@ -589,7 +575,7 @@ local function LoadSkin()
 
 	hooksecurefunc("LFGListSearchEntry_Update", function(button)
 		if not button.CancelButton.template then
-			handleLFGListCancelDeclineButton(button.CancelButton)
+			S:HandleButton(button.CancelButton, nil, true)
 		end
 	end)
 
@@ -706,16 +692,17 @@ local function LoadSecondarySkin()
 	ChallengesFrameInsetBg:Hide()
 
 	-- Mythic Dungeon Tab
-	ChallengesFrame.WeeklyBest:SetPoint("TOPLEFT")
-	ChallengesFrame.WeeklyBest:SetPoint("BOTTOMRIGHT")
-	ChallengesFrame.WeeklyBest.Child.Star:SetPoint("TOPLEFT", 54, -27)
-	ChallengesFrame.WeeklyBest.Child.Label:ClearAllPoints()
-	ChallengesFrame.WeeklyBest.Child.Label:Point("TOPLEFT", ChallengesFrame.WeeklyBest.Child.Star, "TOPRIGHT", -16, 1)
-	ChallengesFrame.GuildBest:StripTextures()
-	ChallengesFrame.GuildBest:CreateBackdrop("Transparent")
-	ChallengesFrame.GuildBest.Line:Hide()
-	ChallengesFrame.GuildBest:ClearAllPoints()
-	ChallengesFrame.GuildBest:Point("TOPLEFT", ChallengesFrame.WeeklyBest.Child.Star, "BOTTOMRIGHT", -16, 50)
+	--ChallengesFrame.WeeklyBest:SetPoint("TOPLEFT")
+	--ChallengesFrame.WeeklyBest:SetPoint("BOTTOMRIGHT")
+	--ChallengesFrame.WeeklyBest.Child.Star:SetPoint("TOPLEFT", 54, -27)
+	--ChallengesFrame.WeeklyBest.Child.Label:ClearAllPoints()
+	--ChallengesFrame.WeeklyBest.Child.Label:Point("TOPLEFT", ChallengesFrame.WeeklyBest.Child.Star, "TOPRIGHT", -16, 1)
+	--ChallengesFrame.GuildBest:SetFrameLevel(ChallengesFrame.GuildBest:GetFrameLevel()+3)
+	--ChallengesFrame.GuildBest:StripTextures()
+	--ChallengesFrame.GuildBest:CreateBackdrop("Transparent")
+	--ChallengesFrame.GuildBest.Line:Hide()
+	--ChallengesFrame.GuildBest:ClearAllPoints()
+	--ChallengesFrame.GuildBest:Point("TOPLEFT", ChallengesFrame.WeeklyBest.Child.Star, "BOTTOMRIGHT", -16, 50)
 
 	-- Mythic+ KeyStoneFrame
 	S:HandleCloseButton(ChallengesKeystoneFrame.CloseButton)

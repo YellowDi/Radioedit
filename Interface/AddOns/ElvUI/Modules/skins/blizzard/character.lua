@@ -4,7 +4,8 @@ local S = E:GetModule('Skins')
 --Cache global variables
 --Lua functions
 local _G = _G
-local unpack, pairs, select = unpack, pairs, select
+local unpack, select = unpack, select
+local pairs, ipairs = pairs, ipairs
 --WoW API / Variables
 local FauxScrollFrame_GetOffset = FauxScrollFrame_GetOffset
 local GetFactionInfo = GetFactionInfo
@@ -19,7 +20,11 @@ local UnitLevel = UnitLevel
 local UnitSex = UnitSex
 --Global variables that we don't cache, list them here for mikk's FindGlobals script
 -- GLOBALS: PAPERDOLL_SIDEBARS, PAPERDOLL_STATINFO, PAPERDOLL_STATCATEGORIES, NUM_GEARSET_ICONS_SHOWN
--- GLOBALS: PaperDollFrame_SetItemLevel, MIN_PLAYER_LEVEL_FOR_ITEM_LEVEL_DISPLAY
+-- GLOBALS: PaperDollFrame_SetItemLevel, MIN_PLAYER_LEVEL_FOR_ITEM_LEVEL_DISPLAY, NUM_FACTIONS_DISPLAYED
+
+local PLACEINBAGS_LOCATION = 0xFFFFFFFF;
+local IGNORESLOT_LOCATION = 0xFFFFFFFE;
+local UNIGNORESLOT_LOCATION = 0xFFFFFFFD;
 
 local function LoadSkin()
 	if E.private.skins.blizzard.enable ~= true or E.private.skins.blizzard.character ~= true then return end
@@ -72,6 +77,20 @@ local function LoadSkin()
 		hooksecurefunc(slot.IconBorder, 'Hide', function(self)
 			self:GetParent():SetBackdropBorderColor(unpack(E.media.bordercolor))
 		end)
+	end
+
+	-- Give character frame model backdrop it's color back
+	for _, corner in pairs({"TopLeft","TopRight","BotLeft","BotRight"}) do
+		local bg = _G["CharacterModelFrameBackground"..corner];
+		if bg then
+			bg:SetDesaturated(false);
+			bg.ignoreDesaturated = true; -- so plugins can prevent this if they want.
+			hooksecurefunc(bg, "SetDesaturated", function(bckgnd, value)
+				if value and bckgnd.ignoreDesaturated then
+					bckgnd:SetDesaturated(false);
+				end
+			end)
+		end
 	end
 
 	CharacterLevelText:FontTemplate()
@@ -209,30 +228,47 @@ local function LoadSkin()
 	S:HandleNextPrevButton(EquipmentFlyoutFrame.NavigationFrame.NextButton)
 
 	local function SkinItemFlyouts()
-		--Because EquipmentFlyout_Show seems to run as OnUpdate, prevent re-skinning the frames over and over.
-		if (not EquipmentFlyoutFrameButtons.isSkinned) or (EquipmentFlyoutFrameButtons.bg2 and not EquipmentFlyoutFrameButtons.bg2.isSkinned) or (EquipmentFlyoutFrameButtons.bg3 and not EquipmentFlyoutFrameButtons.bg3.isSkinned) or (EquipmentFlyoutFrameButtons.bg4 and not EquipmentFlyoutFrameButtons.bg4.isSkinned) then
-			EquipmentFlyoutFrameButtons:StripTextures()
-			EquipmentFlyoutFrameButtons:SetTemplate("Transparent")
-			EquipmentFlyoutFrameButtons.isSkinned = true
-			if EquipmentFlyoutFrameButtons.bg2 then EquipmentFlyoutFrameButtons.bg2.isSkinned = true end
-			if EquipmentFlyoutFrameButtons.bg3 then EquipmentFlyoutFrameButtons.bg3.isSkinned = true end
-			if EquipmentFlyoutFrameButtons.bg4 then EquipmentFlyoutFrameButtons.bg4.isSkinned = true end
+		local flyout = EquipmentFlyoutFrame;
+		local buttons = flyout.buttons;
+		local buttonAnchor = flyout.buttonFrame;
+
+		if not buttonAnchor.template then
+			buttonAnchor:StripTextures()
+			buttonAnchor:SetTemplate("Transparent")
 		end
 
-		local i = 1
-		local button = _G["EquipmentFlyoutFrameButton"..i]
+		for i, button in ipairs(buttons) do
+			if buttonAnchor["bg"..i] and buttonAnchor["bg"..i]:GetTexture() ~= nil then
+				buttonAnchor["bg"..i]:SetTexture(nil)
+			end
 
-		while button do
 			if not button.isHooked then
-				local icon = _G["EquipmentFlyoutFrameButton"..i.."IconTexture"]
-
+				button.isHooked = true
 				button:StyleButton(false)
 				button:GetNormalTexture():SetTexture(nil)
 
+				button.icon:SetInside()
+				button.icon:SetTexCoord(unpack(E.TexCoords))
+
 				if not button.backdrop then
+					button:SetFrameLevel(buttonAnchor:GetFrameLevel()+2)
 					button:CreateBackdrop("Default")
 					button.backdrop:SetAllPoints()
 
+					if i ~= 1 then -- dont call this intially on placeInBags button
+						button.backdrop:SetBackdropBorderColor(button.IconBorder:GetVertexColor())
+					end
+
+					if i == 1 or i == 2 then
+						hooksecurefunc(button.icon, 'SetTexture', function(self)
+							local loc = self:GetParent().location
+							if (loc == PLACEINBAGS_LOCATION) or (loc == IGNORESLOT_LOCATION) or (loc == UNIGNORESLOT_LOCATION) then
+								self:GetParent().backdrop:SetBackdropBorderColor(unpack(E.media.bordercolor))
+							end
+						end)
+					end
+
+					button.IconBorder:SetTexture("")
 					hooksecurefunc(button.IconBorder, 'SetVertexColor', function(self, r, g, b)
 						self:GetParent().backdrop:SetBackdropBorderColor(r, g, b)
 						self:SetTexture("")
@@ -241,19 +277,15 @@ local function LoadSkin()
 						self:GetParent().backdrop:SetBackdropBorderColor(unpack(E.media.bordercolor))
 					end)
 				end
-
-				icon:SetInside()
-				icon:SetTexCoord(unpack(E.TexCoords))
-				button.isHooked = true
 			end
-
-			i = i + 1
-			button = _G["EquipmentFlyoutFrameButton"..i]
 		end
+
+		local width, height = buttonAnchor:GetSize()
+		buttonAnchor:Size(width+3, height)
 	end
 
 	--Swap item flyout frame (shown when holding alt over a slot)
-	EquipmentFlyoutFrame:HookScript("OnShow", SkinItemFlyouts)
+	hooksecurefunc("EquipmentFlyout_UpdateItems", SkinItemFlyouts)
 
 	--Icon in upper right corner of character frame
 	CharacterFramePortrait:Kill()
@@ -270,7 +302,8 @@ local function LoadSkin()
 	for _, object in pairs(charframe) do
 		_G[object]:StripTextures()
 	end
-	--Re-add the overlay texture which was removed right above
+
+	--Re-add the overlay texture which was removed right above via StripTextures
 	CharacterModelFrameBackgroundOverlay:SetColorTexture(0,0,0)
 	CharacterModelFrame:CreateBackdrop("Default")
 	CharacterModelFrame.backdrop:Point("TOPLEFT", E.PixelMode and -1 or -2, E.PixelMode and 1 or 2)
@@ -335,6 +368,9 @@ local function LoadSkin()
 
 	--Icon selection frame
 	S:HandleIconSelectionFrame(GearManagerDialogPopup, NUM_GEARSET_ICONS_SHOWN, "GearManagerDialogPopupButton")
+	S:HandleButton(GearManagerDialogPopupOkay)
+	S:HandleButton(GearManagerDialogPopupCancel)
+	S:HandleEditBox(GearManagerDialogPopupEditBox)
 
 	--Handle Tabs at bottom of character frame
 	for i=1, 4 do
@@ -349,7 +385,7 @@ local function LoadSkin()
 				tab.Icon:SetAllPoints()
 				tab.Highlight:SetColorTexture(1, 1, 1, 0.3)
 				tab.Highlight:SetAllPoints()
-				tab.Hider:SetColorTexture(0.4,0.4,0.4,0.4)
+				tab.Hider:SetColorTexture(0.0,0.0,0.0,0.8)
 				tab.Hider:SetAllPoints()
 				tab.TabBg:Kill()
 
@@ -419,23 +455,25 @@ local function LoadSkin()
 	hooksecurefunc("ReputationFrame_Update", UpdateFactionSkins)
 
 	--Reputation Paragon Tooltip
-	local tooltip = ReputationParagonTooltip
-	local reward = tooltip.ItemTooltip
-	local icon = reward.Icon
-	tooltip:SetTemplate("Transparent")
-	if icon then
-		S:HandleIcon(icon)
-		hooksecurefunc(reward.IconBorder, "SetVertexColor", function(self, r, g, b)
-			self:GetParent().backdrop:SetBackdropBorderColor(r, g, b)
-			self:SetTexture("")
-		end)
-		hooksecurefunc(reward.IconBorder, "Hide", function(self)
-			self:GetParent().backdrop:SetBackdropBorderColor(unpack(E.media.bordercolor))
+	if E.private.skins.blizzard.tooltip then
+		local tooltip = EmbeddedItemTooltip
+		local reward = tooltip.ItemTooltip
+		local icon = reward.Icon
+		tooltip:SetTemplate("Transparent")
+		if icon then
+			S:HandleIcon(icon)
+			hooksecurefunc(reward.IconBorder, "SetVertexColor", function(self, r, g, b)
+				self:GetParent().backdrop:SetBackdropBorderColor(r, g, b)
+				self:SetTexture("")
+			end)
+			hooksecurefunc(reward.IconBorder, "Hide", function(self)
+				self:GetParent().backdrop:SetBackdropBorderColor(unpack(E.media.bordercolor))
+			end)
+		end
+		tooltip:HookScript("OnShow", function(self)
+			self:SetTemplate("Transparent")
 		end)
 	end
-	tooltip:HookScript("OnShow", function(self)
-		self:SetTemplate("Transparent")
-	end)
 
 	--Currency
 	local function UpdateCurrencySkins()
