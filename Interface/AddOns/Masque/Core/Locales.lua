@@ -100,8 +100,7 @@ L["Disabled"] = "Deaktiviert"
 L["Enable"] = "Aktivieren"
 L["Enable the backdrop texture."] = "Aktiviert die Hintergrundtextur."
 L["Enable the minimap icon."] = "Aktiviert das Minikartensymbol"
---Translation missing 
--- L["Equipped"] = ""
+L["Equipped"] = "Ausgerüstet"
 L["Flash"] = "Leuchten"
 L["General"] = "Allgemein"
 L["Global"] = "Global"
@@ -123,8 +122,7 @@ L["Set the color of the backdrop texture."] = "Lege die Farbe der Hintergrundtex
 L["Set the color of the checked texture."] = "Lege die Farbe der Markiert-Textur fest"
 L["Set the color of the cooldown animation."] = "Lege die Farbe der Abklingzeit-Animation fest."
 L["Set the color of the disabled texture."] = "Lege die Farbe der Deaktiviert-Textur fest"
---Translation missing 
--- L["Set the color of the equipped item texture."] = ""
+L["Set the color of the equipped item texture."] = "Lege die Farbe der Ausgerüstetes-Item textur fest."
 L["Set the color of the flash texture."] = "Lege die Farbe der Leucht-Textur fest"
 L["Set the color of the gloss texture."] = "Lege die Farbe der Glanz-Textur fest"
 L["Set the color of the highlight texture."] = "Lege die Farbe Hervorgehoben-Textur"
@@ -134,9 +132,6 @@ L["Set the intensity of the gloss color."] = "Lege die Intensität der Glanzfarb
 L["Set the skin for this group."] = "Lege die Optik dieser Gruppe fest"
 L["Skin"] = "Optik"
 L["This section will allow you to skin the buttons of the add-ons and add-on groups registered with Masque."] = "Dieser Abschnitt ermöglicht es dir, das Aussehen von Buttons der Addons und Addongruppen anzupassen, die mit Masque verbunden sind."
-
--- ToC
-L["A dynamic button skinning add-on."] = "Ein Addon zur dynamischen Änderung der Buttonoptiken."
 
 	elseif LOC == "esES" or LOC == "esMX" then
 L["Addons"] = "Botones"
@@ -150,8 +145,8 @@ L["Click this button to load Masque's options. You can also use the %s or %s cha
 L["Click to open Masque's options window."] = "Clic para mostrar las opciones de Masque."
 L["Color"] = "Color"
 L["Colors"] = "Colores"
---Translation missing 
--- L["Cooldown"] = ""
+--[[Translation missing --]]
+--[[ L["Cooldown"] = ""--]] 
 L["Debug Mode"] = "Depuración"
 L["Disable"] = "Desactivado"
 L["Disable the skinning of this group."] = "Deshabilitar las texturas para este grupo."
@@ -159,8 +154,8 @@ L["Disabled"] = "Desactivado"
 L["Enable"] = "Activado"
 L["Enable the backdrop texture."] = "Habilitar la textura de fondo."
 L["Enable the minimap icon."] = "Mostrar un icono en el minimapa"
---Translation missing 
--- L["Equipped"] = ""
+--[[Translation missing --]]
+--[[ L["Equipped"] = ""--]] 
 L["Flash"] = "Destello"
 L["General"] = "General"
 L["Global"] = "Global"
@@ -180,11 +175,11 @@ L["Reset all skin options to the defaults."] = "Reestablece todos los colores a 
 L["Reset Skin"] = "Restablecer Colores"
 L["Set the color of the backdrop texture."] = "Cambiar el color de la textura del fondo."
 L["Set the color of the checked texture."] = "Establece el color de la textura activada"
---Translation missing 
--- L["Set the color of the cooldown animation."] = ""
+--[[Translation missing --]]
+--[[ L["Set the color of the cooldown animation."] = ""--]] 
 L["Set the color of the disabled texture."] = "Establece el color de la textura desactivada"
---Translation missing 
--- L["Set the color of the equipped item texture."] = ""
+--[[Translation missing --]]
+--[[ L["Set the color of the equipped item texture."] = ""--]] 
 L["Set the color of the flash texture."] = "Establece el color del textura destelleando"
 L["Set the color of the gloss texture."] = "Establece el color de la textura brillando"
 L["Set the color of the highlight texture."] = "Establece el color de la textura resaltada"
@@ -194,9 +189,6 @@ L["Set the intensity of the gloss color."] = "Cambiar la transparencia de la tex
 L["Set the skin for this group."] = "Seleccionar la tema para este grupo."
 L["Skin"] = "Textura"
 L["This section will allow you to skin the buttons of the add-ons and add-on groups registered with Masque."] = "Estas opciones te permiten cambiar la aparencia de los botones de los add-ons que se han registrados en Masque."
-
--- ToC
-L["A dynamic button skinning add-on."] = "Cambiar dinamicamente la aparencia de botones."
 
 	elseif LOC == "frFR" then
 L["Addons"] = "Boutons"
@@ -210,8 +202,7 @@ L["Click this button to load Masque's options. You can also use the %s or %s cha
 L["Click to open Masque's options window."] = "Cliquez pour ouvrir la fenêtre des options de Masque."
 L["Color"] = "Couleur"
 L["Colors"] = "Couleurs"
---Translation missing 
--- L["Cooldown"] = ""
+L["Cooldown"] = "Cooldown"
 L["Debug Mode"] = "Mode débogage"
 L["Disable"] = "Désactiver"
 L["Disable the skinning of this group."] = "Désactiver le skin (style) de ce groupe."
@@ -219,8 +210,7 @@ L["Disabled"] = "Désactivé"
 L["Enable"] = "Activer"
 L["Enable the backdrop texture."] = "Activer la texture de fond."
 L["Enable the minimap icon."] = "Active l'icône de la minicarte."
---Translation missing 
--- L["Equipped"] = ""
+L["Equipped"] = "équipé"
 L["Flash"] = "Flash"
 L["General"] = "Général"
 L["Global"] = "Global"
@@ -240,11 +230,9 @@ L["Reset all skin options to the defaults."] = "Restaure les couleurs par défau
 L["Reset Skin"] = "Réinit. toutes les couleurs"
 L["Set the color of the backdrop texture."] = "Définir la couleur de la texture de fond."
 L["Set the color of the checked texture."] = "Définir la couleur de la texture cochée."
---Translation missing 
--- L["Set the color of the cooldown animation."] = ""
+L["Set the color of the cooldown animation."] = "Définir la couleur de l'animation du cooldown"
 L["Set the color of the disabled texture."] = "Définir la couleur de la texture désactivée."
---Translation missing 
--- L["Set the color of the equipped item texture."] = ""
+L["Set the color of the equipped item texture."] = "Définir la couleur de la texture de l'objet équipé"
 L["Set the color of the flash texture."] = "Définir la couleur de la texture clignotante."
 L["Set the color of the gloss texture."] = "Définir la couleur de la texture du vernis. "
 L["Set the color of the highlight texture."] = "Définir la couleur de la surbrillance."
@@ -254,9 +242,6 @@ L["Set the intensity of the gloss color."] = "Définir l’intensité de la coul
 L["Set the skin for this group."] = "Définir le skin (style) pour ce groupe."
 L["Skin"] = "Skin"
 L["This section will allow you to skin the buttons of the add-ons and add-on groups registered with Masque."] = "Cette section vous permet de définir le skin (style) des boutons des add-ons et des groupes d'add-ons enregistrés avec Masque."
-
--- ToC
-L["A dynamic button skinning add-on."] = "Un add-on de skinnage dynamique des boutons."
 
 	elseif LOC == "itIT" then
 L["Addons"] = "Addons"
@@ -270,8 +255,8 @@ L["Click this button to load Masque's options. You can also use the %s or %s cha
 L["Click to open Masque's options window."] = "Clicca per aprire la finestra delle opzioni di Masque"
 L["Color"] = "Colore"
 L["Colors"] = "Colori"
---Translation missing 
--- L["Cooldown"] = ""
+--[[Translation missing --]]
+--[[ L["Cooldown"] = ""--]] 
 L["Debug Mode"] = "Modalità  Debug"
 L["Disable"] = "Disabilita"
 L["Disable the skinning of this group."] = "Disabilita lo skinning per questo gruppo."
@@ -279,8 +264,8 @@ L["Disabled"] = "Disabilitato"
 L["Enable"] = "Abilita"
 L["Enable the backdrop texture."] = "Abilita la texture di sfondo."
 L["Enable the minimap icon."] = "Abilita l'icona della minimappa"
---Translation missing 
--- L["Equipped"] = ""
+--[[Translation missing --]]
+--[[ L["Equipped"] = ""--]] 
 L["Flash"] = "Lampeggio"
 L["General"] = "Generale"
 L["Global"] = "Globale"
@@ -300,11 +285,11 @@ L["Reset all skin options to the defaults."] = "Reimposta i valori predefiniti d
 L["Reset Skin"] = "Reimposta Skin"
 L["Set the color of the backdrop texture."] = "Imposta il colore della texture di sfondo."
 L["Set the color of the checked texture."] = "Imposta il colore della texture controllata."
---Translation missing 
--- L["Set the color of the cooldown animation."] = ""
+--[[Translation missing --]]
+--[[ L["Set the color of the cooldown animation."] = ""--]] 
 L["Set the color of the disabled texture."] = "Imposta il colore della texture disabilitata."
---Translation missing 
--- L["Set the color of the equipped item texture."] = ""
+--[[Translation missing --]]
+--[[ L["Set the color of the equipped item texture."] = ""--]] 
 L["Set the color of the flash texture."] = "Imposta il colore della texture lampeggiante."
 L["Set the color of the gloss texture."] = "Imposta il colore della texture gloss."
 L["Set the color of the highlight texture."] = "Imposta il colore della texture evidenziata."
@@ -314,9 +299,6 @@ L["Set the intensity of the gloss color."] = "Imposta l'intensità della texture
 L["Set the skin for this group."] = "Imposta la skin per questo gruppo."
 L["Skin"] = "Skin"
 L["This section will allow you to skin the buttons of the add-ons and add-on groups registered with Masque."] = "Questa sezione vi permetterà di impostare le skin ai pulsanti degli add-on o a gruppi di add-on registrati con Masque."
-
--- ToC
-L["A dynamic button skinning add-on."] = "Un'add-on per lo skinning dinamico dei pulsanti."
 
 	elseif LOC == "koKR" then
 L["Addons"] = "애드온"
@@ -371,9 +353,6 @@ L["Set the skin for this group."] = "이 그룹을 위한 스킨을 설정합니
 L["Skin"] = "스킨"
 L["This section will allow you to skin the buttons of the add-ons and add-on groups registered with Masque."] = "이 항목은 Masque와 함께 등록된 애드온과 애드온 그룹의 버튼의 스킨을 씌울 수 있도록 합니다."
 
--- ToC
-L["A dynamic button skinning add-on."] = "동적인 버튼 스킨 입히기 애드온 입니다."
-
 	elseif LOC == "ptBR" then
 L["Addons"] = "Addons"
 L["Adjust the skin of all buttons registered to %s. This will overwrite any per-group settings."] = "Ajusta a skin de todos os botões registrados a %s. Isto substituirá qualquer definição por-grupo."
@@ -386,8 +365,8 @@ L["Click this button to load Masque's options. You can also use the %s or %s cha
 L["Click to open Masque's options window."] = "Clique para abrir a janela de opções do Masque."
 L["Color"] = "Cor"
 L["Colors"] = "Cores"
---Translation missing 
--- L["Cooldown"] = ""
+--[[Translation missing --]]
+--[[ L["Cooldown"] = ""--]] 
 L["Debug Mode"] = "Modo de Depuração"
 L["Disable"] = "Desativar"
 L["Disable the skinning of this group."] = "Desatica a skin deste grupo."
@@ -395,11 +374,11 @@ L["Disabled"] = "Desativado"
 L["Enable"] = "Ativar"
 L["Enable the backdrop texture."] = "Ativa a textura de fundo."
 L["Enable the minimap icon."] = "Ativa o ícone do minimapa."
---Translation missing 
--- L["Equipped"] = ""
+--[[Translation missing --]]
+--[[ L["Equipped"] = ""--]] 
 L["Flash"] = "Flash"
---Translation missing 
--- L["General"] = ""
+--[[Translation missing --]]
+--[[ L["General"] = ""--]] 
 L["Global"] = "Global"
 L["Gloss Settings"] = "Definições de Brilho"
 L["Highlight"] = "Destaque"
@@ -417,11 +396,11 @@ L["Reset all skin options to the defaults."] = "Redefine todas as opções da sk
 L["Reset Skin"] = "Redefinir Skin"
 L["Set the color of the backdrop texture."] = "Define a cor da textura de fundo."
 L["Set the color of the checked texture."] = "Define a cor da textura de marcado."
---Translation missing 
--- L["Set the color of the cooldown animation."] = ""
+--[[Translation missing --]]
+--[[ L["Set the color of the cooldown animation."] = ""--]] 
 L["Set the color of the disabled texture."] = "Define a cor da textura de desativado."
---Translation missing 
--- L["Set the color of the equipped item texture."] = ""
+--[[Translation missing --]]
+--[[ L["Set the color of the equipped item texture."] = ""--]] 
 L["Set the color of the flash texture."] = "Define a cor da textura de flash."
 L["Set the color of the gloss texture."] = "Define a cor da textura de brilho."
 L["Set the color of the highlight texture."] = "Define a cor da textura de destaque."
@@ -431,9 +410,6 @@ L["Set the intensity of the gloss color."] = "Define a intensidade da cor de bri
 L["Set the skin for this group."] = "Define a skin para este grupo."
 L["Skin"] = "Skin"
 L["This section will allow you to skin the buttons of the add-ons and add-on groups registered with Masque."] = "Esta seção permitirá que você coloque skins nos botões dos add-ons e grupos de add-ons registrados no Masque."
-
--- ToC
-L["A dynamic button skinning add-on."] = "Um add-on de skin dinâmico de botões."
 
 	elseif LOC == "ruRU" then
 L["Addons"] = "Модификации"
@@ -447,8 +423,8 @@ L["Click this button to load Masque's options. You can also use the %s or %s cha
 L["Click to open Masque's options window."] = "ЛКМ для открытия настроек Masque."
 L["Color"] = "Цвет"
 L["Colors"] = "Цвета"
---Translation missing 
--- L["Cooldown"] = ""
+--[[Translation missing --]]
+--[[ L["Cooldown"] = ""--]] 
 L["Debug Mode"] = "Режим отладки"
 L["Disable"] = "Отключить"
 L["Disable the skinning of this group."] = "Отключить скины для этой группы."
@@ -456,8 +432,8 @@ L["Disabled"] = "Отключенный"
 L["Enable"] = "Включить"
 L["Enable the backdrop texture."] = "Включить настройки фона текстуры."
 L["Enable the minimap icon."] = "Отображать иконку у миникарты."
---Translation missing 
--- L["Equipped"] = ""
+--[[Translation missing --]]
+--[[ L["Equipped"] = ""--]] 
 L["Flash"] = "Сверкание"
 L["General"] = "Общее"
 L["Global"] = "Общее"
@@ -477,11 +453,11 @@ L["Reset all skin options to the defaults."] = "Установить значе�
 L["Reset Skin"] = "Сбросить цвета"
 L["Set the color of the backdrop texture."] = "Установить цвет фона текстуры."
 L["Set the color of the checked texture."] = "Установить цвет текстуры при выделении."
---Translation missing 
--- L["Set the color of the cooldown animation."] = ""
+--[[Translation missing --]]
+--[[ L["Set the color of the cooldown animation."] = ""--]] 
 L["Set the color of the disabled texture."] = "Установить цвет отключенной текстуры."
---Translation missing 
--- L["Set the color of the equipped item texture."] = ""
+--[[Translation missing --]]
+--[[ L["Set the color of the equipped item texture."] = ""--]] 
 L["Set the color of the flash texture."] = "Установить цвет текстуры с подсветкой."
 L["Set the color of the gloss texture."] = "Задать цвет для глянца текстур."
 L["Set the color of the highlight texture."] = "Установить цвет текстуры при наведении."
@@ -491,9 +467,6 @@ L["Set the intensity of the gloss color."] = "Установить интенс�
 L["Set the skin for this group."] = "Установить скин для данной группы."
 L["Skin"] = "Скины"
 L["This section will allow you to skin the buttons of the add-ons and add-on groups registered with Masque."] = "Этот раздел позволяет настроить скины для панелей команд аддонов и групп аддонов, использующих Masque."
-
--- ToC
-L["A dynamic button skinning add-on."] = "Аддон для добавления скинов к панелям команд."
 
 	elseif LOC == "zhCN" then
 L["Addons"] = "插件"
@@ -507,8 +480,8 @@ L["Click this button to load Masque's options. You can also use the %s or %s cha
 L["Click to open Masque's options window."] = "点击打开 Masque 选项窗口。"
 L["Color"] = "颜色"
 L["Colors"] = "颜色"
---Translation missing 
--- L["Cooldown"] = ""
+--[[Translation missing --]]
+--[[ L["Cooldown"] = ""--]] 
 L["Debug Mode"] = "调试模式"
 L["Disable"] = "禁用"
 L["Disable the skinning of this group."] = "禁用此群组换肤。"
@@ -516,8 +489,8 @@ L["Disabled"] = "已禁用"
 L["Enable"] = "启用"
 L["Enable the backdrop texture."] = "启用背景材质。"
 L["Enable the minimap icon."] = "启用小地图图标。"
---Translation missing 
--- L["Equipped"] = ""
+--[[Translation missing --]]
+--[[ L["Equipped"] = ""--]] 
 L["Flash"] = "闪光"
 L["General"] = "一般"
 L["Global"] = "全局"
@@ -537,11 +510,11 @@ L["Reset all skin options to the defaults."] = "重置所有皮肤选项为默�
 L["Reset Skin"] = "重置皮肤"
 L["Set the color of the backdrop texture."] = "设置背景材质颜色"
 L["Set the color of the checked texture."] = "设置已选中材质颜色。"
---Translation missing 
--- L["Set the color of the cooldown animation."] = ""
+--[[Translation missing --]]
+--[[ L["Set the color of the cooldown animation."] = ""--]] 
 L["Set the color of the disabled texture."] = "设置已禁用材质颜色。"
---Translation missing 
--- L["Set the color of the equipped item texture."] = ""
+--[[Translation missing --]]
+--[[ L["Set the color of the equipped item texture."] = ""--]] 
 L["Set the color of the flash texture."] = "设置闪光材质颜色。"
 L["Set the color of the gloss texture."] = "设置光泽材质颜色。"
 L["Set the color of the highlight texture."] = "设置高亮材质颜色。"
@@ -551,9 +524,6 @@ L["Set the intensity of the gloss color."] = "设置光泽颜色亮度。"
 L["Set the skin for this group."] = "为此群组设置皮肤。"
 L["Skin"] = "皮肤"
 L["This section will allow you to skin the buttons of the add-ons and add-on groups registered with Masque."] = "这个部分将允许你将使用 Masque 注册的插件与插件群组的按钮进行换肤。"
-
--- ToC
-L["A dynamic button skinning add-on."] = "一个动态按钮皮肤插件。"
 
 	elseif LOC == "zhTW" then
 L["Addons"] = "插件"
@@ -607,9 +577,6 @@ L["Set the intensity of the gloss color."] = "設定光澤顏色亮度。"
 L["Set the skin for this group."] = "設定佈景主題套用在此群組。"
 L["Skin"] = "佈景主題"
 L["This section will allow you to skin the buttons of the add-ons and add-on groups registered with Masque."] = "此區塊允許使用者將註冊在Masque底下的插件按鈕套用佈景主題。"
-
--- ToC
-L["A dynamic button skinning add-on."] = "動態套用按鈕佈景主題的插件。"
 
 	end
 end
