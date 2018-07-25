@@ -90,38 +90,38 @@ local APPLICANT_LIST_HEADER = {
             return _PartySortHandler(applicant) or tostring(9999 - applicant:GetItemLevel())
         end
     },
-    {
-        key = 'PvPRating',
-        text = L['PvP'],
-        width = 52,
-        showHandler = function(applicant)
-            local activity = CreatePanel:GetCurrentActivity()
-            if not activity then
-                return
-            end
-            local pvp = applicant:GetPvPText()
-            if not pvp then
-                return
-            end
+    -- {
+    --     key = 'PvPRating',
+    --     text = L['PvP'],
+    --     width = 52,
+    --     showHandler = function(applicant)
+    --         local activity = CreatePanel:GetCurrentActivity()
+    --         if not activity then
+    --             return
+    --         end
+    --         local pvp = applicant:GetPvPText()
+    --         if not pvp then
+    --             return
+    --         end
 
-            if applicant:GetResult() then
-                if applicant:GetPvPRating() < activity:GetPvPRating() then
-                    return pvp, RED_FONT_COLOR.r, RED_FONT_COLOR.g, RED_FONT_COLOR.b
-                else
-                    return pvp
-                end
-            else
-                return pvp, GRAY_FONT_COLOR.r, GRAY_FONT_COLOR.g, GRAY_FONT_COLOR.b
-            end
-        end,
-        sortHandler = function(applicant)
-            return _PartySortHandler(applicant) or tostring(9999 - applicant:GetPvPRating())
-        end
-    },
+    --         if applicant:GetResult() then
+    --             if applicant:GetPvPRating() < activity:GetPvPRating() then
+    --                 return pvp, RED_FONT_COLOR.r, RED_FONT_COLOR.g, RED_FONT_COLOR.b
+    --             else
+    --                 return pvp
+    --             end
+    --         else
+    --             return pvp, GRAY_FONT_COLOR.r, GRAY_FONT_COLOR.g, GRAY_FONT_COLOR.b
+    --         end
+    --     end,
+    --     sortHandler = function(applicant)
+    --         return _PartySortHandler(applicant) or tostring(9999 - applicant:GetPvPRating())
+    --     end
+    -- },
     {
         key = 'Msg',
         text = L['描述'],
-        width = 100,
+        width = 152,
         style = 'LEFT',
         showHandler = function(applicant)
             if applicant:GetResult() then

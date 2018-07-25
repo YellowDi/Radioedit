@@ -19,7 +19,9 @@ function CombatStat:OnInitialize()
 end
 
 function CombatStat:OnEnable()
-    self:RegisterEvent('COMBAT_LOG_EVENT_UNFILTERED')
+    self:RegisterEvent('COMBAT_LOG_EVENT_UNFILTERED', function()
+        self:COMBAT_LOG_EVENT_UNFILTERED('COMBAT_LOG_EVENT_UNFILTERED', CombatLogGetCurrentEventInfo())
+    end)
     self:RegisterEvent('UNIT_PET')
     self:RegisterEvent('GROUP_ROSTER_UPDATE', 'UpdateGroupUnits')
 

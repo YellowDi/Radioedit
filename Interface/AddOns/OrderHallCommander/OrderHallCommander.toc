@@ -1,4 +1,4 @@
-## Interface: 70300
+## Interface: 80000
 ## Title: OrderHallCommander
 ## Notes: Sending all follower to missions with just one click and more
 ## Notes-itIT: Invia tutti i seguaci in missione con un click e molto altro
@@ -12,15 +12,15 @@
 ## Notes-zhTW: 发送所有的追随者与点击多任务
 ## Notes-zhCN: 發送所有的追隨者與點擊多任務
 ## Author: Alar of Runetotem
-## Version: 1.5.14 70300
-## X-Revision: dd040db
+## Version: 1.6.1 70300
+## X-Revision: 5258def
 ## eMail: alar@aspide.it
 ## URL: http://wow.aspide.it
 ## OptionalDeps: Ace3,LibInit
-## Dependencies: Blizzard_OrderHallUI
+## Dependencies: Blizzard_GarrisonUI,Blizzard_GarrisonTemplates
 ## DefaultState: Enabled
 ## LoadOnDemand: 1
-## LoadWith: Blizzard_OrderHallUI
+## LoadWith: Blizzard_GarrisonUI
 ## SavedVariables: dbOHC
 ## SavedVariablesPerCharacter: dbOHCperChar
 ## X-ID: OHC
@@ -28,8 +28,9 @@
 ## X-Category: Garrison
 ## X-License: GPL v3
 ## X-eMail: alar@aspide.it
-## X-Date: 2018-02-16T18:01:02Z
+## X-Date: 2018-07-21T18:00:47Z
 ## X-Embeds: LibInit
+## X-Reboot: 1
 embeds.xml
 forcelocale.lua
 localization.lua

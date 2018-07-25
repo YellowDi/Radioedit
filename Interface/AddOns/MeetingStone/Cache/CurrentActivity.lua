@@ -45,11 +45,8 @@ end
 function CurrentActivity:GetCreateArguments(autoAccept)
     local comment = CodeCommentData(self)
     return  self:GetActivityID(),
-            self:GetTitle(),
             self:GetItemLevel(),
             self:GetHonorLevel(),
-            self:GetVoiceChat(),
-            self:GetSummary() .. comment,
             autoAccept,
             self:GetPrivateGroup()
 end

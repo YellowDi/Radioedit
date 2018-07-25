@@ -94,7 +94,7 @@ function SummaryGrid:SetActivity(activity)
     self.expiration = activity:GetApplicationExpiration()
     self.voiceChat = activity:GetVoiceChat()
     self.Spinner:SetShown(pendingStatus == 'applied')
-    self.Summary:SetText(activity:GetSummary())
+    self.Summary:SetText(activity:GetComment())
     self.Summary:SetFontObject((activity:IsDelisted() or activity:IsApplicationFinished()) and 'GameFontDisableLeft' or 'GameFontHighlightLeft')
     self.CancelButton:SetEnabled(LFGListUtil_IsAppEmpowered())
     self.CancelButton.tooltip = not LFGListUtil_IsAppEmpowered() and LFG_LIST_APP_UNEMPOWERED

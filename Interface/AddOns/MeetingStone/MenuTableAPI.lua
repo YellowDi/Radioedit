@@ -273,38 +273,38 @@ function GetActivitesMenuTable(menuType)
         })
     end
 
-    if UnitLevel('player') >= 70 then
-        if menuType == ACTIVITY_FILTER_CREATE then
-            tinsert(list, {
-                text         = L['单刷'],
-                notClickable = true,
-                hasArrow     = true,
-                menuTable    = {
-                    MakeActivityMenuTable(
-                        ACTIVITY_CUSTOM_IDS[SOLO_HIDDEN_CUSTOM_ID],
-                        LE_LFG_LIST_FILTER_PVP,
-                        SOLO_HIDDEN_CUSTOM_ID,
-                        ACTIVITY_CUSTOM_NAMES[SOLO_HIDDEN_CUSTOM_ID],
-                        L['单刷开团，不会被其他玩家干扰。']
-                    ),
-                    MakeActivityMenuTable(
-                        ACTIVITY_CUSTOM_IDS[SOLO_VISIBLE_CUSTOM_ID],
-                        LE_LFG_LIST_FILTER_PVE,
-                        SOLO_VISIBLE_CUSTOM_ID,
-                        ACTIVITY_CUSTOM_NAMES[SOLO_VISIBLE_CUSTOM_ID],
-                        L['这个活动可以被玩家搜索到。']
-                    )
-                }
-            })
-        elseif menuType == ACTIVITY_FILTER_BROWSE then
-            tinsert(list, MakeActivityMenuTable(
-                ACTIVITY_CUSTOM_IDS[SOLO_VISIBLE_CUSTOM_ID],
-                LE_LFG_LIST_FILTER_PVP,
-                SOLO_VISIBLE_CUSTOM_ID,
-                ACTIVITY_CUSTOM_NAMES[SOLO_VISIBLE_CUSTOM_ID]
-            ))
-        end
-    end
+    -- if UnitLevel('player') >= 70 then
+    --     if menuType == ACTIVITY_FILTER_CREATE then
+    --         tinsert(list, {
+    --             text         = L['单刷'],
+    --             notClickable = true,
+    --             hasArrow     = true,
+    --             menuTable    = {
+    --                 MakeActivityMenuTable(
+    --                     ACTIVITY_CUSTOM_IDS[SOLO_HIDDEN_CUSTOM_ID],
+    --                     LE_LFG_LIST_FILTER_PVP,
+    --                     SOLO_HIDDEN_CUSTOM_ID,
+    --                     ACTIVITY_CUSTOM_NAMES[SOLO_HIDDEN_CUSTOM_ID],
+    --                     L['单刷开团，不会被其他玩家干扰。']
+    --                 ),
+    --                 MakeActivityMenuTable(
+    --                     ACTIVITY_CUSTOM_IDS[SOLO_VISIBLE_CUSTOM_ID],
+    --                     LE_LFG_LIST_FILTER_PVE,
+    --                     SOLO_VISIBLE_CUSTOM_ID,
+    --                     ACTIVITY_CUSTOM_NAMES[SOLO_VISIBLE_CUSTOM_ID],
+    --                     L['这个活动可以被玩家搜索到。']
+    --                 )
+    --             }
+    --         })
+    --     elseif menuType == ACTIVITY_FILTER_BROWSE then
+    --         tinsert(list, MakeActivityMenuTable(
+    --             ACTIVITY_CUSTOM_IDS[SOLO_VISIBLE_CUSTOM_ID],
+    --             LE_LFG_LIST_FILTER_PVP,
+    --             SOLO_VISIBLE_CUSTOM_ID,
+    --             ACTIVITY_CUSTOM_NAMES[SOLO_VISIBLE_CUSTOM_ID]
+    --         ))
+    --     end
+    -- end
     return list
 end
 

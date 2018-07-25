@@ -65,6 +65,10 @@ function BaseActivity:UpdateCustomData(comment, title)
     end
 
     if proto then
+        return false
+    end
+
+    if proto then
         local customId = proto:GetCustomID()
         if customId == 0 then
             customId = nil

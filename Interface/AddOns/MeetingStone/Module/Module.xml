@@ -19,7 +19,6 @@
   <Script file="OptionPanel.lua" />
   <Script file="Misc.lua" />
   <Script file="PlayerInfoDialog.lua" />
-  <Script file="WorldQuest.lua" />
   <Script file="AppQrDialog.lua" />
   <Script file="DataBroker.lua" />
 </Ui>

@@ -6,7 +6,6 @@ ManagerPanel = Addon:NewModule(CreateFrame('Frame'), 'ManagerPanel', 'AceEvent-3
 local CHECK_USEABLE_EVENTS = {
     'PARTY_LEADER_CHANGED',
     'GROUP_ROSTER_UPDATE',
-    'PVP_ROLE_CHECK_UPDATED',
     'UPDATE_BATTLEFIELD_STATUS',
     'LFG_UPDATE',
     'LFG_ROLE_CHECK_UPDATE',

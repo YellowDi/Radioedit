@@ -16,6 +16,7 @@ function LfgService:OnInitialize()
     self:RegisterEvent('LFG_LIST_SEARCH_FAILED', 'LFG_LIST_SEARCH_RESULTS_RECEIVED')
     self:RegisterEvent('LFG_LIST_APPLICATION_STATUS_UPDATED', 'LFG_LIST_SEARCH_RESULT_UPDATED')
     self:RegisterEvent('LFG_LIST_SEARCH_RESULT_UPDATED')
+
     -- self:RegisterBucketEvent('LFG_LIST_SEARCH_RESULT_UPDATED', 0.1, 'LFG_LIST_SEARCH_RESULT_UPDATED_BUCKET')
 
     self:SecureHook(C_LFGList, 'Search', 'C_LFGList_Search')
@@ -23,6 +24,7 @@ end
 
 function LfgService:C_LFGList_Search()
     self.inSearch = true
+    self.dirty = true
 end
 
 function LfgService:GetActivity(id)
@@ -94,6 +96,10 @@ function LfgService:_CacheActivity(id)
         return
     end
 
+    if activity:IsSoloActivity() and self.searchCode ~= activity:GetCode() then
+        return
+    end
+
     -- if activityItem then
     --     if activityItem.activityId and not ACTIVITY_CUSTOM_DATA.A[activityItem.activityId] then
     --         if activityItem.activityId ~= activity:GetActivityID() or activityItem.customId ~= activity:GetCustomID() then
@@ -155,4 +161,16 @@ function LfgService:LFG_LIST_SEARCH_RESULT_UPDATED(_, id)
     
     self:UpdateActivity(id)
     self:SendMessage('MEETINGSTONE_ACTIVITIES_RESULT_UPDATED')
+end
+
+function LfgService:Search(categoryId, searchText, baseFilter, searchCode)
+    self.ourSearch = true
+    self.searchCode = searchCode
+    C_LFGList.Search(categoryId, searchText, 0, baseFilter)
+    self.ourSearch = false
+    self.dirty = false
+end
+
+function LfgService:IsDirty()
+    return self.dirty
 end
