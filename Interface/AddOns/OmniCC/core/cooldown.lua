@@ -28,7 +28,7 @@ function Cooldown:Setup()
 		self:HookScript('OnSizeChanged', Cooldown.OnSizeChanged)
 		self.omnicc = OmniCC.Timer:New(self)
 	end
-	
+
 	OmniCC:SetupEffect(self)
 end
 
@@ -41,7 +41,7 @@ end
 
 function Cooldown:CanShow(start, duration)
 	if not self.noCooldownCount and duration and start and start > 0 then
-		local sets = OmniCC:GetGroupSettingsFor(self) 
+		local sets = OmniCC:GetGroupSettingsFor(self)
 		if duration >= sets.minDuration and sets.enabled then
 			local globalstart, globalduration = GetSpellCooldown(61304)
 			return start ~= globalstart or duration ~= globalduration
@@ -75,7 +75,7 @@ end
 function Cooldown:OnSizeChanged(width, ...)
 	if self.omniWidth ~= width then
 		self.omniWidth = width
-		
+
 		local timer = self.omnicc
 		if timer then
 			timer:UpdateFontSize(width, ...)
@@ -97,7 +97,7 @@ end
 
 function Cooldown:UpdateAlpha()
 	local alpha = OmniCC:GetGroupSettingsFor(self).spiralOpacity * (self.omniA or 1)
-	
+
 	self.omniTask = true
 	OmniCC.Meta.SetSwipeColor(self, self.omniR or 0, self.omniG or 0, self.omniB or 0, alpha)
 	self.omniTask = nil
