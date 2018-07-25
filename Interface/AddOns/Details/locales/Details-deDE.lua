@@ -535,8 +535,7 @@ L["STRING_OPTIONS_CENERGY_DESC"] = [=[Aktiviert die Erfassung von:
 - |cFFFFFF00Erzeugte Runenmacht|r]=]
 L["STRING_OPTIONS_CHANGE_CLASSCOLORS"] = "Klassenfarben ändern"
 L["STRING_OPTIONS_CHANGE_CLASSCOLORS_DESC"] = "Wähle neue Klassenfarben aus."
---[[Translation missing --]]
---[[ L["STRING_OPTIONS_CHANGECOLOR"] = ""--]] 
+L["STRING_OPTIONS_CHANGECOLOR"] = "Farbe ändern"
 L["STRING_OPTIONS_CHANGELOG"] = "Versionshinweise"
 L["STRING_OPTIONS_CHART_ADD"] = "Daten hinzufügen"
 L["STRING_OPTIONS_CHART_ADD2"] = "Hinzufügen"
@@ -845,7 +844,7 @@ L["STRING_OPTIONS_OVERALL_DUNGEONCLEAN_DESC"] = "Segmente mit abgräumtem Dungeo
 L["STRING_OPTIONS_OVERALL_LOGOFF"] = "Beim Ausloggen löschen"
 L["STRING_OPTIONS_OVERALL_LOGOFF_DESC"] = "Aktiviert: Die Gesamtdaten werden automatisch beim Ausloggen des Charakters gelöscht."
 L["STRING_OPTIONS_OVERALL_MYTHICPLUS"] = "Beim Start einer Mythic+ löschen"
-L["STRING_OPTIONS_OVERALL_MYTHICPLUS_DESC"] = "Wenn aktiviert, werden sämtliche Daten automatisch gelöscht, wenn ein neue Mythisch+ Durchlauf gestartet wird."
+L["STRING_OPTIONS_OVERALL_MYTHICPLUS_DESC"] = "Wenn aktiviert, werden sämtliche Daten automatisch gelöscht, wenn ein neuer Mythisch+-Durchlauf gestartet wird."
 L["STRING_OPTIONS_OVERALL_NEWBOSS"] = "Bei neuem Boss löschen"
 L["STRING_OPTIONS_OVERALL_NEWBOSS_DESC"] = "Aktiviert: Die Gesamtdaten werden automatisch bei einem neuen Boss gelöscht."
 L["STRING_OPTIONS_OVERALL_RAIDBOSS"] = "Schlachtzugsbosse"
@@ -1655,20 +1654,13 @@ L["STRING_WELCOME_7"] = "Für Ranglisten verwendet diese Methode die Kampflaufze
 L["STRING_WELCOME_70"] = "Titelleisteneinstellungen"
 L["STRING_WELCOME_71"] = "Leisteneinstellungen"
 L["STRING_WELCOME_72"] = "Fenstereinstellungen"
---[[Translation missing --]]
---[[ L["STRING_WELCOME_73"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_WELCOME_74"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_WELCOME_75"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_WELCOME_76"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_WELCOME_77"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_WELCOME_78"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_WELCOME_79"] = ""--]] 
+L["STRING_WELCOME_73"] = "Wähle das Alphabet oder die Region:"
+L["STRING_WELCOME_74"] = "Lateinisches Alphabet"
+L["STRING_WELCOME_75"] = "Kyrillisches Alphabet"
+L["STRING_WELCOME_76"] = "China"
+L["STRING_WELCOME_77"] = "Korea"
+L["STRING_WELCOME_78"] = "Taiwan"
+L["STRING_WELCOME_79"] = "Zweites Fenster erstellen"
 L["STRING_WINDOW_NOTFOUND"] = "Kein Fenster gefunden."
 L["STRING_WINDOW_NUMBER"] = "Fensternummer"
 L["STRING_WINDOW1ATACH_DESC"] = "Zur Bildung einer Fenstergruppe, ziehe Fenster #2 in die Nähe von Fenster #1."

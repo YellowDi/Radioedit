@@ -1,5 +1,17 @@
-changeset:   722:905512562025
+changeset:   724:c37a7672ea3a
 tag:         tip
+user:        Tercio
+date:        Tue Jul 24 13:56:44 2018 -0300
+summary:     - Removed bookmark tutorial popup.
+
+
+changeset:   723:7269c15128aa
+user:        Tercio
+date:        Fri Jul 20 18:23:25 2018 -0300
+summary:     - Added Cyclone to crowd control.
+
+
+changeset:   722:905512562025
 user:        Tercio
 date:        Thu Jul 19 16:40:11 2018 -0300
 summary:     - Missing localization for the welcome window has been added.
