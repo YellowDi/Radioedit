@@ -16,11 +16,11 @@ BigTipDB = {
 		},
 	},
 	["general"] = {
-		["statusbarFontSize"] = 15,
-		["scale"] = "1.0",
+		["statusbarFontSize"] = 10,
+		["scale"] = 1,
 		["mask"] = true,
-		["statusbarText"] = true,
-		["headerFont"] = "微软雅黑Myriad",
+		["bgfile"] = "rock",
+		["headerFont"] = "default",
 		["borderSize"] = 1,
 		["borderColor"] = {
 			0.6, -- [1]
@@ -29,10 +29,8 @@ BigTipDB = {
 			0.8, -- [4]
 		},
 		["anchor"] = {
-			["y"] = 327,
-			["returnOnUnitFrame"] = true,
+			["returnOnUnitFrame"] = false,
 			["position"] = "cursorRight",
-			["x"] = -77,
 			["cp"] = "BOTTOM",
 			["p"] = "BOTTOMRIGHT",
 			["returnInCombat"] = false,
@@ -41,27 +39,26 @@ BigTipDB = {
 			0, -- [1]
 			0, -- [2]
 			0, -- [3]
-			0.8, -- [4]
+			0.7, -- [4]
 		},
-		["alwaysShowIdInfo"] = false,
 		["statusbarPosition"] = "bottom",
 		["statusbarOffsetX"] = 0,
-		["headerFontSize"] = 15,
-		["bodyFontSize"] = 15,
-		["bodyFontFlag"] = "OUTLINE",
-		["statusbarColor"] = "auto",
-		["borderCorner"] = "angular",
-		["statusbarOffsetY"] = 0,
-		["statusbarFontFlag"] = "OUTLINE",
-		["statusbarHeight"] = 12,
 		["skinMoreFrames"] = true,
-		["headerFontFlag"] = "OUTLINE",
-		["statusbarFont"] = "微软雅黑Myriad",
-		["statusbarTexture"] = "TukTex",
-		["bodyFont"] = "微软雅黑Myriad",
-		["bgfile"] = "gradual",
+		["bodyFontSize"] = "default",
+		["bodyFontFlag"] = "default",
+		["bodyFont"] = "default",
+		["statusbarOffsetY"] = 0,
+		["statusbarTexture"] = "Interface\\AddOns\\TinyTooltip\\texture\\StatusBar",
+		["headerFontSize"] = "default",
+		["statusbarText"] = false,
+		["statusbarHeight"] = 4,
+		["headerFontFlag"] = "default",
+		["borderCorner"] = "default",
+		["statusbarColor"] = "auto",
+		["statusbarFontFlag"] = "THINOUTLINE",
+		["alwaysShowIdInfo"] = true,
 	},
-	["version"] = 2,
+	["version"] = 2.5,
 	["item"] = {
 		["coloredItemBorder"] = true,
 		["showItemIcon"] = false,
@@ -73,19 +70,17 @@ BigTipDB = {
 		["player"] = {
 			["elements"] = {
 				{
-					"moveSpeed", -- [1]
+					"raidIcon", -- [1]
 					"roleIcon", -- [2]
-					"role", -- [3]
-					"raidIcon", -- [4]
-					"pvpIcon", -- [5]
-					"factionIcon", -- [6]
-					"classIcon", -- [7]
-					"title", -- [8]
-					"name", -- [9]
-					"realm", -- [10]
-					"statusAFK", -- [11]
-					"statusDND", -- [12]
-					"statusDC", -- [13]
+					"pvpIcon", -- [3]
+					"factionIcon", -- [4]
+					"classIcon", -- [5]
+					"title", -- [6]
+					"name", -- [7]
+					"realm", -- [8]
+					"statusAFK", -- [9]
+					"statusDND", -- [10]
+					"statusDC", -- [11]
 				}, -- [1]
 				{
 					"guildName", -- [1]
@@ -100,6 +95,8 @@ BigTipDB = {
 					"raceName", -- [4]
 					"className", -- [5]
 					"isPlayer", -- [6]
+					"role", -- [7]
+					"moveSpeed", -- [8]
 				}, -- [3]
 				{
 					"zone", -- [1]
@@ -107,7 +104,7 @@ BigTipDB = {
 				["guildRank"] = {
 					["enable"] = true,
 					["color"] = "cc88ff",
-					["wildcard"] = "%s",
+					["wildcard"] = "%s)",
 					["filter"] = "none",
 				},
 				["statusAFK"] = {
@@ -119,7 +116,7 @@ BigTipDB = {
 				["guildIndex"] = {
 					["enable"] = true,
 					["color"] = "cc88ff",
-					["wildcard"] = "-%s-",
+					["wildcard"] = "(%s",
 					["filter"] = "none",
 				},
 				["zone"] = {
@@ -168,7 +165,7 @@ BigTipDB = {
 					["wildcard"] = "%s",
 					["filter"] = "none",
 				},
-				["factionIcon"] = {
+				["roleIcon"] = {
 					["enable"] = true,
 					["filter"] = "none",
 				},
@@ -178,7 +175,7 @@ BigTipDB = {
 				},
 				["moveSpeed"] = {
 					["enable"] = false,
-					["color"] = "ffffff",
+					["color"] = "e8e7a8",
 					["wildcard"] = "%d%%",
 					["filter"] = "none",
 				},
@@ -200,8 +197,10 @@ BigTipDB = {
 					["wildcard"] = "(%s)",
 					["filter"] = "none",
 				},
-				["roleIcon"] = {
-					["enable"] = true,
+				["isPlayer"] = {
+					["enable"] = false,
+					["color"] = "ffffff",
+					["wildcard"] = "(%s)",
 					["filter"] = "none",
 				},
 				["title"] = {
@@ -216,10 +215,10 @@ BigTipDB = {
 					["wildcard"] = "<%s>",
 					["filter"] = "none",
 				},
-				["isPlayer"] = {
-					["enable"] = false,
+				["className"] = {
+					["enable"] = true,
 					["color"] = "ffffff",
-					["wildcard"] = "(%s)",
+					["wildcard"] = "%s",
 					["filter"] = "none",
 				},
 				["name"] = {
@@ -228,10 +227,8 @@ BigTipDB = {
 					["wildcard"] = "%s",
 					["filter"] = "none",
 				},
-				["className"] = {
+				["factionIcon"] = {
 					["enable"] = true,
-					["color"] = "ffffff",
-					["wildcard"] = "%s",
 					["filter"] = "none",
 				},
 				["classIcon"] = {
@@ -239,9 +236,14 @@ BigTipDB = {
 					["filter"] = "none",
 				},
 			},
-			["showModel"] = false,
+			["showModel"] = true,
 			["showTargetBy"] = true,
 			["coloredBorder"] = "class",
+			["showTarget"] = true,
+			["background"] = {
+				["colorfunc"] = "default",
+				["alpha"] = 0.9,
+			},
 			["anchor"] = {
 				["returnOnUnitFrame"] = false,
 				["position"] = "inherit",
@@ -249,21 +251,15 @@ BigTipDB = {
 				["p"] = "BOTTOMRIGHT",
 				["returnInCombat"] = true,
 			},
-			["background"] = {
-				["colorfunc"] = "default",
-				["alpha"] = 0.5,
-			},
-			["showTarget"] = true,
 			["grayForDead"] = false,
 		},
 		["npc"] = {
 			["elements"] = {
 				{
-					"moveSpeed", -- [1]
-					"raidIcon", -- [2]
-					"classIcon", -- [3]
-					"questIcon", -- [4]
-					"name", -- [5]
+					"raidIcon", -- [1]
+					"classIcon", -- [2]
+					"questIcon", -- [3]
+					"name", -- [4]
 				}, -- [1]
 				{
 					"levelValue", -- [1]
@@ -272,6 +268,7 @@ BigTipDB = {
 					"classifRare", -- [4]
 					"creature", -- [5]
 					"reactionName", -- [6]
+					"moveSpeed", -- [7]
 				}, -- [2]
 				["creature"] = {
 					["enable"] = true,
@@ -303,7 +300,7 @@ BigTipDB = {
 				},
 				["moveSpeed"] = {
 					["enable"] = false,
-					["color"] = "ffffff",
+					["color"] = "e8e7a8",
 					["wildcard"] = "%d%%",
 					["filter"] = "none",
 				},
@@ -351,7 +348,7 @@ BigTipDB = {
 			["showTarget"] = true,
 			["background"] = {
 				["colorfunc"] = "default",
-				["alpha"] = 0.5,
+				["alpha"] = 0.9,
 			},
 			["showTargetBy"] = true,
 			["grayForDead"] = false,

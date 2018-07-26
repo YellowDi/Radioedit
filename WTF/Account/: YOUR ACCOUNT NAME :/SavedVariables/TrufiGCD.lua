@@ -7,16 +7,16 @@ TrufiGCDGlSave = {
 			["point"] = "CENTER",
 			["enable"] = true,
 			["text"] = "Player",
-			["fade"] = "Left",
+			["fade"] = "Right",
 			["y"] = 0,
 			["x"] = 0,
 			["speed"] = 18.75,
-			["width"] = 3,
+			["width"] = 6,
 			["size"] = 30,
 		}, -- [1]
 		{
 			["point"] = "CENTER",
-			["enable"] = true,
+			["enable"] = false,
 			["text"] = "Party 1",
 			["fade"] = "Left",
 			["y"] = 0,
@@ -27,7 +27,7 @@ TrufiGCDGlSave = {
 		}, -- [2]
 		{
 			["point"] = "CENTER",
-			["enable"] = true,
+			["enable"] = false,
 			["text"] = "Party 2",
 			["fade"] = "Left",
 			["y"] = 0,
@@ -38,7 +38,7 @@ TrufiGCDGlSave = {
 		}, -- [3]
 		{
 			["point"] = "CENTER",
-			["enable"] = true,
+			["enable"] = false,
 			["text"] = "Party 3",
 			["fade"] = "Left",
 			["y"] = 0,
@@ -49,7 +49,7 @@ TrufiGCDGlSave = {
 		}, -- [4]
 		{
 			["point"] = "CENTER",
-			["enable"] = true,
+			["enable"] = false,
 			["text"] = "Party 4",
 			["fade"] = "Left",
 			["y"] = 0,
@@ -60,7 +60,7 @@ TrufiGCDGlSave = {
 		}, -- [5]
 		{
 			["point"] = "CENTER",
-			["enable"] = true,
+			["enable"] = false,
 			["text"] = "Arena 1",
 			["fade"] = "Left",
 			["y"] = 0,
@@ -71,7 +71,7 @@ TrufiGCDGlSave = {
 		}, -- [6]
 		{
 			["point"] = "CENTER",
-			["enable"] = true,
+			["enable"] = false,
 			["text"] = "Arena 2",
 			["fade"] = "Left",
 			["y"] = 0,
@@ -82,7 +82,7 @@ TrufiGCDGlSave = {
 		}, -- [7]
 		{
 			["point"] = "CENTER",
-			["enable"] = true,
+			["enable"] = false,
 			["text"] = "Arena 3",
 			["fade"] = "Left",
 			["y"] = 0,
@@ -93,7 +93,7 @@ TrufiGCDGlSave = {
 		}, -- [8]
 		{
 			["point"] = "CENTER",
-			["enable"] = true,
+			["enable"] = false,
 			["text"] = "Arena 4",
 			["fade"] = "Left",
 			["y"] = 0,
@@ -104,7 +104,7 @@ TrufiGCDGlSave = {
 		}, -- [9]
 		{
 			["point"] = "CENTER",
-			["enable"] = true,
+			["enable"] = false,
 			["text"] = "Arena 5",
 			["fade"] = "Left",
 			["y"] = 0,
@@ -121,12 +121,12 @@ TrufiGCDGlSave = {
 			["y"] = 0,
 			["x"] = 0,
 			["speed"] = 18.75,
-			["width"] = 3,
+			["width"] = 6,
 			["size"] = 30,
 		}, -- [11]
 		{
 			["point"] = "CENTER",
-			["enable"] = true,
+			["enable"] = false,
 			["text"] = "Focus",
 			["fade"] = "Left",
 			["y"] = 0,

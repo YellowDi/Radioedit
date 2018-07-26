@@ -1,9 +1,18 @@
 
 KuiNameplatesCoreSaved = {
+	["216_HEALTH_TRANSITION"] = true,
 	["profiles"] = {
 		["default"] = {
-			["fade_alpha"] = 0.450000017881393,
+			["cvar_show_friendly_npcs"] = true,
+			["castbar_showpersonal"] = true,
+			["cvar_personal_show_always"] = true,
+			["colour_player_class"] = true,
+			["cvar_name_only"] = true,
+			["cvar_personal_show_target"] = true,
 			["bar_animation"] = 2,
+			["cvar_enable"] = true,
+			["target_arrows"] = true,
+			["bar_texture"] = "Kui shaded bar",
 		},
 	},
 }

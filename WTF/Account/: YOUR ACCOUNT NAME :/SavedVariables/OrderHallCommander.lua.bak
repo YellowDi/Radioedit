@@ -1,49 +1,22 @@
 
 dbOHC = {
 	["char"] = {
-		["Ravenkwok - 主宰之剑"] = {
-			["firstun"] = false,
-		},
-		["Zeoi - 主宰之剑"] = {
-			["firstun"] = false,
-		},
-		["Geronimo - 格瑞姆巴托"] = {
-			["firstun"] = false,
-		},
-		["Radioedit - 格瑞姆巴托"] = {
-			["firstun"] = false,
-		},
-		["Mirvish - 主宰之剑"] = {
+		["Mirvish - 格瑞姆巴托"] = {
 			["firstun"] = false,
 		},
 		["Geronimo - 奥蕾莉亚"] = {
 			["firstun"] = false,
 		},
-		["蒙特拉贡 - 格瑞姆巴托"] = {
-			["firstun"] = false,
-		},
-		["Syllenaris - 奥蕾莉亚"] = {
-			["firstun"] = false,
-		},
-		["Radioedit - 主宰之剑"] = {
-			["firstun"] = false,
-		},
-		["Underdog - 主宰之剑"] = {
-			["firstun"] = false,
-		},
 		["Elenore - 格瑞姆巴托"] = {
 			["firstun"] = false,
 		},
-		["Marcie - 奥蕾莉亚"] = {
+		["Radioedit - 格瑞姆巴托"] = {
 			["firstun"] = false,
 		},
-		["苍白的形容词 - 格瑞姆巴托"] = {
+		["Ravenkwok - 主宰之剑"] = {
 			["firstun"] = false,
 		},
-		["Atax - 奥蕾莉亚"] = {
-			["firstun"] = false,
-		},
-		["可憎少女呜呼 - 格瑞姆巴托"] = {
+		["Radioedit - 主宰之剑"] = {
 			["firstun"] = false,
 		},
 	},
@@ -55,51 +28,41 @@ dbOHC = {
 		["warn02_seen"] = 0,
 	},
 	["profileKeys"] = {
-		["Ravenkwok - 主宰之剑"] = "Default",
-		["Zeoi - 主宰之剑"] = "Default",
-		["Geronimo - 格瑞姆巴托"] = "Default",
-		["Radioedit - 格瑞姆巴托"] = "Default",
-		["Mirvish - 主宰之剑"] = "Default",
+		["Mirvish - 格瑞姆巴托"] = "Default",
 		["Geronimo - 奥蕾莉亚"] = "Default",
-		["蒙特拉贡 - 格瑞姆巴托"] = "Default",
-		["Syllenaris - 奥蕾莉亚"] = "Default",
-		["Radioedit - 主宰之剑"] = "Default",
-		["Underdog - 主宰之剑"] = "Default",
 		["Elenore - 格瑞姆巴托"] = "Default",
-		["Marcie - 奥蕾莉亚"] = "Default",
-		["苍白的形容词 - 格瑞姆巴托"] = "Default",
-		["Atax - 奥蕾莉亚"] = "Default",
-		["可憎少女呜呼 - 格瑞姆巴托"] = "Default",
+		["Radioedit - 格瑞姆巴托"] = "Default",
+		["Ravenkwok - 主宰之剑"] = "Default",
+		["Radioedit - 主宰之剑"] = "Default",
 	},
 	["profiles"] = {
 		["Default"] = {
 			["toggles"] = {
 				["ELITEOVERCAP"] = true,
-				["NOTROOPS"] = false,
-				["SORTMISSION"] = "Garrison_SortMissions_Chance",
+				["SPARE"] = false,
+				["SORTMISSION"] = "Garrison_SortMissions_Original",
 				["NEVERKILLTROOPS"] = false,
-				["MAXCHAMP"] = 3,
+				["MAKEITVERYQUICK"] = false,
 				["NOBLACKLIST"] = false,
 				["MOVEPANEL"] = true,
 				["MAXIMIZEXP"] = false,
 				["USEALLY"] = false,
 				["SAVETROOPS"] = false,
 				["IGNOREINACTIVE"] = true,
-				["MAKEITVERYQUICK"] = false,
 				["BONUS"] = false,
 				["SORTMISSION2"] = "Garrison_SortMissions_Original",
 				["BONUSCHANCE"] = 100,
-				["MINCHANCE"] = 5,
+				["IGNORELOW"] = false,
 				["NOWARN"] = false,
 				["PREFERHIGH"] = false,
-				["IGNORELOW"] = false,
+				["NOTROOPS"] = false,
 				["MAKEITQUICK"] = false,
-				["SPARE"] = false,
+				["MAXCHAMP"] = 3,
 				["TROOPALERT"] = true,
 				["IGNOREBUSY"] = true,
 				["BASECHANCE"] = 0,
 			},
-			["showmenu"] = false,
+			["showmenu"] = true,
 		},
 	},
 }

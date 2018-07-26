@@ -1,425 +1,67 @@
 
 MEETINGSTONE_UI_DB = {
 	["profileKeys"] = {
-		["Geronimo - 格瑞姆巴托"] = "Default",
-		["可憎少女呜呼 - 格瑞姆巴托"] = "Default",
-		["Mirvish - 主宰之剑"] = "Default",
-		["长大不会游泳 - 主宰之剑"] = "Default",
-		["Agihax - 奥蕾莉亚"] = "Default",
-		["Syllenaris - 奥蕾莉亚"] = "Default",
-		["Lumilol - 白银之手"] = "Default",
+		["Radioedit - 格瑞姆巴托"] = "Default",
+		["Mirvish - 格瑞姆巴托"] = "Default",
+		["Radioedit - 主宰之剑"] = "Default",
 		["Underdog - 主宰之剑"] = "Default",
 		["Elenore - 格瑞姆巴托"] = "Default",
-		["Lullatone - 主宰之剑"] = "Default",
-		["Elenore - 主宰之剑"] = "Default",
-		["蒙特拉贡 - 格瑞姆巴托"] = "Default",
-		["Capslock - 格瑞姆巴托"] = "Default",
-		["Ravenkwok - 主宰之剑"] = "Default",
-		["蒙特拉贡 - 主宰之剑"] = "Default",
-		["Radioedit - 主宰之剑"] = "Default",
-		["Zeoi - 主宰之剑"] = "Default",
-		["Ataxa - 奥蕾莉亚"] = "Default",
-		["可憎少女呜呼 - 主宰之剑"] = "Default",
-		["Underdog - 白银之手"] = "Default",
-		["Radioedit - 格瑞姆巴托"] = "Default",
-		["Mirvish - 奥蕾莉亚"] = "Default",
-		["Geronimo - 奥蕾莉亚"] = "Default",
-		["Mirvish - 格瑞姆巴托"] = "Default",
 		["苍白的形容词 - 格瑞姆巴托"] = "Default",
-		["Marcie - 奥蕾莉亚"] = "Default",
-		["Underdog - 奥蕾莉亚"] = "Default",
-		["Atax - 奥蕾莉亚"] = "Default",
-		["Radioedit - 奥蕾莉亚"] = "Default",
+		["Elenore - 主宰之剑"] = "Default",
+		["Geronimo - 奥蕾莉亚"] = "Default",
+		["Ravenkwok - 主宰之剑"] = "Default",
 	},
 	["global"] = {
 		["serverDatas"] = {
+			["AnnData"] = {
+				["data"] = "^1^SAnnData^T^Stitle^S集合石插件积分兑换维护^Scontent^S集合石插件积分兑换功能正在维护中，目前暂时无法正常使用，大家还是可以正常登录战网进行兑换，给大家造成的不便还请谅解。^t^^",
+				["new"] = false,
+			},
 			["FilterData"] = {
-				["data"] = "^1^S![Vv][Xx]^S下单^S![Vv][Ii][Pp]^S付款^S某宝^S站桩^S代打^S陪练^S低价^S便宜^S超低^S可躺^S老板^S门票^S直播^S包车^S![Ww][ⅩXx]^S另接^S全躺^S咨询^S上帝^S售后^S陪打^S看戏^S差价^S可拼^S躺尸^S来壕^S实惠^S价格^S贵宾^S陪聊^S支付^SV信^S单点^S带小号^S站着生^S无压斤^S有偿^S带你飞^S可淘^S自己捡装^S一个一給^S来各种躺^S卧铺^S個拾^S根%h*糖^S拼%h*包^S代唰^S代做^^",
+				["data"] = "^1^S![Vv][Xx]^S下单^S![Vv][Ii][Pp]^S付款^S某宝^S站桩^S代打^S陪练^S低价^S便宜^S超低^S可躺^S老板^S门票^S包车^S![Ww][ⅩXx]^S另接^S全躺^S咨询^S陪打^S看戏^S差价^S可拼^S躺尸^S来壕^S实惠^S价格^S贵宾^S陪聊^S支付^SV信^S单点^S带小号^S无压斤^S有偿^S带你飞^S可淘^S自己捡装^S一个一給^S来各种躺^S卧铺^S個拾^S根%h*糖^S拼%h*包^S代唰^S代做^S渡劫^S补分竞技^S安全效率^S臣卜^^",
 				["new"] = true,
 			},
 			["MallData"] = {
-				["data"] = "^1^SMallData^T^S宠物#1^S2002;850,,每周限量;68841;37846#2004;1200,,每周限量;34493;22966^S玩具#3^S4002;800,,每周限量;72161#7001;750,,每周限量;54212;31756#3006;1500,,每月限量;79769^S坐骑#2^S9002;1500,,每月1件;69228;38048^t^^",
+				["data"] = "^1^SMallData^T^S宠物#1^S2006;1500,,每周限量;23713;16943#2007;850,,每周限量;72134;38919^S消耗品#3^S1002;150;46779^S玩具#2^S7001;750,,每周限量;54212;31756#3006;1500,,每月限量;79769#3007;450,,每月限量;69227^t^^",
 			},
 			["ActivitiesData"] = {
-				["data"] = "$1$Z$S160`你搞活动我买单`阿古斯团队的荣耀（联盟）`3月10日（周六）20点，阿古斯团队的荣耀（联盟）*J家仇国恨日将颂，妇好冲冠自请缨。古有女扮男装花木兰，今有斗鱼TV-扶风西子(房间号：429842）戴咕咕。在巾帼豪杰面前，燃烧军团根本不堪一击，连敌将恶犬都败倒在她石榴裙下。联盟的勇士啊，快一起来击溃燃烧军团吧！*J集合石活动QQ交流群：603459231*J集合石活动专题页面：{URL}`http://w.163.com/special/convene-stone/`1`3$$",
+				["data"] = "$1$Z$S181`魔兽主播活动`艾星军备竞赛（联盟）`7月21日（周六）20点，艾星军备竞赛（联盟）*J消灭了燃烧军团之后，艾泽拉斯大陆迎来了久违的和平盛世，可和平总显得如此短暂，大战一触即发，联盟的战士们！快与斗鱼TV：近战之光喵妮莎（房间号：37625）一起，为联盟的军备添砖加瓦！*J魔兽主播活动QQ交流群：603459231`http://w.163.com/special/convene-stone/`1`3$$",
+				["new"] = false,
 			},
 		},
-		["version"] = "70300.09",
-		["ActivityProfiles"] = {
-			["奈萨里奥的巢穴（史诗钥石）"] = {
-				["ItemLevel"] = 900,
-				["Summary"] = "17来奶",
-				["PvPRating"] = 0,
-				["MaxLevel"] = 110,
-				["MinLevel"] = 110,
-				["HonorLevel"] = 0,
-			},
-			["阿苏纳"] = {
-				["ItemLevel"] = 0,
-				["Summary"] = "碾压者加图拉克",
-				["PvPRating"] = 0,
-				["MaxLevel"] = 110,
-				["MinLevel"] = 98,
-				["HonorLevel"] = 0,
-			},
-			["克罗库恩"] = {
-				["ItemLevel"] = 0,
-				["Summary"] = "安息",
-				["MinLevel"] = 110,
-				["MaxLevel"] = 110,
-				["PvPRating"] = 0,
-				["HonorLevel"] = 0,
-			},
-			["瓦尔莎拉"] = {
-				["ItemLevel"] = 0,
-				["Summary"] = "突袭守望高塔：黑暗信徒尖塔",
-				["PvPRating"] = 0,
-				["MaxLevel"] = 110,
-				["MinLevel"] = 98,
-				["HonorLevel"] = 0,
-			},
-			["黑鸦堡垒（史诗钥石）"] = {
-				["ItemLevel"] = 920,
-				["Summary"] = "14，来t或者dps",
-				["MinLevel"] = 110,
-				["MaxLevel"] = 110,
-				["PvPRating"] = 0,
-				["HonorLevel"] = 0,
-			},
-			["噬魂之喉（史诗钥石）"] = {
-				["ItemLevel"] = 900,
-				["Summary"] = "8",
-				["PvPRating"] = 0,
-				["MaxLevel"] = 110,
-				["MinLevel"] = 110,
-				["HonorLevel"] = 0,
-			},
-			["Voice"] = "",
-			["黑心林地（史诗钥石）"] = {
-				["ItemLevel"] = 900,
-				["Summary"] = "来15以上钥匙宝宝",
-				["MinLevel"] = 110,
-				["MaxLevel"] = 110,
-				["PvPRating"] = 0,
-				["HonorLevel"] = 0,
-			},
-			["破碎海滩"] = {
-				["ItemLevel"] = 0,
-				["Summary"] = "滥用元素",
-				["PvPRating"] = 0,
-				["MaxLevel"] = 110,
-				["MinLevel"] = 110,
-				["HonorLevel"] = 0,
-			},
-			["永夜大教堂（史诗钥石）"] = {
-				["ItemLevel"] = 840,
-				["Summary"] = "14",
-				["MinLevel"] = 110,
-				["MaxLevel"] = 110,
-				["PvPRating"] = 0,
-				["HonorLevel"] = 0,
-			},
-			["英灵殿（史诗钥石）"] = {
-				["ItemLevel"] = 840,
-				["Summary"] = "4",
-				["PvPRating"] = 0,
-				["MaxLevel"] = 110,
-				["MinLevel"] = 110,
-				["HonorLevel"] = 0,
-			},
-			["艾萨拉之眼（史诗钥石）"] = {
-				["ItemLevel"] = 840,
-				["Summary"] = "11",
-				["MinLevel"] = 110,
-				["MaxLevel"] = 110,
-				["PvPRating"] = 0,
-				["HonorLevel"] = 0,
-			},
-			["噬魂之喉（史诗）"] = {
-				["ItemLevel"] = 830,
-				["Summary"] = "m",
-				["MinLevel"] = 110,
-				["MaxLevel"] = 110,
-				["PvPRating"] = 0,
-				["HonorLevel"] = 0,
-			},
-			["突袭紫罗兰监狱（史诗）"] = {
-				["ItemLevel"] = 830,
-				["Summary"] = "",
-				["PvPRating"] = 0,
-				["MaxLevel"] = 110,
-				["MinLevel"] = 110,
-				["HonorLevel"] = 0,
-			},
-			["魔法回廊（史诗）"] = {
-				["ItemLevel"] = 830,
-				["Summary"] = "",
-				["PvPRating"] = 0,
-				["MaxLevel"] = 110,
-				["MinLevel"] = 110,
-				["HonorLevel"] = 0,
-			},
-			["群星庭院（史诗钥石）"] = {
-				["ItemLevel"] = 840,
-				["Summary"] = "15钥匙宝宝已就位，来tn",
-				["MinLevel"] = 110,
-				["MaxLevel"] = 110,
-				["PvPRating"] = 0,
-				["HonorLevel"] = 0,
-			},
-		},
+		["version"] = "80000.01",
 		["spamWord"] = {
 			{
 				["text"] = "%d+元",
 			}, -- [1]
 			{
-				["text"] = "(",
+				["text"] = "5173",
 				["pain"] = true,
 			}, -- [2]
 			{
-				["text"] = "....................",
+				["text"] = "lfg:",
+				["pain"] = true,
 			}, -- [3]
 			{
-				["text"] = "/",
-				["pain"] = true,
-			}, -- [4]
-			{
-				["text"] = "/人",
-				["pain"] = true,
-			}, -- [5]
-			{
-				["text"] = "/件",
-				["pain"] = true,
-			}, -- [6]
-			{
-				["text"] = "5173",
-				["pain"] = true,
-			}, -- [7]
-			{
-				["text"] = "<",
-				["pain"] = true,
-			}, -- [8]
-			{
-				["text"] = "=",
-				["pain"] = true,
-			}, -- [9]
-			{
-				["text"] = "[",
-				["pain"] = true,
-			}, -- [10]
-			{
-				["text"] = "[菱形]",
-				["pain"] = true,
-			}, -- [11]
-			{
-				["text"] = "g团",
-				["pain"] = true,
-			}, -- [12]
-			{
-				["text"] = "laoban",
-				["pain"] = true,
-			}, -- [13]
-			{
-				["text"] = "lao板",
-				["pain"] = true,
-			}, -- [14]
-			{
-				["text"] = "m",
-				["pain"] = true,
-			}, -- [15]
-			{
 				["text"] = "tao.*bao",
-			}, -- [16]
-			{
-				["text"] = "yy",
-				["pain"] = true,
-			}, -- [17]
-			{
-				["text"] = "《",
-				["pain"] = true,
-			}, -- [18]
-			{
-				["text"] = "一位",
-				["pain"] = true,
-			}, -- [19]
-			{
-				["text"] = "上di",
-				["pain"] = true,
-			}, -- [20]
-			{
-				["text"] = "上帝",
-				["pain"] = true,
-			}, -- [21]
-			{
-				["text"] = "专业队伍",
-				["pain"] = true,
-			}, -- [22]
-			{
-				["text"] = "专业高效",
-				["pain"] = true,
-			}, -- [23]
-			{
-				["text"] = "个人",
-				["pain"] = true,
-			}, -- [24]
-			{
-				["text"] = "价",
-				["pain"] = true,
-			}, -- [25]
-			{
-				["pain"] = true,
-				["text"] = "休息",
-			}, -- [26]
-			{
-				["text"] = "优惠",
-				["pain"] = true,
-			}, -- [27]
-			{
-				["text"] = "低价",
-				["pain"] = true,
-			}, -- [28]
-			{
-				["text"] = "双飞",
-				["pain"] = true,
-			}, -- [29]
-			{
-				["text"] = "各系",
-				["pain"] = true,
-			}, -- [30]
-			{
-				["text"] = "地板",
-				["pain"] = true,
-			}, -- [31]
-			{
-				["text"] = "填坑",
-				["pain"] = true,
-			}, -- [32]
-			{
-				["text"] = "外观",
-				["pain"] = true,
-			}, -- [33]
-			{
-				["text"] = "定制",
-				["pain"] = true,
-			}, -- [34]
-			{
-				["text"] = "实惠",
-				["pain"] = true,
-			}, -- [35]
-			{
-				["text"] = "巅峰 车队",
-				["pain"] = true,
-			}, -- [36]
-			{
-				["text"] = "巅峰车队",
-				["pain"] = true,
-			}, -- [37]
+			}, -- [4]
 			{
 				["text"] = "平台",
 				["pain"] = true,
-			}, -- [38]
+			}, -- [5]
 			{
-				["pain"] = true,
-				["text"] = "快来",
-			}, -- [39]
-			{
-				["text"] = "押金",
-				["pain"] = true,
-			}, -- [40]
-			{
-				["text"] = "挑战",
-				["pain"] = true,
-			}, -- [41]
-			{
-				["text"] = "接1",
-				["pain"] = true,
-			}, -- [42]
-			{
-				["text"] = "搜索",
-				["pain"] = true,
-			}, -- [43]
+				["text"] = "抵",
+			}, -- [6]
 			{
 				["text"] = "支.*付.*宝",
-			}, -- [44]
-			{
-				["text"] = "斗鱼",
-				["pain"] = true,
-			}, -- [45]
-			{
-				["text"] = "有偿",
-				["pain"] = true,
-			}, -- [46]
-			{
-				["text"] = "有常",
-				["pain"] = true,
-			}, -- [47]
-			{
-				["text"] = "来老",
-				["pain"] = true,
-			}, -- [48]
-			{
-				["text"] = "每人",
-				["pain"] = true,
-			}, -- [49]
-			{
-				["text"] = "每位",
-				["pain"] = true,
-			}, -- [50]
+			}, -- [7]
 			{
 				["text"] = "淘.*宝",
-			}, -- [51]
-			{
-				["text"] = "维护",
-				["pain"] = true,
-			}, -- [52]
-			{
-				["text"] = "老ban",
-				["pain"] = true,
-			}, -- [53]
-			{
-				["text"] = "老木反",
-				["pain"] = true,
-			}, -- [54]
-			{
-				["text"] = "老牌",
-				["pain"] = true,
-			}, -- [55]
-			{
-				["text"] = "联系",
-				["pain"] = true,
-			}, -- [56]
-			{
-				["text"] = "荣誉",
-				["pain"] = true,
-			}, -- [57]
-			{
-				["text"] = "解锁",
-				["pain"] = true,
-			}, -- [58]
-			{
-				["text"] = "起",
-				["pain"] = true,
-			}, -- [59]
-			{
-				["text"] = "躺",
-				["pain"] = true,
-			}, -- [60]
-			{
-				["text"] = "躺尸",
-				["pain"] = true,
-			}, -- [61]
+			}, -- [8]
 			{
 				["text"] = "门票",
 				["pain"] = true,
-			}, -- [62]
-			{
-				["text"] = "需求",
-				["pain"] = true,
-			}, -- [63]
-			{
-				["text"] = "需要",
-				["pain"] = true,
-			}, -- [64]
+			}, -- [9]
 			["default"] = true,
 		},
 	},

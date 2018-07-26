@@ -1,33 +1,18 @@
-VER 3 000000000000012F " " "INV_Misc_QuestionMark"
-#showtooltips
-/cast 自利
-/cast 荣耀勋章
-END
 VER 3 000000000000011F "1+1+1" "INV_Misc_QuestionMark"
 #showtooltips 冰风暴
 /castsequence reset=2 冰风暴,冰枪术,寒冰箭 
 END
-VER 3 0000000000000132 "123" "INV_MISC_QUESTIONMARK"
-/run if GetMouseButtonClicked()=="LeftButton" then ConsoleExec("ActionCam full")else ConsoleExec("ActionCam off")end
+VER 3 0000000000000131 "·" "134400"
+/cast [@player] 神圣守卫(荣誉天赋)
+/施放 心灵专注(荣誉天赋)
 END
-VER 3 0000000000000130 "·" "132874"
-/script ChatFrame_RemoveMessageGroup(ChatFrame1, "CHANNEL")
-END
-VER 3 0000000000000131 "保护之手" "134400"
-/G 工会仓库食物和附魔随便拿，不要的蓝绿装请丢仓库分解给大家做附魔，还有各种肉，鱼，血，不要的统统丢里面。（最近缺诅咒女王鱼，黑梭鱼，附魔材料魔光碎片)
-END
-VER 3 0000000000000124 "关闭动态视角" "1305156"
-/console ActionCam off
+VER 3 000000000000012F "下跪" "INV_MISC_QUESTIONMARK"
+/下跪
 END
 VER 3 0000000000000123 "冰风暴防多连+保险宏" "INV_Misc_QuestionMark"
 #showtooltips
 /cast [mod:alt]冰风暴
 /castsequence reset=1 冰风暴,0
-END
-VER 3 0000000000000125 "动态视角" "1305156"
-/console ActionCam full
-/console ActionCam focusOn
-/console ActionCam headMove
 END
 VER 3 0000000000000127 "法阵" "INV_Misc_QuestionMark"
 #showtooltip 燃烧
@@ -35,8 +20,7 @@ VER 3 0000000000000127 "法阵" "INV_Misc_QuestionMark"
 /castsequence [@cursor] reset=10 能量符文,流星,燃烧,火焰冲击,炎爆术,火焰冲击,炎爆术,火焰冲击,炎爆术,灼烧,炎爆术,灼烧,炎爆术,灼烧,炎爆术,龙息术
 END
 VER 3 000000000000012E "焦点羊" "INV_MISC_QUESTIONMARK"
-#showtooltip 变形术
-/cast [target=focus,exists]变形术;变形术
+/目标 风暴峡湾超级自爆绵羊羊
 END
 VER 3 000000000000012A "羽毛" "INV_Misc_QuestionMark"
 #showtooltip 天堂之羽
@@ -51,6 +35,9 @@ VER 3 000000000000012D "镜像" "INV_Misc_QuestionMark"
 /use  缺指指环
 /use 勇气号角
 /castsequence [@cursor] reset=10 镜像,流星,燃烧,火焰冲击,炎爆术,火焰冲击,炎爆术,火焰冲击,炎爆术,灼烧,炎爆术,灼烧,炎爆术,灼烧,炎爆术,龙息术
+END
+VER 3 0000000000000130 "阿曼苏尔" "INV_MISC_QUESTIONMARK"
+/e 获得了阿曼苏尔的预见
 END
 VER 3 0000000000000129 "风暴" "INV_Misc_QuestionMark"
 #showtooltip 烈焰风暴
