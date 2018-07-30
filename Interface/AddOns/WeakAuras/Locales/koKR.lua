@@ -63,6 +63,8 @@ L["Absorbed"] = "흡수함"
 L["Action Usable"] = "사용 가능"
 L["Active"] = "활성화"
 L["Additional Trigger Replacements"] = "추가적인 활성 조건 교체"
+--[[Translation missing --]]
+L["Adjust Timer"] = "Adjust Timer"
 L["Affected"] = "영향 받음"
 L["Aggro"] = "어그로"
 --[[Translation missing --]]
@@ -424,6 +426,8 @@ L["Multistrike"] = "연속타격"
 L["Multi-target"] = "다중 대상"
 L["Music"] = "음악"
 L["Mythic"] = "신화"
+--[[Translation missing --]]
+L["Mythic+ Affix"] = "Mythic+ Affix"
 L["Name"] = "이름"
 L["Neck"] = "목"
 L["Neutral"] = "중립"

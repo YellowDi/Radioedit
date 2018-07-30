@@ -528,6 +528,18 @@ function WeakAuras.CheckNumericIds(loadids, currentId)
   return false;
 end
 
+function WeakAuras.CheckMPlusAffixIds(loadids, currentId)
+  if (not loadids or not currentId) or type(currentId) ~= "table" then
+    return false
+  end
+  for i=1, #currentId do
+    if loadids == currentId[i] then
+      return true
+    end
+  end
+  return false
+end
+
 function WeakAuras.CheckChargesDirection(direction, triggerDirection)
   return triggerDirection == "CHANGED"
     or (triggerDirection == "GAINED" and direction > 0)
@@ -929,6 +941,14 @@ WeakAuras.load_prototype = {
       values = "role_types",
       init = "arg"
     },
+    {
+      name = "affixes",
+      display = L["Mythic+ Affix"],
+      type = "multiselect",
+      values = "mythic_plus_affixes",
+      init = "arg",
+      test = "WeakAuras.CheckMPlusAffixIds(%d, affixes)",
+    },
   }
 };
 
@@ -1240,6 +1260,23 @@ WeakAuras.event_prototypes = {
                   state.cost = costInfo.cost;
                   break;
                 end
+              end
+            end
+            state.changed = true;
+          elseif (event == "UNIT_DISPLAYPOWER") then
+            local spellID = select(9, UnitCastingInfo("player"));
+            if spellID then
+              local costTable = GetSpellPowerCost(spellID);
+              local cost;
+              for _, costInfo in pairs(costTable) do
+                if costInfo.type == powerTypeToCheck then
+                  cost = costInfo.cost;
+                  break;
+                end
+              end
+              if (state.cost ~= cost) then
+                state.cost = cost;
+                state.changed = true;
               end
             end
             state.changed = true;
@@ -1897,7 +1934,7 @@ WeakAuras.event_prototypes = {
         local showOn = %s
         local expirationTime = startTime + duration
       ]=];
-      if (not trigger.trackcharge) then
+      if (not trigger.use_trackcharge or not trigger.trackcharge) then
         ret = ret .. [=[
           if (state.expirationTime ~= expirationTime) then
             state.expirationTime = expirationTime;
@@ -2215,7 +2252,7 @@ WeakAuras.event_prototypes = {
       trigger.itemName = trigger.itemName or 0;
       local itemName = type(trigger.itemName) == "number" and trigger.itemName or "[["..trigger.itemName.."]]";
       local ret = [[
-        local startTime, duration = WeakAuras.GetItemCooldown(%s);
+        local startTime, duration, enabled = WeakAuras.GetItemCooldown(%s);
         local showOn = %s
       ]];
       if(trigger.use_remaining and trigger.showOn ~= "showOnReady") then
@@ -2231,6 +2268,7 @@ WeakAuras.event_prototypes = {
       end
       return ret:format(itemName,  "[[" .. (trigger.showOn or "") .. "]]");
     end,
+    statesParameter = "one",
     args = {
       {
         name = "itemName",
@@ -2257,16 +2295,22 @@ WeakAuras.event_prototypes = {
       },
       {
         hidden = true,
+        name = "enabled",
+        store = true,
+        test = "true",
+      },
+      {
+        hidden = true,
         name = "onCooldown",
         test = "true",
         display = L["On Cooldown"],
         conditionType = "bool",
-        conditionTest = "(state and state.show and state.expirationTime and state.expirationTime > GetTime()) == (%s == 1)",
+        conditionTest = "(state and state.show and (state.expirationTime and state.expirationTime > GetTime() or state.enabled == 0)) == (%s == 1)",
       },
       {
         hidden = true,
-        test = "(showOn == \"showOnReady\" and startTime == 0) " ..
-        "or (showOn == \"showOnCooldown\" and startTime > 0) " ..
+        test = "(showOn == \"showOnReady\" and startTime == 0 and enabled == 1) " ..
+        "or (showOn == \"showOnCooldown\" and (startTime > 0 or enabled == 0)) " ..
         "or (showOn == \"showAlways\")"
       }
     },
@@ -2575,6 +2619,12 @@ WeakAuras.event_prototypes = {
           local triggerSpellId = nil;
         ]];
       end
+
+      local ret2 = [[
+        local extendTimer = %s;
+      ]]
+      ret = ret .. ret2:format(trigger.use_extend and tonumber(trigger.extend or 0) or 0)
+
       local copyOrSchedule;
       if (trigger.use_remaining) then
         local ret2 = [[
@@ -2582,21 +2632,21 @@ WeakAuras.event_prototypes = {
         ]];
         ret = ret .. ret2:format(trigger.remaining or 0);
         copyOrSchedule = [[
-          local remainingTime = bar.expirationTime - GetTime()
+          local remainingTime = bar.expirationTime - GetTime() + extendTimer;
           if (remainingTime %s %s) then
-            WeakAuras.CopyBarToState(bar, states, id);
+            WeakAuras.CopyBarToState(bar, states, id, extendTimer);
           elseif (states[id] and states[id].show) then
               states[id].show = false;
               states[id].changed = true;
           end
           if (remainingTime >= remainingCheck) then
-            WeakAuras.ScheduleDbmCheck(bar.expirationTime - remainingCheck);
+            WeakAuras.ScheduleDbmCheck(bar.expirationTime - remainingCheck + extendTimer);
           end
         ]]
         copyOrSchedule = copyOrSchedule:format(trigger.remaining_operator or "<", trigger.remaining or 0);
       else
         copyOrSchedule = [[
-          WeakAuras.CopyBarToState(bar, states, id);
+          WeakAuras.CopyBarToState(bar, states, id, extendTimer);
           ]];
       end
       if (trigger.use_cloneId) then
@@ -2619,8 +2669,11 @@ WeakAuras.event_prototypes = {
 
           elseif (event == "DBM_TimerStop") then
             if (states[id]) then
-              states[id].show = false;
-              states[id].changed = true;
+              local bar_remainingTime = GetTime() - states[id].expirationTime + states[id].extend;
+              if (states[id].extend == 0 or bar_remainingTime > 0.2) then
+                states[id].show = false;
+                states[id].changed = true;
+              end
             end
           elseif (event == "DBM_TimerStopAll") then
             for _, state in pairs(states) do
@@ -2644,16 +2697,31 @@ WeakAuras.event_prototypes = {
         return ret
       else -- no clones
         ret = ret .. [[
-          local bar = WeakAuras.GetDBMTimer(triggerId, triggerMessage, triggerOperator, triggerSpellId);
+          if (event == "DBM_TimerStart") then
+            if (extendTimer ~= 0) then
+              if (WeakAuras.DBMTimerMatches(id, triggerId, triggerMessage, triggerOperator, triggerSpellId)) then
+                local bar = WeakAuras.GetDBMTimerById(id);
+                WeakAuras.ScheduleDbmCheck(bar.expirationTime + extendTimer);
+              end
+            end
+          end
+          local bar = WeakAuras.GetDBMTimer(triggerId, triggerMessage, triggerOperator, triggerSpellId, extendTimer);
           local id = "";
           if (bar) then
+            if (extendTimer == 0)
+              or (not (states[""] and states[""].show)
+              or (states[""] and states[""].show and states[""].expirationTime > (bar.expirationTime + extendTimer))) then
         ]]
       ret = ret .. copyOrSchedule;
       ret = ret .. [[
+            end
           else
             if (states[""] and states[""].show) then
-              states[""].show = false;
-              states[""].changed = true;
+              local bar_remainingTime = GetTime() - states[""].expirationTime + states[""].extend;
+              if (states[""].extend == 0 or bar_remainingTime > 0.2) then
+                states[""].show = false;
+                states[""].changed = true;
+              end
             end
           end
           return true;
@@ -2687,6 +2755,11 @@ WeakAuras.event_prototypes = {
         name = "remaining",
         display = L["Remaining Time"],
         type = "number",
+      },
+      {
+        name = "extend",
+        display = L["Adjust Timer"],
+        type = "string",
       },
       {
         name = "cloneId",
@@ -2783,6 +2856,11 @@ WeakAuras.event_prototypes = {
         trigger.use_text and trigger.text_operator or ""
       );
 
+      local ret2 = [[
+        local extendTimer = %s;
+      ]]
+      ret = ret .. ret2:format(trigger.use_extend and tonumber(trigger.extend or 0) or 0)
+
       local copyOrSchedule;
       if (trigger.use_remaining) then
         local ret2 = [[
@@ -2790,21 +2868,21 @@ WeakAuras.event_prototypes = {
         ]];
         ret = ret .. ret2:format(trigger.remaining or 0);
         copyOrSchedule = [[
-          local remainingTime = bar.expirationTime - GetTime()
+          local remainingTime = bar.expirationTime - GetTime() + extendTimer;
           if (remainingTime %s %s) then
-            WeakAuras.CopyBigWigsTimerToState(bar, states, id);
+            WeakAuras.CopyBigWigsTimerToState(bar, states, id, extendTimer);
           elseif (states[id] and states[id].show) then
               states[id].show = false;
               states[id].changed = true;
           end
           if (remainingTime >= remainingCheck) then
-            WeakAuras.ScheduleBigWigsCheck(bar.expirationTime - remainingCheck);
+            WeakAuras.ScheduleBigWigsCheck(bar.expirationTime - remainingCheck + extendTimer);
           end
           ]]
         copyOrSchedule = copyOrSchedule:format(trigger.remaining_operator or "", trigger.remaining or 0);
       else
         copyOrSchedule = [[
-          WeakAuras.CopyBigWigsTimerToState(bar, states, id);
+          WeakAuras.CopyBigWigsTimerToState(bar, states, id, extendTimer);
           ]];
       end
 
@@ -2819,8 +2897,11 @@ WeakAuras.event_prototypes = {
             end
           elseif (event == "BigWigs_StopBar") then
             if (states[id]) then
-              states[id].show = false;
-              states[id].changed = true;
+              local bar_remainingTime = GetTime() - states[id].expirationTime + states[id].extend;
+              if (states[id].extend == 0 or bar_remainingTime > 0.2) then
+                states[id].show = false;
+                states[id].changed = true;
+              end
             end
           elseif (event == "BigWigs_Timer_Update") then
             for id, bar in pairs(WeakAuras.GetAllBigWigsTimers()) do
@@ -2846,16 +2927,31 @@ WeakAuras.event_prototypes = {
         return ret;
       else
         ret = ret .. [[
-          local bar = WeakAuras.GetBigWigsTimer(triggerAddon, triggerSpellId, triggerTextOperator, triggerText);
+          if (event == "BigWigs_StartBar") then
+            if (extendTimer ~= 0) then
+              if (WeakAuras.BigWigsTimerMatches(id, triggerAddon, triggerSpellId, triggerTextOperator, triggerText)) then
+                local bar = WeakAuras.GetBigWigsTimerById(id);
+                WeakAuras.ScheduleBigWigsCheck(bar.expirationTime + extendTimer);
+              end
+            end
+          end
+          local bar = WeakAuras.GetBigWigsTimer(triggerAddon, triggerSpellId, triggerTextOperator, triggerText, extendTimer);
           local id = "";
           if (bar) then
+            if (extendTimer == 0)
+              or (not (states[""] and states[""].show)
+              or (states[""] and states[""].show and states[""].expirationTime > (bar.expirationTime + extendTimer))) then
         ]]
         ret = ret .. copyOrSchedule;
         ret = ret .. [[
+            end
           else
             if (states[""] and states[""].show) then
-              states[""].show = false;
-              states[""].changed = true;
+              local bar_remainingTime = GetTime() - states[""].expirationTime + states[""].extend;
+              if (states[""].extend == 0 or bar_remainingTime > 0.2) then
+                states[""].show = false;
+                states[""].changed = true;
+              end
             end
           end
           return true;
@@ -2887,6 +2983,11 @@ WeakAuras.event_prototypes = {
         name = "remaining",
         display = L["Remaining Time"],
         type = "number",
+      },
+      {
+        name = "extend",
+        display = L["Adjust Timer"],
+        type = "string",
       },
       {
         name = "cloneId",
@@ -4500,7 +4601,7 @@ WeakAuras.dynamic_texts = {
     value = "stacks",
     static = 1
   },
-  ["%c"] = {
+  ["%c%d*"] = {
     unescaped = "%c",
     name = L["Custom"],
     value = "custom",
