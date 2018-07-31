@@ -1014,10 +1014,10 @@ local default_profile = {
 	
 	--> cloud capture
 		cloud_capture = true,
-		
+	
 	--> combat
 		minimum_combat_time = 5,
-		overall_flag = 0xD,
+		overall_flag = 0x10,
 		overall_clear_newboss = true,
 		overall_clear_newchallenge = true,
 		overall_clear_logout = false,
@@ -1040,6 +1040,8 @@ local default_profile = {
 			enabled = false,
 			tab_name = "",
 			single_window = false,
+			x_offset = 0,
+			y_offset = 0,
 		},
 	
 	--> broadcaster options

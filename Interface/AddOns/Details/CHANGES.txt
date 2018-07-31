@@ -1,5 +1,17 @@
-changeset:   724:c37a7672ea3a
+changeset:   726:7ca9550a402a
 tag:         tip
+user:        Tercio
+date:        Mon Jul 30 14:02:20 2018 -0300
+summary:     - Framework update.
+
+
+changeset:   725:9c36469215a4
+user:        Tercio
+date:        Sat Jul 28 18:22:13 2018 -0300
+summary:     - Added size offset options for the chat tab embed feature.
+
+
+changeset:   724:c37a7672ea3a
 user:        Tercio
 date:        Tue Jul 24 13:56:44 2018 -0300
 summary:     - Removed bookmark tutorial popup.
