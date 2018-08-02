@@ -57,9 +57,10 @@ local function Frame_OnMouseDown(frame)
 	AceGUI:ClearFocus()
 end
 
-local function Slider_OnValueChanged(frame, newvalue)
+local function Slider_OnValueChanged(frame)
 	local self = frame.obj
 	if not frame.setup then
+		local newvalue = frame:GetValue()
 		if self.step and self.step > 0 then
 			local min_value = self.min or 0
 			newvalue = floor((newvalue - min_value) / self.step + 0.5) * self.step + min_value

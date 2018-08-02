@@ -11,6 +11,8 @@ local L = WeakAuras.L
 	L["Add Triggers"] = "Add Triggers"
 	L["Always Active"] = "Siempre activo"
 	--[[Translation missing --]]
+	L["Azerite Traits"] = "Azerite Traits"
+	--[[Translation missing --]]
 	L["Back"] = "Back"
 	--[[Translation missing --]]
 	L["Bloodlust/Heroism"] = "Bloodlust/Heroism"
@@ -29,33 +31,25 @@ local L = WeakAuras.L
 	--[[Translation missing --]]
 	L["Cooldowns"] = "Cooldowns"
 	--[[Translation missing --]]
+	L["Damage Trinkets"] = "Damage Trinkets"
+	--[[Translation missing --]]
 	L["Debuffs"] = "Debuffs"
 	--[[Translation missing --]]
 	L["Enchants"] = "Enchants"
 	--[[Translation missing --]]
 	L["General"] = "General"
 	--[[Translation missing --]]
-	L["General Azerite Traits"] = "General Azerite Traits"
+	L["Healer Trinkets"] = "Healer Trinkets"
 	--[[Translation missing --]]
 	L["Health"] = "Health"
 	--[[Translation missing --]]
 	L["Keeps existing triggers intact"] = "Keeps existing triggers intact"
-	--[[Translation missing --]]
-	L["On Procc Trinkets (Buff)"] = "On Procc Trinkets (Buff)"
-	--[[Translation missing --]]
-	L["On Use Trinkets (Buff)"] = "On Use Trinkets (Buff)"
-	--[[Translation missing --]]
-	L["On Use Trinkets (CD)"] = "On Use Trinkets (CD)"
 	L["Pet alive"] = "Mascota viva"
 	L["Pet Behavior"] = "Comportamiento de mascota"
 	--[[Translation missing --]]
-	L["PvP Azerite Traits"] = "PvP Azerite Traits"
-	--[[Translation missing --]]
 	L["PvP Talents"] = "PvP Talents"
 	--[[Translation missing --]]
-	L["PVP Trinkets (Buff)"] = "PVP Trinkets (Buff)"
-	--[[Translation missing --]]
-	L["PVP Trinkets (CD)"] = "PVP Trinkets (CD)"
+	L["PVP Trinkets"] = "PVP Trinkets"
 	--[[Translation missing --]]
 	L["Replace all existing triggers"] = "Replace all existing triggers"
 	--[[Translation missing --]]
@@ -69,9 +63,9 @@ local L = WeakAuras.L
 	--[[Translation missing --]]
 	L["Shapeshift Form"] = "Shapeshift Form"
 	--[[Translation missing --]]
-	L["Specific Azerite Traits"] = "Specific Azerite Traits"
-	--[[Translation missing --]]
 	L["Stagger"] = "Stagger"
+	--[[Translation missing --]]
+	L["Tank Trinkets"] = "Tank Trinkets"
 	L["Totems"] = "Tótems"
 	--[[Translation missing --]]
 	L["Unknown Item"] = "Unknown Item"

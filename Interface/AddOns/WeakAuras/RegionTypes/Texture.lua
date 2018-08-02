@@ -22,8 +22,6 @@ local default = {
   frameStrata = 1
 };
 
-WeakAuras.regionPrototype.AddAlphaToDefault(default);
-
 local screenWidth, screenHeight = math.ceil(GetScreenWidth() / 20) * 20, math.ceil(GetScreenHeight() / 20) * 20;
 
 local properties = {
@@ -55,7 +53,7 @@ local properties = {
   },
 }
 
-WeakAuras.regionPrototype.AddProperties(properties, default);
+WeakAuras.regionPrototype.AddProperties(properties);
 
 local function GetProperties(data)
   return properties;

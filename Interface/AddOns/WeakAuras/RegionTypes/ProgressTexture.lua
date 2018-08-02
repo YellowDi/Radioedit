@@ -29,6 +29,7 @@ local default = {
   height = 200,
   orientation = "VERTICAL",
   inverse = false,
+  alpha = 1.0,
   foregroundColor = {1, 1, 1, 1},
   backgroundColor = {0.5, 0.5, 0.5, 0.5},
   startAngle = 0,
@@ -51,8 +52,6 @@ local default = {
   frameStrata = 1,
   slantMode = "INSIDE"
 };
-
-WeakAuras.regionPrototype.AddAlphaToDefault(default);
 
 WeakAuras.regionPrototype.AddAdjustedDurationToDefault(default);
 
@@ -108,7 +107,7 @@ local properties = {
   }
 }
 
-WeakAuras.regionPrototype.AddProperties(properties, default);
+WeakAuras.regionPrototype.AddProperties(properties);
 
 local function GetProperties(data)
   local overlayInfo = WeakAuras.GetOverlayInfo(data);
@@ -1004,6 +1003,8 @@ local function modify(parent, region, data)
   region.scalex = 1;
   region.scaley = 1;
   region.aspect =  data.width / data.height;
+
+  region:SetAlpha(data.alpha);
 
   region.textureWrapMode = data.textureWrapMode;
 

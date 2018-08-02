@@ -5,6 +5,14 @@ end
 local L = WeakAuras.L
 
 -- WeakAuras
+--[[Translation missing --]]
+L[ [=[
+
+Supports multiple entries, separated by commas
+]=] ] = [=[
+
+Supports multiple entries, separated by commas
+]=]
 L["!="] = "!="
 --[[Translation missing --]]
 L["%s - %i. Trigger"] = "%s - %i. Trigger"
@@ -89,8 +97,6 @@ L["Action Usable"] = "Azione utilizzabile"
 L["Active"] = "Active"
 --[[Translation missing --]]
 L["Additional Trigger Replacements"] = "Additional Trigger Replacements"
---[[Translation missing --]]
-L["Adjust Timer"] = "Adjust Timer"
 L["Affected"] = "Affetto"
 --[[Translation missing --]]
 L["Aggro"] = "Aggro"
@@ -102,8 +108,6 @@ L["All Triggers"] = "Tutte le attivazioni"
 L["Alliance"] = "Alliance"
 --[[Translation missing --]]
 L["Allow partial matches"] = "Allow partial matches"
---[[Translation missing --]]
-L["Alpha"] = "Alpha"
 L["Alternate Power"] = "Alternate Power"
 --[[Translation missing --]]
 L["Always"] = "Always"
@@ -152,6 +156,8 @@ L["Back and Forth"] = "Avanti e indietro"
 L["Backdrop Color"] = "Backdrop Color"
 --[[Translation missing --]]
 L["Background Color"] = "Background Color"
+--[[Translation missing --]]
+L["Bar Alpha"] = "Bar Alpha"
 --[[Translation missing --]]
 L["Bar Color"] = "Bar Color"
 L["Battle.net Whisper"] = "Sussurri di Battle.net"
@@ -460,8 +466,6 @@ L["Guild"] = "Guild"
 --[[Translation missing --]]
 L["Hands"] = "Hands"
 --[[Translation missing --]]
-L["Has Target"] = "Has Target"
---[[Translation missing --]]
 L["Has Vehicle UI"] = "Has Vehicle UI"
 --[[Translation missing --]]
 L["HasPet"] = "HasPet"
@@ -666,13 +670,13 @@ L["Mounted"] = "Mounted"
 --[[Translation missing --]]
 L["Mouse Cursor"] = "Mouse Cursor"
 --[[Translation missing --]]
+L["Multistrike"] = "Multistrike"
+--[[Translation missing --]]
 L["Multi-target"] = "Multi-target"
 --[[Translation missing --]]
 L["Music"] = "Music"
 --[[Translation missing --]]
 L["Mythic"] = "Mythic"
---[[Translation missing --]]
-L["Mythic+ Affix"] = "Mythic+ Affix"
 --[[Translation missing --]]
 L["Name"] = "Name"
 --[[Translation missing --]]
@@ -1005,8 +1009,6 @@ L["Spell Id"] = "Spell Id"
 L["Spell Known"] = "Spell Known"
 --[[Translation missing --]]
 L["Spell Name"] = "Spell Name"
---[[Translation missing --]]
-L["Spell Usable"] = "Spell Usable"
 --[[Translation missing --]]
 L["Spell/Encounter Id"] = "Spell/Encounter Id"
 --[[Translation missing --]]

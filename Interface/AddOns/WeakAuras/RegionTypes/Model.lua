@@ -60,7 +60,7 @@ local properties = {
   },
 }
 
-WeakAuras.regionPrototype.AddProperties(properties, default);
+WeakAuras.regionPrototype.AddProperties(properties);
 
 local function GetProperties(data)
   return properties;

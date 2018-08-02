@@ -949,11 +949,7 @@ local function addControlsForCondition(args, order, data, conditionVariable, con
 
   local optionsName = blueIfSubset (data, conditions[i].check);
   if (conditions[i].check.trigger) then
-    if (conditions[i].check.trigger == -1) then
-      optionsName = optionsName .. L["If"];
-    else
-      optionsName = optionsName .. string.format(L["If Trigger %s"], conditions[i].check.trigger + 1);
-    end
+    optionsName = optionsName .. string.format(L["If Trigger %s"], conditions[i].check.trigger + 1);
   else
     optionsName = optionsName .. L["If"];
   end
@@ -1307,8 +1303,6 @@ local function createConditionTemplates(data)
     numTriggers = data.numTriggers;
   end
 
-  allConditionTemplates[-1] = WeakAuras.GetGlobalConditions();
-
   local conditionTemplates = {};
   conditionTemplates.all = allConditionTemplates;
   conditionTemplates.indexToTrigger = {};
@@ -1317,7 +1311,7 @@ local function createConditionTemplates(data)
   conditionTemplates.display = {};
 
   local index = 1;
-  for triggernum = -1, numTriggers - 1 do
+  for triggernum = 0, numTriggers - 1 do
     local templatesForTrigger = allConditionTemplates[triggernum];
 
     -- Sort Conditions for one trigger
@@ -1331,11 +1325,7 @@ local function createConditionTemplates(data)
       end);
 
       if (#sorted > 0) then
-        if (triggernum == -1) then
-          conditionTemplates.display[index]  = string.format(L["Global Conditions"]);
-        else
-          conditionTemplates.display[index]  = string.format(L["Trigger %d"], triggernum + 1);
-        end
+        conditionTemplates.display[index]  = string.format(L["Trigger %d"], triggernum + 1);
         index = index + 1;
       end
 

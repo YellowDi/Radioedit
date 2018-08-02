@@ -5,6 +5,14 @@ end
 local L = WeakAuras.L
 
 -- WeakAuras
+--[[Translation missing --]]
+L[ [=[
+
+Supports multiple entries, separated by commas
+]=] ] = [=[
+
+Supports multiple entries, separated by commas
+]=]
 L["!="] = "!="
 L["%s - %i. Trigger"] = "%s - %i. Desencadenador"
 L["%s - 1. Trigger"] = "%s - 1. Desencadenador"
@@ -58,8 +66,6 @@ L["Absorbed"] = "Absorbido"
 L["Action Usable"] = "Acción utilizable"
 L["Active"] = "Activo"
 L["Additional Trigger Replacements"] = "Reemplazos adicionales de desencadenadores"
---[[Translation missing --]]
-L["Adjust Timer"] = "Adjust Timer"
 L["Affected"] = "Afectado"
 L["Aggro"] = "Agro"
 --[[Translation missing --]]
@@ -68,8 +74,6 @@ L["Alive"] = "Vivo"
 L["All Triggers"] = "Todos los desencadenadores"
 L["Alliance"] = "Alianza"
 L["Allow partial matches"] = "Permitir coincidencias parciales"
---[[Translation missing --]]
-L["Alpha"] = "Alpha"
 L["Alternate Power"] = "Energía alternativa"
 L["Always"] = "Siempre"
 L["Always active trigger"] = "Activar siempre el desencadenador"
@@ -108,6 +112,8 @@ L["Back"] = "Atrás"
 L["Back and Forth"] = "De atrás hacia adelante"
 L["Backdrop Color"] = "Color de fondo"
 L["Background Color"] = "Color de fondo"
+--[[Translation missing --]]
+L["Bar Alpha"] = "Bar Alpha"
 L["Bar Color"] = "Color de la barra"
 L["Battle.net Whisper"] = "Mensaje de Battle.net"
 L["Battleground"] = "Campo de batalla"
@@ -301,8 +307,6 @@ L["Grow"] = "Crecer"
 L["GTFO Alert"] = "Alerta de GTFO"
 L["Guild"] = "Hermandad"
 L["Hands"] = "Manos"
---[[Translation missing --]]
-L["Has Target"] = "Has Target"
 L["Has Vehicle UI"] = "Posee IU"
 L["HasPet"] = "Mascota viva"
 L["Head"] = "Cabeza"
@@ -428,11 +432,10 @@ L["Monster Yell"] = "Monstruo - Susurrar"
 L["Moon"] = "Moon"
 L["Mounted"] = "Montado"
 L["Mouse Cursor"] = "Cursor"
+L["Multistrike"] = "Ataques múltiples"
 L["Multi-target"] = "Objetivo múltiple"
 L["Music"] = "Música"
 L["Mythic"] = "Mítico"
---[[Translation missing --]]
-L["Mythic+ Affix"] = "Mythic+ Affix"
 L["Name"] = "Nombre"
 L["Neck"] = "Cuello"
 L["Neutral"] = "Neutral"
@@ -635,8 +638,6 @@ L["Spell ID"] = "ID de hechizo"
 L["Spell Id"] = "ID de hechizo"
 L["Spell Known"] = "Hechizo conocido"
 L["Spell Name"] = "Nombre de hechizo"
---[[Translation missing --]]
-L["Spell Usable"] = "Spell Usable"
 L["Spell/Encounter Id"] = "ID de hechizo/enfrentamiento"
 L["Spin"] = "Girar"
 L["Spiral"] = "Espiral"

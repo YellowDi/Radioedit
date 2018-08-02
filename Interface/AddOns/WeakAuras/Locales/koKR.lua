@@ -5,6 +5,14 @@ end
 local L = WeakAuras.L
 
 -- WeakAuras
+--[[Translation missing --]]
+L[ [=[
+
+Supports multiple entries, separated by commas
+]=] ] = [=[
+
+Supports multiple entries, separated by commas
+]=]
 L["!="] = "!="
 L["%s - %i. Trigger"] = "%s - %i. 활성 조건"
 L["%s - 1. Trigger"] = "%s - 1. 활성 조건"
@@ -55,8 +63,6 @@ L["Absorbed"] = "흡수함"
 L["Action Usable"] = "사용 가능"
 L["Active"] = "활성화"
 L["Additional Trigger Replacements"] = "추가적인 활성 조건 교체"
---[[Translation missing --]]
-L["Adjust Timer"] = "Adjust Timer"
 L["Affected"] = "영향 받음"
 L["Aggro"] = "어그로"
 --[[Translation missing --]]
@@ -65,8 +71,6 @@ L["Alive"] = "생존"
 L["All Triggers"] = "모든 활성 조건 만족"
 L["Alliance"] = "얼라이언스"
 L["Allow partial matches"] = "부분 일치 허용"
---[[Translation missing --]]
-L["Alpha"] = "Alpha"
 L["Alternate Power"] = "보조 마력"
 L["Always"] = "항상"
 L["Always active trigger"] = "항상 활성 조건 활성화"
@@ -104,6 +108,8 @@ L["Back"] = "등"
 L["Back and Forth"] = "왕복"
 L["Backdrop Color"] = "배경 색상"
 L["Background Color"] = "배경 색상"
+--[[Translation missing --]]
+L["Bar Alpha"] = "Bar Alpha"
 L["Bar Color"] = "바 색상"
 L["Battle.net Whisper"] = "Battle.net 귓속말"
 L["Battleground"] = "전장"
@@ -292,8 +298,6 @@ L["Grow"] = "성장"
 L["GTFO Alert"] = "GTFO 경보"
 L["Guild"] = "길드"
 L["Hands"] = "손"
---[[Translation missing --]]
-L["Has Target"] = "Has Target"
 L["Has Vehicle UI"] = "차량 UI가 있을 때"
 L["HasPet"] = "소환수 있음 (살아있음)"
 L["Head"] = "머리"
@@ -416,11 +420,10 @@ L["Monster Yell"] = "몬스터 외침"
 L["Moon"] = "달"
 L["Mounted"] = "탈것 탑승 중"
 L["Mouse Cursor"] = "마우스 커서"
+L["Multistrike"] = "연속타격"
 L["Multi-target"] = "다중 대상"
 L["Music"] = "음악"
 L["Mythic"] = "신화"
---[[Translation missing --]]
-L["Mythic+ Affix"] = "Mythic+ Affix"
 L["Name"] = "이름"
 L["Neck"] = "목"
 L["Neutral"] = "중립"
@@ -635,8 +638,6 @@ L["Spell ID"] = "주문 ID"
 L["Spell Id"] = "주문 Id"
 L["Spell Known"] = "습득한 주문"
 L["Spell Name"] = "주문 이름"
---[[Translation missing --]]
-L["Spell Usable"] = "Spell Usable"
 L["Spell/Encounter Id"] = "주문/우두머리 전투 Id"
 L["Spin"] = "회전"
 L["Spiral"] = "소용돌이"

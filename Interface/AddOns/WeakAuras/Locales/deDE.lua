@@ -5,6 +5,14 @@ end
 local L = WeakAuras.L
 
 -- WeakAuras
+--[[Translation missing --]]
+L[ [=[
+
+Supports multiple entries, separated by commas
+]=] ] = [=[
+
+Supports multiple entries, separated by commas
+]=]
 L["!="] = "!= (Ungleich)"
 L["%s - %i. Trigger"] = "%s - %i. Auslöser"
 L["%s - 1. Trigger"] = "%s - 1. Auslöser"
@@ -57,8 +65,6 @@ L["Absorbed"] = "Absorbiert"
 L["Action Usable"] = "Aktion nutzbar"
 L["Active"] = "Aktiv"
 L["Additional Trigger Replacements"] = "Zusätzlicher Auslöser Ersatz"
---[[Translation missing --]]
-L["Adjust Timer"] = "Adjust Timer"
 L["Affected"] = "Betroffen"
 L["Aggro"] = "Aggro (Bedrohung)"
 --[[Translation missing --]]
@@ -67,8 +73,6 @@ L["Alive"] = "am Leben"
 L["All Triggers"] = "Alle Auslöser (UND)"
 L["Alliance"] = "Allianz"
 L["Allow partial matches"] = "Teilweise Übereinstimmungen erlauben"
---[[Translation missing --]]
-L["Alpha"] = "Alpha"
 L["Alternate Power"] = "Alternative Energie"
 L["Always"] = "Immer"
 L["Always active trigger"] = "Immer aktiver Auslöser"
@@ -105,6 +109,8 @@ L["Back"] = "Rücken"
 L["Back and Forth"] = "Vor und zurück"
 L["Backdrop Color"] = "Hintergrundfarbe"
 L["Background Color"] = "Hintergrundfarbe"
+--[[Translation missing --]]
+L["Bar Alpha"] = "Bar Alpha"
 L["Bar Color"] = "Balkenfarbe"
 L["Battle.net Whisper"] = "Battle.net-Flüster"
 L["Battleground"] = "Schlachtfeld"
@@ -288,8 +294,6 @@ L["Grow"] = "Wachsen"
 L["GTFO Alert"] = "GTFO-Warnung"
 L["Guild"] = "Gilde"
 L["Hands"] = "Hände"
---[[Translation missing --]]
-L["Has Target"] = "Has Target"
 L["Has Vehicle UI"] = "Hat Fahrzeug-UI"
 L["HasPet"] = "mit aktivem Begleiter"
 L["Head"] = "Kopf"
@@ -411,11 +415,10 @@ L["Monster Yell"] = "NPC-Schrei"
 L["Moon"] = "Mond"
 L["Mounted"] = "am Reiten"
 L["Mouse Cursor"] = "Mauszeiger"
+L["Multistrike"] = "Mehrfachschlag"
 L["Multi-target"] = "Mehrfachziel"
 L["Music"] = "Musik"
 L["Mythic"] = "Mythisch"
---[[Translation missing --]]
-L["Mythic+ Affix"] = "Mythic+ Affix"
 L["Name"] = "Name"
 L["Neck"] = "Hals"
 L["Neutral"] = "Neutral"
@@ -513,7 +516,8 @@ L["Region type %s not supported"] = "Regiontyp %s wird nicht unterstützt"
 L["Relative"] = "Relativ"
 L["Remaining Duration"] = "Verbleibende Dauer"
 L["Remaining Time"] = "Verbleibende Zeit"
-L["Repeat"] = "Wiederhole"
+--[[Translation missing --]]
+L["Repeat"] = "Repeat"
 L["Requested display does not exist"] = "Angeforderte Anzeige existiert nicht"
 L["Requested display not authorized"] = "Angeforderte Anzeige ist nicht autorisiert"
 --[[Translation missing --]]
@@ -620,8 +624,6 @@ L["Spell ID"] = "Zauber-ID"
 L["Spell Id"] = "Zauber-ID"
 L["Spell Known"] = "Zauber erlernt"
 L["Spell Name"] = "Zaubername"
---[[Translation missing --]]
-L["Spell Usable"] = "Spell Usable"
 L["Spell/Encounter Id"] = "Zauber-/Begegnungs-ID"
 L["Spin"] = "Drehen"
 L["Spiral"] = "Winden"
@@ -718,5 +720,6 @@ L["Y-Offset"] = "Y-Versatz"
 L["Zone Group ID(s)"] = "Zone Group ID(s)"
 --[[Translation missing --]]
 L["Zone ID(s)"] = "Zone ID(s)"
-L["Zone Name"] = "Gebietsname"
+--[[Translation missing --]]
+L["Zone Name"] = "Zone Name"
 

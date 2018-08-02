@@ -5,6 +5,14 @@ end
 local L = WeakAuras.L
 
 -- WeakAuras
+--[[Translation missing --]]
+L[ [=[
+
+Supports multiple entries, separated by commas
+]=] ] = [=[
+
+Supports multiple entries, separated by commas
+]=]
 L["!="] = "≠"
 L["%s - %i. Trigger"] = "%s - %i. 触发器"
 L["%s - 1. Trigger"] = "%s - 1. 触发器"
@@ -55,8 +63,6 @@ L["Absorbed"] = "已吸收"
 L["Action Usable"] = "动作可以使用"
 L["Active"] = "活跃"
 L["Additional Trigger Replacements"] = "额外触发器替代品"
---[[Translation missing --]]
-L["Adjust Timer"] = "Adjust Timer"
 L["Affected"] = "受到影响"
 L["Aggro"] = "引起仇恨"
 L["Alert Type"] = "警报类型"
@@ -64,8 +70,6 @@ L["Alive"] = "存活"
 L["All Triggers"] = "全部符合"
 L["Alliance"] = "联盟"
 L["Allow partial matches"] = "允许部分匹配"
---[[Translation missing --]]
-L["Alpha"] = "Alpha"
 L["Alternate Power"] = "特殊能量(BOSS战中)"
 L["Always"] = "总是"
 L["Always active trigger"] = "总是启用触发器"
@@ -105,6 +109,8 @@ L["Back and Forth"] = "往返"
 --[[Translation missing --]]
 L["Backdrop Color"] = "Backdrop Color"
 L["Background Color"] = "背景颜色"
+--[[Translation missing --]]
+L["Bar Alpha"] = "Bar Alpha"
 --[[Translation missing --]]
 L["Bar Color"] = "Bar Color"
 L["Battle.net Whisper"] = "战网好友密语"
@@ -305,8 +311,6 @@ L["Grow"] = "延伸"
 L["GTFO Alert"] = "GTFO警报"
 L["Guild"] = "公会"
 L["Hands"] = "手"
---[[Translation missing --]]
-L["Has Target"] = "Has Target"
 L["Has Vehicle UI"] = "有载具UI"
 L["HasPet"] = "有宠物"
 L["Head"] = "头部"
@@ -433,11 +437,10 @@ L["Monster Yell"] = "怪物大喊"
 L["Moon"] = "Moon"
 L["Mounted"] = "在坐骑上"
 L["Mouse Cursor"] = "鼠标"
+L["Multistrike"] = "溅射"
 L["Multi-target"] = "多目标"
 L["Music"] = "音乐"
 L["Mythic"] = "史诗"
---[[Translation missing --]]
-L["Mythic+ Affix"] = "Mythic+ Affix"
 L["Name"] = "名称"
 L["Neck"] = "项链"
 L["Neutral"] = "中立"
@@ -666,8 +669,6 @@ L["Spell ID"] = "法术ID"
 L["Spell Id"] = "法术Id"
 L["Spell Known"] = "学会的法术"
 L["Spell Name"] = "法术名称"
---[[Translation missing --]]
-L["Spell Usable"] = "Spell Usable"
 L["Spell/Encounter Id"] = "法术/战斗Id"
 L["Spin"] = "旋转"
 L["Spiral"] = "螺旋"

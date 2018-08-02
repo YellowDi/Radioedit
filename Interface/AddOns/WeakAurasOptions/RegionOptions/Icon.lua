@@ -306,20 +306,11 @@ local function createOptions(id, data)
       hidden = function() return not WeakAuras.CanHaveTooltip(data) end,
       order = 49.5
     },
-    alpha = {
-      type = "range",
-      name = L["Icon Alpha"],
-      order = 49.6,
-      min = 0,
-      max = 1,
-      bigStep = 0.01,
-      isPercent = true
-    },
   };
 
   local function hideCustomTextEditor()
-    return not ((data.text1Enabled and data.text1:find("%%c"))
-             or (data.text2Enabled and data.text2:find("%%c")))
+    return not ((data.text1Enabled and WeakAuras.ContainsPlaceHolders(data.text1, "c"))
+      or (data.text2Enabled and WeakAuras.ContainsPlaceHolders(data.text2, "c")))
   end
 
   WeakAuras.AddCodeOption(options, data, L["Custom Function"], "customText", 43.2,  hideCustomTextEditor, {"customText"}, false);

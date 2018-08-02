@@ -46,19 +46,16 @@ local function createOptions(id, data)
       name = L["Mirror"],
       order = 20
     },
-    alpha = {
-      type = "range",
-      name = L["Alpha"],
-      order = 25,
-      min = 0,
-      max = 1,
-      bigStep = 0.01,
-      isPercent = true
-    },
     rotate = {
       type = "toggle",
       name = L["Allow Full Rotation"],
-      order = 30
+      order = 25
+    },
+    space3 = {
+      type = "execute",
+      name = "",
+      order = 30,
+      image = function() return "", 0, 0 end,
     },
     rotation = {
       type = "range",
