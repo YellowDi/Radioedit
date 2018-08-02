@@ -1,0 +1,13 @@
+VER 3 0100000000000003 "·" "INV_Misc_QuestionMark"
+#showtooltip 真言术：障
+/cast [@cursor] 真言术：障
+END
+VER 3 0100000000000002 "·" "135939"
+/施放 能量灌注
+/use 延时之力药水
+/use 狂怒战鼓
+/use 高山战鼓
+END
+VER 3 0100000000000001 "牧师神器" "1295540"
+.item 16 128825 31
+END
