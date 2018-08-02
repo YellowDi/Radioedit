@@ -1,5 +1,5 @@
 ## Interface: 80000
-## Version: v8.0.1
+## Version: v8.0.2
 ## Title: BugSack
 ## Notes: Toss those bugs inna sack.
 ## Notes-deDE: Werft den Fehler in einen Sack.
