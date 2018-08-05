@@ -1,0 +1,11 @@
+## Interface: 80000
+## Version: 1.12
+## Title: NameplateSCT
+## Author: mpstark
+## SavedVariables: NameplateSCTDB
+## Notes: Nameplate-based scrolling combat text.
+## OptionalDeps: Ace3, LibEasing
+
+embeds.xml
+
+NameplateSCT.lua
