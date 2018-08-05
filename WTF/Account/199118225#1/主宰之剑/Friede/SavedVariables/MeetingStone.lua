@@ -8,6 +8,14 @@ MEETINGSTONE_CHARACTER_DB = {
 			["createHistoryList"] = {
 				"1-134-489-0", -- [1]
 			},
+			["searchHistoryList"] = {
+				"2-0-0-0", -- [1]
+				"6-0-0-0", -- [2]
+			},
+			["version"] = "80000.01",
+			["settings"] = {
+				["panel"] = false,
+			},
 			["recent"] = {
 				["1-134-489-0"] = {
 					{
@@ -24,15 +32,7 @@ MEETINGSTONE_CHARACTER_DB = {
 					}, -- [2]
 				},
 			},
-			["version"] = "80000.01",
-			["settings"] = {
-				["panel"] = false,
-			},
 			["lastSearchCode"] = "2-0-0-0",
-			["searchHistoryList"] = {
-				"2-0-0-0", -- [1]
-				"6-0-0-0", -- [2]
-			},
 		},
 	},
 }

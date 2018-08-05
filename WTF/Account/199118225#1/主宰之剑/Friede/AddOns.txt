@@ -25,9 +25,9 @@ OmniCC: enabled
 OmniCC_Config: enabled
 OrderHallCommander: enabled
 Pawn: enabled
-Quartz: enabled
-ShadowedUF_Options: enabled
-ShadowedUnitFrames: enabled
+Quartz: disabled
+ShadowedUF_Options: disabled
+ShadowedUnitFrames: disabled
 TellMeWhen: enabled
 TellMeWhen_Options: enabled
 TidyPlatesContinued: enabled
@@ -69,3 +69,4 @@ Blizzard_CUFProfiles: enabled
 Blizzard_CompactRaidFrames: enabled
 Blizzard_ObjectiveTracker: enabled
 DBM-VPJingjing: enabled
+EKPlates: disabled

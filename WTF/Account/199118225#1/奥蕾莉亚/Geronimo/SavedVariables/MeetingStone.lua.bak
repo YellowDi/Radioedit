@@ -6,6 +6,41 @@ MEETINGSTONE_CHARACTER_DB = {
 	["profiles"] = {
 		["Geronimo - 奥蕾莉亚"] = {
 			["recent"] = {
+				["2-112-445-0"] = {
+					{
+						["role"] = "DAMAGER",
+						["name"] = "范灬迪塞尔-国王之谷",
+						["iLvl"] = 237,
+						["time"] = 1533300427,
+						["class"] = 3,
+						["leader"] = true,
+						["bTag"] = "Saints#5482",
+					}, -- [1]
+					{
+						["role"] = "DAMAGER",
+						["name"] = "埃里戈涅-奥拉基尔",
+						["iLvl"] = 205,
+						["time"] = 1533300427,
+						["class"] = 3,
+						["bTag"] = "峰回路转第一弯#5822",
+					}, -- [2]
+					{
+						["role"] = "DAMAGER",
+						["name"] = "东方文文-贫瘠之地",
+						["iLvl"] = 215,
+						["time"] = 1533300427,
+						["class"] = 4,
+						["bTag"] = "梦回大理#5961",
+					}, -- [3]
+					{
+						["role"] = "DAMAGER",
+						["name"] = "大吉大岭-霜之哀伤",
+						["iLvl"] = 232,
+						["time"] = 1533300427,
+						["class"] = 8,
+						["bTag"] = "Greenuor#5528",
+					}, -- [4]
+				},
 				["1-134-488-0"] = {
 					{
 						["role"] = "DAMAGER",
@@ -30,10 +65,11 @@ MEETINGSTONE_CHARACTER_DB = {
 			},
 			["version"] = "80000.01",
 			["searchHistoryList"] = {
-				"1-134-489-0", -- [1]
-				"6-0-0-0", -- [2]
+				"2-112-445-0", -- [1]
+				"1-134-489-0", -- [2]
+				"6-0-0-0", -- [3]
 			},
-			["lastSearchCode"] = "1-134-489-0",
+			["lastSearchCode"] = "2-112-445-0",
 		},
 	},
 }

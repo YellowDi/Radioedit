@@ -2,7 +2,7 @@ ShadowedUF_Options: enabled
 ShadowedUnitFrames: enabled
 TidyPlatesContinued_Quatre: enabled
 TidyPlatesContinued: enabled
-Quartz: enabled
+Quartz: disabled
 iShadow: enabled
 AdvancedInterfaceOptions: enabled
 AngryKeystones: enabled

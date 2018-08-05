@@ -24,7 +24,7 @@ OmniCC: enabled
 OmniCC_Config: enabled
 OrderHallCommander: enabled
 Pawn: enabled
-Quartz: enabled
+Quartz: disabled
 ShadowedUF_Options: enabled
 ShadowedUnitFrames: enabled
 TellMeWhen: enabled

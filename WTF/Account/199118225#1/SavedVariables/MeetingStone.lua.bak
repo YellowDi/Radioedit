@@ -1,13 +1,15 @@
 
 MEETINGSTONE_UI_DB = {
 	["profileKeys"] = {
-		["Mirvish - 格瑞姆巴托"] = "Default",
-		["Geronimo - 奥蕾莉亚"] = "Default",
-		["Underdog - 主宰之剑"] = "Default",
-		["Elenore - 格瑞姆巴托"] = "Default",
 		["Geronimo - 格瑞姆巴托"] = "Default",
 		["Mirvish - 主宰之剑"] = "Default",
+		["Mirvish - 格瑞姆巴托"] = "Default",
 		["Radioedit - 主宰之剑"] = "Default",
+		["Underdog - 主宰之剑"] = "Default",
+		["Elenore - 格瑞姆巴托"] = "Default",
+		["Zeoi - 主宰之剑"] = "Default",
+		["Elenore - 主宰之剑"] = "Default",
+		["Geronimo - 奥蕾莉亚"] = "Default",
 		["Friede - 主宰之剑"] = "Default",
 	},
 	["global"] = {
@@ -16,19 +18,19 @@ MEETINGSTONE_UI_DB = {
 				["text"] = "%d+元",
 			}, -- [1]
 			{
-				["text"] = "5173",
 				["pain"] = true,
+				["text"] = "5173",
 			}, -- [2]
 			{
-				["text"] = "lfg:",
 				["pain"] = true,
+				["text"] = "lfg:",
 			}, -- [3]
 			{
 				["text"] = "tao.*bao",
 			}, -- [4]
 			{
-				["text"] = "平台",
 				["pain"] = true,
+				["text"] = "平台",
 			}, -- [5]
 			{
 				["text"] = "支.*付.*宝",
@@ -37,8 +39,8 @@ MEETINGSTONE_UI_DB = {
 				["text"] = "淘.*宝",
 			}, -- [7]
 			{
-				["text"] = "门票",
 				["pain"] = true,
+				["text"] = "门票",
 			}, -- [8]
 			["default"] = true,
 		},

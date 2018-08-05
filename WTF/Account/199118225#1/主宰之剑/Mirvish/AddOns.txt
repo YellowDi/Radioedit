@@ -1,6 +1,6 @@
 WorldQuestTracker: disabled
-ShadowedUF_Options: enabled
-ShadowedUnitFrames: enabled
+ShadowedUF_Options: disabled
+ShadowedUnitFrames: disabled
 AdvancedInterfaceOptions: enabled
 AngryKeystones: enabled
 !BugGrabber: enabled
@@ -27,7 +27,7 @@ OmniCC: enabled
 OmniCC_Config: enabled
 OrderHallCommander: enabled
 Pawn: enabled
-Quartz: enabled
+Quartz: disabled
 TellMeWhen: enabled
 TellMeWhen_Options: enabled
 TidyPlatesContinued: enabled
@@ -69,3 +69,4 @@ DBM-DefaultSkin: enabled
 Blizzard_CUFProfiles: enabled
 Blizzard_CompactRaidFrames: enabled
 Blizzard_ObjectiveTracker: enabled
+EKPlates: disabled

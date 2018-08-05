@@ -5,7 +5,60 @@ MEETINGSTONE_CHARACTER_DB = {
 	},
 	["profiles"] = {
 		["Underdog - 主宰之剑"] = {
+			["recent"] = {
+				["1-124-469-0"] = {
+					{
+						["role"] = "DAMAGER",
+						["name"] = "阿尔小萨斯-范达尔鹿盔",
+						["iLvl"] = 214,
+						["time"] = 1533435339,
+						["class"] = 6,
+						["leader"] = true,
+						["bTag"] = "besthym#5367",
+					}, -- [1]
+					{
+						["role"] = "TANK",
+						["name"] = "爱国咕熊猫-霜之哀伤",
+						["iLvl"] = 252,
+						["time"] = 1533435039,
+						["class"] = 11,
+						["bTag"] = "hikiyukino#5919",
+					}, -- [2]
+					{
+						["role"] = "DAMAGER",
+						["name"] = "青烟漫漫-翡翠梦境",
+						["iLvl"] = 214,
+						["time"] = 1533435463,
+						["class"] = 7,
+						["leader"] = true,
+						["bTag"] = "那年那个小侏儒#5514",
+					}, -- [3]
+					{
+						["role"] = "DAMAGER",
+						["name"] = "天爱朵-罗宁",
+						["iLvl"] = 191,
+						["time"] = 1533435463,
+						["class"] = 9,
+						["bTag"] = "天之朵#5111",
+					}, -- [4]
+					{
+						["role"] = "TANK",
+						["name"] = "修行即生活-国王之谷",
+						["iLvl"] = 196,
+						["time"] = 1533435463,
+						["class"] = 2,
+						["bTag"] = "沧海有情天#5616",
+					}, -- [5]
+				},
+			},
+			["settings"] = {
+				["panel"] = false,
+			},
 			["version"] = "80000.01",
+			["lastSearchCode"] = "6-0-0-0",
+			["searchHistoryList"] = {
+				"6-0-0-0", -- [1]
+			},
 		},
 	},
 }
