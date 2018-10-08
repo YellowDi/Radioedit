@@ -1,0 +1,6 @@
+﻿## Interface: 80000
+## Title: |cff70C0F5Sora's|r
+## Notes: Sora's O(∩_∩)O
+## Author: Neavo
+
+Load.xml
