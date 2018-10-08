@@ -1,0 +1,8 @@
+## Interface: 80000
+## Title: |cff0080ffOrderHall|rIcon
+## Author: Siweia
+## Notes: Replace the OrderHallCommandBar with an Icon
+## Version: 1.1
+## LoadWith: Blizzard_OrderHallUI
+
+Core.lua
