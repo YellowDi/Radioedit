@@ -319,10 +319,10 @@ local PawnGemData110Epic =
 local PawnGemData120Uncommon =
 {
 
-{ 153710, "CritRating", 7 }, -- Deadly Solstone
-{ 153711, "HasteRating", 7 }, -- Quick Golden Beryl
-{ 153712, "Versatility", 7 }, -- Versatile Kyanite
-{ 153713, "MasteryRating", 7 }, -- Masterful Kubiline
+{ 153710, "CritRating", 30 }, -- Deadly Solstone
+{ 153711, "HasteRating", 30 }, -- Quick Golden Beryl
+{ 153712, "Versatility", 30 }, -- Versatile Kyanite
+{ 153713, "MasteryRating", 30 }, -- Masterful Kubiline
 
 }
 
@@ -333,10 +333,10 @@ local PawnGemData120Uncommon =
 local PawnGemData120Rare =
 {
 
-{ 154126, "CritRating", 9 }, -- Deadly Amberblaze
-{ 154127, "HasteRating", 9 }, -- Quick Owlseye
-{ 154128, "Versatility", 9 }, -- Versatile Royal Quartz
-{ 154129, "MasteryRating", 9 }, -- Masterful Tidal Amethyst
+{ 154126, "CritRating", 40 }, -- Deadly Amberblaze
+{ 154127, "HasteRating", 40 }, -- Quick Owlseye
+{ 154128, "Versatility", 40 }, -- Versatile Royal Quartz
+{ 154129, "MasteryRating", 40 }, -- Masterful Tidal Amethyst
 
 }
 
@@ -358,9 +358,8 @@ PawnGemQualityLevels =
 	-- 355-370: BfA world bosses
 	-- 355: BfA normal raids
 	-- 325: BfA heroics
-	-- 280: low-level BfA blue set
-	-- 210: leveling dungeons in BfA
-	{ 340, PawnGemData120Rare }, -- BfA mythic dungeons / raid finder
+	-- 210-310: leveling dungeons in BfA
+	{ 340, PawnGemData120Rare }, -- BfA raid finder / mythic dungeon
 	{ 270, PawnGemData120Uncommon }, -- above Legion legendaries
 	{ 225, PawnGemData110Epic }, -- Heroic Antorus
 	{ 195, PawnGemData110Rare }, -- Heroic Tomb of Sargeras / higher than new Relinquished gear
@@ -381,4 +380,4 @@ PawnGemQualityLevels =
 	{ 0, PawnGemData70Uncommon },
 }
 
-PawnMinimumItemLevelToConsiderGems = 153 -- Sockets on items below this ilvl are ignored
+PawnMinimumItemLevelToConsiderGems = 310 -- Sockets on items below this ilvl are ignored
