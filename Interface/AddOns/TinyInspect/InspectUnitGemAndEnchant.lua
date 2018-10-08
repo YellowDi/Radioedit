@@ -194,7 +194,7 @@ local function ShowGemAndEnchant(frame, ItemLink, anchorFrame, itemframe)
         if (qty == 6 and (itemframe.index==16 or itemframe.index==17)) then else
             num = num + 1
             icon = GetIconFrame(frame)
-            icon.title = ENCHANTS .. ":" .. EnchantParts[itemframe.index][2]
+            icon.title = ENCHANTS .. ": " .. EnchantParts[itemframe.index][2]
             icon.bg:SetVertexColor(1, 0.2, 0.2, 0.6)
             icon.texture:SetTexture("Interface\\Cursor\\" .. (EnchantParts[itemframe.index][1]==1 and "Quest" or "QuestRepeatable"))
             icon:ClearAllPoints()

@@ -17,7 +17,7 @@ end})
 
 local DefaultDB = {
     version = VERSION,                    --配置的版本號
-    ShowItemBorder = true,                --物品直角邊框
+    ShowItemBorder = false,                --物品直角邊框
     EnableItemLevel  = true,              --物品等級
       ShowColoredItemLevelString = false, --裝等文字隨物品品質
       ShowItemSlotString = true,          --物品部位文字
