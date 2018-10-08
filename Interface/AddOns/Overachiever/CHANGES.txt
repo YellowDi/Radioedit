@@ -1,0 +1,57 @@
+------------------------------------------------------------------------
+r233 | Tuhljin | 2018-09-15 01:10:36 +0000 (Sat, 15 Sep 2018) | 1 line
+Changed paths:
+   M /trunk/Overachiever_Tabs/Suggestions.lua
+   M /trunk/readme.txt
+
+- Suggestions Tab: Fix suggestions not showing at The Banshee's Wail.
+------------------------------------------------------------------------
+r232 | Tuhljin | 2018-09-07 21:15:02 +0000 (Fri, 07 Sep 2018) | 2 lines
+Changed paths:
+   M /trunk/AchieveID.lua
+   M /trunk/GameTip.lua
+   M /trunk/Options.lua
+   M /trunk/Overachiever_Tabs/Suggestions.lua
+   M /trunk/localization.lua
+   M /trunk/readme.txt
+
+- "Azeroth at War: The Barrens", "Azeroth at War: After Lordaeron", "Azeroth at War: Kalimdor on Fire" (new): Added an option to display a reminder tooltip in the mission UI for completing missions.
+- Suggestions Tab: Remove suggestion "Fighting with Style: Challenging" since it is now a Feat of Strength.
+------------------------------------------------------------------------
+r231 | Tuhljin | 2018-09-02 04:28:15 +0000 (Sun, 02 Sep 2018) | 3 lines
+Changed paths:
+   M /trunk/AchieveID.lua
+   M /trunk/GameTip.lua
+   M /trunk/Options.lua
+   M /trunk/Overachiever.lua
+   M /trunk/Overachiever_Cache/Cache.lua
+   M /trunk/Overachiever_Tabs/Suggestions.lua
+   M /trunk/localization.lua
+   M /trunk/readme.txt
+
+- Suggestions Tab: Added suggestions for the War Campaign Ships (Banshee's Wail and Wind's Redemption).
+- Fixed reminder tooltip not showing for some mobs required for Legion's "Adventurer of..." achievements.
+- "Three Sheets to the Wind": Changed description from "purchase" to "acquire" drinks since looting them counts. (If you were using the previous alpha version, you may need to check its checkbox in the relevant options panel.)
+------------------------------------------------------------------------
+r230 | Tuhljin | 2018-08-23 05:30:32 +0000 (Thu, 23 Aug 2018) | 6 lines
+Changed paths:
+   M /trunk/AchieveID.lua
+   M /trunk/GameTip.lua
+   M /trunk/Options.lua
+   M /trunk/Overachiever.toc
+   M /trunk/Overachiever_Cache/Cache.lua
+   M /trunk/Overachiever_Cache/Overachiever_Cache.toc
+   M /trunk/Overachiever_Tabs/Overachiever_Tabs.toc
+   M /trunk/Overachiever_Tabs/Suggestions.lua
+   M /trunk/Overachiever_Trade/Overachiever_Trade.toc
+   M /trunk/localization.lua
+   M /trunk/readme.txt
+
+- "Three Sheets to the Wind" (new): Added an option to display a reminder tooltip for purchasing drinks.
+- Suggestions Tab:
+-- Added suggestions for Tol Dagor (dungeon).
+-- Removed suggestions that are now Feats of Strength.
+- Fixed an issue where tooltips indicating whether an item needs to be consumed would appear even when the related option's checkbox was unchecked.
+- Cache module: Fixed an issue that prevented the use of stored data from the opposing faction if a character of that faction hadn't been logged into since the release of a new WoW build or Overachiever version. (Data for the other faction should generally be considered reliable enough to use even if it will be rebuilt when you next log into a character of that faction.)
+------------------------------------------------------------------------
+
