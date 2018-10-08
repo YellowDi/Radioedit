@@ -2,16 +2,11 @@
 ## Title: TinyChat
 ## Notes: TinyChat
 ## Author: M
-## Version: 8.0.0
-## SavedVariables: TinyChatDB, TinyChatLevelDB
+## Version: 8.0.1
 
 ChatAtFriends.lua
 ChatCopy.lua
 ChatEmote.lua
-ChatLevel.lua
-ChatLinkIcon.lua
-ChatShortChannel.lua
-ChatSimplify.lua
-ChatSwitch.lua
+ChatHistory.lua
+##ChatLinkIcon.lua
 ChatTabSwitch.lua
-util.lua
