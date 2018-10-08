@@ -1,4 +1,4 @@
-
+﻿
 local AddonName, HubData = ...;
 local LocalVars = TidyPlatesContHubDefaults
 

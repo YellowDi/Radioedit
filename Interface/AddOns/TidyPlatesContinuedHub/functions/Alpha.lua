@@ -1,4 +1,4 @@
-
+﻿
 local AddonName, HubData = ...;
 local LocalVars = TidyPlatesContHubDefaults
 
@@ -88,7 +88,7 @@ local function AlphaFunctionByThreat(unit)
 		if unit.reaction == "NEUTRAL" and unit.threatValue < 2 then return AlphaFunctionByThreatHigh(unit) end
 
 		if (LocalVars.ThreatWarningMode == "Auto" and IsTankingAuraActive())
-			or LocalVars.ThreatWarningMode == "Tank" then
+			or LocalVars.ThreatWarningMode == "坦克" then
 				return AlphaFunctionByThreatLow(unit)	-- tank mode
 		else return AlphaFunctionByThreatHigh(unit) end
 end
@@ -111,23 +111,23 @@ local AddHubFunction = TidyPlatesContHubHelpers.AddHubFunction
 local AlphaFunctionsEnemy = {}
 
 TidyPlatesContHubDefaults.EnemyAlphaSpotlightMode = "ByThreat"			-- Sets the default function
-AddHubFunction(AlphaFunctionsEnemy, TidyPlatesContHubMenus.EnemyOpacityModes, DummyFunction, "None", "None")
-AddHubFunction(AlphaFunctionsEnemy, TidyPlatesContHubMenus.EnemyOpacityModes, AlphaFunctionByThreat, "By Threat", "ByThreat")
-AddHubFunction(AlphaFunctionsEnemy, TidyPlatesContHubMenus.EnemyOpacityModes, AlphaFunctionByLowHealth, "On Low-Health Units", "OnLowHealth")
-AddHubFunction(AlphaFunctionsEnemy, TidyPlatesContHubMenus.EnemyOpacityModes, AlphaFunctionByNPC, "On NPC", "OnNPC")
---AddHubFunction(AlphaFunctionsEnemy, TidyPlatesContHubMenus.EnemyOpacityModes, AlphaFunctionByActiveAuras, "On Active Auras", "OnActiveAura")
-AddHubFunction(AlphaFunctionsEnemy, TidyPlatesContHubMenus.EnemyOpacityModes, AlphaFunctionByEnemyHealer, "On Enemy Healers", "OnEnemyHealer")
-AddHubFunction(AlphaFunctionsEnemy, TidyPlatesContHubMenus.EnemyOpacityModes, AlphaFunctionByActive, "On Active/Damaged Units", "OnActiveUnits")
+AddHubFunction(AlphaFunctionsEnemy, TidyPlatesContHubMenus.EnemyOpacityModes, DummyFunction, "无", "None")
+AddHubFunction(AlphaFunctionsEnemy, TidyPlatesContHubMenus.EnemyOpacityModes, AlphaFunctionByThreat, "按仇恨", "ByThreat")
+AddHubFunction(AlphaFunctionsEnemy, TidyPlatesContHubMenus.EnemyOpacityModes, AlphaFunctionByLowHealth, "对低血量单位", "OnLowHealth")
+AddHubFunction(AlphaFunctionsEnemy, TidyPlatesContHubMenus.EnemyOpacityModes, AlphaFunctionByNPC, "对NPC", "OnNPC")
+--AddHubFunction(AlphaFunctionsEnemy, TidyPlatesContHubMenus.EnemyOpacityModes, AlphaFunctionByActiveAuras, "按激活的法术效果", "OnActiveAura")
+AddHubFunction(AlphaFunctionsEnemy, TidyPlatesContHubMenus.EnemyOpacityModes, AlphaFunctionByEnemyHealer, "对敌方治疗者", "OnEnemyHealer")
+AddHubFunction(AlphaFunctionsEnemy, TidyPlatesContHubMenus.EnemyOpacityModes, AlphaFunctionByActive, "按激活/受伤的单位", "OnActiveUnits")
 
 
 local AlphaFunctionsFriendly = {}
 
-TidyPlatesContHubDefaults.FriendlyAlphaSpotlightMode = "None"			-- Sets the default function
-AddHubFunction(AlphaFunctionsFriendly, TidyPlatesContHubMenus.FriendlyOpacityModes, DummyFunction, "None", "None")
-AddHubFunction(AlphaFunctionsFriendly, TidyPlatesContHubMenus.FriendlyOpacityModes, AlphaFunctionByLowHealth, "On Low-Health Units", "OnLowHealth")
-AddHubFunction(AlphaFunctionsFriendly, TidyPlatesContHubMenus.FriendlyOpacityModes, AlphaFunctionGroupMembers, "On Party Members", "OnGroupMembers")
-AddHubFunction(AlphaFunctionsFriendly, TidyPlatesContHubMenus.FriendlyOpacityModes, AlphaFunctionByPlayers, "On Players", "OnPlayers")
-AddHubFunction(AlphaFunctionsFriendly, TidyPlatesContHubMenus.FriendlyOpacityModes, AlphaFunctionByDamaged, "On Damaged Units", "OnActiveUnits")
+TidyPlatesContHubDefaults.FriendlyAlphaSpotlightMode = "无"			-- Sets the default function
+AddHubFunction(AlphaFunctionsFriendly, TidyPlatesContHubMenus.FriendlyOpacityModes, DummyFunction, "无", "None")
+AddHubFunction(AlphaFunctionsFriendly, TidyPlatesContHubMenus.FriendlyOpacityModes, AlphaFunctionByLowHealth, "对低血量单位", "OnLowHealth")
+AddHubFunction(AlphaFunctionsFriendly, TidyPlatesContHubMenus.FriendlyOpacityModes, AlphaFunctionGroupMembers, "对小队成员", "OnGroupMembers")
+AddHubFunction(AlphaFunctionsFriendly, TidyPlatesContHubMenus.FriendlyOpacityModes, AlphaFunctionByPlayers, "对玩家", "OnPlayers")
+AddHubFunction(AlphaFunctionsFriendly, TidyPlatesContHubMenus.FriendlyOpacityModes, AlphaFunctionByDamaged, "按受伤的单位", "OnActiveUnits")
 
 
 

@@ -1,4 +1,4 @@
-
+﻿
 local CopyTable = TidyPlatesContUtility.copyTable
 
 TidyPlatesContHubCache = {}
@@ -122,6 +122,7 @@ TidyPlatesContHubDefaults = {
 	TextUseBlizzardFont = false,
 	TextHealthTextMode = 1,
 	TextShowOnlyOnTargets = false,
+	TextCNNumberDisplay = false,  --汉化添加
 
 	-- Color
 	---------------------------------------
@@ -196,23 +197,38 @@ TidyPlatesContHubDefaults = {
 	WidgetEliteIndicator = true,
 	ClassEnemyIcon = false,
 	ClassPartyIcon = false,
-	WidgetsTotemIcon = false,
-	WidgetsComboPoints = true,
-	WidgetsThreatIndicator = true,
-	WidgetsRangeIndicator = false,
-	WidgetsRangeMode = 1,
-	WidgetsEnableExternal = true,
+	WidgetTotemIcon = false,
+	WidgetComboPoints = true,
+	WidgetComboPointsStyle = 1,
+	WidgetThreatIndicator = true,
+	WidgetRangeIndicator = false,
+	WidgetRangeMode = 1,
+	WidgetEnableExternal = true,
+	WidgetAbsorbIndicator = false,
+	WidgetAbsorbMode = 1,
+	WidgetQuestIcon = false,
+	WidgetThreatPercentage = false,
 
 	-- Aura Widget
 	---------------------------------------
-	WidgetsDebuff = true,
-	WidgetsDebuffStyle = 1,
-	--WidgetsAuraMode = 1,
-	WidgetsMyDebuff = true,
-	WidgetsMyBuff = false,
-	WidgetsDebuffTrackList = "My Rake\nMy Rip\nMy Moonfire\nAll 339\nMy Regrowth\nMy Rejuvenation\nNot Facepalm Bolt",
-	WidgetsDebuffLookup = {},
-	WidgetsDebuffPriority = {},
+	WidgetDebuff = true,
+	WidgetDebuffStyle = 1,
+	--WidgetAuraMode = 1,
+	WidgetMyDebuff = true,
+	WidgetMyBuff = false,
+	WidgetPandemic = false,
+	ColorPandemic = {r = 0.9, g = 0.15, b = 0.15, a = 1}, -- Red
+	BorderPandemic = 1,
+	WidgetBuffPurgeable = false,
+	ColorBuffPurgeable = {r = 0, g = 0.4, b = 1, a = 1}, -- Medium Blue
+	BorderBuffPurgeable = 1,
+	WidgetBuffEnrage = false,
+	ColorBuffEnrage = {r = 1, g = 0, b = 0.2, a = 1}, -- Medium Red
+	BorderBuffEnrage = 1,
+	SpacerSlots = 1,
+	WidgetDebuffTrackList = "My Rake\nMy Rip\nMy Moonfire\nAll 339\nMy Regrowth\nMy Rejuvenation\nNot Facepalm Bolt",
+	WidgetDebuffLookup = {},
+	WidgetDebuffPriority = {},
 	WidgetAuraTrackDispelFriendly = false,
 	WidgetAuraTrackCurse = true,
 	WidgetAuraTrackDisease = true,
@@ -225,6 +241,7 @@ TidyPlatesContHubDefaults = {
 	AdvancedEnableUnitCache = true,
 	FocusAsTarget = false,
 	FrameBarWidth = 1,
+	NameplateMaxDistance = 60,
 	--AdvancedHealthTextList = [[return unit.health]],
 }
 

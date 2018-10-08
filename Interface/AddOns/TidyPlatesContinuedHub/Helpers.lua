@@ -27,7 +27,15 @@ local function GetPanelValues(panel, targetTable)
 		local index
 		for index in pairs(targetTable) do
 			if panel[index] then
-				targetTable[index] = panel[index]:GetValue()
+				local value = panel[index]:GetValue()
+				if tonumber(value) ~= nil then
+					if panel[index].isActual then
+						value = math.ceil(value)	-- Round to whole number
+					else
+						value = math.ceil(value*100)/100	-- Round to 2 decimals
+					end
+				end
+				targetTable[index] = value
 			end
 		end
 	end
@@ -73,6 +81,7 @@ end
 
 
 local function ConvertDebuffListTable(source, target, order)
+	if source == nil then return end
 	local temp = ListToTable(strsplit("\n", source))
 	target = wipe(target)
 	if order then order = wipe(order) end

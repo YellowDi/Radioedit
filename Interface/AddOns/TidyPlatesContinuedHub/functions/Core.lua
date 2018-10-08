@@ -1,4 +1,4 @@
-
+﻿
 ------------------------------------------------------------------------------------
 -- Tidy Plates Hub
 ------------------------------------------------------------------------------------
@@ -43,8 +43,16 @@ local function IsOffTanked(unit)
 
 	local unitid = unit.unitid
 	if unitid then
-		local targetOf = unitid.."target"
-		local targetIsTank = UnitIsUnit(targetOf, "pet") or ("TANK" ==  UnitGroupRolesAssigned(targetOf))
+		local targetOf = unitid.."target"	
+		local targetGUID = UnitGUID(targetOf)
+		local targetIsGuardian = false
+
+		if targetGUID then
+			targetGUID = select(6, strsplit("-", UnitGUID(targetOf)))
+			targetIsGuardian = targetGUID == "61146" or targetGUID == "103822" -- Treant(103822), Black Ox Statue(61146)
+		end
+		
+		local targetIsTank = UnitIsUnit(targetOf, "pet") or targetIsGuardian or ("TANK" ==  UnitGroupRolesAssigned(targetOf))
 
 		--if LocalVars.EnableOffTankHighlight and IsEnemyTanked(unit) then
 		if LocalVars.EnableOffTankHighlight and targetIsTank then
@@ -60,9 +68,9 @@ local function DummyFunction() return end
 -- Define the Menu for Threat Modes
 TidyPlatesContHubDefaults.ThreatWarningMode = "Auto"
 TidyPlatesContHubMenus.ThreatWarningModes = {
-					{ text = "Auto (Color Swap)", value = "Auto",} ,
-					{ text = "Tank", value = "Tank",} ,
-					{ text = "DPS/Healer", value = "DPS",} ,
+					{ text = "自动（随专精切换）", value = "Auto",} ,
+					{ text = "坦克", value = "坦克"    ,} ,
+					{ text = "伤害输出/治疗者", value = "DPS",} ,
 					}
 
 local NormalGrey = {r = .65, g = .65, b = .65, a = .4}
@@ -86,7 +94,7 @@ local PaleBlue = {r = 0, g = 130/255, b = 225/255,}
 local PaleBlueText = {r = 194/255, g = 253/255, b = 1,}
 local DarkRed = {r = .9, g = 0.08, b = .08,}
 
-local RaidClassColors = RAID_CLASS_COLORS
+local RaidClassColors = CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS
 
 ------------------------------------------------------------------------------------
 
@@ -141,7 +149,7 @@ local function CallbackUpdate()
 end
 
 local function EnableWatchers()
-	if LocalVars.WidgetsDebuffStyle == 2 then TidyPlatesContWidgets.UseSquareDebuffIcon() else TidyPlatesContWidgets.UseWideDebuffIcon()end
+	if LocalVars.WidgetDebuffStyle == 2 then TidyPlatesContWidgets.UseSquareDebuffIcon() else TidyPlatesContWidgets.UseWideDebuffIcon()end
 	--TidyPlatesContUtility:EnableGroupWatcher()
 	TidyPlatesContUtility:EnableHealerTrack()
 	--TidyPlatesContWidgets:EnableTankWatch()
@@ -154,7 +162,7 @@ local CreateVariableSet = TidyPlatesContHubRapidPanel.CreateVariableSet
 
 local function UseVariables(profileName)
 
-	local suffix = profileName or "Damage"
+	local suffix = profileName or "伤害输出"
 	if suffix then
 
 		if CurrentProfileName ~= suffix then 	-- Stop repeat loading
@@ -239,6 +247,13 @@ local function ApplyProfileSettings(theme, ...)
 	EnableWatchers()
 	ApplyStyleCustomization(theme["Default"], theme["DefaultBackup"])
 	ApplyFontCustomization(theme["NameOnly"], theme["NameOnlyBackup"])
+
+	-- Set Space Between Buffs & Debuffs
+	TidyPlatesContWidgets.SetSpacerSlots(math.ceil(LocalVars.SpacerSlots))
+	-- If the setting can't be stored during combat
+	if InCombatLockdown() == false and LocalVars.NameplateMaxDistance ~= nil then
+		SetCVar("nameplateMaxDistance", math.ceil(LocalVars.NameplateMaxDistance))
+	end
 
 	TidyPlatesCont:ForceUpdate()
 	RaidClassColors = CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS

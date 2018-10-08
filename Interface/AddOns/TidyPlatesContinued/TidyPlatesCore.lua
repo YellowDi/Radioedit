@@ -410,7 +410,7 @@ do
 		unitid = PlatesVisible[plate]
 		UpdateReferences(plate)
 
-		UpdateUnitIdentity(unitid)
+		UpdateUnitIdentity(plate, unitid)
 		UpdateUnitContext(plate, unitid)
 		ProcessUnitChanges()
 		OnUpdateCastMidway(plate, unitid)
@@ -497,7 +497,7 @@ do
 	-- UpdateUnitIdentity: Updates Low-volatility Unit Data
 	-- (This is essentially static data)
 	--------------------------------------------------------
-	function UpdateUnitIdentity(unitid)
+	function UpdateUnitIdentity(plate, unitid)
 
 		unit.unitid = unitid
 		unit.name = UnitName(unitid)
@@ -521,6 +521,7 @@ do
 			unit.class = ""
 			unit.type = "NPC"
 		end
+		
 	end
 
 
@@ -914,31 +915,30 @@ do
 		TidyPlatesContCore:SetScript("OnUpdate", OnUpdate);
 	end
 
+	function CoreEvents:UNIT_NAME_UPDATE(...)
+		local unitid = ...
+		local plate = GetNamePlateForUnit(unitid);
+		
+		if plate then
+			SetUpdateMe(plate)
+		end
+	end
+
 	function CoreEvents:NAME_PLATE_CREATED(...)
 		local plate = ...
-		local BlizzardFrame = plate:GetChildren()
-
-		-- hooksecurefunc([table,] "function", hookfunc)
-
-		--BlizzardFrame._Show = BlizzardFrame.Show	-- Store this for later
-		--BlizzardFrame.Show = BlizzardFrame.Hide			-- Try this to keep the plate from showing up
-		-- --BlizzardFrame.Show = BypassFunction			-- Try this to keep the plate from showing up
 		OnNewNameplate(plate)
 	 end
 
 	function CoreEvents:NAME_PLATE_UNIT_ADDED(...)
 		local unitid = ...
 		local plate = GetNamePlateForUnit(unitid);
-
-		-- Personal Display
-		if UnitIsUnit("player", unitid) then
-			-- plate:GetChildren():_Show()
-		-- Normal Plates
-		else
-			plate:GetChildren():Hide()
-			OnShowNameplate(plate, unitid)
-		end
-
+		
+		-- Ignore if plate is Personal Display
+		if plate and not UnitIsUnit("player", unitid) then
+			local children = plate:GetChildren()
+			if children then children:Hide() end --Avoids errors incase the plate has no children
+	 		OnShowNameplate(plate, unitid)
+	 	end
 	end
 
 	function CoreEvents:NAME_PLATE_UNIT_REMOVED(...)

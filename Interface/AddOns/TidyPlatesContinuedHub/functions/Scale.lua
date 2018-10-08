@@ -1,4 +1,4 @@
-
+﻿
 
 local AddonName, HubData = ...;
 local LocalVars = TidyPlatesContHubDefaults
@@ -98,7 +98,7 @@ local function ScaleFunctionByThreat(unit)
 	if unit.reaction == "NEUTRAL" and unit.threatValue < 2 then return ScaleFunctionByThreatHigh(unit) end
 
 	if (LocalVars.ThreatWarningMode == "Auto" and IsTankingAuraActive())
-		or LocalVars.ThreatWarningMode == "Tank" then
+		or LocalVars.ThreatWarningMode == "坦克" then
 			return ScaleFunctionByThreatLow(unit)	-- tank mode
 	else return ScaleFunctionByThreatHigh(unit) end
 
@@ -117,15 +117,15 @@ local ScaleFunctionsUniversal = { DummyFunction, ScaleFunctionByThreat, ScaleFun
 
 local AddHubFunction = TidyPlatesContHubHelpers.AddHubFunction
 
-AddHubFunction(ScaleFunctionsUniversal, TidyPlatesContHubMenus.ScaleModes, DummyFunction, "None", "None")
-AddHubFunction(ScaleFunctionsUniversal, TidyPlatesContHubMenus.ScaleModes, ScaleFunctionByThreat, "By Threat", "ByThreat")
-AddHubFunction(ScaleFunctionsUniversal, TidyPlatesContHubMenus.ScaleModes, ScaleFunctionByElite, "On Elite Units", "OnElite")
-AddHubFunction(ScaleFunctionsUniversal, TidyPlatesContHubMenus.ScaleModes, ScaleFunctionByEnemy, "On Enemy Units", "OnHostile")
-AddHubFunction(ScaleFunctionsUniversal, TidyPlatesContHubMenus.ScaleModes, ScaleFunctionByNPC, "On NPCs", "OnNPC")
-AddHubFunction(ScaleFunctionsUniversal, TidyPlatesContHubMenus.ScaleModes, ScaleFunctionByRaidIcon, "On Raid Targets", "OnMarked")
-AddHubFunction(ScaleFunctionsUniversal, TidyPlatesContHubMenus.ScaleModes, ScaleFunctionByEnemyHealer, "On Enemy Healers", "OnHealers")
-AddHubFunction(ScaleFunctionsUniversal, TidyPlatesContHubMenus.ScaleModes, ScaleFunctionByLowHealth, "On Low-Health Units", "OnLowHealth")
-AddHubFunction(ScaleFunctionsUniversal, TidyPlatesContHubMenus.ScaleModes, ScaleFunctionByBoss, "On Bosses", "OnBosses")
+AddHubFunction(ScaleFunctionsUniversal, TidyPlatesContHubMenus.ScaleModes, DummyFunction, "无", "None")
+AddHubFunction(ScaleFunctionsUniversal, TidyPlatesContHubMenus.ScaleModes, ScaleFunctionByThreat, "按仇恨", "ByThreat")
+AddHubFunction(ScaleFunctionsUniversal, TidyPlatesContHubMenus.ScaleModes, ScaleFunctionByElite, "对精英单位", "OnElite")
+AddHubFunction(ScaleFunctionsUniversal, TidyPlatesContHubMenus.ScaleModes, ScaleFunctionByEnemy, "对敌方单位", "OnHostile")
+AddHubFunction(ScaleFunctionsUniversal, TidyPlatesContHubMenus.ScaleModes, ScaleFunctionByNPC, "对NPC", "OnNPC")
+AddHubFunction(ScaleFunctionsUniversal, TidyPlatesContHubMenus.ScaleModes, ScaleFunctionByRaidIcon, "对团队目标", "OnMarked")
+AddHubFunction(ScaleFunctionsUniversal, TidyPlatesContHubMenus.ScaleModes, ScaleFunctionByEnemyHealer, "对敌方治疗者", "OnHealers")
+AddHubFunction(ScaleFunctionsUniversal, TidyPlatesContHubMenus.ScaleModes, ScaleFunctionByLowHealth, "对低血量单位", "OnLowHealth")
+AddHubFunction(ScaleFunctionsUniversal, TidyPlatesContHubMenus.ScaleModes, ScaleFunctionByBoss, "对首领", "OnBosses")
 --TidyPlatesContHubDefaults.ScaleFunctionMode = 2			-- Sets the default function
 TidyPlatesContHubDefaults.ScaleFunctionMode = "ByThreat"			-- Sets the default function
 

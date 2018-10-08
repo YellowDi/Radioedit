@@ -1,4 +1,4 @@
----------------------------------------------------------------------------------------------------------------------
+﻿---------------------------------------------------------------------------------------------------------------------
 -- Tidy Plates Interface Panel
 ---------------------------------------------------------------------------------------------------------------------
 
@@ -17,9 +17,9 @@ local CallIn = TidyPlatesContUtility.CallIn
 local copytable = TidyPlatesContUtility.copyTable
 local PanelHelpers = TidyPlatesContUtility.PanelHelpers
 
-local NO_AUTOMATION = "No Automation"
-local DURING_COMBAT = "Show during Combat, Hide when Combat ends"
-local OUT_OF_COMBAT = "Hide when Combat starts, Show when Combat ends"
+local NO_AUTOMATION = "不使用自动化"
+local DURING_COMBAT = "战斗中显示，战斗外隐藏"
+local OUT_OF_COMBAT = "战斗中隐藏，战斗外显示"
 
 local font = "Interface\\Addons\\TidyPlatesContinued\\Media\\DefaultFont.ttf"
 local yellow, blue, red, orange = "|cffffff00", "|cFF3782D1", "|cFFFF1100", "|cFFFF6906"
@@ -38,7 +38,7 @@ end
 local FirstTryTheme = "Neon"
 local DefaultProfile = "Damage"
 
-local ActiveProfile = "None"
+local ActiveProfile = "无"
 
 TidyPlatesContOptions = {
 
@@ -77,7 +77,19 @@ TidyPlatesCont.GetProfile = GetProfile
 
 function TidyPlatesContPanel.AddProfile(self, profileName )
 	if  profileName then
-		HubProfileList[#HubProfileList+1] = { text = profileName, value = profileName, }
+		local ZHCN_SEARCH = 0	 --补充一串代码，解决汉化兼容性
+		local ZHCN_K = 0
+		local ZHCN_V = 0
+		local ZHCN_ENUS={ Damage = "伤害输出", Healer = "治疗者", Gladiator = "角斗士", Tank = "坦克", }
+		for ZHCN_K,ZHCN_V in pairs(ZHCN_ENUS) do
+ 	 		if ZHCN_ENUS[ZHCN_K] == ZHCN_ENUS[profileName] then
+			      ZHCN_SEARCH = 1
+			end	   
+		end		
+		if ZHCN_SEARCH == 0 then
+			ZHCN_ENUS[profileName] = profileName
+		end
+		HubProfileList[#HubProfileList+1] = { text = ZHCN_ENUS[profileName], value = profileName, }
 	end
 end
 
@@ -123,6 +135,17 @@ local function ApplyAutomationSettings()
 	TidyPlatesCont:ForceUpdate()
 end
 
+local function Role2Profile(spec)
+	local s = GetSpecializationInfo(spec)
+	if s ~= nil then	
+		local role = GetSpecializationRole(spec)
+		if role == "DAMAGER" then return "Damage" end
+		if role == "TANK" then return "Tank" end
+		if role == "HEALER" then return "Healer"  end
+	end
+	return "Damage"
+end
+
 local function ApplyPanelSettings()
 
 	-- Theme
@@ -147,7 +170,6 @@ local function ApplyPanelSettings()
 		ActiveProfile = TidyPlatesContOptions.FirstSpecProfile
 	end
 
-	local _, specname = GetSpecializationInfo(currentSpec)
 
 	local theme = TidyPlatesCont:GetTheme()
 
@@ -230,7 +252,7 @@ local function OnRefresh(panel)
 	local id, name = GetSpecializationInfo(1)
 
 	if name then
-		if currentSpec == 1 then name = name.." (Active)" end
+		if currentSpec == 1 then name = name.."(当前专精)" end
 		panel.FirstSpecLabel:SetText(name)
 	end
 	------------------------
@@ -239,7 +261,7 @@ local function OnRefresh(panel)
 	local id, name = GetSpecializationInfo(2)
 
 	if name then
-		if currentSpec == 2 then name = name.." (Active)" end
+		if currentSpec == 2 then name = name.."(当前专精)" end
 		panel.SecondSpecLabel:SetText(name)
 	end
 	------------------------
@@ -248,7 +270,7 @@ local function OnRefresh(panel)
 	local id, name = GetSpecializationInfo(3)
 
 	if name then
-		if currentSpec == 3 then name = name.." (Active)" end
+		if currentSpec == 3 then name = name.."(当前专精)" end
 		panel.ThirdSpecLabel:SetText(name)
 		panel.ThirdSpecLabel:Show()
 		panel.ThirdSpecDropdown:Show()
@@ -259,7 +281,7 @@ local function OnRefresh(panel)
 	local id, name = GetSpecializationInfo(4)
 
 	if name then
-		if currentSpec == 4 then name = name.." (Active)" end
+		if currentSpec == 4 then name = name.."(当前专精)" end
 		panel.FourthSpecLabel:SetText(name)
 		panel.FourthSpecLabel:Show()
 		panel.FourthSpecDropdown:Show()
@@ -319,7 +341,7 @@ local function BuildInterfacePanel(panel)
 	----------------------------------------------
 	panel.ThemeCategoryTitle = panel:CreateFontString(nil, 'ARTWORK', 'GameFontNormal')
 	panel.ThemeCategoryTitle:SetFont(font, 22)
-	panel.ThemeCategoryTitle:SetText("Theme")
+	panel.ThemeCategoryTitle:SetText("主题")
 	panel.ThemeCategoryTitle:SetPoint("TOPLEFT", 20, -70)
 	panel.ThemeCategoryTitle:SetTextColor(255/255, 105/255, 6/255)
 
@@ -332,7 +354,7 @@ local function BuildInterfacePanel(panel)
 	----------------------------------------------
 	panel.ProfileLabel = panel:CreateFontString(nil, 'ARTWORK', 'GameFontNormal')
 	panel.ProfileLabel:SetFont(font, 22)
-	panel.ProfileLabel:SetText("Profile")
+	panel.ProfileLabel:SetText("模板")
 	panel.ProfileLabel:SetPoint("TOPLEFT", panel.ActiveThemeDropdown, "BOTTOMLEFT", 20, -20)
 	panel.ProfileLabel:SetTextColor(255/255, 105/255, 6/255)
 
@@ -392,7 +414,7 @@ local function BuildInterfacePanel(panel)
 	----------------------------------------------
 	panel.AutomationLabel = panel:CreateFontString(nil, 'ARTWORK', 'GameFontNormal')
 	panel.AutomationLabel:SetFont(font, 22)
-	panel.AutomationLabel:SetText("Automation")
+	panel.AutomationLabel:SetText("自动化")
 	panel.AutomationLabel:SetPoint("TOPLEFT", panel.ThirdSpecDropdown, "BOTTOMLEFT", 20, -20)
 	panel.AutomationLabel:SetTextColor(255/255, 105/255, 6/255)
 
@@ -405,7 +427,7 @@ local function BuildInterfacePanel(panel)
 	panel.AutoShowEnemyLabel:SetPoint("TOPLEFT", panel.AutomationLabel,"BOTTOMLEFT", 0, -4)
 	panel.AutoShowEnemyLabel:SetWidth(170)
 	panel.AutoShowEnemyLabel:SetJustifyH("LEFT")
-	panel.AutoShowEnemyLabel:SetText("Enemy Nameplates:")
+	panel.AutoShowEnemyLabel:SetText("敌方姓名板")
 
 	panel.AutoShowEnemy = PanelHelpers:CreateDropdownFrame("TidyPlatesContAutoShowEnemy", panel, AutomationDropdownItems, NO_AUTOMATION, nil, true)
 	panel.AutoShowEnemy:SetPoint("TOPLEFT",panel.AutoShowEnemyLabel, "BOTTOMLEFT", -20, -2)
@@ -419,7 +441,7 @@ local function BuildInterfacePanel(panel)
 	panel.AutoShowFriendlyLabel:SetPoint("TOPLEFT", panel.AutoShowEnemyLabel,"TOPLEFT", 180, 0)
 	panel.AutoShowFriendlyLabel:SetWidth(170)
 	panel.AutoShowFriendlyLabel:SetJustifyH("LEFT")
-	panel.AutoShowFriendlyLabel:SetText("Friendly Nameplates:")
+	panel.AutoShowFriendlyLabel:SetText("友方姓名板")
 
 	panel.AutoShowFriendly = PanelHelpers:CreateDropdownFrame("TidyPlatesContAutoShowFriendly", panel, AutomationDropdownItems, NO_AUTOMATION, nil, true)
 	panel.AutoShowFriendly:SetPoint("TOPLEFT", panel.AutoShowFriendlyLabel,"BOTTOMLEFT", -20, -2)
@@ -434,15 +456,15 @@ local function BuildInterfacePanel(panel)
 	--BlizzOptionsButton:SetPoint("TOPRIGHT", ResetButton, "TOPLEFT", -8, 0)
 	BlizzOptionsButton:SetPoint("TOPLEFT", panel.AutoShowEnemy, "TOPLEFT", 16, -55)
 	BlizzOptionsButton:SetWidth(260)
-	BlizzOptionsButton:SetText("Nameplate Motion & Visibility")
+	BlizzOptionsButton:SetText("打开暴雪姓名板设置...")
 
 	-- Cast Bars
-	panel.DisableCastBars = PanelHelpers:CreateCheckButton("TidyPlatesContOptions_DisableCastBars", panel, "Disable Cast Bars")
+	panel.DisableCastBars = PanelHelpers:CreateCheckButton("TidyPlatesContOptions_DisableCastBars", panel, "禁用施法条")
 	panel.DisableCastBars:SetPoint("TOPLEFT", BlizzOptionsButton, "TOPLEFT", 0, -35)
 	panel.DisableCastBars:SetScript("OnClick", function(self) SetCastBars(not self:GetChecked()) end)
 
 	-- ForceBlizzardFont
-	panel.ForceBlizzardFont = PanelHelpers:CreateCheckButton("TidyPlatesContOptions_ForceBlizzardFont", panel, "Force Multi-Lingual Font (Requires /reload)")
+	panel.ForceBlizzardFont = PanelHelpers:CreateCheckButton("TidyPlatesContOptions_ForceBlizzardFont", panel, "强制使用多语言字体（要求/reload）")
 	panel.ForceBlizzardFont:SetPoint("TOPLEFT", panel.DisableCastBars, "TOPLEFT", 0, -35)
 	panel.ForceBlizzardFont:SetScript("OnClick", function(self) TidyPlatesCont.OverrideFonts( self:GetChecked()); end)
 
@@ -450,7 +472,7 @@ local function BuildInterfacePanel(panel)
 	ResetButton = CreateFrame("Button", "TidyPlatesContOptions_ResetButton", panel, "TidyPlatesContPanelButtonTemplate")
 	ResetButton:SetPoint("BOTTOMRIGHT", -16, 8)
 	ResetButton:SetWidth(155)
-	ResetButton:SetText("Reset Configuration")
+	ResetButton:SetText("重置所有设置")
 
 	-- Update Functions
 	panel.okay = OnOkay
@@ -485,8 +507,8 @@ local function BuildInterfacePanel(panel)
 			for i, v in pairs(TidyPlatesContOptionsDefaults) do TidyPlatesContOptions[i] = v end
 			OnRefresh(panel)
 			ApplyPanelSettings()
-			print(yellow.."Resetting "..orange.."Tidy Plates Continued"..yellow.." Theme Selection to Default")
-			print(yellow.."Holding down "..blue.."Shift"..yellow.." while clicking "..red.."Reset Configuration"..yellow.." will clear your saved settings, AND reload the user interface.")
+			print(yellow.."正在重置"..orange.."Tidy Plates Continued"..yellow.."主题至默认。")
+			print(yellow.."按住"..blue.."Shift"..yellow.."后点击"..red.."重置所有设置"..yellow.."将清除所有设置、缓存并重载UI。")
 		end
 
 	end)
@@ -542,16 +564,18 @@ function panelevents:PLAYER_LOGIN()
 
 	-- First time setup
 	if not TidyPlatesContOptions.WelcomeShown then
-		SetCVar("nameplateShowSelf", 0)		--
 		SetCVar("nameplateShowAll", 1)		--
 
 
 		SetCVar("nameplateShowEnemies", 1)
-		SetCVar("nameplateShowFriends", 0)
 		SetCVar("threatWarning", 3)		-- Required for threat/aggro detection
 		TidyPlatesContOptions.WelcomeShown = true
+		
+		TidyPlatesContOptions.FirstSpecProfile = Role2Profile(1)
+		TidyPlatesContOptions.SecondSpecProfile = Role2Profile(2)
+		TidyPlatesContOptions.ThirdSpecProfile = Role2Profile(3)
+		TidyPlatesContOptions.FourthSpecProfile = Role2Profile(4)
 	end
-
 end
 
 TidyPlatesContInterfacePanel:SetScript("OnEvent", function(self, event, ...) panelevents[event](self, ...) end)

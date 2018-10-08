@@ -22,8 +22,13 @@ local UpdateWidget
 local TargetOfGroupMembers = {}
 local DebuffColumns = 3
 local DebuffLimit = 6
+local AuraLimit = 9
 local inArena = false
 local useWideIcons = true
+local SpacerSlots = 0 -- math.min(15, DebuffColumns-1)
+
+local PandemicEnabled = false
+local PandemicColor = {}
 
 local function DummyFunction() end
 
@@ -38,6 +43,13 @@ local AURA_TARGET_FRIENDLY = 2
 
 local AURA_TYPE_BUFF = 1
 local AURA_TYPE_DEBUFF = 6
+
+local ButtonGlow = LibStub("LibButtonGlow-1.0")
+local ButtonGlowEnabled = {
+		["Pandemic"] = false,
+		["Magic"] = false,
+		[""] = false, -- Enrage
+	}
 
 -- Get a clean version of the function...  Avoid OmniCC interference
 local CooldownNative = CreateFrame("Cooldown", nil, WorldFrame)
@@ -136,33 +148,54 @@ local function UpdateWidgetTime(frame, expiration)
 end
 
 
-local function UpdateIcon(frame, texture, duration, expiration, stacks, r, g, b)
-	if frame and texture and expiration then
+local function UpdateIcon(frame, aura)
+	if frame and aura and aura.texture and aura.expiration then
+		local r, g, b, a = aura.r, aura.g, aura.b, aura.a
+		local glowType = aura.type
+		local pandemicThreshold = aura.duration and aura.expiration and aura.effect == "HARMFUL" and aura.expiration-GetTime() <= aura.duration*0.3
+		local removeGlow = true
+
 		-- Icon
-		frame.Icon:SetTexture(texture)
+		frame.Icon:SetTexture(aura.texture)
 
 		-- Stacks
-		if stacks and stacks > 1 then frame.Stacks:SetText(stacks)
+		if aura.stacks and aura.stacks > 1 then frame.Stacks:SetText(aura.stacks)
 		else frame.Stacks:SetText("") end
 
-		-- Highlight Coloring
-		if r then
-			frame.BorderHighlight:SetVertexColor(r, g or 1, b or 1)
+		-- Pandemic and other Hightlighting
+		if (aura.effect == "HELPFUL" and ButtonGlowEnabled[aura.type]) or (PandemicEnabled and pandemicThreshold and ButtonGlowEnabled["Pandemic"]) then
+			removeGlow = false
+			frame.BorderHighlight:Hide()
+			frame.Border:Hide()
+			ButtonGlow.ShowOverlayGlow(frame)
+			frame.__LBGoverlay:SetFrameLevel(frame:GetFrameLevel() or 65)
+		elseif PandemicEnabled and pandemicThreshold then
+			frame.BorderHighlight:SetVertexColor(PandemicColor.r,PandemicColor.g,PandemicColor.b,PandemicColor.a)
 			frame.BorderHighlight:Show()
 			frame.Border:Hide()
-		else frame.BorderHighlight:Hide(); frame.Border:Show()	end
+		elseif r then
+			frame.BorderHighlight:SetVertexColor(r, g or 1, b or 1, a or 1)
+			frame.BorderHighlight:Show()
+			frame.Border:Hide()
+		else frame.BorderHighlight:Hide(); frame.Border:Show() end
+
+		-- Remove ButtonGlow if appropriate
+		if frame.__LBGoverlay and removeGlow then ButtonGlow.HideOverlayGlow(frame) end
 
 		-- [[ Cooldown
-		if duration and duration > 0 and expiration and expiration > 0 then
-			SetCooldown(frame.Cooldown, expiration-duration, duration+.25)
-			--frame.Cooldown:SetCooldown(expiration-duration, duration+.25)
+		frame.Cooldown.noCooldownCount = true -- Disable OmniCC interaction
+		if aura.duration and aura.duration > 0 and aura.expiration and aura.expiration > 0 then
+			SetCooldown(frame.Cooldown, aura.expiration-aura.duration, aura.duration+.25)
+			--frame.Cooldown:SetCooldown(aura.expiration-aura.duration, aura.duration+.25)
+		else
+			SetCooldown(frame.Cooldown, 0, 0)	-- Clear Cooldown
 		end
 		--]]
 
 		-- Expiration
-		UpdateWidgetTime(frame, expiration)
+		UpdateWidgetTime(frame, aura.expiration)
 		frame:Show()
-		if expiration ~= 0 then PolledHideIn(frame, expiration) end
+		if aura.expiration ~= 0 then PolledHideIn(frame, aura.expiration) end
 
 	elseif frame then
 		PolledHideIn(frame, 0)
@@ -224,14 +257,14 @@ local function UpdateIconGrid(frame, unitid)
 			-- Auras are evaluated by an external function
 			-- Pre-filtering before the icon grid is populated
 			if aura.name then
-				local show, priority, r, g, b = AuraFilterFunction(aura)
+				local show, priority, r, g, b, a = AuraFilterFunction(aura)
 				--print(aura.name, show, priority)
 				--show = true
 				-- Store Order/Priority
 				if show then
 
 					aura.priority = priority or 10
-					aura.r, aura.g, aura.b = r, g, b
+					aura.r, aura.g, aura.b, aura.a = r, g, b, a
 
 					storedAuraCount = storedAuraCount + 1
 					storedAuras[storedAuraCount] = aura
@@ -248,31 +281,88 @@ local function UpdateIconGrid(frame, unitid)
 
 		until (searchedDebuffs and searchedBuffs)
 
+		--[[ Debug, add custom Buff
+		storedAuraCount = storedAuraCount+1
+		storedAuras[storedAuraCount] = {
+			["type"] = "Magic",
+			["effect"] = "HELPFUL",
+			["duration"] = 10,
+			["stacks"] = 0,
+			["reaction"] = 1,
+			["name"] = "Debug",
+			["expiration"] = 0,
+			["priority"] = 20,
+			["spellid"] = 234153,
+			["texture"] = 136069,
+			["r"] = 0.2,
+			["g"] = 0,
+			["b"] = 1,
+		}
+		--]]
 
 		-- Display Auras
 		------------------------------------------------------------------------------------------------------
-		local AuraSlotCount = 1
+		local DebuffSlotCount = 0
+		local BuffSlotCount = 0
+		local AuraSlots = {}
+		local BuffAuras = {}
+		local DebuffAuras = {}
+		local DebuffCount = 0
+
 		if storedAuraCount > 0 then
 			frame:Show()
 			sort(storedAuras, AuraSortFunction)
 
-			for index = 1,  storedAuraCount do
-				if AuraSlotCount > DebuffLimit then break end
+			for index = 1, storedAuraCount do
+				if (DebuffSlotCount+BuffSlotCount) > AuraLimit then break end
 				local aura = storedAuras[index]
 				if aura.spellid and aura.expiration then
 
-					-- Call function to display the aura
-					UpdateIcon(AuraIconFrames[AuraSlotCount], aura.texture, aura.duration, aura.expiration, aura.stacks, aura.r, aura.g, aura.b)
+					-- Sort buffs and debuffs
+					if aura.effect == "HELPFUL" then 
+						table.insert(BuffAuras, aura)
+						BuffSlotCount = BuffSlotCount + 1
+					elseif DebuffSlotCount < DebuffLimit then
+						table.insert(DebuffAuras, aura)
+						DebuffSlotCount = DebuffSlotCount + 1
+					end
 
-					AuraSlotCount = AuraSlotCount + 1
 					frame.currentAuraCount = index
+				end
+			end
+
+			-- Loop through debuffs and call function to display them
+			for k, aura in ipairs(DebuffAuras) do
+				UpdateIcon(AuraIconFrames[k], aura)
+				AuraSlots[k] = true
+			end
+
+			-- Calculate Buff Offset
+			local rowOffset
+			local rowCount = (math.floor((DebuffSlotCount + BuffSlotCount - 1)/DebuffColumns)+1)
+			-- print(DebuffColumns * rowCount - (DebuffSlotCount + BuffSlotCount))
+			if DebuffColumns * rowCount - (DebuffSlotCount + BuffSlotCount) >= SpacerSlots then
+				rowOffset = math.max(DebuffColumns * rowCount, DebuffColumns) -- Same Row with space between
+			else
+				rowOffset = DebuffColumns * (rowCount + 1)	-- Seperate Row
+			end
+
+			-- Loop through buffs and call function to display them
+			for k, aura in ipairs(BuffAuras) do
+				local index = rowOffset+1-k
+				-- Make sure we aren't overwriting any debuffs and that we're not trying to apply buffs to slots that don't exist
+				if index > DebuffCount and index > 0 then
+						UpdateIcon(AuraIconFrames[index], aura)
+						AuraSlots[index] = true
 				end
 			end
 
 		end
 
 		-- Clear Extra Slots
-		for AuraSlotEmpty = AuraSlotCount, DebuffLimit do UpdateIcon(AuraIconFrames[AuraSlotEmpty]) end
+		for AuraSlotEmpty = 1, AuraLimit do
+			if AuraSlots[AuraSlotEmpty] ~= true then UpdateIcon(AuraIconFrames[AuraSlotEmpty]) end
+		end
 
 end
 
@@ -414,8 +504,8 @@ local function CreateAuraIcon(parent)
 	-- Text
 	--frame.TimeLeft = frame:CreateFontString(nil, "OVERLAY")
 	frame.TimeLeft = frame.Cooldown:CreateFontString(nil, "OVERLAY")
-	--frame.Stacks = frame:CreateFontString(nil, "OVERLAY")
-	frame.Stacks = frame.Cooldown:CreateFontString(nil, "OVERLAY")
+	frame.Stacks = frame:CreateFontString(nil, "OVERLAY")
+	-- frame.Stacks = frame.Cooldown:CreateFontString(nil, "OVERLAY")
 
 	-- Information about the currently displayed aura
 	frame.AuraInfo = {
@@ -438,26 +528,42 @@ local function UpdateIconConfig(frame)
 
 	if iconTable then
 		-- Create Icons
-		for index = 1, DebuffLimit do
+		for index = 1, AuraLimit do
 			local icon = iconTable[index] or CreateAuraIcon(frame)
 			iconTable[index] = icon
 			-- Apply Style
 			if useWideIcons then TransformWideAura(icon) else TransformSquareAura(icon) end
 		end
 
-		-- Set Anchors
-		iconTable[1]:ClearAllPoints()
-		iconTable[1]:SetPoint("LEFT", frame)
-		for index = 2, DebuffColumns do
-		  iconTable[index]:ClearAllPoints()
-		  iconTable[index]:SetPoint("LEFT", iconTable[index-1], "RIGHT", 5, 0)
-		end
+		-- -- Set Anchors
+		-- iconTable[1]:ClearAllPoints()
+		-- iconTable[1]:SetPoint("LEFT", frame)
+		-- for index = 2, DebuffColumns do
+		--   iconTable[index]:ClearAllPoints()
+		--   iconTable[index]:SetPoint("LEFT", iconTable[index-1], "RIGHT", 5, 0)
+		-- end
 
-		iconTable[DebuffColumns+1]:ClearAllPoints()
-		iconTable[DebuffColumns+1]:SetPoint("BOTTOMLEFT", iconTable[1], "TOPLEFT", 0, 8)
-		for index = (DebuffColumns+2), DebuffLimit do
-		  iconTable[index]:ClearAllPoints()
-		  iconTable[index]:SetPoint("LEFT", iconTable[index-1], "RIGHT", 5, 0)
+		-- iconTable[DebuffColumns+1]:ClearAllPoints()
+		-- iconTable[DebuffColumns+1]:SetPoint("BOTTOMLEFT", iconTable[1], "TOPLEFT", 0, 8)
+		-- for index = (DebuffColumns+2), AuraLimit do
+		--   iconTable[index]:ClearAllPoints()
+		--   iconTable[index]:SetPoint("LEFT", iconTable[index-1], "RIGHT", 5, 0)
+		-- end
+
+		-- Set Anchors
+		local anchorIndex = 1
+		for row = 1, AuraLimit/DebuffColumns do
+			iconTable[anchorIndex]:ClearAllPoints()
+			if row == 1 then
+				iconTable[anchorIndex]:SetPoint("LEFT", frame)
+			else
+				iconTable[anchorIndex]:SetPoint("BOTTOMLEFT", iconTable[anchorIndex-DebuffColumns], "TOPLEFT", 0, 8)
+			end
+			for index = anchorIndex + 1, DebuffColumns * row do
+			  iconTable[index]:ClearAllPoints()
+			  iconTable[index]:SetPoint("LEFT", iconTable[index-1], "RIGHT", 5, 0)
+			end
+			anchorIndex = anchorIndex + DebuffColumns -- Set next anchor index
 		end
 	end
 end
@@ -495,6 +601,7 @@ local function UseSquareDebuffIcon()
 	useWideIcons = false
 	DebuffColumns = 5
 	DebuffLimit = DebuffColumns * 2
+	AuraLimit = DebuffColumns * 3	-- Extra row for buffs
 	TidyPlatesCont:ForceUpdate()
 end
 
@@ -502,6 +609,7 @@ local function UseWideDebuffIcon()
 	useWideIcons = true
 	DebuffColumns = 3
 	DebuffLimit = DebuffColumns * 2
+	AuraLimit = DebuffColumns * 3	-- Extra row for buffs
 	TidyPlatesCont:ForceUpdate()
 end
 
@@ -510,6 +618,26 @@ local function SetAuraFilter(func)
 	if func and type(func) == 'function' then
 		AuraFilterFunction = func
 	end
+end
+
+local function SetPandemic(enabled, color)
+	PandemicEnabled = enabled
+	PandemicColor = color
+end
+
+local function SetBorderTypes(pandemic, magic, enrage)
+	if pandemic == 2 then pandemic = true else pandemic = false end
+	if magic == 2 then magic = true else magic = false end
+	if enrage == 2 then enrage = true else enrage = false end
+	ButtonGlowEnabled = {
+		["Pandemic"] = pandemic,
+		["Magic"] = magic,
+		[""] = enrage,
+	}
+end
+
+local function SetSpacerSlots(amount)
+	SpacerSlots = math.min(amount, DebuffColumns-1)
 end
 
 
@@ -524,6 +652,9 @@ TidyPlatesContWidgets.UseWideDebuffIcon = UseWideDebuffIcon
 
 TidyPlatesContWidgets.SetAuraFilter = SetAuraFilter
 
+TidyPlatesContWidgets.SetPandemic = SetPandemic
+TidyPlatesContWidgets.SetBorderTypes = SetBorderTypes
+TidyPlatesContWidgets.SetSpacerSlots = SetSpacerSlots
 
 TidyPlatesContWidgets.CreateAuraWidget = CreateAuraWidget
 
