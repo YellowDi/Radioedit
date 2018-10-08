@@ -234,6 +234,7 @@ L.EventWipeSound			= "Set sound played for encounter wipe"
 L.EventEngageSound			= "Set sound played for encounter engage"
 L.EventDungeonMusic			= "Set music played inside dungeons/raids"
 L.EventEngageMusic			= "Set music played during encounters"
+L.EventTurtleMusic			= "Set music played during turtle beach quests"
 L.Area_EventSoundsExtras	= "Event Sound Options"
 L.EventMusicCombined		= "Allow all music choices in dungeon and encounter selections (changing this option requires UIReload to reflect changes)"
 L.Area_EventSoundsFilters	= "Event Sound Filter Conditions"
@@ -276,7 +277,7 @@ L.FilterInterrupts2			= "if caster is not current target/focus (Always) or inter
 L.FilterInterrupts3			= "if caster is not current target/focus (Always) or interrupt on CD (Boss & Trash)"
 L.FilterInterruptNoteName	= "Filter warnings for interruptable spells (with count) if warning does not contain your name in the custom note"
 L.FilterDispels				= "Filter warnings for dispelable spells if your dispel is on cooldown"
-L.FilterSelfHud				= "Filter yourself from HudMap (Excludes range based Hud functions)"
+L.FilterTrashWarnings		= "Filter all trash mob warnings in normal &amp; heroic dungeons"
 
 L.Area_PullTimer			= "Pull, Break, Combat, & Custom Timer Filter Options"
 L.DontShowPTNoID			= "Block Pull Timer if not sent from same zone as you"
@@ -289,7 +290,7 @@ L.PT_Threshold				= "Do not show Break/Combat/Custom Timer countdown text above:
 L.Panel_HideBlizzard		= "Blizzard Disable & Hide"
 L.Area_HideBlizzard			= "Blizzard Disable & Hide Options"
 L.HideBossEmoteFrame		= "Hide raid boss emote frame during boss fights"
-L.HideWatchFrame			= "Hide watch (objectives) frame during boss fights if no achievements are being tracked. If in a CM, creates a temp medal timer during boss fight while frame hidden."
+L.HideWatchFrame			= "Hide watch (objectives) frame during boss fights if no achievements are being tracked and if not in a Mythic+"
 L.HideGarrisonUpdates		= "Hide garrison toasts during boss fights"
 L.HideGuildChallengeUpdates	= "Hide guild challenge toasts during boss fights"
 L.HideQuestTooltips			= "Hide quest objectives from tooltips during boss fights"
@@ -300,6 +301,11 @@ L.AfterFirst				= "After each movie has played once"
 L.Always					= ALWAYS
 L.CombatOnly				= "Disable in combat (any)"
 L.RaidCombat				= "Disable in combat (bosses only)"
+L.HideBonusHeader			= "Hide bonus roll window in..."
+L.TrivialContent			= "NON-Mythic dungeons (<340)"--Basically anything below 340
+L.NormalRaider				= "Dungeons below Mythic+5 and LFR raids (<355)"--Basically, anything below 355
+L.HeroicRaider				= "Dungeons below Mythic+10 and raids below heroic and non warfront bosses (<370)"--Basically anything below 370
+L.MythicRaider				= "Anything below mythic difficulty raids (<385)"--Basically anything below 385
 
 L.Panel_ExtraFeatures		= "Extra Features"
 --

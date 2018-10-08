@@ -229,6 +229,7 @@ L.EventMusicCombined		= "던전과 보스 전투 배경음에 모든 음악 사�
 L.Area_EventSoundsFilters	= "이벤트 효과음 필터 적용 조건"
 L.EventFilterDungMythicMusic= "신화/신화+ 난이도에선 던전 배경음을 재생하지 않음"
 L.EventFilterMythicMusic	= "신화/신화+ 난이도에선 보스 전투 배경음을 재생하지 않음"
+L.EventTurtleMusic			= "거북이 해변 퀘스트 배경음 설정"
 
 -- Tab: Global Filter
 L.Panel_SpamFilter			= "DBM 전역 기능 끄기 및 필터"
@@ -266,7 +267,7 @@ L.FilterInterrupts2			= "주문 시전 몹이 현재 대상/주시 대상이 아
 L.FilterInterrupts3			= "주문 시전 몹이 현재 대상/주시 대상이 아니거나 (항상) 차단기가 쿨타임일 때 (보스 및 쫄 정리시)"
 L.FilterInterruptNoteName	= "사용자 메모에 자기 이름이 포함되지 않은 경우 차단 가능 주문의 경고 보지 않기"
 L.FilterDispels				= "해제 주문이 재사용 대기중이면 해제 경고 보지 않기"
-L.FilterSelfHud				= "HUD에서 자기 정보는 보지 않기 (거리 기반 HUD 기능은 제외)"
+L.FilterTrashWarnings		= "일반 &amp; 영웅 던전에선 일반몹 경고 보지 않기"
 
 L.Area_PullTimer			= "풀링, 휴식, 전투, 사용자 지정 바 필터 설정"
 L.DontShowPTNoID			= "같은 지역에 없는 사용자가 보낸 풀링 타이머 차단"
@@ -279,7 +280,7 @@ L.PT_Threshold				= "휴식/전투/사용자 지정 타이머 초읽기 숫자 �
 L.Panel_HideBlizzard		= "블리자드 기능 끄기 및 숨김"
 L.Area_HideBlizzard			= "블리자드 기능 끄기 및 숨김 설정"
 L.HideBossEmoteFrame		= "보스 전투중 보스 감정표현 숨기기"
-L.HideWatchFrame			= "추적중인 업적이 없을 경우 보스 전투시 퀘스트 추적 프레임을 숨깁니다. 도전 모드에서는 메달 제한시간 프레임이 생성됩니다."
+L.HideWatchFrame			= "추적중인 업적이 없고 신화+ 난이도가 아니라면 보스 전투시 퀘스트 추적 프레임을 숨깁니다."
 L.HideGarrisonUpdates		= "보스 전투중 주둔지 팝업 알림 숨기기"
 L.HideGuildChallengeUpdates	= "보스 전투중 길드 도전 과제 알림 숨기기"
 L.HideQuestTooltips			= "보스 전투중 툴팁에서 퀘스트 정보 숨기기"
@@ -290,6 +291,11 @@ L.AfterFirst				= "1회 이상 본 영상만"
 L.Always					= "항상 끄기"
 L.CombatOnly				= "전투중 차단 (모든 전투)"
 L.RaidCombat				= "전투중 차단 (보스만)"
+L.HideBonusHeader			= "추가 전리품 주사위 굴림 창을 숨길 전리품 레벨..."
+L.TrivialContent			= "신화 미만 던전 (<340)"--Basically anything below 340
+L.NormalRaider				= "신화+ 5단 미만 던전과 공격대 찾기 레이드 (<355)"--Basically, anything below 355
+L.HeroicRaider				= "신화+ 10단 미만 던전과 영웅 미만 레이드와 격전지 이외 필드 레이드 보스 (<370)"--Basically anything below 370
+L.MythicRaider				= "신화 레이드 미만 모든 보스 (<385)"--Basically anything below 385
 
 L.Panel_ExtraFeatures		= "기타 기능"
 --

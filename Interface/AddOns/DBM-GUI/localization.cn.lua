@@ -2,7 +2,7 @@
 -- yleaf(yaroot@gmail.com)
 -- sunlcy@NGA
 -- Mini Dragon(projecteurs@gmail.com)
--- Last update: 2018/07/10
+-- Last update: 2018/09/21
 
 if GetLocale() ~= "zhCN" then return end
 if not DBM_GUI_Translations then DBM_GUI_Translations = {} end
@@ -275,7 +275,7 @@ L.FilterInterrupts2			= "如果被打断对象不是当前目标/焦点(总是)�
 L.FilterInterrupts3			= "如果被打断对象不是当前目标/焦点(总是)或者打断技能正在冷却(Boss和小怪)"
 L.FilterInterruptNoteName	= "当自定义注记内没有包含你的名字的时候，过滤掉打断提示 (带计数)"
 L.FilterDispels				= "当驱散技能在冷却时, 过滤掉驱散提示"
-L.FilterSelfHud				= "把自己从HudMap中过滤掉 (不包括和距离有关的功能)"
+L.FilterTrashWarnings		= "当进入普通或英雄副本时，过滤掉所有小怪警报"
 
 L.Area_PullTimer			= "开怪和倒计时过滤设置"
 L.DontShowPTNoID			= "不显示不同区域发送的倒计时"
@@ -299,6 +299,11 @@ L.AfterFirst				= "仅第一次播放"
 L.Always					= "总是跳过"
 L.CombatOnly				= "在任何战斗中隐藏"
 L.RaidCombat				= "只在Boss战斗中隐藏"
+L.HideBonusHeader			= "隐藏奖励拾取投掷"
+L.TrivialContent			= "低于5M掉落 (<340)"--Basically anything below 340
+L.NormalRaider				= "低于5层大秘 和随机团掉落 (<355)"--Basically, anything below 355
+L.HeroicRaider				= "低于10层大秘，H副本 (<370)"--Basically anything below 370
+L.MythicRaider				= "低于M副本 (<385)"--Basically anything below 385
 
 L.Panel_ExtraFeatures		= "其他功能"
 --
