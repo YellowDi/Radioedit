@@ -63,7 +63,7 @@
 		</Scripts>
 	</Button>
 
-	<Button name="ImmersionItemButtonTemplate" virtual="true">
+	<Button name="ImmersionItemButtonTemplate" virtual="true" registerForClicks="LeftButtonUp,RightButtonUp">
 		<Size x="250" y="54" />
 		<Layers>
 			<Layer level="BORDER">
@@ -235,7 +235,7 @@
 					</OnLoad>
 				</Scripts>
 			</Frame>
-			<Button parentKey="Button">
+			<Button parentKey="Button" registerForClicks="LeftButtonUp,RightButtonUp">
 				<HighlightTexture parentKey="HighlightTexture" file="Interface\PVPFrame\PvPMegaQueue" alphaMode="ADD" alpha="0.25">
 					<TexCoords left="0.00195313" right="0.63867188" top="0.70703125" bottom="0.76757813"/>
 					<Anchors>

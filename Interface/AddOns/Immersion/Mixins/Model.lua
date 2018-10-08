@@ -27,7 +27,14 @@ function Model:IsEther() return (self.unit == 'ether') end
 function Model:GetUnit() return self.unit end
 
 function Model:SetUnit(unit)
-	self:ClearModel()
+	self.unitDirty = unit
+	if self:IsVisible() then
+		self:ClearModel()
+		self:ApplyModelFromUnit(unit)
+	end
+end
+
+function Model:ApplyModelFromUnit(unit)
 	if m2[unit] then
 		self:SetModel(m2[unit])
 		self:SetCamDistanceScale(.4)
@@ -107,6 +114,13 @@ function Model:OnAnimFinished()
 			self:PrepareAnimation(nil, nil)
 			self:Reset()
 		end
+	end
+end
+
+function Model:OnShow()
+	self:ClearModel()
+	if self.unitDirty then
+		self:ApplyModelFromUnit(self.unitDirty)
 	end
 end
 

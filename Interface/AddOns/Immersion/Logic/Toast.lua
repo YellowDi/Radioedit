@@ -1,16 +1,16 @@
 local _, L = ...
 local NPC, Text = ImmersionFrame, ImmersionFrame.TalkBox.TextFrame.Text
 ----------------------------------
-local playbackQueue, textCache = {}, {}
+local playbackQueue, questCache = {}, {}
+local QUEST_TOAST_CACHE_LIMIT = 30
 ----------------------------------
-
 local function GetCreatureID(unit)
 	local guid = UnitGUID(unit)
 	return guid and select(6, strsplit('-', guid))
 end
 
-local function IsTextCached(text)
-	for i, toast in ipairs(playbackQueue) do
+local function IsTextCached(text, tbl)
+	for i, toast in ipairs(tbl) do
 		if toast.text == text then
 			return i
 		end
@@ -28,35 +28,36 @@ local function CanToastPlay()
 	return IsFrameReady() and #playbackQueue > 0
 end
 
+local function PopToast(i)
+	local toast = tremove(playbackQueue, i)
+	if ( toast and toast.questID ~= 0 and not IsTextCached(toast.text, questCache) ) then
+		tinsert(questCache, 1, toast)
+		questCache[QUEST_TOAST_CACHE_LIMIT] = nil
+	end
+end
+
 local function RemoveToastByKey(key, value)
 	local i = 1
 	while playbackQueue[i] do
 		if playbackQueue[i][key] == value then
-			tremove(playbackQueue, i)
+			PopToast(i)
 		else
 			i = i + 1
 		end
 	end
 end
 
-----------------------------------
-
-function NPC:PlayToast(obstructingFrameOpen)
-	if CanToastPlay() and not obstructingFrameOpen and not self:IsToastObstructed() then
-		local toast = playbackQueue[1]
-		if toast then
-			self:PlayIntro('IMMERSION_TOAST', true)
-			self:UpdateTalkingHead(toast.title, toast.text, toast.npcType, toast.display, true)
-		end
-	end
+local function PlayToast(toast)
+	NPC:PlayIntro('IMMERSION_TOAST', true)
+	NPC:UpdateTalkingHead(toast.title, toast.text, toast.purpose, toast.display, true)
 end
 
-function NPC:QueueToast(title, text, npcType, unit)
-	if not IsTextCached(text) then
-		tinsert(playbackQueue, {
+local function QueueToast(tbl, title, text, purpose, unit)
+	if not IsTextCached(text, tbl) then
+		tinsert(tbl, {
 			title 	= title;
 			text 	= text;
-			npcType = npcType;
+			purpose = purpose;
 			questID = GetQuestID();
 			youSaid = L.ClickedTitleCache or {};
 			display = GetCreatureID(unit);
@@ -64,17 +65,53 @@ function NPC:QueueToast(title, text, npcType, unit)
 	end
 end
 
+----------------------------------
+
+function NPC:PlaySuperTrackedQuestToast(questID)
+	for i, toast in ipairs(questCache) do
+		if ( toast.questID == questID ) and
+			---------------------------------- 
+			IsFrameReady() and
+			not IsOptionFrameOpen() and
+			not self:IsToastObstructed() then
+			----------------------------------
+			PlayToast(toast)
+			tremove(questCache, i)
+			break
+		end
+	end
+end
+
+function NPC:PlayToasts(obstructingFrameOpen)
+	if CanToastPlay() and not obstructingFrameOpen and not self:IsToastObstructed() then
+		local toast = playbackQueue[1]
+		if toast then
+			PlayToast(toast)
+		end
+	end
+end
+
+function NPC:QueueToast(...)
+	QueueToast(playbackQueue, ...)
+end
+
+function NPC:QueueQuestToast(...)
+	QueueToast(questCache, ...)
+end
+
 function NPC:RemoveToastByText(text)
 	RemoveToastByKey('text', text)
 	if CanToastPlay() then
-		self:PlayToast()
+		self:PlayToasts()
 	elseif IsFrameReady() then
 		self:PlayOutro()
 	end
 end
 
 function NPC:ClearToasts()
-	wipe(playbackQueue)
+	for i=1, #playbackQueue do
+		PopToast(1)
+	end
 end
 
 ----------------------------------
@@ -95,7 +132,7 @@ do	-- OBSTRUCTION:
 	local function ObstructorOnHide()
 		obstructorsShowing = obstructorsShowing - 1
 		if ( obstructorsShowing < 1 ) and ( NPC.playbackEvent == 'IMMERSION_TOAST' ) then
-			NPC:PlayToast()
+			NPC:PlayToasts()
 		end
 	end
 
