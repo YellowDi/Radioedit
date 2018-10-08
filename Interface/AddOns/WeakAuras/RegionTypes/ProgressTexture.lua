@@ -29,7 +29,6 @@ local default = {
   height = 200,
   orientation = "VERTICAL",
   inverse = false,
-  alpha = 1.0,
   foregroundColor = {1, 1, 1, 1},
   backgroundColor = {0.5, 0.5, 0.5, 0.5},
   startAngle = 0,
@@ -38,7 +37,6 @@ local default = {
   user_y = 0,
   crop_x = 0.41,
   crop_y = 0.41,
-  crop = 0.41,
   rotation = 0,
   selfPoint = "CENTER",
   anchorPoint = "CENTER",
@@ -52,6 +50,8 @@ local default = {
   frameStrata = 1,
   slantMode = "INSIDE"
 };
+
+WeakAuras.regionPrototype.AddAlphaToDefault(default);
 
 WeakAuras.regionPrototype.AddAdjustedDurationToDefault(default);
 
@@ -85,6 +85,7 @@ local properties = {
     min = 1,
     softMax = screenWidth,
     bigStep = 1,
+    default = 32
   },
   height = {
     display = L["Height"],
@@ -92,7 +93,8 @@ local properties = {
     type = "number",
     min = 1,
     softMax = screenHeight,
-    bigStep = 1
+    bigStep = 1,
+    default = 32
   },
   orientation = {
     display = L["Orientation"],
@@ -107,7 +109,7 @@ local properties = {
   }
 }
 
-WeakAuras.regionPrototype.AddProperties(properties);
+WeakAuras.regionPrototype.AddProperties(properties, default);
 
 local function GetProperties(data)
   local overlayInfo = WeakAuras.GetOverlayInfo(data);
@@ -701,6 +703,8 @@ end
 
 local TextureSetValueFunction = function(self, progress)
   self.progress = progress;
+  progress = max(0, progress);
+  progress = min(1, progress);
   self.foreground:SetValue(0, progress);
 end
 
@@ -750,7 +754,7 @@ end
 
 local function ensureExtraTextures(region, count)
   for i = #region.extraTextures + 1, count do
-    local extraTexture = createTexture(region, "ARTWORK", i);
+    local extraTexture = createTexture(region, "ARTWORK", min(i, 7));
     extraTexture:SetTexture(region.currentTexture, region.textureWrapMode, region.textureWrapMode)
     extraTexture:SetBlendMode(region.foreground:GetBlendMode());
     extraTexture:SetOrientation(region.orientation, region.compress, region.slanted, region.slant, region.slantFirst, region.slantMode);
@@ -761,21 +765,21 @@ end
 local function ensureExtraSpinners(region, count)
   local parent = region:GetParent();
   for i = #region.extraSpinners + 1, count do
-    local extraSpinner = createSpinner(region, "OVERLAY", parent:GetFrameLevel() + 3, i);
+    local extraSpinner = createSpinner(region, "OVERLAY", parent:GetFrameLevel() + 3, min(i, 7));
     extraSpinner:SetTexture(region.currentTexture);
     extraSpinner:SetBlendMode(region.foreground:GetBlendMode());
     region.extraSpinners[i] = extraSpinner;
   end
 end
 
-local function convertToProgress(rprogress, additionalProgress, min, totalWidth, inverse)
+local function convertToProgress(rprogress, additionalProgress, adjustMin, totalWidth, inverse, clamp)
   local startProgress = 0;
   local endProgress = 0;
 
   if (additionalProgress.min and additionalProgress.max) then
     if (totalWidth ~= 0) then
-      startProgress = max( (additionalProgress.min - min) / totalWidth, 0);
-      endProgress = (additionalProgress.max - min) / totalWidth;
+      startProgress = max( (additionalProgress.min - adjustMin) / totalWidth, 0);
+      endProgress = (additionalProgress.max - adjustMin) / totalWidth;
 
       if (inverse) then
         startProgress = 1 - startProgress;
@@ -799,6 +803,12 @@ local function convertToProgress(rprogress, additionalProgress, min, totalWidth,
       end
     end
   end
+
+  if (clamp) then
+    startProgress = max(0, min(1, startProgress));
+    endProgress = max(0, min(1, endProgress));
+  end
+
   return startProgress, endProgress;
 end
 
@@ -820,7 +830,7 @@ local function SetAdditionalProgress(self, additionalProgress, min, max, inverse
       local extraTexture = self.extraTextures[index];
 
       local totalWidth = max - min;
-      local startProgress, endProgress = convertToProgress(self.progress, additionalProgress, min, totalWidth, effectiveInverse);
+      local startProgress, endProgress = convertToProgress(self.progress, additionalProgress, min, totalWidth, effectiveInverse, self.overlayclip);
       if ((endProgress - startProgress) == 0) then
         extraTexture:Hide();
       else
@@ -857,7 +867,7 @@ local function SetAdditionalProgressCircular(self, additionalProgress, min, max,
       local extraSpinner = self.extraSpinners[index];
 
       local totalWidth = max - min;
-      local startProgress, endProgress = convertToProgress(self.progress, additionalProgress, min, totalWidth, effectiveInverse);
+      local startProgress, endProgress = convertToProgress(self.progress, additionalProgress, min, totalWidth, effectiveInverse, self.overlayclip);
       if (endProgress < startProgress) then
         startProgress, endProgress = endProgress, startProgress;
       end
@@ -1003,8 +1013,7 @@ local function modify(parent, region, data)
   region.scalex = 1;
   region.scaley = 1;
   region.aspect =  data.width / data.height;
-
-  region:SetAlpha(data.alpha);
+  region.overlayclip = data.overlayclip;
 
   region.textureWrapMode = data.textureWrapMode;
 
@@ -1041,7 +1050,6 @@ local function modify(parent, region, data)
   region.mirror_h = data.mirror;
   region.scale_x = 1 + (data.crop_x or 0.41);
   region.scale_y = 1 + (data.crop_y or 0.41);
-  region.scale = 1 + (data.crop or 0.41);
   region.rotation = data.rotation or 0;
   region.user_x = -1 * (data.user_x or 0);
   region.user_y = data.user_y or 0;

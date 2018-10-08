@@ -160,7 +160,6 @@ local function createOptions(id, data)
         end
         WeakAuras.ResetMoverSizer();
       end,
-      hidden = function() return data.orientation == "CLOCKWISE" or data.orientation == "ANTICLOCKWISE"; end
     },
     crop_y = {
       type = "range",
@@ -185,33 +184,6 @@ local function createOptions(id, data)
         end
         WeakAuras.ResetMoverSizer();
       end,
-      hidden = function() return data.orientation == "CLOCKWISE" or data.orientation == "ANTICLOCKWISE"; end
-    },
-    crop = {
-      type = "range",
-      name = L["Crop"],
-      order = 47,
-      min = 0,
-      softMax = 2,
-      bigStep = 0.01,
-      isPercent = true,
-      set = function(info, v)
-        data.height = data.height * ((1 + data.crop or 0) / (1 + v));
-        data.width = data.width * ((1 + data.crop or 0) / (1 + v));
-        data.crop = v;
-        WeakAuras.Add(data);
-        WeakAuras.SetThumbnail(data);
-        WeakAuras.SetIconNames(data);
-        if(data.parent) then
-          local parentData = WeakAuras.GetData(data.parent);
-          if(parentData) then
-            WeakAuras.Add(parentData);
-            WeakAuras.SetThumbnail(parentData);
-          end
-        end
-        WeakAuras.ResetMoverSizer();
-      end,
-      hidden = function() return data.orientation ~= "CLOCKWISE" and data.orientation ~= "ANTICLOCKWISE"; end
     },
     rotation = {
       type = "range",
@@ -314,6 +286,12 @@ local function createOptions(id, data)
       }
       index = index + 0.01
     end
+
+    options["overlayclip"] = {
+      type = "toggle",
+      name = L["Clip Overlays"],
+      order = index
+    }
   end
 
   return {
@@ -464,7 +442,6 @@ local function modifyThumbnail(parent, borderframe, data, fullModify, size)
 
   region:ClearAllPoints();
   region:SetPoint("CENTER", borderframe, "CENTER");
-  region:SetAlpha(data.alpha);
 
   background:SetTexture(data.sameTexture and data.foregroundTexture or data.backgroundTexture);
   background:SetDesaturated(data.desaturateBackground)
@@ -747,6 +724,7 @@ local templates = {
   {
     title = L["Default"],
     data = {
+      inverse = true,
     };
   },
   {
@@ -760,6 +738,7 @@ local templates = {
       mirror = true,
       foregroundTexture = "Textures\\SpellActivationOverlays\\Backlash",
       orientation = "HORIZONTAL",
+      inverse = true,
     },
   },
   {
@@ -770,6 +749,7 @@ local templates = {
       height = 200,
       xOffset = -150,
       yOffset = 0,
+      inverse = true,
     },
   },
   {
@@ -780,6 +760,7 @@ local templates = {
       height = 200,
       xOffset = -200,
       yOffset = 0,
+      inverse = true,
     },
   },
   {
@@ -791,6 +772,7 @@ local templates = {
       xOffset = 150,
       yOffset = 0,
       mirror = true,
+      inverse = true,
     },
   },
   {
@@ -802,6 +784,7 @@ local templates = {
       xOffset = 200,
       yOffset = 0,
       mirror = true,
+      inverse = true,
     },
   },
 }

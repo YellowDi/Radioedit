@@ -654,6 +654,13 @@ local function createOptions(id, data)
       }
       index = index + 0.01
     end
+
+    options["overlayclip"] = {
+      type = "toggle",
+      name = L["Clip Overlays"],
+      order = 58 + index;
+    }
+
   end
 
   return {
@@ -728,9 +735,6 @@ local function modifyThumbnail(parent, borderframe, data, fullModify, width, hei
       region:SetPoint("BOTTOM", borderframe, "BOTTOM", 0, 2);
     end
   end
-
-  -- Fake bar alpha
-  region:SetAlpha(data.alpha);
 
   -- Fake status-bar style
   texture:SetTexture(SharedMedia:Fetch("statusbar", data.texture));
@@ -844,24 +848,13 @@ end
 
 local templates = {
   {
-    title = L["Default"],
-    data = {
-    };
-  },
-  {
-    title = L["Horizontal Blizzard Raid Bar"],
-    data = {
-      texture = "Blizzard Raid Bar",
-      width = 200,
-      height = 15,
-    };
-  },
-  {
     title = L["Horizontal Bar"],
     data = {
       width = 200,
       height = 30,
-      barColor = { 1, 1, 0, 1}
+      barColor = { 0, 1, 0, 1},
+      inverse = true,
+      smoothProgress = true,
     }
   },
   {
@@ -872,8 +865,8 @@ local templates = {
       barColor = { 0, 1, 0, 1},
       rotateText = "LEFT",
       orientation = "VERTICAL_INVERSE",
-      texture = "Blizzard Raid Bar",
-      icon = false
+      inverse = true,
+      smoothProgress = true,
     }
   },
 }

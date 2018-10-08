@@ -2,7 +2,7 @@ local tinsert, tconcat, tremove, wipe = table.insert, table.concat, table.remove
 local select, pairs, next, type, unpack = select, pairs, next, type, unpack
 local tostring, error = tostring, error
 
-local Type, Version = "WeakAurasDisplayButton", 37
+local Type, Version = "WeakAurasDisplayButton", 39
 local AceGUI = LibStub and LibStub("AceGUI-3.0", true)
 if not AceGUI or (AceGUI:GetWidgetVersion(Type) or 0) >= Version then return end
 
@@ -15,20 +15,15 @@ local function IsRegionAGroup(data)
 end
 
 local ignoreForCopyingDisplay = {
-  trigger = true,
-  untrigger = true,
+  triggers = true,
   conditions = true,
   load = true,
   actions = true,
   animation = true,
   id = true,
   parent = true,
-  activeTriggerMode = true,
-  numTriggers = true,
   controlledChildren = true,
-  customTriggerLogic = true,
-  disjunctive = true,
-  additional_triggers = true,
+  uid = true,
 }
 
 local function copyAuraPart(source, destination, part)
@@ -45,20 +40,8 @@ local function copyAuraPart(source, destination, part)
     end
   end
   if (part == "trigger" or all) and not IsRegionAGroup(source) then
-    destination.trigger = {};
-    WeakAuras.DeepCopy(source.trigger, destination.trigger);
-    if (source.additional_triggers) then
-      destination.additional_triggers = {};
-      WeakAuras.DeepCopy(source.additional_triggers, destination.additional_triggers);
-    else
-      destination.additional_triggers = nil;
-    end
-    destination.untrigger = {};
-    WeakAuras.DeepCopy(source.untrigger, destination.untrigger);
-    destination.activeTriggerMode = source.activeTriggerMode;
-    destination.numTriggers = source.numTriggers;
-    destination.customTriggerLogic = source.customTriggerLogic;
-    destination.disjunctive = source.disjunctive;
+    destination.triggers = {};
+    WeakAuras.DeepCopy(source.triggers, destination.triggers);
   end
   if (part == "condition" or all) and not IsRegionAGroup(source) then
     destination.conditions = {};
@@ -112,9 +95,8 @@ clipboard.copyEverythingEntry = {
   text = L["Everything"],
   notCheckable = true,
   func = function()
+    WeakAuras_DropDownMenu:Hide();
     CopyToClipboard("all", L["Paste Settings"])
-    WeakAuras_DropDownMenu:Hide();
-    WeakAuras_DropDownMenu:Hide();
   end
 };
 
@@ -122,9 +104,8 @@ clipboard.copyGroupEntry = {
   text = L["Group"],
   notCheckable = true,
   func = function()
+    WeakAuras_DropDownMenu:Hide();
     CopyToClipboard("display", L["Paste Group Settings"])
-    WeakAuras_DropDownMenu:Hide();
-    WeakAuras_DropDownMenu:Hide();
   end
 };
 
@@ -132,9 +113,8 @@ clipboard.copyDisplayEntry = {
   text = L["Display"],
   notCheckable = true,
   func = function()
+    WeakAuras_DropDownMenu:Hide();
     CopyToClipboard("display", L["Paste Display Settings"])
-    WeakAuras_DropDownMenu:Hide();
-    WeakAuras_DropDownMenu:Hide();
   end
 };
 
@@ -142,9 +122,8 @@ clipboard.copyTriggerEntry = {
   text = L["Trigger"],
   notCheckable = true,
   func = function()
+    WeakAuras_DropDownMenu:Hide();
     CopyToClipboard("trigger", L["Paste Trigger Settings"])
-    WeakAuras_DropDownMenu:Hide();
-    WeakAuras_DropDownMenu:Hide();
   end
 };
 
@@ -152,9 +131,8 @@ clipboard.copyConditionsEntry = {
   text = L["Conditions"],
   notCheckable = true,
   func = function()
+    WeakAuras_DropDownMenu:Hide();
     CopyToClipboard("condition", L["Paste Condition Settings"])
-    WeakAuras_DropDownMenu:Hide();
-    WeakAuras_DropDownMenu:Hide();
   end
 };
 
@@ -162,9 +140,8 @@ clipboard.copyLoadEntry = {
   text = L["Load"],
   notCheckable = true,
   func = function()
+    WeakAuras_DropDownMenu:Hide();
     CopyToClipboard("load", L["Paste Load Settings"])
-    WeakAuras_DropDownMenu:Hide();
-    WeakAuras_DropDownMenu:Hide();
   end
 };
 
@@ -172,9 +149,8 @@ clipboard.copyActionsEntry = {
   text = L["Actions"],
   notCheckable = true,
   func = function()
+    WeakAuras_DropDownMenu:Hide();
     CopyToClipboard("action", L["Paste Action Settings"])
-    WeakAuras_DropDownMenu:Hide();
-    WeakAuras_DropDownMenu:Hide();
   end
 };
 
@@ -182,9 +158,8 @@ clipboard.copyAnimationsEntry = {
   text = L["Animations"],
   notCheckable = true,
   func = function()
+    WeakAuras_DropDownMenu:Hide();
     CopyToClipboard("animation", L["Paste Animations Settings"])
-    WeakAuras_DropDownMenu:Hide();
-    WeakAuras_DropDownMenu:Hide();
   end
 };
 
@@ -293,7 +268,7 @@ local Actions = {
           group.callbacks.UpdateExpandButton();
           group:ReloadTooltip()
         else
-          error("Calling 'Group' with invalid groupId. Reload your UI to fix the display list.")
+          WeakAuras.Add(source.data)
         end
       else
         -- move source into the top-level list
@@ -317,6 +292,9 @@ local Actions = {
         WeakAuras.UpdateGroupOrders(parent);
         WeakAuras.ReloadGroupRegionOptions(parent);
         WeakAuras.UpdateDisplayButton(parent);
+        local group = WeakAuras.GetDisplayButton(parent.id)
+        group.callbacks.UpdateExpandButton();
+        group:ReloadTooltip()
       else
         error("Display thinks it is a member of a group which does not control it")
       end
@@ -513,7 +491,11 @@ local methods = {
             end
           end
         else
-          WeakAuras.PickDisplay(data.id);
+          if (WeakAuras.IsDisplayPicked(data.id)) then
+            WeakAuras.ClearPicks(data.id);
+          else
+            WeakAuras.PickDisplay(data.id);
+          end
           self:ReloadTooltip();
         end
       end
@@ -773,8 +755,10 @@ local methods = {
 
     function self.callbacks.OnDragStart()
       if WeakAuras.IsImporting() or self:IsGroup() then return end;
-      WeakAuras.PickDisplay(data.id)
-      WeakAuras.SetDragging(data)
+      if #WeakAuras.tempGroup.controlledChildren == 0 then
+        WeakAuras.PickDisplay(data.id);
+      end
+      WeakAuras.SetDragging(data);
     end
 
     function self.callbacks.OnDragStop()
@@ -978,13 +962,8 @@ local methods = {
         namestable[1] = L["No Children"];
       end
     else
-      for triggernum = 0, data.numTriggers or 9 do
-        local trigger;
-        if(triggernum == 0) then
-          trigger = data.trigger;
-        elseif(data.additional_triggers and data.additional_triggers[triggernum]) then
-          trigger = data.additional_triggers[triggernum].trigger;
-        end
+      for triggernum, triggerData in ipairs(data.triggers) do
+        local trigger = triggerData.trigger
         if(trigger) then
           if(trigger.type == "aura") then
             if(trigger.fullscan) then
@@ -1086,10 +1065,16 @@ local methods = {
       self:Enable();
     end
   end,
-  ["SetDragging"] = function(self, data, drop)
+  ["SetDragging"] = function(self, data, drop, size)
+    if (size) then
+      self.multi = {
+        size = size,
+        selected = data and (data.id == self.data.id)
+      }
+    end
     if data then
       -- self
-      if self.data.id == data.id then
+      if self.data.id == data.id or self.multi then
         if drop then
           self:Drop()
           self.frame:SetScript("OnClick", self.callbacks.OnClickNormal)
@@ -1129,8 +1114,9 @@ local methods = {
   ["ShowTooltip"] = function(self)
   end,
   ["Drag"] = function(self)
-    local uiscale, _, y = UIParent:GetScale(), GetCursorPosition()
-    local scale, x, w = self.frame:GetEffectiveScale(), self.frame:GetLeft(), self.frame:GetWidth()
+    local uiscale, scale = UIParent:GetScale(), self.frame:GetEffectiveScale()
+    local x, w = self.frame:GetLeft(), self.frame:GetWidth()
+    local _, y = GetCursorPosition()
     -- hide "visual clutter"
     self.downgroup:Hide()
     self.group:Hide()
@@ -1148,26 +1134,50 @@ local methods = {
     }
     self.frame:SetParent(UIParent)
     self.frame:SetFrameStrata("FULLSCREEN_DIALOG")
-    self.frame:SetPoint("Center", UIParent, "BOTTOMLEFT", (x+w/2)*scale/uiscale, y/uiscale)
-    -- attach OnUpdate event to update drop indicator
-    local id = self.data.id
-    self.frame:SetScript("OnUpdate", function(self,elapsed)
-      self.elapsed = (self.elapsed or 0) + elapsed
-      if self.elapsed > 0.1 then
-        Show_DropIndicator(id)
-        self.elapsed = 0
+    if not self.multi then
+      self.frame:SetPoint("Center", UIParent, "BOTTOMLEFT", (x+w/2)*scale/uiscale, y/uiscale)
+    else
+      if self.multi.selected then
+        -- change label & icon
+        self.frame:SetPoint("Center", UIParent, "BOTTOMLEFT", (x+w/2)*scale/uiscale, y/uiscale)
+        self.frame.temp.title = self.title:GetText()
+        self.title:SetText((L["%i auras selected"]):format(self.multi.size))
+        self:OverrideIcon();
+      else
+        -- Hide frames
+        self.frame:StopMovingOrSizing()
+        self.frame:Hide()
       end
-    end)
-    Show_DropIndicator(id)
+    end
+    -- attach OnUpdate event to update drop indicator
+    if not self.multi or (self.multi and self.multi.selected) then
+      local id = self.data.id
+      self.frame:SetScript("OnUpdate", function(self,elapsed)
+        self.elapsed = (self.elapsed or 0) + elapsed
+        if self.elapsed > 0.1 then
+          Show_DropIndicator(id)
+          self.elapsed = 0
+        end
+      end)
+      Show_DropIndicator(id)
+    end
     WeakAuras.UpdateButtonsScroll()
   end,
   ["Drop"] = function(self, reset)
+    Show_DropIndicator()
+    local target, area = select(2, GetDropTarget())
+    -- get action and execute it
     self.frame:StopMovingOrSizing()
     self.frame:SetScript("OnUpdate", nil)
+    if self.multi and self.multi.selected then
+      -- restore title and icon
+      self.title:SetText(self.frame.temp.title)
+      self:RestoreIcon();
+    end
     if self.dragging then
       self.frame:SetParent(self.frame.temp.parent)
       self.frame:SetFrameStrata(self.frame.temp.strata)
-      self.frame.tmp = nil
+      self.frame.temp = nil
       if self.data.parent then
         self.downgroup:Show()
         self.ungroup:Show()
@@ -1178,15 +1188,15 @@ local methods = {
       self.loaded:Show()
       self.view:Show()
     end
-    Show_DropIndicator()
-    local target, area = select(2, GetDropTarget())
     self.dragging = false
     -- exit if we have no target or only want to reset
-    if reset or not target then return WeakAuras.UpdateButtonsScroll() end
-    -- get action and execute it
+    self.multi = nil
+    if reset or not target then
+      return WeakAuras.UpdateButtonsScroll()
+    end
     local action = GetAction(target, area, self)
     if action then
-      action(self,target)
+      action(self, target)
     end
     WeakAuras.SortDisplayButtons()
   end,
@@ -1204,6 +1214,7 @@ local methods = {
     self.frame.description = {...};
   end,
   ["SetIcon"] = function(self, icon)
+    self.orgIcon = icon;
     if(type(icon) == "string" or type(icon) == "number") then
       self.icon:SetTexture(icon);
       self.icon:Show();
@@ -1214,8 +1225,19 @@ local methods = {
       self.iconRegion = icon;
       icon:SetAllPoints(self.icon);
       icon:SetParent(self.frame);
+      self.iconRegion:Show();
       self.icon:Hide();
     end
+  end,
+  ["OverrideIcon"] = function(self)
+    self.icon:SetTexture("Interface\\Addons\\WeakAuras\\Media\\Textures\\icon.blp")
+    self.icon:Show()
+    if(self.iconRegion and self.iconRegion.Hide) then
+      self.iconRegion:Hide();
+    end
+  end,
+  ["RestoreIcon"] = function(self)
+    self:SetIcon(self.orgIcon);
   end,
   ["SetViewRegion"] = function(self, region)
     self.view.region = region;
@@ -1504,6 +1526,9 @@ local function Constructor()
   view:SetScript("OnLeave", Hide_Tooltip);
   view.visibility = 0;
   view.PriorityShow = function(self, priority)
+    if (not WeakAuras.IsOptionsOpen()) then
+      return;
+    end
     if(priority >= self.visibility) then
       self.visibility = priority;
       if(self.region and self.region.Expand) then
@@ -1519,6 +1544,9 @@ local function Constructor()
     end
   end
   view.PriorityHide = function(self, priority)
+    if (not WeakAuras.IsOptionsOpen()) then
+      return;
+    end
     if(priority >= self.visibility) then
       self.visibility = 0;
       if(self.region and self.region.Collapse) then
@@ -1563,7 +1591,7 @@ local function Constructor()
   renamebox:SetPoint("TOP", button, "TOP");
   renamebox:SetPoint("LEFT", icon, "RIGHT", 6, 0);
   renamebox:SetPoint("RIGHT", button, "RIGHT", -4, 0);
-  renamebox:SetFont("Fonts\\FRIZQT__.TTF", 10);
+  renamebox:SetFont(STANDARD_TEXT_FONT, 10);
   renamebox:Hide();
 
   renamebox.func = function() --[[By default, do nothing!]] end;

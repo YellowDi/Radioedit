@@ -709,6 +709,28 @@ function WeakAuras.GetBuffTriggerOptions(data, trigger)
         WeakAuras.UpdateDisplayButton(data);
       end
     },
+    useGroupRole = {
+      type = "toggle",
+      name = '|TInterface\\OptionsFrame\\UI-OptionsFrame-NewFeatureIcon:0|t' .. L["Filter by Group Role"],
+      order = 47.1,
+      hidden = function() return not (trigger.type == "aura" and trigger.unit == "group"); end,
+    },
+    group_role = {
+      type = "select",
+      name = L["Group Role"],
+      values = WeakAuras.role_types,
+      hidden = function() return not (trigger.type == "aura" and trigger.unit == "group"); end,
+      disabled = function() return not trigger.useGroupRole; end,
+      get = function() return trigger.group_role; end,
+      order = 47.2
+    },
+    ignoreSelf = {
+      type = "toggle",
+      name = L["Ignore self"],
+      order = 47.3,
+      width = "double",
+      hidden = function() return not (trigger.type == "aura" and trigger.unit == "group"); end,
+    },
     groupclone = {
       type = "toggle",
       name = L["Show all matches (Auto-clone)"],
@@ -724,12 +746,12 @@ function WeakAuras.GetBuffTriggerOptions(data, trigger)
         end
         WeakAuras.Add(data);
       end,
-      order = 47.1
+      order = 47.4
     },
     name_info = {
       type = "select",
       name = L["Name Info"],
-      order = 47.3,
+      order = 47.5,
       hidden = function() return not (trigger.type == "aura" and trigger.unit == "group" and not trigger.groupclone); end,
       disabled = function() return not WeakAuras.CanShowNameInfo(data); end,
       get = function()
@@ -759,7 +781,7 @@ function WeakAuras.GetBuffTriggerOptions(data, trigger)
     hideAlone = {
       type = "toggle",
       name = L["Hide When Not In Group"],
-      order = 48,
+      order = 47.7,
       width = "double",
       hidden = function() return not (trigger.type == "aura" and trigger.unit == "group"); end,
     },
@@ -796,7 +818,7 @@ function WeakAuras.GetBuffTriggerOptions(data, trigger)
     useRem = {
       type = "toggle",
       name = L["Remaining Time"],
-      hidden = function() return not (trigger.type == "aura" and not trigger.fullscan and trigger.unit ~= "multi"); end,
+      hidden = function() return not (trigger.type == "aura" and trigger.unit ~= "multi"); end,
       order = 56
     },
     remOperator = {
@@ -806,7 +828,7 @@ function WeakAuras.GetBuffTriggerOptions(data, trigger)
       width = "half",
       values = operator_types,
       disabled = function() return not trigger.useRem; end,
-      hidden = function() return not (trigger.type == "aura" and not trigger.fullscan and trigger.unit ~= "multi"); end,
+      hidden = function() return not (trigger.type == "aura" and trigger.unit ~= "multi"); end,
       get = function() return trigger.useRem and trigger.remOperator or nil end
     },
     rem = {
@@ -816,7 +838,7 @@ function WeakAuras.GetBuffTriggerOptions(data, trigger)
       order = 58,
       width = "half",
       disabled = function() return not trigger.useRem; end,
-      hidden = function() return not (trigger.type == "aura" and not trigger.fullscan and trigger.unit ~= "multi"); end,
+      hidden = function() return not (trigger.type == "aura" and trigger.unit ~= "multi"); end,
       get = function() return trigger.useRem and trigger.rem or nil end
     },
     useCount = {
@@ -847,6 +869,7 @@ function WeakAuras.GetBuffTriggerOptions(data, trigger)
     },
     ownOnly = {
       type = "toggle",
+      width = "double",
       name = function()
         local value = trigger.ownOnly;
         if(value == nil) then return L["Own Only"];
@@ -878,27 +901,33 @@ function WeakAuras.GetBuffTriggerOptions(data, trigger)
       order = 70,
       hidden = function() return not (trigger.type == "aura"); end
     },
-    showOn = {
-      type = "select",
+    useBuffShowOn = {
+      type = "toggle",
       name = L["Show On"],
-      values = WeakAuras.bufftrigger_progress_behavior_types,
       order = 71,
-      get = function()
-        if (not trigger.showOn or not WeakAuras.bufftrigger_progress_behavior_types[trigger.showOn]) then
-          trigger.showOn = "showOnActive";
-        end
-        return trigger.showOn or "showOnActive";
+      disabled = true,
+      hidden = function()
+        return not (trigger.type == "aura" and not(trigger.unit ~= "group" and trigger.fullscan and trigger.autoclone) and trigger.unit ~= "multi" and not(trigger.unit == "group" and not trigger.groupclone));
       end,
-      hidden = function() return not (trigger.type == "aura" and not(trigger.unit ~= "group" and trigger.autoclone) and trigger.unit ~= "multi" and not(trigger.unit == "group" and not trigger.groupclone)); end
+      get = function() return true end
+    },
+    buffShowOn = {
+      type = "select",
+      name = "",
+      values = WeakAuras.bufftrigger_progress_behavior_types,
+      order = 71.1,
+      get = function() return trigger.buffShowOn end,
+      hidden = function()
+        return not (trigger.type == "aura" and not(trigger.unit ~= "group" and trigger.fullscan and trigger.autoclone) and trigger.unit ~= "multi" and not(trigger.unit == "group" and not trigger.groupclone));
+      end
     },
     unitExists = {
       type = "toggle",
       name = L["Show If Unit Is Invalid"],
       order = 72,
-      width = "double",
       hidden = function()
         return not (trigger.type == "aura"
-          and not(trigger.unit ~= "group" and trigger.autoclone)
+          and not(trigger.unit ~= "group" and trigger.fullscan and trigger.autoclone)
           and trigger.unit ~= "multi"
           and trigger.unit ~= "group"
           and trigger.unit ~= "player");

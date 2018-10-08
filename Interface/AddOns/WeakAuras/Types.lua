@@ -1437,7 +1437,7 @@ WeakAuras.cooldown_progress_behavior_types = {
 WeakAuras.bufftrigger_progress_behavior_types = {
   showOnActive = L["Buffed/Debuffed"],
   showOnMissing = L["Missing"],
-  showActiveOrMissing = L["Always"]
+  showAlways= L["Always"]
 }
 
 WeakAuras.item_slot_types = {
@@ -1482,4 +1482,252 @@ WeakAuras.bool_types = {
 WeakAuras.absorb_modes = {
   OVERLAY_FROM_START = L["Attach to Start"],
   OVERLAY_FROM_END = L["Attach to End"]
+}
+
+WeakAuras.mythic_plus_affixes = {
+  [2] = true,
+  [3] = true,
+  [4] = true,
+  [5] = true,
+  [6] = true,
+  [7] = true,
+  [8] = true,
+  [9] = true,
+  [10] = true,
+  [11] = true,
+  [12] = true,
+  [13] = true,
+  [14] = true,
+  [16] = true,
+}
+
+for k in pairs(WeakAuras.mythic_plus_affixes) do
+  WeakAuras.mythic_plus_affixes[k] = C_ChallengeMode.GetAffixInfo(k);
+end
+
+WeakAuras.update_categories = {
+  {
+    name = "anchor",
+    fields = {
+      "xOffset",
+      "yOffset",
+      "selfPoint",
+      "anchorPoint",
+      "anchorFrameType",
+      "anchorFrameFrame",
+      "frameStrata",
+      "height",
+      "width",
+      "fontSize",
+      "scale",
+    },
+    label = L["Size & Position"],
+  },
+  {
+    name = "name",
+    fields = {"id"},
+    label = L["Aura Names"],
+  },
+  {
+    name = "display",
+    fields = {},
+    label = L["Display"],
+  },
+  {
+    name = "trigger",
+    fields = {"triggers"},
+    label = L["Trigger"],
+  },
+  {
+    name = "conditions",
+    fields = {"conditions"},
+    label = L["Conditions"],
+  },
+  {
+    name = "load",
+    fields = {"load"},
+    label = L["Load Conditions"],
+  },
+  {
+    name = "action",
+    fields = {"actions"},
+    label = L["Actions"],
+  },
+  {
+    name = "animation",
+    fields = {"animation"},
+    label = L["Animations"],
+  },
+  {
+    name = "arrangement",
+    fields = {
+      "grow",
+      "space",
+      "stagger",
+      "sort",
+      "hybridPosition",
+      "radius",
+      "align",
+      "rotation",
+      "constantFactor",
+      "hybridSortMode",
+    },
+    label = L["Group Arrangement"],
+  },
+  {
+    name = "oldchildren",
+    fields = {},
+    label = L["Remove Obsolete Auras"],
+  },
+  {
+    name = "newchildren",
+    fields = {},
+    label = L["Add Missing Auras"],
+  },
+  {
+    name = "metadata",
+    fields = {
+      "url",
+      "desc",
+      "version",
+    },
+    label = L["Meta Data"],
+  },
+}
+
+WeakAuras.internal_fields = {
+  uid = true,
+  controlledChildren = true,
+  parent = true,
+  internalVersion = true,
+  sortHybridTable = true,
+  expanded = true,
+  parent = true,
+}
+
+WeakAuras.data_stub = {
+  -- note: this is the minimal data stub which prevents false positives in WeakAuras.diff upon reimporting an aura.
+  -- pending a refactor of other code which adds unnecessary fields, it is possible to shrink it
+  triggers = {
+    {
+      trigger = {
+        type = "aura",
+        names = {},
+        event = "Health",
+        subeventPrefix = "SPELL",
+        subeventSuffix = "_CAST_START",
+        spellIds = {},
+        unit = "player",
+        debuffType = "HELPFUL",
+      },
+      untrigger = {},
+    },
+  },
+  load = {
+    size = {
+      multi = {},
+    },
+    spec = {
+      multi = {},
+    },
+    class = {
+      multi = {},
+    },
+  },
+  actions = {
+    init = {},
+    start = {},
+    finish = {},
+  },
+  animation = {
+    start = {
+      type = "none",
+      duration_type = "seconds",
+    },
+    main = {
+      type = "none",
+      duration_type = "seconds",
+    },
+    finish = {
+      type = "none",
+      duration_type = "seconds",
+    },
+  },
+  conditions = {},
+}
+
+WeakAuras.difficulty_info = {
+  [1] = {
+    size = "party",
+    difficulty = "normal",
+  },
+  [2] = {
+    size = "party",
+    difficulty = "heroic",
+  },
+  [3] = {
+    size = "ten",
+    difficulty = "normal",
+  },
+  [4] = {
+    size = "twentyfive",
+    difficulty = "normal",
+  },
+  [5] = {
+    size = "ten",
+    difficulty = "heroic",
+  },
+  [6] = {
+    size = "twentyfive",
+    difficulty = "heroic",
+  },
+  [7] = {
+    size = "twentyfive",
+    difficulty = "lfr",
+  },
+  [8] = {
+    size = "party",
+    difficulty = "challenge",
+  },
+  [9] = {
+    size = "fortyman",
+    difficulty = "normal",
+  },
+  [11] = {
+    size = "scenario",
+    difficulty = "heroic",
+  },
+  [12] = {
+    size = "scenario",
+    difficulty = "normal",
+  },
+  nil, -- 13 is unused
+  [14] = {
+    size = "flexible",
+    difficulty = "normal",
+  },
+  [15] = {
+    size = "flexible",
+    difficulty = "heroic",
+  },
+  [16] = {
+    size = "twenty",
+    difficulty = "mythic",
+  },
+  [17] = {
+    size = "flexible",
+    difficulty = "lfr",
+  },
+  [23] = {
+    size = "party",
+    difficulty = "mythic",
+  },
+  [24] = {
+    size = "party",
+    difficulty = "timewalking",
+  },
+  [33] = {
+    size = "flexible",
+    difficulty = "timewalking",
+  },
 }

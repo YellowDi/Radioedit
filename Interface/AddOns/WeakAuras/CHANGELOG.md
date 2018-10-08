@@ -1,12 +1,18 @@
-# [2.6.3](https://github.com/WeakAuras/WeakAuras2/tree/2.6.3) (2018-07-23)
+# [2.8.1](https://github.com/WeakAuras/WeakAuras2/tree/2.8.1) (2018-10-02)
 
-[Full Changelog](https://github.com/WeakAuras/WeakAuras2/compare/2.6.2...2.6.3)
+[Full Changelog](https://github.com/WeakAuras/WeakAuras2/compare/2.8.0...2.8.1)
 
-Allen Faure (1):
+## Highlights
 
-- ensure that the childID exists before using it
+ We fixed a bug where conditions were not properly resetting when auras got unloaded. 
 
-Benjamin Staneck (1):
+## Commits
 
-- hello this is the luaformatter police
+Causese (1):
+
+- fixed a trait that is no longer a buff on player
+
+Infus (1):
+
+- Fix Conditions not resetting on unloading auras
 
