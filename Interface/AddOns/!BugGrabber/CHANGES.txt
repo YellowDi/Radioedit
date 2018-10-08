@@ -1,8 +1,8 @@
 ------------------------------------------------------------------------
-r226 | funkydude | 2018-07-18 10:01:44 +0000 (Wed, 18 Jul 2018) | 1 line
+r234 | funkydude | 2018-07-27 00:10:22 +0000 (Fri, 27 Jul 2018) | 1 line
 Changed paths:
    M /trunk/BugGrabber.lua
 
-Grab all events from LUA_WARNING and unregister it from the base UI.
+Various scope cleanups
 ------------------------------------------------------------------------
 
