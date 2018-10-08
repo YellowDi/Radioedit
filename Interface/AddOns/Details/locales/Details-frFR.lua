@@ -190,6 +190,8 @@ L["STRING_DAMAGE_TAKEN_FROM"] = "Dégâts pris de"
 --[[Translation missing --]]
 --[[ L["STRING_DETACH_DESC"] = ""--]] 
 --[[Translation missing --]]
+--[[ L["STRING_DISCARD"] = ""--]] 
+--[[Translation missing --]]
 --[[ L["STRING_DISPELLED"] = ""--]] 
 --[[Translation missing --]]
 --[[ L["STRING_DODGE"] = ""--]] 
@@ -367,22 +369,17 @@ L["STRING_DAMAGE_TAKEN_FROM"] = "Dégâts pris de"
 --[[ L["STRING_GUILDDAMAGERANK_TUTORIAL_DESC"] = ""--]] 
 --[[Translation missing --]]
 --[[ L["STRING_GUILDDAMAGERANK_WINDOWALERT"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_HEAL"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_HEAL_ABSORBED"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_HEAL_CRIT"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_HEALING_FROM"] = ""--]] 
+L["STRING_HEAL"] = "Soin"
+L["STRING_HEAL_ABSORBED"] = "Soin Absorbé"
+L["STRING_HEAL_CRIT"] = "Soin Critique"
+L["STRING_HEALING_FROM"] = "Soin reçu de"
 --[[Translation missing --]]
 --[[ L["STRING_HEALING_HPS_FROM"] = ""--]] 
 --[[Translation missing --]]
 --[[ L["STRING_HITS"] = ""--]] 
 --[[Translation missing --]]
 --[[ L["STRING_HPS"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_IMAGEEDIT_ALPHA"] = ""--]] 
+L["STRING_IMAGEEDIT_ALPHA"] = "Transparence"
 --[[Translation missing --]]
 --[[ L["STRING_IMAGEEDIT_CROPBOTTOM"] = ""--]] 
 --[[Translation missing --]]
@@ -441,10 +438,8 @@ L["STRING_DAMAGE_TAKEN_FROM"] = "Dégâts pris de"
 --[[ L["STRING_KILLED"] = ""--]] 
 --[[Translation missing --]]
 --[[ L["STRING_LAST_COOLDOWN"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_LEFT"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_LEFT_CLICK_SHARE"] = ""--]] 
+L["STRING_LEFT"] = "gauche"
+L["STRING_LEFT_CLICK_SHARE"] = "Clic gauche pour signaler."
 --[[Translation missing --]]
 --[[ L["STRING_LEFT_TO_RIGHT"] = ""--]] 
 --[[Translation missing --]]
@@ -453,10 +448,8 @@ L["STRING_DAMAGE_TAKEN_FROM"] = "Dégâts pris de"
 --[[ L["STRING_LOCK_WINDOW"] = ""--]] 
 --[[Translation missing --]]
 --[[ L["STRING_MASTERY"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_MAXIMUM"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_MAXIMUM_SHORT"] = ""--]] 
+L["STRING_MAXIMUM"] = "Maximum"
+L["STRING_MAXIMUM_SHORT"] = "Max"
 --[[Translation missing --]]
 --[[ L["STRING_MEDIA"] = ""--]] 
 --[[Translation missing --]]
@@ -494,10 +487,8 @@ L["STRING_MEMORY_ALERT_TITLE"] = "S'il vous plaît lire attentivement!"
 --[[ L["STRING_MINIMAPMENU_REOPENALL"] = ""--]] 
 --[[Translation missing --]]
 --[[ L["STRING_MINIMAPMENU_UNLOCK"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_MINIMUM"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_MINIMUM_SHORT"] = ""--]] 
+L["STRING_MINIMUM"] = "Minimum"
+L["STRING_MINIMUM_SHORT"] = "Min"
 L["STRING_MINITUTORIAL_BOOKMARK1"] = "Faites un clic droit à tout moment au cours de la fenêtre pour ouvrir les signets!"
 L["STRING_MINITUTORIAL_BOOKMARK2"] = "Signets donne un accès rapide aux écrans favoris."
 L["STRING_MINITUTORIAL_BOOKMARK3"] = "cliquez à droite pour fermer le panneau de signets."
@@ -751,9 +742,9 @@ L["STRING_MINITUTORIAL_OPTIONS_PANEL6"] = "Sélectionnez ici quelle fenêtre vou
 --[[Translation missing --]]
 --[[ L["STRING_OPTIONS_BG_ANCHOR"] = ""--]] 
 --[[Translation missing --]]
---[[ L["STRING_OPTIONS_BG_REMOTE_PARSER"] = ""--]] 
+--[[ L["STRING_OPTIONS_BG_UNIQUE_SEGMENT"] = ""--]] 
 --[[Translation missing --]]
---[[ L["STRING_OPTIONS_BG_REMOTE_PARSER_DESC"] = ""--]] 
+--[[ L["STRING_OPTIONS_BG_UNIQUE_SEGMENT_DESC"] = ""--]] 
 --[[Translation missing --]]
 --[[ L["STRING_OPTIONS_CAURAS"] = ""--]] 
 --[[Translation missing --]]

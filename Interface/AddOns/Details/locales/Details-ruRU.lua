@@ -176,6 +176,8 @@ L["STRING_DAMAGE_TAKEN_FROM2"] = "принятый урон с"
 L["STRING_DEFENSES"] = "Защита"
 L["STRING_DESCENDING"] = "По убыванию"
 L["STRING_DETACH_DESC"] = "Разделить группу окон"
+--[[Translation missing --]]
+--[[ L["STRING_DISCARD"] = ""--]] 
 L["STRING_DISPELLED"] = "Баффы/Дебафы удалены"
 L["STRING_DODGE"] = "Уклонение"
 L["STRING_DOT"] = "(ДоТ)"
@@ -520,8 +522,8 @@ L["STRING_OPTIONS_BG_ALL_ALLY_DESC"] = [=[Когда включено, враж�
 
 |cFFFFFF00Важно|r: изменения применяются последующего вступления в бой.]=]
 L["STRING_OPTIONS_BG_ANCHOR"] = "Поля боя:"
-L["STRING_OPTIONS_BG_REMOTE_PARSER"] = "Умный счет"
-L["STRING_OPTIONS_BG_REMOTE_PARSER_DESC"] = "Когда включено, то наносимый урон и исцеление синхронизируются с таблицей очков."
+L["STRING_OPTIONS_BG_UNIQUE_SEGMENT"] = "Уникальный сегмент"
+L["STRING_OPTIONS_BG_UNIQUE_SEGMENT_DESC"] = "Создается один сегмент в начале поля боя и длится до его окончания."
 L["STRING_OPTIONS_CAURAS"] = "Собирать 'Ауры'"
 L["STRING_OPTIONS_CAURAS_DESC"] = [=[Включить захват:
 
@@ -545,8 +547,7 @@ L["STRING_OPTIONS_CENERGY_DESC"] = [=[Включить захват:
 - |cFFFFFF00Получено: силы рун|r]=]
 L["STRING_OPTIONS_CHANGE_CLASSCOLORS"] = "Изменение цвета класса"
 L["STRING_OPTIONS_CHANGE_CLASSCOLORS_DESC"] = "Выберите новые цвета для классов."
---[[Translation missing --]]
---[[ L["STRING_OPTIONS_CHANGECOLOR"] = ""--]] 
+L["STRING_OPTIONS_CHANGECOLOR"] = "Изменить цвет"
 L["STRING_OPTIONS_CHANGELOG"] = "Заметки о версии"
 L["STRING_OPTIONS_CHART_ADD"] = "Добавить данные"
 L["STRING_OPTIONS_CHART_ADD2"] = "Добавить"
@@ -1671,20 +1672,13 @@ L["STRING_WELCOME_7"] = "используется для рейтинга, эт�
 L["STRING_WELCOME_70"] = "Настройки полос заголовка"
 L["STRING_WELCOME_71"] = "Настройки полос"
 L["STRING_WELCOME_72"] = "Настройки окнa"
---[[Translation missing --]]
---[[ L["STRING_WELCOME_73"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_WELCOME_74"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_WELCOME_75"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_WELCOME_76"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_WELCOME_77"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_WELCOME_78"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_WELCOME_79"] = ""--]] 
+L["STRING_WELCOME_73"] = "Выберите алфавит или регион:"
+L["STRING_WELCOME_74"] = "Латинский алфавит"
+L["STRING_WELCOME_75"] = "Кириллицы алфавит"
+L["STRING_WELCOME_76"] = "Китай"
+L["STRING_WELCOME_77"] = "Корея"
+L["STRING_WELCOME_78"] = "Тайвань"
+L["STRING_WELCOME_79"] = "Создать 2-рое окно"
 L["STRING_WINDOW_NOTFOUND"] = "Окно не найдено."
 L["STRING_WINDOW_NUMBER"] = "номер окна"
 L["STRING_WINDOW1ATACH_DESC"] = "Чтобы создать группу окон, перетащите окно #2 рядом с окном #1."

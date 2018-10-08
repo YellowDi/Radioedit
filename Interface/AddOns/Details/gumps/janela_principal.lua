@@ -1733,9 +1733,10 @@ function _detalhes:RefreshLockedState()
 	return true
 end
 
-local lockFunctionOnClick = function (button, button_type, button2)
+local lockFunctionOnClick = function (button, button_type, button2, isFromOptionsButton)
 
-	if (_detalhes.disable_lock_ungroup_buttons) then
+	--isFromOptionsButton is true when the call if from the button in the display section of the options panel
+	if (_detalhes.disable_lock_ungroup_buttons and isFromOptionsButton ~= true) then
 		return
 	end
 
@@ -1749,8 +1750,12 @@ local lockFunctionOnClick = function (button, button_type, button2)
 		baseframe.instance.isLocked = false
 		button.label:SetText (Loc ["STRING_LOCK_WINDOW"])
 		button:SetWidth (button.label:GetStringWidth()+2)
-		baseframe.resize_direita:SetAlpha (1)
-		baseframe.resize_esquerda:SetAlpha (1)
+		
+		if (not _detalhes.disable_lock_ungroup_buttons) then
+			baseframe.resize_direita:SetAlpha (1)
+			baseframe.resize_esquerda:SetAlpha (1)
+		end
+		
 		button:ClearAllPoints()
 		button:SetPoint ("right", baseframe.resize_direita, "left", -1, 1.5)	
 	else
@@ -2155,7 +2160,7 @@ local icon_frame_on_enter = function (self)
 			end
 		
 		elseif (actor.dead_at) then
-			
+		
 		
 		elseif (actor.name) then --ensure it's an actor table
 		
@@ -2166,7 +2171,7 @@ local icon_frame_on_enter = function (self)
 			local talents = _detalhes.cached_talents [serial]
 			local ilvl = _detalhes.ilevel:GetIlvl (serial)
 			
-			local icon_size = 16
+			local icon_size = 20
 			
 			local instance = _detalhes:GetInstance (self.row.instance_id)
 			
@@ -2198,13 +2203,13 @@ local icon_frame_on_enter = function (self)
 			if (talents) then
 				for i = 1, #talents do
 					local talentID, name, texture, selected, available = GetTalentInfoByID (talents [i])
-					talent_string = talent_string ..  " |T" .. texture .. ":" .. 15 .. ":" .. 15 ..":0:0:64:64:4:60:4:60|t"
+					talent_string = talent_string ..  " |T" .. texture .. ":" .. 24 .. ":" .. 24 ..":0:0:64:64:4:60:4:60|t"
 				end
 			end
 			
 			local got_info
 			if (ilvl) then
-				GameCooltip:AddLine (STAT_AVERAGE_ITEM_LEVEL .. ":", ilvl and floor (ilvl.ilvl) or "??") --> Loc from GlobalStrings.lua
+				GameCooltip:AddLine (STAT_AVERAGE_ITEM_LEVEL .. ":" , ilvl and "|T:" .. 24 .. ":" .. 24 ..":0:0:64:64:4:60:4:60|t" .. floor (ilvl.ilvl) or "|T:" .. 24 .. ":" .. 24 ..":0:0:64:64:4:60:4:60|t ??") --> Loc from GlobalStrings.lua
 				_detalhes:AddTooltipBackgroundStatusbar()
 				got_info = true
 			end
@@ -2222,11 +2227,11 @@ local icon_frame_on_enter = function (self)
 			GameCooltip:SetOption ("MinButtonHeight", 15)
 			GameCooltip:SetOption ("IgnoreButtonAutoHeight", false)
 			
-			local height = 52
+			local height = 64
 			if (not got_info) then
 				GameCooltip:AddLine (Loc ["STRING_QUERY_INSPECT"], nil, 1, "orange")
 				GameCooltip:AddIcon ([[Interface\TUTORIALFRAME\UI-TUTORIAL-FRAME]], 1, 1, 12, icon_size, 8/512, 70/512, 224/512, 306/512)
-				height = 42
+				height = 54
 			end
 
 			local combat = instance:GetShowingCombat()
@@ -2262,6 +2267,7 @@ local icon_frame_on_enter = function (self)
 				end
 			end
 			
+			--[=[
 			if (RaiderIO and RaiderIO.GetScore) then
 				local mythicPlusScore = RaiderIO.GetScore (name)
 				if (mythicPlusScore and mythicPlusScore.allScore) then
@@ -2269,6 +2275,7 @@ local icon_frame_on_enter = function (self)
 					_detalhes:AddTooltipBackgroundStatusbar()
 				end
 			end
+			--]=]
 			
 			GameCooltip:SetOption ("FixedHeight", height)
 			
@@ -2282,7 +2289,10 @@ local icon_frame_on_enter = function (self)
 end
 local icon_frame_on_leave = function (self)
 	GameCooltip:Hide()
-	--GameTooltip:Hide()
+	
+	if (GameTooltip and GameTooltip:IsShown()) then
+		GameTooltip:Hide()
+	end
 	
 	if (self.row.icone_classe:GetTexture() ~= "") then
 		--self.row.icone_classe:SetSize (self.row.icone_classe:GetWidth()-1, self.row.icone_classe:GetWidth()-1)
@@ -5071,7 +5081,6 @@ function _detalhes:InstanceButtonsColors (red, green, blue, alpha, no_save, only
 		if (self:IsLowerInstance()) then
 			for _, ThisButton in _ipairs (_detalhes.ToolBar.Shown) do
 				ThisButton:SetAlpha (alpha)
-				--print (ThisButton:GetName())
 			end
 		end
 
@@ -5671,6 +5680,13 @@ function _detalhes:ToolbarMenuSetButtons (_mode, _segment, _attributes, _report,
 				total_buttons_shown = total_buttons_shown + 1
 			end
 		end
+		
+		if (self.baseframe.cabecalho.PluginIconsSeparator:IsShown()) then
+			if (self.baseframe.cabecalho.modo_selecao:GetAlpha() == 0) then
+				self.baseframe.cabecalho.PluginIconsSeparator:Hide()
+			end
+		end
+		
 	end
 	
 	self.total_buttons_shown = total_buttons_shown
@@ -7225,6 +7241,7 @@ function _detalhes:RefreshAttributeTextSize()
 	end
 end
 
+-- ~encounter ~timer
 function _detalhes:CheckForTextTimeCounter (combat_start)
 	if (combat_start) then
 		if (_detalhes.tabela_vigente.is_boss) then
@@ -7447,28 +7464,40 @@ function _detalhes:SetBackdropTexture (texturename)
 	
 end
 
--- ~alpha (transparency of buttons on the toolbar)
+-- ~alpha (transparency of buttons on the toolbar) ~autohide �utohide ~menuauto
 function _detalhes:SetAutoHideMenu (left, right, interacting)
+
+	--30/07/2018: the separation by left and right menu icons doesn't exists for years, but it was still active in the code making
+	--the toolbar icons show on initialization even when the options to auto hide them enabled.
+	--the code to set the alpha was already updated to only one anhor (left) but this function was still calling to update the right anchor (deprecated)
 
 	if (interacting) then
 		if (self.is_interacting) then
 			if (self.auto_hide_menu.left) then
 				local r, g, b = unpack (self.color_buttons)
 				self:InstanceButtonsColors (r, g, b, 1, true, true) --no save, only left
+				
+				if (self.baseframe.cabecalho.PluginIconsSeparator) then
+					self.baseframe.cabecalho.PluginIconsSeparator:Show()
+				end
 			end
-			if (self.auto_hide_menu.right) then
-				local r, g, b = unpack (self.color_buttons)
-				self:InstanceButtonsColors (r, g, b, 1, true, nil, true) --no save, only right
-			end
+--			if (self.auto_hide_menu.right) then
+--				local r, g, b = unpack (self.color_buttons)
+--				self:InstanceButtonsColors (r, g, b, 1, true, nil, true) --no save, only right
+--			end
 		else
 			if (self.auto_hide_menu.left) then
 				local r, g, b = unpack (self.color_buttons)
 				self:InstanceButtonsColors (r, g, b, 0, true, true) --no save, only left
+				
+				if (self.baseframe.cabecalho.PluginIconsSeparator) then
+					self.baseframe.cabecalho.PluginIconsSeparator:Hide()
+				end
 			end
-			if (self.auto_hide_menu.right) then
-				local r, g, b = unpack (self.color_buttons)
-				self:InstanceButtonsColors (r, g, b, 0, true, nil, true) --no save, only right
-			end
+--			if (self.auto_hide_menu.right) then
+--				local r, g, b = unpack (self.color_buttons)
+--				self:InstanceButtonsColors (r, g, b, 0, true, nil, true) --no save, only right
+--			end
 		end
 		return
 	end
@@ -7484,18 +7513,31 @@ function _detalhes:SetAutoHideMenu (left, right, interacting)
 	self.auto_hide_menu.right = right
 	
 	local r, g, b = unpack (self.color_buttons)
-	
+
 	if (not left) then
 		--auto hide is off
 		self:InstanceButtonsColors (r, g, b, 1, true, true) --no save, only left
+		
+		if (self.baseframe.cabecalho.PluginIconsSeparator) then
+			self.baseframe.cabecalho.PluginIconsSeparator:Show()
+		end
 	else
 		if (self.is_interacting) then
 			self:InstanceButtonsColors (r, g, b, 1, true, true) --no save, only left
+			
+			if (self.baseframe.cabecalho.PluginIconsSeparator) then
+				self.baseframe.cabecalho.PluginIconsSeparator:Show()
+			end
 		else
 			self:InstanceButtonsColors (0, 0, 0, 0, true, true) --no save, only left
+			
+			if (self.baseframe.cabecalho.PluginIconsSeparator) then
+				self.baseframe.cabecalho.PluginIconsSeparator:Hide()
+			end
 		end
 	end
-	
+
+--[=[	
 	if (not right) then
 		--auto hide is off
 		self:InstanceButtonsColors (r, g, b, 1, true, nil, true) --no save, only right
@@ -7506,7 +7548,8 @@ function _detalhes:SetAutoHideMenu (left, right, interacting)
 			self:InstanceButtonsColors (0, 0, 0, 0, true, nil, true) --no save, only right
 		end
 	end
-	
+--]=]
+
 	self:RefreshAttributeTextSize()
 	--auto_hide_menu = {left = false, right = false},
 

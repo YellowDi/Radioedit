@@ -38,6 +38,10 @@ DF.OptionsFunctions = {
 			self.options = {}
 			self.options [optionName] = optionValue
 		end
+		
+		if (self.OnOptionChanged) then
+			DF:Dispatch (self.OnOptionChanged, self, optionName, optionValue)
+		end
 	end,
 	
 	GetOption = function (self, optionName)
@@ -1161,6 +1165,8 @@ function DF:NewFillPanel (parent, rows, name, member, w, h, total_lines, fill_ro
 	panel.scrollframe = scrollframe
 	scrollframe.lines = {}
 	
+	DF:ReskinSlider (scrollframe)
+	
 	--create lines
 	function panel:UpdateRowAmount()
 		local size = options.rowheight
@@ -2005,25 +2011,32 @@ end
 function DF:ShowPromptPanel (message, func_true, func_false)
 	
 	if (not DF.prompt_panel) then
-		local f = CreateFrame ("frame", "DetailsFrameworkPrompt", UIParent) 
-		f:SetSize (400, 65)
+		local f = CreateFrame ("frame", "DetailsFrameworkPromptSimple", UIParent) 
+		f:SetSize (400, 80)
 		f:SetFrameStrata ("DIALOG")
 		f:SetPoint ("center", UIParent, "center", 0, 300)
 		f:SetBackdrop ({edgeFile = [[Interface\Buttons\WHITE8X8]], edgeSize = 1, bgFile = [[Interface\Tooltips\UI-Tooltip-Background]], tileSize = 64, tile = true})
 		f:SetBackdropColor (0, 0, 0, 0.8)
 		f:SetBackdropBorderColor (0, 0, 0, 1)
+		tinsert (UISpecialFrames, "DetailsFrameworkPromptSimple")
+		
+		DF:CreateTitleBar (f, "Prompt!")
+		DF:ApplyStandardBackdrop (f)
 		
 		local prompt = f:CreateFontString (nil, "overlay", "GameFontNormal")
-		prompt:SetPoint ("top", f, "top", 0, -15)
+		prompt:SetPoint ("top", f, "top", 0, -28)
 		prompt:SetJustifyH ("center")
 		f.prompt = prompt
 		
-		local button_true = DF:CreateButton (f, nil, 60, 20, "Yes")
-		button_true:SetPoint ("bottomleft", f, "bottomleft", 5, 5)
+		local button_text_template = DF:GetTemplate ("font", "OPTIONS_FONT_TEMPLATE")
+		local options_dropdown_template = DF:GetTemplate ("dropdown", "OPTIONS_DROPDOWN_TEMPLATE")
+		
+		local button_true = DF:CreateButton (f, nil, 60, 20, "Yes", nil, nil, nil, nil, nil, nil, options_dropdown_template)
+		button_true:SetPoint ("bottomright", f, "bottomright", -5, 5)
 		f.button_true = button_true
-
-		local button_false = DF:CreateButton (f, nil, 60, 20, "No")
-		button_false:SetPoint ("bottomright", f, "bottomright", -5, 5)
+		
+		local button_false = DF:CreateButton (f, nil, 60, 20, "No", nil, nil, nil, nil, nil, nil, options_dropdown_template)
+		button_false:SetPoint ("bottomleft", f, "bottomleft", 5, 5)
 		f.button_false = button_false
 		
 		button_true:SetClickFunction (function()
@@ -2067,34 +2080,42 @@ function DF:ShowTextPromptPanel (message, callback)
 	if (not DF.text_prompt_panel) then
 		
 		local f = CreateFrame ("frame", "DetailsFrameworkPrompt", UIParent) 
-		f:SetSize (400, 100)
-		f:SetFrameStrata ("DIALOG")
-		f:SetPoint ("center", UIParent, "center", 0, 300)
-		f:SetBackdrop ({edgeFile = [[Interface\Buttons\WHITE8X8]], edgeSize = 1, bgFile = [[Interface\Tooltips\UI-Tooltip-Background]], tileSize = 64, tile = true})
-		f:SetBackdropColor (0, 0, 0, 0.8)
-		f:SetBackdropBorderColor (0, 0, 0, 1)
+		f:SetSize (400, 120)
+		f:SetFrameStrata ("FULLSCREEN")
+		f:SetPoint ("center", UIParent, "center", 0, 100)
+		f:EnableMouse (true)
+		f:SetMovable (true)
+		f:RegisterForDrag ("LeftButton")
+		f:SetScript ("OnDragStart", function() f:StartMoving() end)
+		f:SetScript ("OnDragStop", function() f:StopMovingOrSizing() end)
+		f:SetScript ("OnMouseDown", function (self, button) if (button == "RightButton") then f.EntryBox:ClearFocus() f:Hide() end end)
+		tinsert (UISpecialFrames, "DetailsFrameworkPrompt")
+		
+		DF:CreateTitleBar (f, "Prompt!")
+		DF:ApplyStandardBackdrop (f)
 		
 		local prompt = f:CreateFontString (nil, "overlay", "GameFontNormal")
-		prompt:SetPoint ("top", f, "top", 0, -15)
+		prompt:SetPoint ("top", f, "top", 0, -25)
 		prompt:SetJustifyH ("center")
+		prompt:SetSize (360, 36)
 		f.prompt = prompt
 
 		local button_text_template = DF:GetTemplate ("font", "OPTIONS_FONT_TEMPLATE")
 		local options_dropdown_template = DF:GetTemplate ("dropdown", "OPTIONS_DROPDOWN_TEMPLATE")
 
-		local button_true = DF:CreateButton (f, nil, 60, 20, "Okey", nil, nil, nil, nil, nil, nil, options_dropdown_template, button_text_template)
-		button_true:SetPoint ("bottomleft", f, "bottomleft", 10, 5)
-		f.button_true = button_true
-
-		local button_false = DF:CreateButton (f, function() f.textbox:ClearFocus(); f:Hide() end, 60, 20, "Cancel", nil, nil, nil, nil, nil, nil, options_dropdown_template, button_text_template)
-		button_false:SetPoint ("bottomright", f, "bottomright", -10, 5)
-		f.button_false = button_false
-		
 		local textbox = DF:CreateTextEntry (f, function()end, 380, 20, "textbox", nil, nil, options_dropdown_template)
-		textbox:SetPoint ("topleft", f, "topleft", 10, -45)
+		textbox:SetPoint ("topleft", f, "topleft", 10, -60)
 		f.EntryBox = textbox
 
-		button_true:SetClickFunction (function()
+		local button_true = DF:CreateButton (f, nil, 60, 20, "Okey", nil, nil, nil, nil, nil, nil, options_dropdown_template)
+		button_true:SetPoint ("bottomright", f, "bottomright", -10, 5)
+		f.button_true = button_true
+
+		local button_false = DF:CreateButton (f, function() f.textbox:ClearFocus(); f:Hide() end, 60, 20, "Cancel", nil, nil, nil, nil, nil, nil, options_dropdown_template)
+		button_false:SetPoint ("bottomleft", f, "bottomleft", 10, 5)
+		f.button_false = button_false
+		
+		local executeCallback = function()
 			local my_func = button_true.true_function
 			if (my_func) then
 				local okey, errormessage = pcall (my_func, textbox:GetText())
@@ -2104,6 +2125,14 @@ function DF:ShowTextPromptPanel (message, callback)
 				end
 				f:Hide()
 			end
+		end
+		
+		button_true:SetClickFunction (function()
+			executeCallback()
+		end)
+		
+		textbox:SetHook ("OnEnterPressed", function()
+			executeCallback()
 		end)
 	
 		f:Hide()
@@ -2115,7 +2144,6 @@ function DF:ShowTextPromptPanel (message, callback)
 	DetailsFrameworkPrompt.EntryBox:SetText ("")
 	DF.text_prompt_panel.prompt:SetText (message)
 	DF.text_prompt_panel.button_true.true_function = callback
-	
 	DF.text_prompt_panel.textbox:SetFocus (true)
 	
 end
@@ -4779,19 +4807,29 @@ DF.IconRowFunctions = {
 		local iconFrame = self.IconPool [self.NextIcon]
 		
 		if (not iconFrame) then
-			local newIconFrame = CreateFrame ("cooldown", "$parentIconCooldown" .. self.NextIcon, self, "CooldownFrameTemplate")
+			local newIconFrame = CreateFrame ("frame", "$parentIcon" .. self.NextIcon, self)
 			newIconFrame:SetSize (self.options.icon_width, self.options.icon_height)
 			
 			newIconFrame.Texture = newIconFrame:CreateTexture (nil, "background")
 			newIconFrame.Texture:SetAllPoints()
 			
-			newIconFrame.Text = newIconFrame:CreateFontString (nil, "overlay", "GameFontNormal")
-			newIconFrame.Text:SetPoint ("center")
-			newIconFrame.Text:Hide()
-			
 			newIconFrame:SetBackdrop ({edgeFile = [[Interface\Buttons\WHITE8X8]], edgeSize = 1})
 			newIconFrame:SetBackdropBorderColor (0, 0, 0, 0)
 			newIconFrame:EnableMouse (false)
+			
+			local cooldownFrame = CreateFrame ("cooldown", "$parentIconCooldown" .. self.NextIcon, newIconFrame, "CooldownFrameTemplate")
+			cooldownFrame:SetAllPoints()
+			cooldownFrame:EnableMouse (false)
+			
+			newIconFrame.Text = cooldownFrame:CreateFontString (nil, "overlay", "GameFontNormal")
+			newIconFrame.Text:SetPoint ("center")
+			newIconFrame.Text:Hide()
+			
+			newIconFrame.Desc = newIconFrame:CreateFontString (nil, "overlay", "GameFontNormal")
+			newIconFrame.Desc:SetPoint ("bottom", newIconFrame, "top", 0, 2)
+			newIconFrame.Desc:Hide()
+			
+			newIconFrame.Cooldown = cooldownFrame
 			
 			self.IconPool [self.NextIcon] = newIconFrame
 			iconFrame = newIconFrame
@@ -4826,8 +4864,15 @@ DF.IconRowFunctions = {
 		return iconFrame
 	end,
 	
-	SetIcon = function (self, spellId, borderColor, startTime, duration)
-		local spellName, _, spellIcon = GetSpellInfo (spellId)
+	SetIcon = function (self, spellId, borderColor, startTime, duration, forceTexture, descText)
+	
+		local spellName, _, spellIcon
+	
+		if (not forceTexture) then
+			spellName, _, spellIcon = GetSpellInfo (spellId)
+		else
+			spellIcon = forceTexture
+		end
 		
 		if (spellIcon) then
 			local iconFrame = self:GetIcon()
@@ -4838,25 +4883,37 @@ DF.IconRowFunctions = {
 				iconFrame:SetBackdropBorderColor (Plater:ParseColors (borderColor))
 			else
 				iconFrame:SetBackdropBorderColor (0, 0, 0 ,0)
-			end			
-
+			end	
+			
 			if (startTime) then
-				CooldownFrame_Set (iconFrame, startTime, duration, true, true)
+				CooldownFrame_Set (iconFrame.Cooldown, startTime, duration, true, true)
 				
 				if (self.options.show_text) then
 					iconFrame.Text:Show()
 					iconFrame.Text:SetText (floor (startTime + duration - GetTime()))
+					
 				else
 					iconFrame.Text:Hide()
 				end
 			else
 				iconFrame.Text:Hide()
 			end
-
+			
+			if (descText and self.options.desc_text) then
+				iconFrame.Desc:Show()
+				iconFrame.Desc:SetText (descText.text)
+				iconFrame.Desc:SetTextColor (DF:ParseColors (descText.text_color or self.options.desc_text_color))
+				DF:SetFontSize (iconFrame.Desc, descText.text_size or self.options.desc_text_size)
+			else
+				iconFrame.Desc:Hide()
+			end
+			
+			iconFrame:SetSize (self.options.icon_width, self.options.icon_height)
 			iconFrame:Show()
 			
 			--> update the size of the frame
 			self:SetWidth ((self.options.left_padding * 2) + (self.options.icon_padding * (self.NextIcon-2)) + (self.options.icon_width * (self.NextIcon - 1)))
+			self:SetHeight (self.options.icon_height + (self.options.top_padding * 2))
 
 			--> show the frame
 			self:Show()
@@ -4903,7 +4960,12 @@ DF.IconRowFunctions = {
 		elseif (side == 13) then
 			return 1
 		end
-	end
+	end,
+	
+	OnOptionChanged = function (self, optionName)
+		self:SetBackdropColor (unpack (self.options.backdrop_color))
+		self:SetBackdropBorderColor (unpack (self.options.backdrop_border_color))
+	end,
 }
 
 local default_icon_row_options = {
@@ -4912,10 +4974,13 @@ local default_icon_row_options = {
 	texcoord = {.1, .9, .1, .9},
 	show_text = true,
 	text_color = {1, 1, 1, 1},
-	left_padding = 2, --distance between right and left
-	top_padding = 2, --distance between top and bottom 
-	icon_padding = 2, --distance between each icon
-	backdrop = {edgeFile = [[Interface\Buttons\WHITE8X8]], edgeSize = 1, bgFile = [[Interface\Tooltips\UI-Tooltip-Background]], tileSize = 64, tile = true},
+	desc_text = true,
+	desc_text_color = {1, 1, 1, 1},
+	desc_text_size = 7,
+	left_padding = 1, --distance between right and left
+	top_padding = 1, --distance between top and bottom 
+	icon_padding = 1, --distance between each icon
+	backdrop = {},
 	backdrop_color = {0, 0, 0, 0.5},
 	backdrop_border_color = {0, 0, 0, 1},
 	anchor = {side = 6, x = 2, y = 0},
@@ -4933,6 +4998,7 @@ function DF:CreateIconRow (parent, name, options)
 	f:BuildOptionsTable (default_icon_row_options, options)
 	
 	f:SetSize (f.options.icon_width, f.options.icon_height + (f.options.top_padding * 2))
+	
 	f:SetBackdrop (f.options.backdrop)
 	f:SetBackdropColor (unpack (f.options.backdrop_color))
 	f:SetBackdropBorderColor (unpack (f.options.backdrop_border_color))

@@ -1072,7 +1072,9 @@ function _detalhes:agrupar_janelas (lados)
 		end
 	end
 	
-	instancia.break_snap_button:SetAlpha (1)
+	if (not _detalhes.disable_lock_ungroup_buttons) then
+		instancia.break_snap_button:SetAlpha (1)
+	end
 	
 	if (_detalhes.tutorial.unlock_button < 4) then
 	

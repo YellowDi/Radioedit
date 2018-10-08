@@ -4,7 +4,7 @@ if not L then return end
 L["ABILITY_ID"] = "id da habilidade"
 L["STRING_"] = ""
 L["STRING_ABSORBED"] = "Absorvido"
-L["STRING_ACTORFRAME_NOTHING"] = "ops, não há nada para reportar :("
+L["STRING_ACTORFRAME_NOTHING"] = "oops, não há nada para reportar :("
 L["STRING_ACTORFRAME_REPORTAT"] = "em"
 L["STRING_ACTORFRAME_REPORTOF"] = "de"
 L["STRING_ACTORFRAME_REPORTTARGETS"] = "relatório para os alvos de"
@@ -81,12 +81,11 @@ L["STRING_CHANNEL_WHISPER_TARGET_COOLDOWN"] = "Sussurrar o Alvo"
 L["STRING_CHANNEL_YELL"] = "Gritar"
 L["STRING_CLICK_REPORT_LINE1"] = "|cFFFFCC22Clique|r: |cFFFFEE00reportar|r"
 L["STRING_CLICK_REPORT_LINE2"] = "|cFFFFCC22Shift+Clique|r: |cFFFFEE00modo janela|r"
-L["STRING_CLOSEALL"] = "Todas as janelas estão fechadas, digite '/details mostrar' para reabri-las."
+L["STRING_CLOSEALL"] = "Todas as janelas estão fechadas, digite '/details show' para reabri-las."
 L["STRING_COLOR"] = "Cor"
 L["STRING_COMMAND_LIST"] = "lista de comandos"
 L["STRING_COOLTIP_NOOPTIONS"] = "não há opções"
---[[Translation missing --]]
---[[ L["STRING_CREATEAURA"] = ""--]] 
+L["STRING_CREATEAURA"] = "Criar Aura"
 L["STRING_CRITICAL_HITS"] = "Golpes Críticos"
 L["STRING_CRITICAL_ONLY"] = "critico"
 L["STRING_CURRENT"] = "Atual"
@@ -113,8 +112,8 @@ L["STRING_CUSTOM_DAMAGEONSHIELDS"] = "Danos em Escudos"
 L["STRING_CUSTOM_DAMAGEONSKULL"] = "Dano no Alvo com Caveira"
 L["STRING_CUSTOM_DAMAGEONSKULL_DESC"] = "Mostra o dano causado em alvos marcados com caveira."
 L["STRING_CUSTOM_DESCRIPTION"] = "Descrição:"
-L["STRING_CUSTOM_DESCRIPTION_DESC"] = "Descreva o que este display faz."
-L["STRING_CUSTOM_DONE"] = "Terminar"
+L["STRING_CUSTOM_DESCRIPTION_DESC"] = "Descrição do que este display faz."
+L["STRING_CUSTOM_DONE"] = "Feito"
 L["STRING_CUSTOM_DTBS"] = "Dano Recebido por Habilidade"
 L["STRING_CUSTOM_DTBS_DESC"] = "Mostra o dano das habilidades dos inimigos contra seu grupo."
 L["STRING_CUSTOM_DYNAMICOVERAL"] = "Dano Dinâmico Geral"
@@ -177,6 +176,8 @@ L["STRING_DAMAGE_TAKEN_FROM2"] = "aplicou dano com"
 L["STRING_DEFENSES"] = "Defesas"
 L["STRING_DESCENDING"] = "Decrescente,"
 L["STRING_DETACH_DESC"] = "Desagrupar Janelas"
+--[[Translation missing --]]
+--[[ L["STRING_DISCARD"] = ""--]] 
 L["STRING_DISPELLED"] = "Auras Removidas"
 L["STRING_DODGE"] = "Desvio"
 L["STRING_DOT"] = " (DoT)"
@@ -563,8 +564,10 @@ L["STRING_OPTIONS_BG_ALL_ALLY_DESC"] = [=[Quando ativado, jogadores inimigos tam
 
 |cFFFFFF00Importante|r: alterações são aplicadas nos combates seguintes.]=]
 L["STRING_OPTIONS_BG_ANCHOR"] = "Campos de Batalha:"
-L["STRING_OPTIONS_BG_REMOTE_PARSER"] = "Pontuação Inteligente"
-L["STRING_OPTIONS_BG_REMOTE_PARSER_DESC"] = "Quando ativa, o dano e cure são sincronizados com o painel de pontuação."
+--[[Translation missing --]]
+--[[ L["STRING_OPTIONS_BG_UNIQUE_SEGMENT"] = ""--]] 
+--[[Translation missing --]]
+--[[ L["STRING_OPTIONS_BG_UNIQUE_SEGMENT_DESC"] = ""--]] 
 L["STRING_OPTIONS_CAURAS"] = "Coletar Auras"
 L["STRING_OPTIONS_CAURAS_DESC"] = [=[Ativa a Captura de:
 

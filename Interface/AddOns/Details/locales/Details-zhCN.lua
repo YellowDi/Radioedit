@@ -173,6 +173,8 @@ L["STRING_DAMAGE_TAKEN_FROM2"] = "施加伤害在"
 L["STRING_DEFENSES"] = "防御"
 L["STRING_DESCENDING"] = "降序"
 L["STRING_DETACH_DESC"] = "分离窗口组群"
+--[[Translation missing --]]
+--[[ L["STRING_DISCARD"] = ""--]] 
 L["STRING_DISPELLED"] = "增益/减益 移除"
 L["STRING_DODGE"] = "闪避"
 L["STRING_DOT"] = " (DoT)"
@@ -508,8 +510,10 @@ L["STRING_OPTIONS_BG_ALL_ALLY"] = "全部显示"
 --[[Translation missing --]]
 --[[ L["STRING_OPTIONS_BG_ALL_ALLY_DESC"] = ""--]] 
 L["STRING_OPTIONS_BG_ANCHOR"] = "战场："
-L["STRING_OPTIONS_BG_REMOTE_PARSER"] = "智能得分"
-L["STRING_OPTIONS_BG_REMOTE_PARSER_DESC"] = "启用后，伤害和治疗将和记分板同步。"
+--[[Translation missing --]]
+--[[ L["STRING_OPTIONS_BG_UNIQUE_SEGMENT"] = ""--]] 
+--[[Translation missing --]]
+--[[ L["STRING_OPTIONS_BG_UNIQUE_SEGMENT_DESC"] = ""--]] 
 L["STRING_OPTIONS_CAURAS"] = "采集光环"
 L["STRING_OPTIONS_CAURAS_DESC"] = [=[启用捕获：
 

@@ -176,6 +176,8 @@ L["STRING_DAMAGE_TAKEN_FROM2"] = "적용된 피해 출처:"
 L["STRING_DEFENSES"] = "방어"
 L["STRING_DESCENDING"] = "내림차순"
 L["STRING_DETACH_DESC"] = "창 그룹 해제"
+--[[Translation missing --]]
+--[[ L["STRING_DISCARD"] = ""--]] 
 L["STRING_DISPELLED"] = "제거된 강화 효과/약화 효과"
 L["STRING_DODGE"] = "회피"
 L["STRING_DOT"] = " (지속 효과)"
@@ -511,8 +513,10 @@ L["STRING_OPTIONS_BG_ALL_ALLY_DESC"] = [=[활성화하면 창이 그룹 모드�
 
 |cFFFFFF00중요|r: 다음 전투부터 적용됩니다.]=]
 L["STRING_OPTIONS_BG_ANCHOR"] = "전장:"
-L["STRING_OPTIONS_BG_REMOTE_PARSER"] = "스마트 점수"
-L["STRING_OPTIONS_BG_REMOTE_PARSER_DESC"] = "활성화하면 피해와 치유를 점수판과 맞춥니다."
+--[[Translation missing --]]
+--[[ L["STRING_OPTIONS_BG_UNIQUE_SEGMENT"] = ""--]] 
+--[[Translation missing --]]
+--[[ L["STRING_OPTIONS_BG_UNIQUE_SEGMENT_DESC"] = ""--]] 
 L["STRING_OPTIONS_CAURAS"] = "오라 수집"
 L["STRING_OPTIONS_CAURAS_DESC"] = [=[수집 허용:
 

@@ -178,6 +178,7 @@ L["STRING_DAMAGE_TAKEN_FROM2"] = "applied damage with"
 L["STRING_DEFENSES"] = "Defenses"
 L["STRING_DESCENDING"] = "Descending"
 L["STRING_DETACH_DESC"] = "Break Window Group"
+L["STRING_DISCARD"] = "Discard"
 L["STRING_DISPELLED"] = "Buffs/Debuffs Removed"
 L["STRING_DODGE"] = "Dodge"
 L["STRING_DOT"] = " (DoT)"
@@ -512,8 +513,8 @@ L["STRING_OPTIONS_BG_ALL_ALLY_DESC"] = [=[When enabled, enemy players are also s
 
 |cFFFFFF00Important|r: changes are applied after the next time entering combat.]=]
 L["STRING_OPTIONS_BG_ANCHOR"] = "Battlegrounds:"
-L["STRING_OPTIONS_BG_REMOTE_PARSER"] = "Smart Score"
-L["STRING_OPTIONS_BG_REMOTE_PARSER_DESC"] = "When enabled, the damage and healing are synced with the score board."
+L["STRING_OPTIONS_BG_UNIQUE_SEGMENT"] = "Unique Segment"
+L["STRING_OPTIONS_BG_UNIQUE_SEGMENT_DESC"] = "One segment is created on the begining of the battleground and last until it ends."
 L["STRING_OPTIONS_CAURAS"] = "Collect Auras"
 L["STRING_OPTIONS_CAURAS_DESC"] = [=[Enable capture of:
 
@@ -1588,8 +1589,7 @@ L["STRING_WELCOME_12"] = "Choose how fast the window get updated, you may also e
 --[[ L["STRING_WELCOME_13"] = ""--]] 
 --[[Translation missing --]]
 --[[ L["STRING_WELCOME_14"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_WELCOME_15"] = ""--]] 
+L["STRING_WELCOME_15"] = "Tooltip for the update speed in the welcome window."
 --[[Translation missing --]]
 --[[ L["STRING_WELCOME_16"] = ""--]] 
 --[[Translation missing --]]

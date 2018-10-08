@@ -278,6 +278,10 @@ function _G._detalhes:Start()
 			self.listener:RegisterEvent ("PLAYER_ROLES_ASSIGNED")
 			self.listener:RegisterEvent ("ROLE_CHANGED_INFORM")
 			
+			self.listener:RegisterEvent ("UNIT_FACTION")
+			self.listener:RegisterEvent ("PLAYER_SPECIALIZATION_CHANGED")
+			self.listener:RegisterEvent ("PLAYER_TALENT_UPDATE")
+			
 			self.listener:RegisterEvent ("PLAYER_SPECIALIZATION_CHANGED")
 			
 			--test immersion stuff
@@ -1295,15 +1299,34 @@ function _G._detalhes:Start()
 			if (lower_instance) then
 				lower_instance = _detalhes:GetInstance (lower_instance)
 				if (lower_instance and _detalhes.latest_news_saw ~= _detalhes.userversion) then
-					lower_instance:InstanceAlert (Loc ["STRING_VERSION_UPDATE"], {[[Interface\GossipFrame\AvailableQuestIcon]], 16, 16, false}, 60, {_detalhes.OpenNewsWindow})
+					C_Timer.After (10, function()
+						if (lower_instance:IsEnabled()) then
+							lower_instance:InstanceAlert (Loc ["STRING_VERSION_UPDATE"], {[[Interface\GossipFrame\AvailableQuestIcon]], 16, 16, false}, 60, {_detalhes.OpenNewsWindow}, true)
+							Details:Msg ("A new version has been installed: /details news")
+						end
+					end)
 				end
 			end
 			
 			_detalhes:FillUserCustomSpells()
 			_detalhes:AddDefaultCustomDisplays()
 			
-			-->  show streamer update panel
-			--[
+			if (_detalhes_database.last_realversion and _detalhes_database.last_realversion < 134 and enable_reset_warning) then
+				C_Timer.After (10, function()
+					for ID, instance in _detalhes:ListInstances() do
+						if (instance:IsEnabled()) then
+							local lineHeight = instance.row_info.height
+							local textSize = instance.row_info.font_size
+							if (lineHeight-1 <= textSize) then
+								instance.row_info.height = 21
+								instance.row_info.font_size = 16
+								instance:ChangeSkin()
+							end
+						end
+					end
+				end)
+			end
+			
 			if (_detalhes_database.last_realversion and _detalhes_database.last_realversion < _detalhes.BFACORE and enable_reset_warning) then
 			
 				--> BFA launch
@@ -1825,20 +1848,10 @@ function _G._detalhes:Start()
 		C_Timer.After (2, function()
 			_detalhes:RefreshPlaterIntegration()
 		end)
-	
-	--[=[
-	--> suppress warnings for the first few seconds
-	CLOSE_SCRIPTERRORWINDOW = function()
-		if (ScriptErrorsFrame) then
-			ScriptErrorsFrame:Hide()
-		end
-	end
-	if (ScriptErrorsFrame) then
-		ScriptErrorsFrame:HookScript ("OnShow", CLOSE_SCRIPTERRORWINDOW)
-		ScriptErrorsFrame:Hide()
-	end
-	C_Timer.After (5, function() _G ["CLOSE_SCRIPTERRORWINDOW"] = nil end)
-	--]=]
+
+	--> override the overall data flag on this release only (remove on the release)
+	Details.overall_flag = 0x10
+
 end
 
 _detalhes.AddOnLoadFilesTime = GetTime()

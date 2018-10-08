@@ -1312,13 +1312,13 @@
 			GuildRankCheckBox:SetAsCheckBox()
 			
 			local guild_sync = function()
-			
+				
 				f.RequestedAmount = 0
 				f.DownloadedAmount = 0
 				f.EstimateSize = 0
 				f.DownloadedSize = 0
 				f.SyncStartTime = time()
-			
+				
 				_detalhes.storage:DBGuildSync()
 				f.GuildSyncButton:Disable()
 				
@@ -2286,6 +2286,9 @@
 		if (not _G.DetailsClassColorManager) then
 			gump:CreateSimplePanel (UIParent, 300, 280, Loc ["STRING_OPTIONS_CLASSCOLOR_MODIFY"], "DetailsClassColorManager")
 			local panel = _G.DetailsClassColorManager
+			
+			_detalhes.gump:ApplyStandardBackdrop (panel)
+			
 			local upper_panel = CreateFrame ("frame", nil, panel)
 			upper_panel:SetAllPoints (panel)
 			upper_panel:SetFrameLevel (panel:GetFrameLevel()+3)
@@ -2371,8 +2374,9 @@
 	function _detalhes:OpenBookmarkConfig()
 	
 		if (not _G.DetailsBookmarkManager) then
-			gump:CreateSimplePanel (UIParent, 300, 480, Loc ["STRING_OPTIONS_MANAGE_BOOKMARKS"], "DetailsBookmarkManager")
+			gump:CreateSimplePanel (UIParent, 465, 460, Loc ["STRING_OPTIONS_MANAGE_BOOKMARKS"], "DetailsBookmarkManager")
 			local panel = _G.DetailsBookmarkManager
+			_detalhes.gump:ApplyStandardBackdrop (panel)
 			panel.blocks = {}
 			
 			local clear_func = function (self, button, id)
@@ -2430,18 +2434,19 @@
 				else
 					--par
 					local o = i-1
-					clear:SetPoint (150, (( o*10 ) * -1) - 35) --right
+					clear:SetPoint (250, (( o*10 ) * -1) - 35) --right
 				end
 			
 				local set = gump:CreateButton (panel, set_att, 16, 16, nil, i)
 				set:SetPoint ("left", clear, "right")
-				set:SetPoint ("right", clear, "right", 110, 0)
+				set:SetPoint ("right", clear, "right", 180, 0)
 				set:SetBackdrop (button_backdrop)
 				set:SetBackdropColor (0, 0, 0, 0.5)
 				set:SetHook ("OnEnter", set_onenter)
 				set:SetHook ("OnLeave", set_onleave)
 			
-				set:InstallCustomTexture (nil, nil, nil, nil, true)
+				--set:InstallCustomTexture (nil, nil, nil, nil, true)
+				set:SetTemplate (gump:GetTemplate ("button", "OPTIONS_BUTTON_TEMPLATE"))
 				
 				local bg_texture = gump:CreateImage (set, [[Interface\AddOns\Details\images\bar_skyline]], 135, 30, "background")
 				bg_texture:SetAllPoints()
@@ -2453,11 +2458,12 @@
 				local label = gump:CreateLabel (set, "")
 				label:SetPoint ("left", icon, "right", 2, 0)
 
-				tinsert (panel.blocks, {icon = icon, label = label, bg = set.bg})
+				tinsert (panel.blocks, {icon = icon, label = label, bg = set.bg, button = set})
 			end
 			
 			local normal_coords = {0, 1, 0, 1}
 			local unknown_coords = {157/512, 206/512, 39/512,  89/512}
+			
 			function panel:Refresh()
 				local bookmarks = _detalhes.switch.table
 				
@@ -2486,11 +2492,14 @@
 							this_block.icon.texcoord = _detalhes.sub_atributos [bookmark.atributo].icones [bookmark.sub_atributo] [2]
 							this_block.bg:SetVertexColor (.4, .4, .4, .6)
 						end
+						
+						this_block.button:SetAlpha (1)
 					else
 						this_block.label.text = "-- x -- x --"
 						this_block.icon.texture = [[Interface\AddOns\Details\images\icons]]
 						this_block.icon.texcoord = unknown_coords
-						this_block.bg:SetVertexColor (.4, .1, .1, .12)
+						this_block.bg:SetVertexColor (.1, .1, .1, .12)
+						this_block.button:SetAlpha (0.3)
 					end
 				end
 			end
@@ -3951,6 +3960,10 @@
 						
 						if (not value) then
 							Details:Msg ("a /reload might be needed to disable this setting.")
+						else
+							if (Plater) then
+								Plater.RefreshDBUpvalues()
+							end
 						end
 					end,
 					name = "Show Real Time Dps",
@@ -4059,6 +4072,10 @@
 						
 						if (not value) then
 							Details:Msg ("a /reload might be needed to disable this setting.")
+						else
+							if (Plater) then
+								Plater.RefreshDBUpvalues()
+							end
 						end
 					end,
 					name = "Show Real Time Dps (From You)",
@@ -4167,6 +4184,10 @@
 						
 						if (not value) then
 							Details:Msg ("a /reload might be needed to disable this setting.")
+						else
+							if (Plater) then
+								Plater.RefreshDBUpvalues()
+							end
 						end
 					end,
 					name = "Show Total Damage Taken",
@@ -6533,3 +6554,270 @@ function _detalhes:FormatBackground (f)
 	f.__background:SetHorizTile (true)
 	f.__background:SetAllPoints()
 end
+
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--> dump table frame
+
+function Details:DumpTable (t)
+	return Details:Dump (t)
+end
+
+function Details:Dump (t)
+	if (not DetailsDumpFrame) then
+		DetailsDumpFrame = DetailsFramework:CreateSimplePanel (UIParent)
+		DetailsDumpFrame:SetSize (700, 600)
+		DetailsDumpFrame:SetTitle ("Details! Dump Table [|cFFFF3333Ready Only|r]")
+		
+		local text_editor = DetailsFramework:NewSpecialLuaEditorEntry (DetailsDumpFrame, 680, 560, "Editbox", "$parentEntry", true)
+		text_editor:SetPoint ("topleft", DetailsDumpFrame, "topleft", 10, -30)
+		
+		text_editor.scroll:SetBackdrop (nil)
+		text_editor.editbox:SetBackdrop (nil)
+		text_editor:SetBackdrop (nil)
+		
+		DetailsFramework:ReskinSlider (text_editor.scroll)
+		
+		if (not text_editor.__background) then
+			text_editor.__background = text_editor:CreateTexture (nil, "background")
+		end
+		
+		text_editor:SetBackdrop ({edgeFile = [[Interface\Buttons\WHITE8X8]], edgeSize = 1})
+		text_editor:SetBackdropBorderColor (0, 0, 0, 1)
+		
+		text_editor.__background:SetColorTexture (0.2317647, 0.2317647, 0.2317647)
+		text_editor.__background:SetVertexColor (0.27, 0.27, 0.27)
+		text_editor.__background:SetAlpha (0.8)
+		text_editor.__background:SetVertTile (true)
+		text_editor.__background:SetHorizTile (true)
+		text_editor.__background:SetAllPoints()	
+	end
+	
+	t = t or {}
+	local s = Details.table.dump (t)
+	DetailsDumpFrame.Editbox:SetText (s)
+	DetailsDumpFrame:Show()
+end
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--> damage scroll
+
+function Details:ScrollDamage()
+	if (not DetailsScrollDamage) then
+		local DF = DetailsFramework
+		DetailsScrollDamage = DetailsFramework:CreateSimplePanel (UIParent)
+		DetailsScrollDamage:SetSize (707, 505)
+		DetailsScrollDamage:SetTitle ("Details! Scroll Damage")
+		DetailsScrollDamage.Data = {}
+		DetailsScrollDamage:ClearAllPoints()
+		DetailsScrollDamage:SetPoint ("left", UIParent, "left", 10, 0)
+		DetailsScrollDamage:Hide()
+		
+		local scroll_width = 675
+		local scroll_height = 450
+		local scroll_lines = 21
+		local scroll_line_height = 20
+		
+		local backdrop_color = {.2, .2, .2, 0.2}
+		local backdrop_color_on_enter = {.8, .8, .8, 0.4}
+		local backdrop_color_is_critical = {.4, .4, .2, 0.2}
+		local backdrop_color_is_critical_on_enter = {1, 1, .8, 0.4}
+		
+		local y = -15
+		local headerY = y - 15
+		local scrollY = headerY - 20
+	
+		--header
+		local headerTable = {
+			{text = "Icon", width = 32},
+			{text = "Spell Name", width = 180},
+			{text = "Amount", width = 80},
+			
+			{text = "Time", width = 80},
+			{text = "Token", width = 130},
+			{text = "Spell ID", width = 80},
+			{text = "School", width = 80},
+		}
+		local headerOptions = {
+			padding = 2,
+		}
+		
+		DetailsScrollDamage.Header = DetailsFramework:CreateHeader (DetailsScrollDamage, headerTable, headerOptions)
+		DetailsScrollDamage.Header:SetPoint ("topleft", DetailsScrollDamage, "topleft", 5, headerY)
+		
+		local scroll_refresh = function (self, data, offset, total_lines)
+			
+			local ToK = _detalhes:GetCurrentToKFunction()
+			
+			for i = 1, total_lines do
+				local index = i + offset
+				local spellTable = data [index]
+				
+				if (spellTable) then
+				
+					local line = self:GetLine (i)
+					local time, token, hidding, sourceSerial, sourceName, sourceFlag, sourceFlag2, targetSerial, targetName, targetFlag, targetFlag2, spellID, spellName, spellType, amount, overKill, school, resisted, blocked, absorbed, isCritical = unpack (spellTable)
+					
+					local spellName, _, spellIcon
+					
+					if (token ~= "SWING_DAMAGE") then
+						spellName, _, spellIcon = GetSpellInfo (spellID)
+					else
+						spellName, _, spellIcon = GetSpellInfo (1)
+					end
+					
+					line.SpellID = spellID
+					line.IsCritical = isCritical
+					
+					if (isCritical) then
+						line:SetBackdropColor (unpack (backdrop_color_is_critical))
+					else
+						line:SetBackdropColor (unpack (backdrop_color))
+					end
+					
+					if (spellName) then
+						line.Icon:SetTexture (spellIcon)
+						line.Icon:SetTexCoord (.1, .9, .1, .9)
+						
+						line.DamageText.text = isCritical and "|cFFFFFF00" .. ToK (_, amount) or ToK (_, amount)
+						line.TimeText.text = format ("%.4f", time - DetailsScrollDamage.Data.Started)
+						line.TokenText.text = token:gsub ("SPELL_", "")
+						line.SchoolText.text = _detalhes:GetSpellSchoolFormatedName (school)
+						line.SpellIDText.text = spellID
+						line.SpellNameText.text = spellName
+					else
+						line:Hide()
+					end
+				end
+			end
+		end		
+		
+		local lineOnEnter = function (self)
+			if (self.IsCritical) then
+				self:SetBackdropColor (unpack (backdrop_color_is_critical_on_enter))
+			else
+				self:SetBackdropColor (unpack (backdrop_color_on_enter))
+			end
+			
+			if (self.SpellID) then
+				GameTooltip:SetOwner (self, "ANCHOR_TOPLEFT")
+				GameTooltip:SetSpellByID (self.SpellID)
+				GameTooltip:AddLine (" ")
+				GameTooltip:Show()
+			end
+		end
+		
+		local lineOnLeave = function (self)
+			if (self.IsCritical) then
+				self:SetBackdropColor (unpack (backdrop_color_is_critical))
+			else
+				self:SetBackdropColor (unpack (backdrop_color))
+			end
+			
+			GameTooltip:Hide()
+		end
+		
+		local scroll_createline = function (self, index)
+		
+			local line = CreateFrame ("button", "$parentLine" .. index, self)
+			line:SetPoint ("topleft", self, "topleft", 1, -((index-1)*(scroll_line_height+1)) - 1)
+			line:SetSize (scroll_width - 2, scroll_line_height)
+			
+			line:SetBackdrop ({bgFile = [[Interface\Tooltips\UI-Tooltip-Background]], tileSize = 64, tile = true})
+			line:SetBackdropColor (unpack (backdrop_color))
+			
+			DF:Mixin (line, DF.HeaderFunctions)
+			
+			line:SetScript ("OnEnter", lineOnEnter)
+			line:SetScript ("OnLeave", lineOnLeave)
+			
+			--icon
+			local icon = line:CreateTexture ("$parentSpellIcon", "overlay")
+			icon:SetSize (scroll_line_height - 2, scroll_line_height - 2)
+			
+			--spellname
+			local spellNameText = DF:CreateLabel (line)
+			
+			--damage
+			local damageText = DF:CreateLabel (line)
+			
+			--time
+			local timeText = DF:CreateLabel (line)
+			
+			--token
+			local tokenText = DF:CreateLabel (line)
+			
+			--spell ID
+			local spellIDText = DF:CreateLabel (line)
+			
+			--school
+			local schoolText = DF:CreateLabel (line)
+
+			line:AddFrameToHeaderAlignment (icon)
+			line:AddFrameToHeaderAlignment (spellNameText)
+			line:AddFrameToHeaderAlignment (damageText)
+			line:AddFrameToHeaderAlignment (timeText)
+			line:AddFrameToHeaderAlignment (tokenText)
+			line:AddFrameToHeaderAlignment (spellIDText)
+			line:AddFrameToHeaderAlignment (schoolText)
+			
+			line:AlignWithHeader (DetailsScrollDamage.Header, "left")
+			
+			line.Icon = icon
+			line.DamageText = damageText
+			line.TimeText = timeText
+			line.TokenText = tokenText
+			line.SchoolText = schoolText
+			line.SpellIDText = spellIDText
+			line.SpellNameText = spellNameText
+
+			return line
+		end
+		
+		local damageScroll = DF:CreateScrollBox (DetailsScrollDamage, "$parentSpellScroll", scroll_refresh, DetailsScrollDamage.Data, scroll_width, scroll_height, scroll_lines, scroll_line_height)
+		DF:ReskinSlider (damageScroll)
+		damageScroll:SetPoint ("topleft", DetailsScrollDamage, "topleft", 5, scrollY)
+		
+		--create lines
+		for i = 1, scroll_lines do 
+			damageScroll:CreateLine (scroll_createline)
+		end
+		
+		local combatLogReader = CreateFrame ("frame")
+		local playerSerial = UnitGUID ("player")
+		
+		combatLogReader:SetScript ("OnEvent", function (self)
+			local timew, token, hidding, sourceSerial, sourceName, sourceFlag, sourceFlag2, targetSerial, targetName, targetFlag, targetFlag2, spellID, spellName, spellType, amount, overKill, school, resisted, blocked, absorbed, isCritical = CombatLogGetCurrentEventInfo()
+			if (sourceSerial == playerSerial) then
+				if (token == "SPELL_DAMAGE" or token == "SPELL_PERIODIC_DAMAGE" or token == "RANGE_DAMAGE" or token == "DAMAGE_SHIELD") then
+					if (not DetailsScrollDamage.Data.Started) then
+						DetailsScrollDamage.Data.Started = time()
+					end
+					tinsert (DetailsScrollDamage.Data, 1, {timew, token, hidding, sourceSerial, sourceName, sourceFlag, sourceFlag2, targetSerial, targetName, targetFlag, targetFlag2, spellID, spellName, spellType, amount, overKill or 0, school or 1, resisted or 0, blocked or 0, absorbed or 0, isCritical})
+					damageScroll:Refresh()
+					
+				elseif (token == "SWING_DAMAGE") then
+				--	amount, overkill, school, resisted, blocked, absorbed, critical, glacing, crushing, isoffhand = spellID, spellName, spellType, amount, overKill, school, resisted, blocked, absorbed, isCritical
+				--	tinsert (DetailsScrollDamage.Data, 1, {timew, token, hidding, sourceSerial, sourceName, sourceFlag, sourceFlag2, targetSerial, targetName, targetFlag, targetFlag2, spellID, spellName, spellType, amount, overKill, school, resisted, blocked, absorbed, isCritical})
+				--	damageScroll:Refresh()
+				end
+			end
+		end)
+
+		DetailsScrollDamage:SetScript ("OnShow", function()
+			wipe (DetailsScrollDamage.Data)
+			damageScroll:Refresh()
+			combatLogReader:RegisterEvent ("COMBAT_LOG_EVENT_UNFILTERED")
+		end)
+
+		DetailsScrollDamage:SetScript ("OnHide", function()
+			combatLogReader:UnregisterEvent ("COMBAT_LOG_EVENT_UNFILTERED")
+		end)
+	end
+
+	DetailsScrollDamage:Show()
+end
+

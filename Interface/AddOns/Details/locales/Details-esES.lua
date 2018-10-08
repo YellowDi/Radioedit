@@ -157,9 +157,9 @@ L["STRING_CUSTOM_FUNC_INVALID"] = "El script personalizato no es valido y no pue
 L["STRING_CUSTOM_HEALTHSTONE_DEFAULT"] = "Piedra de salud usado"
 L["STRING_CUSTOM_HEALTHSTONE_DEFAULT_DESC"] = "Mostrar los miembres del grupo o banda que utilizan una piedra de salud mientras del encuentro."
 L["STRING_CUSTOM_ICON"] = "Icono:"
-L["STRING_CUSTOM_IMPORT"] = "Importir"
-L["STRING_CUSTOM_IMPORT_ALERT"] = "Visualización se ha cargado. Hacer clic 'Importir' para confirmar."
-L["STRING_CUSTOM_IMPORT_BUTTON"] = "Importir"
+L["STRING_CUSTOM_IMPORT"] = "Importar"
+L["STRING_CUSTOM_IMPORT_ALERT"] = "Visualización cargada, clic 'Importar' para confirmar."
+L["STRING_CUSTOM_IMPORT_BUTTON"] = "Importar"
 L["STRING_CUSTOM_IMPORT_ERROR"] = "Importación fracasó -- cadena no valido."
 L["STRING_CUSTOM_IMPORTED"] = "La visualización se ha importado con éxito."
 L["STRING_CUSTOM_LONGNAME"] = "El nombre no puede tener más de 32 caracteres."
@@ -202,6 +202,8 @@ L["STRING_DEFENSES"] = "Defensas"
 --[[Translation missing --]]
 --[[ L["STRING_DESCENDING"] = ""--]] 
 L["STRING_DETACH_DESC"] = "Desagrupar ventanas"
+--[[Translation missing --]]
+--[[ L["STRING_DISCARD"] = ""--]] 
 L["STRING_DISPELLED"] = "Bufos/debufos disipados"
 L["STRING_DODGE"] = "Esquivado"
 L["STRING_DOT"] = " (DoT)"
@@ -649,9 +651,9 @@ L["STRING_OPTIONS_BARSTART_DESC"] = "La barra comenza al borde derecho del icono
 --[[Translation missing --]]
 --[[ L["STRING_OPTIONS_BG_ANCHOR"] = ""--]] 
 --[[Translation missing --]]
---[[ L["STRING_OPTIONS_BG_REMOTE_PARSER"] = ""--]] 
+--[[ L["STRING_OPTIONS_BG_UNIQUE_SEGMENT"] = ""--]] 
 --[[Translation missing --]]
---[[ L["STRING_OPTIONS_BG_REMOTE_PARSER_DESC"] = ""--]] 
+--[[ L["STRING_OPTIONS_BG_UNIQUE_SEGMENT_DESC"] = ""--]] 
 L["STRING_OPTIONS_CAURAS"] = "Recoger auras"
 L["STRING_OPTIONS_CAURAS_DESC"] = [=[Activar la recogida de:
 
@@ -697,7 +699,7 @@ L["STRING_OPTIONS_CHART_EDIT"] = "Editar código"
 L["STRING_OPTIONS_CHART_EXPORT"] = "Exportir"
 L["STRING_OPTIONS_CHART_FUNCERROR"] = "La función no es válida."
 L["STRING_OPTIONS_CHART_ICON"] = "Icono"
-L["STRING_OPTIONS_CHART_IMPORT"] = "Importir"
+L["STRING_OPTIONS_CHART_IMPORT"] = "Importar"
 L["STRING_OPTIONS_CHART_IMPORTERROR"] = "Los datos de importación no son válidos."
 L["STRING_OPTIONS_CHART_NAME"] = "Nombre"
 L["STRING_OPTIONS_CHART_NAMEERROR"] = "El nombre no es válido."
@@ -1281,7 +1283,7 @@ L["STRING_OPTIONS_SAVELOAD_ERASE_DESC"] = "Eliminar permanentemente un skin que 
 L["STRING_OPTIONS_SAVELOAD_EXPORT"] = "Exportir"
 L["STRING_OPTIONS_SAVELOAD_EXPORT_COPY"] = "Pulsar las teclas CTRL + C"
 L["STRING_OPTIONS_SAVELOAD_EXPORT_DESC"] = "Guardar el skin en forma de texto."
-L["STRING_OPTIONS_SAVELOAD_IMPORT"] = "Importir"
+L["STRING_OPTIONS_SAVELOAD_IMPORT"] = "Importar"
 L["STRING_OPTIONS_SAVELOAD_IMPORT_DESC"] = "Importar una skin en forma de texto."
 L["STRING_OPTIONS_SAVELOAD_IMPORT_OKEY"] = "Skin se ha importado con éxito."
 L["STRING_OPTIONS_SAVELOAD_LOAD"] = "Aplicar"

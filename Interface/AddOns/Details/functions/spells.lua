@@ -1,5 +1,5 @@
 do
-
+--doq
 	local _detalhes = 		_G._detalhes
 	
 	_detalhes.PotionList = {
@@ -17,12 +17,12 @@ do
 --		[175821] = true, --draenic pure rage potion
 
 		--> Legion
-		[188028] = true, --Potion of the Old War
-		[188027] = true, --Potion of Deadly Grace
-		[188029] = true, --Unbending Potion
-		[188017] = true, --Ancient Mana Potion
-		[188030] = true, --Leytorrent Potion
-		[229206] = true, --Potion of Prolongued Power
+--		[188028] = true, --Potion of the Old War
+--		[188027] = true, --Potion of Deadly Grace
+--		[188029] = true, --Unbending Potion
+--		[188017] = true, --Ancient Mana Potion
+--		[188030] = true, --Leytorrent Potion
+--		[229206] = true, --Potion of Prolongued Power
 		
 		--mana and heal potions
 --		[188016] = true, --Ancient Healing Potion
@@ -34,6 +34,11 @@ do
 --		[188034] = true, --Flask of the Countless Armies
 --		[188035] = true, --Flask of Ten Thousand Scars
 	}
+	
+	--import potion list from the framework
+	for spellID, _ in pairs (DetailsFramework.PotionIDs) do
+		_detalhes.PotionList [spellID] = true
+	end
 	
 	_detalhes.SpecSpellList = { --~spec
 	
@@ -103,25 +108,22 @@ do
 		[56222] = 250, -- Dark Command
 		
 		-- Balance Druid:
-		[152221] = 102, -- Stellar Flare
-		[88747] = 102, -- Wild Mushroom
-		[33605] = 102, -- Astral Showers
 		[48505] = 102, -- Starfall
 		[112071] = 102, -- Celestial Alignment
 		[78675] = 102, -- Solar Beam
 		[93399] = 102, -- Shooting Stars
-		[78674] = 102, -- Starsurge
 		[2912] = 102, -- Starfire
+		--[78674] = 102, -- Starsurge
 
 		-- Feral Druid:
 		[171746] = 103, -- Claws of Shirvallah
 		[22570] = 103, -- Maim
 		[16974] = 103, -- Predatory Swiftness
-		--[106785] = 103, -- Swipe
-		--[1079] = 103, -- Rip
 		[52610] = 103, -- Savage Roar
 		[5217] = 103, -- Tiger's Fury
 		--[1822] = 103, -- Rake
+		--[106785] = 103, -- Swipe
+		--[1079] = 103, -- Rip
 		
 		-- Guardian Druid:
 		[155835] = 104, -- Bristling Fur
@@ -134,15 +136,15 @@ do
 		[62606] = 104, -- Savage Defense
 		
 		-- Restoration Druid:
-
-		[145518] = 105, -- Genesis --no exists
 		[145205] = 105, -- Wild Mushroom
-		[48438] = 105, -- Wild Growth
 		[740] = 105, -- Tranquility
 		[102342] = 105, -- Ironbark
 		[33763] = 105, -- Lifebloom
 		[88423] = 105, -- Nature's Cure
-		[18562] = 105, -- Swiftmend
+		[145205] = 105, --Efflorescence
+		--[145518] = 105, -- Genesis --removed
+		--[48438] = 105, -- Wild Growth --talent for other specs
+		--[18562] = 105, -- Swiftmend --talent for other specs
 		
 		-- Beast Mastery Hunter:
 		[19574] = 253, -- Bestial Wrath
@@ -269,9 +271,6 @@ do
 		[184575] = 70, --Blade of Justice
 
 		-- Discipline Priest:
-		--[109964] = 256, -- Spirit Shell
-		--[47753] = 256, -- Divine Aegis
-		--[132157] = 256, -- Holy Nova
 		[152118] = 256, -- Clarity of Will
 		[62618] = 256, -- Power Word: Barrier
 		[194509] = 256, -- Power Word: Radiance
@@ -284,7 +283,6 @@ do
 		[200829] = 256, -- Plea
 		[47536] = 256, -- Rapture
 		[204197] = 256, -- Purge the Wicked
-
 		
 		-- Holy Priest:
 		[155245] = 257, -- Clarity of Purpose
@@ -296,21 +294,16 @@ do
 		[2050] = 257, -- Holy Word: Serenity
 		[34861] = 257, -- Holy Word: Sanctify
 		[47788] = 257, -- Guardian Spirit
-		[132157] = 257, -- Holy Nova
-		--[126135] = 257, -- Lightwell
 		[139] = 257, -- Renew
+		[2061] = 257, --Flash Heal
+		[2060] = 257, --Heal
 
-	
 		-- Shadow Priest:
-		--[127632] = 258, -- Cascade
-		--[122121] = 258, -- Divine Star
-		--[120644] = 258, -- Halo
 		[15286] = 258, -- Vampiric Embrace
 		[32379] = 258, -- Shadow Word: Death
 		[73510] = 258, -- Mind Spike
 		[78203] = 258, -- Shadowy Apparitions
 		[34914] = 258, -- Vampiric Touch
-		--[2944] = 258, -- Devouring Plague
 		[8092] = 258, -- Mind Blast
 		[15407] = 258, -- Mind Flay
 		[228266] = 258, -- Void Bolt

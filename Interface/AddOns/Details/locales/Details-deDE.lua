@@ -176,6 +176,8 @@ L["STRING_DAMAGE_TAKEN_FROM2"] = "Schaden zugefügt mit"
 L["STRING_DEFENSES"] = "Verteidigung "
 L["STRING_DESCENDING"] = "Absteigend"
 L["STRING_DETACH_DESC"] = "Löst die Fenstergruppe auf"
+--[[Translation missing --]]
+--[[ L["STRING_DISCARD"] = ""--]] 
 L["STRING_DISPELLED"] = "Entfernte Stärkungs-/Schwächungszauber"
 L["STRING_DODGE"] = "Ausweichen"
 L["STRING_DOT"] = "(DoT)"
@@ -264,8 +266,7 @@ L["STRING_GUILDDAMAGERANK_ROLE"] = "Rolle"
 L["STRING_GUILDDAMAGERANK_SHOWHISTORY"] = "Verlauf zeigen"
 L["STRING_GUILDDAMAGERANK_SHOWRANK"] = "Gildenbank zeigen"
 L["STRING_GUILDDAMAGERANK_SYNCBUTTONTEXT"] = "Mit Gilde synchronisieren"
---[[Translation missing --]]
---[[ L["STRING_GUILDDAMAGERANK_TUTORIAL_DESC"] = ""--]] 
+L["STRING_GUILDDAMAGERANK_TUTORIAL_DESC"] = "Details! speichere den Schaden und die Heilung für jeden Boss, den du mit deiner Gilde triffst. Durchsuche den Verlauf, indem du das Kästchen'|cFFFFFF00Show History|r' anklickst, die Ergebnisse für alle Kämpfe werden angezeigt.\\n Durch Auswahl von '|cFFFFFF00Show Guild Rank|r' werden die Top-Ergebnisse für den ausgewählten Boss angezeigt.\\n\\n\\nWenn Sie dieses Tool zum ersten Mal verwenden oder wenn Sie einen Tag des Schlachtzuges verloren haben, klicken Sie auf die Schaltfläche '|cFFFFFFFFFF00Sync With Guild|r'."
 L["STRING_GUILDDAMAGERANK_WINDOWALERT"] = "Boss besiegt! Rangliste zeigen"
 L["STRING_HEAL"] = "Heilung"
 L["STRING_HEAL_ABSORBED"] = "Absorbierte Heilung"
@@ -510,8 +511,8 @@ L["STRING_OPTIONS_BG_ALL_ALLY_DESC"] = [=[Aktiviert: Zeigt auch gegnerische Spie
 
 |cFFFFFF00Wichtig|r: Änderungen werden erst beim nächsten Kampf übernommen.]=]
 L["STRING_OPTIONS_BG_ANCHOR"] = "Schlachtfelder:"
-L["STRING_OPTIONS_BG_REMOTE_PARSER"] = "Punktezahl"
-L["STRING_OPTIONS_BG_REMOTE_PARSER_DESC"] = "Aktiviert: Schaden und Heilung werden mit der Punktetafel synchronisiert."
+L["STRING_OPTIONS_BG_UNIQUE_SEGMENT"] = "Einzigartiges Segment"
+L["STRING_OPTIONS_BG_UNIQUE_SEGMENT_DESC"] = "Ein Segment wird beim Start eines Schlachtfeldes erstellt und besteht bis das Schlachtfeld endet."
 L["STRING_OPTIONS_CAURAS"] = "Auren erfassen"
 L["STRING_OPTIONS_CAURAS_DESC"] = [=[Aktiviert die Erfassung von:
 
@@ -599,7 +600,7 @@ L["STRING_OPTIONS_COMBAT_ALPHA_3"] = "Außerhalb eines Kampfes"
 L["STRING_OPTIONS_COMBAT_ALPHA_4"] = "Außerhalb einer Gruppe"
 L["STRING_OPTIONS_COMBAT_ALPHA_5"] = "Außerhalb einer Instanz"
 L["STRING_OPTIONS_COMBAT_ALPHA_6"] = "Innerhalb einer Instanz"
-L["STRING_OPTIONS_COMBAT_ALPHA_7"] = "Schlachtzug nachbereiten"
+L["STRING_OPTIONS_COMBAT_ALPHA_7"] = "Im Schlachtzug"
 L["STRING_OPTIONS_COMBAT_ALPHA_DESC"] = [=[Wähle, wie ein Kampf die Fenstertransparenz beeinflussen soll.
 
 |cFFFFFF00Keine Änderung|r: Transparenz unverändert.
@@ -653,7 +654,7 @@ L["STRING_OPTIONS_DEATHLIMIT_DESC"] = [=[Stelle die Anzahl an Ereignissen für d
 
 |cFFFFFF00Wichtig|r: Wird nach der Änderung nur auf neue Tode angewendet.]=]
 L["STRING_OPTIONS_DEATHLOG_MINHEALING"] = "Mindestheilung für Todesprotokoll"
-L["STRING_OPTIONS_DEATHLOG_MINHEALING_DESC"] = "|cFFFFFF00Tip|r: Rechtsklicken um einen manuellen Wert einzugeben."
+L["STRING_OPTIONS_DEATHLOG_MINHEALING_DESC"] = "|cFFFFFF00Tip|r: Rechtsklicken, um einen manuellen Wert einzugeben."
 L["STRING_OPTIONS_DESATURATE_MENU"] = "Entfärbt"
 L["STRING_OPTIONS_DESATURATE_MENU_DESC"] = "Aktiviert: Alle Symbole der Werkzeugleiste werden schwarz-weiß."
 L["STRING_OPTIONS_DISABLE_ALLDISPLAYSWINDOW"] = "Das Menü 'Alle Anzeigen' deaktivieren"

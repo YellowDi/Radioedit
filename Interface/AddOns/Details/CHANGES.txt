@@ -1,5 +1,107 @@
-changeset:   726:7ca9550a402a
+changeset:   743:16c8b07b352a
 tag:         tip
+user:        Tercio
+date:        Tue Sep 11 22:19:59 2018 -0300
+summary:     - Added macro text box in Encounter Plugin.
+
+
+changeset:   742:882d9fa124cf
+user:        Tercio
+date:        Tue Sep 11 19:57:17 2018 -0300
+summary:     - Added a new panel to open the Chart after a mythic dungeon.
+
+
+changeset:   741:4d105898bbc1
+user:        Tercio
+date:        Mon Sep 10 21:17:53 2018 -0300
+summary:     - Details! is ready for Uldir mythic raiding!.
+
+
+changeset:   740:aa2d4ac294e0
+user:        Tercio
+date:        Mon Sep 10 11:20:00 2018 -0300
+summary:     - Removed RaiderIO integration.
+
+
+changeset:   739:6af1603684c5
+user:        Tercio
+date:        Tue Aug 28 13:03:08 2018 -0300
+summary:     - Fixed custom display 'Dynamic Overall Data'.
+
+
+changeset:   738:253e14dca82e
+user:        Tercio
+date:        Sat Aug 25 20:15:31 2018 -0300
+summary:     - Fixed spell container :ListActors() API.
+
+
+changeset:   737:84218026dc7b
+user:        Tercio
+date:        Fri Aug 24 22:41:35 2018 -0300
+summary:     - Cleanup on the item level tracker.
+
+
+changeset:   736:1fdf66defdcb
+user:        Tercio
+date:        Wed Aug 22 12:22:19 2018 -0300
+summary:     - Workaround for Hunter's Incendiary Ammunition bug.
+
+
+changeset:   735:4fcaff920195
+user:        Tercio
+date:        Tue Aug 21 18:14:42 2018 -0300
+summary:     - Parser cleanup.
+
+
+changeset:   734:28929636d0cd
+user:        Tercio
+date:        Mon Aug 20 21:29:47 2018 -0300
+summary:     - Fixed the latest raid check update.
+
+
+changeset:   733:0c3d5411181c
+user:        Tercio
+date:        Sun Aug 19 15:27:19 2018 -0300
+summary:     - Updated flask and food list to BFA.
+
+
+changeset:   732:0fe5b00bc175
+user:        Tercio
+date:        Thu Aug 16 22:05:10 2018 -0300
+summary:     - bug fixes.
+
+
+changeset:   731:dfe710f3192f
+user:        Tercio
+date:        Mon Aug 13 17:06:46 2018 -0300
+summary:     - Fixed an issue with Alliance or Horde icons showing at random in player bars.
+
+
+changeset:   730:a4e4991a7f8d
+user:        Tercio
+date:        Mon Aug 13 17:01:58 2018 -0300
+summary:     - Fixed an issue with Alliance or Horde icons showing at random in player bars.
+
+
+changeset:   729:41c0431ad5c8
+user:        Tercio
+date:        Thu Aug 09 11:55:18 2018 -0300
+summary:     - Fixed mobs showing when in Standard mode.
+
+
+changeset:   728:5c29a7092020
+user:        Tercio
+date:        Thu Aug 09 00:39:13 2018 -0300
+summary:     - Hotfix an initialization issue caused by a stealth patch in the client addon API.
+
+
+changeset:   727:3f1ec67b4eeb
+user:        Tercio
+date:        Tue Aug 07 15:55:19 2018 -0300
+summary:     - Death Knight: Epidemic, Scourge Strike and Howling Blast now has a better description on the spell name.
+
+
+changeset:   726:7ca9550a402a
 user:        Tercio
 date:        Mon Jul 30 14:02:20 2018 -0300
 summary:     - Framework update.

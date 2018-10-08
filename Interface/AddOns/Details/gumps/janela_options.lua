@@ -188,6 +188,9 @@ function _detalhes:OpenOptionsWindow (instance, no_reopen, section)
 		
 		window.using_skin = 1
 		
+		local scaleBar = Details.gump:CreateScaleBar (DetailsOptionsWindow, Details.options_window)
+		DetailsOptionsWindow:SetScale (Details.options_window.scale)
+		
 		DetailsOptionsWindow.instance = instance
 		DetailsOptionsWindow.loading_settings = true
 		
@@ -4301,12 +4304,18 @@ function window:CreateFrame1()
 			_detalhes:SelectNumericalSystem (systemNumber)
 		end
 		
-
-
+		local asian1K, asian10K, asian1B = _detalhes.gump:GetAsianNumberSymbols()
+		local asianNumerals = {value = 2, label = Loc ["STRING_NUMERALSYSTEM_MYRIAD_EASTASIA"], desc = "1" .. asian1K .. " = 1.000 \n1" .. asian10K .. " = 10.000 \n10" .. asian10K .. " = 100.000 \n100" .. asian10K .. " = 1.000.000", onclick = onSelectNumeralSystem, icon = icon, iconcolor = iconcolor, iconsize = iconsize}
+		
+		--> if region is western it'll be using Korean symbols, set a font on the dropdown so it won't show ?????
+		local clientRegion = _detalhes.gump:GetClientRegion()
+		if (clientRegion == "western" or clientRegion == "russia") then
+			asianNumerals.descfont = _detalhes.gump:GetBestFontForLanguage ("koKR")
+		end
 
 		local numeralSystems = {
 			{value = 1, label = Loc ["STRING_NUMERALSYSTEM_ARABIC_WESTERN"], desc = "1K = 1.000 \n10K = 10.000 \n100K = 100.000 \n1M = 1.000.000", onclick = onSelectNumeralSystem, icon = icon, iconcolor = iconcolor, iconsize = iconsize},
-			{value = 2, label = Loc ["STRING_NUMERALSYSTEM_MYRIAD_EASTASIA"], desc = "1천 = 1.000 \n1만 = 10.000 \n10만 = 100.000 \n100만 = 1.000.000", onclick = onSelectNumeralSystem, icon = icon, iconcolor = iconcolor, iconsize = iconsize},
+			asianNumerals
 		}
 		
 		local buildNumeralSystemsMenu = function()
@@ -4366,7 +4375,7 @@ function window:CreateFrame1()
 		
 		
 		--lock unlock
-			g:NewButton (frame1, _, "$parentLockButton", "LockButton", window.buttons_width, window.buttons_height, _detalhes.lock_instance_function, nil, nil, nil, Loc ["STRING_OPTIONS_WC_LOCK"], 1, options_button_template)
+			g:NewButton (frame1, _, "$parentLockButton", "LockButton", window.buttons_width, window.buttons_height, _detalhes.lock_instance_function, true, true, nil, Loc ["STRING_OPTIONS_WC_LOCK"], 1, options_button_template)
 			--frame1.LockButton:InstallCustomTexture (nil, nil, nil, nil, nil, true)
 
 			window:CreateLineBackground2 (frame1, "LockButton", "LockButton", Loc ["STRING_OPTIONS_WC_LOCK_DESC"], nil, {1, 0.8, 0}, button_color_rgb)
@@ -4842,14 +4851,14 @@ function window:CreateFrame2()
 
 	--> battleground
 		--> remote parser
-		g:NewLabel (frame2, _, "$parentRemoteParserLabel", "RemoteParserLabel", Loc ["STRING_OPTIONS_BG_REMOTE_PARSER"], "GameFontHighlightLeft")
+		g:NewLabel (frame2, _, "$parentRemoteParserLabel", "RemoteParserLabel", Loc ["STRING_OPTIONS_BG_UNIQUE_SEGMENT"], "GameFontHighlightLeft")
 		g:NewSwitch (frame2, _, "$parentRemoteParserSlider", "RemoteParserSlider", 60, 20, _, _, _detalhes.use_battleground_server_parser, nil, nil, nil, nil, options_switch_template)
 		frame2.RemoteParserSlider:SetPoint ("left", frame2.RemoteParserLabel, "right", 2)
 		frame2.RemoteParserSlider:SetAsCheckBox()
 		frame2.RemoteParserSlider.OnSwitch = function (self, _, value)
 			_detalhes.use_battleground_server_parser = value
 		end
-		window:CreateLineBackground2 (frame2, "RemoteParserSlider", "RemoteParserLabel", Loc ["STRING_OPTIONS_BG_REMOTE_PARSER_DESC"])
+		window:CreateLineBackground2 (frame2, "RemoteParserSlider", "RemoteParserLabel", Loc ["STRING_OPTIONS_BG_UNIQUE_SEGMENT_DESC"])
 		
 	--> show all
 		g:NewLabel (frame2, _, "$parentShowAllLabel", "ShowAllLabel", Loc ["STRING_OPTIONS_BG_ALL_ALLY"], "GameFontHighlightLeft")

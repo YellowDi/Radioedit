@@ -443,6 +443,19 @@
 			end
 		end
 		
+		function _detalhes:ScheduleSyncPlayerActorData()
+			if ((IsInGroup() or IsInRaid()) and (_detalhes.zone_type == "party" or _detalhes.zone_type == "raid")) then
+				--> do not sync if in battleground or arena
+				_detalhes:SendCharacterData()
+			end
+		end
+		
+		function _detalhes:EndCombat()
+			if (_detalhes.in_combat) then
+				_detalhes:SairDoCombate()
+			end
+		end
+		
 		-- ~end ~leave
 		function _detalhes:SairDoCombate (bossKilled, from_encounter_end)
 		
@@ -571,6 +584,9 @@
 					_detalhes.tabela_vigente.is_mythic_dungeon_run_id = _detalhes.mythic_dungeon_id
 				end
 			end
+			
+			--> send item level after a combat if is in raid or party group
+			C_Timer.After (1, _detalhes.ScheduleSyncPlayerActorData)
 			
 			if (not _detalhes.tabela_vigente.is_boss) then
 
@@ -734,12 +750,26 @@
 			local tempo_do_combate = _detalhes.tabela_vigente:GetCombatTime()
 			local invalid_combat
 			
-			if ((tempo_do_combate >= _detalhes.minimum_combat_time or not _detalhes.tabela_historico.tabelas[1]) and not _detalhes.tabela_vigente.discard_segment) then
+			local zoneName, zoneType = GetInstanceInfo()
+			if (not _detalhes.tabela_vigente.discard_segment and (zoneType == "none" or tempo_do_combate >= _detalhes.minimum_combat_time or not _detalhes.tabela_historico.tabelas[1])) then
 				_detalhes.tabela_historico:adicionar (_detalhes.tabela_vigente) --move a tabela atual para dentro do hist�rico
-				
-				_detalhes:CanSendMissData()
+				--8.0.1 miss data isn't required at the moment, spells like akari's soul has been removed from the game
+				--_detalhes:CanSendMissData()
 			else
 				invalid_combat = _detalhes.tabela_vigente
+				
+				--> tutorial about the combat time < then 'minimum_combat_time'
+				local hasSeenTutorial = _detalhes:GetTutorialCVar ("MIN_COMBAT_TIME")
+				if (not hasSeenTutorial) then
+					local lower_instance = _detalhes:GetLowerInstanceNumber()
+					if (lower_instance) then
+						lower_instance = _detalhes:GetInstance (lower_instance)
+						if (lower_instance) then
+							lower_instance:InstanceAlert ("combat ignored: less than 5 seconds.", {[[Interface\BUTTONS\UI-GROUPLOOT-PASS-DOWN]], 18, 18, false, 0, 1, 0, 1}, 20, {function() Details:Msg ("combat ignored: elapsed time less than 5 seconds."); Details:Msg ("add '|cFFFFFF00Details.minimum_combat_time = 2;|r' on Auto Run Code to change the minimum time.") end})
+							_detalhes:SetTutorialCVar ("MIN_COMBAT_TIME", true)
+						end
+					end
+				end
 				
 				--in case of a forced discard segment, just check a second time if we have a previous combat.
 				if (not _detalhes.tabela_historico.tabelas[1]) then
@@ -1467,11 +1497,19 @@
 			GameCooltip:AddStatusBar (100, 1, 0, 0, 0, 0.8)
 		end
 		
-		function _detalhes:AddTooltipBackgroundStatusbar (side)
+		function _detalhes:AddTooltipBackgroundStatusbar (side, value, useSpark)
+			_detalhes.tooltip.background [4] = 0.8
+			_detalhes.tooltip.icon_size.W = 16
+			_detalhes.tooltip.icon_size.H = 16
+			
+			value = value or 100
+			
 			if (not side) then
-				GameCooltip:AddStatusBar (100, 1, unpack (_detalhes.tooltip.background))
+				local r, g, b, a = unpack (_detalhes.tooltip.background)
+				GameCooltip:AddStatusBar (value, 1, r, g, b, a, useSpark, {value = 100, color = {.21, .21, .21, 0.8}, texture = [[Interface\AddOns\Details\images\bar_serenity]]})
+				
 			else
-				GameCooltip:AddStatusBar (100, 2, unpack (_detalhes.tooltip.background))
+				GameCooltip:AddStatusBar (value, 2, unpack (_detalhes.tooltip.background))
 			end
 		end
 		
@@ -1494,13 +1532,16 @@
 			end
 		end
 		
-		local bgColor, borderColor = {0.37, 0.37, 0.37, .75}, {.30, .30, .30, .3}
+		local bgColor, borderColor = {0, 0, 0, 0.8}, {0, 0, 0, 0} --{0.37, 0.37, 0.37, .75}, {.30, .30, .30, .3}
 		
 		function _detalhes:BuildInstanceBarTooltip (frame)
 			local GameCooltip = GameCooltip
 			
 			GameCooltip:Reset()
 			GameCooltip:SetType ("tooltip")
+
+			GameCooltip:SetOption ("MinWidth", _math_max (230, self.baseframe:GetWidth()*0.98))
+			GameCooltip:SetOption ("StatusBarTexture", [[Interface\AddOns\Details\images\bar_background]])
 			
 			GameCooltip:SetOption ("TextSize", _detalhes.tooltip.fontsize)
 			GameCooltip:SetOption ("TextFont",  _detalhes.tooltip.fontface)
@@ -1510,14 +1551,13 @@
 			
 			GameCooltip:SetOption ("LeftBorderSize", -4)
 			GameCooltip:SetOption ("RightBorderSize", 4)
-			GameCooltip:SetOption ("ButtonsYMod", 4)
-			
 			GameCooltip:SetOption ("RightTextMargin", 0)
-			
-			GameCooltip:SetOption ("MinWidth", _math_max (230, self.baseframe:GetWidth()*0.9))
-			GameCooltip:SetOption ("StatusBarTexture", [[Interface\AddOns\Details\images\bar_background]])
+			GameCooltip:SetOption ("VerticalOffset", 8) 
+			GameCooltip:SetOption ("AlignAsBlizzTooltip", true)
+			GameCooltip:SetOption ("AlignAsBlizzTooltipFrameHeightOffset", -8)
+			GameCooltip:SetOption ("LineHeightSizeOffset", 4)
+			GameCooltip:SetOption ("VerticalPadding", -4)
 
-			--GameCooltip:SetBackdrop (1, _detalhes.tooltip_backdrop, backgroundColor, _detalhes.tooltip_border_color) --{.090, .090, .188, .1}
 			GameCooltip:SetBackdrop (1, _detalhes.cooltip_preset2_backdrop, bgColor, borderColor)
 			
 			local myPoint = _detalhes.tooltip.anchor_point
@@ -1526,6 +1566,7 @@
 			local y_Offset = _detalhes.tooltip.anchor_offset[2]
 			
 			if (_detalhes.tooltip.anchored_to == 1) then
+				
 				GameCooltip:SetHost (frame, myPoint, anchorPoint, x_Offset, y_Offset)
 			else
 				GameCooltip:SetHost (DetailsTooltipAnchor, myPoint, anchorPoint, x_Offset, y_Offset)
@@ -1609,7 +1650,7 @@
 					if (instancia.rows_showing == 0 and instancia:GetSegment() == -1) then -- -1 overall data
 						if (not instancia:IsShowingOverallDataWarning()) then
 							local tutorial = _detalhes:GetTutorialCVar ("OVERALLDATA_WARNING1") or 0
-							if ((type (tutorial) == "number") and (tutorial < 10)) then
+							if ((type (tutorial) == "number") and (tutorial < 6)) then
 								_detalhes:SetTutorialCVar ("OVERALLDATA_WARNING1", tutorial + 1)
 								instancia:ShowOverallDataWarning (true)
 							end
