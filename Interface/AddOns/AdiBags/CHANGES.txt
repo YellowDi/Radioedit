@@ -1,0 +1,14 @@
+tag 8288d72182a1c46f7fd08d0d72145ed572c26346 v1.9.11
+Author:	Talyrius <contact@talyrius.net>
+Date:	Fri Aug 17 08:41:01 2018 -0700
+
+Tagging as v1.9.11.
+
+commit 3a6e77981efa0a334a24a6abc6e17bf739737272
+Author: Steffen <smb@users.noreply.github.com>
+Date:   Fri Aug 17 17:33:16 2018 +0200
+
+    Fix for strmatch errors with empty call stack in BugGrabber handling (#293)
+    
+    Fixes #289.
+
