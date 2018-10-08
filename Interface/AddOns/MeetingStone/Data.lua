@@ -10,6 +10,7 @@ ADDON_VERSION_SHORT = ADDON_VERSION:gsub('(%d)%d(%d)%d%d%.(%d%d)','%1%2%3')
 ADDON_REGIONSUPPORT = GetCurrentRegion() == 5
 ADDON_SERVER        = (NETEASE_SERVER_PREFIX or 'S1') .. UnitFactionGroup('player')
 SERVER_TIMEOUT      = 120
+NO_SCAN_WORD        = true
 
 _G.BINDING_NAME_MEETINGSTONE_TOGGLE = L['打开/关闭集合石']
 _G.BINDING_HEADER_NETEASE           = '网易插件'
@@ -280,6 +281,25 @@ CATEGORY = {
         },
         activities = {
             [458] = true,
+        },
+    },
+    [7] = {
+        groups = {
+            [135] = true,
+            [136] = true,
+            [137] = true,
+            [138] = true,
+            [139] = true,
+            [140] = true,
+            [141] = true,
+            [142] = true,
+            [143] = true,
+            [144] = true,
+            [145] = true,
+            [146] = true,
+        },
+        activities = {
+            [657] = true,
         },
     }
 }

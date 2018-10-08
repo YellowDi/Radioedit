@@ -165,7 +165,7 @@ function BrowsePanel:OnInitialize()
                             return NONE, GRAY_FONT_COLOR.r, GRAY_FONT_COLOR.g, GRAY_FONT_COLOR.b
                         else
                             local color = activity:IsUnusable() and GRAY_FONT_COLOR or activity:IsPvPRatingValid() and GREEN_FONT_COLOR or RED_FONT_COLOR
-                            return pvpRating, color.r, color.g, color.b
+                            return floor(pvpRating), color.r, color.g, color.b
                         end
                     else
                         local itemLevel = activity:GetItemLevel()
@@ -173,7 +173,7 @@ function BrowsePanel:OnInitialize()
                             return NONE, GRAY_FONT_COLOR.r, GRAY_FONT_COLOR.g, GRAY_FONT_COLOR.b
                         else
                             local color = activity:IsUnusable() and GRAY_FONT_COLOR or activity:IsItemLevelValid() and GREEN_FONT_COLOR or RED_FONT_COLOR
-                            return itemLevel, color.r, color.g, color.b
+                            return floor(itemLevel), color.r, color.g, color.b
                         end
                     end
                 end,
@@ -318,37 +318,44 @@ function BrowsePanel:OnInitialize()
         end)
     end
 
-    local function RefreshFilter()
-        self.ActivityList:SetFilterText(
-            self.SearchInput:GetText():lower(),
-            self.bossFilter,
-            Profile:GetSetting('spamWord'),
-            Profile:GetSetting('spamLengthEnabled') and Profile:GetSetting('spamLength') or nil,
-            Profile:GetSetting('spamChar')
-        )
-    end
+    local RefreshFilter
+    if NO_SCAN_WORD then
+        function RefreshFilter()
+            self.ActivityList:SetFilterText(nil, self.bossFilter)
+        end
+    else
+        function RefreshFilter()
+            self.ActivityList:SetFilterText(
+                self.SearchInput:GetText():lower(),
+                self.bossFilter,
+                Profile:GetSetting('spamWord'),
+                Profile:GetSetting('spamLengthEnabled') and Profile:GetSetting('spamLength') or nil,
+                Profile:GetSetting('spamChar')
+            )
+        end
 
-    local SearchLabel = self:CreateFontString(nil, 'ARTWORK', 'GameFontHighlight') do
-        SearchLabel:SetPoint('LEFT', ActivityLabel, 'LEFT', ActivityDropdown:GetWidth() + 10, 0)
-        SearchLabel:SetText(L['搜索'])
-    end
+        local SearchLabel = self:CreateFontString(nil, 'ARTWORK', 'GameFontHighlight') do
+            SearchLabel:SetPoint('LEFT', ActivityLabel, 'LEFT', ActivityDropdown:GetWidth() + 10, 0)
+            SearchLabel:SetText(L['搜索'])
+        end
 
-    local SearchInput = GUI:GetClass('SearchBox'):New(self) do
-        SearchInput:SetSize(180, 15)
-        SearchInput:SetPoint('TOPLEFT', SearchLabel, 'BOTTOMLEFT', 10, -10)
-        SearchInput:SetPrompt(L['搜索说明或团长'])
-        SearchInput:EnableAutoComplete(true)
-        SearchInput:EnableAutoCompleteFilter(false)
-        SearchInput:SetCallback('OnTextChanged', RefreshFilter)
-        SearchInput:SetCallback('OnEditFocusLost', function(SearchInput)
-            local text = SearchInput:GetText()
-            if text ~= '' then
-                Profile:SaveSearchInputHistory(self.ActivityDropdown:GetItem().value, text)
-            end
-        end)
-        SearchInput:SetCallback('OnEditFocusGained', function(SearchInput)
-            SearchInput:SetAutoCompleteList(Profile:GetSearchInputHistory(ActivityDropdown:GetItem().value))
-        end)
+        local SearchInput = GUI:GetClass('SearchBox'):New(self) do
+            SearchInput:SetSize(180, 15)
+            SearchInput:SetPoint('TOPLEFT', SearchLabel, 'BOTTOMLEFT', 10, -10)
+            SearchInput:SetPrompt(L['搜索说明或团长'])
+            SearchInput:EnableAutoComplete(true)
+            SearchInput:EnableAutoCompleteFilter(false)
+            SearchInput:SetCallback('OnTextChanged', RefreshFilter)
+            SearchInput:SetCallback('OnEditFocusLost', function(SearchInput)
+                local text = SearchInput:GetText()
+                if text ~= '' then
+                    Profile:SaveSearchInputHistory(self.ActivityDropdown:GetItem().value, text)
+                end
+            end)
+            SearchInput:SetCallback('OnEditFocusGained', function(SearchInput)
+                SearchInput:SetAutoCompleteList(Profile:GetSearchInputHistory(ActivityDropdown:GetItem().value))
+            end)
+        end
     end
 
     local AdvFilterPanel = CreateFrame('Frame', nil, self) do
@@ -520,25 +527,19 @@ function BrowsePanel:OnInitialize()
         IconSummary:SetScript('OnLeave', GameTooltip_Hide)
     end
 
-    -- local SpamWord = GUI:GetClass('CheckBox'):New(self) do
-    --     SpamWord:SetPoint('BOTTOMRIGHT', MainPanel, -230, 5)
-    --     SpamWord:SetText(L['关键字过滤'])
-    --     SpamWord:SetScript('OnClick', function(SpamWord)
-    --         Profile:SetSetting('spamWord', not not SpamWord:GetChecked())
-    --         RefreshFilter()
-    --     end)
-    -- end
-
-    local FilterButton = CreateFrame('Button', nil, self) do
-        FilterButton:SetNormalFontObject('GameFontNormalSmall')
-        FilterButton:SetHighlightFontObject('GameFontHighlightSmall')
-        FilterButton:SetSize(70, 22)
-        FilterButton:SetPoint('BOTTOMRIGHT', MainPanel, -140, 3)
-        FilterButton:SetText(L['过滤器'])
-        FilterButton:RegisterForClicks('anyUp')
-        FilterButton:SetScript('OnClick', function()
-            self:OnFilterButtonClicked()
-        end)
+    local FilterButton
+    if not NO_SCAN_WORD then
+        FilterButton = CreateFrame('Button', nil, self) do
+            FilterButton:SetNormalFontObject('GameFontNormalSmall')
+            FilterButton:SetHighlightFontObject('GameFontHighlightSmall')
+            FilterButton:SetSize(70, 22)
+            FilterButton:SetPoint('BOTTOMRIGHT', MainPanel, -140, 3)
+            FilterButton:SetText(L['过滤器'])
+            FilterButton:RegisterForClicks('anyUp')
+            FilterButton:SetScript('OnClick', function()
+                self:OnFilterButtonClicked()
+            end)
+        end
     end
 
     local HelpPlate = {
@@ -757,22 +758,16 @@ function BrowsePanel:Search()
     end
 
     local categoryId = activityItem.categoryId
-    local fullName = activityItem.fullName
-    local filters= activityItem.filters
     local baseFilter = activityItem.baseFilter
     local searchCode = activityItem.value
+    local activityId = activityItem.activityId
 
     if not categoryId or not MainPanel:IsVisible() then
         return
     end
 
-    local searchText = self:GetSearchCode(fullName)
-
-    searchText = LFGListSearchPanel_ParseSearchTerms(searchText)
-
     Profile:SetLastSearchCode(searchCode)
-
-    LfgService:Search(categoryId, searchText, baseFilter, searchCode)
+    LfgService:Search(categoryId, baseFilter, activityId)
 
     self.searchTimer = nil
     self.searchedInFrame = true
@@ -1027,6 +1022,8 @@ function BrowsePanel:QuickSearch(activityCode, mode, loot, searchText)
     self:StartSet()
     Profile:SetLastSearchCode(activityCode)
     self.ActivityDropdown:SetValue(activityCode)
-    self.SearchInput:SetText(searchText or '')
+    if not NO_SCAN_WORD then
+        self.SearchInput:SetText(searchText or '')
+    end
     self:EndSet()
 end
