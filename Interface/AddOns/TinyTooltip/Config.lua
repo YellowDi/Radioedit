@@ -6,10 +6,10 @@ addon.db = {
     general = {
         scale             = 1,                      --縮放
         mask              = true,                   --頂部遮罩層
-        bgfile            = "rock",                 --背景
+        bgfile            = "marble",               --背景
         background        = {0, 0, 0, 0.7},         --背景顔色和透明度
         borderSize        = 1,                      --邊框大小（直角邊框才生效）
-        borderCorner      = "default",              --邊框類型 default|angular:直角邊框
+        borderCorner      = "angular",              --邊框類型 default|angular:直角邊框
         borderColor       = {0.6, 0.6, 0.6, 0.8},   --邊框顔色和透明度
         statusbarHeight   = 4,                      --HP高度
         statusbarPosition = "bottom",               --HP位置 default|bottom|top
@@ -34,10 +34,10 @@ addon.db = {
         player = {
             coloredBorder = "class",                --玩家邊框顔色 default|class|level|reaction|itemQuality|selection|faction|HEX
             background = { colorfunc = "class", alpha = 0.9, },
-            anchor = { position = "inherit", returnInCombat = true, returnOnUnitFrame = false, cp = "BOTTOM", p = "BOTTOMRIGHT", },
+            anchor = { position = "inherit", returnInCombat = false, returnOnUnitFrame = false, cp = "BOTTOM", p = "BOTTOMRIGHT", },
             showTarget = true,                      --顯示目標
             showTargetBy = true,                    --顯示被關注
-            showModel = true,                       --顯示模型
+            showModel = false,                      --顯示模型
             grayForDead = false,                    --灰色死亡目標
             elements = {
                 raidIcon    = { enable = true, filter = "none" },
@@ -76,7 +76,7 @@ addon.db = {
             showTarget = true,
             showTargetBy = true,
             grayForDead = false,
-            anchor = { position = "inherit", returnInCombat = true, returnOnUnitFrame = false, cp = "BOTTOM", p = "BOTTOMRIGHT", },
+            anchor = { position = "inherit", returnInCombat = false, returnOnUnitFrame = false, cp = "BOTTOM", p = "BOTTOMRIGHT", },
             elements = {
                 raidIcon     = { enable = true,  filter = "none" },
                 classIcon    = { enable = false, filter = "none" },

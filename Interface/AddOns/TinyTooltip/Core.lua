@@ -186,7 +186,7 @@ end
 
 -- PVP圖標
 function addon:GetPVPIcon(unit)
-    if (UnitIsPVPFreeForAll(unit) and UnitPrestige(unit) <= 0) then
+    if (UnitIsPVPFreeForAll(unit) and UnitPrestige(unit) and UnitPrestige(unit) <= 0) then
         return self.icons.pvp
     end
 end
