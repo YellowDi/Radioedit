@@ -1,0 +1,14 @@
+## Interface: 70200
+## Title: QuakeAssist
+## Version: 1.03
+## Author: Abin
+## X-Category: Combat
+## SavedVariables: QuakeAssistDB
+
+Includes\LibAddonManager.lua
+Includes\InterfaceOptionPage-1.0.lua
+
+Localization.lua
+Core.lua
+MainFrame.lua
+OptionFrame.lua
