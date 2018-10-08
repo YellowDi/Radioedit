@@ -4,6 +4,31 @@ TMW.CHANGELOG_LASTVER="7.4.0"
 
 TMW.CHANGELOG = [==[
 
+===v8.5.4===
+* New icon drag operation - Insert.
+* Added Dark Icon and Mag'har to Unit Race condition.
+* Added Stagger to the Resouce Display icon type.
+
+====Bug Fixes====
+* Fixed #1575 - Notification handlers can no longer be chosen when their parent module is disabled.
+* Fixed #1561 - Shear/Fracture not working correctly with Last Ability Used condition.
+
+===v8.5.3===
+* Guardians icon type now accounts for Implosion and the Consumption talent.
+
+====Bug Fixes====
+* Fixed #1544 - Blizzard changed return values of GetChannelList(), breaking chat channel text notifications.
+
+===v8.5.2===
+* Includes latest LibDogTag-Unit with fixes for [SoulShardParts] and others.
+* Updated Guardian icon type for 8.0 Warlock changes.
+* Back by popular demand, DR reset duration is now an icon-specific setting, and once again defaults to 18.
+
+====Bug Fixes====
+* Fixed #1534 - Attempt to register unknown event "WORLD_MAP_UPDATE"
+* Fixed cusor position in tall textboxes sometimes being incorrect due to a Blizzard bug with FontString:SetSpacing()
+* Fixed handling of pipe characters in export strings.
+
 ===v8.5.1===
 * Changed DR reset duration to 20 seconds from 18 to increase consistency.
 

@@ -683,7 +683,7 @@ L["SORTBYNONE_DURATION"] = "Normal Duration"
 L["SORTBYNONE_STACKS"] = "Normal Stacks"
 L["SORTBYNONE_DESC"] = [[If checked, spells will be checked in and appear in the order that they were entered into the "%s" editbox.
 
-If this icon is a buff/debuff icon and the number of auras being checked exceeds the efficiency threshold setting, auras will be checked in the order that they would normally appear on the unit's unit frame.]]
+If this icon is a buff/debuff icon, auras will be checked in the order that they would normally appear on the unit's unit frame.]]
 L["SORTBYNONE_META_DESC"] = [[If checked, icons will be checked in the order that was configured above.]]
 L["ICONMENU_SORTASC"] = "Low duration"
 L["ICONMENU_SORTASC_DESC"] = "Check this box to prioritize and show spells with the lowest duration."
@@ -700,6 +700,10 @@ L["ICONMENU_SORT_STACKS_DESC_DESC"] = "Check this box to prioritize and show spe
 L["ICONMENU_MOVEHERE"] = "Move here"
 L["ICONMENU_COPYHERE"] = "Copy here"
 L["ICONMENU_SWAPWITH"] = "Swap with"
+L["ICONMENU_INSERTHERE"] = "Extract & Insert here"
+L["ICONMENU_INSERTHERE_DESC"] = [[Take %s out of its current position and insert it at the current location of %s. 
+
+Icons will be shifted as needed.]]
 L["ICONMENU_ADDMETA"] = "Add to Meta Icon"
 L["ICONMENU_APPENDCONDT"] = "Add as %q condition"
 L["ICONMENU_ANCHORTO"] = "Anchor to %s"
@@ -820,7 +824,7 @@ L["UIPANEL_PROFILES"] = "Profiles"
 
 L["UIPANEL_GROUPTYPE"] = "Display Method"
 L["UIPANEL_GROUPTYPE_ICON"] = "Icon"
-L["UIPANEL_GROUPTYPE_ICON_DESC"] = [[Displays the icons in the2 group using TellMeWhen's traditional icon display.]]
+L["UIPANEL_GROUPTYPE_ICON_DESC"] = [[Displays the icons in the group using TellMeWhen's traditional icon display.]]
 L["UIPANEL_GROUPTYPE_BAR"] = "Bar"
 L["UIPANEL_GROUPTYPE_BAR_DESC"] = [[Displays the icons in the group with progress bars attached to the icons.]]
 L["UIPANEL_GROUPTYPE_BARV"] = "Vertical Bar"
@@ -961,6 +965,10 @@ L["UIPANEL_WARNINVALIDS_DESC"] = [[If this setting is enabled, TellMeWhen when w
 
 It is HIGHLY RECOMMENDED that you keep this setting enabled, as some of these configuration errors can cause particularly poor performance]]
 
+L["UIPANEL_DRDURATION"] = "DR Duration"
+L["UIPANEL_DRDURATION_DESC"] = [[Set the duration that diminishing returns last.
+
+The official time stated by Blizzard is 18 seconds, but in many cases, this can be too short and will cause your DR icons to report completed DR when it isn't quite done. You may wish to add a second or two to compensate for that.]]
 
 L["UIPANEL_GROUPSORT"] = "Icon Sorting"
 
