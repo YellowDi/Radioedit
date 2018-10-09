@@ -1,0 +1,17 @@
+
+ACP_Data = {
+	["sorter"] = "按名称分组",
+	["NoRecurse"] = false,
+	["NoChildren"] = true,
+	["collapsed"] = {
+		["DBM"] = true,
+		["TidyPlatesContinued"] = true,
+		["Details"] = true,
+		["TellMeWhen"] = true,
+		["Blizzard Addons"] = true,
+		["Paku"] = true,
+	},
+	["ProtectedAddons"] = {
+		["ACP"] = true,
+	},
+}

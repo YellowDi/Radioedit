@@ -1,0 +1,62 @@
+VER 3 000000000000012F "下跪" "INV_MISC_QUESTIONMARK"
+/下跪
+END
+VER 3 0000000000000131 "伤害显示" "134400"
+/console floatingCombatTextCombatDamage 1
+END
+VER 3 0000000000000133 "双向驱散" "INV_MISC_QUESTIONMARK"
+#showtooltip 纯净术 
+/cast [help,nodead] 纯净术 
+/cast [harm,nodead] 驱散魔法
+END
+VER 3 0000000000000134 "摧心魔" "INV_MISC_QUESTIONMARK"
+#showtooltip 摧心魔 
+/targetenemy [noharm][dead] 
+/tar 摧心魔 
+/cast [help]真言术：盾 
+/targetlasttarget [noharm][dead] 
+/cast 摧心魔
+END
+VER 3 0000000000000132 "日志" "134400"
+/combatlog
+END
+VER 3 0000000000000138 "暗影冲撞" "INV_MISC_QUESTIONMARK"
+#showtooltip 暗影冲撞 
+/cast [@cursor] 暗影冲撞
+END
+VER 3 0000000000000137 "暗影形态" "INV_MISC_QUESTIONMARK"
+#showtooltip 精神鞭笞
+/cast [nostance:1]暗影形态 
+/cast [harm][target=targettarget,harm]精神鞭笞 
+/cast 精神鞭笞
+END
+VER 3 0000000000000136 "束缚漂浮" "INV_MISC_QUESTIONMARK"
+#showtooltip 束缚亡灵 
+/cast [harm,nodead] 束缚亡灵 
+/cast [help,nodead][] 漂浮术
+END
+VER 3 0000000000000135 "群体驱散" "INV_MISC_QUESTIONMARK"
+#showtooltip 群体驱散
+/cast [@cursor] 群体驱散
+END
+VER 3 000000000000012A "羽毛" "INV_Misc_QuestionMark"
+#showtooltip 天堂之羽
+/cast [@player] 天堂之羽
+/use 1
+END
+VER 3 000000000000012C "视角宏" "134331"
+/script SetCVar("cameradistanceMax",50)
+END
+VER 3 000000000000012D "镜像" "INV_Misc_QuestionMark"
+#showtooltip 燃烧
+/use  缺指指环
+/use 勇气号角
+/castsequence [@cursor] reset=10 镜像,流星,燃烧,火焰冲击,炎爆术,火焰冲击,炎爆术,火焰冲击,炎爆术,灼烧,炎爆术,灼烧,炎爆术,灼烧,炎爆术,龙息术
+END
+VER 3 0000000000000130 "阿曼苏尔" "INV_MISC_QUESTIONMARK"
+/e 获得了阿曼苏尔的预见
+END
+VER 3 0000000000000129 "风暴" "INV_Misc_QuestionMark"
+#showtooltip 烈焰风暴
+/cast [@cursor] 烈焰风暴
+END

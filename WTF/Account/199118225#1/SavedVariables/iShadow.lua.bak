@@ -1,2 +1,0 @@
-
-iShadowLevel = 50
