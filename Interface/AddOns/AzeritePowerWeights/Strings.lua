@@ -112,6 +112,8 @@ do -- enUS / enGB
 	L.Config_Score_AddItemLevelToScore_Desc = "Add Azerite items itemlevel to all current score, current potential and maximum score calculations."
 	L.Config_Score_ScaleByAzeriteEmpowered = "Scale itemlevel score by the weight of %s in the scale" -- %s Name of Azerite Empowered, returned by _G.GetSpellInfo(263978)
 	L.Config_Score_ScaleByAzeriteEmpowered_Desc = "When adding itemlevel to the scores, use the weight of %s of the scale to calculate value of +1 itemlevel instead of using +1 itemlevel = +1 score." -- %s Name of Azerite Empowered, returned by _G.GetSpellInfo(263978)
+	L.Config_Score_AddPrimaryStatToScore = "Add primary stat to all scores"
+	L.Config_Score_AddPrimaryStatToScore_Desc = "Add Azerite items amount of primary stat (%s/%s/%s) to all current score, current potential and maximum score calculations." -- %s, %s, %s = _G.ITEM_MOD_AGILITY_SHORT, _G.ITEM_MOD_INTELLECT_SHORT, _G.ITEM_MOD_STRENGTH_SHORT
 	L.Config_Score_RelativeScore = "Show relative values in tooltips instead of absolute values"
 	L.Config_Score_RelativeScore_Desc = "Instead of showing absolute values of scales in tooltips, calculate the relative value compared to currently equiped items and show them in percentages."
 	L.Config_Score_ShowOnlyUpgrades = "Show tooltips only for upgrades"
@@ -137,6 +139,10 @@ L["Config_Scales_Title"] = "Skalierungsliste "
 --[[ L["Config_Score_AddItemLevelToScore"] = ""--]] 
 --[[Translation missing --]]
 --[[ L["Config_Score_AddItemLevelToScore_Desc"] = ""--]] 
+--[[Translation missing --]]
+--[[ L["Config_Score_AddPrimaryStatToScore"] = ""--]] 
+--[[Translation missing --]]
+--[[ L["Config_Score_AddPrimaryStatToScore_Desc"] = ""--]] 
 --[[Translation missing --]]
 --[[ L["Config_Score_RelativeScore"] = ""--]] 
 --[[Translation missing --]]
@@ -276,6 +282,10 @@ L["Config_Importing_Title"] = "Importando"
 --[[ L["Config_Score_AddItemLevelToScore"] = ""--]] 
 --[[Translation missing --]]
 --[[ L["Config_Score_AddItemLevelToScore_Desc"] = ""--]] 
+--[[Translation missing --]]
+--[[ L["Config_Score_AddPrimaryStatToScore"] = ""--]] 
+--[[Translation missing --]]
+--[[ L["Config_Score_AddPrimaryStatToScore_Desc"] = ""--]] 
 --[[Translation missing --]]
 --[[ L["Config_Score_RelativeScore"] = ""--]] 
 --[[Translation missing --]]
@@ -456,6 +466,10 @@ elseif LOCALE == "esMX" then
 --[[Translation missing --]]
 --[[ L["Config_Score_AddItemLevelToScore_Desc"] = ""--]] 
 --[[Translation missing --]]
+--[[ L["Config_Score_AddPrimaryStatToScore"] = ""--]] 
+--[[Translation missing --]]
+--[[ L["Config_Score_AddPrimaryStatToScore_Desc"] = ""--]] 
+--[[Translation missing --]]
 --[[ L["Config_Score_RelativeScore"] = ""--]] 
 --[[Translation missing --]]
 --[[ L["Config_Score_RelativeScore_Desc"] = ""--]] 
@@ -627,6 +641,10 @@ L["Config_Scales_Title"] = "Liste des échelles"
 --[[Translation missing --]]
 --[[ L["Config_Score_AddItemLevelToScore_Desc"] = ""--]] 
 --[[Translation missing --]]
+--[[ L["Config_Score_AddPrimaryStatToScore"] = ""--]] 
+--[[Translation missing --]]
+--[[ L["Config_Score_AddPrimaryStatToScore_Desc"] = ""--]] 
+--[[Translation missing --]]
 --[[ L["Config_Score_RelativeScore"] = ""--]] 
 --[[Translation missing --]]
 --[[ L["Config_Score_RelativeScore_Desc"] = ""--]] 
@@ -795,6 +813,10 @@ elseif LOCALE == "itIT" then
 --[[ L["Config_Score_AddItemLevelToScore"] = ""--]] 
 --[[Translation missing --]]
 --[[ L["Config_Score_AddItemLevelToScore_Desc"] = ""--]] 
+--[[Translation missing --]]
+--[[ L["Config_Score_AddPrimaryStatToScore"] = ""--]] 
+--[[Translation missing --]]
+--[[ L["Config_Score_AddPrimaryStatToScore_Desc"] = ""--]] 
 --[[Translation missing --]]
 --[[ L["Config_Score_RelativeScore"] = ""--]] 
 --[[Translation missing --]]
@@ -969,6 +991,10 @@ L["Config_Scales_Title"] = "값 목록"
 --[[Translation missing --]]
 --[[ L["Config_Score_AddItemLevelToScore_Desc"] = ""--]] 
 --[[Translation missing --]]
+--[[ L["Config_Score_AddPrimaryStatToScore"] = ""--]] 
+--[[Translation missing --]]
+--[[ L["Config_Score_AddPrimaryStatToScore_Desc"] = ""--]] 
+--[[Translation missing --]]
 --[[ L["Config_Score_RelativeScore"] = ""--]] 
 --[[Translation missing --]]
 --[[ L["Config_Score_RelativeScore_Desc"] = ""--]] 
@@ -1098,6 +1124,10 @@ L["Config_Scales_Title"] = "Lista de Pesos"
 --[[Translation missing --]]
 --[[ L["Config_Score_AddItemLevelToScore_Desc"] = ""--]] 
 --[[Translation missing --]]
+--[[ L["Config_Score_AddPrimaryStatToScore"] = ""--]] 
+--[[Translation missing --]]
+--[[ L["Config_Score_AddPrimaryStatToScore_Desc"] = ""--]] 
+--[[Translation missing --]]
 --[[ L["Config_Score_RelativeScore"] = ""--]] 
 --[[Translation missing --]]
 --[[ L["Config_Score_RelativeScore_Desc"] = ""--]] 
@@ -1210,6 +1240,10 @@ L["Config_Scales_OwnClassDefaultsOnly_Desc"] = "Показывать не все
 L["Config_Scales_Title"] = "Список наборов"
 L["Config_Score_AddItemLevelToScore"] = "Добавить уровень предмета ко всем рейтингам"
 L["Config_Score_AddItemLevelToScore_Desc"] = "Добавить уровень азеритовых предметов к текущему, потенциальному и максимальному рейтингам."
+--[[Translation missing --]]
+--[[ L["Config_Score_AddPrimaryStatToScore"] = ""--]] 
+--[[Translation missing --]]
+--[[ L["Config_Score_AddPrimaryStatToScore_Desc"] = ""--]] 
 L["Config_Score_RelativeScore"] = "Показывать в подсказке относительные значения вместо абсолютных"
 L["Config_Score_RelativeScore_Desc"] = "Вместо абсолютных значений вычислять относительные (по сравнению с надетыми предметами) значения и показывать их в процентах."
 L["Config_Score_ScaleByAzeriteEmpowered"] = "Масштабировать прибавляемый уровень предмета с помощью ценности %s"
@@ -1313,6 +1347,10 @@ L["Config_Scales_OwnClassDefaultsOnly_Desc"] = "只显示你自己职业的默�
 L["Config_Scales_Title"] = "配置列表"
 L["Config_Score_AddItemLevelToScore"] = "将物品等级添加到所有分数中"
 L["Config_Score_AddItemLevelToScore_Desc"] = "将艾泽里特护甲的物品等级添加到当前分数，当前可选最高分数，最大分数的计算中。"
+--[[Translation missing --]]
+--[[ L["Config_Score_AddPrimaryStatToScore"] = ""--]] 
+--[[Translation missing --]]
+--[[ L["Config_Score_AddPrimaryStatToScore_Desc"] = ""--]] 
 L["Config_Score_RelativeScore"] = "在鼠标提示中显示相对值而不是绝对值"
 L["Config_Score_RelativeScore_Desc"] = "不在鼠标提示中显示权重的绝对值，而是计算与当前装备相比的相对值，并以百分比显示。"
 L["Config_Score_ScaleByAzeriteEmpowered"] = "按％s的权重计算物品等级分数"
@@ -1420,6 +1458,10 @@ L["Config_Scales_OwnClassDefaultsOnly_Desc"] = "只列出你自己職業的預�
 L["Config_Scales_Title"] = "比例清單"
 L["Config_Score_AddItemLevelToScore"] = "添加物品等級到所有分數"
 L["Config_Score_AddItemLevelToScore_Desc"] = "添加艾澤萊護甲的物品等級到所有當前分數，當前潛力與最高分數計算。"
+--[[Translation missing --]]
+--[[ L["Config_Score_AddPrimaryStatToScore"] = ""--]] 
+--[[Translation missing --]]
+--[[ L["Config_Score_AddPrimaryStatToScore_Desc"] = ""--]] 
 L["Config_Score_RelativeScore"] = "在工具提示中顯示相對值而不是絕對值"
 L["Config_Score_RelativeScore_Desc"] = "不是在工具提示中顯示比例的絕對值，而是計算與當前裝備物品相比的相對值，並以百分比顯示差異。"
 L["Config_Score_ScaleByAzeriteEmpowered"] = "按比例中的％s權值縮放物品等級計分"
