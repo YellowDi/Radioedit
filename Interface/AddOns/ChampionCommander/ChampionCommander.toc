@@ -12,7 +12,7 @@
 ## Notes-zhTW: 发送所有的追随者与点击多任务
 ## Notes-zhCN: 發送所有的追隨者與點擊多任務
 ## Author: Alar of Runetotem
-## Version: 1.1.0-Beta-4 80000
+## Version: 1.1.0 80000
 ## X-Revision: 1ce7437
 ## eMail: alar@aspide.it
 ## URL: http://wow.aspide.it

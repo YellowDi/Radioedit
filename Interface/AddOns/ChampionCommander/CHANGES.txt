@@ -1,8 +1,8 @@
-tag 0fd1cb1949e56a5518787a2394d1f46e4e24e9b8 1.1.0-Beta-4
+tag 307a2cbb04c4439d62e3a9e294d24a47e60d1956 1.1.0
 Author:	Alar of Runetotem <alar@aspide.it>
-Date:	Sun Oct 7 01:09:44 2018 +0200
+Date:	Tue Oct 9 22:56:41 2018 +0200
 
-Fixed lua error abou artifact power
+Fixed lua error about artifact power
 
 commit 1ce74378325e9ef2ab7fa7ed119ce154d9324667
 Author: Alar of Runetotem <alar@aspide.it>
