@@ -126,7 +126,7 @@ do -- enUS / enGB
 	L.Slash_Error_Unkown = "ERROR: Something went wrong!"
 end
 
-if LOCALE == "deDE" then -- Sinusquell (42), Tiggi2702 (6)
+if LOCALE == "deDE" then -- Sinusquell (42), Tiggi2702 (6), Vivan (2)
 L["Config_Importing_ImportingCanUpdate"] = "Beim Importieren können vorhandene Skalierung aktualisiert werden."
 L["Config_Importing_ImportingCanUpdate_Desc"] = "Wenn Sie eine Skalierung mit demselben Namen, derselben Klasse und Spezialisierung wie eine bereits vorhandene Skalierung importieren, wird die vorhandene Skalierung mit den neuen Gewichtungen aktualisiert, anstatt eine neue Skalierung zu erstellen. "
 L["Config_Importing_ImportingCanUpdate_Desc_Clarification"] = "Es kann mehrere Skalierungen mit demselben Namen geben, solange sie für verschiedene Spezialisierungen oder Klassen gelten. "
@@ -151,12 +151,10 @@ L["Config_Scales_Title"] = "Skalierungsliste "
 --[[ L["Config_Score_ScaleByAzeriteEmpowered"] = ""--]] 
 --[[Translation missing --]]
 --[[ L["Config_Score_ScaleByAzeriteEmpowered_Desc"] = ""--]] 
---[[Translation missing --]]
---[[ L["Config_Score_ShowOnlyUpgrades"] = ""--]] 
+L["Config_Score_ShowOnlyUpgrades"] = "Zeige Tooltip Information nur bei Upgrades an"
 --[[Translation missing --]]
 --[[ L["Config_Score_ShowOnlyUpgrades_Desc"] = ""--]] 
---[[Translation missing --]]
---[[ L["Config_Score_ShowTooltipLegend"] = ""--]] 
+L["Config_Score_ShowTooltipLegend"] = "Zeige eine Legende in Tooltips an"
 --[[Translation missing --]]
 --[[ L["Config_Score_ShowTooltipLegend_Desc"] = ""--]] 
 L["Config_Score_Title"] = "Punkte"
@@ -627,7 +625,7 @@ elseif LOCALE == "esMX" then
 --[[ L["WeightEditor_VersionText"] = ""--]] 
 
 
-elseif LOCALE == "frFR" then -- tthegarde (20)
+elseif LOCALE == "frFR" then -- tthegarde (20), Marechoux (9)
 L["Config_Importing_ImportingCanUpdate"] = "Importer peut modifier les échelles existantes."
 L["Config_Importing_ImportingCanUpdate_Desc"] = "Quand vous importez une échelle avec les mêmes nom, classe et spécialisation qu'une échelle pré-définie, l'échelle pré-définie sera mise à jour avec les nouveaux poids au lieu qu'une nouvelle échelle soit créée."
 L["Config_Importing_ImportingCanUpdate_Desc_Clarification"] = "Il peut y avoir plusieurs échelles avec le même nom tant qu'elles sont pour des classes ou spécialisations différentes."
@@ -636,32 +634,25 @@ L["Config_Scales_Desc"] = "Les réglages suivants n'affectent que la liste des �
 L["Config_Scales_OwnClassDefaultsOnly"] = "N'afficher que les échelles par défaut de votre classe"
 L["Config_Scales_OwnClassDefaultsOnly_Desc"] = "Cache les échelles par défaut qui ne correspondent pas à votre classe au lieu de toutes les afficher."
 L["Config_Scales_Title"] = "Liste des échelles"
---[[Translation missing --]]
---[[ L["Config_Score_AddItemLevelToScore"] = ""--]] 
---[[Translation missing --]]
---[[ L["Config_Score_AddItemLevelToScore_Desc"] = ""--]] 
---[[Translation missing --]]
---[[ L["Config_Score_AddPrimaryStatToScore"] = ""--]] 
+L["Config_Score_AddItemLevelToScore"] = "Ajouter le niveau d'objet à tous les scores"
+L["Config_Score_AddItemLevelToScore_Desc"] = "Ajouter le niveau d'objet des objets azéritiques au calcul des scores actuels, potentiels et maximaux."
+L["Config_Score_AddPrimaryStatToScore"] = "Ajouter la stat principale à tous les scores"
 --[[Translation missing --]]
 --[[ L["Config_Score_AddPrimaryStatToScore_Desc"] = ""--]] 
---[[Translation missing --]]
---[[ L["Config_Score_RelativeScore"] = ""--]] 
---[[Translation missing --]]
---[[ L["Config_Score_RelativeScore_Desc"] = ""--]] 
+L["Config_Score_RelativeScore"] = "Afficher des valeurs relatives dans les infobulles à la place des valeurs absolues"
+L["Config_Score_RelativeScore_Desc"] = "À la place de montrer la valeur absolue des échelles dans les infobulles, calculer la valeur relative comparée aux objets actuellement équipés et les montrer en pourcentage."
 --[[Translation missing --]]
 --[[ L["Config_Score_ScaleByAzeriteEmpowered"] = ""--]] 
 --[[Translation missing --]]
 --[[ L["Config_Score_ScaleByAzeriteEmpowered_Desc"] = ""--]] 
---[[Translation missing --]]
---[[ L["Config_Score_ShowOnlyUpgrades"] = ""--]] 
+L["Config_Score_ShowOnlyUpgrades"] = "N'afficher les infobulles que pour les améliorations"
 --[[Translation missing --]]
 --[[ L["Config_Score_ShowOnlyUpgrades_Desc"] = ""--]] 
 --[[Translation missing --]]
 --[[ L["Config_Score_ShowTooltipLegend"] = ""--]] 
 --[[Translation missing --]]
 --[[ L["Config_Score_ShowTooltipLegend_Desc"] = ""--]] 
---[[Translation missing --]]
---[[ L["Config_Score_Title"] = ""--]] 
+L["Config_Score_Title"] = "Score"
 --[[Translation missing --]]
 --[[ L["Config_SettingsAddonExplanation"] = ""--]] 
 L["Config_SettingsSavedPerChar"] = [=[Tous ces réglages sont sauvegardés par personnage.
@@ -716,8 +707,7 @@ L["Config_WeightEditor_ShowRolesOnlyForOwnSpec"] = "Affiche les traits de Rôle 
 --[[ L["DeletePopup_Warning"] = ""--]] 
 --[[Translation missing --]]
 --[[ L["ExportPopup_Desc"] = ""--]] 
---[[Translation missing --]]
---[[ L["ExportPopup_Title"] = ""--]] 
+L["ExportPopup_Title"] = "Exporter l'échelle"
 --[[Translation missing --]]
 --[[ L["ImportPopup_CreatedNewScale"] = ""--]] 
 --[[Translation missing --]]
@@ -726,8 +716,7 @@ L["Config_WeightEditor_ShowRolesOnlyForOwnSpec"] = "Affiche les traits de Rôle 
 --[[ L["ImportPopup_Error_MalformedString"] = ""--]] 
 --[[Translation missing --]]
 --[[ L["ImportPopup_Error_OldStringVersion"] = ""--]] 
---[[Translation missing --]]
---[[ L["ImportPopup_Title"] = ""--]] 
+L["ImportPopup_Title"] = "Importer l'échelle"
 --[[Translation missing --]]
 --[[ L["ImportPopup_UpdatedScale"] = ""--]] 
 --[[Translation missing --]]
@@ -1229,7 +1218,7 @@ L["WeightEditor_TooltipText"] = "Mostrar na descrição dos itens"
 L["WeightEditor_VersionText"] = "Versão %s"
 
 
-elseif LOCALE == "ruRU" then -- dartraiden (70), Hubbotu (18)
+elseif LOCALE == "ruRU" then -- dartraiden (70), Hubbotu (18), rtim0905 (1), Wolfeg (1)
 L["Config_Importing_ImportingCanUpdate"] = "Обновлять уже существующие наборы при импорте"
 L["Config_Importing_ImportingCanUpdate_Desc"] = "При импорте набора, совпадающего с существующим по имени, классу и специализации, вместо создания нового набора будет обновлён уже существующий набор."
 L["Config_Importing_ImportingCanUpdate_Desc_Clarification"] = "Допустимы наборы с одинаковыми названиями, если они предназначены для разных специализаций или классов."
@@ -1240,10 +1229,8 @@ L["Config_Scales_OwnClassDefaultsOnly_Desc"] = "Показывать не все
 L["Config_Scales_Title"] = "Список наборов"
 L["Config_Score_AddItemLevelToScore"] = "Добавить уровень предмета ко всем рейтингам"
 L["Config_Score_AddItemLevelToScore_Desc"] = "Добавить уровень азеритовых предметов к текущему, потенциальному и максимальному рейтингам."
---[[Translation missing --]]
---[[ L["Config_Score_AddPrimaryStatToScore"] = ""--]] 
---[[Translation missing --]]
---[[ L["Config_Score_AddPrimaryStatToScore_Desc"] = ""--]] 
+L["Config_Score_AddPrimaryStatToScore"] = "Добавить основную характеристику ко всем рейтингам"
+L["Config_Score_AddPrimaryStatToScore_Desc"] = "Добавить количество основных характеристик азеритового предмета к текущему, потенциальному и максимальному рейтингам."
 L["Config_Score_RelativeScore"] = "Показывать в подсказке относительные значения вместо абсолютных"
 L["Config_Score_RelativeScore_Desc"] = "Вместо абсолютных значений вычислять относительные (по сравнению с надетыми предметами) значения и показывать их в процентах."
 L["Config_Score_ScaleByAzeriteEmpowered"] = "Масштабировать прибавляемый уровень предмета с помощью ценности %s"
@@ -1336,57 +1323,53 @@ L["WeightEditor_TooltipText"] = "Показывать в подсказке"
 L["WeightEditor_VersionText"] = "Версия %s"
 
 
-elseif LOCALE == "zhCN" then -- plok245 (47), riggzh (36)
-L["Config_Importing_ImportingCanUpdate"] = "导入覆盖现有配置"
-L["Config_Importing_ImportingCanUpdate_Desc"] = "当导入配置名称相同并且职业专精一致时，将覆盖现有配置，而不是建立新配置。"
+elseif LOCALE == "zhCN" then -- plok245 (27), riggzh (29), xlfd2008 (34)
+L["Config_Importing_ImportingCanUpdate"] = "允许导入覆盖现有配置"
+L["Config_Importing_ImportingCanUpdate_Desc"] = "当导入配置名称相同并且职业专精一致时，将覆盖现有配置，而不是新建配置。"
 L["Config_Importing_ImportingCanUpdate_Desc_Clarification"] = "可以有多个同名配置，只要它们用于不同的专精或职业。"
 L["Config_Importing_Title"] = "导入"
-L["Config_Scales_Desc"] = "以下设置仅影响默认配置。所有自定义配置将在每个职业显示。"
+L["Config_Scales_Desc"] = "以下设置仅影响默认配置。所有自定义配置在每个职业中都显示。"
 L["Config_Scales_OwnClassDefaultsOnly"] = "只显示自己职业的默认配置"
-L["Config_Scales_OwnClassDefaultsOnly_Desc"] = "只显示你自己职业的默认配置，而不是显示所有的默认配置。"
+L["Config_Scales_OwnClassDefaultsOnly_Desc"] = "只显示您自己职业的默认配置，而不是显示所有的默认配置。"
 L["Config_Scales_Title"] = "配置列表"
-L["Config_Score_AddItemLevelToScore"] = "将物品等级添加到所有分数中"
-L["Config_Score_AddItemLevelToScore_Desc"] = "将艾泽里特护甲的物品等级添加到当前分数，当前可选最高分数，最大分数的计算中。"
---[[Translation missing --]]
---[[ L["Config_Score_AddPrimaryStatToScore"] = ""--]] 
---[[Translation missing --]]
---[[ L["Config_Score_AddPrimaryStatToScore_Desc"] = ""--]] 
+L["Config_Score_AddItemLevelToScore"] = "将物品等级计入所有分数中"
+L["Config_Score_AddItemLevelToScore_Desc"] = "将艾泽里特护甲的物品等级计入到所有当前已选分数、当前可选最高分和全部解锁最高分的计算中。"
+L["Config_Score_AddPrimaryStatToScore"] = "将主属性计入到所有分数中"
+L["Config_Score_AddPrimaryStatToScore_Desc"] = "将艾泽里特护甲的主属性值(%s/%s/%s)计入所有当前已选分数、当前可选最高分和全部解锁最高分的计算中。"
 L["Config_Score_RelativeScore"] = "在鼠标提示中显示相对值而不是绝对值"
-L["Config_Score_RelativeScore_Desc"] = "不在鼠标提示中显示权重的绝对值，而是计算与当前装备相比的相对值，并以百分比显示。"
-L["Config_Score_ScaleByAzeriteEmpowered"] = "按％s的权重计算物品等级分数"
-L["Config_Score_ScaleByAzeriteEmpowered_Desc"] = "将物品等级添加到分数中时，使用％s的权值来计算+1物品等级的分数，而不是使用+1物品等級 = +1分数。"
+L["Config_Score_RelativeScore_Desc"] = "不在鼠标提示中显示权值的绝对值，而是计算与当前装备相比的相对值，并以百分比显示。"
+L["Config_Score_ScaleByAzeriteEmpowered"] = "按％s的权值计算物品等级分数"
+L["Config_Score_ScaleByAzeriteEmpowered_Desc"] = "将物品等级计入分数中时，使用“艾泽里特强化”的权值来计算+1物品等级的分数，而不是按照“1物品等级=1分”来计算。"
 L["Config_Score_ShowOnlyUpgrades"] = "只显示有提升的鼠标提示"
 L["Config_Score_ShowOnlyUpgrades_Desc"] = "只有在与当前装备的物品相比有提升时，才显示鼠标提示中的权值。 仅适用于启用了相对值。"
---[[Translation missing --]]
---[[ L["Config_Score_ShowTooltipLegend"] = ""--]] 
---[[Translation missing --]]
---[[ L["Config_Score_ShowTooltipLegend_Desc"] = ""--]] 
+L["Config_Score_ShowTooltipLegend"] = "在鼠标提示中显示详细说明"
+L["Config_Score_ShowTooltipLegend_Desc"] = "在鼠标提示中显示“当前已选分数/当前可选最高分/全部解锁最高分”。"
 L["Config_Score_Title"] = "分数"
---[[Translation missing --]]
---[[ L["Config_SettingsAddonExplanation"] = ""--]] 
-L["Config_SettingsSavedPerChar"] = [=[这里的所有设置都是每个角色分开保存。
+L["Config_SettingsAddonExplanation"] = "此插件根据您选择的特质权重来计算艾泽里特护甲的“当前已选分数”，“当前可选最高分”和“全部解锁最高分”。"
+L["Config_SettingsSavedPerChar"] = [=[此处所有设置都是每个角色分开保存。
 自定义配置则为所有角色共享。]=]
---[[Translation missing --]]
---[[ L["Config_SettingsScoreExplanation"] = ""--]] 
-L["Config_WeightEditor_Desc"] = [=[以下设置只适用于显示在配置权重编辑器的特质。
-即使你禁用了它们，如果它们在启用配置中设置了权重，所有的艾泽里特特质仍会计算分数。]=]
+L["Config_SettingsScoreExplanation"] = [=[“当前已选分数”是该艾泽里特护甲中当前选择特质的分数之和。
+“当前可选最高分”是该艾泽里特护甲已解锁层中特质最高分数之和。
+“全部解锁最高分”是该艾泽里特护甲每一层中特质最高分数之和，包括未解锁的。]=]
+L["Config_WeightEditor_Desc"] = [=[以下设置只适用于显示在配置权值编辑器的特质。
+即使你禁用了它们，如果它们在启用配置中设置了权值，所有的艾泽里特特质仍会计算分数。]=]
 L["Config_WeightEditor_ShowDefensive"] = "显示防御性特质"
-L["Config_WeightEditor_ShowDefensive_Desc"] = "在配置权重编辑器中显示通用与职业特定的防御性特质。"
+L["Config_WeightEditor_ShowDefensive_Desc"] = "在配置权值编辑器中显示通用与职业特定的防御性特质。"
 L["Config_WeightEditor_ShowProfession"] = "显示专业技能专有特质"
-L["Config_WeightEditor_ShowProfession_Desc"] = "在配置权重编辑器中显示专业技能专有特质。这些特质只会出现在专业技能制造的装备中。目前只有工程头。"
+L["Config_WeightEditor_ShowProfession_Desc"] = "在配置权值编辑器中显示专业技能专有特质。这些特质只会出现在专业技能制造的装备中。目前只有工程头。"
 L["Config_WeightEditor_ShowPvP"] = "显示PvP专有特质"
-L["Config_WeightEditor_ShowPvP_Desc"] = "在配置权重编辑器中显示PvP专有特质。你只会看到自己的阵营特质，但对它们进行更改会应用到双方阵营特质。"
+L["Config_WeightEditor_ShowPvP_Desc"] = "在配置权值编辑器中显示PvP专有特质。你只会看到自己的阵营特质，但对它们进行更改会应用到双方阵营特质。"
 L["Config_WeightEditor_ShowPvP_Desc_Import"] = [=[当导出生成的字符串时，只包含你自己阵营的PvP特质，但它们可以与对立阵营PvP特质ID互换。
-当导入一个具有PvP特质的字符串时，权重会镜像导入到双方阵营特质中。]=]
+当导入一个具有PvP特质的字符串时，权值会镜像导入到双方阵营特质中。]=]
 L["Config_WeightEditor_ShowRole"] = "显示角色专有特质"
-L["Config_WeightEditor_ShowRole_Desc"] = "在配置权重编辑器中显示角色专有特质。"
+L["Config_WeightEditor_ShowRole_Desc"] = "在配置权值编辑器中显示角色专有特质。"
 L["Config_WeightEditor_ShowRolesOnlyForOwnSpec"] = "只显示自己专精职责的角色专有特质"
-L["Config_WeightEditor_ShowRolesOnlyForOwnSpec_Desc"] = "在配置权重编辑器中显示通用与当前专精相关的角色专有特质。启用此设置的话，例如治疗专有特质将会在DPS与坦克上隐藏等。"
+L["Config_WeightEditor_ShowRolesOnlyForOwnSpec_Desc"] = "在配置权值编辑器中显示通用与当前专精相关的角色专有特质。启用此设置的话，例如治疗专有特质将会在DPS与坦克上隐藏等。"
 L["Config_WeightEditor_ShowZone"] = "显示区域专有特质"
-L["Config_WeightEditor_ShowZone_Desc"] = "在配置权重编辑器中显示区域专有特质。这些特质只会出现在与特质相关的特定区域中获得的装备上。"
-L["Config_WeightEditor_ShowZone_Desc_Proc"] = [=[普通特质可以在任何地方生效，但团本特质的部分效果只能在相应的团本内生效（例如：奥迪尔特质的[重组矩阵]效果只能在奥迪尔内生效）
-团本特质将在配置权重编辑器的名称旁标有星号（*）]=]
-L["Config_WeightEditor_Title"] = "配置权重编辑器"
+L["Config_WeightEditor_ShowZone_Desc"] = "在配置权值编辑器中显示区域专有特质。这些特质只会出现在与特质相关的特定区域中获得的装备上。"
+L["Config_WeightEditor_ShowZone_Desc_Proc"] = [=[普通特质可以在任何地方生效，但团本特质的部分效果只能在相应的团本内生效（例如：奥迪尔特质的[重组阵列]效果只能在奥迪尔内生效）
+团本特质将在配置权值编辑器的名称旁标有星号（*）]=]
+L["Config_WeightEditor_Title"] = "配置权值编辑器"
 L["CreatePopup_Desc"] = "创建新配置。请从下拉列表中选择职业和天赋，然后输入新配置的名称并点击%1$s"
 L["CreatePopup_Error_CreatedNewScale"] = "创建新配置“%s”"
 L["CreatePopup_Error_UnknownError"] = "错误：无法创建新配置“%s”"
@@ -1394,11 +1377,11 @@ L["CreatePopup_Title"] = "添加配置"
 L["DefaultScaleName_Default"] = "默认"
 L["DefaultScaleName_Defensive"] = "防御"
 L["DefaultScaleName_Offensive"] = "输出"
-L["DeletePopup_DeletedDefaultScale"] = "删除正在使用的配置，恢复职业和天赋为默认选项"
+L["DeletePopup_DeletedDefaultScale"] = "删除的配置正在使用中，现已恢复为您职业和专精的默认选项！"
 L["DeletePopup_DeletedScale"] = "删除配置“%s”"
 L["DeletePopup_Desc"] = [=[正在删除配置“%1$s”
 点击%2$s确认
-所有使用此配置的职业和天赋将恢复默认]=]
+所有使用此配置的职业和专精将恢复默认]=]
 L["DeletePopup_Title"] = "删除配置"
 L["DeletePopup_Warning"] = "！这项操作是永久的且不可恢复！"
 L["ExportPopup_Desc"] = [=[导出配置%1$s
@@ -1412,17 +1395,16 @@ L["ImportPopup_Error_OldStringVersion"] = "错误：\"导入字符串\" -版本�
 L["ImportPopup_Title"] = "导入配置"
 L["ImportPopup_UpdatedScale"] = "更新现有的配置 \"%s\""
 L["ItemToolTip_AzeriteLevel"] = "艾泽里特等级: %1$d / %2$d"
---[[Translation missing --]]
---[[ L["ItemToolTip_Legend"] = ""--]] 
-L["PowersScoreString"] = [=[当前分数: %1$s/%2$s
-最大分数: %3$s
+L["ItemToolTip_Legend"] = "当前已选分数/当前可选最高分/全部解锁最高分"
+L["PowersScoreString"] = [=[当前已选分数: %1$s/%2$s
+全部解锁最高分: %3$s
 艾泽里特等级: %4$d/%5$d]=]
 L["PowersTitles_Class"] = "职业特质"
 L["PowersTitles_Defensive"] = "防御性特质"
 L["PowersTitles_Profession"] = "专业技能特质"
 L["PowersTitles_PvP"] = "PvP特质"
 L["PowersTitles_Role"] = "角色特质"
-L["PowersTitles_Zone"] = "团本与通用特质"
+L["PowersTitles_Zone"] = "团本与区域特质"
 L["RenamePopup_Desc"] = [=[正在重命名配置 %1$s
 在编辑框中输入新名称并按下 %2$s]=]
 L["RenamePopup_RenamedScale"] = "已重命名配置 \"%1$s\" 为 \"%2$s\""
@@ -1432,7 +1414,7 @@ L["ScaleName_Unnamed"] = "未命名"
 L["ScalesList_CreateImportText"] = "新建/导入"
 L["ScalesList_CustomGroupName"] = "自定义配置"
 L["ScalesList_DefaultGroupName"] = "默认配置"
-L["ScaleWeightEditor_Title"] = "%s 配置权重编辑器"
+L["ScaleWeightEditor_Title"] = "%s 配置权值编辑器"
 L["Slash_Command"] = "/azerite"
 L["Slash_Error_Unkown"] = "错误：出现一些错误！"
 L["Slash_RemindConfig"] = "到 ESC -> 界面 -> 插件 -> %s 来设置"
@@ -1447,7 +1429,7 @@ L["WeightEditor_TooltipText"] = "在鼠标提示中显示"
 L["WeightEditor_VersionText"] = "版本 %s"
 
 
-elseif LOCALE == "zhTW" then -- BNSSNB (87), Sinusquell (1)
+elseif LOCALE == "zhTW" then -- BNSSNB (89), Sinusquell (1)
 L["Config_Importing_ImportingCanUpdate"] = "導入可以更新現有比例"
 L["Config_Importing_ImportingCanUpdate_Desc"] = "當導入具有相同名稱，職業和專精的比例作為預先存在的比例時，現有比例將使用新權值更新，而不是建立新比例。"
 L["Config_Importing_ImportingCanUpdate_Desc_Clarification"] = "可以有多個具有相同名稱的比例，只要它們用於不同的專精或職業。"
@@ -1458,10 +1440,8 @@ L["Config_Scales_OwnClassDefaultsOnly_Desc"] = "只列出你自己職業的預�
 L["Config_Scales_Title"] = "比例清單"
 L["Config_Score_AddItemLevelToScore"] = "添加物品等級到所有分數"
 L["Config_Score_AddItemLevelToScore_Desc"] = "添加艾澤萊護甲的物品等級到所有當前分數，當前潛力與最高分數計算。"
---[[Translation missing --]]
---[[ L["Config_Score_AddPrimaryStatToScore"] = ""--]] 
---[[Translation missing --]]
---[[ L["Config_Score_AddPrimaryStatToScore_Desc"] = ""--]] 
+L["Config_Score_AddPrimaryStatToScore"] = "主屬性計入所有分數"
+L["Config_Score_AddPrimaryStatToScore_Desc"] = "將艾澤萊護甲的主屬性值(%s/%s/%s)計算加入當前分數，當前潛力以及最大分數。"
 L["Config_Score_RelativeScore"] = "在工具提示中顯示相對值而不是絕對值"
 L["Config_Score_RelativeScore_Desc"] = "不是在工具提示中顯示比例的絕對值，而是計算與當前裝備物品相比的相對值，並以百分比顯示差異。"
 L["Config_Score_ScaleByAzeriteEmpowered"] = "按比例中的％s權值縮放物品等級計分"
