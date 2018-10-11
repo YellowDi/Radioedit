@@ -1,5 +1,59 @@
-changeset:   743:16c8b07b352a
+changeset:   752:b5a107128b3f
 tag:         tip
+user:        Tercio
+date:        Wed Oct 10 23:01:37 2018 -0300
+summary:     - Fixing the pvp issue introduced in the previous build.
+
+
+changeset:   751:83144964254d
+user:        Tercio
+date:        Wed Oct 10 14:31:12 2018 -0300
+summary:     - Send character data when the group roster changes.
+
+
+changeset:   750:8ad20c7b78e7
+user:        Tercio
+date:        Tue Oct 09 18:43:05 2018 -0300
+summary:     - Player detail window now has bigger lines (16 pixels to 20).
+
+
+changeset:   749:4e7c350ff26b
+user:        Tercio
+date:        Sat Oct 06 17:39:20 2018 -0300
+summary:     - Added a macro section with useful macros.
+
+
+changeset:   748:589b441f6a68
+user:        Tercio
+date:        Fri Oct 05 09:18:09 2018 -0300
+summary:     - framework update.
+
+
+changeset:   747:5ae6f4f26046
+user:        Tercio
+date:        Sun Sep 30 20:05:18 2018 -0300
+summary:     - Updated to BFA 'Potion Used' and 'Health Potion and Stone' custom displays.
+
+
+changeset:   746:6bc9f8bacdb5
+user:        Tercio
+date:        Fri Sep 28 19:19:03 2018 -0300
+summary:     - Show light of the martyr damage on death log.
+
+
+changeset:   745:414ed11c2900
+user:        Tercio
+date:        Tue Sep 25 20:21:13 2018 -0300
+summary:     - Deprecated rules for friendly fire has been removed, this might fix some random issues with mind controlled players in the Lord Stormsong encounter in the Shrine of the Storm dungeon.
+
+
+changeset:   744:4249f1488249
+user:        Tercio
+date:        Tue Sep 18 18:13:39 2018 -0300
+summary:     - Fixed pets with the owner name showing twice in the pet name.
+
+
+changeset:   743:16c8b07b352a
 user:        Tercio
 date:        Tue Sep 11 22:19:59 2018 -0300
 summary:     - Added macro text box in Encounter Plugin.

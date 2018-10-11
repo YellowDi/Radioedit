@@ -844,10 +844,8 @@ L["STRING_OPTIONS_OVERALL_DUNGEONCLEAN"] = "地下城小怪"
 L["STRING_OPTIONS_OVERALL_DUNGEONCLEAN_DESC"] = "地下城清理小怪片段被添加到总体数据"
 L["STRING_OPTIONS_OVERALL_LOGOFF"] = "清除注销"
 L["STRING_OPTIONS_OVERALL_LOGOFF_DESC"] = "当启用时，总体数据将自动被清除当你退到角色界面。"
---[[Translation missing --]]
---[[ L["STRING_OPTIONS_OVERALL_MYTHICPLUS"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_OPTIONS_OVERALL_MYTHICPLUS_DESC"] = ""--]] 
+L["STRING_OPTIONS_OVERALL_MYTHICPLUS"] = "大秘境开始时清除"
+L["STRING_OPTIONS_OVERALL_MYTHICPLUS_DESC"] = "启用后，当一个新的大秘境开始时，整个数据都将被自动清除。"
 L["STRING_OPTIONS_OVERALL_NEWBOSS"] = "新BOSS时清除"
 L["STRING_OPTIONS_OVERALL_NEWBOSS_DESC"] = "当启用时，总数据时将自动被清除当遭遇不同的地下城首领。"
 L["STRING_OPTIONS_OVERALL_RAIDBOSS"] = "地下城首领"

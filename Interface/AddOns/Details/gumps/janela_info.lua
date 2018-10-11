@@ -30,6 +30,9 @@ local SummaryWidgets = {}
 local CurrentTab = "Summary"
 local IconTexCoord = {5/64, 59/64, 5/64, 59/64}
 
+local CONST_BAR_HEIGHT = 20
+local CONST_TARGET_HEIGHT = 18
+
 ------------------------------------------------------------------------------------------------------------------------------
 --self = instancia
 --jogador = classe_damage ou classe_heal
@@ -560,8 +563,10 @@ function gump:SetaDetalheInfoAltura (index, xmod, ymod)
 	info.dano_porcento:SetPoint ("TOPRIGHT", background, "TOPRIGHT", -x + right, y + (-24))
 	info.dano_dps:SetPoint ("TOPRIGHT", background, "TOPRIGHT", -x + right, y + (-44))
 	
-	info.bg:SetPoint ("TOPLEFT", background, "TOPLEFT", 0, 0)
-	info.bg:SetHeight (background:GetHeight())
+	info.bg:SetPoint ("TOPLEFT", background, "TOPLEFT", 1, -1)
+	info.bg:SetHeight (background:GetHeight() - 2)
+	info.bg:SetWidth (info.bg:GetWidth() - 2) --ofcourse why not
+	
 	info.bg_end:SetPoint ("LEFT", info.bg, "LEFT", info.bg:GetValue()*2.19, 0)
 	info.bg_end:SetHeight (background:GetHeight()+2)
 	info.bg_end:SetWidth (6)
@@ -581,10 +586,10 @@ function gump:SetaDetalheInfoTexto (index, p, arg1, arg2, arg3, arg4, arg5, arg6
 	if (p) then
 		if (_type (p) == "table") then
 			info.bg:SetValue (p.p)
-			--info.bg:SetStatusBarColor (p.c[1], p.c[2], p.c[3], p.c[4] or 1)
+			info.bg:SetStatusBarColor (p.c[1], p.c[2], p.c[3], p.c[4] or 1)
 		else
 			info.bg:SetValue (p)
-			--info.bg:SetStatusBarColor (1, 1, 1, 0.5)
+			info.bg:SetStatusBarColor (1, 1, 1, .5)
 		end
 		
 		--if (index == 1) then
@@ -728,10 +733,11 @@ function gump:JI_AtualizaContainerBarras (amt)
 	local container = _detalhes.janela_info.container_barras
 	
 	if (amt >= 9 and container.ultimo ~= amt) then
-		local tamanho = 17*amt
+		local tamanho = (CONST_BAR_HEIGHT + 1) * amt
 		container.gump:SetHeight (tamanho)
 		container.slider:Update()
 		container.ultimo = amt
+		
 	elseif (amt < 8 and container.slider.ativo) then
 		container.slider:Update (true)
 		container.gump:SetHeight (140)
@@ -740,16 +746,16 @@ function gump:JI_AtualizaContainerBarras (amt)
 	end
 end
 
-
 function gump:JI_AtualizaContainerAlvos (amt)
 
 	local container = _detalhes.janela_info.container_alvos
 	
 	if (amt >= 6 and container.ultimo ~= amt) then
-		local tamanho = 17*amt
+		local tamanho = (CONST_TARGET_HEIGHT + 1) * amt
 		container.gump:SetHeight (tamanho)
 		container.slider:Update()
 		container.ultimo = amt
+		
 	elseif (amt <= 5 and container.slider.ativo) then
 		container.slider:Update (true)
 		container.gump:SetHeight (100)
@@ -5146,7 +5152,7 @@ local row_on_enter = function (self)
 	end
 	
 	--> aumenta o tamanho da barra
-	self:SetHeight (17) --> altura determinada pela inst�ncia
+	self:SetHeight (CONST_BAR_HEIGHT + 1)
 	--> poe a barra com alfa 1 ao inv�s de 0.9
 	self:SetAlpha(1)
 
@@ -5165,6 +5171,8 @@ local row_on_enter = function (self)
 		elseif (not self.minha_tabela or not self.minha_tabela:MontaTooltipAlvos (self, self._index, info.instancia)) then  -- > poderia ser aprimerado para uma tailcall
 			return
 		end
+		
+		self:SetHeight (CONST_TARGET_HEIGHT + 1)
 		
 		GameTooltip:Show()
 		
@@ -5185,8 +5193,8 @@ local row_on_enter = function (self)
 		end
 	
 		--> da zoom no icone
-		self.icone:SetWidth (17)
-		self.icone:SetHeight (17)	
+		self.icone:SetWidth (CONST_BAR_HEIGHT + 2)
+		self.icone:SetHeight (CONST_BAR_HEIGHT + 2)
 		--> poe a alfa do icone em 1.0
 		self.icone:SetAlpha (1)
 		
@@ -5210,7 +5218,7 @@ local row_on_leave = function (self)
 	self.mouse_over = false
 
 	--> diminui o tamanho da barra
-	self:SetHeight (16)
+	self:SetHeight (CONST_BAR_HEIGHT)
 	--> volta com o alfa antigo da barra que era de 0.9
 	self:SetAlpha(0.9)
 	
@@ -5225,8 +5233,8 @@ local row_on_leave = function (self)
 	
 	if (self.isMain) then
 		--> retira o zoom no icone
-		self.icone:SetWidth (14)
-		self.icone:SetHeight (14)
+		self.icone:SetWidth (CONST_BAR_HEIGHT)
+		self.icone:SetHeight (CONST_BAR_HEIGHT)
 		--> volta com a alfa antiga da barra
 		self.icone:SetAlpha (1)
 		
@@ -5239,6 +5247,9 @@ local row_on_leave = function (self)
 			info.jogador.detalhes = nil
 			gump:HidaAllDetalheInfo()
 		end
+	
+	elseif (self.isAlvo) then
+		self:SetHeight (CONST_TARGET_HEIGHT)
 	end
 end
 
@@ -5340,12 +5351,7 @@ local function CriaTexturaBarra (instancia, barra)
 	
 	local texture = SharedMedia:Fetch ("statusbar", _detalhes.player_details_window.bar_texture)
 	barra.textura:SetStatusBarTexture (texture)
-	
-	--barra.textura:SetStatusBarTexture ([[Interface\AddOns\Details\Images\bar_skyline.tga]])
-	--barra.textura:SetStatusBarTexture ([[Interface\AddOns\Details\Images\bar_serenity]])
 	barra.textura:SetStatusBarTexture (.6, .6, .6, 1)
-
-	--print (texture, _detalhes.player_details_window.bar_texture)
 	
 	barra.textura:SetStatusBarColor (.5, .5, .5, 0)
 	barra.textura:SetMinMaxValues (0,100)
@@ -5360,7 +5366,7 @@ local function CriaTexturaBarra (instancia, barra)
 	end
 	
 	barra.texto_esquerdo = barra:CreateFontString (nil, "OVERLAY", "GameFontHighlightSmall")
-	barra.texto_esquerdo:SetPoint ("LEFT", barra.textura, "LEFT", 22, 0)
+	barra.texto_esquerdo:SetPoint ("LEFT", barra.textura, "LEFT", CONST_BAR_HEIGHT + 6, 0)
 	barra.texto_esquerdo:SetJustifyH ("LEFT")
 	barra.texto_esquerdo:SetTextColor (1,1,1,1)
 	
@@ -5496,6 +5502,8 @@ local target_on_leave = function (self)
 	self:SetAlpha (.7)
 end
 
+
+
 function gump:CriaNovaBarraInfo1 (instancia, index)
 
 	if (_detalhes.janela_info.barras1 [index]) then
@@ -5506,10 +5514,10 @@ function gump:CriaNovaBarraInfo1 (instancia, index)
 	local janela = info.container_barras.gump
 
 	local esta_barra = _CreateFrame ("Button", "Details_infobox1_bar_"..index, info.container_barras.gump)
-	esta_barra:SetHeight (16) --> altura determinada pela inst�ncia
+	esta_barra:SetHeight (CONST_BAR_HEIGHT)
 	esta_barra.index = index
 
-	local y = (index-1)*17 --> 17 � a altura da barra
+	local y = (index-1) * (CONST_BAR_HEIGHT + 1)
 	y = y*-1 --> baixo
 	
 	esta_barra:SetPoint ("LEFT", janela, "LEFT")
@@ -5522,7 +5530,7 @@ function gump:CriaNovaBarraInfo1 (instancia, index)
 	
 	esta_barra.targets = CreateFrame ("frame", "Details_infobox1_bar_"..index.."Targets", esta_barra)
 	esta_barra.targets:SetPoint ("right", esta_barra, "right")
-	esta_barra.targets:SetSize (15, 15)
+	esta_barra.targets:SetSize (CONST_BAR_HEIGHT-1, CONST_BAR_HEIGHT-1)
 	esta_barra.targets.texture = esta_barra.targets:CreateTexture (nil, overlay)
 	esta_barra.targets.texture:SetTexture ([[Interface\MINIMAP\TRACKING\Target]])
 	esta_barra.targets.texture:SetAllPoints()
@@ -5536,16 +5544,16 @@ function gump:CriaNovaBarraInfo1 (instancia, index)
 	
 	--> icone
 	esta_barra.miniframe = CreateFrame ("frame", nil, esta_barra)
-	esta_barra.miniframe:SetSize (14, 14)
-	esta_barra.miniframe:SetPoint ("RIGHT", esta_barra.textura, "LEFT", 18, 0)
+	esta_barra.miniframe:SetSize (CONST_BAR_HEIGHT-2, CONST_BAR_HEIGHT-2)
+	esta_barra.miniframe:SetPoint ("RIGHT", esta_barra.textura, "LEFT", CONST_BAR_HEIGHT + 2, 0)
 	
 	esta_barra.miniframe:SetScript ("OnEnter", miniframe_func_on_enter)
 	esta_barra.miniframe:SetScript ("OnLeave", miniframe_func_on_leave)
 	
 	esta_barra.icone = esta_barra:CreateTexture (nil, "OVERLAY")
-	esta_barra.icone:SetWidth (14)
-	esta_barra.icone:SetHeight (14)
-	esta_barra.icone:SetPoint ("RIGHT", esta_barra.textura, "LEFT", 18, 0)
+	esta_barra.icone:SetWidth (CONST_BAR_HEIGHT)
+	esta_barra.icone:SetHeight (CONST_BAR_HEIGHT)
+	esta_barra.icone:SetPoint ("RIGHT", esta_barra.textura, "LEFT", CONST_BAR_HEIGHT + 2, 0)
 	
 	esta_barra:SetAlpha(0.9)
 	esta_barra.icone:SetAlpha (1)
@@ -5572,9 +5580,9 @@ function gump:CriaNovaBarraInfo2 (instancia, index)
 	local janela = info.container_alvos.gump
 
 	local esta_barra = _CreateFrame ("Button", "Details_infobox2_bar_"..index, info.container_alvos.gump)
-	esta_barra:SetHeight (16) --> altura determinada pela inst�ncia
+	esta_barra:SetHeight (CONST_TARGET_HEIGHT)
 
-	local y = (index-1)*17 --> 17 � a altura da barra
+	local y = (index-1) * (CONST_TARGET_HEIGHT + 1)
 	y = y*-1 --> baixo
 	
 	esta_barra:SetPoint ("LEFT", janela, "LEFT")
@@ -5589,9 +5597,9 @@ function gump:CriaNovaBarraInfo2 (instancia, index)
 
 	--> icone
 	esta_barra.icone = esta_barra:CreateTexture (nil, "OVERLAY")
-	esta_barra.icone:SetWidth (14)
-	esta_barra.icone:SetHeight (14)
-	esta_barra.icone:SetPoint ("RIGHT", esta_barra.textura, "LEFT", 18, 0)
+	esta_barra.icone:SetWidth (CONST_TARGET_HEIGHT)
+	esta_barra.icone:SetHeight (CONST_TARGET_HEIGHT)
+	esta_barra.icone:SetPoint ("RIGHT", esta_barra.textura, "LEFT", CONST_TARGET_HEIGHT + 2, 0)
 	
 	esta_barra:SetAlpha (ALPHA_BLEND_AMOUNT)
 	esta_barra.icone:SetAlpha (1)

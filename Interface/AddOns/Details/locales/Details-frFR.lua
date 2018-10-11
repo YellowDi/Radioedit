@@ -39,16 +39,14 @@ L["STRING_ATTRIBUTE_DAMAGE_FRAGS"] = "Frags"
 L["STRING_ATTRIBUTE_DAMAGE_FRIENDLYFIRE"] = "Dégâts aux alliés"
 L["STRING_ATTRIBUTE_DAMAGE_TAKEN"] = "Dégâts Subis"
 L["STRING_ATTRIBUTE_ENERGY"] = "Ressources"
---[[Translation missing --]]
---[[ L["STRING_ATTRIBUTE_ENERGY_ALTERNATEPOWER"] = ""--]] 
+L["STRING_ATTRIBUTE_ENERGY_ALTERNATEPOWER"] = "Puissance alternative"
 L["STRING_ATTRIBUTE_ENERGY_ENERGY"] = "Énergie Générée"
 L["STRING_ATTRIBUTE_ENERGY_MANA"] = "Mana Restaurée"
 L["STRING_ATTRIBUTE_ENERGY_RAGE"] = "Rage Générée"
 L["STRING_ATTRIBUTE_ENERGY_RESOURCES"] = "Autres ressources"
 L["STRING_ATTRIBUTE_ENERGY_RUNEPOWER"] = "Puissance Runique Générée"
 L["STRING_ATTRIBUTE_HEAL"] = "Soin"
---[[Translation missing --]]
---[[ L["STRING_ATTRIBUTE_HEAL_ABSORBED"] = ""--]] 
+L["STRING_ATTRIBUTE_HEAL_ABSORBED"] = "Soin absorbé"
 L["STRING_ATTRIBUTE_HEAL_DONE"] = "Soins Prodigués"
 L["STRING_ATTRIBUTE_HEAL_ENEMY"] = "Soins reçus (Ennemi)"
 L["STRING_ATTRIBUTE_HEAL_HPS"] = "HPS"
@@ -201,60 +199,36 @@ L["STRING_DAMAGE_TAKEN_FROM"] = "Dégâts pris de"
 --[[ L["STRING_DPS"] = ""--]] 
 --[[Translation missing --]]
 --[[ L["STRING_EMPTY_SEGMENT"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_ENABLED"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_ENVIRONMENTAL_DROWNING"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_ENVIRONMENTAL_FALLING"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_ENVIRONMENTAL_FATIGUE"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_ENVIRONMENTAL_FIRE"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_ENVIRONMENTAL_LAVA"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_ENVIRONMENTAL_SLIME"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_EQUILIZING"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_ERASE"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_ERASE_DATA"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_ERASE_DATA_OVERALL"] = ""--]] 
+L["STRING_ENABLED"] = "Activé"
+L["STRING_ENVIRONMENTAL_DROWNING"] = "Environnement (noyade)"
+L["STRING_ENVIRONMENTAL_FALLING"] = "Environnement (chute)"
+L["STRING_ENVIRONMENTAL_FATIGUE"] = "Environnement (fatigue)"
+L["STRING_ENVIRONMENTAL_FIRE"] = "Environnement (feu)"
+L["STRING_ENVIRONMENTAL_LAVA"] = "Environnement (lave)"
+L["STRING_ENVIRONMENTAL_SLIME"] = "Environnement (vase)"
+L["STRING_EQUILIZING"] = "Partager les données des rencontres"
+L["STRING_ERASE"] = "Effacer"
+L["STRING_ERASE_DATA"] = "Réinitialiser toutes les données"
+L["STRING_ERASE_DATA_OVERALL"] = "Réinitialiser les données globales"
 --[[Translation missing --]]
 --[[ L["STRING_ERASE_IN_COMBAT"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_EXAMPLE"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_EXPLOSION"] = ""--]] 
+L["STRING_EXAMPLE"] = "Exemple"
+L["STRING_EXPLOSION"] = "explosion"
 --[[Translation missing --]]
 --[[ L["STRING_FAIL_ATTACKS"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_FEEDBACK_CURSE_DESC"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_FEEDBACK_MMOC_DESC"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_FEEDBACK_PREFERED_SITE"] = ""--]] 
+L["STRING_FEEDBACK_CURSE_DESC"] = "Ouvrez un ticket ou laissez un message sur la page de Details!"
+L["STRING_FEEDBACK_MMOC_DESC"] = "Envoyez un message sur notre fil de discussion du forum de mmo-champion."
+L["STRING_FEEDBACK_PREFERED_SITE"] = "Choisissez votre site communautaire préféré :"
 --[[Translation missing --]]
 --[[ L["STRING_FEEDBACK_SEND_FEEDBACK"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_FEEDBACK_WOWI_DESC"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_FIGHTNUMBER"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_FORGE_BUTTON_ALLSPELLS"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_FORGE_BUTTON_ALLSPELLS_DESC"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_FORGE_BUTTON_BWTIMERS"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_FORGE_BUTTON_BWTIMERS_DESC"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_FORGE_BUTTON_DBMTIMERS"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_FORGE_BUTTON_DBMTIMERS_DESC"] = ""--]] 
+L["STRING_FEEDBACK_WOWI_DESC"] = "Laissez un commentaire sur la page du projet de Details!"
+L["STRING_FIGHTNUMBER"] = "Combat #"
+L["STRING_FORGE_BUTTON_ALLSPELLS"] = "Tous les sorts"
+L["STRING_FORGE_BUTTON_ALLSPELLS_DESC"] = "Liste tous les sorts des joueurs et des PNJs."
+L["STRING_FORGE_BUTTON_BWTIMERS"] = "Délais BigWigs"
+L["STRING_FORGE_BUTTON_BWTIMERS_DESC"] = "Liste les délais de BigWigs"
+L["STRING_FORGE_BUTTON_DBMTIMERS"] = "Délais DBM"
+L["STRING_FORGE_BUTTON_DBMTIMERS_DESC"] = "Liste les délais de Deadly Boss Mods"
 --[[Translation missing --]]
 --[[ L["STRING_FORGE_BUTTON_ENCOUNTERSPELLS"] = ""--]] 
 --[[Translation missing --]]
@@ -331,12 +305,9 @@ L["STRING_DAMAGE_TAKEN_FROM"] = "Dégâts pris de"
 --[[ L["STRING_FORGE_TUTORIAL_TITLE"] = ""--]] 
 --[[Translation missing --]]
 --[[ L["STRING_FORGE_TUTORIAL_VIDEO"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_FREEZE"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_FROM"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_GERAL"] = ""--]] 
+L["STRING_FREEZE"] = "Ce segment n'est pas disponible pour le moment"
+L["STRING_FROM"] = "De"
+L["STRING_GERAL"] = "Général"
 --[[Translation missing --]]
 --[[ L["STRING_GLANCING"] = ""--]] 
 --[[Translation missing --]]
@@ -406,14 +377,10 @@ L["STRING_IMAGEEDIT_ALPHA"] = "Transparence"
 --[[ L["STRING_INSTANCE_CHAT"] = ""--]] 
 --[[Translation missing --]]
 --[[ L["STRING_INSTANCE_LIMIT"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_INTERFACE_OPENOPTIONS"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_ISA_PET"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_KEYBIND_BOOKMARK"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_KEYBIND_BOOKMARK_NUMBER"] = ""--]] 
+L["STRING_INTERFACE_OPENOPTIONS"] = "Ouvrir le panneau des options"
+L["STRING_ISA_PET"] = "Cet acteur est un familier"
+L["STRING_KEYBIND_BOOKMARK"] = "Marque-pages"
+L["STRING_KEYBIND_BOOKMARK_NUMBER"] = "Marque-page #%s"
 --[[Translation missing --]]
 --[[ L["STRING_KEYBIND_RESET_SEGMENTS"] = ""--]] 
 --[[Translation missing --]]
@@ -442,18 +409,15 @@ L["STRING_LEFT"] = "gauche"
 L["STRING_LEFT_CLICK_SHARE"] = "Clic gauche pour signaler."
 --[[Translation missing --]]
 --[[ L["STRING_LEFT_TO_RIGHT"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_LOCK_DESC"] = ""--]] 
+L["STRING_LOCK_DESC"] = "Verrouille ou déverrouille la fenêtre"
 --[[Translation missing --]]
 --[[ L["STRING_LOCK_WINDOW"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_MASTERY"] = ""--]] 
+L["STRING_MASTERY"] = "Maîtrise"
 L["STRING_MAXIMUM"] = "Maximum"
 L["STRING_MAXIMUM_SHORT"] = "Max"
 --[[Translation missing --]]
 --[[ L["STRING_MEDIA"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_MELEE"] = ""--]] 
+L["STRING_MELEE"] = "Mêlée"
 L["STRING_MEMORY_ALERT_BUTTON"] = "J'ai compris"
 L["STRING_MEMORY_ALERT_TEXT1"] = "Details! utilise beaucoup de mémoire, mais, |cFFFF8800contrairement à la croyance populaire|r, utilisation de la mémoire par extension |cFFFF8800n'a pas d'incidence|r en rien les performances du jeu ou de votre FPS."
 L["STRING_MEMORY_ALERT_TEXT2"] = "Donc, si vous voyez Details! en utilisant beaucoup de mémoire, ne paniquez pas :D! |cFFFF8800Tout va bien|r, et une partie de cette mémoire est encore |cFFFF8800utilisé dans caches|r pour l'addon encore plus vite."
@@ -467,20 +431,13 @@ L["STRING_MEMORY_ALERT_TITLE"] = "S'il vous plaît lire attentivement!"
 --[[ L["STRING_MENU_CLOSE_INSTANCE_DESC2"] = ""--]] 
 --[[Translation missing --]]
 --[[ L["STRING_MENU_INSTANCE_CONTROL"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_MINIMAP_TOOLTIP1"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_MINIMAP_TOOLTIP11"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_MINIMAP_TOOLTIP12"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_MINIMAP_TOOLTIP2"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_MINIMAPMENU_CLOSEALL"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_MINIMAPMENU_HIDEICON"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_MINIMAPMENU_LOCK"] = ""--]] 
+L["STRING_MINIMAP_TOOLTIP1"] = "|cFFCFCFCFclic gauche| r: ouvre le panneau des options"
+L["STRING_MINIMAP_TOOLTIP11"] = "|cFFCFCFCFclic gauche|r : efface tous les segments"
+L["STRING_MINIMAP_TOOLTIP12"] = "|cFFCFCFCFclic gauche|r : affiche/cache les fenêtres"
+L["STRING_MINIMAP_TOOLTIP2"] = "|cFFCFCFCFclic droit|r : menu rapide"
+L["STRING_MINIMAPMENU_CLOSEALL"] = "Tout fermer"
+L["STRING_MINIMAPMENU_HIDEICON"] = "Cacher l'icône de la minicarte"
+L["STRING_MINIMAPMENU_LOCK"] = "Verrouiller"
 --[[Translation missing --]]
 --[[ L["STRING_MINIMAPMENU_NEWWINDOW"] = ""--]] 
 --[[Translation missing --]]
@@ -533,18 +490,12 @@ L["STRING_MINITUTORIAL_OPTIONS_PANEL6"] = "Sélectionnez ici quelle fenêtre vou
 --[[ L["STRING_MUSIC_DETAILS_ROBERTOCARLOS"] = ""--]] 
 --[[Translation missing --]]
 --[[ L["STRING_NEWROW"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_NEWS_REINSTALL"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_NEWS_TITLE"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_NO"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_NO_DATA"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_NO_SPELL"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_NO_TARGET"] = ""--]] 
+L["STRING_NEWS_REINSTALL"] = "Des problèmes après une mise à jour ? Essayez la commande '/details reinstall'."
+L["STRING_NEWS_TITLE"] = "Quoi de neuf dans cette version"
+L["STRING_NO"] = "Non"
+L["STRING_NO_DATA"] = "les données ont déjà été nettoyées"
+L["STRING_NO_SPELL"] = "aucun sort n'a été utilisé"
+L["STRING_NO_TARGET"] = "Aucune cible trouvée."
 --[[Translation missing --]]
 --[[ L["STRING_NO_TARGET_BOX"] = ""--]] 
 --[[Translation missing --]]
@@ -555,8 +506,7 @@ L["STRING_MINITUTORIAL_OPTIONS_PANEL6"] = "Sélectionnez ici quelle fenêtre vou
 --[[ L["STRING_NOMORE_INSTANCES"] = ""--]] 
 --[[Translation missing --]]
 --[[ L["STRING_NORMAL_HITS"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_NUMERALSYSTEM"] = ""--]] 
+L["STRING_NUMERALSYSTEM"] = "Système numérique"
 --[[Translation missing --]]
 --[[ L["STRING_NUMERALSYSTEM_ARABIC_MYRIAD_EASTASIA"] = ""--]] 
 --[[Translation missing --]]
@@ -2047,58 +1997,36 @@ L["STRING_MINITUTORIAL_OPTIONS_PANEL6"] = "Sélectionnez ici quelle fenêtre vou
 --[[ L["STRING_OVERHEAL"] = ""--]] 
 --[[Translation missing --]]
 --[[ L["STRING_OVERHEALED"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_PARRY"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_PERCENTAGE"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_PET"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_PETS"] = ""--]] 
+L["STRING_PARRY"] = "Parade"
+L["STRING_PERCENTAGE"] = "Pourcentage"
+L["STRING_PET"] = "Familier"
+L["STRING_PETS"] = "Familiers"
 --[[Translation missing --]]
 --[[ L["STRING_PLAYER_DETAILS"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_PLAYERS"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_PLEASE_WAIT"] = ""--]] 
+L["STRING_PLAYERS"] = "Joueurs"
+L["STRING_PLEASE_WAIT"] = "Veuillez patienter"
 --[[Translation missing --]]
 --[[ L["STRING_PLUGIN_CLEAN"] = ""--]] 
 --[[Translation missing --]]
 --[[ L["STRING_PLUGIN_CLOCKNAME"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_PLUGIN_CLOCKTYPE"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_PLUGIN_DURABILITY"] = ""--]] 
+L["STRING_PLUGIN_CLOCKTYPE"] = "Type d'horloge"
+L["STRING_PLUGIN_DURABILITY"] = "Durabilité"
 --[[Translation missing --]]
 --[[ L["STRING_PLUGIN_FPS"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_PLUGIN_GOLD"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_PLUGIN_LATENCY"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_PLUGIN_MINSEC"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_PLUGIN_NAMEALREADYTAKEN"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_PLUGIN_PATTRIBUTENAME"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_PLUGIN_PDPSNAME"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_PLUGIN_PSEGMENTNAME"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_PLUGIN_SECONLY"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_PLUGIN_SEGMENTTYPE"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_PLUGIN_SEGMENTTYPE_1"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_PLUGIN_SEGMENTTYPE_2"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_PLUGIN_SEGMENTTYPE_3"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_PLUGIN_THREATNAME"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_PLUGIN_TIME"] = ""--]] 
+L["STRING_PLUGIN_GOLD"] = "Or"
+L["STRING_PLUGIN_LATENCY"] = "Latence"
+L["STRING_PLUGIN_MINSEC"] = "Minutes & secondes"
+L["STRING_PLUGIN_NAMEALREADYTAKEN"] = "Details! ne peut installer le plugin car le nom a déjà été pris"
+L["STRING_PLUGIN_PATTRIBUTENAME"] = "Attribut"
+L["STRING_PLUGIN_PDPSNAME"] = "DPS du raid"
+L["STRING_PLUGIN_PSEGMENTNAME"] = "Segment"
+L["STRING_PLUGIN_SECONLY"] = "Secondes uniquement"
+L["STRING_PLUGIN_SEGMENTTYPE"] = "Type de segment"
+L["STRING_PLUGIN_SEGMENTTYPE_1"] = "Combat #X"
+L["STRING_PLUGIN_SEGMENTTYPE_2"] = "Nom de la rencontre"
+L["STRING_PLUGIN_SEGMENTTYPE_3"] = "Nom de la rencontre plus segment"
+L["STRING_PLUGIN_THREATNAME"] = "Ma menace"
+L["STRING_PLUGIN_TIME"] = "Horloge"
 --[[Translation missing --]]
 --[[ L["STRING_PLUGIN_TIMEDIFF"] = ""--]] 
 --[[Translation missing --]]
@@ -2113,18 +2041,14 @@ L["STRING_MINITUTORIAL_OPTIONS_PANEL6"] = "Sélectionnez ici quelle fenêtre vou
 --[[ L["STRING_PLUGINOPTIONS_FONTFACE"] = ""--]] 
 --[[Translation missing --]]
 --[[ L["STRING_PLUGINOPTIONS_NOFORMAT"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_PLUGINOPTIONS_TEXTALIGN"] = ""--]] 
+L["STRING_PLUGINOPTIONS_TEXTALIGN"] = "Alignement du texte"
 --[[Translation missing --]]
 --[[ L["STRING_PLUGINOPTIONS_TEXTALIGN_X"] = ""--]] 
 --[[Translation missing --]]
 --[[ L["STRING_PLUGINOPTIONS_TEXTALIGN_Y"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_PLUGINOPTIONS_TEXTCOLOR"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_PLUGINOPTIONS_TEXTSIZE"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_PLUGINOPTIONS_TEXTSTYLE"] = ""--]] 
+L["STRING_PLUGINOPTIONS_TEXTCOLOR"] = "Couleur du texte"
+L["STRING_PLUGINOPTIONS_TEXTSIZE"] = "Taille de la police"
+L["STRING_PLUGINOPTIONS_TEXTSTYLE"] = "Style du texte"
 --[[Translation missing --]]
 --[[ L["STRING_QUERY_INSPECT"] = ""--]] 
 --[[Translation missing --]]
@@ -2323,22 +2247,16 @@ L["STRING_MINITUTORIAL_OPTIONS_PANEL6"] = "Sélectionnez ici quelle fenêtre vou
 --[[ L["STRING_SLASH_WIPECONFIG_DESC"] = ""--]] 
 --[[Translation missing --]]
 --[[ L["STRING_SLASH_WORLDBOSS"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_SLASH_WORLDBOSS_DESC"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_SPELL_INTERRUPTED"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_SPELLLIST"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_SPELLS"] = ""--]] 
+L["STRING_SLASH_WORLDBOSS_DESC"] = "exécute une macro indiquant quels boss vous avez tués cette semaine."
+L["STRING_SPELL_INTERRUPTED"] = "Sorts interrompus"
+L["STRING_SPELLLIST"] = "Liste des sorts"
+L["STRING_SPELLS"] = "Sorts"
 --[[Translation missing --]]
 --[[ L["STRING_SPIRIT_LINK_TOTEM"] = ""--]] 
 --[[Translation missing --]]
 --[[ L["STRING_SPIRIT_LINK_TOTEM_DESC"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_STATISTICS"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_STATUSBAR_NOOPTIONS"] = ""--]] 
+L["STRING_STATISTICS"] = "Statistiques"
+L["STRING_STATUSBAR_NOOPTIONS"] = "Ce widget n'a pas d'option."
 --[[Translation missing --]]
 --[[ L["STRING_SWITCH_CLICKME"] = ""--]] 
 --[[Translation missing --]]
@@ -2347,32 +2265,23 @@ L["STRING_MINITUTORIAL_OPTIONS_PANEL6"] = "Sélectionnez ici quelle fenêtre vou
 --[[ L["STRING_SWITCH_TO"] = ""--]] 
 --[[Translation missing --]]
 --[[ L["STRING_SWITCH_WARNING"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_TARGET"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_TARGETS"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_TARGETS_OTHER1"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_TEXTURE"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_TIME_OF_DEATH"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_TOOOLD"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_TOP"] = ""--]] 
+L["STRING_TARGET"] = "Cible"
+L["STRING_TARGETS"] = "Cibles"
+L["STRING_TARGETS_OTHER1"] = "Familiers et autres cibles"
+L["STRING_TEXTURE"] = "Texture"
+L["STRING_TIME_OF_DEATH"] = "Mort"
+L["STRING_TOOOLD"] = "n'a pas pu être installé car votre version de Details! est trop ancienne."
+L["STRING_TOP"] = "haut"
 --[[Translation missing --]]
 --[[ L["STRING_TOP_TO_BOTTOM"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_TOTAL"] = ""--]] 
+L["STRING_TOTAL"] = "Total"
 --[[Translation missing --]]
 --[[ L["STRING_TRANSLATE_LANGUAGE"] = ""--]] 
 --[[Translation missing --]]
 --[[ L["STRING_TUTORIAL_FULLY_DELETE_WINDOW"] = ""--]] 
 --[[Translation missing --]]
 --[[ L["STRING_TUTORIAL_OVERALL1"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_UNKNOW"] = ""--]] 
+L["STRING_UNKNOW"] = "Inconnu"
 --[[Translation missing --]]
 --[[ L["STRING_UNKNOWSPELL"] = ""--]] 
 --[[Translation missing --]]
@@ -2389,10 +2298,10 @@ L["STRING_MINITUTORIAL_OPTIONS_PANEL6"] = "Sélectionnez ici quelle fenêtre vou
 --[[ L["STRING_WAITPLUGIN"] = ""--]] 
 --[[Translation missing --]]
 --[[ L["STRING_WAVE"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_WELCOME_1"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_WELCOME_11"] = ""--]] 
+L["STRING_WELCOME_1"] = [=[|cFFFFFFFFBienvenue sur l'assistant de démarrage rapide de Details!|r
+
+Utilisez les flèches en bas à droite pour vous déplacer.]=]
+L["STRING_WELCOME_11"] = "Si vous changez d'avis, vous pouvez toujours modifier à nouveau via le panneau des options"
 --[[Translation missing --]]
 --[[ L["STRING_WELCOME_12"] = ""--]] 
 --[[Translation missing --]]
@@ -2405,8 +2314,7 @@ L["STRING_MINITUTORIAL_OPTIONS_PANEL6"] = "Sélectionnez ici quelle fenêtre vou
 --[[ L["STRING_WELCOME_16"] = ""--]] 
 --[[Translation missing --]]
 --[[ L["STRING_WELCOME_17"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_WELCOME_2"] = ""--]] 
+L["STRING_WELCOME_2"] = "Si vous changez d'avis, vous pouvez toujours modifier à nouveau via le panneau des options"
 --[[Translation missing --]]
 --[[ L["STRING_WELCOME_26"] = ""--]] 
 --[[Translation missing --]]
@@ -2483,26 +2391,17 @@ L["STRING_MINITUTORIAL_OPTIONS_PANEL6"] = "Sélectionnez ici quelle fenêtre vou
 --[[ L["STRING_WELCOME_71"] = ""--]] 
 --[[Translation missing --]]
 --[[ L["STRING_WELCOME_72"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_WELCOME_73"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_WELCOME_74"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_WELCOME_75"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_WELCOME_76"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_WELCOME_77"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_WELCOME_78"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_WELCOME_79"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_WINDOW_NOTFOUND"] = ""--]] 
+L["STRING_WELCOME_73"] = "Choisissez l'alphabet ou la région :"
+L["STRING_WELCOME_74"] = "Alphabet latin"
+L["STRING_WELCOME_75"] = "Alphabet cyrillique"
+L["STRING_WELCOME_76"] = "Chine"
+L["STRING_WELCOME_77"] = "Corée"
+L["STRING_WELCOME_78"] = "Taïwan"
+L["STRING_WELCOME_79"] = "Créer une 2ème fenêtre"
+L["STRING_WINDOW_NOTFOUND"] = "Aucune fenêtre trouvée."
 --[[Translation missing --]]
 --[[ L["STRING_WINDOW_NUMBER"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_WINDOW1ATACH_DESC"] = ""--]] 
+L["STRING_WINDOW1ATACH_DESC"] = "Pour créer un groupe de fenêtre, approchez la fenêtre #2 de la fenêtre #1."
 --[[Translation missing --]]
 --[[ L["STRING_WIPE_ALERT"] = ""--]] 
 --[[Translation missing --]]
@@ -2511,6 +2410,5 @@ L["STRING_MINITUTORIAL_OPTIONS_PANEL6"] = "Sélectionnez ici quelle fenêtre vou
 --[[ L["STRING_WIPE_ERROR2"] = ""--]] 
 --[[Translation missing --]]
 --[[ L["STRING_WIPE_ERROR3"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_YES"] = ""--]] 
+L["STRING_YES"] = "Oui"
 

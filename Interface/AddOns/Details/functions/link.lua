@@ -2532,6 +2532,8 @@
 			DetailsAuraPanel.IconSizeSlider:SetValue (DetailsAuraPanel.other_values.text_size)
 		end
 		
+		spellname = spellname or ""
+		
 		DetailsAuraPanel.name.text = spellname .. " (d!)"
 		DetailsAuraPanel.spellname.text = spellname
 		DetailsAuraPanel.AuraSpellId.text = tostring (spellid)
@@ -3679,7 +3681,7 @@
 			-----------------------------------------------
 			
 			local dbm_open_aura_creator = function (row)
-				local data = all_modules [3].data [row]
+				local data = all_modules [4].data [row]
 				
 				local spellname, spellicon, _
 				if (type (data [7]) == "number") then
@@ -3809,7 +3811,7 @@
 			
 			local bw_open_aura_creator = function (row)
 			
-				local data = all_modules [4].data [row]
+				local data = all_modules [5].data [row]
 				
 				local spellname, spellicon, _
 				local spellid = tonumber (data [2])
@@ -4136,7 +4138,7 @@ local create_deathrecap_line = function (parent, n)
 	timeAt:SetPoint ("left", line, "left", 2, 0)
 	spellIcon:SetPoint ("left", line, "left", 50, 0)
 	sourceName:SetPoint ("left", line, "left", 82, 0)
-	amount:SetPoint ("left", line, "left", 220, 0)
+	amount:SetPoint ("left", line, "left", 240, 0)
 	lifePercent:SetPoint ("left", line, "left", 320, 0)
 	
 	--text colors
@@ -4155,7 +4157,7 @@ local create_deathrecap_line = function (parent, n)
 	--text setup
 	amount:SetWidth (85)
 	amount:SetJustifyH ("right")
-	lifePercent:SetWidth (36)
+	lifePercent:SetWidth (42)
 	lifePercent:SetJustifyH ("right")
 	
 	--background
@@ -4189,8 +4191,8 @@ local create_deathrecap_line = function (parent, n)
 		backgroundTexture2:SetHeight (32)
 
 		--_detalhes.gump:SetFontColor (amount, "red")
-		_detalhes.gump:SetFontSize (amount, 16)
-		_detalhes.gump:SetFontSize (lifePercent, 16)
+		_detalhes.gump:SetFontSize (amount, 14)
+		_detalhes.gump:SetFontSize (lifePercent, 14)
 		backgroundTexture:SetVertexColor (.2, .1, .1, .3)
 		
 	end
@@ -4266,7 +4268,8 @@ function _detalhes.BuildDeathTableFromRecap (recapID)
 			evtData.absorbed or 0,
 			evtData.school or 0,
 			false,
-			evtData.overkill
+			evtData.overkill,
+			not spellId and {spellId, spellName, texture},
 		}
 		
 		tinsert (ArtificialDeathLog[1], ev)
@@ -4276,8 +4279,35 @@ function _detalhes.BuildDeathTableFromRecap (recapID)
 	return ArtificialDeathLog
 end
 
-function _detalhes.OpenDetailsDeathRecap (segment, RecapID)
+function _detalhes.GetDeathRecapFromChat()
+	-- /dump ChatFrame1:GetMessageInfo (i)
+	-- /dump ChatFrame1:GetNumMessages()
+	local chat1 = ChatFrame1
+	local recapIDFromChat
+	if (chat1) then
+		local numLines = chat1:GetNumMessages()
+		for i = numLines, 1, -1 do
+			local text = chat1:GetMessageInfo (i)
+			if (text) then
+				if (text:find ("Hdeath:%d")) then
+					local recapID = text:match ("|Hdeath:(%d+)|h")
+					if (recapID) then
+						recapIDFromChat = tonumber (recapID)
+					end
+					break
+				end
+			end
+		end
+	end
 	
+	if (recapIDFromChat) then
+		_detalhes.OpenDetailsDeathRecap (nil, recapIDFromChat, true)
+		return
+	end
+end
+
+function _detalhes.OpenDetailsDeathRecap (segment, RecapID, fromChat)
+
 		if (not _detalhes.death_recap.enabled) then
 			if (Details.DeathRecap and Details.DeathRecap.Lines) then
 				for i = 1, 10 do
@@ -4287,6 +4317,7 @@ function _detalhes.OpenDetailsDeathRecap (segment, RecapID)
 					button:Hide()
 				end
 			end
+
 			return
 		end
 	
@@ -4335,7 +4366,29 @@ function _detalhes.OpenDetailsDeathRecap (segment, RecapID)
 	
 		--segment to use
 		local death = _detalhes.tabela_vigente.last_events_tables
-	
+		
+		--see if this segment has a death for the player
+		local foundPlayer = false
+		for index = #death, 1, -1 do
+			if (death [index] [3] == _detalhes.playername) then
+				foundPlayer = true
+				break
+			end
+		end
+
+		--in case a combat has been created after the player death, the death won't be at the current segment
+		if (not foundPlayer) then
+			local segmentHistory = _detalhes:GetCombatSegments()
+			for i = 1, 2 do
+				local segment = segmentHistory [1]
+				if (segment and segment ~= _detalhes.tabela_vigente) then
+					if (_detalhes.tabela_vigente.start_time - 3 < segment.end_time) then
+						death = segment.last_events_tables
+					end
+				end
+			end
+		end
+		
 		--segments
 		if (_detalhes.death_recap.show_segments) then
 			local last_index = 0
@@ -4383,8 +4436,7 @@ function _detalhes.OpenDetailsDeathRecap (segment, RecapID)
 				DeathRecapFrame.Unavailable:Show()
 				return
 			end
-			
-			
+
 			--get the death events from the blizzard's recap
 			ArtificialDeathLog = _detalhes.BuildDeathTableFromRecap (RecapID)
 		end
@@ -4477,7 +4529,14 @@ function _detalhes.OpenDetailsDeathRecap (segment, RecapID)
 					tremove (BiggestDamageHits, 11)
 				end
 			end
-			
+
+			if (#BiggestDamageHits == 0) then
+				if (not fromChat) then
+					_detalhes.GetDeathRecapFromChat()
+					return
+				end
+			end	
+
 			table.sort (BiggestDamageHits, function (t1, t2) 
 				return t1[4] > t2[4]
 			end)
@@ -4499,6 +4558,8 @@ function _detalhes.OpenDetailsDeathRecap (segment, RecapID)
 				local source = event [6]
 				local overkill = event [10] or 0
 				
+				local customSpellInfo = event [11]
+				
 				--print ("3 loop", i, type (evType), evType)
 				
 				if (type (evType) == "boolean" and evType) then
@@ -4507,7 +4568,7 @@ function _detalhes.OpenDetailsDeathRecap (segment, RecapID)
 					--print ("4 loop", i, line)
 					if (line) then
 						line.timeAt:SetText (format ("%.1f", eventTime - timeOfDeath) .. "s")
-						line.spellIcon:SetTexture (spellIcon)
+						line.spellIcon:SetTexture (spellIcon or customSpellInfo and customSpellInfo [3] or "")
 						line.TopFader:Hide()
 						--line.spellIcon:SetTexCoord (.1, .9, .1, .9)
 						--line.sourceName:SetText ("|cFFC6B0D9" .. source .. "|r")
@@ -4552,11 +4613,24 @@ function _detalhes.OpenDetailsDeathRecap (segment, RecapID)
 
 						--> remove the dot signal from the spell name
 						if (not spellName) then
-							spellName = "*?*"
+							spellName = customSpellInfo and customSpellInfo [2] or "*?*"
+							if (spellName:find (STRING_ENVIRONMENTAL_DAMAGE_FALLING)) then
+								if (UnitName ("player") == "Elphaba") then
+									spellName = "Gravity Won!, Elphaba..."
+									source = ""
+								else
+									source = "Gravity"
+								end
+								--/run for a,b in pairs (_G) do if (type (b)=="string" and b:find ("Falling")) then print (a,b) end end
+							end
 						end
+						
 						spellName = spellName:gsub (L["STRING_DOT"], "")
+						--print ("link.lua", L["STRING_DOT"], spellName, spellName:find (L["STRING_DOT"]), spellName:gsub (L["STRING_DOT"], ""))
+						source = source or ""
 						
 						line.sourceName:SetText (spellName .. " (" .. "|cFFC6B0D9" .. source .. "|r" .. ")")
+						DetailsFramework:TruncateText (line.sourceName, 185)
 						
 						if (amount > 1000) then
 							--line.amount:SetText ("-" .. _detalhes:ToK (amount))
@@ -4572,7 +4646,7 @@ function _detalhes.OpenDetailsDeathRecap (segment, RecapID)
 						
 						if (_detalhes.death_recap.show_life_percent) then
 							line.lifePercent:Show()
-							line.amount:SetPoint ("left", line, "left", 220, 0)
+							line.amount:SetPoint ("left", line, "left", 240, 0)
 							line.lifePercent:SetPoint ("left", line, "left", 320, 0)
 						else
 							line.lifePercent:Hide()
@@ -4591,6 +4665,10 @@ function _detalhes.OpenDetailsDeathRecap (segment, RecapID)
 			end
 			
 			DeathRecapFrame.Unavailable:Hide()
+		else
+			if (not fromChat) then
+				_detalhes.GetDeathRecapFromChat()
+			end
 		end
 
 end
@@ -4763,13 +4841,24 @@ function Details:RefreshPlaterIntegration()
 end
 
 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--> general macros
+
+function _detalhes:OpenPlayerDetails (window)
+	
+	window = window or 1
+	
+	local instance = _detalhes:GetInstance (window)
+	if (instance) then
+		local display, subDisplay = instance:GetDisplay()
+		if (display == 1) then
+			instance:AbreJanelaInfo (Details:GetPlayer (false, 1))
+		elseif (display == 2) then
+			instance:AbreJanelaInfo (Details:GetPlayer (false, 2))
+		end
+	end
+end
 
 
 
-
-
-
-
-
-
-
+--endd
