@@ -118,11 +118,19 @@ function NPC:IsSpeechFinished()
 	return self.TalkBox.TextFrame.Text:IsFinished()
 end
 
+function NPC:IsObstructingQuestEvent(forceEvent)
+	local event = forceEvent or self.lastEvent or ''
+	return ( event:match('^QUEST') and event ~= 'QUEST_ACCEPTED' )
+end
+
 function NPC:HandleGossipQuestOverlap(event)
+	-- Since Blizzard handles this transition by mutually exclusive gossip/quest frames,
+	-- and their visibility to determine whether to close gossip or quest interaction,
+	-- events need to be checked so that an NPC interaction is correctly transitioned.
 	if (type(event) == 'string') then
 		if ( event == 'GOSSIP_SHOW' ) then
 		--	CloseQuest()
-		elseif ( event:match('^QUEST') and event ~= 'QUEST_ACCEPTED' ) then
+		elseif self:IsObstructingQuestEvent(event) then
 			CloseGossip()
 		end
 	end
@@ -352,13 +360,13 @@ local inputs = {
 	accept = function(self)
 		local text = self.TalkBox.TextFrame.Text
 		local numActive = self.TitleButtons.numActive
-		if not self:IsModifierDown() and text:GetNumRemaining() > 1 and text:IsSequence() then
+		if ( not self:IsModifierDown() and text:GetNumRemaining() > 1 and text:IsSequence() ) then
 			text:ForceNext()
-		elseif self.lastEvent == 'GOSSIP_SHOW' and numActive < 1 then
+		elseif ( self.lastEvent == 'GOSSIP_SHOW' and numActive < 1 ) then
 			CloseGossip()
-		elseif self.lastEvent == 'GOSSIP_SHOW' and numActive == 1 then
+		elseif ( self.lastEvent == 'GOSSIP_SHOW' and numActive == 1 ) then
 			SelectGossipOption(1)
-		elseif (self.lastEvent == 'GOSSIP_SHOW' or self.lastEvent == 'QUEST_GREETING') and numActive > 1 then
+		elseif ( numActive > 1 ) then
 			self:SelectBestOption()
 		else
 			self.TalkBox:OnLeftClick()
@@ -526,12 +534,13 @@ end
 function TalkBox:OnEnter()
 	-- Highlight the button when it can be clicked
 	if not L('disableboxhighlight') then
-		if 	L('immersivemode') or ( ( ( self.lastEvent == 'QUEST_COMPLETE' ) and
+		local lastEvent = self.lastEvent
+		if 	L('immersivemode') or ( ( ( lastEvent == 'QUEST_COMPLETE' ) and
 			not (self.Elements.itemChoice == 0 and GetNumQuestChoices() > 1) ) or
-			( self.lastEvent == 'QUEST_ACCEPTED' ) or
-			( self.lastEvent == 'QUEST_DETAIL' ) or
-			( self.lastEvent == 'ITEM_TEXT_READY' ) or
-			( self.lastEvent ~= 'GOSSIP_SHOW' and IsQuestCompletable() ) ) then
+			( lastEvent == 'QUEST_ACCEPTED' ) or
+			( lastEvent == 'QUEST_DETAIL' ) or
+			( lastEvent == 'ITEM_TEXT_READY' ) or
+			( lastEvent ~= 'GOSSIP_SHOW' and IsQuestCompletable() ) ) then
 			L.UIFrameFadeIn(self.Hilite, 0.15, self.Hilite:GetAlpha(), 1)
 		end
 	end
