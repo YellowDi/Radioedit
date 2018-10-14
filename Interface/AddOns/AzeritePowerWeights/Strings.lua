@@ -126,8 +126,8 @@ do -- enUS / enGB
 	L.Slash_Error_Unkown = "ERROR: Something went wrong!"
 end
 
-if LOCALE == "deDE" then -- Sinusquell (42), Tiggi2702 (6), Vivan (2)
-L["Config_Importing_ImportingCanUpdate"] = "Beim Importieren können vorhandene Skalierung aktualisiert werden."
+if LOCALE == "deDE" then -- Sinusquell (40), Tiggi2702 (6), Vivan (2), pas06 (2)
+L["Config_Importing_ImportingCanUpdate"] = "Beim Importieren können vorhandene Skalierungen aktualisiert werden."
 L["Config_Importing_ImportingCanUpdate_Desc"] = "Wenn Sie eine Skalierung mit demselben Namen, derselben Klasse und Spezialisierung wie eine bereits vorhandene Skalierung importieren, wird die vorhandene Skalierung mit den neuen Gewichtungen aktualisiert, anstatt eine neue Skalierung zu erstellen. "
 L["Config_Importing_ImportingCanUpdate_Desc_Clarification"] = "Es kann mehrere Skalierungen mit demselben Namen geben, solange sie für verschiedene Spezialisierungen oder Klassen gelten. "
 L["Config_Importing_Title"] = "Importieren "
@@ -251,7 +251,7 @@ L["ScalesList_DefaultGroupName"] = "Standardskalierungen"
 L["ScaleWeightEditor_Title"] = "%s Editor"
 L["Slash_Command"] = "/azerite"
 L["Slash_Error_Unkown"] = "ERROR: Irgendwas war fehlerhaft! "
-L["Slash_RemindConfig"] = "Prüfe ESC -> Interface -> Addons -> %s für weiter Einstellungen."
+L["Slash_RemindConfig"] = "Siehe ESC -> Interface -> Addons -> %s für weitere Einstellungen."
 L["WeightEditor_CreateNewText"] = "Neu erstellen"
 L["WeightEditor_CurrentScale"] = "Aktuelle Skalierung: %s"
 L["WeightEditor_DeleteText"] = "Löschen"
