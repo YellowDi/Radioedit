@@ -359,7 +359,7 @@ end
 local inputs = {
 	accept = function(self)
 		local text = self.TalkBox.TextFrame.Text
-		local numActive = self.TitleButtons.numActive
+		local numActive = self.TitleButtons:GetNumActive()
 		if ( not self:IsModifierDown() and text:GetNumRemaining() > 1 and text:IsSequence() ) then
 			text:ForceNext()
 		elseif ( self.lastEvent == 'GOSSIP_SHOW' and numActive < 1 ) then
