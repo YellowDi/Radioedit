@@ -1218,7 +1218,7 @@ L["WeightEditor_TooltipText"] = "Mostrar na descrição dos itens"
 L["WeightEditor_VersionText"] = "Versão %s"
 
 
-elseif LOCALE == "ruRU" then -- dartraiden (71), Hubbotu (18), rtim0905 (0), Wolfeg (1)
+elseif LOCALE == "ruRU" then -- dartraiden (71), Hubbotu (12), rtim0905 (0), Wolfeg (1), lorientalas (2)
 L["Config_Importing_ImportingCanUpdate"] = "Обновлять уже существующие наборы при импорте"
 L["Config_Importing_ImportingCanUpdate_Desc"] = "При импорте набора, совпадающего с существующим по имени, классу и специализации, вместо создания нового набора будет обновлён уже существующий набор."
 L["Config_Importing_ImportingCanUpdate_Desc_Clarification"] = "Допустимы наборы с одинаковыми названиями, если они предназначены для разных специализаций или классов."
@@ -1288,11 +1288,11 @@ L["ImportPopup_Error_MalformedString"] = "ОШИБКА: импортируема
 L["ImportPopup_Error_OldStringVersion"] = "ОШИБКА: импортируемая строка некорректна или импортируется из старой версии!"
 L["ImportPopup_Title"] = "Импортировать набор"
 L["ImportPopup_UpdatedScale"] = "Обновлён существующий набор \"%s\""
-L["ItemToolTip_AzeriteLevel"] = "Уровень Сердца Азерота: %1$d / %2$d"
+L["ItemToolTip_AzeriteLevel"] = "Уровень Сердца Азерот: %1$d / %2$d"
 L["ItemToolTip_Legend"] = "Текущий рейтинг / потенциальный рейтинг / максимальный рейтинг"
 L["PowersScoreString"] = [=[Текущий рейтинг: %1$d/%2$d
 Максимальный рейтинг: %3$d
-Уровень Сердца Азерота: %4$d/%5$d]=]
+Уровень Сердца Азерот: %4$d/%5$d]=]
 L["PowersTitles_Class"] = "Классовые таланты"
 L["PowersTitles_Defensive"] = "Защитные таланты"
 L["PowersTitles_Profession"] = "Таланты профессий"
