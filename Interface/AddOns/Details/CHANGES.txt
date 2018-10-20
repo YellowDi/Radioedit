@@ -1,5 +1,17 @@
-changeset:   752:b5a107128b3f
+changeset:   754:64d71a698f27
 tag:         tip
+user:        Tercio
+date:        Sat Oct 20 00:18:52 2018 -0300
+summary:     - Fixed broken change log from last version.
+
+
+changeset:   753:cdaff539eed9
+user:        Tercio
+date:        Fri Oct 19 21:11:32 2018 -0300
+summary:     - Fixed damage on low level training dummies where it was showing 1 damage for each ability.
+
+
+changeset:   752:b5a107128b3f
 user:        Tercio
 date:        Wed Oct 10 23:01:37 2018 -0300
 summary:     - Fixing the pvp issue introduced in the previous build.
