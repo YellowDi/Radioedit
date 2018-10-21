@@ -1,14 +1,15 @@
-tag 307a2cbb04c4439d62e3a9e294d24a47e60d1956 1.1.0
+tag eaba42fa2e51bf06b872c3be65364acc57c5f39a 1.1.1
 Author:	Alar of Runetotem <alar@aspide.it>
-Date:	Tue Oct 9 22:56:41 2018 +0200
+Date:	Sat Oct 20 12:28:22 2018 +0200
 
-Fixed lua error about artifact power
+Fixed long standing bug: parties are now refreshed immediately after
+sending a mission
 
-commit 1ce74378325e9ef2ab7fa7ed119ce154d9324667
+commit 49155224b87d5b61b981d0a52254b85daa783f1f
 Author: Alar of Runetotem <alar@aspide.it>
-Date:   Sun Oct 7 01:06:25 2018 +0200
+Date:   Sat Oct 20 12:27:30 2018 +0200
 
-    17: LUA Error with 1.1.0-Beta3
+    Fix: parties are now refreshed after sendign a mission
     
-    Task-Url: http://github.com/alarofrunetotem/ChampionCommander/issues/17
+    At last I found this bug!
 
