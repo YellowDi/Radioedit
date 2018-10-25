@@ -20,7 +20,12 @@ if NonLatinLocales[GetLocale()] == true then font = STANDARD_TEXT_FONT end
 
 local StyleDefault = {}
 
-StyleDefault.hitbox = { width = 140, height = 35, }
+StyleDefault.hitbox = {
+	width = 130,
+	height = 40,
+	x = 0,
+	y = 0,
+}
 
 StyleDefault.highlight = {
 	texture =					defaultArtPath.."\\Highlight",
@@ -41,7 +46,7 @@ StyleDefault.eliteicon = {
 	texture = defaultArtPath.."\\EliteIcon",
 	width = 14,
 	height = 14,
-	x = -51,
+	x = -45,
 	y = 17,
 	anchor = "CENTER",
 	show = true,

@@ -1,5 +1,6 @@
 ## Interface: 80000
 ## Title: Tidy Plates Continued: Quatre Theme
+## Title-zhCN: |cffFF6060[战斗]|r Tidy Plates Continued: Quatre 主题
 ## Notes: It's the 4th!
 ## Author: Binny
 ## Dependencies: TidyPlatesContinued, TidyPlatesContinuedHub

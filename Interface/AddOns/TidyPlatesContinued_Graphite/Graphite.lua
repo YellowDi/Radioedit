@@ -27,8 +27,10 @@ local heightfactor = 1.2
 local StyleDefault = {}
 
 StyleDefault.hitbox = {
-	width = 100,
-	height = 35,
+	width = 115,
+	height = 30,
+	x = 0,
+	y = -2,
 }
 
 StyleDefault.frame = {
@@ -172,8 +174,13 @@ StyleDefault.spellicon = {
 }
 
 StyleDefault.eliteicon = {
-	show = false,
-	texture = EmptyTexture,
+	texture = path.."EliteIcon",
+	width = 10,
+	height = 10,
+	x = -46,
+	y = -4,
+	anchor = "CENTER",
+	show = true,
 }
 
 StyleDefault.raidicon = {

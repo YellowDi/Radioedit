@@ -1,5 +1,6 @@
 ## Interface: 80000
 ## Title: Tidy Plates Continued: Grey Theme
+## Title-zhCN: |cffFF6060[战斗]|r Tidy Plates Continued: Grey 主题
 ## Notes: Use apostrophes wisely.
 ## Author: Binny
 ## Dependencies: TidyPlatesContinued, TidyPlatesContinuedHub

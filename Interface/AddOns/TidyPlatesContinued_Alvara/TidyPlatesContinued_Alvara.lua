@@ -8,6 +8,12 @@ if NonLatinLocales[GetLocale()] == true then font = STANDARD_TEXT_FONT end
 local Theme = {}
 local Alvara = {}
 
+Alvara.hitbox = {
+	width = 120,
+	height = 30,
+	x = 0,
+	y = -4,
+}
 Alvara.frame = {
 	width = 128,
 	height = 16,
@@ -35,6 +41,15 @@ Alvara.healthborder = {
 	x = 0,
 	y = 0,
 	anchor = "CENTER",
+}
+Alvara.eliteicon = {
+	texture = path.."\\EliteIcon",
+	width = 10,
+	height = 10,
+	x = -43,
+	y = -4,
+	anchor = "CENTER",
+	show = true,
 }
 Alvara.healthbar = {
 	texture = path.."\\Statusbar",
@@ -125,6 +140,15 @@ Alvara.options = {
 	showSpecialText = true,
 	showDangerSkull = true,
 	showspellIcon = true,
+}
+Alvara.customtext = {
+	typeface = font,
+	width = 90,
+	x = -3,
+	y = 1.5,
+	align = "CENTER",
+	shadow = false,
+	show = true,
 }
 
 local CopyTable = TidyPlatesContUtility.copyTable

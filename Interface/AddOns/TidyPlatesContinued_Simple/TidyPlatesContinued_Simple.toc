@@ -1,5 +1,6 @@
 ## Interface: 80000
 ## Title: Tidy Plates Continued: |cffffffffSimple|r
+## Title-zhCN: |cffFF6060[战斗]|r Tidy Plates Continued: |cffffffffSimple|r 主题
 ## Notes: Simple TidyPlates skin with some built-in Healer functionality.
 ## Author: FunkyCold
 ## Version: 7.3.0

@@ -14,6 +14,9 @@ local select, pairs, tostring  = select, pairs, tostring 			    -- Local functio
 local CreateTidyPlatesContStatusbar = CreateTidyPlatesContStatusbar			    -- Local function copy
 local WorldFrame, UIParent = WorldFrame, UIParent
 local GetNamePlateForUnit = C_NamePlate.GetNamePlateForUnit
+local SetNamePlateFriendlySize = C_NamePlate.SetNamePlateFriendlySize
+local SetNamePlateEnemySize = C_NamePlate.SetNamePlateEnemySize
+
 
 -- Internal Data
 local Plates, PlatesVisible, PlatesFading, GUID = {}, {}, {}, {}	            	-- Plate Lists
@@ -78,6 +81,24 @@ local OnNewNameplate
 local OnUpdate
 local OnNewNameplate
 local ForEachPlate
+
+-- UpdateNameplateSize
+local function UpdateNameplateSize(plate)
+	local scaleStandard = TidyPlatesContHubFunctions.SetScale(plate)
+	local hitbox = {
+		width = activetheme.Default.hitbox.width * scaleStandard,
+		height = activetheme.Default.hitbox.height * scaleStandard,
+		x = (activetheme.Default.hitbox.x*-1) * scaleStandard,
+		y = (activetheme.Default.hitbox.y*-1) * scaleStandard,
+	}
+
+	if not InCombatLockdown() then
+		SetNamePlateEnemySize(hitbox.width, hitbox.height) -- Clickable area of the nameplate
+		SetNamePlateFriendlySize(hitbox.width, hitbox.height) -- Clickable area of the nameplate
+	end
+
+	plate.carrier:SetPoint("CENTER", plate, "CENTER", hitbox.x, hitbox.y)	-- Offset
+end
 
 -- UpdateReferences
 local function UpdateReferences(plate)
@@ -164,9 +185,9 @@ do
 	-- ApplyPlateExtesion
 	function OnNewNameplate(plate, plateid)
 
-        -- Tidy Plates Frame
-        --------------------------------
-        local bars, regions = {}, {}
+    -- Tidy Plates Frame
+    --------------------------------
+    local bars, regions = {}, {}
 		local carrier
 		local frameName = "TidyPlatesContCarrier"..numChildren
 
@@ -176,7 +197,7 @@ do
 		plate.carrier = carrier
 		plate.extended = extended
 
-        -- Add Graphical Elements
+    -- Add Graphical Elements
 		local visual = {}
 		-- Status Bars
 		local healthbar = CreateTidyPlatesContStatusbar(extended)
@@ -250,6 +271,8 @@ do
 		extended.stylename = ""
 
 		carrier:SetPoint("CENTER", plate, "CENTER")
+
+		UpdateNameplateSize(plate)
 	end
 
 end
@@ -414,6 +437,7 @@ do
 		UpdateUnitContext(plate, unitid)
 		ProcessUnitChanges()
 		OnUpdateCastMidway(plate, unitid)
+
 	end
 
 	-- OnHealthUpdate
@@ -433,6 +457,7 @@ do
 		extended.stylename = ""
 		unitid = PlatesVisible[plate]
 
+		UpdateNameplateSize(plate)
 		OnShowNameplate(plate, unitid)
 	end
 
@@ -1070,7 +1095,7 @@ do
 
 
 	-- SetObjectShadow:
-	local function SetObjectShadow(object, shadow)
+	local function SetObjectShadow(object, shadow)                --字体阴影设置
 		if shadow then
 			object:SetShadowColor(0,0,0, 1)
 			object:SetShadowOffset(1, -1)
@@ -1082,7 +1107,7 @@ do
 		if objectstyle then
 			SetObjectFont(object, objectstyle.typeface, objectstyle.size, objectstyle.flags)
 			SetObjectJustify(object, objectstyle.align or "CENTER", objectstyle.vertical or "BOTTOM")
-			SetObjectShadow(object, objectstyle.shadow)
+			SetObjectShadow(object, objectstyle.shadow)                       --是否启用字体阴影
 		end
 	end
 

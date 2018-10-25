@@ -1,4 +1,4 @@
-﻿
+
 ------------------------------------------------------------------------------------
 -- Tidy Plates Hub
 ------------------------------------------------------------------------------------
@@ -49,7 +49,7 @@ local function IsOffTanked(unit)
 
 		if targetGUID then
 			targetGUID = select(6, strsplit("-", UnitGUID(targetOf)))
-			targetIsGuardian = targetGUID == "61146" or targetGUID == "103822" -- Treant(103822), Black Ox Statue(61146)
+			targetIsGuardian = targetGUID == "61146" or targetGUID == "103822" or targetGUID == "61056" or targetGUID == "95072" -- Black Ox Statue(61146), Treant(103822), Primal Earth Elemental(61056), Greater Earth Elemental(95072)
 		end
 		
 		local targetIsTank = UnitIsUnit(targetOf, "pet") or targetIsGuardian or ("TANK" ==  UnitGroupRolesAssigned(targetOf))
@@ -68,9 +68,9 @@ local function DummyFunction() return end
 -- Define the Menu for Threat Modes
 TidyPlatesContHubDefaults.ThreatWarningMode = "Auto"
 TidyPlatesContHubMenus.ThreatWarningModes = {
-					{ text = "自动（随专精切换）", value = "Auto",} ,
-					{ text = "坦克", value = "坦克"    ,} ,
-					{ text = "伤害输出/治疗者", value = "DPS",} ,
+					{ text = "自动(交换颜色)", value = "Auto",} ,
+					{ text = "坦克", value = "Tank",} ,
+					{ text = "输出或治疗", value = "DPS",} ,
 					}
 
 local NormalGrey = {r = .65, g = .65, b = .65, a = .4}
@@ -162,7 +162,7 @@ local CreateVariableSet = TidyPlatesContHubRapidPanel.CreateVariableSet
 
 local function UseVariables(profileName)
 
-	local suffix = profileName or "伤害输出"
+	local suffix = profileName or "Damage"
 	if suffix then
 
 		if CurrentProfileName ~= suffix then 	-- Stop repeat loading
