@@ -5,12 +5,13 @@
 -- 2017/6/22
 ------------------------------------------------------------
 
-local UnitDebuff = UnitDebuff
-local UnitBuff = UnitBuff
+local type = type
+local GetTime = GetTime
+local UnitDebuff = Pre80API.UnitDebuff
+local UnitBuff = Pre80API.UnitBuff
 local UnitCastingInfo = UnitCastingInfo
 local UnitChannelInfo = UnitChannelInfo
 local PlaySoundFile = PlaySoundFile
-local GetTime = GetTime
 
 local addon = LibAddonManager:CreateAddon(...)
 local L = addon.L
@@ -22,10 +23,12 @@ addon:RegisterSlashCmd("quakeassist", "qa")
 --addon.debug = 1 -- debug
 
 local AFFIX_ID = 14 -- Quaking
-local QUAKE_SPELL = GetSpellInfo(240447) -- Quake
-local DEBUG_SPELL = GetSpellInfo(236298) -- debug spell, arcane mages
+local QUAKE_SPELL, _, QUAKE_ICON = GetSpellInfo(240447) -- Quake
+local DEBUG_SPELL = GetSpellInfo(774)
 local WARNING_SOUND = addon.path.."\\Alert.ogg" -- Replace Alert.ogg with your own sound file if preferred
-local WARNING_QUAKE_APPLIED = "Sound\\Interface\\UI_RaidBossWhisperWarning.ogg"
+
+addon.QUAKE_SPELL = QUAKE_SPELL
+addon.QUAKE_ICON = QUAKE_ICON
 
 function addon:OnInitialize(db, isNew)
 	self:BroadcastEvent("OnInitialize", db, isNew)
@@ -52,11 +55,7 @@ function addon:Enable()
 		return
 	end
 
-	self.lastQuakeTime = GetTime()
-
 	self:Print(L["enabled prompt"])
-	self:BroadcastEvent("OnEnable")
-
 	self:RegisterEvent("UNIT_AURA")
 	self:RegisterEvent("UNIT_SPELLCAST_START", "CheckCasting")
 	self:RegisterEvent("UNIT_SPELLCAST_STOP", "CheckCasting")
@@ -75,9 +74,8 @@ function addon:Disable()
 	self:UnregisterEvent("UNIT_SPELLCAST_STOP")
 	self:UnregisterEvent("UNIT_SPELLCAST_CHANNEL_START")
 	self:UnregisterEvent("UNIT_SPELLCAST_CHANNEL_STOP")
-
+	self.frame:Disable()
 	self:Print(L["disabled prompt"])
-	self:BroadcastEvent("OnDisable")
 end
 
 function addon:FindAffix(affix)
@@ -99,20 +97,19 @@ function addon:FindAffix(affix)
 end
 
 function addon:VoiceAlert()
-	PlaySoundFile(WARNING_SOUND, "Master")
+	if self.db.voice then
+		PlaySoundFile(WARNING_SOUND, "Master")
+	end
 end
 
 function addon:CheckAlert()
 	local dangerous = self.quakeEndTime and self.castingEndTime and (self.quakeEndTime --[[+ self.db.tolerance / 100--]] < self.castingEndTime)
-	if dangerous == self.dangerous then
-		return
-	end
-
-	self.dangerous = dangerous
-	self:BroadcastEvent("OnAlert", dangerous)
-
-	if dangerous and self.db.voice then
-		self:VoiceAlert()
+	if dangerous ~= self.dangerous then
+		self.dangerous = dangerous
+		self:BroadcastEvent("OnAlert", dangerous)
+		if dangerous then
+			self:VoiceAlert()
+		end
 	end
 end
 
@@ -121,34 +118,51 @@ function addon:UNIT_AURA(unit)
 		return
 	end
 
-	local name, _, _, _, _, duration, expires
+	local name, _, _, _, duration, expires
 	if self.debug then
-		name, _, _, _, _, duration, expires = UnitBuff("player", DEBUG_SPELL)
+		name, _, _, _, duration, expires = UnitBuff("player", DEBUG_SPELL)
 		if name then
 			local diff = duration - 2.5
 			duration = 2.5
 			expires = expires - diff
 		end
 	else
-		name, _, _, _, _, duration, expires = UnitDebuff("player", QUAKE_SPELL)
+		name, _, _, _, duration, expires = UnitDebuff("player", QUAKE_SPELL)
 	end
 
-	if expires == 0 then
-		expires = nil
+	if self.hasDebuff == name then
+		return -- nothing changes
 	end
 
-	if expires == self.quakeEndTime then
+	self.hasDebuff = name
+
+	if name then
+		local startTime = expires - duration
+		self.nextQuakeStartTime = startTime
+		self.quakeEndTime = expires
+		self:BroadcastEvent("OnQuake", startTime, expires)
+	else
+		self.quakeEndTime = nil
+		self:BroadcastEvent("OnQuake")
+	end
+
+	self:CheckAlert()
+end
+
+function addon:PredictNextQuake()
+	-- possibly quake every 20 seconds, sometimes 40
+	local nextQuakeStartTime = self.nextQuakeStartTime
+	if not nextQuakeStartTime then
 		return
 	end
 
-	if expires then
-		self.lastQuakeTime = expires - duration
-		--PlaySoundFile(WARNING_QUAKE_APPLIED, "Master")
+	local now = GetTime()
+	while nextQuakeStartTime <= now do
+		nextQuakeStartTime = nextQuakeStartTime + 20
 	end
 
-	self.quakeEndTime = expires
-	self:BroadcastEvent("OnQuake", duration, expires)
-	self:CheckAlert()
+	self.nextQuakeStartTime = nextQuakeStartTime
+	return nextQuakeStartTime - 20, nextQuakeStartTime
 end
 
 function addon:CheckCasting(unit)
@@ -156,9 +170,9 @@ function addon:CheckCasting(unit)
 		return
 	end
 
-	local name, _, _, texture, startTime, endTime = UnitCastingInfo("player")
+	local name, _, texture, startTime, endTime = UnitCastingInfo("player")
 	if not name then
-		name, _, _, texture, startTime, endTime = UnitChannelInfo("player")
+		name, _, texture, startTime, endTime = UnitChannelInfo("player")
 	end
 
 	if endTime == 0 then
