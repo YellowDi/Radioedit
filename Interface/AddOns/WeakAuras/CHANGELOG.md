@@ -1,18 +1,24 @@
-# [2.8.1](https://github.com/WeakAuras/WeakAuras2/tree/2.8.1) (2018-10-02)
+# [2.9.0-beta2](https://github.com/WeakAuras/WeakAuras2/tree/2.9.0-beta2) (2018-10-29)
 
-[Full Changelog](https://github.com/WeakAuras/WeakAuras2/compare/2.8.0...2.8.1)
+[Full Changelog](https://github.com/WeakAuras/WeakAuras2/compare/2.9.0-beta1...2.9.0-beta2)
 
 ## Highlights
 
- We fixed a bug where conditions were not properly resetting when auras got unloaded. 
+ 2.9.0-beta2 
 
 ## Commits
 
-Causese (1):
+Buds (2):
 
-- fixed a trait that is no longer a buff on player
+- handle sharing of auras with people crossrealm in same group
+- add minimap icon
 
-Infus (1):
+Infus (6):
 
-- Fix Conditions not resetting on unloading auras
+- Fix regression in GetNameAndIcon
+- For PRD attached auras: Make frame.kui the parent not KuiNameplatesPlayerAnchor
+- Fix various bugs around vehicles and tooltips not updating
+- Fix nil error on group selection
+- Change how text replacements work in a backwards incompatible way
+- Allow up to 100 names/spell ids
 
