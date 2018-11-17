@@ -184,7 +184,9 @@ CATEGORY = {
             [73] = true,
             [74] = true,
         },
-        activities = {}
+        activities = {
+            [303] = true,
+        }
     },
     [3] = {
         groups = {
