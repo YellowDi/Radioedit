@@ -1,7 +1,0 @@
-## Interface: 80000
-## Author: Neavo
-## Version: 0.0.1
-## Title: BlizzFix
-## Notes: BlizzFix
-
-Core.lua
