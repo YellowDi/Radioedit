@@ -193,6 +193,7 @@ local function UpdateMatchData(time, matchDataChanged, resetMatchDataByTrigger, 
       name = name,
       icon = icon,
       stacks = stacks,
+      debuffClass = debuffClass,
       duration = duration,
       expirationTime = expirationTime,
       unitCaster = unitCaster,
@@ -853,6 +854,16 @@ local function TriggerInfoApplies(triggerInfo, isSelf, role)
   return true
 end
 
+local function SortMatchDataByUnitIndex(a, b)
+  if a.unit and b.unit and a.unit ~= b.unit then
+    return a.unit < b.unit
+  end
+  if a.index and b.index and a.index ~= b.index then
+    return a.index < b.index
+  end
+  return a.expirationTime < b.expirationTime
+end
+
 local function UpdateTriggerState(time, id, triggernum)
   local triggerStates = WeakAuras.GetTriggerStateForTrigger(id, triggernum)
   local triggerInfo = triggerInfos[id][triggernum]
@@ -923,13 +934,16 @@ local function UpdateTriggerState(time, id, triggernum)
     end
 
     if useMatches then
+
+      table.sort(auraDatas, SortMatchDataByUnitIndex)
+
       local affected, unaffected
       if triggerInfo.useAffected then
         affected, unaffected = FormatAffectedUnaffected(triggerInfo, matchedUnits)
       end
 
-      for _, auraData in ipairs(auraDatas) do
-        local cloneId = tostring(auraData)
+      for index, auraData in ipairs(auraDatas) do
+        local cloneId = tostring(index)
         updated = UpdateStateWithMatch(time, auraData, triggerStates, cloneId, matchCount, unitCount, maxUnitCount, affected, unaffected) or updated
       end
 
@@ -1860,21 +1874,21 @@ local function createScanFunc(trigger)
   if use_tooltip and trigger.tooltip_operator and trigger.tooltip then
     if trigger.tooltip_operator == "==" then
       local ret2 = [[
-      if not matchData.tooltip == %q then
+      if not matchData.tooltip or not matchData.tooltip == %q then
         return false
       end
       ]]
       ret = ret .. ret2:format(trigger.tooltip)
     elseif trigger.tooltip_operator == "find('%s')" then
       local ret2 = [[
-      if not matchData.tooltip:find(%q) then
+      if not matchData.tooltip or not matchData.tooltip:find(%q) then
         return false
       end
       ]]
       ret = ret .. ret2:format(trigger.tooltip)
     elseif trigger.tooltip_operator == "match('%s')" then
       local ret2 = [[
-      if not matchData.tooltip:match(%q) then
+      if not matchData.tooltip or not matchData.tooltip:match(%q) then
         return false
       end
       ]]
@@ -1885,11 +1899,11 @@ local function createScanFunc(trigger)
   if use_tooltipValue and trigger.tooltipValueNumber and trigger.tooltipValue_operator and trigger.tooltipValue then
     local property = "tooltip" .. tonumber(trigger.tooltipValueNumber)
     local ret2 = [[
-      if not (matchData.%s %s %s) then
+      if not matchData.%s or not (matchData.%s %s %s) then
         return false
       end
     ]]
-    ret = ret .. ret2:format(property, trigger.tooltipValue_operator, trigger.tooltipValue)
+    ret = ret .. ret2:format(property, property, trigger.tooltipValue_operator, trigger.tooltipValue)
   end
 
   if trigger.useNamePattern and trigger.namePattern_operator and trigger.namePattern_name then
@@ -2207,27 +2221,27 @@ function BuffTrigger.GetAdditionalProperties(data, triggernum)
   local trigger = data.triggers[triggernum].trigger
 
   local ret = "\n\n" .. L["Additional Trigger Replacements"] .. "\n"
-  ret = ret .. "|cFFFF0000%spellId|r -" .. L["Spell ID"] .. "\n"
-  ret = ret .. "|cFFFF0000%unitCaster|r -" .. L["Caster Unit"] .. "\n"
-  ret = ret .. "|cFFFF0000%casterName|r -" .. L["Caster Name"] .. "\n"
-  ret = ret .. "|cFFFF0000%unitName|r -" .. L["Unit Name"] .. "\n"
-  ret = ret .. "|cFFFF0000%matchCount|r -" .. L["Match Count"] .. "\n"
-  ret = ret .. "|cFFFF0000%unitCount|r -" .. L["Units Affected"] .. "\n"
+  ret = ret .. "|cFFFF0000%spellId|r - " .. L["Spell ID"] .. "\n"
+  ret = ret .. "|cFFFF0000%unitCaster|r - " .. L["Caster Unit"] .. "\n"
+  ret = ret .. "|cFFFF0000%casterName|r - " .. L["Caster Name"] .. "\n"
+  ret = ret .. "|cFFFF0000%unitName|r - " .. L["Unit Name"] .. "\n"
+  ret = ret .. "|cFFFF0000%matchCount|r - " .. L["Match Count"] .. "\n"
+  ret = ret .. "|cFFFF0000%unitCount|r - " .. L["Units Affected"] .. "\n"
 
   if trigger.unit ~= "multi" then
-    ret = ret .. "|cFFFF0000%maxUnitCount|r -" .. L["Total Units"] .. "\n"
+    ret = ret .. "|cFFFF0000%maxUnitCount|r - " .. L["Total Units"] .. "\n"
   end
 
   if not IsSingleMissing(trigger) and trigger.unit ~= "multi" and trigger.fetchTooltip then
-    ret = ret .. "|cFFFF0000%tooltip|r -" .. L["Tooltip"] .. "\n"
-    ret = ret .. "|cFFFF0000%tooltip1|r -" .. L["First Value of Tooltip Text"] .. "\n"
-    ret = ret .. "|cFFFF0000%tooltip2|r -" .. L["Second Value of Tooltip Text"] .. "\n"
-    ret = ret .. "|cFFFF0000%tooltip3|r -" .. L["Third Value of Tooltip Text"] .. "\n"
+    ret = ret .. "|cFFFF0000%tooltip|r - " .. L["Tooltip"] .. "\n"
+    ret = ret .. "|cFFFF0000%tooltip1|r - " .. L["First Value of Tooltip Text"] .. "\n"
+    ret = ret .. "|cFFFF0000%tooltip2|r - " .. L["Second Value of Tooltip Text"] .. "\n"
+    ret = ret .. "|cFFFF0000%tooltip3|r - " .. L["Third Value of Tooltip Text"] .. "\n"
   end
 
   if trigger.unit == "group" and trigger.useAffected then
-    ret = ret .. "|cFFFF0000%affected|r -" .. L["Names of affected Players"] .. "\n"
-    ret = ret .. "|cFFFF0000%unaffected|r -" .. L["Names of unaffected Players"] .. "\n"
+    ret = ret .. "|cFFFF0000%affected|r - " .. L["Names of affected Players"] .. "\n"
+    ret = ret .. "|cFFFF0000%unaffected|r - " .. L["Names of unaffected Players"] .. "\n"
   end
 
   return ret
@@ -2715,6 +2729,14 @@ local function AugmentMatchDataMulti(matchData, unit, filter, sourceGUID, nameKe
     if not name then
       return false
     end
+
+    if debuffClass == nil then
+      debuffClass = "none"
+    elseif debuffClass == "" then
+      debuffClass = "enrage"
+    else
+      debuffClass = string.lower(debuffClass)
+    end
     local auraSourceGuid = unitCaster and UnitGUID(unitCaster)
     if (name == nameKey or spellId == spellKey) and sourceGUID == auraSourceGuid then
       local changed = AugmentMatchDataMultiWith(matchData, unit, name, icon, stacks, debuffClass, duration, expirationTime, unitCaster, isStealable, _, spellId)
@@ -2797,6 +2819,13 @@ local function CheckAurasMulti(base, unit, filter)
     local name, icon, stacks, debuffClass, duration, expirationTime, unitCaster, isStealable, _, spellId = UnitAura(unit, index, filter)
     if not name then
       return false
+    end
+    if debuffClass == nil then
+      debuffClass = "none"
+    elseif debuffClass == "" then
+      debuffClass = "enrage"
+    else
+      debuffClass = string.lower(debuffClass)
     end
     local auraCasterGUID = unitCaster and UnitGUID(unitCaster)
     if base[name] and base[name][auraCasterGUID] then

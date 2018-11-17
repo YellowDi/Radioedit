@@ -144,7 +144,7 @@ WeakAuras.unit_types_bufftrigger_2 = {
   nameplate = L["Nameplate"],
   pet = L["Pet"],
   member = L["Specific Unit"],
-  multi = L["Multi-target (CLEU)"]
+  multi = L["Multi-target"]
 }
 
 WeakAuras.actual_unit_types_with_specific = {
@@ -1708,8 +1708,6 @@ WeakAuras.data_stub = {
         spellIds = {},
         unit = "player",
         debuffType = "HELPFUL",
-        duration = "1",
-        unevent = "timed"
       },
       untrigger = {},
     },
