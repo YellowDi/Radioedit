@@ -419,10 +419,7 @@ function Type:Setup(icon)
 	-- validity check:
 	if icon.Enabled then
 		for i, icGUID in pairs(icon.Icons) do
-			-- Don't warn about nils or blanks - these are totally harmless.
-			if icGUID and icGUID ~= "" then
-				TMW:QueueValidityCheck(icon, icGUID, L["VALIDITY_META_DESC"], i)
-			end
+			TMW:QueueValidityCheck(icon, icGUID, L["VALIDITY_META_DESC"], i)
 		end
 	end
 
