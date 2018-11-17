@@ -6,6 +6,7 @@ local configDefaults = {
 	progressTooltip = true,
 	progressFormat = 1,
 	autoGossip = true,
+	cosRumors = false,
 	silverGoldTimer = false,
 	splitsFormat = 1,
 	completionMessage = true,
@@ -15,7 +16,6 @@ local configDefaults = {
 	showLevelModifier = false,
 	hideTalkingHead = true,
 	resetPopup = false,
-	announceKeystones = false,
 }
 local callbacks = {}
 
@@ -259,7 +259,8 @@ Panel_OnRefresh = function(self)
 		checkboxes = {}
 		dropdowns = {}
 
-		local checkboxes_order = { "silverGoldTimer", "autoGossip", "progressTooltip", "completionMessage", "hideTalkingHead", "resetPopup", "announceKeystones" }
+		local checkboxes_order = { "silverGoldTimer", "autoGossip", "progressTooltip", "completionMessage", "hideTalkingHead", "resetPopup" }
+		if Addon.Locale:HasRumors() then table.insert(checkboxes_order, 5, "cosRumors") end
 
 		for i,key in ipairs(checkboxes_order) do
 			checkboxes[i] = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
