@@ -17,17 +17,17 @@ if (GetLocale():sub(1,2) == "zh") then ARTIFACT_POWER = "能量" end
 --框架 #category Bag|Bank|Merchant|Trade|GuildBank|Auction|AltEquipment|PaperDoll|Loot
 local function GetItemLevelFrame(self, category)
     if (not self.ItemLevelFrame) then
-        local fontAdjust = GetLocale():sub(1,2) == "zh" and -2 or -3
+        local fontAdjust = GetLocale():sub(1,2) == "zh" and 0 or -3
         self.ItemLevelFrame = CreateFrame("Frame", nil, self)
         self.ItemLevelFrame:SetFrameLevel(8)
         self.ItemLevelFrame:SetSize(self:GetSize())
         self.ItemLevelFrame:SetPoint("CENTER")
         self.ItemLevelFrame.levelString = self.ItemLevelFrame:CreateFontString(nil, "OVERLAY")
-        self.ItemLevelFrame.levelString:SetFont(STANDARD_TEXT_FONT, 10, "THINOUTLINE")
-        self.ItemLevelFrame.levelString:SetPoint("TOP", 0, -2)
+        self.ItemLevelFrame.levelString:SetFont(STANDARD_TEXT_FONT, 14+fontAdjust, "OUTLINE")
+        self.ItemLevelFrame.levelString:SetPoint("TOP")
         self.ItemLevelFrame.levelString:SetTextColor(1, 0.82, 0)
         self.ItemLevelFrame.slotString = self.ItemLevelFrame:CreateFontString(nil, "OVERLAY")
-        self.ItemLevelFrame.slotString:SetFont(STANDARD_TEXT_FONT, 10, "THINOUTLINE")
+        self.ItemLevelFrame.slotString:SetFont(STANDARD_TEXT_FONT, 10+fontAdjust, "OUTLINE")
         self.ItemLevelFrame.slotString:SetPoint("BOTTOMRIGHT", 1, 2)
         self.ItemLevelFrame.slotString:SetTextColor(1, 1, 1)
         self.ItemLevelFrame.slotString:SetJustifyH("RIGHT")
@@ -429,7 +429,7 @@ LibEvent:attachTrigger("ITEMLEVEL_FRAME_SHOWN", function(self, frame, parent, ca
     if (frame.anchorPoint ~= anchorPoint) then
         frame.anchorPoint = anchorPoint
         frame.levelString:ClearAllPoints()
-        frame.levelString:SetPoint(anchorPoint or "TOP", 0, -2)
+        frame.levelString:SetPoint(anchorPoint or "TOP")
     end
 end)
 
