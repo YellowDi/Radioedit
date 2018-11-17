@@ -6,7 +6,7 @@
 
 ChatAtFriends.lua
 ChatCopy.lua
-ChatEmote.lua
+##ChatEmote.lua
 ChatHistory.lua
-##ChatLinkIcon.lua
+ChatLinkIcon.lua
 ChatTabSwitch.lua
