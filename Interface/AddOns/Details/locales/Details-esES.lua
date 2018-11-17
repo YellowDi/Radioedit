@@ -1337,6 +1337,8 @@ L["STRING_OPTIONS_SKIN_A_DESC"] = "Estas opciones se permiten personalizar el sk
 L["STRING_OPTIONS_SKIN_EXTRA_OPTIONS_ANCHOR"] = "Opciones de skin:"
 L["STRING_OPTIONS_SKIN_LOADED"] = "Skin se ha cargado con éxito."
 L["STRING_OPTIONS_SKIN_PRESETS_ANCHOR"] = "Guardar skin:"
+--[[Translation missing --]]
+--[[ L["STRING_OPTIONS_SKIN_PRESETSCONFIG_ANCHOR"] = ""--]] 
 L["STRING_OPTIONS_SKIN_REMOVED"] = "Skin se ha eliminado."
 --[[Translation missing --]]
 --[[ L["STRING_OPTIONS_SKIN_RESET_TOOLTIP"] = ""--]] 
@@ -1913,6 +1915,8 @@ L["STRING_UNKNOWSPELL"] = "Hechizo desconocido"
 L["STRING_UNLOCK"] = "Esparcir las ventanas con este botón."
 L["STRING_UNLOCK_WINDOW"] = "desbloquear"
 L["STRING_UPTADING"] = "actualizando"
+--[[Translation missing --]]
+--[[ L["STRING_VERSION_AVAILABLE"] = ""--]] 
 L["STRING_VERSION_UPDATE"] = "Nueva versión: ¿qué se ha cambiado? Hacer clic aquí."
 L["STRING_VOIDZONE_TOOLTIP"] = "Daño y duración:"
 L["STRING_WAITPLUGIN"] = "esperando para plugins"

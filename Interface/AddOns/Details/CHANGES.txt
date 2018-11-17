@@ -1,5 +1,23 @@
-changeset:   754:64d71a698f27
+changeset:   757:0d92132ce7d7
 tag:         tip
+user:        Tercioo
+date:        Wed Nov 07 17:32:08 2018 -0200
+summary:     - New Feature: import and export profiles.
+
+
+changeset:   756:313b158026ee
+user:        Tercio
+date:        Tue Oct 30 19:40:07 2018 -0300
+summary:     - Major improvements on row text scripts, now they pass 4 objects: actor, combat, instance and the default text of the bar.
+
+
+changeset:   755:b53b11c41a50
+user:        Tercio
+date:        Sun Oct 28 15:58:05 2018 -0300
+summary:     - Added import and export profiles.
+
+
+changeset:   754:64d71a698f27
 user:        Tercio
 date:        Sat Oct 20 00:18:52 2018 -0300
 summary:     - Fixed broken change log from last version.

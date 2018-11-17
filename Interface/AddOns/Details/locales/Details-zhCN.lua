@@ -173,8 +173,7 @@ L["STRING_DAMAGE_TAKEN_FROM2"] = "施加伤害在"
 L["STRING_DEFENSES"] = "防御"
 L["STRING_DESCENDING"] = "降序"
 L["STRING_DETACH_DESC"] = "分离窗口组群"
---[[Translation missing --]]
---[[ L["STRING_DISCARD"] = ""--]] 
+L["STRING_DISCARD"] = "放弃"
 L["STRING_DISPELLED"] = "增益/减益 移除"
 L["STRING_DODGE"] = "闪避"
 L["STRING_DOT"] = " (DoT)"
@@ -1096,6 +1095,8 @@ L["STRING_OPTIONS_SKIN_ELVUI_BUTTON3_DESC"] = [=[修改 tooltip's:
 L["STRING_OPTIONS_SKIN_EXTRA_OPTIONS_ANCHOR"] = "皮肤选项："
 L["STRING_OPTIONS_SKIN_LOADED"] = "皮肤成功加载。"
 L["STRING_OPTIONS_SKIN_PRESETS_ANCHOR"] = "保存皮肤："
+--[[Translation missing --]]
+--[[ L["STRING_OPTIONS_SKIN_PRESETSCONFIG_ANCHOR"] = ""--]] 
 L["STRING_OPTIONS_SKIN_REMOVED"] = "删除皮肤。"
 L["STRING_OPTIONS_SKIN_RESET_TOOLTIP"] = "重置提示边框"
 L["STRING_OPTIONS_SKIN_RESET_TOOLTIP_DESC"] = "设置提示的边框颜色和纹理为默认值。"
@@ -1580,6 +1581,8 @@ L["STRING_UNLOCK"] = [=[Ungroup windows
  in this button]=]
 L["STRING_UNLOCK_WINDOW"] = "解锁"
 L["STRING_UPTADING"] = "更新中"
+--[[Translation missing --]]
+--[[ L["STRING_VERSION_AVAILABLE"] = ""--]] 
 L["STRING_VERSION_UPDATE"] = "新版本：有什么改变？ 点击这里"
 L["STRING_VOIDZONE_TOOLTIP"] = "伤害和时间:"
 L["STRING_WAITPLUGIN"] = [=[等待

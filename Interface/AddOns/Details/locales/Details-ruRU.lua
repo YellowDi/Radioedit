@@ -1105,6 +1105,8 @@ L["STRING_OPTIONS_SKIN_ELVUI_BUTTON3_DESC"] = [=[Изменения в подс�
 L["STRING_OPTIONS_SKIN_EXTRA_OPTIONS_ANCHOR"] = "Параметры скина:"
 L["STRING_OPTIONS_SKIN_LOADED"] = "скин успешно загружен."
 L["STRING_OPTIONS_SKIN_PRESETS_ANCHOR"] = "Сохранить скин:"
+--[[Translation missing --]]
+--[[ L["STRING_OPTIONS_SKIN_PRESETSCONFIG_ANCHOR"] = ""--]] 
 L["STRING_OPTIONS_SKIN_REMOVED"] = "скин удален."
 L["STRING_OPTIONS_SKIN_RESET_TOOLTIP"] = "Сбросить границу подсказки"
 L["STRING_OPTIONS_SKIN_RESET_TOOLTIP_DESC"] = "Установить цвет и текстуру границы подсказки по умолчанию."
@@ -1575,6 +1577,8 @@ L["STRING_UNLOCK"] = [=[Разгруппировать окна
  в этой кнопке]=]
 L["STRING_UNLOCK_WINDOW"] = "разблокировать"
 L["STRING_UPTADING"] = "обновление"
+--[[Translation missing --]]
+--[[ L["STRING_VERSION_AVAILABLE"] = ""--]] 
 L["STRING_VERSION_UPDATE"] = "новая версия: что изменилось? щелкните сюда"
 L["STRING_VOIDZONE_TOOLTIP"] = "Урон и время"
 L["STRING_WAITPLUGIN"] = [=[ожидание

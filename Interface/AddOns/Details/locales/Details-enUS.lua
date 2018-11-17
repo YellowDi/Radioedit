@@ -1049,7 +1049,7 @@ L["STRING_OPTIONS_SAVELOAD_ERASE_DESC"] = "This option erases a previous saved s
 L["STRING_OPTIONS_SAVELOAD_EXPORT"] = "Export"
 L["STRING_OPTIONS_SAVELOAD_EXPORT_COPY"] = "Press CTRL + C"
 L["STRING_OPTIONS_SAVELOAD_EXPORT_DESC"] = "Saves the skin in text format."
-L["STRING_OPTIONS_SAVELOAD_IMPORT"] = "Import"
+L["STRING_OPTIONS_SAVELOAD_IMPORT"] = "Import Custom Skin"
 L["STRING_OPTIONS_SAVELOAD_IMPORT_DESC"] = "Import a skin in text format."
 L["STRING_OPTIONS_SAVELOAD_IMPORT_OKEY"] = "Skin successfully imported to your saved skins list. You can now apply it through the 'Apply' dropbox."
 L["STRING_OPTIONS_SAVELOAD_LOAD"] = "Apply"
@@ -1102,7 +1102,8 @@ L["STRING_OPTIONS_SKIN_ELVUI_BUTTON3_DESC"] = [=[Modify tooltip's:
 Border Color to: |cFFFFFF00Transparent|r.]=]
 L["STRING_OPTIONS_SKIN_EXTRA_OPTIONS_ANCHOR"] = "Skin Options:"
 L["STRING_OPTIONS_SKIN_LOADED"] = "skin successfully loaded."
-L["STRING_OPTIONS_SKIN_PRESETS_ANCHOR"] = "Save Skin:"
+L["STRING_OPTIONS_SKIN_PRESETS_ANCHOR"] = "Save Current Settings as Custom Skin:"
+L["STRING_OPTIONS_SKIN_PRESETSCONFIG_ANCHOR"] = "Manage Saved Custom Skins:"
 L["STRING_OPTIONS_SKIN_REMOVED"] = "skin removed."
 L["STRING_OPTIONS_SKIN_RESET_TOOLTIP"] = "Reset Tooltip Border"
 L["STRING_OPTIONS_SKIN_RESET_TOOLTIP_DESC"] = "Set the tooltip's border color and texture to default."
@@ -1575,6 +1576,7 @@ L["STRING_UNLOCK"] = [=[Ungroup windows
  in this button]=]
 L["STRING_UNLOCK_WINDOW"] = "unlock"
 L["STRING_UPTADING"] = "updating"
+L["STRING_VERSION_AVAILABLE"] = "a new version is available, download it from Twitch App or Curse website."
 L["STRING_VERSION_UPDATE"] = "new version: what's changed? click here"
 L["STRING_VOIDZONE_TOOLTIP"] = "Damage and Time"
 L["STRING_WAITPLUGIN"] = [=[waiting for

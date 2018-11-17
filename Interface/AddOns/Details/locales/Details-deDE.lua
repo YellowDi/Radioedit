@@ -1092,6 +1092,8 @@ Rahmenfarbe auf: |cFFFFFF00transparent|r.]=]
 L["STRING_OPTIONS_SKIN_EXTRA_OPTIONS_ANCHOR"] = "Skinoptionen:"
 L["STRING_OPTIONS_SKIN_LOADED"] = "Skin erfolgreich geladen."
 L["STRING_OPTIONS_SKIN_PRESETS_ANCHOR"] = "Skin speichern:"
+--[[Translation missing --]]
+--[[ L["STRING_OPTIONS_SKIN_PRESETSCONFIG_ANCHOR"] = ""--]] 
 L["STRING_OPTIONS_SKIN_REMOVED"] = "Skin gelöscht."
 L["STRING_OPTIONS_SKIN_RESET_TOOLTIP"] = "Tooltiprahmen zurücksetzen "
 L["STRING_OPTIONS_SKIN_RESET_TOOLTIP_DESC"] = "Setzt die Rahmenfarbe und Textur des Tooltips auf die Standardeinstellung zurück."
@@ -1559,6 +1561,8 @@ L["STRING_UNLOCK"] = [=[Fenstergruppe auflösen
  mit dieser Schaltfläche]=]
 L["STRING_UNLOCK_WINDOW"] = "freigeben"
 L["STRING_UPTADING"] = "aktualisiere"
+--[[Translation missing --]]
+--[[ L["STRING_VERSION_AVAILABLE"] = ""--]] 
 L["STRING_VERSION_UPDATE"] = "Neue Version: Was hat sich geändert? Klicke hier"
 L["STRING_VOIDZONE_TOOLTIP"] = "Schaden und Zeit"
 L["STRING_WAITPLUGIN"] = [=[warte auf

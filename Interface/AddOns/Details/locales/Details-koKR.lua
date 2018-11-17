@@ -1101,6 +1101,8 @@ L["STRING_OPTIONS_SKIN_ELVUI_BUTTON3_DESC"] = [=[툴팁 수정:
 L["STRING_OPTIONS_SKIN_EXTRA_OPTIONS_ANCHOR"] = "스킨 옵션:"
 L["STRING_OPTIONS_SKIN_LOADED"] = "스킨을 불러왔습니다."
 L["STRING_OPTIONS_SKIN_PRESETS_ANCHOR"] = "스킨 저장:"
+--[[Translation missing --]]
+--[[ L["STRING_OPTIONS_SKIN_PRESETSCONFIG_ANCHOR"] = ""--]] 
 L["STRING_OPTIONS_SKIN_REMOVED"] = "스킨이 삭제되었습니다."
 L["STRING_OPTIONS_SKIN_RESET_TOOLTIP"] = "툴팁 테두리 초기화"
 L["STRING_OPTIONS_SKIN_RESET_TOOLTIP_DESC"] = "툴팁 테두리 색상과 무늬를 기본값으로 되돌립니다."
@@ -1568,6 +1570,8 @@ L["STRING_UNLOCK"] = [=[이 버튼으로
 창 그룹 해제]=]
 L["STRING_UNLOCK_WINDOW"] = "잠금해제"
 L["STRING_UPTADING"] = "갱신 중"
+--[[Translation missing --]]
+--[[ L["STRING_VERSION_AVAILABLE"] = ""--]] 
 L["STRING_VERSION_UPDATE"] = "새 버전: 변경 내용을 보려면 클릭하세요"
 L["STRING_VOIDZONE_TOOLTIP"] = "피해와 시간"
 L["STRING_WAITPLUGIN"] = [=[플러그인

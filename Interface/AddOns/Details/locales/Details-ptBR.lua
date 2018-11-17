@@ -176,8 +176,7 @@ L["STRING_DAMAGE_TAKEN_FROM2"] = "aplicou dano com"
 L["STRING_DEFENSES"] = "Defesas"
 L["STRING_DESCENDING"] = "Decrescente,"
 L["STRING_DETACH_DESC"] = "Desagrupar Janelas"
---[[Translation missing --]]
---[[ L["STRING_DISCARD"] = ""--]] 
+L["STRING_DISCARD"] = "Descartar"
 L["STRING_DISPELLED"] = "Auras Removidas"
 L["STRING_DODGE"] = "Desvio"
 L["STRING_DOT"] = " (DoT)"
@@ -220,98 +219,63 @@ L["STRING_FORGE_BUTTON_PLAYERS"] = "Jogadores"
 L["STRING_FORGE_BUTTON_PLAYERS_DESC"] = "Listar jogadores do combate atual."
 --[[Translation missing --]]
 --[[ L["STRING_FORGE_ENABLEPLUGINS"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_FORGE_FILTER_BARTEXT"] = ""--]] 
+L["STRING_FORGE_FILTER_BARTEXT"] = "Nome da barra"
 --[[Translation missing --]]
 --[[ L["STRING_FORGE_FILTER_CASTERNAME"] = ""--]] 
 --[[Translation missing --]]
 --[[ L["STRING_FORGE_FILTER_ENCOUNTERNAME"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_FORGE_FILTER_ENEMYNAME"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_FORGE_FILTER_OWNERNAME"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_FORGE_FILTER_PETNAME"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_FORGE_FILTER_PLAYERNAME"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_FORGE_FILTER_SPELLNAME"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_FORGE_HEADER_BARTEXT"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_FORGE_HEADER_CASTER"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_FORGE_HEADER_CLASS"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_FORGE_HEADER_CREATEAURA"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_FORGE_HEADER_ENCOUNTERID"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_FORGE_HEADER_ENCOUNTERNAME"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_FORGE_HEADER_EVENT"] = ""--]] 
+L["STRING_FORGE_FILTER_ENEMYNAME"] = "Nome do inimigo"
+L["STRING_FORGE_FILTER_OWNERNAME"] = "Nome do proprietário"
+L["STRING_FORGE_FILTER_PETNAME"] = "Nome do pet"
+L["STRING_FORGE_FILTER_PLAYERNAME"] = "Nome do jogador"
+L["STRING_FORGE_FILTER_SPELLNAME"] = "Nome da magia"
+L["STRING_FORGE_HEADER_BARTEXT"] = "Barra de texto"
+L["STRING_FORGE_HEADER_CASTER"] = "Lançador"
+L["STRING_FORGE_HEADER_CLASS"] = "Classe"
+L["STRING_FORGE_HEADER_CREATEAURA"] = "Criar Aura"
+L["STRING_FORGE_HEADER_ENCOUNTERID"] = "ID do encontro"
+L["STRING_FORGE_HEADER_ENCOUNTERNAME"] = "Nome do encontro"
+L["STRING_FORGE_HEADER_EVENT"] = "Evento"
 --[[Translation missing --]]
 --[[ L["STRING_FORGE_HEADER_FLAG"] = ""--]] 
 --[[Translation missing --]]
 --[[ L["STRING_FORGE_HEADER_GUID"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_FORGE_HEADER_ICON"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_FORGE_HEADER_ID"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_FORGE_HEADER_INDEX"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_FORGE_HEADER_NAME"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_FORGE_HEADER_NPCID"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_FORGE_HEADER_OWNER"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_FORGE_HEADER_SCHOOL"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_FORGE_HEADER_SPELLID"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_FORGE_HEADER_TIMER"] = ""--]] 
+L["STRING_FORGE_HEADER_ICON"] = "Ícone"
+L["STRING_FORGE_HEADER_ID"] = "ID"
+L["STRING_FORGE_HEADER_INDEX"] = "índice"
+L["STRING_FORGE_HEADER_NAME"] = "Nome"
+L["STRING_FORGE_HEADER_NPCID"] = "ID do Npc"
+L["STRING_FORGE_HEADER_OWNER"] = "Dono"
+L["STRING_FORGE_HEADER_SCHOOL"] = "Escola"
+L["STRING_FORGE_HEADER_SPELLID"] = "ID da magia"
+L["STRING_FORGE_HEADER_TIMER"] = "Cronômetro"
 --[[Translation missing --]]
 --[[ L["STRING_FORGE_TUTORIAL_DESC"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_FORGE_TUTORIAL_TITLE"] = ""--]] 
+L["STRING_FORGE_TUTORIAL_TITLE"] = "Bem vindo ao Details! Forge"
 --[[Translation missing --]]
 --[[ L["STRING_FORGE_TUTORIAL_VIDEO"] = ""--]] 
 L["STRING_FREEZE"] = "Este segmento não está disponível no momento"
 L["STRING_FROM"] = "Fonte"
 L["STRING_GERAL"] = "Geral"
 L["STRING_GLANCING"] = "Glancing"
---[[Translation missing --]]
---[[ L["STRING_GUILDDAMAGERANK_BOSS"] = ""--]] 
+L["STRING_GUILDDAMAGERANK_BOSS"] = "Chefe"
 --[[Translation missing --]]
 --[[ L["STRING_GUILDDAMAGERANK_DATABASEERROR"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_GUILDDAMAGERANK_DIFF"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_GUILDDAMAGERANK_GUILD"] = ""--]] 
+L["STRING_GUILDDAMAGERANK_DIFF"] = "Dificuldade"
+L["STRING_GUILDDAMAGERANK_GUILD"] = "Guilda"
 --[[Translation missing --]]
 --[[ L["STRING_GUILDDAMAGERANK_PLAYERBASE"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_GUILDDAMAGERANK_PLAYERBASE_INDIVIDUAL"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_GUILDDAMAGERANK_PLAYERBASE_PLAYER"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_GUILDDAMAGERANK_PLAYERBASE_RAID"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_GUILDDAMAGERANK_RAID"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_GUILDDAMAGERANK_ROLE"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_GUILDDAMAGERANK_SHOWHISTORY"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_GUILDDAMAGERANK_SHOWRANK"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_GUILDDAMAGERANK_SYNCBUTTONTEXT"] = ""--]] 
+L["STRING_GUILDDAMAGERANK_PLAYERBASE_INDIVIDUAL"] = "Individual"
+L["STRING_GUILDDAMAGERANK_PLAYERBASE_PLAYER"] = "Jogador"
+L["STRING_GUILDDAMAGERANK_PLAYERBASE_RAID"] = "Todos os jogadores"
+L["STRING_GUILDDAMAGERANK_RAID"] = "Raid"
+L["STRING_GUILDDAMAGERANK_ROLE"] = "Função"
+L["STRING_GUILDDAMAGERANK_SHOWHISTORY"] = "Mostrar histórico"
+L["STRING_GUILDDAMAGERANK_SHOWRANK"] = "Mostrar ranking da guilda"
+L["STRING_GUILDDAMAGERANK_SYNCBUTTONTEXT"] = "Sincronizar com a guilda"
 --[[Translation missing --]]
 --[[ L["STRING_GUILDDAMAGERANK_TUTORIAL_DESC"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_GUILDDAMAGERANK_WINDOWALERT"] = ""--]] 
+L["STRING_GUILDDAMAGERANK_WINDOWALERT"] = "Chefe derrotado! Mostrar Ranking"
 L["STRING_HEAL"] = "Cura"
 L["STRING_HEAL_ABSORBED"] = "Cura absorvida"
 L["STRING_HEAL_CRIT"] = "Cura Critica"
@@ -405,8 +369,7 @@ L["STRING_MIRROR_IMAGE"] = "Imagem Espelhada"
 L["STRING_MISS"] = "Errou"
 L["STRING_MODE_ALL"] = "Modo: Tudo"
 L["STRING_MODE_GROUP"] = "Modo: Padrão"
---[[Translation missing --]]
---[[ L["STRING_MODE_OPENFORGE"] = ""--]] 
+L["STRING_MODE_OPENFORGE"] = "Lista de feitiços"
 L["STRING_MODE_PLUGINS"] = "plugins"
 L["STRING_MODE_RAID"] = "Plugins: Raide"
 L["STRING_MODE_SELF"] = "Plugins: Individuais"
@@ -454,8 +417,7 @@ L["STRING_OPTIONS_ADVANCED"] = "Avançado"
 L["STRING_OPTIONS_ALPHAMOD_ANCHOR"] = "Auto Ocultar:"
 L["STRING_OPTIONS_ALWAYS_USE"] = "Usar Em Todos os Personagens"
 L["STRING_OPTIONS_ALWAYS_USE_DESC"] = "O mesmo perfil é usado em todos os personagens. Você pode sobre escrever ele em qualquer personagem apenas escolhendo um perfil na caixa de cima."
---[[Translation missing --]]
---[[ L["STRING_OPTIONS_ALWAYSSHOWPLAYERS"] = ""--]] 
+L["STRING_OPTIONS_ALWAYSSHOWPLAYERS"] = "Mostrar todos os jogadores"
 --[[Translation missing --]]
 --[[ L["STRING_OPTIONS_ALWAYSSHOWPLAYERS_DESC"] = ""--]] 
 L["STRING_OPTIONS_ANCHOR"] = "Lado"
@@ -564,8 +526,7 @@ L["STRING_OPTIONS_BG_ALL_ALLY_DESC"] = [=[Quando ativado, jogadores inimigos tam
 
 |cFFFFFF00Importante|r: alterações são aplicadas nos combates seguintes.]=]
 L["STRING_OPTIONS_BG_ANCHOR"] = "Campos de Batalha:"
---[[Translation missing --]]
---[[ L["STRING_OPTIONS_BG_UNIQUE_SEGMENT"] = ""--]] 
+L["STRING_OPTIONS_BG_UNIQUE_SEGMENT"] = "Segmento Exclusivo"
 --[[Translation missing --]]
 --[[ L["STRING_OPTIONS_BG_UNIQUE_SEGMENT_DESC"] = ""--]] 
 L["STRING_OPTIONS_CAURAS"] = "Coletar Auras"
@@ -591,8 +552,7 @@ L["STRING_OPTIONS_CENERGY_DESC"] = [=[Ativa a Captura de:
 - |cFFFFFFFFPoder Rúnico Gerado|r]=]
 L["STRING_OPTIONS_CHANGE_CLASSCOLORS"] = "Modificar Cores Das Classes"
 L["STRING_OPTIONS_CHANGE_CLASSCOLORS_DESC"] = "Escolha novas cores para as cores das classes."
---[[Translation missing --]]
---[[ L["STRING_OPTIONS_CHANGECOLOR"] = ""--]] 
+L["STRING_OPTIONS_CHANGECOLOR"] = "Mudar cor"
 L["STRING_OPTIONS_CHANGELOG"] = "Notas da Versão"
 L["STRING_OPTIONS_CHART_ADD"] = "Adicionar Dados"
 L["STRING_OPTIONS_CHART_ADD2"] = "Adicionar"
@@ -1145,6 +1105,8 @@ Cor da Borda: |cFFFFFF00Transparente|r.]=]
 L["STRING_OPTIONS_SKIN_EXTRA_OPTIONS_ANCHOR"] = "Opções de Skin:"
 L["STRING_OPTIONS_SKIN_LOADED"] = "Carregamento de skin bem sucedido."
 L["STRING_OPTIONS_SKIN_PRESETS_ANCHOR"] = "Salvar Skin:"
+--[[Translation missing --]]
+--[[ L["STRING_OPTIONS_SKIN_PRESETSCONFIG_ANCHOR"] = ""--]] 
 L["STRING_OPTIONS_SKIN_REMOVED"] = "skin removida."
 L["STRING_OPTIONS_SKIN_RESET_TOOLTIP"] = "Reseta a Cor e Textura do Tooltip"
 L["STRING_OPTIONS_SKIN_RESET_TOOLTIP_DESC"] = "Reconfigura a cor da borda e a textura usada nos tooltips."
@@ -1580,8 +1542,7 @@ L["STRING_SLASH_WIPECONFIG_DESC"] = "faz a reinstalação do addon limpando toda
 L["STRING_SLASH_WORLDBOSS"] = "worldboss"
 L["STRING_SLASH_WORLDBOSS_DESC"] = "executa uma macro mostrando quais 'world boss' você matou esta semana."
 L["STRING_SPELL_INTERRUPTED"] = "Magias Interrompidas"
---[[Translation missing --]]
---[[ L["STRING_SPELLLIST"] = ""--]] 
+L["STRING_SPELLLIST"] = "Lista de feitiços"
 L["STRING_SPELLS"] = "Habilidades"
 L["STRING_SPIRIT_LINK_TOTEM"] = "Troca de Vida"
 L["STRING_SPIRIT_LINK_TOTEM_DESC"] = [=[Quantidade de vida trocada entre
@@ -1589,8 +1550,7 @@ jogadores dentro do círculo do totem.
 
 Esta cura não é adicionada ao
 total curado do jogador.]=]
---[[Translation missing --]]
---[[ L["STRING_STATISTICS"] = ""--]] 
+L["STRING_STATISTICS"] = "Estatísticas"
 L["STRING_STATUSBAR_NOOPTIONS"] = "Não há opcoes para esta ferramenta."
 L["STRING_SWITCH_CLICKME"] = "clique-me"
 L["STRING_SWITCH_SELECTMSG"] = "Selecione o display para o atalho #%d."
@@ -1615,6 +1575,8 @@ L["STRING_UNLOCK"] = [=[Separe as janelas
 neste botão]=]
 L["STRING_UNLOCK_WINDOW"] = "destravar"
 L["STRING_UPTADING"] = "atualizando"
+--[[Translation missing --]]
+--[[ L["STRING_VERSION_AVAILABLE"] = ""--]] 
 L["STRING_VERSION_UPDATE"] = "nova versão: clique para ver o que mudou"
 L["STRING_VOIDZONE_TOOLTIP"] = "Dano e tempo:"
 L["STRING_WAITPLUGIN"] = [=[esperando por
@@ -1697,20 +1659,13 @@ L["STRING_WELCOME_7"] = "usado em rankings, este método usa o tempo total da lu
 L["STRING_WELCOME_70"] = "Config da Barra de Título"
 L["STRING_WELCOME_71"] = "Config das Barras"
 L["STRING_WELCOME_72"] = "Config das Janelas"
---[[Translation missing --]]
---[[ L["STRING_WELCOME_73"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_WELCOME_74"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_WELCOME_75"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_WELCOME_76"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_WELCOME_77"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_WELCOME_78"] = ""--]] 
---[[Translation missing --]]
---[[ L["STRING_WELCOME_79"] = ""--]] 
+L["STRING_WELCOME_73"] = "Selecione o alfabeto ou região"
+L["STRING_WELCOME_74"] = "Alfabeto latino"
+L["STRING_WELCOME_75"] = "Alfabeto cirílico"
+L["STRING_WELCOME_76"] = "China"
+L["STRING_WELCOME_77"] = "Coréia"
+L["STRING_WELCOME_78"] = "Taiwan"
+L["STRING_WELCOME_79"] = "Criar segunda janela"
 L["STRING_WINDOW_NOTFOUND"] = "Nenhuma janela encontrada."
 L["STRING_WINDOW_NUMBER"] = "número da janela"
 L["STRING_WINDOW1ATACH_DESC"] = "Para criar um grupo de janelas, mova a janela #2 para perto da janela #1."
