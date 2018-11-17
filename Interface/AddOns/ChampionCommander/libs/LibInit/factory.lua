@@ -275,7 +275,7 @@ end
 	frame:SetHeight(50)
 	frame:SetWidth(frame.maxwidth)
 	frame.SetOnChange=function() end
-	local dd=MSA_DropDownMenu_Create(name, frame)
+	local dd=CreateFrame("Frame",name,frame,"UIDropDownMenuTemplate")
 	dd:SetPoint("BOTTOMLEFT")
 	dd:SetPoint("BOTTOMRIGHT")
 	dd.Left=_G[name.."Left"]
@@ -304,25 +304,25 @@ end
 
 	dd:SetScript("OnLeave",function() GameTooltip:Hide() end)
 	dd.list=list
-	MSA_DropDownMenu_Initialize(dd, function(...)
+	UIDropDownMenu_Initialize(dd, function(...)
 		local i=0
 		for k,v in pairs(dd.list) do
 			i=i+1
-			local info=MSA_DropDownMenu_CreateInfo()
+			local info=UIDropDownMenu_CreateInfo()
 			info.text=v
 			info.value=k
 			info.func=function(...) return dd:OnValueChanged(...) end
 			info.arg1=i
 			info.arg2=k
 			--info.notCheckable=true
-			MSA_DropDownMenu_AddButton(info)
+			UIDropDownMenu_AddButton(info)
 		end
 	end)
-	MSA_DropDownMenu_SetSelectedValue(dd, current)
-	MSA_DropDownMenu_JustifyText(dd, "LEFT")
+	UIDropDownMenu_SetSelectedValue(dd, current)
+	UIDropDownMenu_JustifyText(dd, "LEFT")
 	function dd:OnValueChanged(this,index,value,...)
 		value=value or index
-		MSA_DropDownMenu_SetSelectedID(dd,index)
+		UIDropDownMenu_SetSelectedID(dd,index)
 		return frame:OnChange(value)
 	end
 	function frame:OnChange(value) end
