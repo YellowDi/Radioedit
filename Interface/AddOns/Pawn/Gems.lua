@@ -358,8 +358,9 @@ PawnGemQualityLevels =
 	-- 355-370: BfA world bosses
 	-- 355: BfA normal raids
 	-- 325: BfA heroics
-	-- 210-310: leveling dungeons in BfA
-	{ 340, PawnGemData120Rare }, -- BfA raid finder / mythic dungeon
+	-- 280: low-level BfA blue set
+	-- 210: leveling dungeons in BfA
+	{ 340, PawnGemData120Rare }, -- BfA mythic dungeons / raid finder
 	{ 270, PawnGemData120Uncommon }, -- above Legion legendaries
 	{ 225, PawnGemData110Epic }, -- Heroic Antorus
 	{ 195, PawnGemData110Rare }, -- Heroic Tomb of Sargeras / higher than new Relinquished gear
@@ -380,4 +381,4 @@ PawnGemQualityLevels =
 	{ 0, PawnGemData70Uncommon },
 }
 
-PawnMinimumItemLevelToConsiderGems = 310 -- Sockets on items below this ilvl are ignored
+PawnMinimumItemLevelToConsiderGems = 153 -- Sockets on items below this ilvl are ignored
