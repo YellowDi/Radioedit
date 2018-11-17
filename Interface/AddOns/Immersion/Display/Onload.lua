@@ -54,15 +54,6 @@ frame.IgnoreResetEvent = {
 	SUPER_TRACKED_QUEST_CHANGED = true,
 }
 
-frame.IgnoreGossipEvent = {
-	GOSSIP_SHOW = true,
-	GOSSIP_CLOSED = true,
-	QUEST_ACCEPTED = true,
-	NAME_PLATE_UNIT_ADDED = true,
-	NAME_PLATE_UNIT_REMOVED = true,
-	SUPER_TRACKED_QUEST_CHANGED = true,
-}
-
 ----------------------------------
 -- Register events for titlebuttons
 ----------------------------------
