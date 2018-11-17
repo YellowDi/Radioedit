@@ -134,10 +134,20 @@ local function ScaleDelegate(...)
 
 	local unit = ...
 	local scale
+	local filterScale
 
 	--if LocalVars.UnitSpotlightScaleEnable and LocalVars.UnitSpotlightLookup[unit.name] then
 	--	return LocalVars.UnitSpotlightScale
 	--end
+	if not unit then return LocalVars.ScaleStandard end
+
+	-- Filter
+	if (LocalVars.FilterScaleLock or (not (unit.isTarget or (LocalVars.FocusAsTarget and unit.isFocus)))) and UnitFilter(unit) then
+		filterScale = LocalVars.ScaleFiltered
+	else
+		local func = ScaleFunctionsUniversal[LocalVars.ScaleFunctionMode] or DummyFunction
+		if func then scale = func(...) end
+	end
 
 	if (LocalVars.ScaleTargetSpotlight and (unit.isTarget or (LocalVars.FocusAsTarget and unit.isFocus))) then scale = LocalVars.ScaleSpotlight
 	elseif (LocalVars.ScaleMouseoverSpotlight and unit.isMouseover) then scale = LocalVars.ScaleSpotlight
@@ -147,16 +157,17 @@ local function ScaleDelegate(...)
 	elseif LocalVars.ScaleCastingSpotlight and unit.reaction == "HOSTILE" and unit.isCasting then scale = LocalVars.ScaleSpotlight
 	--elseif LocalVars.ScaleMiniMobs and unit.isMini then
 	--	scale = MiniMobScale
-	else
-		-- Filter
-		if (LocalVars.FilterScaleLock or (not (unit.isTarget or (LocalVars.FocusAsTarget and unit.isFocus)))) and UnitFilter(unit) then scale = LocalVars.ScaleFiltered
-		else
-			local func = ScaleFunctionsUniversal[LocalVars.ScaleFunctionMode] or DummyFunction
-			if func then scale = func(...) end
-		end
 	end
 
-	return scale or LocalVars.ScaleStandard
+	if(filterScale and LocalVars.FilterScaleLock and UnitFilter(unit)) then
+		return filterScale
+	else
+		return scale or LocalVars.ScaleStandard
+	end
+end
+
+local function GetClickableArea()
+	return LocalVars.NameplateClickableWidth, LocalVars.NameplateClickableHeight
 end
 
 
@@ -178,4 +189,5 @@ HubData.RegisterCallback(OnVariableChange)
 -- Add References
 ------------------------------------------------------------------------------
 TidyPlatesContHubFunctions.SetScale = ScaleDelegate
+TidyPlatesContHubFunctions.GetClickableArea = GetClickableArea
 

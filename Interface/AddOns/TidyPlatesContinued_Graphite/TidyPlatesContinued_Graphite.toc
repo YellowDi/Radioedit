@@ -1,6 +1,5 @@
 ## Interface: 80000
 ## Title: Tidy Plates Continued: Graphite
-## Title-zhCN: |cffFF6060[战斗]|r Tidy Plates Continued: Graphite 主题
 ## Notes: Minimalisty
 ## Author: Binny
 ## Dependencies: TidyPlatesContinued, TidyPlatesContinuedHub

@@ -1,6 +1,5 @@
 ## Interface: 80000
 ## Title: Tidy Plates Continued: Neon Theme
-## Title-zhCN: |cffFF6060[战斗]|r Tidy Plates Continued: Neon 主题
 ## Notes: It toasts your Eggo waffles, and butters your bread.
 ## Author: Binny
 ## Dependencies: TidyPlatesContinued, TidyPlatesContinuedHub

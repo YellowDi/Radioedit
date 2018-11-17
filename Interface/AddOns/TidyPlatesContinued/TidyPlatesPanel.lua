@@ -1,4 +1,4 @@
----------------------------------------------------------------------------------------------------------------------
+﻿---------------------------------------------------------------------------------------------------------------------
 -- Tidy Plates Interface Panel
 ---------------------------------------------------------------------------------------------------------------------
 
@@ -17,9 +17,9 @@ local CallIn = TidyPlatesContUtility.CallIn
 local copytable = TidyPlatesContUtility.copyTable
 local PanelHelpers = TidyPlatesContUtility.PanelHelpers
 
-local NO_AUTOMATION = "不自动"
-local DURING_COMBAT = "战斗中显示, 战斗结束隐藏"
-local OUT_OF_COMBAT = "战斗开始隐藏, 战斗结束显示"
+local NO_AUTOMATION = "不使用自动化"
+local DURING_COMBAT = "战斗中显示，战斗外隐藏"
+local OUT_OF_COMBAT = "战斗中隐藏，战斗外显示"
 
 local font = "Interface\\Addons\\TidyPlatesContinued\\Media\\DefaultFont.ttf"
 local yellow, blue, red, orange = "|cffffff00", "|cFF3782D1", "|cFFFF1100", "|cFFFF6906"
@@ -38,7 +38,7 @@ end
 local FirstTryTheme = "Neon"
 local DefaultProfile = "Damage"
 
-local ActiveProfile = "None"
+local ActiveProfile = "无"
 
 TidyPlatesContOptions = {
 
@@ -77,12 +77,151 @@ TidyPlatesCont.GetProfile = GetProfile
 
 function TidyPlatesContPanel.AddProfile(self, profileName )
 	if  profileName then
-        HubProfileList = { 
-              { text = "输出", value = "Damage" }, 
-              { text = "治疗", value = "Healer"}, 
-              { text = "坦克", value = "Tank"}, 
-              { text = "角斗士", value = "Gladiator"}, 
-        }
+		local ZHCN_SEARCH = 0	 --补充一串代码，解决汉化兼容性
+		local ZHCN_K = 0
+		local ZHCN_V = 0
+		local ZHCN_ENUS={ Damage = "伤害输出", Healer = "治疗者", Gladiator = "角斗士", Tank = "坦克", }
+		for ZHCN_K,ZHCN_V in pairs(ZHCN_ENUS) do
+ 	 		if ZHCN_ENUS[ZHCN_K] == ZHCN_ENUS[profileName] then
+			      ZHCN_SEARCH = 1
+			end	   
+		end		
+		if ZHCN_SEARCH == 0 then
+			ZHCN_ENUS[profileName] = profileName
+		end
+		local ZHCN_SEARCH = 0	 --补充一串代码，解决汉化兼容性
+		local ZHCN_K = 0
+		local ZHCN_V = 0
+		local ZHCN_ENUS={ Damage = "伤害输出", Healer = "治疗者", Gladiator = "角斗士", Tank = "坦克", }
+		for ZHCN_K,ZHCN_V in pairs(ZHCN_ENUS) do
+ 	 		if ZHCN_ENUS[ZHCN_K] == ZHCN_ENUS[profileName] then
+			      ZHCN_SEARCH = 1
+			end	   
+		end		
+		if ZHCN_SEARCH == 0 then
+			ZHCN_ENUS[profileName] = profileName
+		end
+		local ZHCN_SEARCH = 0	 --补充一串代码，解决汉化兼容性
+		local ZHCN_K = 0
+		local ZHCN_V = 0
+		local ZHCN_ENUS={ Damage = "伤害输出", Healer = "治疗者", Gladiator = "角斗士", Tank = "坦克", }
+		for ZHCN_K,ZHCN_V in pairs(ZHCN_ENUS) do
+ 	 		if ZHCN_ENUS[ZHCN_K] == ZHCN_ENUS[profileName] then
+			      ZHCN_SEARCH = 1
+			end	   
+		end		
+		if ZHCN_SEARCH == 0 then
+			ZHCN_ENUS[profileName] = profileName
+		end
+		local ZHCN_SEARCH = 0	 --补充一串代码，解决汉化兼容性
+		local ZHCN_K = 0
+		local ZHCN_V = 0
+		local ZHCN_ENUS={ Damage = "伤害输出", Healer = "治疗者", Gladiator = "角斗士", Tank = "坦克", }
+		for ZHCN_K,ZHCN_V in pairs(ZHCN_ENUS) do
+ 	 		if ZHCN_ENUS[ZHCN_K] == ZHCN_ENUS[profileName] then
+			      ZHCN_SEARCH = 1
+			end	   
+		end		
+		if ZHCN_SEARCH == 0 then
+			ZHCN_ENUS[profileName] = profileName
+		end
+		local ZHCN_SEARCH = 0	 --补充一串代码，解决汉化兼容性
+		local ZHCN_K = 0
+		local ZHCN_V = 0
+		local ZHCN_ENUS={ Damage = "伤害输出", Healer = "治疗者", Gladiator = "角斗士", Tank = "坦克", }
+		for ZHCN_K,ZHCN_V in pairs(ZHCN_ENUS) do
+ 	 		if ZHCN_ENUS[ZHCN_K] == ZHCN_ENUS[profileName] then
+			      ZHCN_SEARCH = 1
+			end	   
+		end		
+		if ZHCN_SEARCH == 0 then
+			ZHCN_ENUS[profileName] = profileName
+		end
+		local ZHCN_SEARCH = 0	 --补充一串代码，解决汉化兼容性
+		local ZHCN_K = 0
+		local ZHCN_V = 0
+		local ZHCN_ENUS={ Damage = "伤害输出", Healer = "治疗者", Gladiator = "角斗士", Tank = "坦克", }
+		for ZHCN_K,ZHCN_V in pairs(ZHCN_ENUS) do
+ 	 		if ZHCN_ENUS[ZHCN_K] == ZHCN_ENUS[profileName] then
+			      ZHCN_SEARCH = 1
+			end	   
+		end		
+		if ZHCN_SEARCH == 0 then
+			ZHCN_ENUS[profileName] = profileName
+		end
+		local ZHCN_SEARCH = 0	 --补充一串代码，解决汉化兼容性
+		local ZHCN_K = 0
+		local ZHCN_V = 0
+		local ZHCN_ENUS={ Damage = "伤害输出", Healer = "治疗者", Gladiator = "角斗士", Tank = "坦克", }
+		for ZHCN_K,ZHCN_V in pairs(ZHCN_ENUS) do
+ 	 		if ZHCN_ENUS[ZHCN_K] == ZHCN_ENUS[profileName] then
+			      ZHCN_SEARCH = 1
+			end	   
+		end		
+		if ZHCN_SEARCH == 0 then
+			ZHCN_ENUS[profileName] = profileName
+		end
+		local ZHCN_SEARCH = 0	 --补充一串代码，解决汉化兼容性
+		local ZHCN_K = 0
+		local ZHCN_V = 0
+		local ZHCN_ENUS={ Damage = "伤害输出", Healer = "治疗者", Gladiator = "角斗士", Tank = "坦克", }
+		for ZHCN_K,ZHCN_V in pairs(ZHCN_ENUS) do
+ 	 		if ZHCN_ENUS[ZHCN_K] == ZHCN_ENUS[profileName] then
+			      ZHCN_SEARCH = 1
+			end	   
+		end		
+		if ZHCN_SEARCH == 0 then
+			ZHCN_ENUS[profileName] = profileName
+		end
+		local ZHCN_SEARCH = 0	 --补充一串代码，解决汉化兼容性
+		local ZHCN_K = 0
+		local ZHCN_V = 0
+		local ZHCN_ENUS={ Damage = "伤害输出", Healer = "治疗者", Gladiator = "角斗士", Tank = "坦克", }
+		for ZHCN_K,ZHCN_V in pairs(ZHCN_ENUS) do
+ 	 		if ZHCN_ENUS[ZHCN_K] == ZHCN_ENUS[profileName] then
+			      ZHCN_SEARCH = 1
+			end	   
+		end		
+		if ZHCN_SEARCH == 0 then
+			ZHCN_ENUS[profileName] = profileName
+		end
+		local ZHCN_SEARCH = 0	 --补充一串代码，解决汉化兼容性
+		local ZHCN_K = 0
+		local ZHCN_V = 0
+		local ZHCN_ENUS={ Damage = "伤害输出", Healer = "治疗者", Gladiator = "角斗士", Tank = "坦克", }
+		for ZHCN_K,ZHCN_V in pairs(ZHCN_ENUS) do
+ 	 		if ZHCN_ENUS[ZHCN_K] == ZHCN_ENUS[profileName] then
+			      ZHCN_SEARCH = 1
+			end	   
+		end		
+		if ZHCN_SEARCH == 0 then
+			ZHCN_ENUS[profileName] = profileName
+		end
+		local ZHCN_SEARCH = 0	 --补充一串代码，解决汉化兼容性
+		local ZHCN_K = 0
+		local ZHCN_V = 0
+		local ZHCN_ENUS={ Damage = "伤害输出", Healer = "治疗者", Gladiator = "角斗士", Tank = "坦克", }
+		for ZHCN_K,ZHCN_V in pairs(ZHCN_ENUS) do
+ 	 		if ZHCN_ENUS[ZHCN_K] == ZHCN_ENUS[profileName] then
+			      ZHCN_SEARCH = 1
+			end	   
+		end		
+		if ZHCN_SEARCH == 0 then
+			ZHCN_ENUS[profileName] = profileName
+		end
+		local ZHCN_SEARCH = 0	 --补充一串代码，解决汉化兼容性
+		local ZHCN_K = 0
+		local ZHCN_V = 0
+		local ZHCN_ENUS={ Damage = "伤害输出", Healer = "治疗者", Gladiator = "角斗士", Tank = "坦克", }
+		for ZHCN_K,ZHCN_V in pairs(ZHCN_ENUS) do
+ 	 		if ZHCN_ENUS[ZHCN_K] == ZHCN_ENUS[profileName] then
+			      ZHCN_SEARCH = 1
+			end	   
+		end		
+		if ZHCN_SEARCH == 0 then
+			ZHCN_ENUS[profileName] = profileName
+		end
+		HubProfileList[#HubProfileList+1] = { text = ZHCN_ENUS[profileName], value = profileName, }
 	end
 end
 
@@ -134,14 +273,14 @@ local function Role2Profile(spec)
 		local role = GetSpecializationRole(spec)
 		if role == "DAMAGER" then return "Damage" end
 		if role == "TANK" then return "Tank" end
-		if role == "HEALER" then return "Healer" end
+		if role == "HEALER" then return "Healer"  end
 	end
 	return "Damage"
 end
 
 local function ApplyPanelSettings()
 	-- Theme
-	SetTheme(TidyPlatesContOptions.ActiveTheme or TidyPlatesContUtility.GetCacheSet("SavedTemplate")["Theme"] or FirstTryTheme)
+	SetTheme(TidyPlatesContOptions.ActiveTheme or TidyPlatesContUtility.GetCacheSet("SavedTemplate")["主题"] or FirstTryTheme)
 
 	-- This is here in case the theme couldn't be loaded, and the core falls back to defaults
 	--TidyPlatesContOptions.ActiveTheme = TidyPlatesContInternal.activeThemeName
@@ -244,7 +383,7 @@ local function OnRefresh(panel)
 	local id, name = GetSpecializationInfo(1)
 
 	if name then
-		if currentSpec == 1 then name = name.." (激活)" end
+		if currentSpec == 1 then name = name.."(当前专精)" end
 		panel.FirstSpecLabel:SetText(name)
 	end
 	------------------------
@@ -253,7 +392,7 @@ local function OnRefresh(panel)
 	local id, name = GetSpecializationInfo(2)
 
 	if name then
-		if currentSpec == 2 then name = name.." (激活)" end
+		if currentSpec == 2 then name = name.."(当前专精)" end
 		panel.SecondSpecLabel:SetText(name)
 	end
 	------------------------
@@ -262,7 +401,7 @@ local function OnRefresh(panel)
 	local id, name = GetSpecializationInfo(3)
 
 	if name then
-		if currentSpec == 3 then name = name.." (激活)" end
+		if currentSpec == 3 then name = name.."(当前专精)" end
 		panel.ThirdSpecLabel:SetText(name)
 		panel.ThirdSpecLabel:Show()
 		panel.ThirdSpecDropdown:Show()
@@ -273,7 +412,7 @@ local function OnRefresh(panel)
 	local id, name = GetSpecializationInfo(4)
 
 	if name then
-		if currentSpec == 4 then name = name.." (激活)" end
+		if currentSpec == 4 then name = name.."(当前专精)" end
 		panel.FourthSpecLabel:SetText(name)
 		panel.FourthSpecLabel:Show()
 		panel.FourthSpecDropdown:Show()
@@ -346,7 +485,7 @@ local function BuildInterfacePanel(panel)
 	----------------------------------------------
 	panel.ProfileLabel = panel:CreateFontString(nil, 'ARTWORK', 'GameFontNormal')
 	panel.ProfileLabel:SetFont(font, 22)
-	panel.ProfileLabel:SetText("天赋")
+	panel.ProfileLabel:SetText("模板")
 	panel.ProfileLabel:SetPoint("TOPLEFT", panel.ActiveThemeDropdown, "BOTTOMLEFT", 20, -20)
 	panel.ProfileLabel:SetTextColor(255/255, 105/255, 6/255)
 
@@ -358,7 +497,7 @@ local function BuildInterfacePanel(panel)
 	panel.FirstSpecLabel:SetPoint("TOPLEFT", panel.ProfileLabel,"BOTTOMLEFT", 0, -4)
 	panel.FirstSpecLabel:SetWidth(170)
 	panel.FirstSpecLabel:SetJustifyH("LEFT")
-	panel.FirstSpecLabel:SetText("第一天赋")
+	panel.FirstSpecLabel:SetText("First Spec")
 
 	panel.FirstSpecDropdown = PanelHelpers:CreateDropdownFrame("TidyPlatesContFirstSpecDropdown", panel, HubProfileList, DefaultProfile, nil, true)
 	panel.FirstSpecDropdown:SetPoint("TOPLEFT", panel.FirstSpecLabel, "BOTTOMLEFT", -20, -2)
@@ -368,7 +507,7 @@ local function BuildInterfacePanel(panel)
 	panel.ThirdSpecLabel:SetPoint("TOPLEFT", panel.FirstSpecDropdown,"BOTTOMLEFT", 20, -8)
 	panel.ThirdSpecLabel:SetWidth(170)
 	panel.ThirdSpecLabel:SetJustifyH("LEFT")
-	panel.ThirdSpecLabel:SetText("第三天赋")
+	panel.ThirdSpecLabel:SetText("Third Spec")
 	panel.ThirdSpecLabel:Hide()
 
 	panel.ThirdSpecDropdown = PanelHelpers:CreateDropdownFrame("TidyPlatesContThirdSpecDropdown", panel, HubProfileList, DefaultProfile, nil, true)
@@ -383,7 +522,7 @@ local function BuildInterfacePanel(panel)
 	panel.SecondSpecLabel:SetPoint("TOPLEFT", panel.FirstSpecLabel,"TOPLEFT", 180, 0)
 	panel.SecondSpecLabel:SetWidth(170)
 	panel.SecondSpecLabel:SetJustifyH("LEFT")
-	panel.SecondSpecLabel:SetText("第二天赋")
+	panel.SecondSpecLabel:SetText("Second Spec")
 
 	panel.SecondSpecDropdown = PanelHelpers:CreateDropdownFrame("TidyPlatesContSecondSpecDropdown", panel, HubProfileList, DefaultProfile, nil, true)
 	panel.SecondSpecDropdown:SetPoint("TOPLEFT",panel.SecondSpecLabel, "BOTTOMLEFT", -20, -2)
@@ -393,7 +532,7 @@ local function BuildInterfacePanel(panel)
 	panel.FourthSpecLabel:SetPoint("TOPLEFT", panel.SecondSpecDropdown,"BOTTOMLEFT", 20, -8)
 	panel.FourthSpecLabel:SetWidth(170)
 	panel.FourthSpecLabel:SetJustifyH("LEFT")
-	panel.FourthSpecLabel:SetText("第四天赋")
+	panel.FourthSpecLabel:SetText("Fourth Spec")
 	panel.FourthSpecLabel:Hide()
 
 	panel.FourthSpecDropdown = PanelHelpers:CreateDropdownFrame("TidyPlatesContFourthSpecDropdown", panel, HubProfileList, DefaultProfile, nil, true)
@@ -406,7 +545,7 @@ local function BuildInterfacePanel(panel)
 	----------------------------------------------
 	panel.AutomationLabel = panel:CreateFontString(nil, 'ARTWORK', 'GameFontNormal')
 	panel.AutomationLabel:SetFont(font, 22)
-	panel.AutomationLabel:SetText("自动切换")
+	panel.AutomationLabel:SetText("自动化")
 	panel.AutomationLabel:SetPoint("TOPLEFT", panel.ThirdSpecDropdown, "BOTTOMLEFT", 20, -20)
 	panel.AutomationLabel:SetTextColor(255/255, 105/255, 6/255)
 
@@ -419,7 +558,7 @@ local function BuildInterfacePanel(panel)
 	panel.AutoShowEnemyLabel:SetPoint("TOPLEFT", panel.AutomationLabel,"BOTTOMLEFT", 0, -4)
 	panel.AutoShowEnemyLabel:SetWidth(170)
 	panel.AutoShowEnemyLabel:SetJustifyH("LEFT")
-	panel.AutoShowEnemyLabel:SetText("敌方姓名版:")
+	panel.AutoShowEnemyLabel:SetText("敌方姓名板")
 
 	panel.AutoShowEnemy = PanelHelpers:CreateDropdownFrame("TidyPlatesContAutoShowEnemy", panel, AutomationDropdownItems, NO_AUTOMATION, nil, true)
 	panel.AutoShowEnemy:SetPoint("TOPLEFT",panel.AutoShowEnemyLabel, "BOTTOMLEFT", -20, -2)
@@ -433,7 +572,7 @@ local function BuildInterfacePanel(panel)
 	panel.AutoShowFriendlyLabel:SetPoint("TOPLEFT", panel.AutoShowEnemyLabel,"TOPLEFT", 180, 0)
 	panel.AutoShowFriendlyLabel:SetWidth(170)
 	panel.AutoShowFriendlyLabel:SetJustifyH("LEFT")
-	panel.AutoShowFriendlyLabel:SetText("友方姓名版:")
+	panel.AutoShowFriendlyLabel:SetText("友方姓名板")
 
 	panel.AutoShowFriendly = PanelHelpers:CreateDropdownFrame("TidyPlatesContAutoShowFriendly", panel, AutomationDropdownItems, NO_AUTOMATION, nil, true)
 	panel.AutoShowFriendly:SetPoint("TOPLEFT", panel.AutoShowFriendlyLabel,"BOTTOMLEFT", -20, -2)
@@ -448,15 +587,15 @@ local function BuildInterfacePanel(panel)
 	--BlizzOptionsButton:SetPoint("TOPRIGHT", ResetButton, "TOPLEFT", -8, 0)
 	BlizzOptionsButton:SetPoint("TOPLEFT", panel.AutoShowEnemy, "TOPLEFT", 16, -55)
 	BlizzOptionsButton:SetWidth(260)
-	BlizzOptionsButton:SetText("姓名版方向和可见度")
+	BlizzOptionsButton:SetText("打开暴雪姓名板设置...")
 
 	-- Cast Bars
-	panel.DisableCastBars = PanelHelpers:CreateCheckButton("TidyPlatesContOptions_DisableCastBars", panel, "关闭施法条")
+	panel.DisableCastBars = PanelHelpers:CreateCheckButton("TidyPlatesContOptions_DisableCastBars", panel, "禁用施法条")
 	panel.DisableCastBars:SetPoint("TOPLEFT", BlizzOptionsButton, "TOPLEFT", 0, -35)
 	panel.DisableCastBars:SetScript("OnClick", function(self) SetCastBars(not self:GetChecked()) end)
 
 	-- ForceBlizzardFont
-	panel.ForceBlizzardFont = PanelHelpers:CreateCheckButton("TidyPlatesContOptions_ForceBlizzardFont", panel, "强制多语言字体(需要 /reload)")
+	panel.ForceBlizzardFont = PanelHelpers:CreateCheckButton("TidyPlatesContOptions_ForceBlizzardFont", panel, "强制使用多语言字体（要求/reload）")
 	panel.ForceBlizzardFont:SetPoint("TOPLEFT", panel.DisableCastBars, "TOPLEFT", 0, -35)
 	panel.ForceBlizzardFont:SetScript("OnClick", function(self) TidyPlatesCont.OverrideFonts( self:GetChecked()); end)
 
@@ -464,7 +603,7 @@ local function BuildInterfacePanel(panel)
 	ResetButton = CreateFrame("Button", "TidyPlatesContOptions_ResetButton", panel, "TidyPlatesContPanelButtonTemplate")
 	ResetButton:SetPoint("BOTTOMRIGHT", -16, 8)
 	ResetButton:SetWidth(155)
-	ResetButton:SetText("重置配置")
+	ResetButton:SetText("重置所有设置")
 
 	-- Update Functions
 	panel.okay = OnOkay
@@ -499,8 +638,8 @@ local function BuildInterfacePanel(panel)
 			for i, v in pairs(TidyPlatesContOptionsDefaults) do TidyPlatesContOptions[i] = v end
 			OnRefresh(panel)
 			ApplyPanelSettings()
-			print(yellow.."重置 "..orange.."Tidy Plates"..yellow.." 默认主题选择")
-			print(yellow.."按住 "..blue.."Shift"..yellow.." 同时点击 "..red.."重新配置"..yellow.." 将清除您的已保存的设置,并重新加载用户界面.")
+			print(yellow.."正在重置"..orange.."Tidy Plates Continued"..yellow.."主题至默认。")
+			print(yellow.."按住"..blue.."Shift"..yellow.."后点击"..red.."重置所有设置"..yellow.."将清除所有设置、缓存并重载UI。")
 		end
 
 	end)

@@ -1,4 +1,4 @@
-
+﻿
 ------------------------------------------------------------------------------------
 -- Tidy Plates Hub
 ------------------------------------------------------------------------------------
@@ -68,9 +68,9 @@ local function DummyFunction() return end
 -- Define the Menu for Threat Modes
 TidyPlatesContHubDefaults.ThreatWarningMode = "Auto"
 TidyPlatesContHubMenus.ThreatWarningModes = {
-					{ text = "自动(交换颜色)", value = "Auto",} ,
-					{ text = "坦克", value = "Tank",} ,
-					{ text = "输出或治疗", value = "DPS",} ,
+					{ text = "自动（随专精切换）", value = "Auto",} ,
+					{ text = "坦克", value = "坦克"    ,} ,
+					{ text = "伤害输出/治疗者", value = "DPS",} ,
 					}
 
 local NormalGrey = {r = .65, g = .65, b = .65, a = .4}
@@ -162,7 +162,7 @@ local CreateVariableSet = TidyPlatesContHubRapidPanel.CreateVariableSet
 
 local function UseVariables(profileName)
 
-	local suffix = profileName or "Damage"
+	local suffix = profileName or "伤害输出"
 	if suffix then
 
 		if CurrentProfileName ~= suffix then 	-- Stop repeat loading
@@ -252,7 +252,11 @@ local function ApplyProfileSettings(theme, ...)
 	TidyPlatesContWidgets.SetSpacerSlots(math.ceil(LocalVars.SpacerSlots))
 	-- If the setting can't be stored during combat
 	if InCombatLockdown() == false and LocalVars.NameplateMaxDistance ~= nil then
-		SetCVar("nameplateMaxDistance", math.ceil(LocalVars.NameplateMaxDistance))
+		SetCVar("nameplateMaxDistance", LocalVars.NameplateMaxDistance)
+		SetCVar("nameplateTargetRadialPosition", LocalVars.NameplateTargetClamp)
+		SetCVar("nameplateMotion", LocalVars.NameplateStacking)
+		SetCVar("nameplateOverlapH", LocalVars.NameplateOverlapH)
+		SetCVar("nameplateOverlapV", LocalVars.NameplateOverlapV)
 	end
 
 	TidyPlatesCont:ForceUpdate()
@@ -298,6 +302,7 @@ end
 local function ApplyHubFunctions(theme)
 	theme.SetNameColor = TidyPlatesContHubFunctions.SetNameColor
 	theme.SetScale = TidyPlatesContHubFunctions.SetScale
+	theme.GetClickableArea = TidyPlatesContHubFunctions.GetClickableArea
 	theme.SetAlpha = TidyPlatesContHubFunctions.SetAlpha
 	theme.SetHealthbarColor = TidyPlatesContHubFunctions.SetHealthbarColor
 	theme.SetThreatColor = TidyPlatesContHubFunctions.SetThreatColor

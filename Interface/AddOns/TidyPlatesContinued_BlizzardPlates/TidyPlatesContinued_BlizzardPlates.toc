@@ -1,6 +1,5 @@
 ## Interface: 80000
 ## Title: Tidy Plates Continued: |cFF3782D1BlizzardPlates
-## Title-zhCN: |cffFF6060[战斗]|r Tidy Plates Continued: |cFF3782D1BlizzardPlates|r 主题
 ## Notes: Blizzard Vanilla´s Plates.
 ## Author: delabarra.
 ## Version: 1.5

@@ -1,6 +1,5 @@
 ## Interface: 80000
 ## Title: Tidy Plates Continued: Alvara
-## Title-zhCN: |cffFF6060[战斗]|r Tidy Plates Continued: Alvara 主题
 ## Notes: Made to Alvara's specifications. Very Simple.
 ## Author: Alvara - Zul'Jin
 ## Version: 5a

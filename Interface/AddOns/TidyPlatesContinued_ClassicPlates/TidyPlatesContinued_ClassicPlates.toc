@@ -1,6 +1,5 @@
 ## Interface: 80000
 ## Title: Tidy Plates Continued: |cffff6060ClassicPlates
-## Title-zhCN: |cffFF6060[战斗]|r Tidy Plates Continued: |cffff6060ClassicPlates|r 主题
 ## Notes: Vanilla-Style Plates.
 ## Author: delabarra 
 ## Dependencies: TidyPlatesContinued, TidyPlatesContinuedHub

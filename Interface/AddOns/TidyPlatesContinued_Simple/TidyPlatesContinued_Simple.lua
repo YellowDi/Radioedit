@@ -174,6 +174,7 @@ SimpleBar.customtext = {
 	show = true,
 }
 
+
 local CopyTable = TidyPlatesContUtility.copyTable
 
 -- No Bar

@@ -31,6 +31,7 @@ local GetFriendlyThreat = TidyPlatesContUtility.GetFriendlyThreat
 local IsFriend = TidyPlatesContUtility.IsFriend
 local IsHealer = TidyPlatesContUtility.IsHealer
 local IsGuildmate = TidyPlatesContUtility.IsGuildmate
+local HexToRGB = TidyPlatesContUtility.HexToRGB
 
 local IsOffTanked = TidyPlatesContHubFunctions.IsOffTanked
 local IsTankingAuraActive = TidyPlatesContWidgets.IsPlayerTank
@@ -198,6 +199,42 @@ AddHubFunction(FriendlyBarFunctions, TidyPlatesContHubMenus.FriendlyBarModes, Co
 
 
 ------------------
+local function CustomColorDelegate(unit)
+	-- Functions is a bit messy because it attempts to use the order of items as a priority...
+	local color, aura, threshold, current, lowest
+	local health = (unit.health/unit.healthmax)*100
+
+	if TidyPlatesContWidgets.AuraCache then aura = TidyPlatesContWidgets.AuraCache[unit.unitid] end
+
+	local temp = {strsplit("\n", LocalVars.CustomColorList)}
+	for index=1, #temp do
+		local key = select(3, string.find(temp[index], "#%x+[%s%p]*(.*)"))
+		
+		if key then
+			--Custom Color by Unit Name
+			if not color and key == unit.name and unit.type ~= "PLAYER" then
+				color = HexToRGB(LocalVars.CustomColorLookup[unit.name]); break
+
+		--Custom Color by Buff/Debuff
+			elseif not color and aura and aura[key] then
+				color = HexToRGB(LocalVars.CustomColorLookup[key]); break
+
+		-- Custom Color by Unit Threshold
+			else
+				current = tonumber((strmatch(key, "(.*)(%%)")))
+				if current and (not lowest or lowest > current) and health <= current then
+					lowest = current
+					threshold = key
+				end
+				if threshold then color = HexToRGB(LocalVars.CustomColorLookup[threshold]) end
+			end
+		end
+	end
+
+	return color
+end
+
+
 local function HealthColorDelegate(unit)
 
 	local color, class
@@ -211,6 +248,9 @@ local function HealthColorDelegate(unit)
 	elseif unit.isTapped then
 		color = LocalVars.ColorTapped
 	end
+
+	-- Custom Color
+	if not color then color = CustomColorDelegate(unit) end
 
 	-- Color Mode / Color Spotlight
 	if not color then

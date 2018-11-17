@@ -1,11 +1,9 @@
-## Interface: 80000
+﻿## Interface: 80000
 ## Title: Tidy Plates Continued
 ## Notes: Enjoys long walks on Darkshore
-## Title-zhCN: |cffFF6060[战斗]|r Tidy Plates Continued 主程序
-## Notes-zhCN: Tidy Plates Continued |n姓名版增强插件，提供多种外观风格和多样化的自定义功能。|n|cffffd200使用方法：|r从Esc>界面>插件>Tidy Plates Continued进行设置。|n|cffFF2D2D注意: |r请勿与EK插件同时加载使用。
 ## Author: Binbwen and Friends
-## 简体汉化：啊呀拐倒
-## Version: 6.21.8-beta3
+## 汉化: 不见的Z光刀-NGA
+## Version: 6.21.12
 ## SavedVariablesPerCharacter: TidyPlatesContOptions
 
 TidyPlatesContinued.xml

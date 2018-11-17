@@ -1,6 +1,5 @@
 ## Interface: 80000
 ## Title: Tidy Plates Continued: Slim Vertical|r
-## Title-zhCN: |cffFF6060[战斗]|r Tidy Plates Continued: Slim Vertical 主题
 ## Author: Dotfix
 ## Version: 2.2
 ## Dependencies: TidyPlatesContinued, TidyPlatesContinuedHub

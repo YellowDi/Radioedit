@@ -1,7 +1,6 @@
-## Interface: 80000
+﻿## Interface: 80000
 ## Title: Tidy Plates Continued Widgets
-## Title-zhCN: |cffFF6060[战斗]|r Tidy Plates Continued 小部件
-## Notes: Library of Widgets
+## Notes: 组件库
 ## Dependencies: TidyPlatesContinued
 
 Widgets.xml

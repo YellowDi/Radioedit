@@ -1,4 +1,4 @@
-
+﻿
 local GetRelativeThreat = TidyPlatesContUtility.GetRelativeThreat
 local GetGroupInfo = TidyPlatesContUtility.GetGroupInfo
 
@@ -72,7 +72,7 @@ local GetGroupInfo = TidyPlatesContUtility.GetGroupInfo
 
 
 ---------------------------------------------------------------------
-local font = "FONTS\\arialn.ttf"
+local font = "FONTS\\ARKai_T.ttf"
 local art = "Interface\\Addons\\TidyPlatesContinuedWidgets\\ThreatLine\\ThreatLineUnified"
 local artCoordinates = {
 	--None = 		{.75,1,0,1},

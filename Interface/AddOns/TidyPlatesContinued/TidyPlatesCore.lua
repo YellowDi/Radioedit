@@ -17,7 +17,6 @@ local GetNamePlateForUnit = C_NamePlate.GetNamePlateForUnit
 local SetNamePlateFriendlySize = C_NamePlate.SetNamePlateFriendlySize
 local SetNamePlateEnemySize = C_NamePlate.SetNamePlateEnemySize
 
-
 -- Internal Data
 local Plates, PlatesVisible, PlatesFading, GUID = {}, {}, {}, {}	            	-- Plate Lists
 local PlatesByUnit = {}
@@ -84,10 +83,11 @@ local ForEachPlate
 
 -- UpdateNameplateSize
 local function UpdateNameplateSize(plate)
-	local scaleStandard = TidyPlatesContHubFunctions.SetScale(plate)
+	local scaleStandard = activetheme.SetScale()
+	local clickableWidth, clickableHeight = activetheme.GetClickableArea()
 	local hitbox = {
-		width = activetheme.Default.hitbox.width * scaleStandard,
-		height = activetheme.Default.hitbox.height * scaleStandard,
+		width = activetheme.Default.hitbox.width * scaleStandard * clickableWidth,
+		height = activetheme.Default.hitbox.height * scaleStandard * clickableHeight,
 		x = (activetheme.Default.hitbox.x*-1) * scaleStandard,
 		y = (activetheme.Default.hitbox.y*-1) * scaleStandard,
 	}
@@ -698,7 +698,8 @@ do
 	-- UpdateIndicator_EliteIcon: Updates the border overlay art and threat glow to Elite or Non-Elite art
 	function UpdateIndicator_EliteIcon()
 		threatborder = visual.threatborder
-		if unit.isElite and style.eliteicon.show then visual.eliteicon:Show() else visual.eliteicon:Hide() end
+		if (unit.isElite or unit.isRare) and not unit.isBoss and style.eliteicon.show then visual.eliteicon:Show() else visual.eliteicon:Hide() end
+		visual.eliteicon:SetDesaturated(unit.isRare) -- Desaturate if rare elite
 	end
 
 
@@ -723,7 +724,7 @@ do
 			if unitcache.name ~= unit.name then UpdateIndicator_Name() end
 			if unitcache.level ~= unit.level then UpdateIndicator_Level() end
 			UpdateIndicator_RaidIcon()
-			if unitcache.isElite ~= unit.isElite then UpdateIndicator_EliteIcon() end
+			if unitcache.isElite ~= unit.isElite or unitcache.isRare ~= unit.isRare then UpdateIndicator_EliteIcon() end
 		end
 	end
 
@@ -1095,7 +1096,7 @@ do
 
 
 	-- SetObjectShadow:
-	local function SetObjectShadow(object, shadow)                --字体阴影设置
+	local function SetObjectShadow(object, shadow)
 		if shadow then
 			object:SetShadowColor(0,0,0, 1)
 			object:SetShadowOffset(1, -1)
@@ -1107,7 +1108,7 @@ do
 		if objectstyle then
 			SetObjectFont(object, objectstyle.typeface, objectstyle.size, objectstyle.flags)
 			SetObjectJustify(object, objectstyle.align or "CENTER", objectstyle.vertical or "BOTTOM")
-			SetObjectShadow(object, objectstyle.shadow)                       --是否启用字体阴影
+			SetObjectShadow(object, objectstyle.shadow)
 		end
 	end
 
@@ -1192,7 +1193,7 @@ do
 			SetFontGroupObject(object, objectstyle)
 		end
 		-- Hide Stuff
-		if not unit.isElite then visual.eliteicon:Hide() end
+		if not unit.isElite and not unit.isRare then visual.eliteicon:Hide() end
 		if not unit.isBoss then visual.skullicon:Hide() end
 
 		if not unit.isTarget then visual.target:Hide() end

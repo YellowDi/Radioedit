@@ -19,10 +19,10 @@ local CreateThreatPercentageWidget = WidgetLib.CreateThreatPercentageWidget
 
 TidyPlatesContHubDefaults.WidgetRangeMode = 1
 TidyPlatesContHubMenus.RangeModes = {
-				{ text = "9 yards"} ,
-				{ text = "15 yards" } ,
-				{ text = "28 yards" } ,
-				{ text = "40 yards" } ,
+				{ text = "9 码"} ,
+				{ text = "15 码" } ,
+				{ text = "28 码" } ,
+				{ text = "40 码" } ,
 			}
 
 TidyPlatesContHubDefaults.WidgetAbsorbMode = 1
@@ -33,8 +33,8 @@ TidyPlatesContHubMenus.AbsorbModes = {
 
 TidyPlatesContHubDefaults.WidgetAbsorbUnits = 1
 TidyPlatesContHubMenus.AbsorbUnits = {
-				{ text = "Target Only"} ,
-				{ text = "All Units" } ,
+				{ text = "仅目标"} ,
+				{ text = "所有单位" } ,
 			}
 
 TidyPlatesContHubDefaults.WidgetDebuffStyle = 1
