@@ -1,18 +1,15 @@
-tag f55c620366a42728d6d93321d13e47912a8ad892 1.0.3
+tag eaba42fa2e51bf06b872c3be65364acc57c5f39a 1.1.1
 Author:	Alar of Runetotem <alar@aspide.it>
-Date:	Mon Aug 20 12:28:12 2018 +0200
+Date:	Sat Oct 20 12:28:22 2018 +0200
 
-Fix: removed debug messages
+Fixed long standing bug: parties are now refreshed immediately after
+sending a mission
 
-commit b9aa7a4d8b0f837b3b7c267f4d4388ea0d2294e9
+commit 49155224b87d5b61b981d0a52254b85daa783f1f
 Author: Alar of Runetotem <alar@aspide.it>
-Date:   Mon Aug 20 12:27:25 2018 +0200
+Date:   Sat Oct 20 12:27:30 2018 +0200
 
-    Fix: Removed debug messages
-
-commit cdabda54c7af436f8a777d62531fb20fdef9589f
-Author: Alar of Runetotem <alar@aspide.it>
-Date:   Mon Aug 20 12:17:57 2018 +0200
-
-    Removed debug messages
+    Fix: parties are now refreshed after sendign a mission
+    
+    At last I found this bug!
 
