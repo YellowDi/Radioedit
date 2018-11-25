@@ -1009,7 +1009,7 @@ L["STRING_OPTIONS_RT_DEATHS_ONOFF_DESC"] = "Когда участник рейд
 L["STRING_OPTIONS_RT_DEATHS_WHERE"] = "Подземелья"
 L["STRING_OPTIONS_RT_DEATHS_WHERE_DESC"] = [=[Выберите место, где можно сообщать о смерти.
 
-|cFFFFFF00Важно|r для рейдов /raid канал использовать, а для подземелий /p.
+|cFFFFFF00Важно|r для рейдов используются /raid канал, а для подземелий /p.
 
 Если выбран |cFFFFFF00Наблюдатель|r, то смерти показываются только для вас в чате.]=]
 L["STRING_OPTIONS_RT_DEATHS_WHERE1"] = "Рейд и Подземелье"
@@ -1051,7 +1051,7 @@ L["STRING_OPTIONS_SAVELOAD_ERASE_DESC"] = "Этот параметр удаля�
 L["STRING_OPTIONS_SAVELOAD_EXPORT"] = "Экспорт"
 L["STRING_OPTIONS_SAVELOAD_EXPORT_COPY"] = "Нажмите CTRL + C"
 L["STRING_OPTIONS_SAVELOAD_EXPORT_DESC"] = "Сохранить скин в текстовом формате."
-L["STRING_OPTIONS_SAVELOAD_IMPORT"] = "Импорт"
+L["STRING_OPTIONS_SAVELOAD_IMPORT"] = "Импорт скина"
 L["STRING_OPTIONS_SAVELOAD_IMPORT_DESC"] = "Импорт скина в текстовом формате."
 L["STRING_OPTIONS_SAVELOAD_IMPORT_OKEY"] = "Скин успешно импортирован в списке сохраненных скинов. Теперь вы можете применить его с помощью поля 'Применить'."
 L["STRING_OPTIONS_SAVELOAD_LOAD"] = "Применить"
@@ -1105,8 +1105,7 @@ L["STRING_OPTIONS_SKIN_ELVUI_BUTTON3_DESC"] = [=[Изменения в подс�
 L["STRING_OPTIONS_SKIN_EXTRA_OPTIONS_ANCHOR"] = "Параметры скина:"
 L["STRING_OPTIONS_SKIN_LOADED"] = "скин успешно загружен."
 L["STRING_OPTIONS_SKIN_PRESETS_ANCHOR"] = "Сохранить скин:"
---[[Translation missing --]]
---[[ L["STRING_OPTIONS_SKIN_PRESETSCONFIG_ANCHOR"] = ""--]] 
+L["STRING_OPTIONS_SKIN_PRESETSCONFIG_ANCHOR"] = "Управление сохраненными скинами:"
 L["STRING_OPTIONS_SKIN_REMOVED"] = "скин удален."
 L["STRING_OPTIONS_SKIN_RESET_TOOLTIP"] = "Сбросить границу подсказки"
 L["STRING_OPTIONS_SKIN_RESET_TOOLTIP_DESC"] = "Установить цвет и текстуру границы подсказки по умолчанию."
@@ -1577,8 +1576,7 @@ L["STRING_UNLOCK"] = [=[Разгруппировать окна
  в этой кнопке]=]
 L["STRING_UNLOCK_WINDOW"] = "разблокировать"
 L["STRING_UPTADING"] = "обновление"
---[[Translation missing --]]
---[[ L["STRING_VERSION_AVAILABLE"] = ""--]] 
+L["STRING_VERSION_AVAILABLE"] = "Вышла новая версия, скачать её можно из приложения Twitch либо с сайта Curse."
 L["STRING_VERSION_UPDATE"] = "новая версия: что изменилось? щелкните сюда"
 L["STRING_VOIDZONE_TOOLTIP"] = "Урон и время"
 L["STRING_WAITPLUGIN"] = [=[ожидание

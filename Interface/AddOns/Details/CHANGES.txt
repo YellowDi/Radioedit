@@ -1,5 +1,23 @@
-changeset:   757:0d92132ce7d7
+changeset:   760:ea42ccffcad1
 tag:         tip
+user:        Tercioo
+date:        Fri Nov 23 19:31:40 2018 -0200
+summary:     - Framwork update for timeline plugin.
+
+
+changeset:   759:daf50a35a0fe
+user:        Tercioo
+date:        Thu Nov 22 14:01:54 2018 -0200
+summary:     - Added Death Logs for mythic dungeon runs in the Overall Data.
+
+
+changeset:   758:e1c9450234ec
+user:        Tercioo
+date:        Wed Nov 21 22:14:43 2018 -0200
+summary:     - Fixed window for report to Copy/Paste.
+
+
+changeset:   757:0d92132ce7d7
 user:        Tercioo
 date:        Wed Nov 07 17:32:08 2018 -0200
 summary:     - New Feature: import and export profiles.
