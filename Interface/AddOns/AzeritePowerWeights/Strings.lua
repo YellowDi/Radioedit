@@ -126,7 +126,7 @@ do -- enUS / enGB
 	L.Slash_Error_Unkown = "ERROR: Something went wrong!"
 end
 
-if LOCALE == "deDE" then -- Sinusquell (40), Tiggi2702 (6), Vivan (2), pas06 (2)
+if LOCALE == "deDE" then -- Sinusquell (39), Tiggi2702 (6), Vivan (2), pas06 (2), Cytoph (2)
 L["Config_Importing_ImportingCanUpdate"] = "Beim Importieren können vorhandene Skalierungen aktualisiert werden."
 L["Config_Importing_ImportingCanUpdate_Desc"] = "Wenn Sie eine Skalierung mit demselben Namen, derselben Klasse und Spezialisierung wie eine bereits vorhandene Skalierung importieren, wird die vorhandene Skalierung mit den neuen Gewichtungen aktualisiert, anstatt eine neue Skalierung zu erstellen. "
 L["Config_Importing_ImportingCanUpdate_Desc_Clarification"] = "Es kann mehrere Skalierungen mit demselben Namen geben, solange sie für verschiedene Spezialisierungen oder Klassen gelten. "
@@ -228,10 +228,9 @@ L["ImportPopup_Error_OldStringVersion"] = "ERROR: \"Import-String\" -Version ist
 L["ImportPopup_Title"] = "Importiere Skalierung"
 L["ImportPopup_UpdatedScale"] = "Skalierung \"%s\" wurde aktualisiert"
 L["ItemToolTip_AzeriteLevel"] = "Azeritlevel: %1$d / %2$d"
---[[Translation missing --]]
---[[ L["ItemToolTip_Legend"] = ""--]] 
-L["PowersScoreString"] = [=[Aktuelle Punkte: %1$d/%2$d
-Maximale Punkte: %3$d
+L["ItemToolTip_Legend"] = "Aktuelle Wertung / Aktuell beste Wertung / Maximale Wertung"
+L["PowersScoreString"] = [=[Aktuelle Wertung: %1$d/%2$d
+Maximale Wertung: %3$d
 Azeritlevel: %4$d/%5$d]=]
 L["PowersTitles_Class"] = "Klassentalente"
 L["PowersTitles_Defensive"] = "Defensivtalente"
