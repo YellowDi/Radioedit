@@ -152,8 +152,9 @@ ConditionCategory:RegisterCondition(6,    "REACT", {
 	Env = {
 		UnitIsEnemy = UnitIsEnemy,
 		UnitReaction = UnitReaction,
+		UnitCanAttack = UnitCanAttack,
 	},
-	funcstr = [[(((UnitIsEnemy("player", c.Unit) or ((UnitReaction("player", c.Unit) or 5) <= 4)) and 1) or 2) == c.Level]],
+	funcstr = [[(UnitCanAttack("player", c.Unit) and 1 or 2) == c.Level]],
 	events = function(ConditionObject, c)
 		return
 			ConditionObject:GetUnitChangedEventString(CNDT:GetUnit(c.Unit)),
@@ -515,10 +516,9 @@ ConditionCategory:RegisterCondition(13.1,   "UNITRACE", {
 	bitFlags = (function()
 		local LBRace = LibStub("LibBabble-Race-3.0")
 		local lookup = LBRace:GetBaseLookupTable()
-		local baseLookup = LBRace:GetBaseLookupTable()
 		local function Name(name)
 			-- Look up the race name without throwing LibBabble errors.
-			if not baseLookup[name] then
+			if not lookup[name] then
 				TMW:Debug("Missing LibBabble-Race-3.0 phrase for: " .. name)
 				return name
 			end
@@ -533,7 +533,8 @@ ConditionCategory:RegisterCondition(13.1,   "UNITRACE", {
 			["Worgen"] = {order = 6, text = Name("Worgen")},
 
 			["VoidElf"] = {order = 6.1, text = Name("Void Elf")},
-			["LightforgedDraenei"] = {order = 6.2, text = Name("Lightforged Draenei"), space = true},
+			["LightforgedDraenei"] = {order = 6.2, text = Name("Lightforged Draenei")},
+			["DarkIronDwarf"] = {order = 6.3, text = Name("Dark Iron Dwarf"), space = true},
 
 			["Orc"] = {order = 7, text = Name("Orc")},
 			["Scourge"] = {order = 8, text = Name("Undead")},
@@ -544,8 +545,10 @@ ConditionCategory:RegisterCondition(13.1,   "UNITRACE", {
 
 			["Nightborne"] = {order = 12.1, text = Name("Nightborne")},
 			["HighmountainTauren"] = {order = 12.2, text = Name("Highmountain Tauren"), space = true},
+			["MagharOrc"] = {order = 12.3, text = Name("Mag'har Orc")},
 
 			["Pandaren"] = {order = 13, text = Name("Pandaren")},
+
 		}
 
 		for token, data in pairs(bitFlags) do

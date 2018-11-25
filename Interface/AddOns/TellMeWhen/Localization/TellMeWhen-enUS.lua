@@ -700,6 +700,10 @@ L["ICONMENU_SORT_STACKS_DESC_DESC"] = "Check this box to prioritize and show spe
 L["ICONMENU_MOVEHERE"] = "Move here"
 L["ICONMENU_COPYHERE"] = "Copy here"
 L["ICONMENU_SWAPWITH"] = "Swap with"
+L["ICONMENU_INSERTHERE"] = "Extract & Insert here"
+L["ICONMENU_INSERTHERE_DESC"] = [[Take %s out of its current position and insert it at the current location of %s. 
+
+Icons will be shifted as needed.]]
 L["ICONMENU_ADDMETA"] = "Add to Meta Icon"
 L["ICONMENU_APPENDCONDT"] = "Add as %q condition"
 L["ICONMENU_ANCHORTO"] = "Anchor to %s"
@@ -820,7 +824,7 @@ L["UIPANEL_PROFILES"] = "Profiles"
 
 L["UIPANEL_GROUPTYPE"] = "Display Method"
 L["UIPANEL_GROUPTYPE_ICON"] = "Icon"
-L["UIPANEL_GROUPTYPE_ICON_DESC"] = [[Displays the icons in the2 group using TellMeWhen's traditional icon display.]]
+L["UIPANEL_GROUPTYPE_ICON_DESC"] = [[Displays the icons in the group using TellMeWhen's traditional icon display.]]
 L["UIPANEL_GROUPTYPE_BAR"] = "Bar"
 L["UIPANEL_GROUPTYPE_BAR_DESC"] = [[Displays the icons in the group with progress bars attached to the icons.]]
 L["UIPANEL_GROUPTYPE_BARV"] = "Vertical Bar"
@@ -1434,6 +1438,8 @@ L["CONDITIONPANEL_INSTANCETYPE"] = "Instance Type"
 L["CONDITIONPANEL_INSTANCETYPE_DESC"] = "Checks the type of instance that you are in, including the difficulty setting of any dungeon or raid."
 L["CONDITIONPANEL_INSTANCETYPE_NONE"] = "Outside"
 L["CONDITIONPANEL_INSTANCETYPE_LEGACY"] = "%s (Legacy)"
+L["CONDITIONPANEL_KEYSTONELEVEL"] = "Keystone Level"
+L["CONDITIONPANEL_KEYSTONELEVEL_DESC"] = "Level of the currently active Mythic Keystone"
 L["CONDITIONPANEL_GROUPTYPE"] = "Group Type"
 L["CONDITIONPANEL_GROUPTYPE_DESC"] = "Checks the type of group that you are in (solo, party, or raid)."
 L["CONDITIONPANEL_GROUPSIZE"] = "Instance Size"
