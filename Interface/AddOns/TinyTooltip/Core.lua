@@ -39,6 +39,7 @@ addon.tooltips = {
     ItemRefShoppingTooltip2,
     WorldMapCompareTooltip1,
     WorldMapCompareTooltip2,
+    NamePlateTooltip,
 }
 
 -- 圖標集
