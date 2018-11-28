@@ -1,0 +1,11 @@
+lightweight tag c037e58d32232718e8ad68f966446893baffebb3 1.15
+Author:	Justwait <justwait@method.gg>
+Date:	Sun Oct 21 14:36:03 2018 +0200
+
+commit c037e58d32232718e8ad68f966446893baffebb3
+Author: Justwait <justwait@method.gg>
+Date:   Sun Oct 21 14:36:03 2018 +0200
+
+    * Diplay pet damage with dark orange if colour by spell types is enabled
+    * Allow font outline to be changed
+

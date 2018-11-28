@@ -47,6 +47,8 @@ local defaults = {
         yOffsetPersonal = -100,
 
         font = defaultFont,
+        fontFlag = "OUTLINE",
+        fontShadow = false,
         damageColor = true,
         defaultColor = "ffff00",
 
@@ -176,7 +178,8 @@ local function getFontString()
     end
 
     fontString:SetParent(NameplateSCT.frame);
-    fontString:SetFont(getFontPath(NameplateSCT.db.global.font), 15, "OUTLINE");
+    fontString:SetFont(getFontPath(NameplateSCT.db.global.font), 15, NameplateSCT.db.global.fontFlag);
+    if NameplateSCT.db.global.textShadow then fontString:SetShadowOffset(1,-1) end
     fontString:SetAlpha(1);
     fontString:SetDrawLayer("OVERLAY");
     fontString:SetText("");
@@ -208,8 +211,8 @@ local function recycleFontString(fontString)
     fontString.pow = nil;
     fontString.startHeight = nil;
     fontString.NSCTFontSize = nil;
-    fontString:SetFont(getFontPath(NameplateSCT.db.global.font), 15, "OUTLINE");
-
+    fontString:SetFont(getFontPath(NameplateSCT.db.global.font), 15, NameplateSCT.db.global.fontFlag);
+    if NameplateSCT.db.global.textShadow then fontString:SetShadowOffset(1,-1) end
     fontString:SetParent(NameplateSCT.frame);
 
     table.insert(fontStringCache, fontString);
@@ -480,7 +483,8 @@ local function AnimationOnUpdate()
                     else
                         fontString.pow = nil;
                         fontString:SetTextHeight(fontString.startHeight);
-                        fontString:SetFont(getFontPath(NameplateSCT.db.global.font), fontString.NSCTFontSize, "OUTLINE");
+                        fontString:SetFont(getFontPath(NameplateSCT.db.global.font), fontString.NSCTFontSize, NameplateSCT.db.global.fontFlag);
+                        if NameplateSCT.db.global.textShadow then fontString:SetShadowOffset(1,-1) end
                         fontString:SetText(fontString.NSCTText);
                     end
                 end
@@ -868,7 +872,8 @@ function NameplateSCT:DisplayText(guid, text, textWithoutIcons, size, animation,
     fontString:SetText(fontString.NSCTText);
 
     fontString.NSCTFontSize = size;
-    fontString:SetFont(getFontPath(NameplateSCT.db.global.font), fontString.NSCTFontSize, "OUTLINE");
+    fontString:SetFont(getFontPath(NameplateSCT.db.global.font), fontString.NSCTFontSize, NameplateSCT.db.global.fontFlag);
+    if NameplateSCT.db.global.textShadow then fontString:SetShadowOffset(1,-1) end
     fontString.startHeight = fontString:GetStringHeight();
     fontString.pow = pow;
     fontString.frameLevel = frameLevel;
@@ -910,6 +915,15 @@ local animationValues = {
     ["verticalDown"] = "Vertical Down",
     ["fountain"] = "Fountain",
     ["rainfall"] = "Rainfall",
+};
+
+local fontFlags = {
+    [""] = "None",
+    ["OUTLINE"] = "Outline",
+    ["THICKOUTLINE"] = "Thick Outline",
+    ["nil, MONOCHROME"] = "Monochrome",
+    ["OUTLINE , MONOCHROME"] = "Monochrome Outline",
+    ["THICKOUTLINE , MONOCHROME"] = "Monochrome Thick Outline",
 };
 
 local menu = {
@@ -1042,6 +1056,22 @@ local menu = {
                     get = function() return NameplateSCT.db.global.font; end,
                     set = function(_, newValue) NameplateSCT.db.global.font = newValue; end,
                 },
+                fontFlag = {
+                    type = 'select',
+                    name = "Font Flags",
+                    desc = "",
+                    get = function() return NameplateSCT.db.global.fontFlag; end,
+                    set = function(_, newValue) NameplateSCT.db.global.fontFlag = newValue; end,
+                    values = fontFlags,
+                    order = 2,
+                },
+                fontShadow = {
+                    type = 'toggle',
+                    name = "Text Shadow",
+                    get = function() return NameplateSCT.db.global.textShadow; end,
+                    set = function(_, newValue) NameplateSCT.db.global.textShadow = newValue end,
+                    order = 3,
+                },
 
                 damageColor = {
                     type = 'toggle',
@@ -1049,7 +1079,7 @@ local menu = {
                     desc = "",
                     get = function() return NameplateSCT.db.global.damageColor; end,
                     set = function(_, newValue) NameplateSCT.db.global.damageColor = newValue; end,
-                    order = 2,
+                    order = 4,
                 },
 
                 defaultColor = {
@@ -1059,7 +1089,7 @@ local menu = {
                     hasAlpha = false,
                     set = function(_, r, g, b) NameplateSCT.db.global.defaultColor = rgbToHex(r, g, b); end,
                     get = function() return hexToRGB(NameplateSCT.db.global.defaultColor); end,
-                    order = 3,
+                    order = 5,
                 },
 
                 xOffset = {
