@@ -48,6 +48,10 @@ end
 function NPC:QUEST_FINISHED(...)
 	CloseQuest()
 	self:PlayOutro()
+--	if self:IsGossipAvailable(true) then
+--		self:OnEvent('GOSSIP_SHOW')
+--		self.TitleButtons:OnEvent('GOSSIP_SHOW')
+--	end
 end
 
 function NPC:QUEST_DETAIL(...)

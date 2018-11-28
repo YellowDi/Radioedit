@@ -121,27 +121,44 @@ function NPC:ClearImmersionFocus()
 	return HANDLE:ClearHintsForFrame(ImmersionFrame)
 end
 
--------------------------------------------------
-local ControllerInput = {
--------------------------------------------------
+---------------------------------------------------------
+local ControllerInput = { -- return true when propagating
+---------------------------------------------------------
 	[KEY.UP] = function(self)
-		self.TitleButtons:SetPrevious()
+		if self.TitleButtons:IsVisible() then
+			self.TitleButtons:SetPrevious()
+		else
+			return true
+		end
 	end;
 	[KEY.DOWN] = function(self)
-		self.TitleButtons:SetNext()
+		if self.TitleButtons:IsVisible() then
+			self.TitleButtons:SetNext()
+		else
+			return true
+		end
 	end;
 	[KEY.LEFT] = function(self)
 		if self.isInspecting then
 			self.Inspector:SetPrevious()
+		else
+			return true
 		end
 	end;
 	[KEY.RIGHT] = function(self)
 		if self.isInspecting then
 			self.Inspector:SetNext()
+		else
+			return true
 		end
 	end;
 	[KEY.SQUARE] = function(self)
-		if not self.isInspecting then
+		if self.isInspecting then
+			local focus = self.Inspector:GetFocus()
+			if focus and focus.ModifiedClick then
+				focus:ModifiedClick()
+			end
+		else
 			local text = self.TalkBox.TextFrame.Text
 			if text:IsSequence() then
 				if text:GetNumRemaining() <= 1 then
@@ -204,10 +221,11 @@ end
 
 function NPC:ParseControllerCommand(button)
 	if controllerInterrupt then
-		-- Handle edge case when CP cursor should precede Immersion input,
-		-- specifically popups caused by pressing certain gossip options.
-		if ( popupCounter > 0 ) and not ConsolePort:GetData()('disableUI') then
-			return false
+		-- Handle edge case when CP cursor should precede Immersion input.
+		if not ConsolePort:GetData()('disableUI') then
+			if ( popupCounter > 0 ) or ( AzeriteEmpoweredItemUI and AzeriteEmpoweredItemUI:IsVisible() ) then
+				return false
+			end
 		end
 		-- Handle case when the inspect binding or M1 is pressed,
 		-- in which case it should show the item inspector.
@@ -219,8 +237,7 @@ function NPC:ParseControllerCommand(button)
 		local keyID = ConsolePort:GetUIControlKey(GetBindingAction(button))
 		local func = keyID and ControllerInput[keyID]
 		if func then
-			func(self)
-			return true
+			return not func(self)
 		end
 	end
 end
@@ -370,6 +387,38 @@ function Inspector:ShowFocusedTooltip(showTooltip)
 		end
 	end
 end
+
+-- Handle custom modified clicks on item popups:
+-- Return itemLink and display text for SQUARE (modified clicks)
+local function GetModifiedClickInfo(item)
+	local link = item and GetQuestItemLink(item.type, item:GetID())
+	if 	link and -- azerite item
+		C_AzeriteEmpoweredItem.IsAzeriteEmpoweredItemByID(link) and 
+		C_AzeriteEmpoweredItem.IsAzeritePreviewSourceDisplayable(link) then
+		----------------------------------------
+		return link, LFG_LIST_DETAILS
+	end
+end
+
+function L.TooltipMixin:ModifiedClick(...)
+	local azeriteItemLink = GetModifiedClickInfo(self.item)
+	if azeriteItemLink then
+		----------------------------------------
+		OpenAzeriteEmpoweredItemUIFromLink(azeriteItemLink)
+		self.inspector:Hide()
+	end
+end
+
+hooksecurefunc(L.TooltipMixin, 'OnEnter', function(self)
+	local _, hintText = GetModifiedClickInfo(self.item)
+	if hintText then
+		Inspector.parent:AddHint('SQUARE', hintText)
+	end
+end)
+
+hooksecurefunc(L.TooltipMixin, 'OnLeave', function(self)
+	Inspector.parent:RemoveHint('SQUARE')
+end)
 
 -- Titles
 Titles.Threshold = NUMGOSSIPBUTTONS

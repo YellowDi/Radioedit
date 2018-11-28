@@ -20,7 +20,7 @@ end
 local function IsFrameReady()
 	local event = NPC.lastEvent or ''
 	local notInGossip = event:match('GOSSIP') and not UnitExists('npc')
-	local notInQuest = event:match('QUEST') and GetQuestID() == 0
+	local notInQuest = NPC:IsObstructingQuestEvent(event) and GetQuestID() == 0
 	return notInGossip or notInQuest
 end
 
@@ -153,7 +153,7 @@ do	-- OBSTRUCTION:
 	AddToastObstructor(AlertFrame)
 
 	if TalkingHeadFrame then
-		Toast:AddObstructor(TalkingHeadFrame)
+		AddToastObstructor(TalkingHeadFrame)
 	else
 		hooksecurefunc('TalkingHead_LoadUI', function() AddToastObstructor(TalkingHeadFrame) end)
 	end
