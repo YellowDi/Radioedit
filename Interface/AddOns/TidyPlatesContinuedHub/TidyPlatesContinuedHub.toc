@@ -1,8 +1,7 @@
-﻿## Interface: 80000
+## Interface: 80000
 ## Title: Tidy Plates Continued Hub
-## Notes: 为支持的主题提供一个通用的设置。 
+## Notes: Provides a common configuration panel for supported themes.
 ## Author: Daniel/Binbwen
-## 汉化: 不见的Z光刀-NGA
 ## Dependencies: TidyPlatesContinued, TidyPlatesContinuedWidgets
 ## OptionalDeps: TidyPlatesContHubDE, TidyPlatesContHubES, TidyPlatesContHubMX, TidyPlatesContHubFR, TidyPlatesContHubKR, TidyPlatesContHubRU, TidyPlatesContHubCN, TidyPlatesContHubTW
 ## SavedVariables: TidyPlatesContHubCache, TidyPlatesContHubGlobal

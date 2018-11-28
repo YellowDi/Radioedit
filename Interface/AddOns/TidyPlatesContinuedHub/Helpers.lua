@@ -140,6 +140,7 @@ end
 
 TidyPlatesContHubHelpers = {}
 TidyPlatesContHubHelpers.CallForStyleUpdate = CallForStyleUpdate
+TidyPlatesContHubHelpers.UpdateCVars = UpdateCVars
 TidyPlatesContHubHelpers.GetPanelValues = GetPanelValues
 TidyPlatesContHubHelpers.SetPanelValues = SetPanelValues
 TidyPlatesContHubHelpers.MergeProfileValues = MergeProfileValues

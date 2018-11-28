@@ -1,4 +1,4 @@
-﻿
+
 local CopyTable = TidyPlatesContUtility.copyTable
 
 TidyPlatesContHubCache = {}
@@ -122,7 +122,6 @@ TidyPlatesContHubDefaults = {
 	TextUseBlizzardFont = false,
 	TextHealthTextMode = 1,
 	TextShowOnlyOnTargets = false,
-	TextCNNumberDisplay = false,  --汉化添加
 
 	-- Color
 	---------------------------------------
@@ -172,7 +171,10 @@ TidyPlatesContHubDefaults = {
 	---------------------------------------
 	ColorNormalSpellCast = { r = 252/255, g = 140/255, b = 0, },
 	ColorUnIntpellCast = { r = 0.5137243866920471, g = 0.7529395222663879, b = 0.7647042274475098, },
+	ColorIntpellCast = { r = 1, g = 0, b = 0, },
 	SpellCastEnableFriendly = false,
+	IntCastEnable = true,
+	IntCastWhoEnable = true,
 
 	-- Status Text
 	---------------------------------------
@@ -245,16 +247,6 @@ TidyPlatesContHubDefaults = {
 	FocusAsTarget = false,
 	FrameBarWidth = 1,
 	--AdvancedHealthTextList = [[return unit.health]],
-
-	-- Nameplate Behaviour
-	---------------------------------------
-	NameplateTargetClamp = GetCVar("nameplateTargetRadialPosition") or false,
-	NameplateStacking = GetCVar("nameplateMotion") or false,
-	NameplateMaxDistance = GetCVar("nameplateMaxDistance") or 60,
-	NameplateOverlapH = GetCVar("nameplateOverlapH") or 0.8,
-	NameplateOverlapV = GetCVar("nameplateOverlapV") or 1.1,
-	NameplateClickableWidth = 1,
-	NameplateClickableHeight = 1,
 }
 
 TidyPlatesContHubGlobal = CopyTable(TidyPlatesContHubDefaults)

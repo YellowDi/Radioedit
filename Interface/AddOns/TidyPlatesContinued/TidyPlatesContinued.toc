@@ -1,9 +1,8 @@
-﻿## Interface: 80000
+## Interface: 80000
 ## Title: Tidy Plates Continued
 ## Notes: Enjoys long walks on Darkshore
 ## Author: Binbwen and Friends
-## 汉化: 不见的Z光刀-NGA
-## Version: 6.21.12
+## Version: 6.21.13
 ## SavedVariablesPerCharacter: TidyPlatesContOptions
 
 TidyPlatesContinued.xml

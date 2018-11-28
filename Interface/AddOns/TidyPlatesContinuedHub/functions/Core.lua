@@ -1,4 +1,4 @@
-﻿
+
 ------------------------------------------------------------------------------------
 -- Tidy Plates Hub
 ------------------------------------------------------------------------------------
@@ -23,6 +23,7 @@ local WidgetLib = TidyPlatesContWidgets
 local valueToString = TidyPlatesContUtility.abbrevNumber
 
 local MergeProfileValues = TidyPlatesContHubHelpers.MergeProfileValues
+local UpdateCVars = TidyPlatesContHubHelpers.UpdateCVars
 
 local EnableTankWatch = TidyPlatesContWidgets.EnableTankWatch
 local DisableTankWatch = TidyPlatesContWidgets.DisableTankWatch
@@ -68,9 +69,9 @@ local function DummyFunction() return end
 -- Define the Menu for Threat Modes
 TidyPlatesContHubDefaults.ThreatWarningMode = "Auto"
 TidyPlatesContHubMenus.ThreatWarningModes = {
-					{ text = "自动（随专精切换）", value = "Auto",} ,
-					{ text = "坦克", value = "坦克"    ,} ,
-					{ text = "伤害输出/治疗者", value = "DPS",} ,
+					{ text = "Auto (Color Swap)", value = "Auto",} ,
+					{ text = "Tank", value = "Tank",} ,
+					{ text = "DPS/Healer", value = "DPS",} ,
 					}
 
 local NormalGrey = {r = .65, g = .65, b = .65, a = .4}
@@ -162,7 +163,7 @@ local CreateVariableSet = TidyPlatesContHubRapidPanel.CreateVariableSet
 
 local function UseVariables(profileName)
 
-	local suffix = profileName or "伤害输出"
+	local suffix = profileName or "Damage"
 	if suffix then
 
 		if CurrentProfileName ~= suffix then 	-- Stop repeat loading
@@ -228,7 +229,7 @@ local function ApplyStyleCustomization(style, defaults)
 end
 
 
-local function ApplyProfileSettings(theme, ...)
+local function ApplyProfileSettings(theme, source, ...)
 	-- When nil is passed, the theme is being deactivated
 	if not theme then return end
 
@@ -250,14 +251,8 @@ local function ApplyProfileSettings(theme, ...)
 
 	-- Set Space Between Buffs & Debuffs
 	TidyPlatesContWidgets.SetSpacerSlots(math.ceil(LocalVars.SpacerSlots))
-	-- If the setting can't be stored during combat
-	if InCombatLockdown() == false and LocalVars.NameplateMaxDistance ~= nil then
-		SetCVar("nameplateMaxDistance", LocalVars.NameplateMaxDistance)
-		SetCVar("nameplateTargetRadialPosition", LocalVars.NameplateTargetClamp)
-		SetCVar("nameplateMotion", LocalVars.NameplateStacking)
-		SetCVar("nameplateOverlapH", LocalVars.NameplateOverlapH)
-		SetCVar("nameplateOverlapV", LocalVars.NameplateOverlapV)
-	end
+
+	TidyPlatesCont:ToggleInterruptedCastbars(LocalVars.IntCastEnable, LocalVars.IntCastWhoEnable)
 
 	TidyPlatesCont:ForceUpdate()
 	RaidClassColors = CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS

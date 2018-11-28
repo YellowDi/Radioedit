@@ -1,4 +1,4 @@
-﻿
+
 local AddonName, HubData = ...;
 local LocalVars = TidyPlatesContHubDefaults
 
@@ -84,7 +84,7 @@ local function ColorFunctionByReaction(unit)
 	return ReactionColors[unit.reaction][unit.type]
 end
 
---"按职业"
+--"By Class"
 local function ColorFunctionByClass(unit)
 	local classColor = RaidClassColors[unit.class]
 	--print(unit.name, unit.class, classColor.r)
@@ -154,9 +154,9 @@ local function ColorFunctionByThreat(unit)
 
 		if unit.reaction == "NEUTRAL" and unit.threatValue < 2 then return ReactionColors[unit.reaction][unit.type] end
 
-		if (LocalVars.ThreatWarningMode == "坦克") or (LocalVars.ThreatWarningMode == "Auto" and IsTankingAuraActive()) then
+		if (LocalVars.ThreatWarningMode == "Tank") or (LocalVars.ThreatWarningMode == "Auto" and IsTankingAuraActive()) then
 			return ColorFunctionTankSwapColors(unit)
-		--elseif LocalVars.ThreatWarningMode == "坦克" then
+		--elseif LocalVars.ThreatWarningMode == "Tank" then
 		--	return ColorFunctionRawTank(unit)
 		else return ColorFunctionDamage(unit) end
 
@@ -183,18 +183,18 @@ end
 local EnemyBarFunctions = {}
 TidyPlatesContHubDefaults.EnemyBarColorMode = "ByThreat"			-- Sets the default function
 
-AddHubFunction(EnemyBarFunctions, TidyPlatesContHubMenus.EnemyBarModes, ColorFunctionByThreat, "按仇恨", "ByThreat")
-AddHubFunction(EnemyBarFunctions, TidyPlatesContHubMenus.EnemyBarModes, ColorFunctionByReaction, "按（其他单位）反应", "ByReaction")
-AddHubFunction(EnemyBarFunctions, TidyPlatesContHubMenus.EnemyBarModes, ColorFunctionByClass, "按职业", "ByClass")
-AddHubFunction(EnemyBarFunctions, TidyPlatesContHubMenus.EnemyBarModes, ColorFunctionByHealth, "按血量", "ByHealth")
+AddHubFunction(EnemyBarFunctions, TidyPlatesContHubMenus.EnemyBarModes, ColorFunctionByThreat, "By Threat", "ByThreat")
+AddHubFunction(EnemyBarFunctions, TidyPlatesContHubMenus.EnemyBarModes, ColorFunctionByReaction, "By Reaction", "ByReaction")
+AddHubFunction(EnemyBarFunctions, TidyPlatesContHubMenus.EnemyBarModes, ColorFunctionByClass, "By Class", "ByClass")
+AddHubFunction(EnemyBarFunctions, TidyPlatesContHubMenus.EnemyBarModes, ColorFunctionByHealth, "By Health", "ByHealth")
 
 
 local FriendlyBarFunctions = {}
 TidyPlatesContHubDefaults.FriendlyBarColorMode = "ByReaction"			-- Sets the default function
 
-AddHubFunction(FriendlyBarFunctions, TidyPlatesContHubMenus.FriendlyBarModes, ColorFunctionByReaction, "按（其他单位）反应", "ByReaction")
-AddHubFunction(FriendlyBarFunctions, TidyPlatesContHubMenus.FriendlyBarModes, ColorFunctionByClass, "按职业", "ByClass")
-AddHubFunction(FriendlyBarFunctions, TidyPlatesContHubMenus.FriendlyBarModes, ColorFunctionByHealth, "按血量", "ByHealth")
+AddHubFunction(FriendlyBarFunctions, TidyPlatesContHubMenus.FriendlyBarModes, ColorFunctionByReaction, "By Reaction", "ByReaction")
+AddHubFunction(FriendlyBarFunctions, TidyPlatesContHubMenus.FriendlyBarModes, ColorFunctionByClass, "By Class", "ByClass")
+AddHubFunction(FriendlyBarFunctions, TidyPlatesContHubMenus.FriendlyBarModes, ColorFunctionByHealth, "By Health", "ByHealth")
 
 
 
@@ -284,7 +284,9 @@ end
 ------------------------------------------------------------------------------
 local function CastBarDelegate(unit)
 	local color, alpha
-	if unit.spellInterruptible then
+	if unit.interrupted then
+		color = LocalVars.ColorIntpellCast
+	elseif unit.spellInterruptible then
 		color = LocalVars.ColorNormalSpellCast
 	else color = LocalVars.ColorUnIntpellCast end
 
@@ -325,23 +327,23 @@ local function WarningBorderFunctionByEnemyHealer(unit)
 	end
 end
 
--- "By Threat (High) Damage"
-local function WarningBorderFunctionByThreatDamage(unit)
-	if InCombatLockdown and unit.reaction ~= "FRIENDLY" and unit.type == "NPC" then
-		if unit.threatValue > 0 then
-			return ColorFunctionDamage(unit)
-		end
-	end
-end
+---- "By Threat (High) Damage"
+--local function WarningBorderFunctionByThreatDamage(unit)
+--	if InCombatLockdown and unit.reaction ~= "FRIENDLY" and unit.type == "NPC" then
+--		if unit.threatValue > 0 then
+--			return ColorFunctionDamage(unit)
+--		end
+--	end
+--end
 
--- "By Threat (Low) Tank"
-local function WarningBorderFunctionByThreatTank(unit)
-	if InCombatLockdown() and unit.reaction ~= "FRIENDLY" and unit.type == "NPC" then
-		if unit.threatValue < 3 then
-			if IsOffTanked(unit) then return else	return ColorFunctionRawTank(unit) end
-		end
-	end
-end
+---- "By Threat (Low) Tank"
+--local function WarningBorderFunctionByThreatTank(unit)
+--	if InCombatLockdown() and unit.reaction ~= "FRIENDLY" and unit.type == "NPC" then
+--		if unit.threatValue < 3 then
+--			if IsOffTanked(unit) then return else	return ColorFunctionRawTank(unit) end
+--		end
+--	end
+--end
 
 
 -- Warning Glow (Auto Detect)
@@ -350,8 +352,8 @@ local function WarningBorderFunctionByThreat(unit)
 		if unit.reaction == "NEUTRAL" and unit.threatValue < 2 then return end
 
 		if (LocalVars.ThreatWarningMode == "Auto" and IsTankingAuraActive())
-			or LocalVars.ThreatWarningMode == "坦克" then
-				if IsOffTanked(unit) then return
+			or LocalVars.ThreatWarningMode == "Tank" then
+				if not unit.isInCombat or IsOffTanked(unit) then return
 				elseif unit.threatValue == 2 then return LocalVars.ColorThreatTransition
 				elseif unit.threatValue < 2 then return LocalVars.ColorThreatWarning	end
 		elseif unit.threatValue > 0 then return ColorFunctionDamage(unit) end
@@ -513,22 +515,22 @@ local EnemyNameColorFunctions = {}
 TidyPlatesContHubMenus.EnemyNameColorModes = {}
 TidyPlatesContHubDefaults.EnemyNameColorMode = "Default"
 
-AddHubFunction(EnemyNameColorFunctions, TidyPlatesContHubMenus.EnemyNameColorModes, NameColorDefault, "白色", "Default")
-AddHubFunction(EnemyNameColorFunctions, TidyPlatesContHubMenus.EnemyNameColorModes, NameColorByClass, "按职业", "ByClass")
-AddHubFunction(EnemyNameColorFunctions, TidyPlatesContHubMenus.EnemyNameColorModes, NameColorByThreat, "按仇恨", "ByThreat")
-AddHubFunction(EnemyNameColorFunctions, TidyPlatesContHubMenus.EnemyNameColorModes, NameColorByReaction, "按（其他单位）反应", "ByReaction")
-AddHubFunction(EnemyNameColorFunctions, TidyPlatesContHubMenus.EnemyNameColorModes, ColorFunctionByHealth, "按血量", "ByHealth")
-AddHubFunction(EnemyNameColorFunctions, TidyPlatesContHubMenus.EnemyNameColorModes, ColorFunctionByLevelColor, "按等级颜色", "ByLevel")
-AddHubFunction(EnemyNameColorFunctions, TidyPlatesContHubMenus.EnemyNameColorModes, NameColorBySignificance, "按普通/精英/首领", "ByElite")
+AddHubFunction(EnemyNameColorFunctions, TidyPlatesContHubMenus.EnemyNameColorModes, NameColorDefault, "White", "Default")
+AddHubFunction(EnemyNameColorFunctions, TidyPlatesContHubMenus.EnemyNameColorModes, NameColorByClass, "By Class", "ByClass")
+AddHubFunction(EnemyNameColorFunctions, TidyPlatesContHubMenus.EnemyNameColorModes, NameColorByThreat, "By Threat", "ByThreat")
+AddHubFunction(EnemyNameColorFunctions, TidyPlatesContHubMenus.EnemyNameColorModes, NameColorByReaction, "By Reaction", "ByReaction")
+AddHubFunction(EnemyNameColorFunctions, TidyPlatesContHubMenus.EnemyNameColorModes, ColorFunctionByHealth, "By Health", "ByHealth")
+AddHubFunction(EnemyNameColorFunctions, TidyPlatesContHubMenus.EnemyNameColorModes, ColorFunctionByLevelColor, "By Level Color", "ByLevel")
+AddHubFunction(EnemyNameColorFunctions, TidyPlatesContHubMenus.EnemyNameColorModes, NameColorBySignificance, "By Normal/Elite/Boss", "ByElite")
 
 local FriendlyNameColorFunctions = {}
 TidyPlatesContHubMenus.FriendlyNameColorModes = {}
 TidyPlatesContHubDefaults.FriendlyNameColorMode = "Default"
 
-AddHubFunction(FriendlyNameColorFunctions, TidyPlatesContHubMenus.FriendlyNameColorModes, NameColorDefault, "白色", "Default")
-AddHubFunction(FriendlyNameColorFunctions, TidyPlatesContHubMenus.FriendlyNameColorModes, NameColorByClass, "按职业", "ByClass")
-AddHubFunction(FriendlyNameColorFunctions, TidyPlatesContHubMenus.FriendlyNameColorModes, NameColorByReaction, "按（其他单位）反应", "ByReaction")
-AddHubFunction(FriendlyNameColorFunctions, TidyPlatesContHubMenus.FriendlyNameColorModes, ColorFunctionByHealth, "按血量", "ByHealth")
+AddHubFunction(FriendlyNameColorFunctions, TidyPlatesContHubMenus.FriendlyNameColorModes, NameColorDefault, "White", "Default")
+AddHubFunction(FriendlyNameColorFunctions, TidyPlatesContHubMenus.FriendlyNameColorModes, NameColorByClass, "By Class", "ByClass")
+AddHubFunction(FriendlyNameColorFunctions, TidyPlatesContHubMenus.FriendlyNameColorModes, NameColorByReaction, "By Reaction", "ByReaction")
+AddHubFunction(FriendlyNameColorFunctions, TidyPlatesContHubMenus.FriendlyNameColorModes, ColorFunctionByHealth, "By Health", "ByHealth")
 
 
 TidyPlatesContHubDefaults.FriendlyHeadlineColor = "ByReaction"

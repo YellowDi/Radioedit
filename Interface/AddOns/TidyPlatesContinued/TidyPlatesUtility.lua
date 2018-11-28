@@ -208,7 +208,19 @@ local function GetUnitSubtitle(unit)
 
 end
 
+local function GetPetOwner(petName)
+	TooltipScanner:ClearLines()
+	TooltipScanner:SetUnit(petName)
+	local ownerText = _G[ScannerName.."TextLeft2"]:GetText()
+	if not ownerText then return nil, nil end
+	local owner, _ = string.split("'",ownerText)
+	local ownerGUID = UnitGUID(string.split("-",owner))
+
+	return ownerGUID, owner -- This is the pet's owner
+end
+
 TidyPlatesContUtility.GetUnitSubtitle = GetUnitSubtitle
+TidyPlatesContUtility.GetPetOwner = GetPetOwner
 
 ------------------------------------------
 -- Quest Info
@@ -549,11 +561,11 @@ end
 --	return slider
 --end
 
-local function CreateSliderFrame(self, reference, parent, label, val, minval, maxval, step, mode)
-	local value, multiplier
+local function CreateSliderFrame(self, reference, parent, label, val, minval, maxval, step, mode, width)
+	local value, multiplier, minimum, maximum, current
 	local slider = CreateFrame("Slider", reference, parent, 'OptionsSliderTemplate')
 
-	slider:SetWidth(100)
+	slider:SetWidth(width or 100)
 	slider:SetHeight(15)
 	--
 	slider:SetMinMaxValues(minval or 0, maxval or 1)
@@ -574,16 +586,29 @@ local function CreateSliderFrame(self, reference, parent, label, val, minval, ma
 	slider.Value:SetWidth(50)
 
 	slider.isActual = (mode and mode == "ACTUAL")
-	slider.ceil = function(v) return ceil(v*100-.5) end
 
-	slider.Value:SetText(tostring(slider.ceil(val)))
+	if slider.isActual then
+		local multiplier = 1
+		if step < 1 and step >= .1 then multiplier = 10 elseif step < .1 then multiplier = 100 end
+		slider.ceil = function(v) return ceil(v*multiplier-.5)/multiplier end
+		minimum = minval or 0
+		maximum = maxval or 1
+		current = val or .5
+	else
+		slider.ceil = function(v) return ceil(v*100-.5) end
+		minimum = tostring((minval or 0)*100).."%"
+		maximum = tostring((maxval or 1)*100).."%"
+		current = tostring(slider.ceil((val or .5))).."%"
+	end
+
+	slider.Low:SetText(minimum)
+	slider.High:SetText(maximum)
+	slider.Value:SetText(current)
 	slider:SetScript("OnValueChanged", function()
 		local ext = "%"
 		if slider.isActual then ext = "" end
 		slider.Value:SetText(tostring(slider.ceil(slider:GetValue())..ext))
 	end)
-	slider.Low:SetText((minval or 0))
-	slider.High:SetText((maxval or 1))
 
 	--slider.tooltipText = "Slider"
 	return slider

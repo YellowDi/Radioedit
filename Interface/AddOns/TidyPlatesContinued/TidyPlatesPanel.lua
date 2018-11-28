@@ -1,4 +1,4 @@
-﻿---------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------
 -- Tidy Plates Interface Panel
 ---------------------------------------------------------------------------------------------------------------------
 
@@ -17,9 +17,9 @@ local CallIn = TidyPlatesContUtility.CallIn
 local copytable = TidyPlatesContUtility.copyTable
 local PanelHelpers = TidyPlatesContUtility.PanelHelpers
 
-local NO_AUTOMATION = "不使用自动化"
-local DURING_COMBAT = "战斗中显示，战斗外隐藏"
-local OUT_OF_COMBAT = "战斗中隐藏，战斗外显示"
+local NO_AUTOMATION = "No Automation"
+local DURING_COMBAT = "Show during Combat, Hide when Combat ends"
+local OUT_OF_COMBAT = "Hide when Combat starts, Show when Combat ends"
 
 local font = "Interface\\Addons\\TidyPlatesContinued\\Media\\DefaultFont.ttf"
 local yellow, blue, red, orange = "|cffffff00", "|cFF3782D1", "|cFFFF1100", "|cFFFF6906"
@@ -38,7 +38,7 @@ end
 local FirstTryTheme = "Neon"
 local DefaultProfile = "Damage"
 
-local ActiveProfile = "无"
+local ActiveProfile = "None"
 
 TidyPlatesContOptions = {
 
@@ -53,6 +53,10 @@ TidyPlatesContOptions = {
 	EnemyAutomation = NO_AUTOMATION,
 	DisableCastBars = false,
 	ForceBlizzardFont = false,
+	HealthFrequent = true,
+
+	NameplateClickableHeight = 1,
+	NameplateClickableWidth = 1,
 	WelcomeShown = false,
 }
 
@@ -77,151 +81,7 @@ TidyPlatesCont.GetProfile = GetProfile
 
 function TidyPlatesContPanel.AddProfile(self, profileName )
 	if  profileName then
-		local ZHCN_SEARCH = 0	 --补充一串代码，解决汉化兼容性
-		local ZHCN_K = 0
-		local ZHCN_V = 0
-		local ZHCN_ENUS={ Damage = "伤害输出", Healer = "治疗者", Gladiator = "角斗士", Tank = "坦克", }
-		for ZHCN_K,ZHCN_V in pairs(ZHCN_ENUS) do
- 	 		if ZHCN_ENUS[ZHCN_K] == ZHCN_ENUS[profileName] then
-			      ZHCN_SEARCH = 1
-			end	   
-		end		
-		if ZHCN_SEARCH == 0 then
-			ZHCN_ENUS[profileName] = profileName
-		end
-		local ZHCN_SEARCH = 0	 --补充一串代码，解决汉化兼容性
-		local ZHCN_K = 0
-		local ZHCN_V = 0
-		local ZHCN_ENUS={ Damage = "伤害输出", Healer = "治疗者", Gladiator = "角斗士", Tank = "坦克", }
-		for ZHCN_K,ZHCN_V in pairs(ZHCN_ENUS) do
- 	 		if ZHCN_ENUS[ZHCN_K] == ZHCN_ENUS[profileName] then
-			      ZHCN_SEARCH = 1
-			end	   
-		end		
-		if ZHCN_SEARCH == 0 then
-			ZHCN_ENUS[profileName] = profileName
-		end
-		local ZHCN_SEARCH = 0	 --补充一串代码，解决汉化兼容性
-		local ZHCN_K = 0
-		local ZHCN_V = 0
-		local ZHCN_ENUS={ Damage = "伤害输出", Healer = "治疗者", Gladiator = "角斗士", Tank = "坦克", }
-		for ZHCN_K,ZHCN_V in pairs(ZHCN_ENUS) do
- 	 		if ZHCN_ENUS[ZHCN_K] == ZHCN_ENUS[profileName] then
-			      ZHCN_SEARCH = 1
-			end	   
-		end		
-		if ZHCN_SEARCH == 0 then
-			ZHCN_ENUS[profileName] = profileName
-		end
-		local ZHCN_SEARCH = 0	 --补充一串代码，解决汉化兼容性
-		local ZHCN_K = 0
-		local ZHCN_V = 0
-		local ZHCN_ENUS={ Damage = "伤害输出", Healer = "治疗者", Gladiator = "角斗士", Tank = "坦克", }
-		for ZHCN_K,ZHCN_V in pairs(ZHCN_ENUS) do
- 	 		if ZHCN_ENUS[ZHCN_K] == ZHCN_ENUS[profileName] then
-			      ZHCN_SEARCH = 1
-			end	   
-		end		
-		if ZHCN_SEARCH == 0 then
-			ZHCN_ENUS[profileName] = profileName
-		end
-		local ZHCN_SEARCH = 0	 --补充一串代码，解决汉化兼容性
-		local ZHCN_K = 0
-		local ZHCN_V = 0
-		local ZHCN_ENUS={ Damage = "伤害输出", Healer = "治疗者", Gladiator = "角斗士", Tank = "坦克", }
-		for ZHCN_K,ZHCN_V in pairs(ZHCN_ENUS) do
- 	 		if ZHCN_ENUS[ZHCN_K] == ZHCN_ENUS[profileName] then
-			      ZHCN_SEARCH = 1
-			end	   
-		end		
-		if ZHCN_SEARCH == 0 then
-			ZHCN_ENUS[profileName] = profileName
-		end
-		local ZHCN_SEARCH = 0	 --补充一串代码，解决汉化兼容性
-		local ZHCN_K = 0
-		local ZHCN_V = 0
-		local ZHCN_ENUS={ Damage = "伤害输出", Healer = "治疗者", Gladiator = "角斗士", Tank = "坦克", }
-		for ZHCN_K,ZHCN_V in pairs(ZHCN_ENUS) do
- 	 		if ZHCN_ENUS[ZHCN_K] == ZHCN_ENUS[profileName] then
-			      ZHCN_SEARCH = 1
-			end	   
-		end		
-		if ZHCN_SEARCH == 0 then
-			ZHCN_ENUS[profileName] = profileName
-		end
-		local ZHCN_SEARCH = 0	 --补充一串代码，解决汉化兼容性
-		local ZHCN_K = 0
-		local ZHCN_V = 0
-		local ZHCN_ENUS={ Damage = "伤害输出", Healer = "治疗者", Gladiator = "角斗士", Tank = "坦克", }
-		for ZHCN_K,ZHCN_V in pairs(ZHCN_ENUS) do
- 	 		if ZHCN_ENUS[ZHCN_K] == ZHCN_ENUS[profileName] then
-			      ZHCN_SEARCH = 1
-			end	   
-		end		
-		if ZHCN_SEARCH == 0 then
-			ZHCN_ENUS[profileName] = profileName
-		end
-		local ZHCN_SEARCH = 0	 --补充一串代码，解决汉化兼容性
-		local ZHCN_K = 0
-		local ZHCN_V = 0
-		local ZHCN_ENUS={ Damage = "伤害输出", Healer = "治疗者", Gladiator = "角斗士", Tank = "坦克", }
-		for ZHCN_K,ZHCN_V in pairs(ZHCN_ENUS) do
- 	 		if ZHCN_ENUS[ZHCN_K] == ZHCN_ENUS[profileName] then
-			      ZHCN_SEARCH = 1
-			end	   
-		end		
-		if ZHCN_SEARCH == 0 then
-			ZHCN_ENUS[profileName] = profileName
-		end
-		local ZHCN_SEARCH = 0	 --补充一串代码，解决汉化兼容性
-		local ZHCN_K = 0
-		local ZHCN_V = 0
-		local ZHCN_ENUS={ Damage = "伤害输出", Healer = "治疗者", Gladiator = "角斗士", Tank = "坦克", }
-		for ZHCN_K,ZHCN_V in pairs(ZHCN_ENUS) do
- 	 		if ZHCN_ENUS[ZHCN_K] == ZHCN_ENUS[profileName] then
-			      ZHCN_SEARCH = 1
-			end	   
-		end		
-		if ZHCN_SEARCH == 0 then
-			ZHCN_ENUS[profileName] = profileName
-		end
-		local ZHCN_SEARCH = 0	 --补充一串代码，解决汉化兼容性
-		local ZHCN_K = 0
-		local ZHCN_V = 0
-		local ZHCN_ENUS={ Damage = "伤害输出", Healer = "治疗者", Gladiator = "角斗士", Tank = "坦克", }
-		for ZHCN_K,ZHCN_V in pairs(ZHCN_ENUS) do
- 	 		if ZHCN_ENUS[ZHCN_K] == ZHCN_ENUS[profileName] then
-			      ZHCN_SEARCH = 1
-			end	   
-		end		
-		if ZHCN_SEARCH == 0 then
-			ZHCN_ENUS[profileName] = profileName
-		end
-		local ZHCN_SEARCH = 0	 --补充一串代码，解决汉化兼容性
-		local ZHCN_K = 0
-		local ZHCN_V = 0
-		local ZHCN_ENUS={ Damage = "伤害输出", Healer = "治疗者", Gladiator = "角斗士", Tank = "坦克", }
-		for ZHCN_K,ZHCN_V in pairs(ZHCN_ENUS) do
- 	 		if ZHCN_ENUS[ZHCN_K] == ZHCN_ENUS[profileName] then
-			      ZHCN_SEARCH = 1
-			end	   
-		end		
-		if ZHCN_SEARCH == 0 then
-			ZHCN_ENUS[profileName] = profileName
-		end
-		local ZHCN_SEARCH = 0	 --补充一串代码，解决汉化兼容性
-		local ZHCN_K = 0
-		local ZHCN_V = 0
-		local ZHCN_ENUS={ Damage = "伤害输出", Healer = "治疗者", Gladiator = "角斗士", Tank = "坦克", }
-		for ZHCN_K,ZHCN_V in pairs(ZHCN_ENUS) do
- 	 		if ZHCN_ENUS[ZHCN_K] == ZHCN_ENUS[profileName] then
-			      ZHCN_SEARCH = 1
-			end	   
-		end		
-		if ZHCN_SEARCH == 0 then
-			ZHCN_ENUS[profileName] = profileName
-		end
-		HubProfileList[#HubProfileList+1] = { text = ZHCN_ENUS[profileName], value = profileName, }
+		HubProfileList[#HubProfileList+1] = { text = profileName, value = profileName, }
 	end
 end
 
@@ -241,6 +101,15 @@ local function SetNameplateVisibility(cvar, mode, combat)
 	end
 end
 
+local function GetClickableArea()
+	return TidyPlatesContOptions.NameplateClickableWidth or 1, TidyPlatesContOptions.NameplateClickableHeight or 1
+end
+
+--local function SetClickableArea(width, height)
+--	if width then TidyPlatesContOptions.NameplateClickableWidth = width end
+--	if height then TidyPlatesContOptions.NameplateClickableHeight = height end
+--end
+
 --[[
 function TidyPlatesCont:ReloadTheme()
 	SetTheme(TidyPlatesContInternal.activeThemeName)
@@ -249,6 +118,7 @@ function TidyPlatesCont:ReloadTheme()
 end
 --]]
 
+TidyPlatesContPanel.GetClickableArea = GetClickableArea
 
 -------------------------------------------------------------------------------------
 -- Panel
@@ -258,6 +128,7 @@ local ThemeDropdownMenuItems = {}
 local function ApplyAutomationSettings()
 	SetCastBars(not TidyPlatesContOptions.DisableCastBars)
 	TidyPlatesCont.OverrideFonts( TidyPlatesContOptions.ForceBlizzardFont)
+	TidyPlatesCont:SetHealthUpdateMethod(TidyPlatesContOptions.HealthFrequent)
 
 	if TidyPlatesContOptions._EnableMiniButton then
 		TidyPlatesContUtility:CreateMinimapButton()
@@ -273,14 +144,22 @@ local function Role2Profile(spec)
 		local role = GetSpecializationRole(spec)
 		if role == "DAMAGER" then return "Damage" end
 		if role == "TANK" then return "Tank" end
-		if role == "HEALER" then return "Healer"  end
+		if role == "HEALER" then return "Healer" end
 	end
 	return "Damage"
 end
 
+local function VerifyPanelSettings()
+	for k, v in pairs(TidyPlatesContOptionsDefaults) do
+		if TidyPlatesContOptions[k] == nil then
+			TidyPlatesContOptions[k] = TidyPlatesContOptionsDefaults[k]
+		end
+	end
+end
+
 local function ApplyPanelSettings()
 	-- Theme
-	SetTheme(TidyPlatesContOptions.ActiveTheme or TidyPlatesContUtility.GetCacheSet("SavedTemplate")["主题"] or FirstTryTheme)
+	SetTheme(TidyPlatesContOptions.ActiveTheme or TidyPlatesContUtility.GetCacheSet("SavedTemplate")["Theme"] or FirstTryTheme)
 
 	-- This is here in case the theme couldn't be loaded, and the core falls back to defaults
 	--TidyPlatesContOptions.ActiveTheme = TidyPlatesContInternal.activeThemeName
@@ -315,10 +194,6 @@ local function ApplyPanelSettings()
 	TidyPlatesCont:ForceUpdate()
 end
 
-
-
-
-
 local function GetPanelValues(panel)
 	TidyPlatesContOptions.ActiveTheme = panel.ActiveThemeDropdown:GetValue()
 
@@ -326,6 +201,9 @@ local function GetPanelValues(panel)
 	TidyPlatesContOptions.EnemyAutomation = panel.AutoShowEnemy:GetValue()
 	TidyPlatesContOptions.DisableCastBars = panel.DisableCastBars:GetChecked()
 	TidyPlatesContOptions.ForceBlizzardFont = panel.ForceBlizzardFont:GetChecked()
+	TidyPlatesContOptions.HealthFrequent = panel.HealthFrequent:GetChecked()
+	TidyPlatesContOptions.NameplateClickableWidth = panel.NameplateClickableWidth:GetValue()
+	TidyPlatesContOptions.NameplateClickableHeight = panel.NameplateClickableHeight:GetValue()
 	TidyPlatesContOptions.PrimaryProfile = panel.FirstSpecDropdown:GetValue()
 
 	TidyPlatesContOptions.FirstSpecProfile = panel.FirstSpecDropdown:GetValue()
@@ -345,8 +223,18 @@ local function SetPanelValues(panel)
 
 	panel.DisableCastBars:SetChecked(TidyPlatesContOptions.DisableCastBars)
 	panel.ForceBlizzardFont:SetChecked(TidyPlatesContOptions.ForceBlizzardFont)
+	panel.HealthFrequent:SetChecked(TidyPlatesContOptions.HealthFrequent)
+	panel.NameplateClickableWidth:SetValue(TidyPlatesContOptions.NameplateClickableWidth)
+	panel.NameplateClickableHeight:SetValue(TidyPlatesContOptions.NameplateClickableHeight)
 	panel.AutoShowFriendly:SetValue(TidyPlatesContOptions.FriendlyAutomation)
 	panel.AutoShowEnemy:SetValue(TidyPlatesContOptions.EnemyAutomation)
+	
+	-- CVars
+	panel.NameplateTargetClamp:SetChecked((function() if GetCVar("nameplateTargetRadialPosition") == "1" then return true else return false end end)())
+	panel.NameplateStacking:SetChecked((function() if GetCVar("nameplateMotion") == "1" then return true else return false end end)())
+	panel.NameplateMaxDistance:SetValue(GetCVar("nameplateMaxDistance"))
+	panel.NameplateOverlapH:SetValue(GetCVar("nameplateOverlapH"))
+	panel.NameplateOverlapV:SetValue(GetCVar("nameplateOverlapV"))
 end
 
 
@@ -359,6 +247,7 @@ end
 
 
 local function OnOkay(panel)
+	panel = panel.MainFrame
 	GetPanelValues(panel)
 	ApplyPanelSettings()
 	ApplyAutomationSettings()
@@ -367,7 +256,7 @@ end
 
 -- Loads values from the saved vars, and preps for display of the panel
 local function OnRefresh(panel)
-
+	panel = panel.MainFrame
 	if not panel then return end
 
 	SetPanelValues(panel)
@@ -383,7 +272,7 @@ local function OnRefresh(panel)
 	local id, name = GetSpecializationInfo(1)
 
 	if name then
-		if currentSpec == 1 then name = name.."(当前专精)" end
+		if currentSpec == 1 then name = name.." (Active)" end
 		panel.FirstSpecLabel:SetText(name)
 	end
 	------------------------
@@ -392,7 +281,7 @@ local function OnRefresh(panel)
 	local id, name = GetSpecializationInfo(2)
 
 	if name then
-		if currentSpec == 2 then name = name.."(当前专精)" end
+		if currentSpec == 2 then name = name.." (Active)" end
 		panel.SecondSpecLabel:SetText(name)
 	end
 	------------------------
@@ -401,7 +290,7 @@ local function OnRefresh(panel)
 	local id, name = GetSpecializationInfo(3)
 
 	if name then
-		if currentSpec == 3 then name = name.."(当前专精)" end
+		if currentSpec == 3 then name = name.." (Active)" end
 		panel.ThirdSpecLabel:SetText(name)
 		panel.ThirdSpecLabel:Show()
 		panel.ThirdSpecDropdown:Show()
@@ -412,7 +301,7 @@ local function OnRefresh(panel)
 	local id, name = GetSpecializationInfo(4)
 
 	if name then
-		if currentSpec == 4 then name = name.."(当前专精)" end
+		if currentSpec == 4 then name = name.." (Active)" end
 		panel.FourthSpecLabel:SetText(name)
 		panel.FourthSpecLabel:Show()
 		panel.FourthSpecDropdown:Show()
@@ -445,7 +334,19 @@ local function CreateMenuTables()
 
 end
 
+local function OnMouseWheelScrollFrame(frame, value, name)
+	local scrollbar = _G[frame:GetName() .. "ScrollBar"];
+	local currentPosition = scrollbar:GetValue()
+	local increment = 50
+
+	-- Spin Up
+	if ( value > 0 ) then scrollbar:SetValue(currentPosition - increment);
+	-- Spin Down
+	else scrollbar:SetValue(currentPosition + increment); end
+end
+
 local function BuildInterfacePanel(panel)
+	local _panel = panel
 	panel:SetBackdrop({bgFile = "Interface/Tooltips/UI-Tooltip-Background", insets = { left = 2, right = 2, top = 2, bottom = 2 },})
 	panel:SetBackdropColor(0.06, 0.06, 0.06, .7)
 
@@ -467,13 +368,43 @@ local function BuildInterfacePanel(panel)
 	panel.DividerLine:SetSize( 500, 12)
 	panel.DividerLine:SetPoint("TOPLEFT", panel.Label, "BOTTOMLEFT", -6, -12)
 
+	-- Main Scrolled Frame
+	------------------------------
+	panel.MainFrame = CreateFrame("Frame")
+	panel.MainFrame:SetWidth(412)
+	panel.MainFrame:SetHeight(100) 		-- If the items inside the frame overflow, it automatically adjusts the height.
+
+	-- Scrollable Panel Window
+	------------------------------
+	panel.ScrollFrame = CreateFrame("ScrollFrame","TidyPlatesCont_Scrollframe", panel, "UIPanelScrollFrameTemplate")
+	panel.ScrollFrame:SetPoint("LEFT", 16 )
+	panel.ScrollFrame:SetPoint("TOP", panel.DividerLine, "BOTTOM", 0, -8 )
+	panel.ScrollFrame:SetPoint("BOTTOMRIGHT", -32 , 16 )
+	panel.ScrollFrame:SetScrollChild(panel.MainFrame)
+	panel.ScrollFrame:SetScript("OnMouseWheel", OnMouseWheelScrollFrame)
+
+	-- Scroll Frame Border
+	------------------------------
+	panel.ScrollFrameBorder = CreateFrame("Frame", "TidyPlatesContScrollFrameBorder", panel.ScrollFrame )
+	panel.ScrollFrameBorder:SetPoint("TOPLEFT", -4, 5)
+	panel.ScrollFrameBorder:SetPoint("BOTTOMRIGHT", 3, -5)
+	panel.ScrollFrameBorder:SetBackdrop({bgFile = "Interface/Tooltips/UI-Tooltip-Background",
+												edgeFile = "Interface/Tooltips/UI-Tooltip-Border",
+												--tile = true, tileSize = 16,
+												edgeSize = 16,
+												insets = { left = 4, right = 4, top = 4, bottom = 4 }
+												});
+	panel.ScrollFrameBorder:SetBackdropColor(0.05, 0.05, 0.05, 0)
+	panel.ScrollFrameBorder:SetBackdropBorderColor(0.2, 0.2, 0.2, 0)
+
+	panel = panel.MainFrame
 	----------------------------------------------
 	-- Theme
 	----------------------------------------------
 	panel.ThemeCategoryTitle = panel:CreateFontString(nil, 'ARTWORK', 'GameFontNormal')
 	panel.ThemeCategoryTitle:SetFont(font, 22)
-	panel.ThemeCategoryTitle:SetText("主题")
-	panel.ThemeCategoryTitle:SetPoint("TOPLEFT", 20, -70)
+	panel.ThemeCategoryTitle:SetText("Theme")
+	panel.ThemeCategoryTitle:SetPoint("TOPLEFT", 20, -10)
 	panel.ThemeCategoryTitle:SetTextColor(255/255, 105/255, 6/255)
 
 	-- Dropdown
@@ -485,7 +416,7 @@ local function BuildInterfacePanel(panel)
 	----------------------------------------------
 	panel.ProfileLabel = panel:CreateFontString(nil, 'ARTWORK', 'GameFontNormal')
 	panel.ProfileLabel:SetFont(font, 22)
-	panel.ProfileLabel:SetText("模板")
+	panel.ProfileLabel:SetText("Profile")
 	panel.ProfileLabel:SetPoint("TOPLEFT", panel.ActiveThemeDropdown, "BOTTOMLEFT", 20, -20)
 	panel.ProfileLabel:SetTextColor(255/255, 105/255, 6/255)
 
@@ -519,7 +450,7 @@ local function BuildInterfacePanel(panel)
 	---------------
 	-- Spec 2
 	panel.SecondSpecLabel = panel:CreateFontString(nil, 'ARTWORK', 'GameFontNormal')
-	panel.SecondSpecLabel:SetPoint("TOPLEFT", panel.FirstSpecLabel,"TOPLEFT", 180, 0)
+	panel.SecondSpecLabel:SetPoint("TOPLEFT", panel.FirstSpecLabel,"TOPLEFT", 150, 0)
 	panel.SecondSpecLabel:SetWidth(170)
 	panel.SecondSpecLabel:SetJustifyH("LEFT")
 	panel.SecondSpecLabel:SetText("Second Spec")
@@ -545,7 +476,7 @@ local function BuildInterfacePanel(panel)
 	----------------------------------------------
 	panel.AutomationLabel = panel:CreateFontString(nil, 'ARTWORK', 'GameFontNormal')
 	panel.AutomationLabel:SetFont(font, 22)
-	panel.AutomationLabel:SetText("自动化")
+	panel.AutomationLabel:SetText("Automation")
 	panel.AutomationLabel:SetPoint("TOPLEFT", panel.ThirdSpecDropdown, "BOTTOMLEFT", 20, -20)
 	panel.AutomationLabel:SetTextColor(255/255, 105/255, 6/255)
 
@@ -558,7 +489,7 @@ local function BuildInterfacePanel(panel)
 	panel.AutoShowEnemyLabel:SetPoint("TOPLEFT", panel.AutomationLabel,"BOTTOMLEFT", 0, -4)
 	panel.AutoShowEnemyLabel:SetWidth(170)
 	panel.AutoShowEnemyLabel:SetJustifyH("LEFT")
-	panel.AutoShowEnemyLabel:SetText("敌方姓名板")
+	panel.AutoShowEnemyLabel:SetText("Enemy Nameplates:")
 
 	panel.AutoShowEnemy = PanelHelpers:CreateDropdownFrame("TidyPlatesContAutoShowEnemy", panel, AutomationDropdownItems, NO_AUTOMATION, nil, true)
 	panel.AutoShowEnemy:SetPoint("TOPLEFT",panel.AutoShowEnemyLabel, "BOTTOMLEFT", -20, -2)
@@ -569,10 +500,10 @@ local function BuildInterfacePanel(panel)
 	---------------
 	-- Friendly Visibility
 	panel.AutoShowFriendlyLabel = panel:CreateFontString(nil, 'ARTWORK', 'GameFontNormal')
-	panel.AutoShowFriendlyLabel:SetPoint("TOPLEFT", panel.AutoShowEnemyLabel,"TOPLEFT", 180, 0)
+	panel.AutoShowFriendlyLabel:SetPoint("TOPLEFT", panel.AutoShowEnemyLabel,"TOPLEFT", 150, 0)
 	panel.AutoShowFriendlyLabel:SetWidth(170)
 	panel.AutoShowFriendlyLabel:SetJustifyH("LEFT")
-	panel.AutoShowFriendlyLabel:SetText("友方姓名板")
+	panel.AutoShowFriendlyLabel:SetText("Friendly Nameplates:")
 
 	panel.AutoShowFriendly = PanelHelpers:CreateDropdownFrame("TidyPlatesContAutoShowFriendly", panel, AutomationDropdownItems, NO_AUTOMATION, nil, true)
 	panel.AutoShowFriendly:SetPoint("TOPLEFT", panel.AutoShowFriendlyLabel,"BOTTOMLEFT", -20, -2)
@@ -582,32 +513,71 @@ local function BuildInterfacePanel(panel)
 	----------------------------------------------
 	-- Other Options
 	----------------------------------------------
-	-- Blizz Button
-	local BlizzOptionsButton = CreateFrame("Button", "TidyPlatesContOptions_BlizzOptionsButton", panel, "TidyPlatesContPanelButtonTemplate")
-	--BlizzOptionsButton:SetPoint("TOPRIGHT", ResetButton, "TOPLEFT", -8, 0)
-	BlizzOptionsButton:SetPoint("TOPLEFT", panel.AutoShowEnemy, "TOPLEFT", 16, -55)
-	BlizzOptionsButton:SetWidth(260)
-	BlizzOptionsButton:SetText("打开暴雪姓名板设置...")
-
 	-- Cast Bars
-	panel.DisableCastBars = PanelHelpers:CreateCheckButton("TidyPlatesContOptions_DisableCastBars", panel, "禁用施法条")
-	panel.DisableCastBars:SetPoint("TOPLEFT", BlizzOptionsButton, "TOPLEFT", 0, -35)
+	panel.DisableCastBars = PanelHelpers:CreateCheckButton("TidyPlatesContOptions_DisableCastBars", panel, "Disable Cast Bars")
+	panel.DisableCastBars:SetPoint("TOPLEFT", panel.AutoShowEnemy, "TOPLEFT", 16, -50)
 	panel.DisableCastBars:SetScript("OnClick", function(self) SetCastBars(not self:GetChecked()) end)
 
 	-- ForceBlizzardFont
-	panel.ForceBlizzardFont = PanelHelpers:CreateCheckButton("TidyPlatesContOptions_ForceBlizzardFont", panel, "强制使用多语言字体（要求/reload）")
-	panel.ForceBlizzardFont:SetPoint("TOPLEFT", panel.DisableCastBars, "TOPLEFT", 0, -35)
-	panel.ForceBlizzardFont:SetScript("OnClick", function(self) TidyPlatesCont.OverrideFonts( self:GetChecked()); end)
+	panel.ForceBlizzardFont = PanelHelpers:CreateCheckButton("TidyPlatesContOptions_ForceBlizzardFont", panel, "Force Multi-Lingual Font (Requires /reload)")
+	panel.ForceBlizzardFont:SetPoint("TOPLEFT", panel.DisableCastBars, "TOPLEFT", 0, -25)
+	panel.ForceBlizzardFont:SetScript("OnClick", function(self) TidyPlatesCont.OverrideFonts( self:GetChecked()) end)
+
+	-- Frequent Health Updates
+	panel.HealthFrequent = PanelHelpers:CreateCheckButton("TidyPlatesContOptions_HealthFrequent", panel, "Use Frequent Health Updates")
+	panel.HealthFrequent:SetPoint("TOPLEFT", panel.ForceBlizzardFont, "TOPLEFT", 0, -25)
+	panel.HealthFrequent:SetScript("OnClick", function(self) TidyPlatesCont:SetHealthUpdateMethod(self:GetChecked()) end)
+
+	-- Nameplate Behaviour
+	panel.CVarsLabel = panel:CreateFontString(nil, 'ARTWORK', 'GameFontNormal')
+	panel.CVarsLabel:SetFont(font, 22)
+	panel.CVarsLabel:SetText("CVars")
+	panel.CVarsLabel:SetPoint("TOPLEFT", panel.HealthFrequent, "BOTTOMLEFT", 0, -20)
+	panel.CVarsLabel:SetTextColor(255/255, 105/255, 6/255)
+
+	panel.NameplateTargetClamp = PanelHelpers:CreateCheckButton("TidyPlatesContOptions_NameplateTargetClamp", panel, "Always keep Target Nameplate on Screen")
+	panel.NameplateTargetClamp:SetPoint("TOPLEFT", panel.CVarsLabel, "TOPLEFT", 0, -25)
+	panel.NameplateTargetClamp:SetScript("OnClick", function(self) if self:GetChecked() then SetCVar("nameplateTargetRadialPosition", 1) else SetCVar("nameplateTargetRadialPosition", 0) end end)
+
+	panel.NameplateStacking = PanelHelpers:CreateCheckButton("TidyPlatesContOptions_NameplateStacking", panel, "Stacking Nameplates")
+	panel.NameplateStacking:SetPoint("TOPLEFT", panel.NameplateTargetClamp, "TOPLEFT", 0, -25)
+	panel.NameplateStacking:SetScript("OnClick", function(self) if self:GetChecked() then SetCVar("nameplateMotion", 1) else SetCVar("nameplateMotion", 0) end end)
+
+	panel.NameplateMaxDistance = PanelHelpers:CreateSliderFrame("TidyPlatesContOptions_NameplateMaxDistance", panel, "Nameplate Max Distance", 60, 10, 100, 1, "ACTUAL", 250)
+	panel.NameplateMaxDistance:SetPoint("TOPLEFT", panel.NameplateStacking, "TOPLEFT", 10, -45)
+	panel.NameplateMaxDistance:SetScript("OnMouseUp", function(self) SetCVar("nameplateMaxDistance", self.ceil(self:GetValue())) end)
+
+	panel.NameplateOverlapH = PanelHelpers:CreateSliderFrame("TidyPlatesContOptions_NameplateOverlapH", panel, "Nameplate Horizontal Overlap", 0, 0, 10, .1, "ACTUAL", 170)
+	panel.NameplateOverlapH:SetPoint("TOPLEFT", panel.NameplateMaxDistance, "TOPLEFT", 0, -45)
+	panel.NameplateOverlapH:SetScript("OnMouseUp", function(self) SetCVar("nameplateOverlapH", self.ceil(self:GetValue())) end)
+
+	panel.NameplateOverlapV = PanelHelpers:CreateSliderFrame("TidyPlatesContOptions_NameplateOverlapV", panel, "Nameplate Vertical Overlap", 0, 0, 10, .1, "ACTUAL", 170)
+	panel.NameplateOverlapV:SetPoint("TOPLEFT", panel.NameplateMaxDistance, "TOPLEFT", 200, -45)
+	panel.NameplateOverlapV:SetScript("OnMouseUp", function(self) SetCVar("nameplateOverlapV", self.ceil(self:GetValue())) end)
+
+	panel.NameplateClickableWidth = PanelHelpers:CreateSliderFrame("TidyPlatesContOptions_NameplateClickableWidth", panel, "Clickable Width of Nameplates", 1, .1, 2, .01, nil, 170)
+	panel.NameplateClickableWidth:SetPoint("TOPLEFT", panel.NameplateOverlapH, "TOPLEFT", 0, -45)
+	--panel.NameplateClickableWidth:SetScript("OnMouseUp", function(self) print(self.ceil(self:GetValue())) end)
+
+	panel.NameplateClickableHeight = PanelHelpers:CreateSliderFrame("TidyPlatesContOptions_NameplateClickableHeight", panel, "Clickable Height of Nameplates", 1, .1, 2, .01, nil, 170)
+	panel.NameplateClickableHeight:SetPoint("TOPLEFT", panel.NameplateOverlapH, "TOPLEFT", 200, -45)
+	--panel.NameplateClickableHeight:SetScript("OnMouseUp", function(self) print("clickableheight", self.ceil(self:GetValue())) end)
+
+	-- Blizz Button
+	local BlizzOptionsButton = CreateFrame("Button", "TidyPlatesContOptions_BlizzOptionsButton", panel, "TidyPlatesContPanelButtonTemplate")
+	BlizzOptionsButton:SetPoint("TOPLEFT", panel.NameplateClickableWidth, "TOPLEFT", -10, -70)
+	BlizzOptionsButton:SetWidth(260)
+	BlizzOptionsButton:SetText("Nameplate Motion & Visibility")
 
 	-- Reset
 	ResetButton = CreateFrame("Button", "TidyPlatesContOptions_ResetButton", panel, "TidyPlatesContPanelButtonTemplate")
-	ResetButton:SetPoint("BOTTOMRIGHT", -16, 8)
+	ResetButton:SetPoint("TOPLEFT", BlizzOptionsButton, "BOTTOMLEFT", 0, -10)
 	ResetButton:SetWidth(155)
-	ResetButton:SetText("重置所有设置")
+	ResetButton:SetText("Reset Configuration")
 
 	-- Update Functions
-	panel.okay = OnOkay
-	panel.refresh = OnRefresh
+	_panel.okay = OnOkay
+	_panel.refresh = OnRefresh
 	panel.ActiveThemeDropdown.OnValueChanged = OnValueChange
 
 	panel.FirstSpecDropdown.OnValueChanged = OnValueChange
@@ -636,10 +606,10 @@ local function BuildInterfacePanel(panel)
 		else
 			TidyPlatesContOptions = wipe(TidyPlatesContOptions)
 			for i, v in pairs(TidyPlatesContOptionsDefaults) do TidyPlatesContOptions[i] = v end
-			OnRefresh(panel)
+			OnRefresh(_panel)
 			ApplyPanelSettings()
-			print(yellow.."正在重置"..orange.."Tidy Plates Continued"..yellow.."主题至默认。")
-			print(yellow.."按住"..blue.."Shift"..yellow.."后点击"..red.."重置所有设置"..yellow.."将清除所有设置、缓存并重载UI。")
+			print(yellow.."Resetting "..orange.."Tidy Plates Continued"..yellow.." Theme Selection to Default")
+			print(yellow.."Holding down "..blue.."Shift"..yellow.." while clicking "..red.."Reset Configuration"..yellow.." will clear your saved settings, AND reload the user interface.")
 		end
 
 	end)
@@ -672,6 +642,7 @@ function panelevents:PLAYER_ENTERING_WORLD()
 	if not TidyPlatesContThemeList[TidyPlatesContOptions.ActiveTheme] then
 		TidyPlatesContOptions.ActiveTheme = fallBackTheme end
 
+	VerifyPanelSettings()
 	ApplyPanelSettings()
 	ApplyAutomationSettings()
 end
