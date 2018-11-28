@@ -1,0 +1,13 @@
+## Interface: 80000
+## Author: houshuu
+## Version: 1.0.0
+## Title: |cff0288d1W|r|cff039be5i|r|cff03a9f4n|r|cff29b6f6d|r|cff4fc3f7M|r|cff81d4fae|r|cffb3e5fcd|r|cffe1f5fei|r|cffe1f5fea|r
+## Title-zhTW: |cff039be5W|r|cff03a9f4i|r|cff29b6f6n|r|cff4fc3f7d|r|cff81d4fa媒|r|cffb3e5fc體|r|cffe1f5fe包|r
+## Title-zhCN: |cff039be5W|r|cff03a9f4i|r|cff29b6f6n|r|cff4fc3f7d|r|cff81d4fa媒|r|cffb3e5fc体|r|cffe1f5fe包|r
+## Notes: Collection of useful medias.
+## Notes-zhTW: 自定義音樂，狀態條材質及字體的整合包。
+## Notes-zhCN: 自定义音乐，状态条材质及字体的整合包。
+## DefaultState: enabled
+
+# 导入材质
+WindMedia.lua
