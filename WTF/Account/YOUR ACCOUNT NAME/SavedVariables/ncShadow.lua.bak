@@ -1,2 +1,0 @@
-
-ncShadowLevel = 50

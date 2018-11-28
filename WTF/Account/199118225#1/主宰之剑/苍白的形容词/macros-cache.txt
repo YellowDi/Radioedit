@@ -1,0 +1,89 @@
+VER 3 010000000000001B " " "INV_Misc_QuestionMark"
+#showtooltip 冰冷血脉
+/castglyph 冰冷血脉 major1
+/cast 冰冷血脉
+END
+VER 3 010000000000001A " " "INV_Misc_QuestionMark"
+#showtooltip 彗星风暴
+/use 14
+/use 13
+/施放 彗星风暴
+END
+VER 3 010000000000001E " " "INV_Misc_QuestionMark"
+#showtooltip 燃烧
+/castsequence reset=15 浮冰,能量符文,燃烧,炎爆术,灼烧,炎爆术,火焰冲击,炎爆术,火焰冲击,炎爆术,烈焰飞舞,火焰冲击,炎爆术,火焰冲击,炎爆术,灼烧
+END
+VER 3 010000000000001D " " "1097742"
+/use 14
+END
+VER 3 010000000000001F " " "237467"
+/use 13
+END
+VER 3 010000000000001C "1" "INV_Misc_QuestionMark"
+#showtooltip 寒冰屏障 
+/stopcasting 
+/cancelAura 寒冰屏障 
+/cast 寒冰屏障
+END
+VER 3 0100000000000012 "冰川尖刺" "INV_MISC_QUESTIONMARK"
+#showtooltip
+/castsequence reset=10 冰川尖刺,冰冻术
+/petattack [harm]
+END
+VER 3 0100000000000011 "冰枪术" "INV_MISC_QUESTIONMARK"
+#showtooltip
+/cast 冰枪术
+/petattack [harm]
+END
+VER 3 0100000000000018 "冰风暴" "INV_MISC_QUESTIONMARK"
+#showtooltips
+/cast [mod:alt]冰风暴
+/castsequence reset=1 冰风暴,0
+END
+VER 3 0100000000000015 "变形术" "INV_MISC_QUESTIONMARK"
+#showtooltip
+/cast [target=focus] 变形术
+/petpassive
+END
+VER 3 0100000000000013 "召唤水元素" "INV_MISC_QUESTIONMARK"
+#showtooltip [nopet] [target=pet,dead] 召唤水元素; [pet] 冰冻术
+/cast [nopet]召唤水元素
+/cast [target=pet,dead]召唤水元素
+/stopmacro [target=pet,dead]
+/cast 冰冻术
+/petattack [harm]
+END
+VER 3 0100000000000016 "吃喝" "134029"
+/use 魔法汉堡
+/USE 魔法布丁
+/USE 魔法煎饼
+/cast 造餐术
+END
+VER 3 0100000000000019 "奥数冲击" "INV_MISC_QUESTIONMARK"
+#showtooltip 奥术冲击
+/cast [nochanneling:奥术飞弹] 奥术冲击
+END
+VER 3 0100000000000010 "寒冰箭" "INV_MISC_QUESTIONMARK"
+#showtooltip
+/cast 寒冰箭
+/petattack [harm]
+END
+VER 3 010000000000000F "彗星风暴" "INV_MISC_QUESTIONMARK"
+#showtooltip
+/cast [notalent:1/2,nopet][notalent:1/2,target=pet,dead]召唤水元素
+/castsequence reset=10 彗星风暴,冰冻术
+/petattack [harm]
+/stopmacro [talent:6/3]
+/cast 冰冻术
+END
+VER 3 0100000000000014 "暴风雪" "INV_MISC_QUESTIONMARK"
+#showtooltips 暴风雪
+/cast [@cursor] 暴风雪
+END
+VER 3 0100000000000017 "爆发" "INV_MISC_QUESTIONMARK"
+#showtooltip 冰冷血脉
+/use 13
+/use 14
+/use朽烂外壳巫毒人偶
+/cast 冰冷血脉
+END

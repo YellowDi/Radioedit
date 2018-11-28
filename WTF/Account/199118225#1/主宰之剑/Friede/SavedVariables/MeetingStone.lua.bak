@@ -1,0 +1,11 @@
+
+MEETINGSTONE_CHARACTER_DB = {
+	["profileKeys"] = {
+		["Friede - 主宰之剑"] = "Friede - 主宰之剑",
+	},
+	["profiles"] = {
+		["Friede - 主宰之剑"] = {
+			["version"] = "80000.07",
+		},
+	},
+}

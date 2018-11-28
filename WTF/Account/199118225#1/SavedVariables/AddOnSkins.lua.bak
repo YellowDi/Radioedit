@@ -1,0 +1,28 @@
+
+AddOnSkinsDB = {
+	["profileKeys"] = {
+		["多晴 - 主宰之剑"] = "BenikUI",
+		["Mirvish - 主宰之剑"] = "BenikUI",
+		["Friede - 主宰之剑"] = "BenikUI",
+		["苍白的形容词 - 主宰之剑"] = "BenikUI",
+	},
+	["profiles"] = {
+		["Default"] = {
+			["WeakAuras"] = false,
+		},
+		["BenikUI"] = {
+			["WeakAuraAuraBar"] = true,
+			["DBMFontSize"] = 10,
+			["DetailsBackdrop"] = false,
+			["DBMRadarTrans"] = true,
+			["DBMSkinHalf"] = true,
+			["DBMFont"] = "Expressway",
+			["WeakAuras"] = false,
+			["EmbedSystemDual"] = true,
+			["ParchmentRemover"] = true,
+			["TransparentEmbed"] = true,
+		},
+	},
+}
+AddOnSkinsDS = {
+}

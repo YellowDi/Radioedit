@@ -1,0 +1,87 @@
+VER 3 000000000000012F "下跪" "INV_MISC_QUESTIONMARK"
+/下跪
+END
+VER 3 0000000000000131 "伤害显示" "134400"
+/console floatingCombatTextCombatDamage 1
+END
+VER 3 000000000000013B "冰冻术" "INV_MISC_QUESTIONMARK"
+#showtooltip [nopet] [target=pet,dead] 召唤水元素; [pet] 冰冻术
+/cast [nopet]召唤水元素
+/cast [target=pet,dead]召唤水元素
+/cast [@cursor] 冰冻术
+END
+VER 3 000000000000013A "冰箱" "INV_MISC_QUESTIONMARK"
+#showtooltip 寒冰屏障
+/stopcasting
+/cancelAura 寒冰屏障
+/cast 寒冰屏障
+END
+VER 3 0000000000000133 "双向驱散" "INV_MISC_QUESTIONMARK"
+#showtooltip 纯净术 
+/cast [help,nodead] 纯净术 
+/cast [harm,nodead] 驱散魔法
+END
+VER 3 000000000000013C "彗星风暴" "INV_MISC_QUESTIONMARK"
+#showtooltip [nopet] [target=pet,dead] 召唤水元素; 彗星风暴
+/cast [nopet]召唤水元素
+/cast [target=pet,dead]召唤水元素
+/stopmacro [target=pet,dead]
+/cast 彗星风暴 
+/cast [@cursor] 冰冻术
+/petattack [harm]
+END
+VER 3 0000000000000134 "摧心魔" "INV_MISC_QUESTIONMARK"
+#showtooltip 摧心魔 
+/targetenemy [noharm][dead] 
+/tar 摧心魔 
+/cast [help]真言术：盾 
+/targetlasttarget [noharm][dead] 
+/cast 摧心魔
+END
+VER 3 0000000000000132 "日志" "134400"
+/combatlog
+END
+VER 3 0000000000000138 "暗影冲撞" "INV_MISC_QUESTIONMARK"
+#showtooltip 暗影冲撞 
+/cast [@cursor] 暗影冲撞
+END
+VER 3 0000000000000137 "暗影形态" "INV_MISC_QUESTIONMARK"
+#showtooltip 精神鞭笞
+/cast [nostance:1]暗影形态 
+/cast [harm][target=targettarget,harm]精神鞭笞 
+/cast 精神鞭笞
+END
+VER 3 0000000000000139 "暴风雪" "INV_MISC_QUESTIONMARK"
+#showtooltips 暴风雪
+/cast [@cursor] 暴风雪
+END
+VER 3 0000000000000136 "束缚漂浮" "INV_MISC_QUESTIONMARK"
+#showtooltip 束缚亡灵 
+/cast [harm,nodead] 束缚亡灵 
+/cast [help,nodead][] 漂浮术
+END
+VER 3 0000000000000129 "灵界打击" "INV_Misc_QuestionMark"
+#showtooltip 灵界打击
+/targetenemy [help][dead][noexists]
+/cast 灵界打击
+END
+VER 3 000000000000012D "爆发" "INV_Misc_QuestionMark"
+#showtooltip 符文武器增效
+/use 悚然角斗士的徽章
+/cast 符文武器增效
+END
+VER 3 0000000000000135 "群体驱散" "INV_MISC_QUESTIONMARK"
+#showtooltip 群体驱散
+/cast [@cursor] 群体驱散
+END
+VER 3 000000000000012A "羽毛" "INV_Misc_QuestionMark"
+#showtooltip 天堂之羽
+/cast [@player] 天堂之羽
+/use 1
+END
+VER 3 000000000000012C "视角宏" "134331"
+/script SetCVar("cameradistanceMax",50)
+END
+VER 3 0000000000000130 "阿曼苏尔" "INV_MISC_QUESTIONMARK"
+/e 获得了阿曼苏尔的预见
+END

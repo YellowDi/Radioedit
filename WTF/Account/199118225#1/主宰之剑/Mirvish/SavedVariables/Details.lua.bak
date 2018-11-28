@@ -1,0 +1,3874 @@
+
+_detalhes_database = {
+	["savedbuffs"] = {
+	},
+	["mythic_dungeon_id"] = 0,
+	["tabela_historico"] = {
+		["tabelas"] = {
+			{
+				{
+					["combatId"] = 5,
+					["tipo"] = 2,
+					["_ActorTable"] = {
+						{
+							["flag_original"] = 1297,
+							["totalabsorbed"] = 0.001822,
+							["spec"] = 577,
+							["damage_from"] = {
+								["泥牙野猪"] = true,
+							},
+							["targets"] = {
+								["泥牙野猪"] = 26038,
+							},
+							["pets"] = {
+								"尼克尔 <Mirvish>", -- [1]
+							},
+							["colocacao"] = 1,
+							["end_time"] = 1543397639,
+							["classe"] = "DEMONHUNTER",
+							["raid_targets"] = {
+							},
+							["total_without_pet"] = 21760.001822,
+							["friendlyfire"] = {
+							},
+							["dps_started"] = false,
+							["total"] = 26038.001822,
+							["friendlyfire_total"] = 0,
+							["on_hold"] = false,
+							["nome"] = "Mirvish",
+							["spells"] = {
+								["tipo"] = 2,
+								["_ActorTable"] = {
+									{
+										["c_amt"] = 4,
+										["b_amt"] = 0,
+										["c_dmg"] = 4580,
+										["g_amt"] = 0,
+										["n_max"] = 771,
+										["targets"] = {
+											["泥牙野猪"] = 6486,
+										},
+										["m_dmg"] = 0,
+										["n_dmg"] = 1906,
+										["n_min"] = 374,
+										["g_dmg"] = 0,
+										["counter"] = 7,
+										["total"] = 6486,
+										["c_max"] = 1513,
+										["id"] = 1,
+										["r_dmg"] = 0,
+										["spellschool"] = 1,
+										["a_dmg"] = 0,
+										["m_crit"] = 0,
+										["a_amt"] = 0,
+										["m_amt"] = 0,
+										["successful_casted"] = 0,
+										["b_dmg"] = 0,
+										["n_amt"] = 3,
+										["r_amt"] = 0,
+										["c_min"] = 775,
+									}, -- [1]
+									[207694] = {
+										["c_amt"] = 0,
+										["b_amt"] = 0,
+										["c_dmg"] = 0,
+										["g_amt"] = 0,
+										["n_max"] = 389,
+										["targets"] = {
+											["泥牙野猪"] = 620,
+										},
+										["m_dmg"] = 0,
+										["n_dmg"] = 620,
+										["n_min"] = 231,
+										["g_dmg"] = 0,
+										["counter"] = 2,
+										["total"] = 620,
+										["c_max"] = 0,
+										["id"] = 207694,
+										["r_dmg"] = 0,
+										["spellschool"] = 33,
+										["a_dmg"] = 0,
+										["m_crit"] = 0,
+										["a_amt"] = 0,
+										["m_amt"] = 0,
+										["successful_casted"] = 0,
+										["b_dmg"] = 0,
+										["n_amt"] = 2,
+										["r_amt"] = 0,
+										["c_min"] = 0,
+									},
+									[162243] = {
+										["c_amt"] = 2,
+										["b_amt"] = 0,
+										["c_dmg"] = 3528,
+										["g_amt"] = 0,
+										["n_max"] = 881,
+										["targets"] = {
+											["泥牙野猪"] = 4409,
+										},
+										["m_dmg"] = 0,
+										["n_dmg"] = 881,
+										["n_min"] = 881,
+										["g_dmg"] = 0,
+										["counter"] = 3,
+										["total"] = 4409,
+										["c_max"] = 1764,
+										["id"] = 162243,
+										["r_dmg"] = 0,
+										["spellschool"] = 1,
+										["a_dmg"] = 0,
+										["m_crit"] = 0,
+										["a_amt"] = 0,
+										["m_amt"] = 0,
+										["successful_casted"] = 0,
+										["b_dmg"] = 0,
+										["n_amt"] = 1,
+										["r_amt"] = 0,
+										["c_min"] = 1764,
+									},
+									[185123] = {
+										["c_amt"] = 1,
+										["b_amt"] = 0,
+										["c_dmg"] = 1299,
+										["g_amt"] = 0,
+										["n_max"] = 0,
+										["targets"] = {
+											["泥牙野猪"] = 1299,
+										},
+										["m_dmg"] = 0,
+										["n_dmg"] = 0,
+										["n_min"] = 0,
+										["g_dmg"] = 0,
+										["counter"] = 1,
+										["total"] = 1299,
+										["c_max"] = 1299,
+										["id"] = 185123,
+										["r_dmg"] = 0,
+										["spellschool"] = 1,
+										["a_dmg"] = 0,
+										["m_crit"] = 0,
+										["a_amt"] = 0,
+										["m_amt"] = 0,
+										["successful_casted"] = 0,
+										["b_dmg"] = 0,
+										["n_amt"] = 0,
+										["r_amt"] = 0,
+										["c_min"] = 1299,
+									},
+									[199547] = {
+										["c_amt"] = 3,
+										["b_amt"] = 0,
+										["c_dmg"] = 7763,
+										["g_amt"] = 0,
+										["n_max"] = 1183,
+										["targets"] = {
+											["泥牙野猪"] = 8946,
+										},
+										["m_dmg"] = 0,
+										["n_dmg"] = 1183,
+										["n_min"] = 1183,
+										["g_dmg"] = 0,
+										["counter"] = 4,
+										["total"] = 8946,
+										["c_max"] = 2952,
+										["id"] = 199547,
+										["r_dmg"] = 0,
+										["spellschool"] = 127,
+										["a_dmg"] = 0,
+										["m_crit"] = 0,
+										["a_amt"] = 0,
+										["m_amt"] = 0,
+										["successful_casted"] = 0,
+										["b_dmg"] = 0,
+										["n_amt"] = 1,
+										["r_amt"] = 0,
+										["c_min"] = 2198,
+									},
+								},
+							},
+							["grupo"] = true,
+							["serial"] = "Player-1955-01CCA79E",
+							["last_dps"] = 3428.30833732707,
+							["custom"] = 0,
+							["last_event"] = 1543397637,
+							["damage_taken"] = 5617.001822,
+							["start_time"] = 1543397630,
+							["delay"] = 0,
+							["tipo"] = 1,
+						}, -- [1]
+						{
+							["flag_original"] = 4369,
+							["totalabsorbed"] = 0.00336,
+							["serial"] = "Vehicle-0-3149-1643-30477-125334-00007E6067",
+							["damage_from"] = {
+							},
+							["targets"] = {
+								["泥牙野猪"] = 4278,
+							},
+							["pets"] = {
+							},
+							["on_hold"] = false,
+							["friendlyfire_total"] = 0,
+							["raid_targets"] = {
+							},
+							["total_without_pet"] = 4278.00336,
+							["dps_started"] = false,
+							["total"] = 4278.00336,
+							["classe"] = "PET",
+							["ownerName"] = "Mirvish",
+							["nome"] = "尼克尔 <Mirvish>",
+							["spells"] = {
+								["tipo"] = 2,
+								["_ActorTable"] = {
+									{
+										["c_amt"] = 0,
+										["b_amt"] = 0,
+										["c_dmg"] = 0,
+										["g_amt"] = 0,
+										["n_max"] = 1492,
+										["targets"] = {
+											["泥牙野猪"] = 4278,
+										},
+										["m_dmg"] = 0,
+										["n_dmg"] = 4278,
+										["n_min"] = 1304,
+										["g_dmg"] = 0,
+										["counter"] = 3,
+										["total"] = 4278,
+										["c_max"] = 0,
+										["id"] = 1,
+										["r_dmg"] = 0,
+										["spellschool"] = 1,
+										["a_dmg"] = 0,
+										["m_crit"] = 0,
+										["a_amt"] = 0,
+										["m_amt"] = 0,
+										["successful_casted"] = 0,
+										["b_dmg"] = 0,
+										["n_amt"] = 3,
+										["r_amt"] = 0,
+										["c_min"] = 0,
+									}, -- [1]
+								},
+							},
+							["friendlyfire"] = {
+							},
+							["end_time"] = 1543397639,
+							["last_dps"] = 0,
+							["custom"] = 0,
+							["tipo"] = 1,
+							["damage_taken"] = 0.00336,
+							["start_time"] = 1543397631,
+							["delay"] = 0,
+							["last_event"] = 1543397635,
+						}, -- [2]
+					},
+				}, -- [1]
+				{
+					["combatId"] = 5,
+					["tipo"] = 3,
+					["_ActorTable"] = {
+						{
+							["flag_original"] = 1297,
+							["healing_from"] = {
+								["Mirvish"] = true,
+							},
+							["pets"] = {
+							},
+							["iniciar_hps"] = false,
+							["classe"] = "DEMONHUNTER",
+							["totalover"] = 12453.008087,
+							["total_without_pet"] = 5617.008087,
+							["total"] = 5617.008087,
+							["targets_absorbs"] = {
+								["Mirvish"] = 4954,
+							},
+							["heal_enemy"] = {
+							},
+							["on_hold"] = false,
+							["serial"] = "Player-1955-01CCA79E",
+							["totalabsorb"] = 4954.008087,
+							["last_hps"] = 0,
+							["targets"] = {
+								["Mirvish"] = 17450,
+							},
+							["totalover_without_pet"] = 0.008087,
+							["healing_taken"] = 5617.008087,
+							["fight_component"] = true,
+							["end_time"] = 1543397639,
+							["targets_overheal"] = {
+								["Mirvish"] = 12453,
+							},
+							["nome"] = "Mirvish",
+							["spells"] = {
+								["tipo"] = 3,
+								["_ActorTable"] = {
+									[207694] = {
+										["c_amt"] = 0,
+										["totalabsorb"] = 0,
+										["targets_overheal"] = {
+											["Mirvish"] = 620,
+										},
+										["n_max"] = 0,
+										["targets"] = {
+											["Mirvish"] = 0,
+										},
+										["n_min"] = 0,
+										["counter"] = 2,
+										["overheal"] = 620,
+										["total"] = 0,
+										["c_max"] = 0,
+										["id"] = 207694,
+										["targets_absorbs"] = {
+										},
+										["c_curado"] = 0,
+										["m_crit"] = 0,
+										["c_min"] = 0,
+										["m_amt"] = 0,
+										["n_curado"] = 0,
+										["n_amt"] = 2,
+										["totaldenied"] = 0,
+										["m_healed"] = 0,
+										["absorbed"] = 0,
+									},
+									[269279] = {
+										["c_amt"] = 0,
+										["totalabsorb"] = 4954,
+										["targets_overheal"] = {
+										},
+										["n_max"] = 1532,
+										["targets"] = {
+											["Mirvish"] = 4954,
+										},
+										["n_min"] = 13,
+										["counter"] = 7,
+										["overheal"] = 0,
+										["total"] = 4954,
+										["c_max"] = 0,
+										["id"] = 269279,
+										["targets_absorbs"] = {
+											["Mirvish"] = 4954,
+										},
+										["m_healed"] = 0,
+										["c_curado"] = 0,
+										["m_crit"] = 0,
+										["c_min"] = 0,
+										["m_amt"] = 0,
+										["n_curado"] = 4954,
+										["n_amt"] = 7,
+										["totaldenied"] = 0,
+										["is_shield"] = true,
+										["absorbed"] = 0,
+									},
+									[270117] = {
+										["c_amt"] = 0,
+										["totalabsorb"] = 0,
+										["targets_overheal"] = {
+											["Mirvish"] = 1499,
+										},
+										["n_max"] = 325,
+										["targets"] = {
+											["Mirvish"] = 325,
+										},
+										["n_min"] = 325,
+										["counter"] = 1,
+										["overheal"] = 1499,
+										["total"] = 325,
+										["c_max"] = 0,
+										["id"] = 270117,
+										["targets_absorbs"] = {
+										},
+										["c_curado"] = 0,
+										["m_crit"] = 0,
+										["c_min"] = 0,
+										["m_amt"] = 0,
+										["n_curado"] = 325,
+										["n_amt"] = 1,
+										["totaldenied"] = 0,
+										["m_healed"] = 0,
+										["absorbed"] = 0,
+									},
+									[178963] = {
+										["c_amt"] = 0,
+										["totalabsorb"] = 0,
+										["targets_overheal"] = {
+											["Mirvish"] = 10334,
+										},
+										["n_max"] = 338,
+										["targets"] = {
+											["Mirvish"] = 338,
+										},
+										["n_min"] = 338,
+										["counter"] = 1,
+										["overheal"] = 10334,
+										["total"] = 338,
+										["c_max"] = 0,
+										["id"] = 178963,
+										["targets_absorbs"] = {
+										},
+										["c_curado"] = 0,
+										["m_crit"] = 0,
+										["c_min"] = 0,
+										["m_amt"] = 0,
+										["n_curado"] = 338,
+										["n_amt"] = 1,
+										["totaldenied"] = 0,
+										["m_healed"] = 0,
+										["absorbed"] = 0,
+									},
+								},
+							},
+							["grupo"] = true,
+							["heal_enemy_amt"] = 0,
+							["start_time"] = 1543397630,
+							["custom"] = 0,
+							["last_event"] = 1543397639,
+							["spec"] = 577,
+							["totaldenied"] = 0.008087,
+							["delay"] = 0,
+							["tipo"] = 2,
+						}, -- [1]
+					},
+				}, -- [2]
+				{
+					["combatId"] = 5,
+					["tipo"] = 7,
+					["_ActorTable"] = {
+						{
+							["received"] = 97.006193,
+							["resource"] = 0.006193,
+							["targets"] = {
+								["Mirvish"] = 97,
+							},
+							["pets"] = {
+							},
+							["powertype"] = 0,
+							["classe"] = "DEMONHUNTER",
+							["fight_component"] = true,
+							["total"] = 97.006193,
+							["nome"] = "Mirvish",
+							["spec"] = 577,
+							["grupo"] = true,
+							["flag_original"] = 1297,
+							["last_event"] = 1543397637,
+							["alternatepower"] = 0.006193,
+							["spells"] = {
+								["tipo"] = 7,
+								["_ActorTable"] = {
+									[162243] = {
+										["id"] = 162243,
+										["total"] = 77,
+										["targets"] = {
+											["Mirvish"] = 77,
+										},
+										["counter"] = 3,
+									},
+									[208828] = {
+										["id"] = 208828,
+										["total"] = 20,
+										["targets"] = {
+											["Mirvish"] = 20,
+										},
+										["counter"] = 3,
+									},
+								},
+							},
+							["serial"] = "Player-1955-01CCA79E",
+							["tipo"] = 3,
+						}, -- [1]
+					},
+				}, -- [3]
+				{
+					["combatId"] = 5,
+					["tipo"] = 9,
+					["_ActorTable"] = {
+						{
+							["flag_original"] = 1047,
+							["debuff_uptime_spells"] = {
+								["tipo"] = 9,
+								["_ActorTable"] = {
+									[1490] = {
+										["activedamt"] = 0,
+										["id"] = 1490,
+										["targets"] = {
+										},
+										["uptime"] = 4,
+										["appliedamt"] = 1,
+										["refreshamt"] = 0,
+										["actived"] = false,
+										["counter"] = 0,
+									},
+								},
+							},
+							["buff_uptime"] = 48,
+							["classe"] = "DEMONHUNTER",
+							["buff_uptime_spells"] = {
+								["tipo"] = 9,
+								["_ActorTable"] = {
+									[277952] = {
+										["activedamt"] = 1,
+										["id"] = 277952,
+										["targets"] = {
+										},
+										["uptime"] = 9,
+										["appliedamt"] = 1,
+										["refreshamt"] = 0,
+										["actived"] = false,
+										["counter"] = 0,
+									},
+									[268534] = {
+										["activedamt"] = 1,
+										["id"] = 268534,
+										["targets"] = {
+										},
+										["uptime"] = 6,
+										["appliedamt"] = 1,
+										["refreshamt"] = 0,
+										["actived"] = false,
+										["counter"] = 0,
+									},
+									[186401] = {
+										["activedamt"] = 1,
+										["id"] = 186401,
+										["targets"] = {
+										},
+										["uptime"] = 9,
+										["appliedamt"] = 1,
+										["refreshamt"] = 0,
+										["actived"] = false,
+										["counter"] = 0,
+									},
+									[248828] = {
+										["activedamt"] = 1,
+										["id"] = 248828,
+										["targets"] = {
+										},
+										["uptime"] = 9,
+										["appliedamt"] = 1,
+										["refreshamt"] = 0,
+										["actived"] = false,
+										["counter"] = 0,
+									},
+									[269279] = {
+										["activedamt"] = 1,
+										["id"] = 269279,
+										["targets"] = {
+										},
+										["uptime"] = 6,
+										["appliedamt"] = 1,
+										["refreshamt"] = 0,
+										["actived"] = false,
+										["counter"] = 0,
+									},
+									[227723] = {
+										["activedamt"] = 1,
+										["id"] = 227723,
+										["targets"] = {
+										},
+										["uptime"] = 9,
+										["appliedamt"] = 1,
+										["refreshamt"] = 0,
+										["actived"] = false,
+										["counter"] = 0,
+									},
+								},
+							},
+							["fight_component"] = true,
+							["debuff_uptime"] = 4,
+							["buff_uptime_targets"] = {
+							},
+							["spec"] = 577,
+							["grupo"] = true,
+							["spell_cast"] = {
+								[162243] = 3,
+								[162794] = 2,
+							},
+							["debuff_uptime_targets"] = {
+							},
+							["last_event"] = 1543397639,
+							["nome"] = "Mirvish",
+							["pets"] = {
+							},
+							["serial"] = "Player-1955-01CCA79E",
+							["tipo"] = 4,
+						}, -- [1]
+					},
+				}, -- [4]
+				{
+					["combatId"] = 5,
+					["tipo"] = 2,
+					["_ActorTable"] = {
+					},
+				}, -- [5]
+				["raid_roster"] = {
+					["Mirvish"] = true,
+				},
+				["last_events_tables"] = {
+				},
+				["alternate_power"] = {
+				},
+				["enemy"] = "泥牙野猪",
+				["combat_counter"] = 18,
+				["playing_solo"] = true,
+				["totals"] = {
+					26037.992751, -- [1]
+					5617, -- [2]
+					{
+						0, -- [1]
+						[0] = 97,
+						["alternatepower"] = 0,
+						[3] = 0,
+						[6] = 0,
+					}, -- [3]
+					{
+						["buff_uptime"] = 0,
+						["ress"] = 0,
+						["debuff_uptime"] = 0,
+						["cooldowns_defensive"] = 0,
+						["interrupt"] = 0,
+						["dispell"] = 0,
+						["cc_break"] = 0,
+						["dead"] = 0,
+					}, -- [4]
+					["frags_total"] = 0,
+					["voidzone_damage"] = 0,
+				},
+				["player_last_events"] = {
+				},
+				["instance_type"] = "none",
+				["frags_need_refresh"] = true,
+				["__call"] = {
+				},
+				["PhaseData"] = {
+					{
+						1, -- [1]
+						1, -- [2]
+					}, -- [1]
+					["heal_section"] = {
+					},
+					["heal"] = {
+						{
+							["Mirvish"] = 5617.008087,
+						}, -- [1]
+					},
+					["damage_section"] = {
+					},
+					["damage"] = {
+						{
+							["Mirvish"] = 26038.001822,
+						}, -- [1]
+					},
+				},
+				["end_time"] = 8124.073,
+				["combat_id"] = 5,
+				["TotalElapsedCombatTime"] = 8124.073,
+				["CombatEndedAt"] = 8124.073,
+				["frags"] = {
+					["泥牙野猪"] = 1,
+				},
+				["data_fim"] = "17:34:00",
+				["data_inicio"] = "17:33:50",
+				["CombatSkillCache"] = {
+				},
+				["totals_grupo"] = {
+					21760, -- [1]
+					5617, -- [2]
+					{
+						0, -- [1]
+						[0] = 97,
+						["alternatepower"] = 0,
+						[3] = 0,
+						[6] = 0,
+					}, -- [3]
+					{
+						["buff_uptime"] = 0,
+						["ress"] = 0,
+						["debuff_uptime"] = 0,
+						["cooldowns_defensive"] = 0,
+						["interrupt"] = 0,
+						["dispell"] = 0,
+						["cc_break"] = 0,
+						["dead"] = 0,
+					}, -- [4]
+				},
+				["start_time"] = 8114.227,
+				["contra"] = "泥牙野猪",
+				["TimeData"] = {
+				},
+			}, -- [1]
+			{
+				{
+					["combatId"] = 4,
+					["tipo"] = 2,
+					["_ActorTable"] = {
+						{
+							["flag_original"] = 1297,
+							["totalabsorbed"] = 0.002823,
+							["total"] = 26784.002823,
+							["damage_from"] = {
+								["泥牙野猪"] = true,
+							},
+							["targets"] = {
+								["泥牙野猪"] = 26784,
+							},
+							["pets"] = {
+								"尼克尔 <Mirvish>", -- [1]
+							},
+							["friendlyfire"] = {
+							},
+							["colocacao"] = 1,
+							["classe"] = "DEMONHUNTER",
+							["raid_targets"] = {
+							},
+							["total_without_pet"] = 21018.002823,
+							["friendlyfire_total"] = 0,
+							["dps_started"] = false,
+							["end_time"] = 1543397610,
+							["on_hold"] = false,
+							["spec"] = 577,
+							["nome"] = "Mirvish",
+							["spells"] = {
+								["tipo"] = 2,
+								["_ActorTable"] = {
+									{
+										["c_amt"] = 3,
+										["b_amt"] = 0,
+										["c_dmg"] = 3772,
+										["g_amt"] = 0,
+										["n_max"] = 757,
+										["targets"] = {
+											["泥牙野猪"] = 5691,
+										},
+										["m_dmg"] = 0,
+										["n_dmg"] = 1919,
+										["n_min"] = 376,
+										["g_dmg"] = 0,
+										["counter"] = 8,
+										["total"] = 5691,
+										["c_max"] = 1531,
+										["MISS"] = 1,
+										["id"] = 1,
+										["r_dmg"] = 0,
+										["spellschool"] = 1,
+										["a_dmg"] = 0,
+										["m_crit"] = 0,
+										["a_amt"] = 0,
+										["m_amt"] = 0,
+										["successful_casted"] = 0,
+										["b_dmg"] = 0,
+										["n_amt"] = 4,
+										["r_amt"] = 0,
+										["c_min"] = 751,
+									}, -- [1]
+									[207694] = {
+										["c_amt"] = 0,
+										["b_amt"] = 0,
+										["c_dmg"] = 0,
+										["g_amt"] = 0,
+										["n_max"] = 446,
+										["targets"] = {
+											["泥牙野猪"] = 446,
+										},
+										["m_dmg"] = 0,
+										["n_dmg"] = 446,
+										["n_min"] = 446,
+										["g_dmg"] = 0,
+										["counter"] = 1,
+										["total"] = 446,
+										["c_max"] = 0,
+										["id"] = 207694,
+										["r_dmg"] = 0,
+										["spellschool"] = 33,
+										["a_dmg"] = 0,
+										["m_crit"] = 0,
+										["a_amt"] = 0,
+										["m_amt"] = 0,
+										["successful_casted"] = 0,
+										["b_dmg"] = 0,
+										["n_amt"] = 1,
+										["r_amt"] = 0,
+										["c_min"] = 0,
+									},
+									[162243] = {
+										["c_amt"] = 1,
+										["b_amt"] = 0,
+										["c_dmg"] = 1764,
+										["g_amt"] = 0,
+										["n_max"] = 882,
+										["targets"] = {
+											["泥牙野猪"] = 3527,
+										},
+										["m_dmg"] = 0,
+										["n_dmg"] = 1763,
+										["n_min"] = 881,
+										["g_dmg"] = 0,
+										["counter"] = 3,
+										["total"] = 3527,
+										["c_max"] = 1764,
+										["id"] = 162243,
+										["r_dmg"] = 0,
+										["spellschool"] = 1,
+										["a_dmg"] = 0,
+										["m_crit"] = 0,
+										["a_amt"] = 0,
+										["m_amt"] = 0,
+										["successful_casted"] = 0,
+										["b_dmg"] = 0,
+										["n_amt"] = 2,
+										["r_amt"] = 0,
+										["c_min"] = 1764,
+									},
+									[199547] = {
+										["c_amt"] = 2,
+										["b_amt"] = 0,
+										["c_dmg"] = 5555,
+										["g_amt"] = 0,
+										["n_max"] = 1183,
+										["targets"] = {
+											["泥牙野猪"] = 7837,
+										},
+										["m_dmg"] = 0,
+										["n_dmg"] = 2282,
+										["n_min"] = 1099,
+										["g_dmg"] = 0,
+										["counter"] = 4,
+										["total"] = 7837,
+										["c_max"] = 2812,
+										["id"] = 199547,
+										["r_dmg"] = 0,
+										["spellschool"] = 127,
+										["a_dmg"] = 0,
+										["m_crit"] = 0,
+										["a_amt"] = 0,
+										["m_amt"] = 0,
+										["successful_casted"] = 0,
+										["b_dmg"] = 0,
+										["n_amt"] = 2,
+										["r_amt"] = 0,
+										["c_min"] = 2743,
+									},
+									[199552] = {
+										["c_amt"] = 0,
+										["b_amt"] = 0,
+										["c_dmg"] = 0,
+										["g_amt"] = 0,
+										["n_max"] = 1566,
+										["targets"] = {
+											["泥牙野猪"] = 3517,
+										},
+										["m_dmg"] = 0,
+										["n_dmg"] = 3517,
+										["n_min"] = 650,
+										["g_dmg"] = 0,
+										["counter"] = 4,
+										["total"] = 3517,
+										["c_max"] = 0,
+										["id"] = 199552,
+										["r_dmg"] = 0,
+										["spellschool"] = 1,
+										["a_dmg"] = 0,
+										["m_crit"] = 0,
+										["a_amt"] = 0,
+										["m_amt"] = 0,
+										["successful_casted"] = 0,
+										["b_dmg"] = 0,
+										["n_amt"] = 4,
+										["r_amt"] = 0,
+										["c_min"] = 0,
+									},
+								},
+							},
+							["grupo"] = true,
+							["serial"] = "Player-1955-01CCA79E",
+							["last_dps"] = 2752.1581199137,
+							["custom"] = 0,
+							["last_event"] = 1543397609,
+							["damage_taken"] = 7122.002823,
+							["start_time"] = 1543397600,
+							["delay"] = 0,
+							["tipo"] = 1,
+						}, -- [1]
+						{
+							["flag_original"] = 4369,
+							["totalabsorbed"] = 0.006965,
+							["serial"] = "Vehicle-0-3149-1643-30477-125334-00007E6067",
+							["damage_from"] = {
+							},
+							["targets"] = {
+								["泥牙野猪"] = 5766,
+							},
+							["pets"] = {
+							},
+							["on_hold"] = false,
+							["friendlyfire_total"] = 0,
+							["raid_targets"] = {
+							},
+							["total_without_pet"] = 5766.006965,
+							["dps_started"] = false,
+							["total"] = 5766.006965,
+							["classe"] = "PET",
+							["ownerName"] = "Mirvish",
+							["nome"] = "尼克尔 <Mirvish>",
+							["spells"] = {
+								["tipo"] = 2,
+								["_ActorTable"] = {
+									{
+										["c_amt"] = 0,
+										["b_amt"] = 0,
+										["c_dmg"] = 0,
+										["g_amt"] = 0,
+										["n_max"] = 1592,
+										["targets"] = {
+											["泥牙野猪"] = 5766,
+										},
+										["m_dmg"] = 0,
+										["n_dmg"] = 5766,
+										["n_min"] = 1211,
+										["g_dmg"] = 0,
+										["counter"] = 4,
+										["total"] = 5766,
+										["c_max"] = 0,
+										["id"] = 1,
+										["r_dmg"] = 0,
+										["spellschool"] = 1,
+										["a_dmg"] = 0,
+										["m_crit"] = 0,
+										["a_amt"] = 0,
+										["m_amt"] = 0,
+										["successful_casted"] = 0,
+										["b_dmg"] = 0,
+										["n_amt"] = 4,
+										["r_amt"] = 0,
+										["c_min"] = 0,
+									}, -- [1]
+								},
+							},
+							["friendlyfire"] = {
+							},
+							["end_time"] = 1543397610,
+							["last_dps"] = 0,
+							["custom"] = 0,
+							["tipo"] = 1,
+							["damage_taken"] = 0.006965,
+							["start_time"] = 1543397601,
+							["delay"] = 0,
+							["last_event"] = 1543397607,
+						}, -- [2]
+					},
+				}, -- [1]
+				{
+					["combatId"] = 4,
+					["tipo"] = 3,
+					["_ActorTable"] = {
+						{
+							["flag_original"] = 1297,
+							["healing_from"] = {
+								["Mirvish"] = true,
+							},
+							["pets"] = {
+							},
+							["iniciar_hps"] = false,
+							["classe"] = "DEMONHUNTER",
+							["totalover"] = 1447.008752,
+							["total_without_pet"] = 4960.008752,
+							["total"] = 4960.008752,
+							["targets_absorbs"] = {
+								["Mirvish"] = 490,
+							},
+							["heal_enemy"] = {
+							},
+							["on_hold"] = false,
+							["serial"] = "Player-1955-01CCA79E",
+							["totalabsorb"] = 490.008752,
+							["last_hps"] = 0,
+							["targets"] = {
+								["Mirvish"] = 6407,
+							},
+							["totalover_without_pet"] = 0.008752,
+							["healing_taken"] = 4960.008752,
+							["fight_component"] = true,
+							["end_time"] = 1543397610,
+							["targets_overheal"] = {
+								["Mirvish"] = 1447,
+							},
+							["nome"] = "Mirvish",
+							["spells"] = {
+								["tipo"] = 3,
+								["_ActorTable"] = {
+									[207694] = {
+										["c_amt"] = 0,
+										["totalabsorb"] = 0,
+										["targets_overheal"] = {
+										},
+										["n_max"] = 446,
+										["targets"] = {
+											["Mirvish"] = 446,
+										},
+										["n_min"] = 446,
+										["counter"] = 1,
+										["overheal"] = 0,
+										["total"] = 446,
+										["c_max"] = 0,
+										["id"] = 207694,
+										["targets_absorbs"] = {
+										},
+										["c_curado"] = 0,
+										["m_crit"] = 0,
+										["c_min"] = 0,
+										["m_amt"] = 0,
+										["n_curado"] = 446,
+										["n_amt"] = 1,
+										["totaldenied"] = 0,
+										["m_healed"] = 0,
+										["absorbed"] = 0,
+									},
+									[269279] = {
+										["c_amt"] = 0,
+										["totalabsorb"] = 490,
+										["targets_overheal"] = {
+										},
+										["n_max"] = 490,
+										["targets"] = {
+											["Mirvish"] = 490,
+										},
+										["n_min"] = 490,
+										["counter"] = 1,
+										["overheal"] = 0,
+										["total"] = 490,
+										["c_max"] = 0,
+										["id"] = 269279,
+										["targets_absorbs"] = {
+											["Mirvish"] = 490,
+										},
+										["m_healed"] = 0,
+										["c_curado"] = 0,
+										["m_crit"] = 0,
+										["c_min"] = 0,
+										["m_amt"] = 0,
+										["n_curado"] = 490,
+										["n_amt"] = 1,
+										["totaldenied"] = 0,
+										["is_shield"] = true,
+										["absorbed"] = 0,
+									},
+									[270117] = {
+										["c_amt"] = 1,
+										["totalabsorb"] = 0,
+										["targets_overheal"] = {
+											["Mirvish"] = 1447,
+										},
+										["n_max"] = 377,
+										["targets"] = {
+											["Mirvish"] = 4024,
+										},
+										["n_min"] = 377,
+										["counter"] = 2,
+										["overheal"] = 1447,
+										["total"] = 4024,
+										["c_max"] = 3647,
+										["id"] = 270117,
+										["targets_absorbs"] = {
+										},
+										["c_curado"] = 3647,
+										["m_crit"] = 0,
+										["c_min"] = 3647,
+										["m_amt"] = 0,
+										["n_curado"] = 377,
+										["n_amt"] = 1,
+										["totaldenied"] = 0,
+										["m_healed"] = 0,
+										["absorbed"] = 0,
+									},
+								},
+							},
+							["grupo"] = true,
+							["heal_enemy_amt"] = 0,
+							["start_time"] = 1543397601,
+							["custom"] = 0,
+							["last_event"] = 1543397607,
+							["spec"] = 577,
+							["totaldenied"] = 0.008752,
+							["delay"] = 0,
+							["tipo"] = 2,
+						}, -- [1]
+					},
+				}, -- [2]
+				{
+					["combatId"] = 4,
+					["tipo"] = 7,
+					["_ActorTable"] = {
+						{
+							["received"] = 103.00422,
+							["resource"] = 0.00422,
+							["targets"] = {
+								["Mirvish"] = 103,
+							},
+							["pets"] = {
+							},
+							["powertype"] = 0,
+							["classe"] = "DEMONHUNTER",
+							["fight_component"] = true,
+							["total"] = 103.00422,
+							["nome"] = "Mirvish",
+							["spec"] = 577,
+							["grupo"] = true,
+							["flag_original"] = 1297,
+							["last_event"] = 1543397607,
+							["alternatepower"] = 0.00422,
+							["spells"] = {
+								["tipo"] = 7,
+								["_ActorTable"] = {
+									[162243] = {
+										["id"] = 162243,
+										["total"] = 82,
+										["targets"] = {
+											["Mirvish"] = 82,
+										},
+										["counter"] = 3,
+									},
+									[208828] = {
+										["id"] = 208828,
+										["total"] = 21,
+										["targets"] = {
+											["Mirvish"] = 21,
+										},
+										["counter"] = 3,
+									},
+								},
+							},
+							["serial"] = "Player-1955-01CCA79E",
+							["tipo"] = 3,
+						}, -- [1]
+					},
+				}, -- [3]
+				{
+					["combatId"] = 4,
+					["tipo"] = 9,
+					["_ActorTable"] = {
+						{
+							["flag_original"] = 1047,
+							["debuff_uptime_spells"] = {
+								["tipo"] = 9,
+								["_ActorTable"] = {
+									[1490] = {
+										["activedamt"] = 0,
+										["id"] = 1490,
+										["targets"] = {
+										},
+										["uptime"] = 6,
+										["appliedamt"] = 1,
+										["refreshamt"] = 0,
+										["actived"] = false,
+										["counter"] = 0,
+									},
+								},
+							},
+							["buff_uptime"] = 55,
+							["classe"] = "DEMONHUNTER",
+							["buff_uptime_spells"] = {
+								["tipo"] = 9,
+								["_ActorTable"] = {
+									[277952] = {
+										["activedamt"] = 1,
+										["id"] = 277952,
+										["targets"] = {
+										},
+										["uptime"] = 10,
+										["appliedamt"] = 1,
+										["refreshamt"] = 0,
+										["actived"] = false,
+										["counter"] = 0,
+									},
+									[188499] = {
+										["activedamt"] = 1,
+										["id"] = 188499,
+										["targets"] = {
+										},
+										["uptime"] = 1,
+										["appliedamt"] = 1,
+										["refreshamt"] = 0,
+										["actived"] = false,
+										["counter"] = 0,
+									},
+									[268534] = {
+										["activedamt"] = 1,
+										["id"] = 268534,
+										["targets"] = {
+										},
+										["uptime"] = 8,
+										["appliedamt"] = 1,
+										["refreshamt"] = 0,
+										["actived"] = false,
+										["counter"] = 0,
+									},
+									[186401] = {
+										["activedamt"] = 1,
+										["id"] = 186401,
+										["targets"] = {
+										},
+										["uptime"] = 10,
+										["appliedamt"] = 1,
+										["refreshamt"] = 0,
+										["actived"] = false,
+										["counter"] = 0,
+									},
+									[248828] = {
+										["activedamt"] = 1,
+										["id"] = 248828,
+										["targets"] = {
+										},
+										["uptime"] = 10,
+										["appliedamt"] = 1,
+										["refreshamt"] = 0,
+										["actived"] = false,
+										["counter"] = 0,
+									},
+									[279584] = {
+										["activedamt"] = 1,
+										["id"] = 279584,
+										["targets"] = {
+										},
+										["uptime"] = 5,
+										["appliedamt"] = 1,
+										["refreshamt"] = 0,
+										["actived"] = false,
+										["counter"] = 0,
+									},
+									[227723] = {
+										["activedamt"] = 1,
+										["id"] = 227723,
+										["targets"] = {
+										},
+										["uptime"] = 10,
+										["appliedamt"] = 1,
+										["refreshamt"] = 0,
+										["actived"] = false,
+										["counter"] = 0,
+									},
+									[269279] = {
+										["activedamt"] = 1,
+										["id"] = 269279,
+										["targets"] = {
+										},
+										["uptime"] = 1,
+										["appliedamt"] = 1,
+										["refreshamt"] = 0,
+										["actived"] = false,
+										["counter"] = 0,
+									},
+								},
+							},
+							["fight_component"] = true,
+							["debuff_uptime"] = 6,
+							["buff_uptime_targets"] = {
+							},
+							["spec"] = 577,
+							["grupo"] = true,
+							["spell_cast"] = {
+								[162243] = 3,
+								[162794] = 2,
+								[188499] = 1,
+							},
+							["debuff_uptime_targets"] = {
+							},
+							["last_event"] = 1543397610,
+							["nome"] = "Mirvish",
+							["pets"] = {
+							},
+							["serial"] = "Player-1955-01CCA79E",
+							["tipo"] = 4,
+						}, -- [1]
+					},
+				}, -- [4]
+				{
+					["combatId"] = 4,
+					["tipo"] = 2,
+					["_ActorTable"] = {
+					},
+				}, -- [5]
+				["raid_roster"] = {
+					["Mirvish"] = true,
+				},
+				["CombatStartedAt"] = 8113.766,
+				["last_events_tables"] = {
+				},
+				["alternate_power"] = {
+				},
+				["enemy"] = "泥牙野猪",
+				["combat_counter"] = 17,
+				["playing_solo"] = true,
+				["totals"] = {
+					26783.993767, -- [1]
+					4960, -- [2]
+					{
+						0, -- [1]
+						[0] = 103,
+						["alternatepower"] = 0,
+						[3] = 0,
+						[6] = 0,
+					}, -- [3]
+					{
+						["buff_uptime"] = 0,
+						["ress"] = 0,
+						["debuff_uptime"] = 0,
+						["cooldowns_defensive"] = 0,
+						["interrupt"] = 0,
+						["dispell"] = 0,
+						["cc_break"] = 0,
+						["dead"] = 0,
+					}, -- [4]
+					["frags_total"] = 0,
+					["voidzone_damage"] = 0,
+				},
+				["player_last_events"] = {
+				},
+				["instance_type"] = "none",
+				["frags_need_refresh"] = true,
+				["__call"] = {
+				},
+				["PhaseData"] = {
+					{
+						1, -- [1]
+						1, -- [2]
+					}, -- [1]
+					["heal_section"] = {
+					},
+					["heal"] = {
+						{
+							["Mirvish"] = 4960.008752,
+						}, -- [1]
+					},
+					["damage_section"] = {
+					},
+					["damage"] = {
+						{
+							["Mirvish"] = 26784.002823,
+						}, -- [1]
+					},
+				},
+				["end_time"] = 8094.609,
+				["combat_id"] = 4,
+				["TotalElapsedCombatTime"] = 8094.609,
+				["CombatEndedAt"] = 8094.609,
+				["frags"] = {
+					["泥牙野猪"] = 1,
+				},
+				["data_fim"] = "17:33:31",
+				["data_inicio"] = "17:33:21",
+				["CombatSkillCache"] = {
+				},
+				["totals_grupo"] = {
+					21018, -- [1]
+					4960, -- [2]
+					{
+						0, -- [1]
+						[0] = 103,
+						["alternatepower"] = 0,
+						[3] = 0,
+						[6] = 0,
+					}, -- [3]
+					{
+						["buff_uptime"] = 0,
+						["ress"] = 0,
+						["debuff_uptime"] = 0,
+						["cooldowns_defensive"] = 0,
+						["interrupt"] = 0,
+						["dispell"] = 0,
+						["cc_break"] = 0,
+						["dead"] = 0,
+					}, -- [4]
+				},
+				["start_time"] = 8084.877,
+				["contra"] = "泥牙野猪",
+				["TimeData"] = {
+				},
+			}, -- [2]
+			{
+				{
+					["combatId"] = 3,
+					["tipo"] = 2,
+					["_ActorTable"] = {
+						{
+							["flag_original"] = 1297,
+							["totalabsorbed"] = 0.008283,
+							["damage_from"] = {
+								["峭壁跳狐"] = true,
+							},
+							["targets"] = {
+								["峭壁跳狐"] = 26527,
+								["醉步白鼬"] = 10570,
+								["活泼的野兔"] = 387,
+							},
+							["pets"] = {
+								"尼克尔 <Mirvish>", -- [1]
+							},
+							["friendlyfire"] = {
+							},
+							["friendlyfire_total"] = 0,
+							["raid_targets"] = {
+							},
+							["total_without_pet"] = 25918.008283,
+							["end_time"] = 1543397595,
+							["colocacao"] = 1,
+							["dps_started"] = false,
+							["total"] = 37484.008283,
+							["classe"] = "DEMONHUNTER",
+							["on_hold"] = false,
+							["nome"] = "Mirvish",
+							["spells"] = {
+								["tipo"] = 2,
+								["_ActorTable"] = {
+									{
+										["c_amt"] = 5,
+										["b_amt"] = 0,
+										["c_dmg"] = 5382,
+										["g_amt"] = 0,
+										["n_max"] = 772,
+										["targets"] = {
+											["醉步白鼬"] = 4621,
+											["峭壁跳狐"] = 4200,
+										},
+										["m_dmg"] = 0,
+										["n_dmg"] = 3439,
+										["n_min"] = 380,
+										["g_dmg"] = 0,
+										["counter"] = 11,
+										["total"] = 8821,
+										["c_max"] = 1544,
+										["DODGE"] = 1,
+										["id"] = 1,
+										["r_dmg"] = 0,
+										["spellschool"] = 1,
+										["a_dmg"] = 0,
+										["m_crit"] = 0,
+										["a_amt"] = 0,
+										["m_amt"] = 0,
+										["successful_casted"] = 0,
+										["b_dmg"] = 0,
+										["n_amt"] = 5,
+										["r_amt"] = 0,
+										["c_min"] = 771,
+									}, -- [1]
+									[199552] = {
+										["c_amt"] = 4,
+										["b_amt"] = 0,
+										["c_dmg"] = 5541,
+										["g_amt"] = 0,
+										["n_max"] = 666,
+										["targets"] = {
+											["峭壁跳狐"] = 5736,
+											["醉步白鼬"] = 2050,
+											["活泼的野兔"] = 387,
+										},
+										["m_dmg"] = 0,
+										["n_dmg"] = 2632,
+										["n_min"] = 277,
+										["g_dmg"] = 0,
+										["counter"] = 9,
+										["total"] = 8173,
+										["c_max"] = 3133,
+										["id"] = 199552,
+										["r_dmg"] = 0,
+										["spellschool"] = 1,
+										["a_dmg"] = 0,
+										["m_crit"] = 0,
+										["a_amt"] = 0,
+										["m_amt"] = 0,
+										["successful_casted"] = 0,
+										["b_dmg"] = 0,
+										["n_amt"] = 5,
+										["r_amt"] = 0,
+										["c_min"] = 553,
+									},
+									[162243] = {
+										["c_amt"] = 0,
+										["b_amt"] = 0,
+										["c_dmg"] = 0,
+										["g_amt"] = 0,
+										["n_max"] = 882,
+										["targets"] = {
+											["醉步白鼬"] = 881,
+											["峭壁跳狐"] = 1764,
+										},
+										["m_dmg"] = 0,
+										["n_dmg"] = 2645,
+										["n_min"] = 881,
+										["g_dmg"] = 0,
+										["counter"] = 3,
+										["total"] = 2645,
+										["c_max"] = 0,
+										["id"] = 162243,
+										["r_dmg"] = 0,
+										["spellschool"] = 1,
+										["a_dmg"] = 0,
+										["m_crit"] = 0,
+										["a_amt"] = 0,
+										["m_amt"] = 0,
+										["successful_casted"] = 0,
+										["b_dmg"] = 0,
+										["n_amt"] = 3,
+										["r_amt"] = 0,
+										["c_min"] = 0,
+									},
+									[199547] = {
+										["c_amt"] = 0,
+										["b_amt"] = 0,
+										["c_dmg"] = 0,
+										["g_amt"] = 0,
+										["n_max"] = 1372,
+										["targets"] = {
+											["峭壁跳狐"] = 4876,
+										},
+										["m_dmg"] = 0,
+										["n_dmg"] = 4876,
+										["n_min"] = 1099,
+										["g_dmg"] = 0,
+										["counter"] = 4,
+										["total"] = 4876,
+										["c_max"] = 0,
+										["id"] = 199547,
+										["r_dmg"] = 0,
+										["spellschool"] = 127,
+										["a_dmg"] = 0,
+										["m_crit"] = 0,
+										["a_amt"] = 0,
+										["m_amt"] = 0,
+										["successful_casted"] = 0,
+										["b_dmg"] = 0,
+										["n_amt"] = 4,
+										["r_amt"] = 0,
+										["c_min"] = 0,
+									},
+									[198813] = {
+										["c_amt"] = 0,
+										["b_amt"] = 0,
+										["c_dmg"] = 0,
+										["g_amt"] = 0,
+										["n_max"] = 232,
+										["targets"] = {
+											["峭壁跳狐"] = 232,
+										},
+										["m_dmg"] = 0,
+										["n_dmg"] = 232,
+										["n_min"] = 232,
+										["g_dmg"] = 0,
+										["counter"] = 1,
+										["total"] = 232,
+										["c_max"] = 0,
+										["id"] = 198813,
+										["r_dmg"] = 0,
+										["spellschool"] = 1,
+										["a_dmg"] = 0,
+										["m_crit"] = 0,
+										["a_amt"] = 0,
+										["m_amt"] = 0,
+										["successful_casted"] = 0,
+										["b_dmg"] = 0,
+										["n_amt"] = 1,
+										["r_amt"] = 0,
+										["c_min"] = 0,
+									},
+									[207694] = {
+										["c_amt"] = 0,
+										["b_amt"] = 0,
+										["c_dmg"] = 0,
+										["g_amt"] = 0,
+										["n_max"] = 390,
+										["targets"] = {
+											["醉步白鼬"] = 391,
+											["峭壁跳狐"] = 780,
+										},
+										["m_dmg"] = 0,
+										["n_dmg"] = 1171,
+										["n_min"] = 166,
+										["g_dmg"] = 0,
+										["counter"] = 5,
+										["total"] = 1171,
+										["c_max"] = 0,
+										["id"] = 207694,
+										["r_dmg"] = 0,
+										["spellschool"] = 33,
+										["a_dmg"] = 0,
+										["m_crit"] = 0,
+										["a_amt"] = 0,
+										["m_amt"] = 0,
+										["successful_casted"] = 0,
+										["b_dmg"] = 0,
+										["n_amt"] = 5,
+										["r_amt"] = 0,
+										["c_min"] = 0,
+									},
+								},
+							},
+							["grupo"] = true,
+							["spec"] = 577,
+							["serial"] = "Player-1955-01CCA79E",
+							["last_dps"] = 2263.11708525024,
+							["custom"] = 0,
+							["tipo"] = 1,
+							["damage_taken"] = 5731.008283,
+							["start_time"] = 1543397578,
+							["delay"] = 0,
+							["last_event"] = 1543397593,
+						}, -- [1]
+						{
+							["flag_original"] = 4369,
+							["totalabsorbed"] = 0.008437,
+							["damage_from"] = {
+							},
+							["targets"] = {
+								["醉步白鼬"] = 2627,
+								["峭壁跳狐"] = 8939,
+							},
+							["pets"] = {
+							},
+							["classe"] = "PET",
+							["raid_targets"] = {
+							},
+							["total_without_pet"] = 11566.008437,
+							["serial"] = "Vehicle-0-3149-1643-30477-125334-00007E6067",
+							["end_time"] = 1543397595,
+							["dps_started"] = false,
+							["total"] = 11566.008437,
+							["on_hold"] = false,
+							["ownerName"] = "Mirvish",
+							["nome"] = "尼克尔 <Mirvish>",
+							["spells"] = {
+								["tipo"] = 2,
+								["_ActorTable"] = {
+									{
+										["c_amt"] = 1,
+										["b_amt"] = 1,
+										["c_dmg"] = 2286,
+										["g_amt"] = 0,
+										["n_max"] = 1532,
+										["targets"] = {
+											["醉步白鼬"] = 2627,
+											["峭壁跳狐"] = 8939,
+										},
+										["m_dmg"] = 0,
+										["n_dmg"] = 9280,
+										["n_min"] = 1114,
+										["g_dmg"] = 0,
+										["counter"] = 8,
+										["total"] = 11566,
+										["c_max"] = 2286,
+										["id"] = 1,
+										["r_dmg"] = 0,
+										["spellschool"] = 1,
+										["a_dmg"] = 0,
+										["m_crit"] = 0,
+										["a_amt"] = 0,
+										["m_amt"] = 0,
+										["successful_casted"] = 0,
+										["b_dmg"] = 1114,
+										["n_amt"] = 7,
+										["r_amt"] = 0,
+										["c_min"] = 2286,
+									}, -- [1]
+								},
+							},
+							["friendlyfire_total"] = 0,
+							["friendlyfire"] = {
+							},
+							["last_dps"] = 0,
+							["custom"] = 0,
+							["last_event"] = 1543397593,
+							["damage_taken"] = 0.008437,
+							["start_time"] = 1543397579,
+							["delay"] = 0,
+							["tipo"] = 1,
+						}, -- [2]
+					},
+				}, -- [1]
+				{
+					["combatId"] = 3,
+					["tipo"] = 3,
+					["_ActorTable"] = {
+						{
+							["flag_original"] = 1297,
+							["targets_overheal"] = {
+								["Mirvish"] = 11843,
+							},
+							["pets"] = {
+							},
+							["iniciar_hps"] = false,
+							["classe"] = "DEMONHUNTER",
+							["totalover"] = 11843.005767,
+							["total_without_pet"] = 5731.005767,
+							["total"] = 5731.005767,
+							["targets_absorbs"] = {
+								["Mirvish"] = 5731,
+							},
+							["heal_enemy"] = {
+							},
+							["on_hold"] = false,
+							["serial"] = "Player-1955-01CCA79E",
+							["totalabsorb"] = 5731.005767,
+							["last_hps"] = 0,
+							["targets"] = {
+								["Mirvish"] = 5731,
+							},
+							["totalover_without_pet"] = 0.005767,
+							["healing_taken"] = 5731.005767,
+							["fight_component"] = true,
+							["end_time"] = 1543397595,
+							["start_time"] = 1543397579,
+							["nome"] = "Mirvish",
+							["spells"] = {
+								["tipo"] = 3,
+								["_ActorTable"] = {
+									[178963] = {
+										["c_amt"] = 0,
+										["totalabsorb"] = 0,
+										["targets_overheal"] = {
+											["Mirvish"] = 10672,
+										},
+										["n_max"] = 0,
+										["targets"] = {
+											["Mirvish"] = 0,
+										},
+										["n_min"] = 0,
+										["counter"] = 1,
+										["overheal"] = 10672,
+										["total"] = 0,
+										["c_max"] = 0,
+										["id"] = 178963,
+										["targets_absorbs"] = {
+										},
+										["c_curado"] = 0,
+										["m_crit"] = 0,
+										["c_min"] = 0,
+										["m_amt"] = 0,
+										["n_curado"] = 0,
+										["n_amt"] = 1,
+										["totaldenied"] = 0,
+										["m_healed"] = 0,
+										["absorbed"] = 0,
+									},
+									[269279] = {
+										["c_amt"] = 0,
+										["totalabsorb"] = 5731,
+										["targets_overheal"] = {
+										},
+										["n_max"] = 1267,
+										["targets"] = {
+											["Mirvish"] = 5731,
+										},
+										["n_min"] = 910,
+										["counter"] = 5,
+										["overheal"] = 0,
+										["total"] = 5731,
+										["c_max"] = 0,
+										["id"] = 269279,
+										["targets_absorbs"] = {
+											["Mirvish"] = 5731,
+										},
+										["m_healed"] = 0,
+										["c_curado"] = 0,
+										["m_crit"] = 0,
+										["c_min"] = 0,
+										["m_amt"] = 0,
+										["n_curado"] = 5731,
+										["n_amt"] = 5,
+										["totaldenied"] = 0,
+										["is_shield"] = true,
+										["absorbed"] = 0,
+									},
+									[207694] = {
+										["c_amt"] = 0,
+										["totalabsorb"] = 0,
+										["targets_overheal"] = {
+											["Mirvish"] = 1171,
+										},
+										["n_max"] = 0,
+										["targets"] = {
+											["Mirvish"] = 0,
+										},
+										["n_min"] = 0,
+										["counter"] = 5,
+										["overheal"] = 1171,
+										["total"] = 0,
+										["c_max"] = 0,
+										["id"] = 207694,
+										["targets_absorbs"] = {
+										},
+										["c_curado"] = 0,
+										["m_crit"] = 0,
+										["c_min"] = 0,
+										["m_amt"] = 0,
+										["n_curado"] = 0,
+										["n_amt"] = 5,
+										["totaldenied"] = 0,
+										["m_healed"] = 0,
+										["absorbed"] = 0,
+									},
+								},
+							},
+							["grupo"] = true,
+							["healing_from"] = {
+								["Mirvish"] = true,
+							},
+							["heal_enemy_amt"] = 0,
+							["custom"] = 0,
+							["tipo"] = 2,
+							["spec"] = 577,
+							["totaldenied"] = 0.005767,
+							["delay"] = 0,
+							["last_event"] = 1543397592,
+						}, -- [1]
+					},
+				}, -- [2]
+				{
+					["combatId"] = 3,
+					["tipo"] = 7,
+					["_ActorTable"] = {
+						{
+							["received"] = 134.004565,
+							["resource"] = 0.004565,
+							["targets"] = {
+								["Mirvish"] = 134,
+							},
+							["pets"] = {
+							},
+							["powertype"] = 0,
+							["classe"] = "DEMONHUNTER",
+							["fight_component"] = true,
+							["total"] = 134.004565,
+							["nome"] = "Mirvish",
+							["spec"] = 577,
+							["grupo"] = true,
+							["flag_original"] = 1297,
+							["last_event"] = 1543397591,
+							["alternatepower"] = 0.004565,
+							["spells"] = {
+								["tipo"] = 7,
+								["_ActorTable"] = {
+									[208828] = {
+										["id"] = 208828,
+										["total"] = 38,
+										["targets"] = {
+											["Mirvish"] = 38,
+										},
+										["counter"] = 3,
+									},
+									[162243] = {
+										["id"] = 162243,
+										["total"] = 76,
+										["targets"] = {
+											["Mirvish"] = 76,
+										},
+										["counter"] = 3,
+									},
+									[193840] = {
+										["id"] = 193840,
+										["total"] = 20,
+										["targets"] = {
+											["Mirvish"] = 20,
+										},
+										["counter"] = 1,
+									},
+								},
+							},
+							["serial"] = "Player-1955-01CCA79E",
+							["tipo"] = 3,
+						}, -- [1]
+					},
+				}, -- [3]
+				{
+					["combatId"] = 3,
+					["tipo"] = 9,
+					["_ActorTable"] = {
+						{
+							["flag_original"] = 1047,
+							["debuff_uptime_spells"] = {
+								["tipo"] = 9,
+								["_ActorTable"] = {
+									[1490] = {
+										["activedamt"] = 0,
+										["id"] = 1490,
+										["targets"] = {
+										},
+										["uptime"] = 8,
+										["appliedamt"] = 1,
+										["refreshamt"] = 0,
+										["actived"] = false,
+										["counter"] = 0,
+									},
+									[198813] = {
+										["activedamt"] = 0,
+										["id"] = 198813,
+										["targets"] = {
+										},
+										["uptime"] = 1,
+										["appliedamt"] = 1,
+										["refreshamt"] = 0,
+										["actived"] = false,
+										["counter"] = 0,
+									},
+								},
+							},
+							["buff_uptime"] = 98,
+							["classe"] = "DEMONHUNTER",
+							["buff_uptime_spells"] = {
+								["tipo"] = 9,
+								["_ActorTable"] = {
+									[277952] = {
+										["activedamt"] = 1,
+										["id"] = 277952,
+										["targets"] = {
+										},
+										["uptime"] = 17,
+										["appliedamt"] = 1,
+										["refreshamt"] = 0,
+										["actived"] = false,
+										["counter"] = 0,
+									},
+									[188499] = {
+										["activedamt"] = 1,
+										["id"] = 188499,
+										["targets"] = {
+										},
+										["uptime"] = 1,
+										["appliedamt"] = 1,
+										["refreshamt"] = 0,
+										["actived"] = false,
+										["counter"] = 0,
+									},
+									[186401] = {
+										["activedamt"] = 1,
+										["id"] = 186401,
+										["targets"] = {
+										},
+										["uptime"] = 17,
+										["appliedamt"] = 1,
+										["refreshamt"] = 0,
+										["actived"] = false,
+										["counter"] = 0,
+									},
+									[248828] = {
+										["activedamt"] = 1,
+										["id"] = 248828,
+										["targets"] = {
+										},
+										["uptime"] = 17,
+										["appliedamt"] = 1,
+										["refreshamt"] = 0,
+										["actived"] = false,
+										["counter"] = 0,
+									},
+									[279584] = {
+										["activedamt"] = 1,
+										["id"] = 279584,
+										["targets"] = {
+										},
+										["uptime"] = 12,
+										["appliedamt"] = 1,
+										["refreshamt"] = 1,
+										["actived"] = false,
+										["counter"] = 0,
+									},
+									[227723] = {
+										["activedamt"] = 1,
+										["id"] = 227723,
+										["targets"] = {
+										},
+										["uptime"] = 17,
+										["appliedamt"] = 1,
+										["refreshamt"] = 0,
+										["actived"] = false,
+										["counter"] = 0,
+									},
+									[269279] = {
+										["activedamt"] = 1,
+										["id"] = 269279,
+										["targets"] = {
+										},
+										["uptime"] = 17,
+										["appliedamt"] = 1,
+										["refreshamt"] = 1,
+										["actived"] = false,
+										["counter"] = 0,
+									},
+								},
+							},
+							["fight_component"] = true,
+							["debuff_uptime"] = 9,
+							["buff_uptime_targets"] = {
+							},
+							["spec"] = 577,
+							["grupo"] = true,
+							["spell_cast"] = {
+								[162794] = 2,
+								[188499] = 1,
+								[162243] = 3,
+								[198793] = 1,
+								[185123] = 1,
+							},
+							["debuff_uptime_targets"] = {
+							},
+							["last_event"] = 1543397595,
+							["nome"] = "Mirvish",
+							["pets"] = {
+							},
+							["serial"] = "Player-1955-01CCA79E",
+							["tipo"] = 4,
+						}, -- [1]
+					},
+				}, -- [4]
+				{
+					["combatId"] = 3,
+					["tipo"] = 2,
+					["_ActorTable"] = {
+					},
+				}, -- [5]
+				["raid_roster"] = {
+					["Mirvish"] = true,
+				},
+				["CombatStartedAt"] = 8084.224,
+				["last_events_tables"] = {
+				},
+				["alternate_power"] = {
+				},
+				["enemy"] = "峭壁跳狐",
+				["combat_counter"] = 16,
+				["playing_solo"] = true,
+				["totals"] = {
+					37483.986021, -- [1]
+					5731, -- [2]
+					{
+						0, -- [1]
+						[0] = 134,
+						["alternatepower"] = 0,
+						[3] = 0,
+						[6] = 0,
+					}, -- [3]
+					{
+						["buff_uptime"] = 0,
+						["ress"] = 0,
+						["debuff_uptime"] = 0,
+						["cooldowns_defensive"] = 0,
+						["interrupt"] = 0,
+						["dispell"] = 0,
+						["cc_break"] = 0,
+						["dead"] = 0,
+					}, -- [4]
+					["frags_total"] = 0,
+					["voidzone_damage"] = 0,
+				},
+				["player_last_events"] = {
+				},
+				["instance_type"] = "none",
+				["frags_need_refresh"] = true,
+				["__call"] = {
+				},
+				["PhaseData"] = {
+					{
+						1, -- [1]
+						1, -- [2]
+					}, -- [1]
+					["heal_section"] = {
+					},
+					["heal"] = {
+						{
+							["Mirvish"] = 5731.005767,
+						}, -- [1]
+					},
+					["damage_section"] = {
+					},
+					["damage"] = {
+						{
+							["Mirvish"] = 37484.008283,
+						}, -- [1]
+					},
+				},
+				["end_time"] = 8079.446,
+				["combat_id"] = 3,
+				["TotalElapsedCombatTime"] = 16.4609999999993,
+				["CombatEndedAt"] = 8079.446,
+				["frags"] = {
+					["峭壁跳狐"] = 1,
+					["活泼的野兔"] = 1,
+					["醉步白鼬"] = 1,
+				},
+				["data_fim"] = "17:33:15",
+				["data_inicio"] = "17:32:59",
+				["CombatSkillCache"] = {
+				},
+				["totals_grupo"] = {
+					25918, -- [1]
+					5731, -- [2]
+					{
+						0, -- [1]
+						[0] = 134,
+						["alternatepower"] = 0,
+						[3] = 0,
+						[6] = 0,
+					}, -- [3]
+					{
+						["buff_uptime"] = 0,
+						["ress"] = 0,
+						["debuff_uptime"] = 0,
+						["cooldowns_defensive"] = 0,
+						["interrupt"] = 0,
+						["dispell"] = 0,
+						["cc_break"] = 0,
+						["dead"] = 0,
+					}, -- [4]
+				},
+				["start_time"] = 8062.883,
+				["TimeData"] = {
+				},
+				["pvp"] = true,
+			}, -- [3]
+			{
+				{
+					["combatId"] = 2,
+					["tipo"] = 2,
+					["_ActorTable"] = {
+						{
+							["flag_original"] = 1297,
+							["totalabsorbed"] = 0.006543,
+							["total"] = 14652.006543,
+							["damage_from"] = {
+							},
+							["targets"] = {
+								["醉步白鼬"] = 14652,
+							},
+							["pets"] = {
+								"尼克尔 <Mirvish>", -- [1]
+							},
+							["friendlyfire"] = {
+							},
+							["colocacao"] = 1,
+							["classe"] = "DEMONHUNTER",
+							["raid_targets"] = {
+							},
+							["total_without_pet"] = 11838.006543,
+							["friendlyfire_total"] = 0,
+							["dps_started"] = false,
+							["end_time"] = 1543397510,
+							["on_hold"] = false,
+							["spec"] = 577,
+							["nome"] = "Mirvish",
+							["spells"] = {
+								["tipo"] = 2,
+								["_ActorTable"] = {
+									{
+										["c_amt"] = 1,
+										["b_amt"] = 0,
+										["c_dmg"] = 757,
+										["g_amt"] = 0,
+										["n_max"] = 758,
+										["targets"] = {
+											["醉步白鼬"] = 1515,
+										},
+										["m_dmg"] = 0,
+										["n_dmg"] = 758,
+										["n_min"] = 758,
+										["g_dmg"] = 0,
+										["counter"] = 4,
+										["total"] = 1515,
+										["c_max"] = 757,
+										["MISS"] = 2,
+										["id"] = 1,
+										["r_dmg"] = 0,
+										["spellschool"] = 1,
+										["a_dmg"] = 0,
+										["m_crit"] = 0,
+										["a_amt"] = 0,
+										["m_amt"] = 0,
+										["successful_casted"] = 0,
+										["b_dmg"] = 0,
+										["n_amt"] = 1,
+										["r_amt"] = 0,
+										["c_min"] = 757,
+									}, -- [1]
+									[207694] = {
+										["c_amt"] = 0,
+										["b_amt"] = 0,
+										["c_dmg"] = 0,
+										["g_amt"] = 0,
+										["n_max"] = 264,
+										["targets"] = {
+											["醉步白鼬"] = 430,
+										},
+										["m_dmg"] = 0,
+										["n_dmg"] = 430,
+										["n_min"] = 166,
+										["g_dmg"] = 0,
+										["counter"] = 2,
+										["total"] = 430,
+										["c_max"] = 0,
+										["id"] = 207694,
+										["r_dmg"] = 0,
+										["spellschool"] = 33,
+										["a_dmg"] = 0,
+										["m_crit"] = 0,
+										["a_amt"] = 0,
+										["m_amt"] = 0,
+										["successful_casted"] = 0,
+										["b_dmg"] = 0,
+										["n_amt"] = 2,
+										["r_amt"] = 0,
+										["c_min"] = 0,
+									},
+									[162243] = {
+										["c_amt"] = 1,
+										["b_amt"] = 0,
+										["c_dmg"] = 1764,
+										["g_amt"] = 0,
+										["n_max"] = 882,
+										["targets"] = {
+											["醉步白鼬"] = 2646,
+										},
+										["m_dmg"] = 0,
+										["n_dmg"] = 882,
+										["n_min"] = 882,
+										["g_dmg"] = 0,
+										["counter"] = 2,
+										["total"] = 2646,
+										["c_max"] = 1764,
+										["id"] = 162243,
+										["r_dmg"] = 0,
+										["spellschool"] = 1,
+										["a_dmg"] = 0,
+										["m_crit"] = 0,
+										["a_amt"] = 0,
+										["m_amt"] = 0,
+										["successful_casted"] = 0,
+										["b_dmg"] = 0,
+										["n_amt"] = 1,
+										["r_amt"] = 0,
+										["c_min"] = 1764,
+									},
+									[199547] = {
+										["c_amt"] = 0,
+										["b_amt"] = 0,
+										["c_dmg"] = 0,
+										["g_amt"] = 0,
+										["n_max"] = 1306,
+										["targets"] = {
+											["醉步白鼬"] = 1306,
+										},
+										["m_dmg"] = 0,
+										["n_dmg"] = 1306,
+										["n_min"] = 1306,
+										["g_dmg"] = 0,
+										["counter"] = 1,
+										["total"] = 1306,
+										["c_max"] = 0,
+										["id"] = 199547,
+										["r_dmg"] = 0,
+										["spellschool"] = 127,
+										["a_dmg"] = 0,
+										["m_crit"] = 0,
+										["a_amt"] = 0,
+										["m_amt"] = 0,
+										["successful_casted"] = 0,
+										["b_dmg"] = 0,
+										["n_amt"] = 1,
+										["r_amt"] = 0,
+										["c_min"] = 0,
+									},
+									[199552] = {
+										["c_amt"] = 2,
+										["b_amt"] = 0,
+										["c_dmg"] = 1855,
+										["g_amt"] = 0,
+										["n_max"] = 1566,
+										["targets"] = {
+											["醉步白鼬"] = 5941,
+										},
+										["m_dmg"] = 0,
+										["n_dmg"] = 4086,
+										["n_min"] = 277,
+										["g_dmg"] = 0,
+										["counter"] = 8,
+										["total"] = 5941,
+										["c_max"] = 1301,
+										["id"] = 199552,
+										["r_dmg"] = 0,
+										["spellschool"] = 1,
+										["a_dmg"] = 0,
+										["m_crit"] = 0,
+										["a_amt"] = 0,
+										["m_amt"] = 0,
+										["successful_casted"] = 0,
+										["b_dmg"] = 0,
+										["n_amt"] = 6,
+										["r_amt"] = 0,
+										["c_min"] = 554,
+									},
+								},
+							},
+							["grupo"] = true,
+							["serial"] = "Player-1955-01CCA79E",
+							["last_dps"] = 1331.03257113011,
+							["custom"] = 0,
+							["last_event"] = 1543397504,
+							["damage_taken"] = 0.006543,
+							["start_time"] = 1543397499,
+							["delay"] = 0,
+							["tipo"] = 1,
+						}, -- [1]
+						{
+							["flag_original"] = 4369,
+							["totalabsorbed"] = 0.001679,
+							["serial"] = "Vehicle-0-3149-1643-30477-125334-00007E6067",
+							["damage_from"] = {
+							},
+							["targets"] = {
+								["醉步白鼬"] = 2814,
+							},
+							["pets"] = {
+							},
+							["on_hold"] = false,
+							["friendlyfire_total"] = 0,
+							["raid_targets"] = {
+							},
+							["total_without_pet"] = 2814.001679,
+							["dps_started"] = false,
+							["total"] = 2814.001679,
+							["classe"] = "PET",
+							["ownerName"] = "Mirvish",
+							["nome"] = "尼克尔 <Mirvish>",
+							["spells"] = {
+								["tipo"] = 2,
+								["_ActorTable"] = {
+									{
+										["c_amt"] = 0,
+										["b_amt"] = 0,
+										["c_dmg"] = 0,
+										["g_amt"] = 0,
+										["n_max"] = 1563,
+										["targets"] = {
+											["醉步白鼬"] = 2814,
+										},
+										["m_dmg"] = 0,
+										["n_dmg"] = 2814,
+										["n_min"] = 1251,
+										["g_dmg"] = 0,
+										["counter"] = 2,
+										["total"] = 2814,
+										["c_max"] = 0,
+										["id"] = 1,
+										["r_dmg"] = 0,
+										["spellschool"] = 1,
+										["a_dmg"] = 0,
+										["m_crit"] = 0,
+										["a_amt"] = 0,
+										["m_amt"] = 0,
+										["successful_casted"] = 0,
+										["b_dmg"] = 0,
+										["n_amt"] = 2,
+										["r_amt"] = 0,
+										["c_min"] = 0,
+									}, -- [1]
+								},
+							},
+							["friendlyfire"] = {
+							},
+							["end_time"] = 1543397510,
+							["last_dps"] = 0,
+							["custom"] = 0,
+							["tipo"] = 1,
+							["damage_taken"] = 0.001679,
+							["start_time"] = 1543397500,
+							["delay"] = 0,
+							["last_event"] = 1543397503,
+						}, -- [2]
+					},
+				}, -- [1]
+				{
+					["combatId"] = 2,
+					["tipo"] = 3,
+					["_ActorTable"] = {
+						{
+							["flag_original"] = 1297,
+							["healing_from"] = {
+								["Mirvish"] = true,
+							},
+							["pets"] = {
+							},
+							["iniciar_hps"] = false,
+							["classe"] = "DEMONHUNTER",
+							["totalover"] = 31787.00521,
+							["total_without_pet"] = 659.00521,
+							["total"] = 659.00521,
+							["targets_absorbs"] = {
+							},
+							["heal_enemy"] = {
+							},
+							["on_hold"] = false,
+							["serial"] = "Player-1955-01CCA79E",
+							["totalabsorb"] = 0.00521,
+							["last_hps"] = 0,
+							["targets"] = {
+								["Mirvish"] = 10936,
+							},
+							["totalover_without_pet"] = 0.00521,
+							["healing_taken"] = 659.00521,
+							["fight_component"] = true,
+							["end_time"] = 1543397510,
+							["targets_overheal"] = {
+								["Mirvish"] = 31787,
+							},
+							["nome"] = "Mirvish",
+							["spells"] = {
+								["tipo"] = 3,
+								["_ActorTable"] = {
+									[207694] = {
+										["c_amt"] = 0,
+										["totalabsorb"] = 0,
+										["targets_overheal"] = {
+											["Mirvish"] = 166,
+										},
+										["n_max"] = 264,
+										["targets"] = {
+											["Mirvish"] = 264,
+										},
+										["n_min"] = 0,
+										["counter"] = 2,
+										["overheal"] = 166,
+										["total"] = 264,
+										["c_max"] = 0,
+										["id"] = 207694,
+										["targets_absorbs"] = {
+										},
+										["c_curado"] = 0,
+										["m_crit"] = 0,
+										["c_min"] = 0,
+										["m_amt"] = 0,
+										["n_curado"] = 264,
+										["n_amt"] = 2,
+										["totaldenied"] = 0,
+										["m_healed"] = 0,
+										["absorbed"] = 0,
+									},
+									[178963] = {
+										["c_amt"] = 0,
+										["totalabsorb"] = 0,
+										["targets_overheal"] = {
+											["Mirvish"] = 31621,
+										},
+										["n_max"] = 395,
+										["targets"] = {
+											["Mirvish"] = 395,
+										},
+										["n_min"] = 0,
+										["counter"] = 3,
+										["overheal"] = 31621,
+										["total"] = 395,
+										["c_max"] = 0,
+										["id"] = 178963,
+										["targets_absorbs"] = {
+										},
+										["c_curado"] = 0,
+										["m_crit"] = 0,
+										["c_min"] = 0,
+										["m_amt"] = 0,
+										["n_curado"] = 395,
+										["n_amt"] = 3,
+										["totaldenied"] = 0,
+										["m_healed"] = 0,
+										["absorbed"] = 0,
+									},
+								},
+							},
+							["grupo"] = true,
+							["heal_enemy_amt"] = 0,
+							["start_time"] = 1543397500,
+							["custom"] = 0,
+							["last_event"] = 1543397506,
+							["spec"] = 577,
+							["totaldenied"] = 0.00521,
+							["delay"] = 0,
+							["tipo"] = 2,
+						}, -- [1]
+					},
+				}, -- [2]
+				{
+					["combatId"] = 2,
+					["tipo"] = 7,
+					["_ActorTable"] = {
+						{
+							["received"] = 29.007993,
+							["resource"] = 0.007993,
+							["targets"] = {
+								["Mirvish"] = 29,
+							},
+							["pets"] = {
+							},
+							["powertype"] = 0,
+							["classe"] = "DEMONHUNTER",
+							["fight_component"] = true,
+							["total"] = 29.007993,
+							["nome"] = "Mirvish",
+							["spec"] = 577,
+							["grupo"] = true,
+							["flag_original"] = 1297,
+							["last_event"] = 1543397503,
+							["alternatepower"] = 0.007993,
+							["spells"] = {
+								["tipo"] = 7,
+								["_ActorTable"] = {
+									[208828] = {
+										["id"] = 208828,
+										["total"] = 7,
+										["targets"] = {
+											["Mirvish"] = 7,
+										},
+										["counter"] = 2,
+									},
+									[162243] = {
+										["id"] = 162243,
+										["total"] = 22,
+										["targets"] = {
+											["Mirvish"] = 22,
+										},
+										["counter"] = 1,
+									},
+								},
+							},
+							["serial"] = "Player-1955-01CCA79E",
+							["tipo"] = 3,
+						}, -- [1]
+					},
+				}, -- [3]
+				{
+					["combatId"] = 2,
+					["tipo"] = 9,
+					["_ActorTable"] = {
+						{
+							["fight_component"] = true,
+							["flag_original"] = 1047,
+							["nome"] = "Mirvish",
+							["spec"] = 577,
+							["grupo"] = true,
+							["buff_uptime_targets"] = {
+							},
+							["buff_uptime"] = 68,
+							["pets"] = {
+							},
+							["spell_cast"] = {
+								[131347] = 1,
+								[162243] = 1,
+								[162794] = 1,
+								[188499] = 1,
+							},
+							["classe"] = "DEMONHUNTER",
+							["tipo"] = 4,
+							["buff_uptime_spells"] = {
+								["tipo"] = 9,
+								["_ActorTable"] = {
+									[277952] = {
+										["activedamt"] = 1,
+										["id"] = 277952,
+										["targets"] = {
+										},
+										["uptime"] = 11,
+										["appliedamt"] = 1,
+										["refreshamt"] = 0,
+										["actived"] = false,
+										["counter"] = 0,
+									},
+									[188499] = {
+										["activedamt"] = 1,
+										["id"] = 188499,
+										["targets"] = {
+										},
+										["uptime"] = 2,
+										["appliedamt"] = 1,
+										["refreshamt"] = 0,
+										["actived"] = false,
+										["counter"] = 0,
+									},
+									[131347] = {
+										["activedamt"] = 0,
+										["id"] = 131347,
+										["targets"] = {
+										},
+										["uptime"] = 0,
+										["appliedamt"] = 0,
+										["refreshamt"] = 0,
+										["actived"] = false,
+										["counter"] = 0,
+									},
+									[186401] = {
+										["activedamt"] = 1,
+										["id"] = 186401,
+										["targets"] = {
+										},
+										["uptime"] = 11,
+										["appliedamt"] = 1,
+										["refreshamt"] = 0,
+										["actived"] = false,
+										["counter"] = 0,
+									},
+									[227723] = {
+										["activedamt"] = 1,
+										["id"] = 227723,
+										["targets"] = {
+										},
+										["uptime"] = 11,
+										["appliedamt"] = 1,
+										["refreshamt"] = 0,
+										["actived"] = false,
+										["counter"] = 0,
+									},
+									[269279] = {
+										["activedamt"] = 1,
+										["id"] = 269279,
+										["targets"] = {
+										},
+										["uptime"] = 11,
+										["appliedamt"] = 1,
+										["refreshamt"] = 0,
+										["actived"] = false,
+										["counter"] = 0,
+									},
+									[279584] = {
+										["activedamt"] = 2,
+										["id"] = 279584,
+										["targets"] = {
+										},
+										["uptime"] = 11,
+										["appliedamt"] = 2,
+										["refreshamt"] = 1,
+										["actived"] = false,
+										["counter"] = 0,
+									},
+									[248828] = {
+										["activedamt"] = 1,
+										["id"] = 248828,
+										["targets"] = {
+										},
+										["uptime"] = 11,
+										["appliedamt"] = 1,
+										["refreshamt"] = 0,
+										["actived"] = false,
+										["counter"] = 0,
+									},
+								},
+							},
+							["serial"] = "Player-1955-01CCA79E",
+							["last_event"] = 1543397510,
+						}, -- [1]
+					},
+				}, -- [4]
+				{
+					["combatId"] = 2,
+					["tipo"] = 2,
+					["_ActorTable"] = {
+					},
+				}, -- [5]
+				["raid_roster"] = {
+					["Mirvish"] = true,
+					["顾倩倩"] = true,
+				},
+				["last_events_tables"] = {
+				},
+				["alternate_power"] = {
+				},
+				["enemy"] = "醉步白鼬",
+				["combat_counter"] = 15,
+				["totals"] = {
+					14651.995699, -- [1]
+					659, -- [2]
+					{
+						0, -- [1]
+						[0] = 29,
+						["alternatepower"] = 0,
+						[3] = 0,
+						[6] = 0,
+					}, -- [3]
+					{
+						["buff_uptime"] = 0,
+						["ress"] = 0,
+						["debuff_uptime"] = 0,
+						["cooldowns_defensive"] = 0,
+						["interrupt"] = 0,
+						["dispell"] = 0,
+						["cc_break"] = 0,
+						["dead"] = 0,
+					}, -- [4]
+					["frags_total"] = 0,
+					["voidzone_damage"] = 0,
+				},
+				["player_last_events"] = {
+				},
+				["instance_type"] = "none",
+				["frags_need_refresh"] = true,
+				["__call"] = {
+				},
+				["PhaseData"] = {
+					{
+						1, -- [1]
+						1, -- [2]
+					}, -- [1]
+					["heal_section"] = {
+					},
+					["heal"] = {
+						{
+							["Mirvish"] = 659.00521,
+						}, -- [1]
+					},
+					["damage_section"] = {
+					},
+					["damage"] = {
+						{
+							["Mirvish"] = 14652.006543,
+						}, -- [1]
+					},
+				},
+				["end_time"] = 7994.781,
+				["combat_id"] = 2,
+				["TotalElapsedCombatTime"] = 7993.959,
+				["CombatEndedAt"] = 7993.959,
+				["frags"] = {
+					["醉步白鼬"] = 2,
+				},
+				["data_fim"] = "17:31:51",
+				["data_inicio"] = "17:31:40",
+				["CombatSkillCache"] = {
+				},
+				["totals_grupo"] = {
+					11838, -- [1]
+					659, -- [2]
+					{
+						0, -- [1]
+						[0] = 29,
+						["alternatepower"] = 0,
+						[3] = 0,
+						[6] = 0,
+					}, -- [3]
+					{
+						["buff_uptime"] = 0,
+						["ress"] = 0,
+						["debuff_uptime"] = 0,
+						["cooldowns_defensive"] = 0,
+						["interrupt"] = 0,
+						["dispell"] = 0,
+						["cc_break"] = 0,
+						["dead"] = 0,
+					}, -- [4]
+				},
+				["start_time"] = 7983.773,
+				["TimeData"] = {
+				},
+				["pvp"] = true,
+			}, -- [4]
+			{
+				{
+					["combatId"] = 1,
+					["tipo"] = 2,
+					["_ActorTable"] = {
+						{
+							["flag_original"] = 1297,
+							["totalabsorbed"] = 0.004439,
+							["total"] = 26031.004439,
+							["damage_from"] = {
+								["泥牙野猪"] = true,
+							},
+							["targets"] = {
+								["泥牙野猪"] = 26031,
+							},
+							["pets"] = {
+								"尼克尔 <Mirvish>", -- [1]
+							},
+							["friendlyfire"] = {
+							},
+							["colocacao"] = 1,
+							["classe"] = "DEMONHUNTER",
+							["raid_targets"] = {
+							},
+							["total_without_pet"] = 17540.004439,
+							["friendlyfire_total"] = 0,
+							["dps_started"] = false,
+							["end_time"] = 1543397494,
+							["on_hold"] = false,
+							["spec"] = 577,
+							["nome"] = "Mirvish",
+							["spells"] = {
+								["tipo"] = 2,
+								["_ActorTable"] = {
+									{
+										["c_amt"] = 1,
+										["b_amt"] = 0,
+										["c_dmg"] = 779,
+										["g_amt"] = 0,
+										["n_max"] = 768,
+										["targets"] = {
+											["泥牙野猪"] = 3065,
+										},
+										["m_dmg"] = 0,
+										["n_dmg"] = 2286,
+										["n_min"] = 369,
+										["g_dmg"] = 0,
+										["counter"] = 8,
+										["total"] = 3065,
+										["c_max"] = 779,
+										["MISS"] = 3,
+										["id"] = 1,
+										["r_dmg"] = 0,
+										["spellschool"] = 1,
+										["a_dmg"] = 0,
+										["m_crit"] = 0,
+										["a_amt"] = 0,
+										["m_amt"] = 0,
+										["successful_casted"] = 0,
+										["b_dmg"] = 0,
+										["n_amt"] = 4,
+										["r_amt"] = 0,
+										["c_min"] = 779,
+									}, -- [1]
+									[199552] = {
+										["c_amt"] = 2,
+										["b_amt"] = 0,
+										["c_dmg"] = 4434,
+										["g_amt"] = 0,
+										["n_max"] = 651,
+										["targets"] = {
+											["泥牙野猪"] = 5735,
+										},
+										["m_dmg"] = 0,
+										["n_dmg"] = 1301,
+										["n_min"] = 650,
+										["g_dmg"] = 0,
+										["counter"] = 4,
+										["total"] = 5735,
+										["c_max"] = 3133,
+										["id"] = 199552,
+										["r_dmg"] = 0,
+										["spellschool"] = 1,
+										["a_dmg"] = 0,
+										["m_crit"] = 0,
+										["a_amt"] = 0,
+										["m_amt"] = 0,
+										["successful_casted"] = 0,
+										["b_dmg"] = 0,
+										["n_amt"] = 2,
+										["r_amt"] = 0,
+										["c_min"] = 1301,
+									},
+									[162243] = {
+										["c_amt"] = 0,
+										["b_amt"] = 0,
+										["c_dmg"] = 0,
+										["g_amt"] = 0,
+										["n_max"] = 882,
+										["targets"] = {
+											["泥牙野猪"] = 2646,
+										},
+										["m_dmg"] = 0,
+										["n_dmg"] = 2646,
+										["n_min"] = 882,
+										["g_dmg"] = 0,
+										["counter"] = 3,
+										["total"] = 2646,
+										["c_max"] = 0,
+										["id"] = 162243,
+										["r_dmg"] = 0,
+										["spellschool"] = 1,
+										["a_dmg"] = 0,
+										["m_crit"] = 0,
+										["a_amt"] = 0,
+										["m_amt"] = 0,
+										["successful_casted"] = 0,
+										["b_dmg"] = 0,
+										["n_amt"] = 3,
+										["r_amt"] = 0,
+										["c_min"] = 0,
+									},
+									[199547] = {
+										["c_amt"] = 0,
+										["b_amt"] = 0,
+										["c_dmg"] = 0,
+										["g_amt"] = 0,
+										["n_max"] = 1372,
+										["targets"] = {
+											["泥牙野猪"] = 4876,
+										},
+										["m_dmg"] = 0,
+										["n_dmg"] = 4876,
+										["n_min"] = 1099,
+										["g_dmg"] = 0,
+										["counter"] = 4,
+										["total"] = 4876,
+										["c_max"] = 0,
+										["id"] = 199547,
+										["r_dmg"] = 0,
+										["spellschool"] = 127,
+										["a_dmg"] = 0,
+										["m_crit"] = 0,
+										["a_amt"] = 0,
+										["m_amt"] = 0,
+										["successful_casted"] = 0,
+										["b_dmg"] = 0,
+										["n_amt"] = 4,
+										["r_amt"] = 0,
+										["c_min"] = 0,
+									},
+									[185123] = {
+										["c_amt"] = 0,
+										["b_amt"] = 0,
+										["c_dmg"] = 0,
+										["g_amt"] = 0,
+										["n_max"] = 649,
+										["targets"] = {
+											["泥牙野猪"] = 649,
+										},
+										["m_dmg"] = 0,
+										["n_dmg"] = 649,
+										["n_min"] = 649,
+										["g_dmg"] = 0,
+										["counter"] = 1,
+										["total"] = 649,
+										["c_max"] = 0,
+										["id"] = 185123,
+										["r_dmg"] = 0,
+										["spellschool"] = 1,
+										["a_dmg"] = 0,
+										["m_crit"] = 0,
+										["a_amt"] = 0,
+										["m_amt"] = 0,
+										["successful_casted"] = 0,
+										["b_dmg"] = 0,
+										["n_amt"] = 1,
+										["r_amt"] = 0,
+										["c_min"] = 0,
+									},
+									[207694] = {
+										["c_amt"] = 0,
+										["b_amt"] = 0,
+										["c_dmg"] = 0,
+										["g_amt"] = 0,
+										["n_max"] = 265,
+										["targets"] = {
+											["泥牙野猪"] = 569,
+										},
+										["m_dmg"] = 0,
+										["n_dmg"] = 569,
+										["n_min"] = 110,
+										["g_dmg"] = 0,
+										["counter"] = 3,
+										["total"] = 569,
+										["c_max"] = 0,
+										["id"] = 207694,
+										["r_dmg"] = 0,
+										["spellschool"] = 33,
+										["a_dmg"] = 0,
+										["m_crit"] = 0,
+										["a_amt"] = 0,
+										["m_amt"] = 0,
+										["successful_casted"] = 0,
+										["b_dmg"] = 0,
+										["n_amt"] = 3,
+										["r_amt"] = 0,
+										["c_min"] = 0,
+									},
+								},
+							},
+							["grupo"] = true,
+							["serial"] = "Player-1955-01CCA79E",
+							["last_dps"] = 2668.7517366209,
+							["custom"] = 0,
+							["last_event"] = 1543397493,
+							["damage_taken"] = 8209.004439,
+							["start_time"] = 1543397483,
+							["delay"] = 0,
+							["tipo"] = 1,
+						}, -- [1]
+						{
+							["flag_original"] = 4369,
+							["totalabsorbed"] = 0.006723,
+							["serial"] = "Vehicle-0-3149-1643-30477-125334-00007E6067",
+							["damage_from"] = {
+							},
+							["targets"] = {
+								["泥牙野猪"] = 8491,
+							},
+							["pets"] = {
+							},
+							["on_hold"] = false,
+							["friendlyfire_total"] = 0,
+							["raid_targets"] = {
+							},
+							["total_without_pet"] = 8491.006723,
+							["dps_started"] = false,
+							["total"] = 8491.006723,
+							["classe"] = "PET",
+							["ownerName"] = "Mirvish",
+							["nome"] = "尼克尔 <Mirvish>",
+							["spells"] = {
+								["tipo"] = 2,
+								["_ActorTable"] = {
+									{
+										["c_amt"] = 1,
+										["b_amt"] = 0,
+										["c_dmg"] = 2524,
+										["g_amt"] = 0,
+										["n_max"] = 1566,
+										["targets"] = {
+											["泥牙野猪"] = 8491,
+										},
+										["m_dmg"] = 0,
+										["n_dmg"] = 5967,
+										["n_min"] = 1298,
+										["g_dmg"] = 0,
+										["counter"] = 5,
+										["total"] = 8491,
+										["c_max"] = 2524,
+										["id"] = 1,
+										["r_dmg"] = 0,
+										["spellschool"] = 1,
+										["a_dmg"] = 0,
+										["m_crit"] = 0,
+										["a_amt"] = 0,
+										["m_amt"] = 0,
+										["successful_casted"] = 0,
+										["b_dmg"] = 0,
+										["n_amt"] = 4,
+										["r_amt"] = 0,
+										["c_min"] = 2524,
+									}, -- [1]
+								},
+							},
+							["friendlyfire"] = {
+							},
+							["end_time"] = 1543397494,
+							["last_dps"] = 0,
+							["custom"] = 0,
+							["tipo"] = 1,
+							["damage_taken"] = 0.006723,
+							["start_time"] = 1543397485,
+							["delay"] = 0,
+							["last_event"] = 1543397493,
+						}, -- [2]
+					},
+				}, -- [1]
+				{
+					["combatId"] = 1,
+					["tipo"] = 3,
+					["_ActorTable"] = {
+						{
+							["flag_original"] = 1297,
+							["healing_from"] = {
+								["Mirvish"] = true,
+							},
+							["pets"] = {
+							},
+							["iniciar_hps"] = false,
+							["classe"] = "DEMONHUNTER",
+							["totalover"] = 1423.001672,
+							["total_without_pet"] = 5924.001672,
+							["total"] = 5924.001672,
+							["targets_absorbs"] = {
+								["Mirvish"] = 4954,
+							},
+							["heal_enemy"] = {
+							},
+							["on_hold"] = false,
+							["serial"] = "Player-1955-01CCA79E",
+							["totalabsorb"] = 4954.001672,
+							["last_hps"] = 0,
+							["targets"] = {
+								["Mirvish"] = 6778,
+							},
+							["totalover_without_pet"] = 0.001672,
+							["healing_taken"] = 5924.001672,
+							["fight_component"] = true,
+							["end_time"] = 1543397494,
+							["targets_overheal"] = {
+								["Mirvish"] = 1423,
+							},
+							["nome"] = "Mirvish",
+							["spells"] = {
+								["tipo"] = 3,
+								["_ActorTable"] = {
+									[207694] = {
+										["c_amt"] = 0,
+										["totalabsorb"] = 0,
+										["targets_overheal"] = {
+											["Mirvish"] = 569,
+										},
+										["n_max"] = 0,
+										["targets"] = {
+											["Mirvish"] = 0,
+										},
+										["n_min"] = 0,
+										["counter"] = 3,
+										["overheal"] = 569,
+										["total"] = 0,
+										["c_max"] = 0,
+										["id"] = 207694,
+										["targets_absorbs"] = {
+										},
+										["c_curado"] = 0,
+										["m_crit"] = 0,
+										["c_min"] = 0,
+										["m_amt"] = 0,
+										["n_curado"] = 0,
+										["n_amt"] = 3,
+										["totaldenied"] = 0,
+										["m_healed"] = 0,
+										["absorbed"] = 0,
+									},
+									[269279] = {
+										["c_amt"] = 0,
+										["totalabsorb"] = 4954,
+										["targets_overheal"] = {
+										},
+										["n_max"] = 2442,
+										["targets"] = {
+											["Mirvish"] = 4954,
+										},
+										["n_min"] = 338,
+										["counter"] = 5,
+										["overheal"] = 0,
+										["total"] = 4954,
+										["c_max"] = 0,
+										["id"] = 269279,
+										["targets_absorbs"] = {
+											["Mirvish"] = 4954,
+										},
+										["m_healed"] = 0,
+										["c_curado"] = 0,
+										["m_crit"] = 0,
+										["c_min"] = 0,
+										["m_amt"] = 0,
+										["n_curado"] = 4954,
+										["n_amt"] = 5,
+										["totaldenied"] = 0,
+										["is_shield"] = true,
+										["absorbed"] = 0,
+									},
+									[270117] = {
+										["c_amt"] = 0,
+										["totalabsorb"] = 0,
+										["targets_overheal"] = {
+											["Mirvish"] = 854,
+										},
+										["n_max"] = 970,
+										["targets"] = {
+											["Mirvish"] = 970,
+										},
+										["n_min"] = 970,
+										["counter"] = 1,
+										["overheal"] = 854,
+										["total"] = 970,
+										["c_max"] = 0,
+										["id"] = 270117,
+										["targets_absorbs"] = {
+										},
+										["c_curado"] = 0,
+										["m_crit"] = 0,
+										["c_min"] = 0,
+										["m_amt"] = 0,
+										["n_curado"] = 970,
+										["n_amt"] = 1,
+										["totaldenied"] = 0,
+										["m_healed"] = 0,
+										["absorbed"] = 0,
+									},
+								},
+							},
+							["grupo"] = true,
+							["heal_enemy_amt"] = 0,
+							["start_time"] = 1543397484,
+							["custom"] = 0,
+							["last_event"] = 1543397489,
+							["spec"] = 577,
+							["totaldenied"] = 0.001672,
+							["delay"] = 0,
+							["tipo"] = 2,
+						}, -- [1]
+					},
+				}, -- [2]
+				{
+					["combatId"] = 1,
+					["tipo"] = 7,
+					["_ActorTable"] = {
+						{
+							["received"] = 150.004986,
+							["resource"] = 0.004986,
+							["targets"] = {
+								["Mirvish"] = 150,
+							},
+							["pets"] = {
+							},
+							["powertype"] = 0,
+							["classe"] = "DEMONHUNTER",
+							["fight_component"] = true,
+							["total"] = 150.004986,
+							["nome"] = "Mirvish",
+							["spec"] = 577,
+							["grupo"] = true,
+							["flag_original"] = 1297,
+							["last_event"] = 1543397499,
+							["alternatepower"] = 0.004986,
+							["spells"] = {
+								["tipo"] = 7,
+								["_ActorTable"] = {
+									[208828] = {
+										["id"] = 208828,
+										["total"] = 25,
+										["targets"] = {
+											["Mirvish"] = 25,
+										},
+										["counter"] = 3,
+									},
+									[162243] = {
+										["id"] = 162243,
+										["total"] = 105,
+										["targets"] = {
+											["Mirvish"] = 105,
+										},
+										["counter"] = 4,
+									},
+									[193840] = {
+										["id"] = 193840,
+										["total"] = 20,
+										["targets"] = {
+											["Mirvish"] = 20,
+										},
+										["counter"] = 1,
+									},
+								},
+							},
+							["serial"] = "Player-1955-01CCA79E",
+							["tipo"] = 3,
+						}, -- [1]
+					},
+				}, -- [3]
+				{
+					["combatId"] = 1,
+					["tipo"] = 9,
+					["_ActorTable"] = {
+						{
+							["flag_original"] = 1047,
+							["debuff_uptime_spells"] = {
+								["tipo"] = 9,
+								["_ActorTable"] = {
+									[1490] = {
+										["activedamt"] = 0,
+										["id"] = 1490,
+										["targets"] = {
+										},
+										["uptime"] = 7,
+										["appliedamt"] = 1,
+										["refreshamt"] = 0,
+										["actived"] = false,
+										["counter"] = 0,
+									},
+								},
+							},
+							["buff_uptime"] = 55,
+							["classe"] = "DEMONHUNTER",
+							["buff_uptime_spells"] = {
+								["tipo"] = 9,
+								["_ActorTable"] = {
+									[269279] = {
+										["activedamt"] = 2,
+										["id"] = 269279,
+										["targets"] = {
+										},
+										["uptime"] = 7,
+										["appliedamt"] = 2,
+										["refreshamt"] = 0,
+										["actived"] = false,
+										["counter"] = 0,
+									},
+									[188499] = {
+										["activedamt"] = 1,
+										["id"] = 188499,
+										["targets"] = {
+										},
+										["uptime"] = 1,
+										["appliedamt"] = 1,
+										["refreshamt"] = 0,
+										["actived"] = false,
+										["counter"] = 0,
+									},
+									[186401] = {
+										["activedamt"] = 1,
+										["id"] = 186401,
+										["targets"] = {
+										},
+										["uptime"] = 11,
+										["appliedamt"] = 1,
+										["refreshamt"] = 0,
+										["actived"] = false,
+										["counter"] = 0,
+									},
+									[227723] = {
+										["activedamt"] = 1,
+										["id"] = 227723,
+										["targets"] = {
+										},
+										["uptime"] = 11,
+										["appliedamt"] = 1,
+										["refreshamt"] = 0,
+										["actived"] = false,
+										["counter"] = 0,
+									},
+									[279584] = {
+										["activedamt"] = 1,
+										["id"] = 279584,
+										["targets"] = {
+										},
+										["uptime"] = 3,
+										["appliedamt"] = 1,
+										["refreshamt"] = 0,
+										["actived"] = false,
+										["counter"] = 0,
+									},
+									[248828] = {
+										["activedamt"] = 1,
+										["id"] = 248828,
+										["targets"] = {
+										},
+										["uptime"] = 11,
+										["appliedamt"] = 1,
+										["refreshamt"] = 0,
+										["actived"] = false,
+										["counter"] = 0,
+									},
+									[277952] = {
+										["activedamt"] = 1,
+										["id"] = 277952,
+										["targets"] = {
+										},
+										["uptime"] = 11,
+										["appliedamt"] = 1,
+										["refreshamt"] = 0,
+										["actived"] = false,
+										["counter"] = 0,
+									},
+								},
+							},
+							["fight_component"] = true,
+							["debuff_uptime"] = 7,
+							["buff_uptime_targets"] = {
+							},
+							["spec"] = 577,
+							["grupo"] = true,
+							["spell_cast"] = {
+								[162243] = 3,
+								[162794] = 2,
+								[188499] = 1,
+							},
+							["debuff_uptime_targets"] = {
+							},
+							["last_event"] = 1543397494,
+							["nome"] = "Mirvish",
+							["pets"] = {
+							},
+							["serial"] = "Player-1955-01CCA79E",
+							["tipo"] = 4,
+						}, -- [1]
+					},
+				}, -- [4]
+				{
+					["combatId"] = 1,
+					["tipo"] = 2,
+					["_ActorTable"] = {
+					},
+				}, -- [5]
+				["raid_roster"] = {
+					["Mirvish"] = true,
+					["顾倩倩"] = true,
+				},
+				["CombatStartedAt"] = 7983.773,
+				["last_events_tables"] = {
+				},
+				["alternate_power"] = {
+				},
+				["enemy"] = "泥牙野猪",
+				["combat_counter"] = 14,
+				["totals"] = {
+					26030.995205, -- [1]
+					5924, -- [2]
+					{
+						0, -- [1]
+						[0] = 150,
+						["alternatepower"] = 0,
+						[3] = 0,
+						[6] = 0,
+					}, -- [3]
+					{
+						["buff_uptime"] = 0,
+						["ress"] = 0,
+						["debuff_uptime"] = 0,
+						["cooldowns_defensive"] = 0,
+						["interrupt"] = 0,
+						["dispell"] = 0,
+						["cc_break"] = 0,
+						["dead"] = 0,
+					}, -- [4]
+					["frags_total"] = 0,
+					["voidzone_damage"] = 0,
+				},
+				["player_last_events"] = {
+				},
+				["instance_type"] = "none",
+				["frags_need_refresh"] = true,
+				["__call"] = {
+				},
+				["PhaseData"] = {
+					{
+						1, -- [1]
+						1, -- [2]
+					}, -- [1]
+					["heal_section"] = {
+					},
+					["heal"] = {
+						{
+							["Mirvish"] = 5924.001672,
+						}, -- [1]
+					},
+					["damage_section"] = {
+					},
+					["damage"] = {
+						{
+							["Mirvish"] = 26031.004439,
+						}, -- [1]
+					},
+				},
+				["end_time"] = 7979.097,
+				["combat_id"] = 1,
+				["TotalElapsedCombatTime"] = 7978.596,
+				["CombatEndedAt"] = 7978.596,
+				["frags"] = {
+					["泥牙野猪"] = 1,
+				},
+				["data_fim"] = "17:31:35",
+				["data_inicio"] = "17:31:24",
+				["CombatSkillCache"] = {
+				},
+				["totals_grupo"] = {
+					17540, -- [1]
+					5924, -- [2]
+					{
+						0, -- [1]
+						[0] = 150,
+						["alternatepower"] = 0,
+						[3] = 0,
+						[6] = 0,
+					}, -- [3]
+					{
+						["buff_uptime"] = 0,
+						["ress"] = 0,
+						["debuff_uptime"] = 0,
+						["cooldowns_defensive"] = 0,
+						["interrupt"] = 0,
+						["dispell"] = 0,
+						["cc_break"] = 0,
+						["dead"] = 0,
+					}, -- [4]
+				},
+				["start_time"] = 7968.081,
+				["contra"] = "泥牙野猪",
+				["TimeData"] = {
+				},
+			}, -- [5]
+		},
+	},
+	["combat_counter"] = 18,
+	["force_font_outline"] = "",
+	["tabela_instancias"] = {
+	},
+	["local_instances_config"] = {
+		{
+			["segment"] = 0,
+			["sub_attribute"] = 1,
+			["horizontalSnap"] = false,
+			["verticalSnap"] = false,
+			["is_open"] = true,
+			["isLocked"] = true,
+			["sub_atributo_last"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+				1, -- [5]
+			},
+			["snap"] = {
+				[3] = 2,
+			},
+			["mode"] = 2,
+			["attribute"] = 1,
+			["pos"] = {
+				["normal"] = {
+					["y"] = -453.49991607666,
+					["x"] = 659.000244140625,
+					["w"] = 200.000061035156,
+					["h"] = 131,
+				},
+				["solo"] = {
+					["y"] = 2,
+					["x"] = 1,
+					["w"] = 300,
+					["h"] = 200,
+				},
+			},
+		}, -- [1]
+		{
+			["segment"] = 0,
+			["sub_attribute"] = 1,
+			["horizontalSnap"] = false,
+			["verticalSnap"] = false,
+			["is_open"] = true,
+			["isLocked"] = true,
+			["sub_atributo_last"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+				1, -- [5]
+			},
+			["snap"] = {
+				1, -- [1]
+			},
+			["mode"] = 2,
+			["attribute"] = 1,
+			["pos"] = {
+				["normal"] = {
+					["y"] = -453.49991607666,
+					["x"] = 858.500244140625,
+					["w"] = 198.999908447266,
+					["h"] = 131,
+				},
+				["solo"] = {
+					["y"] = 2,
+					["x"] = 1,
+					["w"] = 300,
+					["h"] = 200,
+				},
+			},
+		}, -- [2]
+	},
+	["cached_talents"] = {
+		["Player-1955-01E99248"] = {
+			22337, -- [1]
+			22332, -- [2]
+			22340, -- [3]
+			22133, -- [4]
+			19241, -- [5]
+			23015, -- [6]
+			19245, -- [7]
+		},
+		["Player-1955-01CCA79E"] = {
+			21854, -- [1]
+			21862, -- [2]
+			21900, -- [3]
+			21865, -- [4]
+			21869, -- [5]
+			21867, -- [6]
+			22799, -- [7]
+		},
+	},
+	["last_instance_id"] = 0,
+	["announce_interrupts"] = {
+		["enabled"] = false,
+		["whisper"] = "",
+		["channel"] = "SAY",
+		["custom"] = "",
+		["next"] = "",
+	},
+	["announce_prepots"] = {
+		["enabled"] = true,
+		["channel"] = "SELF",
+		["reverse"] = false,
+	},
+	["active_profile"] = "R2",
+	["last_realversion"] = 135,
+	["benchmark_db"] = {
+		["frame"] = {
+		},
+	},
+	["plugin_database"] = {
+		["DETAILS_PLUGIN_TINY_THREAT"] = {
+			["updatespeed"] = 1,
+			["enabled"] = true,
+			["animate"] = false,
+			["useplayercolor"] = false,
+			["author"] = "Details! Team",
+			["useclasscolors"] = false,
+			["playercolor"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+			},
+			["showamount"] = false,
+		},
+		["DETAILS_PLUGIN_RAIDCHECK"] = {
+			["enabled"] = true,
+			["food_tier1"] = true,
+			["mythic_1_4"] = true,
+			["food_tier2"] = true,
+			["author"] = "Details! Team",
+			["use_report_panel"] = true,
+			["pre_pot_healers"] = false,
+			["pre_pot_tanks"] = false,
+			["food_tier3"] = true,
+		},
+		["DETAILS_PLUGIN_VANGUARD"] = {
+			["enabled"] = true,
+			["tank_block_color"] = {
+				0.24705882, -- [1]
+				0.0039215, -- [2]
+				0, -- [3]
+				0.8, -- [4]
+			},
+			["tank_block_texture"] = "Details Serenity",
+			["show_inc_bars"] = false,
+			["author"] = "Details! Team",
+			["first_run"] = false,
+			["tank_block_size"] = 150,
+		},
+		["DETAILS_PLUGIN_ENCOUNTER_DETAILS"] = {
+			["enabled"] = true,
+			["encounter_timers_bw"] = {
+			},
+			["max_emote_segments"] = 3,
+			["author"] = "Details! Team",
+			["window_scale"] = 1,
+			["encounter_timers_dbm"] = {
+			},
+			["show_icon"] = 5,
+			["opened"] = 0,
+			["hide_on_combat"] = false,
+		},
+		["DETAILS_PLUGIN_STREAM_OVERLAY"] = {
+			["font_color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
+			},
+			["is_first_run"] = false,
+			["arrow_color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				0.5, -- [4]
+			},
+			["main_frame_size"] = {
+				300.000061035156, -- [1]
+				499.999938964844, -- [2]
+			},
+			["minimap"] = {
+				["minimapPos"] = 160,
+				["radius"] = 160,
+				["hide"] = true,
+			},
+			["arrow_anchor_x"] = 0,
+			["row_texture"] = "Details Serenity",
+			["arrow_anchor_y"] = 0,
+			["main_frame_locked"] = false,
+			["main_frame_strata"] = "LOW",
+			["enabled"] = false,
+			["arrow_size"] = 10,
+			["y"] = -1.525878906250e-005,
+			["row_spacement"] = 21,
+			["main_frame_color"] = {
+				0, -- [1]
+				0, -- [2]
+				0, -- [3]
+				0.2, -- [4]
+			},
+			["author"] = "Details! Team",
+			["arrow_texture"] = "Interface\\CHATFRAME\\ChatFrameExpandArrow",
+			["per_second"] = {
+				["enabled"] = false,
+				["point"] = "CENTER",
+				["scale"] = 1,
+				["font_shadow"] = true,
+				["y"] = -3.05175781250e-005,
+				["x"] = 6.1035156250e-005,
+				["attribute_type"] = 1,
+				["update_speed"] = 0.05,
+				["size"] = 32,
+			},
+			["font_size"] = 10,
+			["x"] = 3.05175781250e-005,
+			["font_face"] = "Friz Quadrata TT",
+			["use_spark"] = true,
+			["row_color"] = {
+				0.1, -- [1]
+				0.1, -- [2]
+				0.1, -- [3]
+				0.4, -- [4]
+			},
+			["point"] = "CENTER",
+			["row_height"] = 20,
+			["scale"] = 1,
+		},
+	},
+	["nick_tag_cache"] = {
+		["nextreset"] = 1544692977,
+		["last_version"] = 10,
+	},
+	["ignore_nicktag"] = false,
+	["mythic_dungeon_currentsaved"] = {
+		["dungeon_name"] = "",
+		["started"] = false,
+		["segment_id"] = 0,
+		["ej_id"] = 0,
+		["started_at"] = 0,
+		["run_id"] = 0,
+		["level"] = 0,
+		["dungeon_zone_id"] = 0,
+		["previous_boss_killed_at"] = 0,
+	},
+	["last_version"] = "v8.0.1.6691",
+	["combat_id"] = 5,
+	["savedStyles"] = {
+	},
+	["last_instance_time"] = 0,
+	["announce_firsthit"] = {
+		["enabled"] = true,
+		["channel"] = "SELF",
+	},
+	["announce_deaths"] = {
+		["enabled"] = false,
+		["last_hits"] = 1,
+		["only_first"] = 5,
+		["where"] = 1,
+	},
+	["tabela_overall"] = {
+		{
+			["tipo"] = 2,
+			["_ActorTable"] = {
+			},
+		}, -- [1]
+		{
+			["tipo"] = 3,
+			["_ActorTable"] = {
+			},
+		}, -- [2]
+		{
+			["tipo"] = 7,
+			["_ActorTable"] = {
+			},
+		}, -- [3]
+		{
+			["tipo"] = 9,
+			["_ActorTable"] = {
+			},
+		}, -- [4]
+		{
+			["tipo"] = 2,
+			["_ActorTable"] = {
+			},
+		}, -- [5]
+		["raid_roster"] = {
+		},
+		["last_events_tables"] = {
+		},
+		["alternate_power"] = {
+		},
+		["combat_counter"] = 13,
+		["totals"] = {
+			0, -- [1]
+			0, -- [2]
+			{
+				0, -- [1]
+				[0] = 0,
+				["alternatepower"] = 0,
+				[3] = 0,
+				[6] = 0,
+			}, -- [3]
+			{
+				["buff_uptime"] = 0,
+				["ress"] = 0,
+				["debuff_uptime"] = 0,
+				["cooldowns_defensive"] = 0,
+				["interrupt"] = 0,
+				["dispell"] = 0,
+				["cc_break"] = 0,
+				["dead"] = 0,
+			}, -- [4]
+			["frags_total"] = 0,
+			["voidzone_damage"] = 0,
+		},
+		["totals_grupo"] = {
+			0, -- [1]
+			0, -- [2]
+			{
+				0, -- [1]
+				[0] = 0,
+				["alternatepower"] = 0,
+				[3] = 0,
+				[6] = 0,
+			}, -- [3]
+			{
+				["buff_uptime"] = 0,
+				["ress"] = 0,
+				["debuff_uptime"] = 0,
+				["cooldowns_defensive"] = 0,
+				["interrupt"] = 0,
+				["dispell"] = 0,
+				["cc_break"] = 0,
+				["dead"] = 0,
+			}, -- [4]
+		},
+		["frags_need_refresh"] = false,
+		["__call"] = {
+		},
+		["data_inicio"] = 0,
+		["frags"] = {
+		},
+		["data_fim"] = 0,
+		["CombatSkillCache"] = {
+		},
+		["PhaseData"] = {
+			{
+				1, -- [1]
+				1, -- [2]
+			}, -- [1]
+			["heal_section"] = {
+			},
+			["heal"] = {
+			},
+			["damage_section"] = {
+			},
+			["damage"] = {
+			},
+		},
+		["start_time"] = 0,
+		["TimeData"] = {
+			["Raid Damage Done"] = {
+			},
+		},
+		["player_last_events"] = {
+		},
+	},
+	["SoloTablesSaved"] = {
+		["Mode"] = 1,
+	},
+	["character_data"] = {
+		["logons"] = 6,
+	},
+	["last_day"] = "28",
+	["announce_cooldowns"] = {
+		["ignored_cooldowns"] = {
+		},
+		["enabled"] = false,
+		["custom"] = "",
+		["channel"] = "RAID",
+	},
+	["rank_window"] = {
+		["last_difficulty"] = 15,
+		["last_raid"] = "",
+	},
+	["announce_damagerecord"] = {
+		["enabled"] = true,
+		["channel"] = "SELF",
+	},
+	["cached_specs"] = {
+		["Player-1955-01CCA79E"] = 577,
+	},
+}
