@@ -1,6 +1,58 @@
 
 AzeritePowerWeightsDB = {
 	["customScales"] = {
+		{
+			"血DK", -- [1]
+			6, -- [2]
+			250, -- [3]
+			{
+				[479] = 8.39,
+				[31] = 6,
+				[481] = 5.75,
+				[482] = 9.07,
+				[483] = 6.97,
+				[485] = 9.14,
+				[486] = 5.8,
+				[487] = 4.54,
+				[488] = 10,
+				[489] = 6.31,
+				[490] = 3.3,
+				[491] = 3.9,
+				[492] = 5.8,
+				[493] = 4.54,
+				[494] = 10,
+				[495] = 6.31,
+				[496] = 3.3,
+				[156] = 6.76,
+				[498] = 7.33,
+				[157] = 9.91,
+				[500] = 8.12,
+				[501] = 6.49,
+				[504] = 6.77,
+				[505] = 6.11,
+				[192] = 6.26,
+				[193] = 8.18,
+				[82] = 8.78,
+				[194] = 9.29,
+				[195] = 6.39,
+				[196] = 7.73,
+				[459] = 4.42,
+				[461] = 3.89,
+				[462] = 4.89,
+				[30] = 5.41,
+				[140] = 3.11,
+				[499] = 5.45,
+				[497] = 3.9,
+				[22] = 5.65,
+				[480] = 5.6,
+				[348] = 6.65,
+				[106] = 4.66,
+				[20] = 4.25,
+				[21] = 4.12,
+				[478] = 9.42,
+				[18] = 3.8,
+			}, -- [4]
+		}, -- [1]
 	},
 	["dbVersion"] = 2,
 	["char"] = {
@@ -18,6 +70,39 @@ AzeritePowerWeightsDB = {
 					[256] = {
 						["scaleName"] = "默认",
 						["scaleID"] = "D/5/1/默认",
+					},
+				},
+				["addPrimaryStatToScore"] = false,
+				["showTooltipLegend"] = true,
+				["zonePowers"] = true,
+				["pvpPowers"] = false,
+				["addILvlToScore"] = false,
+				["relativeScore"] = false,
+				["rolePowersNoOffRolePowers"] = false,
+				["importingCanUpdate"] = true,
+				["tooltipScales"] = {
+				},
+				["rolePowers"] = true,
+				["defensivePowers"] = true,
+				["scaleByAzeriteEmpowered"] = false,
+				["onlyOwnClassDefaults"] = true,
+				["showOnlyUpgrades"] = false,
+				["professionPowers"] = false,
+				["debug"] = false,
+			},
+			["多晴"] = {
+				["specScales"] = {
+					[252] = {
+						["scaleName"] = "默认",
+						["scaleID"] = "D/6/3/默认",
+					},
+					[251] = {
+						["scaleName"] = "默认",
+						["scaleID"] = "D/6/2/默认",
+					},
+					[250] = {
+						["scaleName"] = "血DK",
+						["scaleID"] = "C/6/250/血DK",
 					},
 				},
 				["addPrimaryStatToScore"] = false,
@@ -64,41 +149,8 @@ AzeritePowerWeightsDB = {
 				["scaleByAzeriteEmpowered"] = false,
 				["onlyOwnClassDefaults"] = true,
 				["showOnlyUpgrades"] = false,
-				["professionPowers"] = false,
 				["debug"] = false,
-			},
-			["多晴"] = {
-				["specScales"] = {
-					[252] = {
-						["scaleName"] = "默认",
-						["scaleID"] = "D/6/3/默认",
-					},
-					[251] = {
-						["scaleName"] = "默认",
-						["scaleID"] = "D/6/2/默认",
-					},
-					[250] = {
-						["scaleName"] = "防御",
-						["scaleID"] = "D/6/1/防御",
-					},
-				},
-				["addPrimaryStatToScore"] = false,
-				["showTooltipLegend"] = true,
-				["zonePowers"] = true,
-				["pvpPowers"] = false,
-				["addILvlToScore"] = false,
-				["relativeScore"] = false,
-				["rolePowersNoOffRolePowers"] = false,
-				["importingCanUpdate"] = true,
-				["tooltipScales"] = {
-				},
-				["rolePowers"] = true,
-				["defensivePowers"] = true,
-				["scaleByAzeriteEmpowered"] = false,
-				["onlyOwnClassDefaults"] = true,
-				["showOnlyUpgrades"] = false,
 				["professionPowers"] = false,
-				["debug"] = false,
 			},
 			["苍白的形容词"] = {
 				["specScales"] = {
@@ -130,8 +182,8 @@ AzeritePowerWeightsDB = {
 				["scaleByAzeriteEmpowered"] = false,
 				["onlyOwnClassDefaults"] = true,
 				["showOnlyUpgrades"] = false,
-				["professionPowers"] = false,
 				["debug"] = false,
+				["professionPowers"] = false,
 			},
 		},
 	},

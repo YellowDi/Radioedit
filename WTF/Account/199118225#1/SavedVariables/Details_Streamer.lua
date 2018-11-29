@@ -3,8 +3,8 @@ Details_StreamerDB = {
 	["characters"] = {
 		["多晴 - 主宰之剑"] = "苍白的形容词 - 主宰之剑",
 		["Mirvish - 主宰之剑"] = "苍白的形容词 - 主宰之剑",
-		["苍白的形容词 - 主宰之剑"] = "苍白的形容词 - 主宰之剑",
 		["Friede - 主宰之剑"] = "苍白的形容词 - 主宰之剑",
+		["苍白的形容词 - 主宰之剑"] = "苍白的形容词 - 主宰之剑",
 	},
 	["profiles"] = {
 		["苍白的形容词 - 主宰之剑"] = {
@@ -32,17 +32,12 @@ Details_StreamerDB = {
 			},
 			["arrow_anchor_x"] = 0,
 			["row_texture"] = "Details Serenity",
-			["scale"] = 1,
-			["row_height"] = 20,
-			["point"] = "CENTER",
+			["arrow_anchor_y"] = 0,
+			["main_frame_locked"] = false,
+			["author"] = "Details! Team",
 			["enabled"] = false,
 			["arrow_size"] = 10,
-			["row_color"] = {
-				0.1, -- [1]
-				0.1, -- [2]
-				0.1, -- [3]
-				0.4, -- [4]
-			},
+			["use_spark"] = true,
 			["row_spacement"] = 21,
 			["main_frame_color"] = {
 				0, -- [1]
@@ -50,13 +45,14 @@ Details_StreamerDB = {
 				0, -- [3]
 				0.2, -- [4]
 			},
-			["main_frame_strata"] = "LOW",
+			["row_color"] = {
+				0.1, -- [1]
+				0.1, -- [2]
+				0.1, -- [3]
+				0.4, -- [4]
+			},
 			["arrow_texture"] = "Interface\\CHATFRAME\\ChatFrameExpandArrow",
-			["use_spark"] = true,
 			["y"] = -1.525878906250e-005,
-			["x"] = 3.05175781250e-005,
-			["font_face"] = "Friz Quadrata TT",
-			["font_size"] = 10,
 			["per_second"] = {
 				["enabled"] = false,
 				["point"] = "CENTER",
@@ -64,13 +60,17 @@ Details_StreamerDB = {
 				["font_shadow"] = true,
 				["y"] = -3.05175781250e-005,
 				["x"] = 6.1035156250e-005,
-				["size"] = 32,
-				["update_speed"] = 0.05,
 				["attribute_type"] = 1,
+				["update_speed"] = 0.05,
+				["size"] = 32,
 			},
-			["author"] = "Details! Team",
-			["main_frame_locked"] = false,
-			["arrow_anchor_y"] = 0,
+			["x"] = 3.05175781250e-005,
+			["font_face"] = "Friz Quadrata TT",
+			["font_size"] = 10,
+			["main_frame_strata"] = "LOW",
+			["point"] = "CENTER",
+			["row_height"] = 20,
+			["scale"] = 1,
 		},
 	},
 }

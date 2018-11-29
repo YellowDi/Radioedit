@@ -7,12 +7,18 @@ dbBFA = {
 		["Mirvish - 主宰之剑"] = {
 			["firstun"] = false,
 		},
-		["Friede - 主宰之剑"] = {
-			["firstun"] = false,
-		},
 		["苍白的形容词 - 主宰之剑"] = {
 			["firstun"] = false,
 		},
+		["Friede - 主宰之剑"] = {
+			["firstun"] = false,
+		},
+	},
+	["profileKeys"] = {
+		["多晴 - 主宰之剑"] = "Default",
+		["Mirvish - 主宰之剑"] = "Default",
+		["苍白的形容词 - 主宰之剑"] = "Default",
+		["Friede - 主宰之剑"] = "Default",
 	},
 	["global"] = {
 		["warn01_seen"] = 0,
@@ -20,12 +26,6 @@ dbBFA = {
 		["news"] = {
 		},
 		["warn02_seen"] = 0,
-	},
-	["profileKeys"] = {
-		["多晴 - 主宰之剑"] = "Default",
-		["Mirvish - 主宰之剑"] = "Default",
-		["Friede - 主宰之剑"] = "Default",
-		["苍白的形容词 - 主宰之剑"] = "Default",
 	},
 	["profiles"] = {
 		["Default"] = {
@@ -49,8 +49,8 @@ dbBFA = {
 				["PREFERHIGH"] = false,
 				["NOTROOPS"] = false,
 				["MAKEITQUICK"] = true,
-				["MAXCHAMP"] = 3,
 				["TROOPALERT"] = true,
+				["MAXCHAMP"] = 3,
 				["IGNOREBUSY"] = true,
 				["BASECHANCE"] = 0,
 			},
