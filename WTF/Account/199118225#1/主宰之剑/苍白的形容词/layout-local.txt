@@ -6,3 +6,10 @@ X: 45
 Y: -184
 W: 365
 H: 240
+Frame: WeakAurasOptions
+FrameLevel: 1
+Anchor: CENTER
+X: 56
+Y: 65
+W: 730
+H: 665

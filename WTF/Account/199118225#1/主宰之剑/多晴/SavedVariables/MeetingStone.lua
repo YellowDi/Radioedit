@@ -5,11 +5,6 @@ MEETINGSTONE_CHARACTER_DB = {
 	},
 	["profiles"] = {
 		["多晴 - 主宰之剑"] = {
-			["lastSearchCode"] = "6-0-0-0",
-			["version"] = "80000.07",
-			["settings"] = {
-				["panel"] = false,
-			},
 			["recent"] = {
 				["3-0-657-0"] = {
 					{
@@ -429,6 +424,11 @@ MEETINGSTONE_CHARACTER_DB = {
 					}, -- [55]
 				},
 			},
+			["settings"] = {
+				["panel"] = false,
+			},
+			["version"] = "80000.07",
+			["lastSearchCode"] = "6-0-0-0",
 			["searchHistoryList"] = {
 				"6-0-0-0", -- [1]
 			},

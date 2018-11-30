@@ -1,7 +1,5 @@
 
 OmniCC4Config = {
-	["groups"] = {
-	},
 	["version"] = "8.0.9",
 	["groupSettings"] = {
 		["base"] = {
@@ -25,5 +23,7 @@ OmniCC4Config = {
 			["minEffectDuration"] = 30,
 			["mmSSDuration"] = 0,
 		},
+	},
+	["groups"] = {
 	},
 }

@@ -3,8 +3,8 @@ AddOnSkinsDB = {
 	["profileKeys"] = {
 		["多晴 - 主宰之剑"] = "BenikUI",
 		["Mirvish - 主宰之剑"] = "BenikUI",
-		["Friede - 主宰之剑"] = "BenikUI",
 		["苍白的形容词 - 主宰之剑"] = "R2",
+		["Friede - 主宰之剑"] = "BenikUI",
 	},
 	["profiles"] = {
 		["BenikUI"] = {

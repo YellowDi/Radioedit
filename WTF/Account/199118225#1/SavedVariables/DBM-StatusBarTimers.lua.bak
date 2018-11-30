@@ -11,12 +11,6 @@ DBT_AllPersistentOptions = {
 			["Texture"] = "Interface\\AddOns\\ElvUI_BenikUI\\media\\textures\\Flat.tga",
 		},
 	},
-	["Default"] = {
-		["DBM"] = {
-			["HugeBarYOffset"] = 13,
-			["BarYOffset"] = 13,
-		},
-	},
 	["BenikUIMirvish-主宰之剑"] = {
 		["DBM"] = {
 			["HugeBarYOffset"] = 16,
@@ -26,6 +20,12 @@ DBT_AllPersistentOptions = {
 			["Scale"] = 1,
 			["Font"] = "Interface\\AddOns\\ElvUI\\media\\fonts\\Expressway.ttf",
 			["Texture"] = "Interface\\AddOns\\ElvUI_BenikUI\\media\\textures\\Flat.tga",
+		},
+	},
+	["Default"] = {
+		["DBM"] = {
+			["HugeBarYOffset"] = 13,
+			["BarYOffset"] = 13,
 		},
 	},
 	["BenikUI多晴-主宰之剑"] = {
