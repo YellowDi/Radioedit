@@ -8,8 +8,8 @@ W: 365
 H: 240
 Frame: DetailsPluginContainerWindow
 FrameLevel: 1
-Anchor: CENTER
+Anchor: TOP
 X: -7
-Y: 64
+Y: -20
 W: 925
 H: 600

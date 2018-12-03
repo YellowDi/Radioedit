@@ -1,1 +1,6 @@
 ElvUI_EverySecondCounts: disabled
+BigWigs_Plugins: enabled
+BigWigs_Core: enabled
+BigWigs_Options: enabled
+Bigwigs_Voice: enabled
+BigWigs_Azeroth: enabled
