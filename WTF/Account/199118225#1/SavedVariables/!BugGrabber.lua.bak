@@ -1,7 +1,7 @@
 
 BugGrabberDB = {
+	["session"] = 98,
 	["lastSanitation"] = 3,
-	["session"] = 97,
 	["errors"] = {
 		{
 			["message"] = "C stack overflow",
@@ -122,21 +122,13 @@ BugGrabberDB = {
 			["counter"] = 1,
 		}, -- [15]
 		{
-			["message"] = "Interface\\FrameXML\\CharacterFrame.lua:184: attempt to perform arithmetic on a nil value",
-			["time"] = "2018/11/28 17:07:51",
-			["locals"] = "self = CharacterFrameTab1 {\n 0 = <userdata>\n backdrop = <unnamed> {\n }\n}\n(*temporary) = nil\n(*temporary) = nil\n(*temporary) = CharacterFrame {\n 0 = <userdata>\n TitleText = CharacterFrameTitleText {\n }\n portrait = CharacterFramePortrait {\n }\n LeftBorder = CharacterFrameLeftBorder {\n }\n TopRightCorner = CharacterFrameTopRightCorner {\n }\n TopLeftCorner = CharacterFrameTopLeftCorner {\n }\n Bg = CharacterFrameBg {\n }\n SetPoint = <function> defined =[C]:-1\n ignoreFramePositionManager = true\n TopBorder = CharacterFrameTopBorder {\n }\n ReputationTabHelpBox = <unnamed> {\n }\n TopTileStreaks = CharacterFrameTopTileStreaks {\n }\n TitleBg = CharacterFrameTitleBg {\n }\n BottomBorder = CharacterFrameBottomBorder {\n }\n template = \"Transparent\"\n OnLoad = <function> defined @Interface\\SharedXML\\SharedUIPanelTemplates.lua:860\n numTabs = 3\n BotRightCorner = CharacterFrameBotRightCorner {\n }\n Inset = CharacterFrameInset {\n }\n CloseButton = CharacterFrameCloseButton {\n }\n BotLeftCorner = CharacterFrameBotLeftCorner {\n }\n PortraitFrame = CharacterFramePortraitFrame {\n }\n selectedTab = 1\n RightBorder = CharacterFrameRightBorder {\n }\n}\n(*temporary) = nil\n(*temporary) = <function> defined @Interface\\SharedXML\\SharedUIPanelTemplates.lua:446\n(*temporary) = CharacterFrameTab3 {\n 0 = <userdata>\n backdrop = <unnamed> {\n }\n}\n(*temporary) = 0\n(*temporary) = nil\n(*temporary) = 36\n(*temporary) = 88\n(*temporary) = \"attempt to perform arithmetic on a nil value\"\nNUM_CHARACTERFRAME_TABS = 3\nCharTabtable = <table> {\n}\nCompareFrameSize = <function> defined @Interface\\FrameXML\\CharacterFrame.lua:170\n",
-			["stack"] = "Interface\\FrameXML\\CharacterFrame.lua:184: in function `CharacterFrame_TabBoundsCheck'\n[string \"*:OnShow\"]:2: in function <[string \"*:OnShow\"]:1>\n[C]: in function `Show'\nInterface\\FrameXML\\UIParent.lua:3134: in function `ShowUIPanel'\nInterface\\FrameXML\\CharacterFrame.lua:21: in function `ToggleCharacter'\n[string \"TOGGLECHARACTER0\"]:1: in function <[string \"TOGGLECHARACTER0\"]:1>",
-			["session"] = 97,
-			["counter"] = 96,
-		}, -- [16]
-		{
 			["message"] = "[ADDON_ACTION_BLOCKED] 插件 'ElvUI_WindTools' 尝试调用保护功能 'FriendsFrame:ClearAllPoints()'。",
 			["time"] = "2018/12/02 21:47:31",
 			["locals"] = "InCombatSkipped",
 			["stack"] = "Interface\\AddOns\\!BugGrabber\\BugGrabber.lua:519: in function <Interface\\AddOns\\!BugGrabber\\BugGrabber.lua:519>\n[C]: in function `ClearAllPoints'\n...vUI_WindTools\\Modules\\More\\EnhancedBlizzardFrame.lua:131: in function <...vUI_WindTools\\Modules\\More\\EnhancedBlizzardFrame.lua:117>\n[C]: ?\n[C]: ?\n[C]: in function `Show'\nInterface\\FrameXML\\UIParent.lua:3134: in function `ShowUIPanel'\nInterface\\FrameXML\\FriendsFrame.lua:1053: in function `ToggleFriendsFrame'\n[string \"TOGGLESOCIAL\"]:1: in function <[string \"TOGGLESOCIAL\"]:1>",
 			["session"] = 97,
 			["counter"] = 1,
-		}, -- [17]
+		}, -- [16]
 		{
 			["message"] = "[ADDON_ACTION_BLOCKED] 插件 'ElvUI' 尝试调用保护功能 'UNKNOWN()'。",
 			["time"] = "2018/12/02 21:47:31",
@@ -144,6 +136,14 @@ BugGrabberDB = {
 			["stack"] = "Interface\\AddOns\\!BugGrabber\\BugGrabber.lua:519: in function <Interface\\AddOns\\!BugGrabber\\BugGrabber.lua:519>\n[C]: ?\n[C]: in function `SetPoint'\n...vUI_WindTools\\Modules\\More\\EnhancedBlizzardFrame.lua:132: in function <...vUI_WindTools\\Modules\\More\\EnhancedBlizzardFrame.lua:117>\n[C]: ?\n[C]: ?\n[C]: in function `Show'\nInterface\\FrameXML\\UIParent.lua:3134: in function `ShowUIPanel'\nInterface\\FrameXML\\FriendsFrame.lua:1053: in function `ToggleFriendsFrame'\n[string \"TOGGLESOCIAL\"]:1: in function <[string \"TOGGLESOCIAL\"]:1>",
 			["session"] = 97,
 			["counter"] = 1,
+		}, -- [17]
+		{
+			["message"] = "Interface\\FrameXML\\CharacterFrame.lua:184: attempt to perform arithmetic on a nil value",
+			["time"] = "2018/11/28 17:07:51",
+			["locals"] = "self = CharacterFrameTab1 {\n 0 = <userdata>\n backdrop = <unnamed> {\n }\n}\n(*temporary) = nil\n(*temporary) = nil\n(*temporary) = CharacterFrame {\n 0 = <userdata>\n TitleText = CharacterFrameTitleText {\n }\n portrait = CharacterFramePortrait {\n }\n LeftBorder = CharacterFrameLeftBorder {\n }\n TopRightCorner = CharacterFrameTopRightCorner {\n }\n TopLeftCorner = CharacterFrameTopLeftCorner {\n }\n Bg = CharacterFrameBg {\n }\n SetPoint = <function> defined =[C]:-1\n ignoreFramePositionManager = true\n TopBorder = CharacterFrameTopBorder {\n }\n ReputationTabHelpBox = <unnamed> {\n }\n TopTileStreaks = CharacterFrameTopTileStreaks {\n }\n TitleBg = CharacterFrameTitleBg {\n }\n BottomBorder = CharacterFrameBottomBorder {\n }\n template = \"Transparent\"\n OnLoad = <function> defined @Interface\\SharedXML\\SharedUIPanelTemplates.lua:860\n numTabs = 3\n BotRightCorner = CharacterFrameBotRightCorner {\n }\n Inset = CharacterFrameInset {\n }\n CloseButton = CharacterFrameCloseButton {\n }\n BotLeftCorner = CharacterFrameBotLeftCorner {\n }\n PortraitFrame = CharacterFramePortraitFrame {\n }\n selectedTab = 1\n RightBorder = CharacterFrameRightBorder {\n }\n}\n(*temporary) = nil\n(*temporary) = <function> defined @Interface\\SharedXML\\SharedUIPanelTemplates.lua:446\n(*temporary) = CharacterFrameTab3 {\n 0 = <userdata>\n backdrop = <unnamed> {\n }\n}\n(*temporary) = 0\n(*temporary) = nil\n(*temporary) = 36\n(*temporary) = 88\n(*temporary) = \"attempt to perform arithmetic on a nil value\"\nNUM_CHARACTERFRAME_TABS = 3\nCharTabtable = <table> {\n}\nCompareFrameSize = <function> defined @Interface\\FrameXML\\CharacterFrame.lua:170\n",
+			["stack"] = "Interface\\FrameXML\\CharacterFrame.lua:184: in function `CharacterFrame_TabBoundsCheck'\n[string \"*:OnShow\"]:2: in function <[string \"*:OnShow\"]:1>\n[C]: in function `Show'\nInterface\\FrameXML\\UIParent.lua:3134: in function `ShowUIPanel'\nInterface\\FrameXML\\CharacterFrame.lua:21: in function `ToggleCharacter'\n[string \"TOGGLECHARACTER0\"]:1: in function <[string \"TOGGLECHARACTER0\"]:1>",
+			["session"] = 98,
+			["counter"] = 99,
 		}, -- [18]
 	},
 }

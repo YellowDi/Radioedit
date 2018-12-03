@@ -45,15 +45,15 @@ AzeritePowerWeightsDB = {
 				[403] = 6.37,
 				[404] = 5.32,
 				[405] = 10,
-				[31] = 4.43,
-				[497] = 3.33,
-				[499] = 3.99,
-				[21] = 3.72,
-				[38] = 3.66,
-				[462] = 3.38,
-				[461] = 3.37,
-				[478] = 6.62,
 				[236] = 2.12,
+				[497] = 3.33,
+				[461] = 3.37,
+				[462] = 3.38,
+				[38] = 3.66,
+				[21] = 3.72,
+				[499] = 3.99,
+				[478] = 6.62,
+				[31] = 4.43,
 			}, -- [4]
 		}, -- [1]
 		{
@@ -96,16 +96,16 @@ AzeritePowerWeightsDB = {
 				[462] = 4.89,
 				[30] = 5.41,
 				[140] = 3.11,
-				[18] = 3.8,
+				[499] = 5.45,
 				[497] = 3.9,
-				[21] = 4.12,
-				[20] = 4.25,
+				[22] = 5.65,
+				[480] = 5.6,
 				[348] = 6.65,
 				[106] = 4.66,
-				[480] = 5.6,
-				[22] = 5.65,
+				[20] = 4.25,
+				[21] = 4.12,
 				[478] = 9.42,
-				[499] = 5.45,
+				[18] = 3.8,
 			}, -- [4]
 		}, -- [2]
 	},
@@ -146,8 +146,8 @@ AzeritePowerWeightsDB = {
 				["scaleByAzeriteEmpowered"] = false,
 				["onlyOwnClassDefaults"] = true,
 				["showOnlyUpgrades"] = false,
-				["professionPowers"] = false,
 				["debug"] = false,
+				["professionPowers"] = false,
 			},
 			["Mirvish"] = {
 				["specScales"] = {
@@ -175,8 +175,8 @@ AzeritePowerWeightsDB = {
 				["scaleByAzeriteEmpowered"] = false,
 				["onlyOwnClassDefaults"] = true,
 				["showOnlyUpgrades"] = false,
-				["professionPowers"] = false,
 				["debug"] = false,
+				["professionPowers"] = false,
 			},
 			["Friede"] = {
 				["specScales"] = {
@@ -208,8 +208,8 @@ AzeritePowerWeightsDB = {
 				["scaleByAzeriteEmpowered"] = false,
 				["onlyOwnClassDefaults"] = true,
 				["showOnlyUpgrades"] = false,
-				["debug"] = false,
 				["professionPowers"] = false,
+				["debug"] = false,
 			},
 			["多晴"] = {
 				["specScales"] = {
@@ -241,8 +241,8 @@ AzeritePowerWeightsDB = {
 				["scaleByAzeriteEmpowered"] = false,
 				["onlyOwnClassDefaults"] = true,
 				["showOnlyUpgrades"] = false,
-				["professionPowers"] = false,
 				["debug"] = false,
+				["professionPowers"] = false,
 			},
 			["苍白的形容词"] = {
 				["specScales"] = {
@@ -274,8 +274,8 @@ AzeritePowerWeightsDB = {
 				["scaleByAzeriteEmpowered"] = false,
 				["onlyOwnClassDefaults"] = true,
 				["showOnlyUpgrades"] = false,
-				["professionPowers"] = false,
 				["debug"] = false,
+				["professionPowers"] = false,
 			},
 		},
 	},

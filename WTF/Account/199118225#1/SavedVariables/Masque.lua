@@ -615,7 +615,7 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_psychic_horror"] = {
+				["WeakAuras_fury_of_elune"] = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
@@ -627,7 +627,7 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_dark_slash"] = {
+				["WeakAuras_barkskin"] = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
@@ -635,12 +635,11 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_unholy_frenzy"] = {
+				["WeakAuras_survival_instincts_feral"] = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_maim"] = {
-					["Inherit"] = false,
+				["WeakAuras_ice_nova"] = {
 					["SkinID"] = "WindShadow",
 				},
 				["WeakAuras_mage_pvpt4"] = {
@@ -653,41 +652,41 @@ MasqueDB = {
 				["WeakAuras_pyroclasm_a"] = {
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_skull_bash"] = {
+				["WeakAuras_incapacitating_roar"] = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_frost_nova"] = {
+				["WeakAuras_survival_instincts"] = {
+					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
 				["WeakAuras_bristling_fur"] = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_spectral_sight"] = {
+				["WeakAuras_raise_ally"] = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_bonestorm"] = {
+				["WeakAuras_pulverize"] = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
 				["WeakAuras_ice_floes"] = {
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_power_word:shield"] = {
-					["Inherit"] = false,
+				["WeakAuras_remove_curse"] = {
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_remove_curse"] = {
+				["WeakAuras_dh_pvpt5"] = {
+					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
 				["WeakAuras_wraith_walk"] = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_gorefiend's_grasp"] = {
-					["Inherit"] = false,
+				["WeakAuras_mage_pvpt1"] = {
 					["SkinID"] = "WindShadow",
 				},
 				["WeakAuras_t30_druid"] = {
@@ -698,13 +697,10 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_mage_pvpt1"] = {
+				["WeakAuras_freeze"] = {
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_rune_of_power_b"] = {
-					["SkinID"] = "WindShadow",
-				},
-				["WeakAuras_thrash_guardian"] = {
+				["WeakAuras_rime"] = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
@@ -712,11 +708,15 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
+				["WeakAuras_blur"] = {
+					["Inherit"] = false,
+					["SkinID"] = "WindShadow",
+				},
 				["WeakAuras_mangle"] = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_priest_pvpt1"] = {
+				["WeakAuras_thrash_guardian"] = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
@@ -735,19 +735,18 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_dh_pvpt7"] = {
+				["WeakAuras_nemesis"] = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_meteor"] = {
+				["WeakAuras_ebonbolt"] = {
 					["SkinID"] = "WindShadow",
 				},
 				["WeakAuras_eration"] = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_throw_glave"] = {
-					["Inherit"] = false,
+				["WeakAuras_arcane_barrage"] = {
 					["SkinID"] = "WindShadow",
 				},
 				["WeakAuras_innervate"] = {
@@ -761,28 +760,28 @@ MasqueDB = {
 				["ElvUI_Debuffs"] = {
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_mage_barrier"] = {
+				["WeakAuras_rune_of_power"] = {
 					["SkinID"] = "WindShadow",
 				},
 				["WeakAuras_feral_bleed_rake"] = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_searing_touch"] = {
+				["WeakAuras_glacial_spike"] = {
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_shadow_crash"] = {
+				["WeakAuras_cone_of_cold"] = {
+					["SkinID"] = "WindShadow",
+				},
+				["WeakAuras_void_torrent"] = {
 					["Inherit"] = false,
-					["SkinID"] = "WindShadow",
-				},
-				["WeakAuras_nether_tempest"] = {
 					["SkinID"] = "WindShadow",
 				},
 				["WeakAuras_runic_corruption"] = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_demon_spikes"] = {
+				["WeakAuras_blood_talons"] = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
@@ -793,14 +792,15 @@ MasqueDB = {
 				["Masque"] = {
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_invisibility"] = {
+				["WeakAuras_brain_freeze"] = {
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_dark_ascension"] = {
+				["WeakAuras_sigil_of_chains"] = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_water_elemental"] = {
+				["WeakAuras_predatory_swiftness"] = {
+					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
 				["WeakAuras_icy_veins"] = {
@@ -814,17 +814,18 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_enchanced_pyrotechnics"] = {
+				["WeakAuras_feral_bleed_rip"] = {
+					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
 				["WeakAuras_fingers_of_frost_2"] = {
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_sunfire"] = {
+				["WeakAuras_anti-magic_shell_dd"] = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_virulent_plague"] = {
+				["WeakAuras_death_grip"] = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
@@ -832,7 +833,7 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_death_grip"] = {
+				["WeakAuras_virulent_plague"] = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
@@ -847,7 +848,7 @@ MasqueDB = {
 				["WeakAuras_mirror_image"] = {
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_consume_magic"] = {
+				["WeakAuras_moonfire"] = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
@@ -855,22 +856,22 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["ElvUI_ActionBars"] = {
+				["WeakAuras_thrash_stacks_guardian"] = {
+					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
 				["WeakAuras_void_eruption"] = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_thrash_stacks_guardian"] = {
+				["ElvUI_ActionBars"] = {
+					["SkinID"] = "WindShadow",
+				},
+				["WeakAuras_hibernate"] = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
 				["WeakAuras_celestial_alignment"] = {
-					["Inherit"] = false,
-					["SkinID"] = "WindShadow",
-				},
-				["WeakAuras_hibernate"] = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
@@ -885,7 +886,7 @@ MasqueDB = {
 				["WeakAuras_time_lapse"] = {
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_moonfire"] = {
+				["WeakAuras_consume_magic"] = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
@@ -893,7 +894,7 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_anti-magic_shell_dd"] = {
+				["WeakAuras_sunfire"] = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
@@ -901,8 +902,7 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_feral_bleed_rip"] = {
-					["Inherit"] = false,
+				["WeakAuras_enchanced_pyrotechnics"] = {
 					["SkinID"] = "WindShadow",
 				},
 				["WeakAuras_blood_tap"] = {
@@ -913,66 +913,66 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_predatory_swiftness"] = {
+				["WeakAuras_water_elemental"] = {
+					["SkinID"] = "WindShadow",
+				},
+				["WeakAuras_dark_ascension"] = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_sigil_of_chains"] = {
+				["WeakAuras_invisibility"] = {
+					["SkinID"] = "WindShadow",
+				},
+				["WeakAuras_demon_spikes"] = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_brain_freeze"] = {
+				["WeakAuras_nether_tempest"] = {
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_blood_talons"] = {
+				["WeakAuras_shadow_crash"] = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_void_torrent"] = {
-					["Inherit"] = false,
+				["WeakAuras_searing_touch"] = {
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_cone_of_cold"] = {
-					["SkinID"] = "WindShadow",
-				},
-				["WeakAuras_glacial_spike"] = {
-					["SkinID"] = "WindShadow",
-				},
-				["WeakAuras_rune_of_power"] = {
+				["WeakAuras_mage_barrier"] = {
 					["SkinID"] = "WindShadow",
 				},
 				["WeakAuras_eye_beam"] = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_arcane_barrage"] = {
-					["SkinID"] = "WindShadow",
-				},
-				["WeakAuras_ebonbolt"] = {
-					["SkinID"] = "WindShadow",
-				},
-				["WeakAuras_nemesis"] = {
+				["WeakAuras_throw_glave"] = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_blur"] = {
+				["WeakAuras_meteor"] = {
+					["SkinID"] = "WindShadow",
+				},
+				["WeakAuras_dh_pvpt7"] = {
+					["Inherit"] = false,
+					["SkinID"] = "WindShadow",
+				},
+				["WeakAuras_priest_pvpt1"] = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
 				["WeakAuras_icy_floes_b"] = {
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_rime"] = {
-					["Inherit"] = false,
+				["WeakAuras_rune_of_power_b"] = {
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_freeze"] = {
+				["WeakAuras_gorefiend's_grasp"] = {
+					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
 				["WeakAuras_pyroblast!"] = {
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_dh_pvpt5"] = {
+				["WeakAuras_power_word:shield"] = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
@@ -984,36 +984,36 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_pulverize"] = {
+				["WeakAuras_bonestorm"] = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_raise_ally"] = {
+				["WeakAuras_spectral_sight"] = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
 				["WeakAuras_combustion"] = {
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_survival_instincts"] = {
-					["Inherit"] = false,
+				["WeakAuras_frost_nova"] = {
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_incapacitating_roar"] = {
+				["WeakAuras_skull_bash"] = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
 				["WeakAuras_supernova"] = {
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_ice_nova"] = {
-					["SkinID"] = "WindShadow",
-				},
-				["WeakAuras_survival_instincts_feral"] = {
+				["WeakAuras_maim"] = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_barkskin"] = {
+				["WeakAuras_unholy_frenzy"] = {
+					["Inherit"] = false,
+					["SkinID"] = "WindShadow",
+				},
+				["WeakAuras_dark_slash"] = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
@@ -1021,7 +1021,7 @@ MasqueDB = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},
-				["WeakAuras_fury_of_elune"] = {
+				["WeakAuras_psychic_horror"] = {
 					["Inherit"] = false,
 					["SkinID"] = "WindShadow",
 				},

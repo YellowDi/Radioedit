@@ -17,19 +17,19 @@ dbBFA = {
 			["firstun"] = false,
 		},
 	},
-	["global"] = {
-		["warn01_seen"] = 0,
-		["firstrun"] = false,
-		["news"] = {
-		},
-		["warn02_seen"] = 0,
-	},
 	["profileKeys"] = {
 		["Friede - 主宰之剑"] = "Default",
 		["多晴 - 主宰之剑"] = "Default",
 		["Mirvish - 主宰之剑"] = "Default",
 		["Zeoi - 主宰之剑"] = "Default",
 		["苍白的形容词 - 主宰之剑"] = "Default",
+	},
+	["global"] = {
+		["warn01_seen"] = 0,
+		["firstrun"] = false,
+		["news"] = {
+		},
+		["warn02_seen"] = 0,
 	},
 	["profiles"] = {
 		["Default"] = {
@@ -53,8 +53,8 @@ dbBFA = {
 				["PREFERHIGH"] = false,
 				["NOTROOPS"] = false,
 				["MAKEITQUICK"] = true,
-				["MAXCHAMP"] = 3,
 				["TROOPALERT"] = true,
+				["MAXCHAMP"] = 3,
 				["IGNOREBUSY"] = true,
 				["BASECHANCE"] = 0,
 			},
